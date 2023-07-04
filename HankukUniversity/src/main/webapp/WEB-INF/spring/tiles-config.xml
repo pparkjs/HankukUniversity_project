@@ -22,8 +22,8 @@
 		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp"/>
 	</definition>
 	
-	<!-- 학생통합시스템 대한 동적 content tiles -->
-	<definition name="admin/*" extends="indexTemplate">
+	<!-- 직원통합시스템 대한 동적 content tiles -->
+	<definition name="admin/*" extends="system-page">
 		<put-attribute name="adminContent" value="/WEB-INF/views/admin/{1}.jsp"/>
 	</definition>
 	
@@ -32,8 +32,8 @@
 		<put-attribute name="portalContent" value="/WEB-INF/views/portal/{1}.jsp"/>
 	</definition>
 	
-	<!-- 학생통합시스템 대한 동적 content tiles -->
-	<definition name="professor/*" extends="indexTemplate">
+	<!-- 교수통합시스템 대한 동적 content tiles -->
+	<definition name="professor/*" extends="system-page">
 		<put-attribute name="professorContent" value="/WEB-INF/views/professor/{1}.jsp"/>
 	</definition>
 	
