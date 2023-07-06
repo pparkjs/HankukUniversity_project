@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.table-wrap{
+	overflow: scroll;
+}
+
+.dept-body{
+	padding-top: 0px;
+}
