@@ -54,11 +54,7 @@
 		
 		<!-- 여기는 spring 권한별로 달라져야하는 부분 -->
 <%-- 		<tiles:insertAttribute name="studentContent"/> --%>
-<<<<<<< HEAD
 	 	<tiles:insertAttribute name="adminContent"/> 
-=======
-<%-- 	 	<tiles:insertAttribute name="adminContent"/>  --%>
->>>>>>> 8c511b5665393345c4ca7621e433ae02fbd0faed
 <%-- 		<tiles:insertAttribute name="professorContent"/> --%>
 <%-- 		<tiles:insertAttribute name="portalContent"/>   --%>
 		
