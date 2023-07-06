@@ -37,7 +37,7 @@
 					<span class="nav-text">수강정보</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">교과목 조회</a></li>
+					<li><a href="/hku/student/search-subject">교과목 조회</a></li>
 					<li><a href="#">수강신청</a></li>
 					<li><a href="#">수강이력</a></li>
 					<li><a href="#">수강중인 강의</a></li>
