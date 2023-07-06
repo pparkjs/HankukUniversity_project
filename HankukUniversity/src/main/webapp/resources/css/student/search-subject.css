@@ -44,3 +44,16 @@
 	height: 55	px;
     border: 1px solid #a0a0a0;
 }
+.subInfo{
+    width : 100%;
+    height : 300px;
+    border: 1px solid #404040;
+}
+.subInfo p{
+	font-size: 1rem;
+    font-weight: 500;
+    color: maroon;
+    text-transform: capitalize;
+    margin-top: 17px;
+    margin-left: 17px;
+}
