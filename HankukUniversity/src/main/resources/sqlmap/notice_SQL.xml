@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.mapper.admin.AdminNoticeMapper">
+ 
+ 	<insert id="addNotice" parameterType="noticeVO">
+ 		insert into notice(
+ 			NOTICE_NO,
+			NOTICE_TTL,
+			NOTICE_CN,
+			NOTICE_WRTR_NM,
+			NOTICE_REGDATE,
+			NOTICE_READ_CNT,
+			NOTICE_CLSF
+<!-- 			ATCH_FILE_NO -->
+ 		)values(
+ 			seq_notice.nextval,
+ 			#{noticeTtl},
+ 			#{noticeCn},
+ 			#{noticeWrtrNm},
+ 			sysdate,
+ 			0,
+ 			#{noticeClsf}
+<!--  			파일 -->
+ 		)
+ 	</insert>
+ 	
+ 	<select id="noticeList" resultType="noticeVO">
+ 		select * from notice
+ 		where 1=1
+ 		order by NOTICE_NO desc
+ 	</select>
+ 	
+ </mapper>

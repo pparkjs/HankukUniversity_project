@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
@@ -21,5 +20,6 @@
     <typeAlias type="kr.or.hku.vo.StudentVO" alias="studentVO"/>
     <typeAlias type="kr.or.hku.vo.ProfessorVO" alias="professorVO"/>
     <typeAlias type="kr.or.hku.vo.EmployeeVO" alias="employeeVO"/>
+    <typeAlias type="kr.or.hku.vo.NoticeVO" alias="noticeVO"/>
 	</typeAliases>
 </configuration>
