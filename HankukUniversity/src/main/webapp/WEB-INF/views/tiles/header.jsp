@@ -263,16 +263,16 @@
 										<img src="/images/tab/1.jpg" alt="">
 									</div>
 									<div class="header-info">
-									<c:if test="${cls eq 'student'}">
+									<c:if test="${not empty std}">
 										<h6>${std.stdNm}</h6>
 										<p>${std.stdNo}</p>
 									</c:if>
-									<c:if test="${cls eq 'professor'}">
+									<c:if test="${not empty pro}">
 											<h6>${pro.proNm}</h6>
 											<p>${pro.proNo}</p>
 									</c:if>		
-									<c:if test="${cls eq 'employee'}">
-											<h6>${emp.empNm}</h6>
+									<c:if test="${not empty emp}">
+											<h6>${emp.empName}</h6>
 											<p>${emp.empNo}</p>
 									</c:if>		
 									</div>
@@ -285,16 +285,16 @@
 										<div class="products">
 											<img src="/images/tab/1.jpg" class="avatar avatar-md" alt="">
 											<div>
-											<c:if test="${cls eq 'student'}">
+											<c:if test="${not empty std}">
 												<h6>${std.stdNm}</h6>
 												<span>${std.stdNo }</span>
 											</c:if>
-											<c:if test="${cls eq 'professor'}">
+											<c:if test="${not empty pro}">
 												<h6>${pro.proNm}</h6>
 												<span>${pro.proNo }</span>
 											</c:if>
-											<c:if test="${cls eq 'employee'}">
-												<h6>${emp.empNm}</h6>
+											<c:if test="${not empty emp}">
+												<h6>${emp.empName}</h6>
 												<span>${emp.empNo }</span>
 											</c:if>
 											</div>
@@ -384,8 +384,6 @@
 </div>
 <script>
 	function logout(){
-		session.invalidate();
-		location.href = "/main/login";
-		
+		location.replace("/main/logout");
 	}
 </script>

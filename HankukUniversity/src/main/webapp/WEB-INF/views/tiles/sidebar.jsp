@@ -5,7 +5,7 @@
 	<div class="deznav-scroll">
 	<!--  각 액터별 side bar도 권한에 따라 배분해야함! -->
 		<ul class="metismenu" id="menu">
-		<c:if test="${cls eq 'student' }">
+		<c:if test="${not empty std }">
 	<!--------------------------------------- 학생에대한 side bar --------------------------------------->
 
 			<li class="menu-title">HANKUK UNIVERSITY (학생)</li>
@@ -180,7 +180,7 @@
 				</ul>
 			</li>
 	</c:if>
-	<c:if test="${cls eq 'employee' }">		
+	<c:if test="${not empty emp}">		
 	<!--------------------------------------- 교직원에대한 side bar --------------------------------------->
 			
 			<li class="menu-title">HANKUK UNIVERSITY (교직원)</li>
@@ -283,7 +283,7 @@
 			</li>
 		</c:if>
 	<!--------------------------------------- 교수에대한 side bar --------------------------------------->
-		<c:if test="${cls eq'professor' }">
+		<c:if test="${not empty pro}">
 			<li class="menu-title">HANKUK UNIVERSITY (교수)</li>
 			<li>
 				<a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
