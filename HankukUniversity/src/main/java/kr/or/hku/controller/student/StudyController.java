@@ -17,8 +17,8 @@ public class StudyController {
 		return "student/study";
 	}
 	
-	@PostMapping(value = "student/study")
-	public int addStudy( StudyVO vo, Model model) {
-		
-	}
+//	@PostMapping(value = "student/study")
+//	public int addStudy( StudyVO vo, Model model) {
+//		
+//	}
 }
