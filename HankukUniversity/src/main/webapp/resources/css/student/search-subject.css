@@ -1,0 +1,46 @@
+@charset "UTF-8";
+.searchCon, .subCon{
+    width:95%;
+}
+.card-body{
+	color: black;
+	font-size: 18px;
+}
+.card{
+	margin-bottom:0px;
+}
+.clsfSel{
+	width: 100px;
+    height: 35px;
+    margin-right: 63px;
+    background: #fff;
+    color: #6e6e6e;
+    line-height: 1.5;
+    font-size: 13px;
+    border-radius: 0.375rem;
+    border-color: #CCCCCC;
+}
+#subName{
+	width:415px;
+	height: 35px;
+}
+.search1{
+	display: flex;
+    align-items: center;
+}
+#searchBtn{
+	padding: 0.419rem 1.163rem;
+	margin-left: 72px;
+}
+.card-header{
+	padding: 1rem 1.25rem 1.25rem;
+}
+
+.tableList{
+    width:100%;
+    text-align: center;
+}
+.tableList tr{
+	height: 55	px;
+    border: 1px solid #a0a0a0;
+}

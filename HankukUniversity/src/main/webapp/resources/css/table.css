@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+.table .thead-dark th {
+	color: #fff;
+	background-color: #6e6e6e;
+}
+
+.table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0 15px;
+	text-align: center;
+}
+
+.table thead th {
+	border: none;
+    padding: 11px;
+    font-size: 16px;
+	color: #fff;
+}
+
+.table tbody tr {
+	margin-bottom: 10px;
+	-webkit-box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);
+	-moz-box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);
+	box-shadow: 0px 5px 12px -9px rgba(0, 0, 0, 0.29);
+}
+
+.table tbody th, .table tbody td {
+	border: none;
+	padding: 15px;
+	font-size: 14px;
+	background: #fff;
+}
+
+.table tbody td .close span {
+	font-size: 12px;
+	color: #dc3545;
+}
