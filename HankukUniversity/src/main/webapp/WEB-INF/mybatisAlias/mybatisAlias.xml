@@ -16,5 +16,10 @@
 	<!-- 자주 사용하는 타입의 별칭을 셋팅 -->
 	<typeAliases>
 <!-- 	<typeAlias type="클래스명(패키지구조를 포함한)" alias="별칭명"/> -->
+    <typeAlias type="kr.or.hku.vo.StudyVO" alias="studyVo"/>
+    <typeAlias type="kr.or.hku.vo.UsersVO" alias="usersVO"/>
+    <typeAlias type="kr.or.hku.vo.StudentVO" alias="studentVO"/>
+    <typeAlias type="kr.or.hku.vo.ProfessorVO" alias="professorVO"/>
+    <typeAlias type="kr.or.hku.vo.EmployeeVO" alias="employeeVO"/>
 	</typeAliases>
 </configuration>
