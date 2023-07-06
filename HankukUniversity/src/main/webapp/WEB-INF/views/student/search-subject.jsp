@@ -110,6 +110,13 @@
 						</tbody>
 					</table>
 				</div>
+				<div class="subInfo">
+					<p>교과목 개요</p>
+					<hr>
+					<div class="">
+						내용입니다.
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
