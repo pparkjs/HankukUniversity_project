@@ -38,7 +38,7 @@ public class LoginController {
 		HttpSession session = request.getSession();
 		UsersVO userVo = loginService.loginUser(usersVo);
 		System.out.println("userVO"+usersVo.getUserClsCd());
-		model.addAttribute("cls", userVo.getUserClsCd());
+//		model.addAttribute("cls", userVo.getUserClsCd());
 		
 		//사용자식별코드가 학생일경우
 		if(userVo.getUserClsCd().equals("student")) {
@@ -70,7 +70,7 @@ public class LoginController {
 	//포탈페이지 호출 
 	@GetMapping("/portal")
 	public String goPortal() {
-		return "portal/home";
+		return "student/main";
 	}
 	
 	@GetMapping("/emp")
