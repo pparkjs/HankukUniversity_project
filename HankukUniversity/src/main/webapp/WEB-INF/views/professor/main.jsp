@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="/css/table.css">
+<link rel="stylesheet" href="/css/pro.css">
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
@@ -7,12 +9,12 @@
 			<li class="breadcrumb-item active"><a href="javascript:void(0)">Flot</a></li>
 		</ol>
     </div>
-	<div class="container-fluid">
+	<div class="container-fluid bbb">
 		<div class="card" id="card-title-1">
 			<div class="card-header border-0 pb-0 ">
 				<h5 class="card-title">메인 대쉬보드</h5>
 			</div>
-			<div class="card-body">
+			<div class="card-body aaa">
 				<p class="card-text">
 					학사관리시스템 교수 메인 대쉬보드입니다.
 				</p>
