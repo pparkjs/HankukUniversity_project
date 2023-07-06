@@ -1,0 +1,84 @@
+.form{
+    border: 1px solid black;
+    padding-right: 3%;
+    padding-left: 3%;
+    height: 320px;
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-bottom: 2%;
+    position: relative;
+}
+.form2{
+    border: 1px solid black;
+    padding-right: 3%;
+    padding-left: 3%;
+    height: 420px;
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-bottom: 2%;
+    position: relative;
+}
+
+.form3{
+    padding-left: 5%;
+}
+
+.p2 {
+    background-color: rgb(107, 18, 18);
+    color: white;
+    font-size: 20px;
+    margin-bottom: 0px;
+    margin-left: 3%;
+    margin-right: 3%;
+    height: 35px;
+}
+.modifyBtn {
+    position: absolute;
+    right: 10%;
+    bottom: 10%;
+}
+
+#tabs{
+    position: relative;
+    width: 100%;
+    height: 80%;
+    border: 1px solid black;
+}
+.tab{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(204, 203, 203);
+    color: rgb(107, 18, 18);
+}
+.tabBtn{
+    margin-top: 10px;
+}
+.input-group {
+    display: flex; /* 요소들을 가로로 배치 */
+    align-items: center; /* 요소들을 수직 가운데 정렬 */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.input-group label {
+    margin-right: 10px; /* 레이블과 입력 상자 간의 간격 설정 */
+    font-weight: bold; /* 레이블 텍스트를 굵게 표시 */
+}
+.input-group input {
+    background-color: transparent;
+}
+select {
+    width: 100px;
+    padding: .8em .5em;
+    border: 1px solid #999;
+    font-family: inherit;
+    background: url('/icons/lsi/arrow.jpg') no-repeat 95% 50%;
+    border-radius: 0px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+#btn{
+    position: absolute;
+    right: 15%;
+}
