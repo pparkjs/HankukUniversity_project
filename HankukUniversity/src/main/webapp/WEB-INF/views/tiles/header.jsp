@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="header">
 	<div class="header-content">
 		<nav class="navbar navbar-expand">
@@ -252,7 +253,7 @@
 
 					</a></li>
 					<li class="nav-item align-items-center header-border"><a
-						href="page-login.html" class="btn btn-primary btn-sm">Logout</a></li>
+						href="#" class="btn btn-primary btn-sm" onclick="logout()">Logout</a></li>
 					<li class="nav-item ps-3">
 						<div class="dropdown header-profile2">
 							<a class="nav-link" href="javascript:void(0);" role="button"
@@ -262,10 +263,20 @@
 										<img src="/images/tab/1.jpg" alt="">
 									</div>
 									<div class="header-info">
-										<h6>Thomas Fleming</h6>
-										<p>info@gmail.com</p>
+									<c:if test="${cls eq 'student'}">
+										<h6>${std.stdNm}</h6>
+										<p>${std.stdNo}</p>
+									</c:if>
+									<c:if test="${cls eq 'professor'}">
+											<h6>${pro.proNm}</h6>
+											<p>${pro.proNo}</p>
+									</c:if>		
+									<c:if test="${cls eq 'employee'}">
+											<h6>${emp.empNm}</h6>
+											<p>${emp.empNo}</p>
+									</c:if>		
 									</div>
-
+									
 								</div>
 							</a>
 							<div class="dropdown-menu dropdown-menu-end" style="">
@@ -274,8 +285,18 @@
 										<div class="products">
 											<img src="/images/tab/1.jpg" class="avatar avatar-md" alt="">
 											<div>
-												<h6>Thomas Fleming</h6>
-												<span>Web Designer</span>
+											<c:if test="${cls eq 'student'}">
+												<h6>${std.stdNm}</h6>
+												<span>${std.stdNo }</span>
+											</c:if>
+											<c:if test="${cls eq 'professor'}">
+												<h6>${pro.proNm}</h6>
+												<span>${pro.proNo }</span>
+											</c:if>
+											<c:if test="${cls eq 'employee'}">
+												<h6>${emp.empNm}</h6>
+												<span>${emp.empNo }</span>
+											</c:if>
 											</div>
 										</div>
 									</div>
@@ -361,3 +382,10 @@
 		</nav>
 	</div>
 </div>
+<script>
+	function logout(){
+		session.invalidate();
+		location.href = "/main/login";
+		
+	}
+</script>

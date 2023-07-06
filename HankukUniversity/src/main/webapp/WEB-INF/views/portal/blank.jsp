@@ -2,6 +2,6 @@
 	pageEncoding="UTF-8"%>
 <div class="content-body">
 	<div class="container-fluid">
-		<!-- 여기다 내용 작성 -->
+		<h1>교수님 페이지</h1>
 	</div>
 </div>

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,27 +29,26 @@ public class LoginController {
 	}
 	
 	@PostMapping(value="/login")
-	public String loginProcess(UsersVO usersVo,HttpServletRequest request) {
-		
-		UsersVO userVo = loginService.loginUser(usersVo);
-		System.out.println("유저:"+ usersVo.getUserNo() +"유저비번: "+usersVo.getUserPw());
+	public String loginProcess(Model model,UsersVO usersVo,HttpServletRequest request) {
 		String goPage = "";
-		
 		HttpSession session = request.getSession();
+		UsersVO userVo = loginService.loginUser(usersVo);
+		model.addAttribute("cls", userVo.getUserClsCd());
+		
+
 		if(userVo.getUserClsCd().equals("student")) {
 			StudentVO stdVo = loginService.studentUser(userVo.getUserNo());
-			System.out.println("학번:"+stdVo.getStdNo());
-			System.out.println("학과:"+stdVo.getDeptCd());
 			session.setAttribute("std", stdVo);
-			goPage = "login/testStd";
+	
+			goPage = "portal/blank";
 		}else if(userVo.getUserClsCd().equals("professor")) {
 			ProfessorVO proVo = loginService.professorUser(userVo.getUserNo());
 			session.setAttribute("pro", proVo);
-			goPage = "login/testPro";
+			goPage = "admin/blank";
 		}else{
 			EmployeeVO empVo = loginService.employeeUser(usersVo.getUserNo());
 			session.setAttribute("emp", userVo);
-			goPage = "login/testPro";
+			goPage = "professor/blank";
 		}
 		
 		return goPage;
