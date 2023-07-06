@@ -52,10 +52,10 @@
 		<tiles:insertAttribute name="sidebar"/>
 		
 		<!-- 여기는 spring 권한별로 달라져야하는 부분 -->
-		<tiles:insertAttribute name="studentContent"/>
+<%-- 		<tiles:insertAttribute name="studentContent"/> --%>
 <%-- 	 	<tiles:insertAttribute name="adminContent"/>  --%>
 <%-- 		<tiles:insertAttribute name="professorContent"/> --%>
-<%-- 		<tiles:insertAttribute name="portalContent"/>   --%>
+		<tiles:insertAttribute name="portalContent"/>  
 		
 		<!-- Content body start -->
         <!-- <div class="content-body">

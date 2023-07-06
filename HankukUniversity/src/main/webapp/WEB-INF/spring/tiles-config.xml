@@ -22,22 +22,22 @@
 		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp"/>
 	</definition>
 	
-	<!-- 직원통합시스템 대한 동적 content tiles -->
+<!--  	직원통합시스템 대한 동적 content tiles  -->
 	<definition name="admin/*" extends="system-page">
 		<put-attribute name="adminContent" value="/WEB-INF/views/admin/{1}.jsp"/>
 	</definition>
 	
-	<!-- 포털사이트에 대한 동적 content tiles -->
+<!--  	포털사이트에 대한 동적 content tiles  -->
 	<definition name="portal/*" extends="system-page">
 		<put-attribute name="portalContent" value="/WEB-INF/views/portal/{1}.jsp"/>
 	</definition>
 	
-	<!-- 교수통합시스템 대한 동적 content tiles -->
+<!-- 	교수통합시스템 대한 동적 content tiles  -->
 	<definition name="professor/*" extends="system-page">
 		<put-attribute name="professorContent" value="/WEB-INF/views/professor/{1}.jsp"/>
 	</definition>
 	
-	<!-- 학생통합시스템에 대한 동적 content tiles -->
+ 	<!-- 학생통합시스템에 대한 동적 content tiles --> 
 	<definition name="student/*" extends="system-page">
 		<put-attribute name="studentContent" value="/WEB-INF/views/student/{1}.jsp"/>
 	</definition>
