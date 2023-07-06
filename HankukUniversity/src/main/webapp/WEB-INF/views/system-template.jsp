@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,7 +53,7 @@
 		<tiles:insertAttribute name="sidebar"/>
 		
 		<!-- 여기는 spring 권한별로 달라져야하는 부분 -->
-		<tiles:insertAttribute name="studentContent"/>
+<%-- 		<tiles:insertAttribute name="studentContent"/> --%>
 <%-- 	 	<tiles:insertAttribute name="adminContent"/>  --%>
 <%-- 		<tiles:insertAttribute name="professorContent"/> --%>
 <%-- 		<tiles:insertAttribute name="portalContent"/>   --%>
