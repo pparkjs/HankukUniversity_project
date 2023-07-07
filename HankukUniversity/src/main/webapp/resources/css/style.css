@@ -10086,14 +10086,15 @@ svg.pulse-svg {
       .header-right .search-area {
         display: none; } }
   .header-right .header-media {
-    width: 1.875rem;
-    height: 1.875rem;
-    margin-right: 7px; }
+    width: 2.375rem;
+    height: 2.375rem;
+    margin-right: 7px;
+    margin-bottom: 3px; }
     .header-right .header-media img {
       width: 100%;
       border-radius: 100%; }
   .header-right .header-info h6, .header-right .header-info .h6 {
-    font-size: 0.813rem;
+    font-size: 1.013rem;
     font-weight: 600;
     margin-bottom: 4px;
     line-height: 1; }
@@ -10101,7 +10102,7 @@ svg.pulse-svg {
       .header-right .header-info h6, .header-right .header-info .h6 {
         margin-bottom: 4px; } }
   .header-right .header-info p {
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 400;
     line-height: 1;
     margin-bottom: 4px; }
@@ -12812,7 +12813,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
         padding-top: .5rem;
         padding-bottom: .5rem;
         position: relative;
-        font-size: 0.813rem;
+        font-size: 1.013rem;
         padding-left: 2.5rem;
         -webkit-transition: all 0.5s;
         -ms-transition: all 0.5s;
@@ -13207,7 +13208,7 @@ The smaller device rules always should write below the bigger device rules
 Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Component
 */
 [data-sidebar-style="full"][data-layout="vertical"] .deznav .metismenu > li > a {
-  font-size: 0.813rem;
+  font-size: 1.213rem;
   padding: 0.75rem 1.5rem;
   margin: 0px;
   -webkit-transition: all 0.5s;

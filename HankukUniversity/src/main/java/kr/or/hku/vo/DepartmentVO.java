@@ -8,11 +8,11 @@ import lombok.ToString;
 @Setter
 @ToString
 public class DepartmentVO {
-	private String deptCd   ;
-	private String colCd    ;
-	private String flctNo   ;
-	private String deptNm   ;
+	private String deptCd;
+	private String colCd;
+	private String flctNo;
+	private String deptNm;
 	private String deptTelno;
-	private String deptOtl  ;
-	private String deptGoal ;
+	private String deptOtl;
+	private String deptGoal;
 }
