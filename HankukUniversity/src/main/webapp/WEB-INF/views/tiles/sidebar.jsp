@@ -295,7 +295,7 @@
 					<span class="nav-text">강의 관리</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">강의 개설신청</a></li>
+					<li><a href="/lecture/open">강의 개설신청</a></li>
 					<li><a href="#">휴강 신청</a></li>
 				</ul>
 			</li>
