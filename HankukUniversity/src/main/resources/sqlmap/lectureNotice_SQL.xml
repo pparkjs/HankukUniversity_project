@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.hku.mapper.professor.LectureNoticeMapper">
+
+<select id="boardList" resultType="lectureNoticeVO">
+	select * from lecture_notice
+</select>
+
+<select id="boardDetail" parameterType="int" resultType="lectureNoticeVO">
+	select * from lecture_notice where lecnt_no = #{lecntNo}
+</select>
+
+<insert id="insertBoard" parameterType="lectureNoticeVO">
+	insert into lecture_notice (
+			lecnt_no,
+			lecnt_ttl,
+			lecnt_cn, 
+			lecnt_regdate, 
+			lecnt_writer,
+			lecnt_read_cnt,
+			atch_file_no
+		  )
+	values(
+			seq_lectureNotice.nextval,
+		    #{lecntTtl},
+		    #{lecntCn},
+		    sysdate,
+		    #{lecntWriter},	 
+			0,
+			null
+		  )
+</insert>
+
+<update id="updateBoard" parameterType="lectureNoticeVO">
+	update lecture_notice 
+	set 
+		lecnt_no = #{lecntNo}, 
+   <!-- lecap_no = #{lecapNo}   과목신청번호 --> 
+		lecnt_ttl = #{lecntTtl}, 
+		lecnt_cn = #{lecntCn}, 
+		lecnt_regdate = sysdate, 
+		lecnt_writer =	#{lecntWriter}, 
+		lecnt_read_cnt = 0, 
+		atch_file_no = null
+</update>
+
+<delete id="deleteBoard" parameterType="int">
+	delete from lecture_notice where lecnt_no = #{lecntNo}
+</delete>
+
+ 
+</mapper>
