@@ -1,9 +1,22 @@
 @charset "UTF-8";
 
+.card{
+	margin-bottom:0px;
+}
 .table-wrap{
 	overflow: scroll;
 }
 
 .dept-body{
 	padding-top: 0px;
+}
+.custom-form {
+	display: flex;
+    justify-content: flex-end;
+}
+.deptDiv{
+	margin-top: -10px;
+}
+.table thead tr th {
+	padding: 15px;
 }
