@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.mapper.student.CourseInfoMapper">
+ <!-- 검색을위한 동적 쿼리 -->
+	<sql id="subSearch">
+		<if test="com_cd_nm != null or com_cd_nm != ''">
+			and (com_cd_nm like '%'||#{com_cd_nm}||'%')
+		</if>
+		<if test="dept_nm != null or dept_nm != ''">
+			and (dept_nm like '%'||#{dept_nm}||'%')
+		</if>
+		<if test="sub_grade != null or sub_grade != ''">
+			and (sub_grade like '%'||#{sub_grade}||'%')
+		</if>
+		<if test="sub_nm != null or sub_nm != ''">
+			and (sub_nm like '%'||#{sub_nm}||'%')
+		</if>
+ 	</sql>
+ 
+ <!-- 교과목 가져오기 -->
+ 	<select id="getList" resultType="subjectVO" parameterType="map">
+ 		select A.SUB_NO, C.DEPT_NM AS DEPT_CD, A.SUB_NM, A.SUB_GRADE, A.SUB_HOUR, A.SUB_CRD, B.com_cd_nm AS CRS_CLASSF_CD, A.SUB_OTL
+		from subject A, com_code B, department C
+		where 1=1
+		and B.com_cd = A.CRS_CLASSF_CD
+		and A.DEPT_CD = C.DEPT_CD
+		<include refid="subSearch"/>
+ 	</select>
+ 	
+ 	<!-- 학과가져오기 -->
+ 	<select id="getAllDept" resultType="departmentVO">
+ 		select * from department
+ 	</select>
+ 	
+ </mapper>

@@ -1,0 +1,104 @@
+@charset "UTF-8";
+#tb{
+/* 	border :1px solid black; */
+	width : 50%;
+	height : 500px;
+/* 	overflow: scroll; */
+}
+
+ .table thead{
+ 
+ 	background-color: #6e6e6e;
+ }
+ 
+ h5{
+ 	font-weight: bold;
+ 
+ }
+ 
+ .table{
+/* 	 width:50%; */
+	 heigth : 50%;
+	 overflow: scroll;
+	 margin : 0 auto;
+	 
+ }
+ 
+ .txt{
+ 	font-size: 1.2em;
+ 	color : #800000;
+ 	font-weight: bold;
+ 
+ }
+ 
+ .tbtr:hover{
+ 	cursor: pointer;
+ 	background-color: #b0b0b0;
+ 	color : white;
+ 
+ }
+ 
+  .selected {
+    background-color: #b0b0b0;
+    color : white;
+  }
+  .aaa{
+  	height : 40px;
+  }
+  .bbb{
+  	height : 50%
+  }
+  .card-body{
+  	align-items: center;
+  	height : 450px;
+  	overflow: scroll;
+  
+  }
+  
+ .card{
+   margin-bottom:0px;
+}
+.table-wrap{
+   overflow: scroll;
+}
+
+.dept-body{
+   padding-top: 0px;
+}
+.custom-form {
+   display: flex;
+    justify-content: flex-end;
+}
+.deptDiv{
+   margin-top: -10px;
+}
+.table thead tr th {
+   padding: 15px;
+}
+
+.time{
+	width : 500px;
+	margin : 0 auto;
+}
+
+.selectCustom{
+	width : 40%;	
+	height: 30px;
+	border-radius: 5px;
+	border : none;
+	box-shadow: 1px 1px 1px 1px gray;
+	text-align: center;
+	font-weight: bold;
+	color : #800000;
+	margin-right: 20px;
+}
+
+.selectCustom option{
+	font-weight: bold;
+	color : #800000;
+}
+
+
+  }
+  
+  

@@ -46,22 +46,22 @@
 	</div>
 	<div class="container-fluid subCon">
 		<div class="card" id="card-title-1">
-			<div class="card-header border-0 pb-0 ">
-				<h5 class="card-title" style="color: maroon;  font-weight: 900;}">학점이수현황</h5>
-			</div>
-			<hr>
 			<div class="card-body" style="padding-top: 0px;">
 				<div class="table-wrap">
 					<table class="table">
 						<thead class="thead-dark">
 							<tr>
-								<th style="width:200px;">과목코드</th>
-								<th style="width:550px;">교과목명</th>
-								<th style="width:200px;">이수구분</th>
-								<th style="width:80px;">학년</th>
-								<th style="width:80px;">학점</th>
-								<th style="width:80px;">시수</th>
-								<th style="width:300px;">학과</th>
+								<th style="width: 130px;">과목코드</th>
+								<th style="width: 330px;">교과목명</th>
+								<th style="width: 40px;">이수구분</th>
+								<th style="width: 130px">담당교수</th>
+								<th style="width: 15px;">학년</th>
+								<th style="width: 15px;">학점</th>
+								<th style="width: 15px;">시수</th>
+								<th style="width: 40px;">강의시간</th>
+								<th style="width: 250px;">학과</th>
+								<th style="width: 20px;">정원</th>
+								<th style="width: 20px;">잔여</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -90,7 +90,19 @@ $(function(){
 	
 	// 조회버튼 클릭시 동작
 	searchBtn.on("click", function(){
-		subList();
+		var clsfSel = $(".clsfSel").val();
+		var deptSel = $(".deptSel").val();
+		var gradeSel = $(".gradeSel").val();
+		var subNm = $("#subName").val();
+		
+		var selData = {
+			"com_cd_nm":clsfSel,
+			"dept_nm":deptSel,
+			"sub_grade":gradeSel,
+			"sub_nm":subNm
+		}
+		
+		subList(selData);
 	})
 	
 	$(document).on("click","tr", function(){
@@ -102,20 +114,8 @@ $(function(){
 })
 
 // 과목 리스트 가져오는 함수
-function subList(){
+function subList(selData){
 	var tbody = $("tbody");
-	var clsfSel = $(".clsfSel").val();
-	var deptSel = $(".deptSel").val();
-	var gradeSel = $(".gradeSel").val();
-	var subNm = $("#subName").val();
-	
-	var selData = {
-		"com_cd_nm":clsfSel,
-		"dept_nm":deptSel,
-		"sub_grade":gradeSel,
-		"sub_nm":subNm
-	}
-	
 	$.ajax({
 		type:"get",
 		data:selData,
