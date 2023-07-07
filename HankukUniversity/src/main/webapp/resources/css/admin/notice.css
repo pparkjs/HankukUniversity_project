@@ -1,5 +1,21 @@
 @charset "UTF-8";
-.noticeSearch{
-	width: 20%;
-	margin-left: 80%;
+.custom-form {
+   display: flex;
+   justify-content: flex-end;
+}
+.noticeTr:hover{
+	background-color: rgba(10,10,10,0.1);
+}
+#deleteBtn{
+	display: none;
+}
+.detailInfo{
+	border-bottom: 2px solid gray;
+	border-top: 2px solid gray;
+}
+#detailDiv{
+	display: none;
+}
+.previewFile span:hover {
+	color: red;
 }

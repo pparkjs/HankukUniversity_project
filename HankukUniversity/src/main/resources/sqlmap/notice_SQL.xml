@@ -4,6 +4,13 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="kr.or.hku.mapper.admin.AdminNoticeMapper">
  
+ 	<update id="incrementNotice" parameterType="int">
+ 		update notice
+ 		set
+ 			NOTICE_READ_CNT = NOTICE_READ_CNT + 1
+ 		where NOTICE_NO = #{noticeNo} 
+ 	</update>
+ 
  	<insert id="addNotice" parameterType="noticeVO">
  		insert into notice(
  			NOTICE_NO,
@@ -30,6 +37,11 @@
  		select * from notice
  		where 1=1
  		order by NOTICE_NO desc
+ 	</select>
+ 	
+ 	<select id="getNoticeOne" parameterType="int" resultType="noticeVO">
+ 		select * from notice
+ 		where NOTICE_NO = #{noticeNo}
  	</select>
  	
  </mapper>

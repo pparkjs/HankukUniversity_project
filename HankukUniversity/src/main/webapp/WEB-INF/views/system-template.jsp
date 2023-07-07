@@ -25,7 +25,10 @@
 	<link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
 	<link href="/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
-	
+    <!-- jquery 추가 -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+	<!-- ckEditor추가 -->
+	<script src="${pageContext.request.contextPath }/resources/vendor/ckeditor/ckeditor.js"></script>
 </head>
 <body>
 	<!-- Preloader start(사이트 이동할 때 로딩되는 것 같은 부분) -->

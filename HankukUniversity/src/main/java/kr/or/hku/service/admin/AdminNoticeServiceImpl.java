@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.hku.ServiceResult;
 import kr.or.hku.mapper.admin.AdminNoticeMapper;
 import kr.or.hku.vo.NoticeVO;
 
@@ -19,4 +20,22 @@ public class AdminNoticeServiceImpl implements IAdminNoticeService{
 		return noticeMapper.noticeList();
 	}
 	
+	@Override
+	public ServiceResult addNotice(NoticeVO noticeVO) {
+		ServiceResult res = null;
+		int cnt = noticeMapper.addNotice(noticeVO);
+		if (cnt > 0) {
+			res = ServiceResult.OK;
+		}else {
+			res = ServiceResult.FAILED;
+		}
+		return res;
+	}
+	
+	
+	@Override
+	public NoticeVO getNoticeOne(int noticeNo) {
+		noticeMapper.incrementNotice(noticeNo);
+		return noticeMapper.getNoticeOne(noticeNo);
+	}
 }
