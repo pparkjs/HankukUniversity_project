@@ -4,21 +4,38 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="kr.or.hku.mapper.student.StudyMapper">
+ 
 	<!-- 스터디 생성 -->
-<!-- 	<insert id="addStudy"> -->
-<!-- 	</insert> -->
+	<insert id="addStudy" parameterType="studyVo">
+		insert into studygroup (study_no, std_no, study_name, study_regdate, study_cpcy, study_intro)
+			values(seq_study_no.nextval , #{stdNo}, #{studyName}, sysdate , #{studyCpcy}, #{studyIntro})
+	</insert>
 
 	<!-- 스터디 가입신청 -->
 <!-- 	<insert id="intoStudy"> -->
 <!-- 	</insert> -->
-	
-	<!-- 스터디리스트 -->
-<!-- 	<select id="studyList"> -->
+
+	<!-- 가입신청 대기중인 리스트 -->
+<!-- 	<select id="applicationsList" resultType="studyVo"> -->
 <!-- 	</select> -->
- 	
+	<!-- 스터디리스트 -->
+	<select id="studyList" resultType="studyVo">
+		select * from studygroup order by study_no desc
+	</select>
+	
+	<!-- 스터디멤버 조회 -->
+	<select id="studyMem" resultType="studyVo">
+		select b.std_no, study_no, b.std_nm, study_role, b.dept_cd, d.dept_nm
+			from studymember a
+			join student b on b.std_no = a.std_no
+			join department d on d.dept_cd = b.dept_cd
+		where study_no = ${studyNo}
+	</select>
+
  	<!-- 스터디 select one -->
-<!--  	<select id="study"> -->
-<!--  	</select> -->
+ 	<select id="studyRoom" resultType="studyVo">
+ 		select * from studygroup where study_no = #{studyNo}
+ 	</select>
  	
  	<!-- 스터디 삭제 -->
 <!--  	<delete id="delStudy"> -->

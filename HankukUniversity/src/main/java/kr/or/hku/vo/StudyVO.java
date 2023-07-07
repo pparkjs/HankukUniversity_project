@@ -45,4 +45,9 @@ public class StudyVO {
 	public String calBgngDt; //시작날짜
 	public String calEndDt; // 끝 날짜
 	public String calColor; // 색
+	
+	// 조인시 필요
+	public String stdNm; // 학생이름	
+	public String deptCd; //학과코드
+	public String deptNm; // 학과명
 }

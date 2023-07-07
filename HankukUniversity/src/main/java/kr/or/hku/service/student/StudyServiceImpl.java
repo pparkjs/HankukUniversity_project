@@ -29,6 +29,11 @@ public class StudyServiceImpl implements StudyService{
 	public List<StudyVO> studyMem(int studyNo) {
 		return mapper.studyMem(studyNo);
 	}
+	
+//	@Override
+//	public List<StudyVO> applicationsList(int studyNo) {
+//		return mapper.applicationsList(studyNo);
+//	}
 
 	@Override
 	public void addStudy(StudyVO studyVo) {
@@ -54,4 +59,5 @@ public class StudyServiceImpl implements StudyService{
 	public int exitStudy(int stdNo) {
 		return 0;
 	}
+
 }

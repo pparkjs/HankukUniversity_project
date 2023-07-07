@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link rel="stylesheet" href="/css/table.css">
 <style>
+
 table, th, td {
    border: 1px solid black;
    border-collapse: collapse;
@@ -12,7 +14,8 @@ th, td {
    padding: 20px;
 }
 th{
-   text-align: center;
+  	text-align: center;
+	font-size: 1.6em;
 }
 	</style>
 		<meta charset="UTF-8">
@@ -55,14 +58,10 @@ th{
 							<div class="tab-content">
 								<div class="tab-pane fade show active" id="home1" role="tabpanel">
 									<div class="pt-4">
-										<table style="width: 90%">
-											<thead>
+										<table style="width: 90%" class="table">
+											<thead class="thead-dark">
 												<tr>
-													<td> </td>
-													<td>이름 </td>
-													<td>학과 </td>
-													<td>학번 </td>
-													<td>학년 </td>
+													<th></th><th>이름 </th><th>학과 </th><th>학번 </th><th>학년 </th>
 												</tr>
 											</thead>
 											<tbody>
@@ -71,22 +70,8 @@ th{
 													<td>홍길동 </td>
 													<td>컴공 </td>
 													<td>202203001 </td>
-													<td>4 </td>
 												</tr>
-												<tr>
-													<td>2 </td>
-													<td>홍길동 </td>
-													<td>컴공 </td>
-													<td>202203001 </td>
-													<td>4 </td>
-												</tr>
-												<tr>
-													<td>3 </td>
-													<td>홍길동 </td>
-													<td>컴공 </td>
-													<td>202203001 </td>
-													<td>4 </td>
-												</tr>
+												
 											</tbody>
 										</table>
 									</div>
@@ -95,11 +80,23 @@ th{
 									<div class="pt-4">
 										<div>
 											<h3>스터디 소개</h3>
-											<p>
-												asdsadsadsadsadsaadds
-											</p>
+											<c:choose>
+												<c:when test="${empty study }">
+													<p>스터디 소개글이 존재하지 않습니다.</p>
+												</c:when>
+												<c:otherwise>
+													<p> ${study.studyIntro }</p>																						
+												</c:otherwise>
+											</c:choose>
+											<br>
 										</div>
-										<table style="width: 90%">
+										<p>스터디원</p>
+										<table style="width: 90%" class="table">
+										<thead class="thead-dark">
+											<tr>
+										    	<th>이름</th><th>학번</th><th>학과</th>
+										    </tr>
+										</thead>
 										  <c:choose>
 										    <c:when test="${empty studyMem }">
 										      <tr>
@@ -107,19 +104,12 @@ th{
 										      </tr>
 										    </c:when>
 										    <c:otherwise>
-										      <thead>
-										        <tr>
-										          <td></td>
-										          <td>이름</td>
-										          <td>학과</td>
-										          <td>학번</td>
-										          <td>학년</td>
-										        </tr>
-										      </thead>
 										      <tbody>
 										        <c:forEach items="${studyMem }" var="studyMem">
 										          <tr>
-										            <td colspan="5">${studyMem.stdNo}</td>
+										            <td>${studyMem.stdNm}</td>
+										            <td>${studyMem.stdNo}</td>
+										            <td>${studyMem.deptNm}</td>
 										          </tr>
 										        </c:forEach>
 										      </tbody>
@@ -129,87 +119,40 @@ th{
 									</div>
 								</div>
 								<div class="tab-pane fade" id="contact1">
+									<div class="cal">
+
+									</div>
 									<div class="pt-4">
 										<table style="width:70%">
 											<tr>
-												<th> </th>
-												<th>월</th>
-												<th>화</th>
-												<th>수</th>
-												<th>목</th>
-												<th>금</th>
-											</tr>
-												<tr>
-												<th>1교시</th>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-											</tr>
-												<tr>
-												<th>2교시</th>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-											</tr>
-												<tr>
-												<th>3교시</th>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
+												<th></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th>
 											</tr>
 											<tr>
-												<th>4교시</th>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
+												<th>1교시</th><td></td><td></td><td></td><td></td><td></td>
 											</tr>
 											<tr>
-												<th>5교시</th>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
+												<th>2교시</th><td></td><td></td><td></td><td></td><td></td>
 											</tr>
 											<tr>
-												<th>6교시</th>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
+												<th>3교시</th><td></td><td></td><td></td><td></td><td></td>
 											</tr>
 											<tr>
-												<th>7교시</th>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
+												<th>4교시</th><td></td><td></td><td></td><td></td><td></td>
 											</tr>
 											<tr>
-												<th>8교시</th>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
+												<th>5교시</th><td></td><td></td><td></td><td></td><td></td>
 											</tr>
 											<tr>
-												<th>9교시</th>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
+												<th>6교시</th><td></td><td></td><td></td><td></td><td></td>
+											</tr>
+											<tr>
+												<th>7교시</th><td></td><td></td><td></td><td></td><td></td>
+											</tr>
+											<tr>
+												<th>8교시</th><td></td><td></td><td></td><td></td><td></td>
+											</tr>
+											<tr>
+												<th>9교시</th><td></td><td></td><td></td><td></td><td></td>
 											</tr>
 									</table>
 									</div>
@@ -226,3 +169,6 @@ th{
 				</div>
 			</div>
 		</div>
+<script>
+
+</script>

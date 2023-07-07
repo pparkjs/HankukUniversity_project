@@ -12,6 +12,8 @@ public interface StudyMapper {
 	public StudyVO studyRoom(int studyNo);
 	// 스터디 멤버 조회
 	public List<StudyVO> studyMem(int studyNo);
+	// 가입신청 대기중인 멤버들
+//	public List<StudyVO> applicationsList(int studyNo);
 	// 스터디 생성
 	public void addStudy(StudyVO studyVo);
 	// 스터디 삭제

@@ -66,8 +66,12 @@ public class StudyController {
 		StudyVO study = service.studyRoom(studyNo);
 		// 해당 스터디룸에 속한 스터디 멤버
 		List<StudyVO> studyMem = service.studyMem(studyNo);
+		// 가입신청 대기중인 멤버목록
+//		List<StudyVO> appli = service.applicationslist(studyNo);
 		model.addAttribute("study", study);
 		model.addAttribute("studyMem", studyMem);
+//		model.addAttribute("appli", appli);
 		return "student/studyRoom";
 	}
+	
 }
