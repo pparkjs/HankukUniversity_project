@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="deznav">
 	<div class="deznav-scroll">
 	<!--  각 액터별 side bar도 권한에 따라 배분해야함! -->
 		<ul class="metismenu" id="menu">
-		
+		<c:if test="${not empty std }">
 	<!--------------------------------------- 학생에대한 side bar --------------------------------------->
 
 			<li class="menu-title">HANKUK UNIVERSITY (학생)</li>
@@ -177,7 +178,8 @@
 					<li><a href="#">증명서 발급</a></li>
 				</ul>
 			</li>
-			
+	</c:if>
+	<c:if test="${not empty emp}">		
 	<!--------------------------------------- 교직원에대한 side bar --------------------------------------->
 			
 			<li class="menu-title">HANKUK UNIVERSITY (교직원)</li>
@@ -192,7 +194,7 @@
 					<span class="nav-text">학사관리</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">학과 관리</a></li>
+					<li><a href="/hku/admin/dept-administration">학과 관리</a></li>
 					<li><a href="#">학적 관리</a></li>
 					<li><a href="#">교과목 관리</a></li>
 					<li><a href="#">시설관리</a></li>
@@ -230,7 +232,6 @@
 				<ul aria-expanded="false">
 					<li><a href="#">개설신청 관리</a></li>
 					<li><a href="#">휴강신청 관리</a></li>
-					<li><a href="#">교과목 관리</a></li>
 				</ul>
 			</li>
 			
@@ -278,9 +279,9 @@
 					<span class="nav-text">총지표</span>
 				</a>
 			</li>
-			
+		</c:if>
 	<!--------------------------------------- 교수에대한 side bar --------------------------------------->
-			
+		<c:if test="${not empty pro}">
 			<li class="menu-title">HANKUK UNIVERSITY (교수)</li>
 			<li>
 				<a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
@@ -324,7 +325,7 @@
 					<li><a href="#">학생상담 신청 내역</a></li>
 				</ul>
 			</li>
-			
+			</c:if>
 		</ul>
 	</div>
 </div>

@@ -21,5 +21,7 @@
     <typeAlias type="kr.or.hku.vo.StudentVO" alias="studentVO"/>
     <typeAlias type="kr.or.hku.vo.ProfessorVO" alias="professorVO"/>
     <typeAlias type="kr.or.hku.vo.EmployeeVO" alias="employeeVO"/>
+    <typeAlias type="kr.or.hku.vo.SubjectVO" alias="subjectVO"/> 
+    <typeAlias type="kr.or.hku.vo.DepartmentVO" alias="departmentVO"/>
 	</typeAliases>
 </configuration>

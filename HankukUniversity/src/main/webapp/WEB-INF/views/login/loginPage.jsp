@@ -217,7 +217,7 @@
                 <label for='idtStd'>&nbsp;학생&nbsp;&nbsp;&nbsp;&nbsp;</label>
                 <input type="radio" name="userClsCd" id="idtPro" value='professor' />
                 <label for='idtPro'>&nbsp;교수&nbsp;&nbsp;&nbsp;&nbsp; </label>
-                <input type="radio" name="userClsCd" id="idtEmp" value='employee' />
+                <input type="radio" name="userClsCd" id="idtEmp" value='admin' />
                 <label for='idtEmp'>&nbsp;직원</label>
             </td>
         </tr>
