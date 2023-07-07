@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="/css/student/search-subject.css">
 <link rel="stylesheet" href="/css/table.css">
+<link rel="stylesheet" href="/css/student/search-subject.css">
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
@@ -61,59 +61,14 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>COM042</th>
-								<td>마이크로프로세스</td>
-								<td>전선</td>
-								<td>2</td>
-								<td>3</td>
-								<td>3</td>
-								<td>컴퓨터공학과</td>
-							</tr>
-							<tr>
-								<td>COM042</th>
-								<td>마이크로프로세스</td>
-								<td>전선</td>
-								<td>2</td>
-								<td>3</td>
-								<td>3</td>
-								<td>컴퓨터공학과</td>
-
-							</tr>
-							<tr>
-								<td>COM042</th>
-								<td>마이크로프로세스</td>
-								<td>전선</td>
-								<td>2</td>
-								<td>3</td>
-								<td>3</td>
-								<td>컴퓨터공학과</td>
-							</tr>
-							<tr>
-								<td>COM042</th>
-								<td>마이크로프로세스</td>
-								<td>전선</td>
-								<td>2</td>
-								<td>3</td>
-								<td>3</td>
-								<td>컴퓨터공학과</td>
-							</tr>
-							<tr>
-								<td>COM042</th>
-								<td>마이크로프로세스</td>
-								<td>전선</td>
-								<td>2</td>
-								<td>3</td>
-								<td>3</td>
-								<td>컴퓨터공학과</td>
-							</tr>
+							<!-- 동적추가 -->
 						</tbody>
 					</table>
 				</div>
 				<div class="subInfo">
 					<p>교과목 개요</p>
 					<hr>
-					<div class="">
+					<div class="otlContent">
 						내용입니다.
 					</div>
 				</div>
@@ -121,3 +76,42 @@
 		</div>
 	</div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script>
+$(function(){
+	subList();
+
+	$(document).on("click","tr", function(){
+		var subOtl = $(this).find('.otl');
+		$(".otlContent").html(subOtl.text());
+		
+	})
+})
+
+function subList(){
+	var tbody = $("tbody");
+	$.ajax({
+		type:"get",
+		url : "/hku/student/sub-list",
+		dataType : "json",
+		success : function(res){
+			console.log(res)
+
+			data = '';
+			for(var i = 0; i < res.length; i++){
+				data += `<tr>
+							<td id="\${res[i].subNo}">\${res[i].subNo}</th>
+							<td id="\${res[i].subNo}">\${res[i].subNm}</td>
+							<td id="\${res[i].subNo}">\${res[i].crsClassfCd}</td>
+							<td id="\${res[i].subNo}">\${res[i].subGrade}</td>
+							<td id="\${res[i].subNo}">\${res[i].subCrd}</td>
+							<td id="\${res[i].subNo}">\${res[i].subHour}</td>
+							<td id="\${res[i].subNo}">\${res[i].deptCd}</td>
+							<td id="\${res[i].subNo}" class="otl" style="display:none;">\${res[i].subOtl}</td>
+						</tr>`;
+			}
+			tbody.html(data);
+		}
+	})
+}
+</script>
