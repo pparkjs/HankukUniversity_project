@@ -1,6 +1,7 @@
 @charset "UTF-8";
 .searchCon, .subCon{
     width:95%;
+    margin-top: -15px;
 }
 .card-body{
 	color: black;
@@ -9,7 +10,7 @@
 .card{
 	margin-bottom:0px;
 }
-.clsfSel{
+.clsfSel, .deptSel, .gradeSel{
 	width: 100px;
     height: 35px;
     margin-right: 63px;
@@ -70,4 +71,7 @@
 .thead-dark{
       position: sticky;
       top: 0px;
+}
+.act{
+	background-color: #6e6e6e26;
 }

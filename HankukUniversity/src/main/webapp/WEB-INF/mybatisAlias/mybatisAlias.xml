@@ -23,5 +23,17 @@
     <typeAlias type="kr.or.hku.vo.EmployeeVO" alias="employeeVO"/>
     <typeAlias type="kr.or.hku.vo.SubjectVO" alias="subjectVO"/> 
     <typeAlias type="kr.or.hku.vo.DepartmentVO" alias="departmentVO"/>
+    <typeAlias type="kr.or.hku.vo.CommonVO" alias="commonVO"/>
+    <!-- 정수칸  밑에서만 작성 -->
+    
+    <!-- 지현칸 밑에서만 작성 -->
+    
+    <!-- 재균칸 밑에서만 작성 -->  
+    
+    <!-- 영우칸 밑에서만 작성-->
+    
+    <!-- 성희칸 밑에서만 작성-->
+    
+    <!-- 성일칸 밑에서만 작성 -->
 	</typeAliases>
 </configuration>
