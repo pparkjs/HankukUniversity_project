@@ -15,7 +15,7 @@
 .table thead th {
 	border: none;
     padding: 11px;
-    font-size: 16px;
+    font-size: 20px;
 	color: #fff;
 }
 
@@ -24,13 +24,18 @@
 	-webkit-box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);
 	-moz-box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.29);
 	box-shadow: 0px 5px 12px -9px rgba(0, 0, 0, 0.29);
+	background: #fff;
+}
+
+.table tbody tr:hover{
+	background:#6e6e6e26;
 }
 
 .table tbody th, .table tbody td {
 	border: none;
 	padding: 15px;
-	font-size: 14px;
-	background: #fff;
+	font-size: 18px;
+	color:black;
 }
 
 .table tbody td .close span {

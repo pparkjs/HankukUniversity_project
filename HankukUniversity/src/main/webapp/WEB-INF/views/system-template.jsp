@@ -63,6 +63,7 @@
 		<c:if test="${not empty pro }">
 		<tiles:insertAttribute name="professorContent"/>
 		</c:if>
+
 		
 		<!-- Content body start -->
         <!-- <div class="content-body">

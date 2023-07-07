@@ -44,3 +44,30 @@
 	height: 55	px;
     border: 1px solid #a0a0a0;
 }
+.subInfo{
+	margin-top: 10px;
+    width : 100%;
+    height : 300px;
+    border: 1px solid #404040;
+}
+.subInfo p{
+	font-size: 1rem;
+    font-weight: 500;
+    color: maroon;
+    text-transform: capitalize;
+    margin-top: 17px;
+    margin-left: 17px;
+}
+.subInfo div{
+	margin-left: 17px;
+    margin-right: 17px;
+    color: #404040;
+}
+.table-wrap{
+	overflow: scroll;
+    height: 407px;
+}
+.thead-dark{
+      position: sticky;
+      top: 0px;
+}

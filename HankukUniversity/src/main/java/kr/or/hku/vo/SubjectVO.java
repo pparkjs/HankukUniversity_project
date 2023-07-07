@@ -13,7 +13,7 @@ public class SubjectVO {
 	private String subNm;
 	private int subGrade;
 	private int subHour;
-	private int usbCrd;
+	private int subCrd;
 	private String crsClassfCd;
 	private String subOtl;
 }
