@@ -1,5 +1,9 @@
 package kr.or.hku.vo;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,4 +20,5 @@ public class NoticeVO {
 	private String noticeReadCnt;
 	private String noticeClsf;
 	private String atchFileNo;
+	private List<MultipartFile> previewFile;
 }

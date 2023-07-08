@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:forEach items="${commonData }" var="cmData">
+	<c:if test="${cmData.comCdNm eq '학사'}">
+		<c:set var="noticeClsf" value="${cmData.comCd}"/>
+	</c:if>
+</c:forEach>
 <link rel="stylesheet" href="/css/admin/notice.css">
 <div class="content-body">
 	<div class="page-titles">
@@ -77,6 +82,9 @@
 </div>
 <script type="text/javascript">
 	const myName = "${emp.empName}";
+	var noticeClsf = "${noticeClsf}";
+	var formData = new FormData();
+	console.log(noticeClsf);
 	$(function(){
 		CKEDITOR.replace("noticeCn",{
 			footnotesPrefix : "a"
@@ -96,6 +104,7 @@
 			if(this.innerText == "등록"){
 				let title = noticeTtl.val();
 				let content = CKEDITOR.instances.noticeCn.getData();
+
 				
 				if(title == null || title == ""){
 					alert("제목을 입력해주세요");
@@ -106,30 +115,38 @@
 					alert("내용을 입력해주세요");
 					return false;
 				}
-				console.log(myName);
-				var addData = {
-					noticeTtl : title,
-					noticeCn : content,
-					noticeWrtrNm : myName
-				};
+// 				console.log(myName);
+// 				var addData = {
+// 					noticeTtl : title,
+// 					noticeCn : content,
+// 					noticeWrtrNm : myName
+// 				};
+
+				formData.append("noticeTtl", title);
+				formData.append("noticeCn",content);
+				formData.append("noticeWrtrNm", myName);
+				formData.append("noticeClsf", noticeClsf);
+				
+				console.log(formData);
+// 				return false;
+
 				var xhr = new XMLHttpRequest();
-				xhr.open("post", "/hankuk/admin/addNotice", true)
-				xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+				xhr.open("post", "/hankuk/admin/addNotice", true);
 				xhr.onreadystatechange = function() {
 					if(xhr.readyState == 4 && xhr.status == 200) {
 						let res = xhr.responseText;
-						if (res === "success") {
-							alert("정상적으로 글이 등록 되었습니다.");	
-						}else{
-							alert("서버에러 다시 시도해주세요.");
-						}
-	// 					console.log();
-						addModal.modal('hide');
-						// 새로운 글추가 원래 이렇게 하면안됨 나중에 수정
-						noticeList();
+						console.log(res);
+						// if (res === "success") {
+						// 	alert("정상적으로 글이 등록 되었습니다.");	
+						// }else{
+						// 	alert("서버에러 다시 시도해주세요.");
+						// }
+						// addModal.modal('hide');
+						// // 새로운 글추가 원래 이렇게 하면안됨 나중에 수정
+						// noticeList();
 					}
 				};
-				xhr.send(JSON.stringify(addData));
+				xhr.send(formData);
 			}else if(this.innerText == "수정"){ // 수정 버튼 눌럿 을떄
 				console.log("수정 버튼 클릭");
 				$('#deleteBtn').text("취소");
@@ -237,7 +254,7 @@
 				previewFile.innerHTML = "";
 				return false;
 			}
-			let formData = new FormData();
+			
 			for(let i=0; i<files.length; i++){
 				formData.append("preivewFiles",files[i]);
 			}

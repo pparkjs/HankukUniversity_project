@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.hku.ServiceResult;
 import kr.or.hku.service.admin.IAdminNoticeService;
+import kr.or.hku.service.common.ICommonService;
+import kr.or.hku.vo.CommonVO;
 import kr.or.hku.vo.NoticeVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,9 +28,13 @@ public class AdminNoticeController {
 	@Autowired
 	private IAdminNoticeService noticeService;
 	
+	@Autowired
+	private ICommonService commonService;
+	
 	@GetMapping("/academicnotice")
 	public String academicNoticeList(Model model) {
-		
+		List<CommonVO> commonData = commonService.getAllCommonData();
+		model.addAttribute("commonData", commonData);
 		return "admin/notice";
 	}
 	
@@ -43,18 +49,21 @@ public class AdminNoticeController {
 	
 	// 등록 로직
 	@ResponseBody
-	@PostMapping(value = "/addNotice", produces = "application/json;charset=utf-8")
+	@PostMapping(value = "/addNotice")
 	public ResponseEntity<String> addNotice(@RequestBody NoticeVO noticeVO){
 		ResponseEntity<String> entity = null;
+		
+		log.info(noticeVO.toString());
 //		log.info("학사공지 등록했을떄 오는 데이터 : " + noticeVO.toString());
 		
-		noticeVO.setNoticeClsf("uni");
-		ServiceResult res = noticeService.addNotice(noticeVO);
-		if (res.equals(ServiceResult.OK)) {
-			entity = new ResponseEntity<String>("success", HttpStatus.OK);
-		}else {
-			entity = new ResponseEntity<String>("failed", HttpStatus.OK);
-		}
+//		noticeVO.setNoticeClsf("uni");
+//		ServiceResult res = noticeService.addNotice(noticeVO);
+//		if (res.equals(ServiceResult.OK)) {
+//			entity = new ResponseEntity<String>("success", HttpStatus.OK);
+//		}else {
+//			entity = new ResponseEntity<String>("failed", HttpStatus.OK);
+//		}
+		entity = new ResponseEntity<String>("success", HttpStatus.OK);
 		return entity;
 	}
 	
