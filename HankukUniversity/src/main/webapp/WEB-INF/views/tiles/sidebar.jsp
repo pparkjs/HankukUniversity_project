@@ -38,7 +38,7 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="/hku/student/search-subject">교과목 조회</a></li>
-					<li><a href="#">수강신청</a></li>
+					<li><a href="/hku/student/course-req">수강신청</a></li>
 					<li><a href="#">수강이력</a></li>
 					<li><a href="#">수강중인 강의</a></li>
 				</ul>
@@ -262,7 +262,7 @@
 					<span class="nav-text">게시판 관리</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">학사공지 게시판</a></li>
+					<li><a href="/hankuk/admin/academicnotice">학사공지 게시판</a></li>
 					<li><a href="#">채용정보 게시판</a></li>
 					<li><a href="#">학과공지 게시판</a></li>
 				</ul>
@@ -294,7 +294,7 @@
 					<span class="nav-text">강의 관리</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">강의 개설신청</a></li>
+					<li><a href="/lecture/open">강의 개설신청</a></li>
 					<li><a href="#">휴강 신청</a></li>
 				</ul>
 			</li>
