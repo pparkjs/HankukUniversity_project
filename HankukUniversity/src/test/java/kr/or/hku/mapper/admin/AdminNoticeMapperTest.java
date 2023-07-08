@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import kr.or.hku.vo.NoticeVO;
+import kr.or.hku.notice.mapper.AdminNoticeMapper;
+import kr.or.hku.notice.vo.NoticeVO;
 
 //Junit5 사용
 @ExtendWith(SpringExtension.class)

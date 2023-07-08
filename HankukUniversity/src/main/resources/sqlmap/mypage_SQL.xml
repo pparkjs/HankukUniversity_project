@@ -3,7 +3,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="kr.or.hku.vo.StudentVO">
+ <mapper namespace="kr.or.hku.mypage.mapper.StdMypageMapper">
  
  <select id="detailInfo" resultType="studentVO">
 	select a.std_no, b.dept_nm, a.std_nm, a.std_telno, a.std_zip, a.std_addr, 
