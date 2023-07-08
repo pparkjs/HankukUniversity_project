@@ -1,8 +1,6 @@
 @charset "UTF-8";
-/* 과목정보 CSS  */
 .searchCon, .subCon{
     width:95%;
-    margin-top: -15px;
 }
 .card-body{
 	color: black;
@@ -11,7 +9,7 @@
 .card{
 	margin-bottom:0px;
 }
-.clsfSel, .deptSel, .gradeSel{
+.clsfSel{
 	width: 100px;
     height: 35px;
     margin-right: 63px;
@@ -72,65 +70,4 @@
 .thead-dark{
       position: sticky;
       top: 0px;
-}
-.act{
-	background-color: #6e6e6e26;
-}
-
-/* 수강신청 CSS  */
-.middle{
-    display: flex;
-}
-.middleLeft{
-    width:65%;
-}
-.middleRight{
-    width:35%;
-}
-
-.schedule .thead-dark th {
-	color: #fff;
-	background-color: #6e6e6e;
-/* 	border: 1px solid black; */
-}
-
-.schedule {
-	width: 100%;
-	border-collapse: separate;
-	text-align: center;
-	border-spacing: 0 0px;
-	margin-top: 14px;
-}
-
-.schedule tbody td {
-	border: 1px solid black;
-    height: 38px;
-}
-.course-wrap{
-	overflow: scroll;
-    height: 363px;
-}
-.cart{
-	margin-left : 37px;
-	position: relative;
-}
-#cartBtn{
-	background: #adb17d;
-    border-color: #adb17d;
-    padding: 0.419rem 1.163rem;
-    padding-bottom: 4px;
-}
-.cartImg{
-	width:25px;
-	height:25px;
-	position: absolute;
-	right: 86px;
-    top: 31px;
-}
-.timeImg{
-	width:21px;
-	height:21px;
-	position: absolute;
-    right: 119px;
-    top: -5px;
 }

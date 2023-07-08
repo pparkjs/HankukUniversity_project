@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.hku.mapper.student.CourseInfoMapper;
 import kr.or.hku.vo.DepartmentVO;
+import kr.or.hku.vo.LectureAplyVO;
 import kr.or.hku.vo.SubjectVO;
 
 @Service
@@ -24,6 +25,11 @@ public class CourseInfoServiceImpl implements ICourseInfoService {
 	@Override
 	public List<DepartmentVO> getAllDept() {
 		return courseMapper.getAllDept();
+	}
+
+	@Override
+	public List<LectureAplyVO> getLecture(String status) {
+		return courseMapper.getLecture(status);
 	}
 
 }
