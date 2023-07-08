@@ -22,7 +22,7 @@
 		select * from college
 	</select>
 	
-	<select id="getDeptList" parameterType="String" resultType="departmentVo">
+	<select id="getDeptList" parameterType="String" resultType="departmentVO">
 		select dept_cd, dept_nm from department where col_cd = #{colCd}
 	</select>
 	
