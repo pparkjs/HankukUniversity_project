@@ -12,13 +12,10 @@
 			</div>
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-xl-6 col-lg-6 bbb">
+					<div class="col-xl-6 col-lg-6 bbb" style="width:55%">
 						<div class="card">
 							<div class="card-header aaa">
 								<h4 class="card-title" style="font-weight:bold; font-size:1.2em;">교과목 조회</h4>
-							</div>
-							<div class="card-body ccc">
-								<span class="txt">단과대학&nbsp;&nbsp;&nbsp;</span>
 								<select class="selectCustom" name="subject" id="selSub">
 									<option value="all">단과선택</option>
 									<c:forEach var="col" items="${college}">
@@ -28,6 +25,9 @@
 								<select class="selectCustom" name="subject" id="selDept">
 									<option value="all2">학과선택</option>
 								</select>
+							</div>
+							<div class="card-body ccc" >
+								
 
 <!-- 								<input type="button" value="조회"> -->
 								<table class="table">
@@ -59,22 +59,21 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-6 col-lg-6 bbb">
+					<div class="col-xl-6 col-lg-6 bbb" style="width:45%">
 						<div class="card">
 							<div class="card-header aaa">
 								<h4 class="card-title" style="font-weight:bold; font-size:1.2em;">강의실 조회</h4>
-							</div>
-							<div class="card-body ccc">
-								<span class="txt">대학건물&nbsp;&nbsp;&nbsp;</span>
-								 <select class="selectCustom" id="selBuil">
+								<select class="selectCustom a" id="selBuil">
 									<option value="all">건물선택</option>
 									<c:forEach var="flct" items="${flct}">
 										<option value="${flct.flctNo}">${flct.flctNm}</option>
 									</c:forEach>
 								</select>
-								<select class="selectCustom" name="classRoom" id="selClass">
+								<select class="selectCustom a" name="classRoom" id="selClass">
 									<option value="all2">호수선택</option>
 								</select>
+							</div>
+							<div class="card-body ccc">
 								<table class="table time">
 									<thead>
 										<tr>
@@ -156,6 +155,93 @@
 							</div>
 						</div>
 					</div>
+						<div class="col-xl-6 col-lg-6 bbb" style="width:100%; margin-top:10px; height : 350px;" >
+						<div class="card">
+							<div class="card-header aaa">
+								<h4 class="card-title" style="font-weight:bold; font-size:1.2em;">개설신청</h4>
+								<div>
+									<input type="button" value="강의계획서" class="btn btn-primary pro1" style="padding:0;">
+									<input type="button" value="신청"  class="btn btn-primary pro2" style="padding:0;">
+								</div>
+							</div>
+							<div class="card-body apply">
+								<table id="applyTable" border="1" style="width:100%;height:100%">
+									<tr>
+										<td>
+											<span>교수명</span>
+											<input type="text" value="${pro.proNm }" disabled="disabled">
+										</td>
+										<td>
+											<span>교수명</span>
+											<input type="text" value="${pro.deptCd }" disabled="disabled">
+										</td>
+										<td>
+											<span>교번</span>
+											<input type="text" value="${pro.proNo }" disabled="disabled">
+										</td>
+										<td>
+											<span>연락처</span>
+											<input type="text" value="${pro.proTelno}" disabled="disabled">				
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<span>교과목명</span>
+											<input type="text" value="${pro.proNm }" disabled="disabled">
+										</td>
+										<td>
+											<span>과목코드</span>
+											<input type="text" value="${pro.proNm }" disabled="disabled">
+										</td>
+										<td>
+											<span>대상학년</span>
+											<input type="text" value="${pro.proNm }" disabled="disabled">
+										</td>
+										<td>
+											<span>수업구분</span>
+											<input type="text" value="${pro.proNm }" disabled="disabled">
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<span>시수</span>
+											<input type="text" value="${pro.proNm }" disabled="disabled">
+										</td>
+										<td>
+											<span>학점</span>
+											<input type="text" value="${pro.proNm }" disabled="disabled">
+										</td>
+										<td>
+											<span>강의건물</span>
+											<input type="text" value="${pro.proNm }" disabled="disabled">
+										</td>
+										<td>
+											<span>강의실</span>
+											<input type="text" value="${pro.proNm }" disabled="disabled">
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<span>시작교시</span>
+											<input type="text" value="${pro.proNm }" disabled="disabled">
+										</td>
+										<td>
+											<span>강의요일</span>
+											<input type="text" value="${pro.proNm }" disabled="disabled">
+										</td>
+										<td>
+											<span>강의유형</span>
+											<input type="text" value="${pro.proNm }" disabled="disabled">
+										</td>
+										<td>
+											<span>강의언어</span>
+											<input type="text" value="${pro.proNm }" disabled="disabled">
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -164,7 +250,7 @@
 			document.addEventListener("DOMContentLoaded", function () {
 				var table = document.querySelector(".table");
 				var rows = table.querySelectorAll("tbody tr");
-				var columns = table.querySelectorAll("tbody td");
+				var columns = table.querySelectorAll("tbody tr");
 				
 				var selectedRow = null;
 
