@@ -20,6 +20,7 @@
     <typeAlias type="kr.or.hku.vo.StudentVO" alias="studentVO"/>
     <typeAlias type="kr.or.hku.vo.ProfessorVO" alias="professorVO"/>
     <typeAlias type="kr.or.hku.vo.EmployeeVO" alias="employeeVO"/>
+    <typeAlias type="kr.or.hku.vo.LectureNoticeVO" alias="lectureNoticeVO"/>
     <typeAlias type="kr.or.hku.vo.NoticeVO" alias="noticeVO"/>
     <typeAlias type="kr.or.hku.vo.CollegeVO" alias="collegeVO"/>
     <typeAlias type="kr.or.hku.vo.FacilityVO" alias="flctVO"/>

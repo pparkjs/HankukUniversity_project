@@ -60,7 +60,7 @@
 		<!-- 여기는 spring 권한별로 달라져야하는 부분 -->
 		<c:if test="${not empty std}">
 		<tiles:insertAttribute name="studentContent"/>
-<%-- 		<tiles:insertAttribute name="portalContent"/> --%>  
+<%-- 	<tiles:insertAttribute name="portalContent"/> --%>  
 		</c:if>
 		<c:if test="${not empty emp }">
 	 	<tiles:insertAttribute name="adminContent"/> 
