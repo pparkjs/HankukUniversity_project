@@ -41,8 +41,9 @@ public class StudyServiceImpl implements StudyService{
 	}
 
 	@Override
-	public int delStudy(int studyNo) {
-		return 0;
+	public void delStudy(int studyNo) {
+		mapper.delStudy(studyNo);
+		mapper.delStudyMem(studyNo);
 	}
 
 	@Override
@@ -58,6 +59,12 @@ public class StudyServiceImpl implements StudyService{
 	@Override
 	public int exitStudy(int stdNo) {
 		return 0;
+	}
+
+	@Override
+	public int delStudyMem(int studyNo) {
+		// TODO Auto-generated method stub
+		return mapper.delStudyMem(studyNo);
 	}
 
 }

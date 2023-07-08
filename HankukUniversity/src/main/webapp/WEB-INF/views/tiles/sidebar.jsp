@@ -20,7 +20,7 @@
 					<span class="nav-text">학적</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">기본사항</a></li>
+					<li><a href="/hku/student/record">기본사항</a></li>
 					<li><a href="#">학적변동</a></li>
 					<li><a href="#">졸업</a></li>
 				</ul>

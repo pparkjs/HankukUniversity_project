@@ -18,6 +18,11 @@
 	<!-- 가입신청 대기중인 리스트 -->
 <!-- 	<select id="applicationsList" resultType="studyVo"> -->
 <!-- 	</select> -->
+	
+	<!-- 스터디 역할 조회 -->
+<!-- 	<select id=""> -->
+<!-- 	</select> -->
+
 	<!-- 스터디리스트 -->
 	<select id="studyList" resultType="studyVo">
 		select * from studygroup order by study_no desc
@@ -38,8 +43,12 @@
  	</select>
  	
  	<!-- 스터디 삭제 -->
-<!--  	<delete id="delStudy"> -->
-<!--  	</delete> -->
+ 	<delete id="delStudyMem" parameterType="int">
+ 		delete from studymember where study_no = #{studyNo};
+ 	</delete>
+	<delete id="delStudy" parameterType="int">
+		delete from studygroup where study_no = #{studyNo};
+	</delete>
  	
  	<!-- 가입신청 승인/반려 -->
 <!--  	<update id=""> -->

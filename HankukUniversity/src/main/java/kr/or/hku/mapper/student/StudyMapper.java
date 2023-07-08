@@ -18,6 +18,7 @@ public interface StudyMapper {
 	public void addStudy(StudyVO studyVo);
 	// 스터디 삭제
 	public int delStudy(int studyNo);
+	public int delStudyMem(int studyNo);
 	// 스터디 가입신청
 	public int intoStudy(StudyVO studyVo);
 	// 스터디 가입신청 승인/반려

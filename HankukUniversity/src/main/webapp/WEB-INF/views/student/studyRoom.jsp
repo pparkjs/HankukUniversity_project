@@ -15,7 +15,7 @@ th, td {
 }
 th{
   	text-align: center;
-	font-size: 1.6em;
+	font-size: 1.5em;
 }
 	</style>
 		<meta charset="UTF-8">
@@ -23,8 +23,7 @@ th{
 			<div class="page-titles">
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-					<li class="breadcrumb-item active"><a href="javascript:void(0)">study
-							room</a></li>
+					<li class="breadcrumb-item active"><a href="javascript:void(0)">study room</a></li>
 				</ol>
 			</div >
 			
@@ -36,8 +35,16 @@ th{
 					</div>
 					<div style="display: flex; justify-content: end; margin-right: 80px;">
 						<a class="btn btn-primary" href="#" role="button" id="btn1" style="margin: 10px">화상채팅</a>
+						
+						<form action="/hku/student/delStudy" method="post" id="delForm">
+							<input type="hidden" name="studyNo" value="${study.studyNo}">
+						</form>
 						<!-- 스터디장은 스터디 해체 버튼 보여주기 -->
-						<a class="btn btn-primary" href="#" role="button" id="btn2" style="margin: 10px">탈퇴하기</a>			
+						<button type="button" class="btn btn-primary" style="margin: 10px" id="delBtn">
+							<i class="fa-solid fa-circle-exclamation me-2"></i>스터디 해체
+						</button>									
+						<a class="btn btn-primary" href="#" role="button" id="btn2" style="margin: 10px">스터디 탈퇴</a>																
+
 					</div>
 					<div class="card-body">
 						<div class="custom-tab-1">
@@ -118,12 +125,36 @@ th{
 										</table>					
 									</div>
 								</div>
-								<div class="tab-pane fade" id="contact1">
-									<div class="cal">
-
-									</div>
-									<div class="pt-4">
-										<table style="width:70%">
+								<div class="tab-pane fade" id="contact1" style="display: flex;">
+									<div style="width: 30%; margin-top: 45px">
+										<table style="width: 40%" class="table">
+										<thead class="thead-dark">
+											<tr>
+										    	<th>이름</th><th>학번</th><th>학과</th>
+										    </tr>
+										</thead>
+										  <c:choose>
+										    <c:when test="${empty studyMem }">
+										      <tr>
+										        <td colspan="3">스터디원이 존재하지 않습니다.</td>
+										      </tr>
+										    </c:when>
+										    <c:otherwise>
+										      <tbody>
+										        <c:forEach items="${studyMem }" var="studyMem">
+										          <tr>
+										            <td>${studyMem.stdNm}</td>
+										            <td>${studyMem.stdNo}</td>
+										            <td>${studyMem.deptNm}</td>
+										          </tr>
+										        </c:forEach>
+										      </tbody>
+										    </c:otherwise>
+										  </c:choose>
+										</table>
+									</div>		
+									<div style="width: 70%; margin-top: 45px">
+										<table style="width:100%">
 											<tr>
 												<th></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th>
 											</tr>
@@ -156,6 +187,7 @@ th{
 											</tr>
 									</table>
 									</div>
+									
 								</div>
 								<div class="tab-pane fade" id="message1">
 									<div class="pt-4">
@@ -170,5 +202,16 @@ th{
 			</div>
 		</div>
 <script>
+$(function(){
+	var delBtn = $('#delBtn');
+	var delForm = $('#delForm');
+	  
+	delBtn.on('click', function(){
+		if(confirm("정말로 해체하시겠습니까?")){
+		delForm.submit();
+		}
+		location.href = "http://localhost/hku/student/study";
 
+  	});
+});
 </script>

@@ -23,12 +23,12 @@ public class StudyVO {
 	public String studyRole; //역할
 	
 	//스터디 게시판
-	public int stbo_no;
-	public String stbo_title;
-	public String stbo_content;
-	public String stbo_writer;
-	public String stbo_regdate; //작성일
-	public int stbo_read_cnt; //조회수
+	public int stboNo;
+	public String stboTitle;
+	public String stboContent;
+	public String stboWriter;
+	public String stboRegdate; //작성일
+	public int stboReadCnt; //조회수
 	
 	// 채팅방
 	public int unreadMsgCnt; //안읽은 메세지 개수
