@@ -4,7 +4,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.hku.mapper.professor.LectureMapper">
-	<select id="getSubjectList" resultType="subjectVo">
+	<select id="getSubjectList" resultType="subjectVO">
 		SELECT a.SUB_NO,
 		       b.dept_nm AS dept_cd,
 		       a.SUB_NM,
@@ -22,11 +22,11 @@
 		select * from college
 	</select>
 	
-	<select id="getDeptList" parameterType="String" resultType="deptVo">
+	<select id="getDeptList" parameterType="String" resultType="departmentVo">
 		select dept_cd, dept_nm from department where col_cd = #{colCd}
 	</select>
 	
-	<select id="selSubject" parameterType="String" resultType="subjectVo">
+	<select id="selSubject" parameterType="String" resultType="subjectVO">
 		SELECT a.SUB_NO,
 		       b.dept_nm AS dept_cd,
 		       a.SUB_NM,
@@ -42,7 +42,7 @@
 	
 	</select>
 	
-	<select id="getcolSubject" parameterType="String" resultType="subjectVo">
+	<select id="getcolSubject" parameterType="String" resultType="subjectVO">
 				SELECT a.SUB_NO,
 		       b.dept_nm AS dept_cd,
 		       a.SUB_NM,

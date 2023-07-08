@@ -40,6 +40,12 @@
 					</select>
 					교과목명:&nbsp;&nbsp;&nbsp;<input type="text" class="form-control" id="subName" placeholder="교과목명을 입력하세요.">
 					<button type="button" class="btn btn-primary" id="searchBtn">조회</button>
+					<div class="cart">
+						<img class="timeImg" src="/images/시간.png" alt="">
+						<div>오전 11:52:23</div>
+						<img class="cartImg" src="/images/shopping-cart(white).png" alt="">
+						<button type="button" class="btn btn-primary" id="cartBtn">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;과목담기</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -47,7 +53,7 @@
 	<div class="container-fluid subCon">
 		<div class="card" id="card-title-1">
 			<div class="card-body" style="padding-top: 0px;">
-				<div class="table-wrap">
+				<div class="course-wrap">
 					<table class="table">
 						<thead class="thead-dark">
 							<tr>
@@ -69,11 +75,124 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="subInfo">
-					<p style="color: maroon;  font-weight: 900;">교과목 개요</p>
-					<hr>
-					<div class="otlContent">
-						<!-- 동적 추가 -->
+				<div class="middle">
+					<div class="middleLeft">
+						<div class="lTitle">
+							<p style="color: maroon;  font-weight: 900; margin-bottom: -10px;">장바구니</p>
+						</div>
+						<div class="table-wrap">
+							<table class="table">
+								<thead class="thead-dark">
+									<tr>
+										<th style="width: 130px;">과목코드</th>
+										<th style="width: 330px;">교과목명</th>
+										<th style="width: 100px">담당교수</th>
+										<th style="width: 15px;">학년</th>
+										<th style="width: 15px;">학점</th>
+										<th style="width: 200px;">학과</th>
+										<th style="width: 20px;">신청</th>
+										<th style="width: 20px;">취소</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- 동적추가 -->
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="middleRight">
+						<div class="rTitle">
+							<p style="color: maroon;  font-weight: 900; margin-bottom: -10px;">시간표 배정</p>
+						</div>
+						<div class="schedule-wrap">
+							<table class="schedule" border=1>
+								<thead class="thead-dark">
+									<tr>
+										<th style="width: 30px;"></th>
+										<th style="width: 30px;">월</th>
+										<th style="width: 30px;">화</th>
+										<th style="width: 30px;">수</th>
+										<th style="width: 30px;">목</th>
+										<th style="width: 30px;">금</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- 동적추가 -->
+									<tr class="1">
+										<td>1교시</td>
+										<td class="mon"></td>
+										<td class="tue"></td>
+										<td class="wed"></td>
+										<td class="thu"></td>
+										<td class="fri"></td>
+									</tr>
+									<tr class="2">
+										<td>2교시</td>
+										<td class="mon"></td>
+										<td class="tue"></td>
+										<td class="wed"></td>
+										<td class="thu"></td>
+										<td class="fri"></td>
+									</tr>
+									<tr class="3">
+										<td>3교시</td>
+										<td class="mon"></td>
+										<td class="tue"></td>
+										<td class="wed"></td>
+										<td class="thu"></td>
+										<td class="fri"></td>
+									</tr>
+									<tr class="4">
+										<td>4교시</td>
+										<td class="mon"></td>
+										<td class="tue"></td>
+										<td class="wed"></td>
+										<td class="thu"></td>
+										<td class="fri"></td>
+									</tr>
+									<tr class="5">
+										<td>5교시</td>
+										<td class="mon"></td>
+										<td class="tue"></td>
+										<td class="wed"></td>
+										<td class="thu"></td>
+										<td class="fri"></td>
+									</tr>
+									<tr class="6">
+										<td>6교시</td>
+										<td class="mon"></td>
+										<td class="tue"></td>
+										<td class="wed"></td>
+										<td class="thu"></td>
+										<td class="fri"></td>
+									</tr>
+									<tr class="7"> 
+										<td>7교시</td>
+										<td class="mon"></td>
+										<td class="tue"></td>
+										<td class="wed"></td>
+										<td class="thu"></td>
+										<td class="fri"></td>
+									</tr>
+									<tr class="8">
+										<td>8교시</td>
+										<td class="mon"></td>
+										<td class="tue"></td>
+										<td class="wed"></td>
+										<td class="thu"></td>
+										<td class="fri"></td>
+									</tr>
+									<tr class="9">
+										<td>9교시</td>
+										<td class="mon"></td>
+										<td class="tue"></td>
+										<td class="wed"></td>
+										<td class="thu"></td>
+										<td class="fri"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -84,25 +203,13 @@
 <script>
 $(function(){
 	
-	subList();
+	/* subList(); */
 	
 	var searchBtn = $("#searchBtn");
 	
 	// 조회버튼 클릭시 동작
 	searchBtn.on("click", function(){
-		var clsfSel = $(".clsfSel").val();
-		var deptSel = $(".deptSel").val();
-		var gradeSel = $(".gradeSel").val();
-		var subNm = $("#subName").val();
-		
-		var selData = {
-			"com_cd_nm":clsfSel,
-			"dept_nm":deptSel,
-			"sub_grade":gradeSel,
-			"sub_nm":subNm
-		}
-		
-		subList(selData);
+		subList();
 	})
 	
 	$(document).on("click","tr", function(){
@@ -114,12 +221,24 @@ $(function(){
 })
 
 // 과목 리스트 가져오는 함수
-function subList(selData){
+function subList(){
 	var tbody = $("tbody");
+	var clsfSel = $(".clsfSel").val();
+	var deptSel = $(".deptSel").val();
+	var gradeSel = $(".gradeSel").val();
+	var subNm = $("#subName").val();
+	
+	var selData = {
+		"com_cd_nm":clsfSel,
+		"dept_nm":deptSel,
+		"sub_grade":gradeSel,
+		"sub_nm":subNm
+	}
+	
 	$.ajax({
 		type:"get",
 		data:selData,
-		url : "/hku/student/sub-list",
+		url : "/hku/student/lecture-list",
 		dataType : "json",
 		success : function(res){
 			console.log(res)
