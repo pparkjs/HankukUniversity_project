@@ -210,7 +210,7 @@
     <table >
         <tr id="trone">
         	<td rowspan="3" style="width : 300px">
-        		<img src="/images/login/로고(마크 가로글씨).png">
+        		<img src="/images/logo2.png">
         	</td>
             <td colspan="2">
                 <input type="radio" name="userClsCd" id="idtStd" value='student' checked="checked" />

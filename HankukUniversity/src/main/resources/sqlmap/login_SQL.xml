@@ -15,7 +15,27 @@
  	</select>
  	
  	<select id="professorUser" parameterType="String" resultType="professorVO">
- 		select * from professor
+ 		select PRO_NO,
+				b.DEPT_NM as DEPT_CD,
+				PRO_JBTTL_CD,
+				PRO_JNCMP_YMD,
+				PRO_RSGNTN_YMD,
+				PRO_LAB,
+				PRO_LAB_TELNO,
+				PRO_NM,
+				PRO_TELNO,
+				SEX_CD,
+				PRO_ZIP,
+				PRO_ADDR,
+				PRO_DADDR,
+				PRO_MAIL,
+				PRO_BRDT,
+				PRO_RRNO,
+				BANK_CD,
+				PRO_ACTNO,
+				PRO_PROFILE_PATH
+				from professor a
+				join department b on a.dept_cd = b.dept_cd
  		where pro_no = #{proNo}
  	</select>
  	

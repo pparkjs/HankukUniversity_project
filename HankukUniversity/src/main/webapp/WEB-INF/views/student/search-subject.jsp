@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" href="/css/table.css">
-<link rel="stylesheet" href="/css/student/search-subject.css">
+<link rel="stylesheet" href="/css/student/course-info.css">
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
@@ -15,24 +16,27 @@
 				<div class="search1">
 					이수구분:&nbsp;&nbsp;&nbsp;
 					<select class="clsfSel">
-						<option>전필</option>
-						<option>전선</option>
-						<option>교선</option>
-						<option>교필</option>
+						<option value="">전체</option>
+						<c:forEach items="${commonList}" var="common">
+							<c:if test="${common.comCdGrp eq 'COURSE_CLSF' }">
+								<option value="${common.comCdNm }">${common.comCdNm }</option>
+							</c:if>
+						</c:forEach>
 					</select>
 					학과:&nbsp;&nbsp;&nbsp;
-					<select class="clsfSel">
-						<option>전필</option>
-						<option>전선</option>
-						<option>교선</option>
-						<option>교필</option>
+					<select class="deptSel">
+						<option value="">전체</option>
+						<c:forEach items="${deptList}" var="dept">
+							<option value="${dept.deptNm }">${dept.deptNm }</option>
+						</c:forEach>
 					</select>
 					학년:&nbsp;&nbsp;&nbsp;
-					<select class="clsfSel">
-						<option>전필</option>
-						<option>전선</option>
-						<option>교선</option>
-						<option>교필</option>
+					<select class="gradeSel">
+						<option value="">전체</option>
+						<option value="1">1학년</option>
+						<option value="2">2학년</option>
+						<option value="3">3학년</option>
+						<option value="4">4학년</option>
 					</select>
 					교과목명:&nbsp;&nbsp;&nbsp;<input type="text" class="form-control" id="subName" placeholder="교과목명을 입력하세요.">
 					<button type="button" class="btn btn-primary" id="searchBtn">조회</button>
@@ -43,7 +47,7 @@
 	<div class="container-fluid subCon">
 		<div class="card" id="card-title-1">
 			<div class="card-header border-0 pb-0 ">
-				<h5 class="card-title" style="color: maroon;">학점이수현황</h5>
+				<h5 class="card-title" style="color: maroon;  font-weight: 900;}">학점이수현황</h5>
 			</div>
 			<hr>
 			<div class="card-body" style="padding-top: 0px;">
@@ -51,13 +55,13 @@
 					<table class="table">
 						<thead class="thead-dark">
 							<tr>
-								<th>과목코드</th>
-								<th>교과목명</th>
-								<th>이수구분</th>
-								<th>학년</th>
-								<th>학점</th>
-								<th>시수</th>
-								<th>학과</th>
+								<th style="width:200px;">과목코드</th>
+								<th style="width:550px;">교과목명</th>
+								<th style="width:200px;">이수구분</th>
+								<th style="width:80px;">학년</th>
+								<th style="width:80px;">학점</th>
+								<th style="width:80px;">시수</th>
+								<th style="width:300px;">학과</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -66,10 +70,10 @@
 					</table>
 				</div>
 				<div class="subInfo">
-					<p>교과목 개요</p>
+					<p style="color: maroon;  font-weight: 900;">교과목 개요</p>
 					<hr>
 					<div class="otlContent">
-						내용입니다.
+						<!-- 동적 추가 -->
 					</div>
 				</div>
 			</div>
@@ -79,19 +83,42 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script>
 $(function(){
+	
 	subList();
-
+	
+	var searchBtn = $("#searchBtn");
+	
+	// 조회버튼 클릭시 동작
+	searchBtn.on("click", function(){
+		subList();
+	})
+	
 	$(document).on("click","tr", function(){
+		$('tr').css('background', '');
+		$(this).css('background', '#6e6e6e26');
 		var subOtl = $(this).find('.otl');
 		$(".otlContent").html(subOtl.text());
-		
 	})
 })
 
+// 과목 리스트 가져오는 함수
 function subList(){
 	var tbody = $("tbody");
+	var clsfSel = $(".clsfSel").val();
+	var deptSel = $(".deptSel").val();
+	var gradeSel = $(".gradeSel").val();
+	var subNm = $("#subName").val();
+	
+	var selData = {
+		"com_cd_nm":clsfSel,
+		"dept_nm":deptSel,
+		"sub_grade":gradeSel,
+		"sub_nm":subNm
+	}
+	
 	$.ajax({
 		type:"get",
+		data:selData,
 		url : "/hku/student/sub-list",
 		dataType : "json",
 		success : function(res){
@@ -106,9 +133,13 @@ function subList(){
 							<td id="\${res[i].subNo}">\${res[i].subGrade}</td>
 							<td id="\${res[i].subNo}">\${res[i].subCrd}</td>
 							<td id="\${res[i].subNo}">\${res[i].subHour}</td>
-							<td id="\${res[i].subNo}">\${res[i].deptCd}</td>
-							<td id="\${res[i].subNo}" class="otl" style="display:none;">\${res[i].subOtl}</td>
-						</tr>`;
+							<td id="\${res[i].subNo}">\${res[i].deptCd}</td>`
+				if(`\${res[i].subOtl}` == "null" || `\${res[i].subOtl}` == null){
+					data +=	`<td id="\${res[i].subNo}" class="otl" style="display:none;">개요가 존재하지 않습니다.</td>`
+				}else{
+					data +=	`<td id="\${res[i].subNo}" class="otl" style="display:none;">\${res[i].subOtl}</td>`
+				}	
+				data +=	`</tr>`;
 			}
 			tbody.html(data);
 		}

@@ -20,9 +20,8 @@
 					<span class="nav-text">학적</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">기본사항</a></li>
-					<li><a href="#">휴학/복학</a></li>
-					<li><a href="#">자퇴</a></li>
+					<li><a href="/hku/student/record">기본사항</a></li>
+					<li><a href="#">학적변동</a></li>
 					<li><a href="#">졸업</a></li>
 				</ul>
 			</li>
@@ -39,7 +38,7 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="/hku/student/search-subject">교과목 조회</a></li>
-					<li><a href="#">수강신청</a></li>
+					<li><a href="/hku/student/course-req">수강신청</a></li>
 					<li><a href="#">수강이력</a></li>
 					<li><a href="#">수강중인 강의</a></li>
 				</ul>
@@ -105,7 +104,7 @@
 			</li>
 			
 			<li>
-				<a href="#" class="" aria-expanded="false">
+				<a href="/hku/student/study" class="" aria-expanded="false">
 					<div class="menu-icon">
 						<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path fill-rule="evenodd" clip-rule="evenodd" d="M10.986 14.0673C7.4407 14.0673 4.41309 14.6034 4.41309 16.7501C4.41309 18.8969 7.4215 19.4521 10.986 19.4521C14.5313 19.4521 17.5581 18.9152 17.5581 16.7693C17.5581 14.6234 14.5505 14.0673 10.986 14.0673Z" stroke="#888888" stroke-linecap="round" stroke-linejoin="round"/>
@@ -263,7 +262,7 @@
 					<span class="nav-text">게시판 관리</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">학사공지 게시판</a></li>
+					<li><a href="/hankuk/admin/academicnotice">학사공지 게시판</a></li>
 					<li><a href="#">채용정보 게시판</a></li>
 					<li><a href="#">학과공지 게시판</a></li>
 				</ul>
@@ -295,7 +294,7 @@
 					<span class="nav-text">강의 관리</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">강의 개설신청</a></li>
+					<li><a href="/lecture/open">강의 개설신청</a></li>
 					<li><a href="#">휴강 신청</a></li>
 				</ul>
 			</li>s

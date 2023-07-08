@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
@@ -22,7 +21,25 @@
     <typeAlias type="kr.or.hku.vo.ProfessorVO" alias="professorVO"/>
     <typeAlias type="kr.or.hku.vo.EmployeeVO" alias="employeeVO"/>
     <typeAlias type="kr.or.hku.vo.LectureNoticeVO" alias="lectureNoticeVO"/>
+    <typeAlias type="kr.or.hku.vo.NoticeVO" alias="noticeVO"/>
+    <typeAlias type="kr.or.hku.vo.CollegeVO" alias="collegeVO"/>
+    <typeAlias type="kr.or.hku.vo.FacilityVO" alias="flctVO"/>
+    <typeAlias type="kr.or.hku.vo.FacilitiesVO" alias="flctsVO"/>
     <typeAlias type="kr.or.hku.vo.SubjectVO" alias="subjectVO"/> 
     <typeAlias type="kr.or.hku.vo.DepartmentVO" alias="departmentVO"/>
+    <typeAlias type="kr.or.hku.vo.SearchInfoVO" alias="searchInfoVO"/>
+    <typeAlias type="kr.or.hku.vo.CommonVO" alias="commonVO"/>
+    <!-- 정수칸  밑에서만 작성 -->
+    
+    <!-- 지현칸 밑에서만 작성 -->
+    
+    <!-- 재균칸 밑에서만 작성 -->  
+    
+    <!-- 영우칸 밑에서만 작성-->
+    
+    <!-- 성희칸 밑에서만 작성-->
+    
+    <!-- 성일칸 밑에서만 작성 -->
+    
 	</typeAliases>
 </configuration>
