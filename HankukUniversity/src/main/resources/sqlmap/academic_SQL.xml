@@ -4,7 +4,19 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="kr.or.hku.mapper.admin.AcademicMapper">
- 	<select id="selectDepartment" resultType="departmentVO">
+ 	<sql id="deptSearch">
+ 		<if test="searchType != null and searchType == 'colCd'">
+			and (col_cd like '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'deptCd'">
+			and (dept_cd like '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'deptNm'">
+			and (dept_nm like '%'||#{searchWord}||'%')
+		</if>
+ 	</sql>
+ 
+ 	<select id="selectDepartment" parameterType="searchInfoVO" resultType="departmentVO">
 	 	select
 	 		DEPT_CD,
 			COL_CD,
@@ -14,5 +26,11 @@
 			DEPT_OTL,
 			DEPT_GOAL
 		from DEPARTMENT
+		where 1=1
+		<include refid="deptSearch"></include>
  	</select>
+ 	
+ 	<delete id="deleteDept" parameterType="String">
+ 		delete from department where dept_cd = #{deptCd}
+ 	</delete>
  </mapper>

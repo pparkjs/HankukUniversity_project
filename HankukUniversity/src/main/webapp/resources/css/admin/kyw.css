@@ -4,11 +4,13 @@
 	margin-bottom:0px;
 }
 .table-wrap{
+	height: 750px;
 	overflow: scroll;
 }
 
 .dept-body{
 	padding-top: 0px;
+	height: 100%
 }
 .custom-form {
 	display: flex;
@@ -19,4 +21,8 @@
 }
 .table thead tr th {
 	padding: 15px;
+}
+.table thead{
+	position: sticky;
+    top: 0px;
 }
