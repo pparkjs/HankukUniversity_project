@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.hku.mapper.admin.AcademicMapper;
 import kr.or.hku.vo.DepartmentVO;
+import kr.or.hku.vo.SearchInfoVO;
 
 @Service
 public class AcademicAdmImpl implements IAcademicAdm {
@@ -15,8 +16,13 @@ public class AcademicAdmImpl implements IAcademicAdm {
 	private AcademicMapper mapper;
 
 	@Override
-	public List<DepartmentVO> selectDepartment() {
-		return mapper.selectDepartment();
+	public List<DepartmentVO> selectDepartment(SearchInfoVO searchInfoVO) {
+		return mapper.selectDepartment(searchInfoVO);
+	}
+
+	@Override
+	public int deleteDept(String deptCd) {
+		return mapper.deleteDept(deptCd);
 	}
 
 }

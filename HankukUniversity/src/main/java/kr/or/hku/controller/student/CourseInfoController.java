@@ -19,6 +19,7 @@ import kr.or.hku.service.common.ICommonService;
 import kr.or.hku.service.student.ICourseInfoService;
 import kr.or.hku.vo.CommonVO;
 import kr.or.hku.vo.DepartmentVO;
+import kr.or.hku.vo.LectureAplyVO;
 import kr.or.hku.vo.SubjectVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,10 +48,7 @@ public class CourseInfoController {
 	@ResponseBody
 	@GetMapping("/sub-list")
 	public ResponseEntity<List<SubjectVO>> getList(@RequestParam Map<String, Object> map){
-		log.info("map입니다 : " + map);
-		log.info("map 결과입니다 : " + map);
 		List<SubjectVO> list = courseService.getList(map);
-		log.info("리스트확인 : " + list);
 		return new ResponseEntity<List<SubjectVO>>(list, HttpStatus.OK);
 	}
 	
@@ -63,6 +61,15 @@ public class CourseInfoController {
 		model.addAttribute("commonList", commonList);
 		model.addAttribute("deptList", deptList);
 		return "student/course-req";
+	}
+	
+	// 수강신청할 강의리스트 가져오기
+	@ResponseBody
+	@GetMapping("/lecture-list")
+	public ResponseEntity<List<LectureAplyVO>> courseList(@RequestParam Map<String, Object> map) {
+		 String status = "appv";
+		 List<LectureAplyVO> list = courseService.getLecture(status);
+		 return new ResponseEntity<List<LectureAplyVO>>(list, HttpStatus.OK);
 	}
 	
 }
