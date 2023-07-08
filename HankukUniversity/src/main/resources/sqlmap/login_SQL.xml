@@ -3,7 +3,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="kr.or.hku.mapper.common.LoginMapper">
+ <mapper namespace="kr.or.hku.login.mapper.LoginMapper">
  	<select id="loginUser" parameterType="usersVO" resultType="usersVO">
  		select * from users
  		where user_no = #{userNo} and user_pw = #{userPw} and user_cls_cd = #{userClsCd}

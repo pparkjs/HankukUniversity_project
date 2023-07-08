@@ -15,20 +15,20 @@
 	<!-- 자주 사용하는 타입의 별칭을 셋팅 -->
 	<typeAliases>
 <!-- 	<typeAlias type="클래스명(패키지구조를 포함한)" alias="별칭명"/> -->
-    <typeAlias type="kr.or.hku.vo.StudyVO" alias="studyVo"/>
-    <typeAlias type="kr.or.hku.vo.UsersVO" alias="usersVO"/>
-    <typeAlias type="kr.or.hku.vo.StudentVO" alias="studentVO"/>
-    <typeAlias type="kr.or.hku.vo.ProfessorVO" alias="professorVO"/>
-    <typeAlias type="kr.or.hku.vo.EmployeeVO" alias="employeeVO"/>
-    <typeAlias type="kr.or.hku.vo.LectureNoticeVO" alias="lectureNoticeVO"/>
-    <typeAlias type="kr.or.hku.vo.NoticeVO" alias="noticeVO"/>
-    <typeAlias type="kr.or.hku.vo.CollegeVO" alias="collegeVO"/>
-    <typeAlias type="kr.or.hku.vo.FacilityVO" alias="flctVO"/>
-    <typeAlias type="kr.or.hku.vo.FacilitiesVO" alias="flctsVO"/>
-    <typeAlias type="kr.or.hku.vo.SubjectVO" alias="subjectVO"/> 
-    <typeAlias type="kr.or.hku.vo.DepartmentVO" alias="departmentVO"/>
-    <typeAlias type="kr.or.hku.vo.SearchInfoVO" alias="searchInfoVO"/>
-    <typeAlias type="kr.or.hku.vo.CommonVO" alias="commonVO"/>
+    <typeAlias type="kr.or.hku.student.vo.StudyVO" alias="studyVo"/>
+    <typeAlias type="kr.or.hku.login.vo.UsersVO" alias="usersVO"/>
+    <typeAlias type="kr.or.hku.student.vo.StudentVO" alias="studentVO"/>
+    <typeAlias type="kr.or.hku.professor.vo.ProfessorVO" alias="professorVO"/>
+    <typeAlias type="kr.or.hku.admin.vo.EmployeeVO" alias="employeeVO"/>
+    <typeAlias type="kr.or.hku.classroom.vo.LectureNoticeVO" alias="lectureNoticeVO"/>
+    <typeAlias type="kr.or.hku.notice.vo.NoticeVO" alias="noticeVO"/>
+    <typeAlias type="kr.or.hku.admin.vo.CollegeVO" alias="collegeVO"/>
+    <typeAlias type="kr.or.hku.admin.vo.FacilityVO" alias="flctVO"/>
+    <typeAlias type="kr.or.hku.admin.vo.FacilitiesVO" alias="flctsVO"/>
+    <typeAlias type="kr.or.hku.lectureInfo.vo.SubjectVO" alias="subjectVO"/> 
+    <typeAlias type="kr.or.hku.admin.vo.DepartmentVO" alias="departmentVO"/>
+    <typeAlias type="kr.or.hku.common.vo.SearchInfoVO" alias="searchInfoVO"/>
+    <typeAlias type="kr.or.hku.common.vo.CommonVO" alias="commonVO"/>
     <!-- 정수칸  밑에서만 작성 -->
     
     <!-- 지현칸 밑에서만 작성 -->

@@ -3,7 +3,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="kr.or.hku.mapper.common.CommonMapper">
+ <mapper namespace="kr.or.hku.common.mapper.CommonMapper">
  	
  	<select id="getAllCommonData" resultType="commonVO">
  		select * from com_code

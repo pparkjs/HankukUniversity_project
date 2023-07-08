@@ -3,7 +3,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="kr.or.hku.mapper.admin.AcademicMapper">
+ <mapper namespace="kr.or.hku.admin.mapper.AcademicMapper">
  	<sql id="deptSearch">
  		<if test="searchType != null and searchType == 'colCd'">
 			and (col_cd like '%'||#{searchWord}||'%')

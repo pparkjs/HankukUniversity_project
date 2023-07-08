@@ -20,7 +20,7 @@
 	 
 	 <!-- 서버에 파일 저장할  upload폴더 설정 -->
 	 <bean id="uploadPath" class="java.lang.String">
-	 	<constructor-arg value="C:\finalproject\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\HankukUniversity\resources\upload"/>
+	 	<constructor-arg value="/uploadfiles"/>
 	 </bean>
 	 
 	 <!-- dataSource : 데이터베이스와 관련된 정보를 설정한다. -->
@@ -55,8 +55,10 @@
 	 	개발자가 직접 DAO를 설정하지 않아도 자동으로 Mapper 인터페이스를 활용하는 객체를 생성하게된다.
 	  -->
 	 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-	 	<property name="basePackage" value="kr.or.hku.mapper"/>
+	 	<property name="basePackage" value="kr.or.hku"/>
+	 	<property name="annotationClass" value="org.apache.ibatis.annotations.Mapper"></property>
 	 </bean>
+	 
 	 
 	 <!-- 트랜잭션 설정 : 트랜잭션 관리자의 빈을정의 -->
 	 <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
