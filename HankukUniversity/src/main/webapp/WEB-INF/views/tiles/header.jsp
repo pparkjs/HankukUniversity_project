@@ -89,8 +89,8 @@
 						</div>
 					</li>
 
-					<li class="nav-item dropdown notification_dropdown"><a
-						class="nav-link" href="javascript:void(0);" role="button"
+					<li class="nav-item dropdown notification_dropdown">
+					<a class="nav-link" href="javascript:void(0);" role="button"
 						data-bs-toggle="dropdown"> <svg width="24" height="24"
 								viewBox="0 0 24 24" fill="none"
 								xmlns="http://www.w3.org/2000/svg">
@@ -282,7 +282,7 @@
 							<div class="dropdown-menu dropdown-menu-end" style="">
 								<div class="card border-0 mb-0">
 									<div class="card-header py-2">
-										<div class="products">
+										<div class="products"> 
 											<img src="/images/tab/1.jpg" class="avatar avatar-md" alt="">
 											<div>
 											<c:if test="${not empty std}">
@@ -301,7 +301,7 @@
 										</div>
 									</div>
 									<div class="card-body px-0 py-2">
-										<a href="app-profile.html" class="dropdown-item ai-icon ">
+										<a href="/hku/student/mypage" class="dropdown-item ai-icon ">
 											<svg width="20" height="20" viewBox="0 0 24 24" fill="none"
 												xmlns="http://www.w3.org/2000/svg">
 													<path fill-rule="evenodd" clip-rule="evenodd"

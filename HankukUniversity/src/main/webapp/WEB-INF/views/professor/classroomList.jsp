@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <link rel="stylesheet" href="/css/table.css">
+
 <div class="table-responsive">
 	<table class="table table-responsive-md">
 		<thead>

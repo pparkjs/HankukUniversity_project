@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.vo.StudentVO">
+ 
+ <select id="detailInfo" resultType="studentVO">
+	select a.std_no, b.dept_nm, a.std_nm, a.std_telno, a.std_zip, a.std_addr, 
+	       a.std_daddr, a.std_mail, a.std_brdt, a.std_profile_path 
+	from student a, department b
+	where a.dept_cd = b.dept_cd
+ </select>
+ 
+ <update id="updateInfo" parameterType="int">
+  update student
+  set 
+	  std_no = #{stdNo},
+	  std_telno = #{stdTelno},  
+	  std_zip = #{stdZip},
+	  std_addr = #{stdAddr},
+	  std_daddr = #{stdDaddr},
+	  std_mail = #{stdMail},
+	  std_profile_path = null
+ </update>
+ 
+ </mapper>
+ 
