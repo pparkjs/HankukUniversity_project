@@ -252,12 +252,28 @@
 		<!-- 스프링 시큐리티 라이브러리 의존 관계 정의 End -->
 		
 		<!-- Test -->
+		<!-- Junit5 다른 것도 끌어옴 -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.8.2</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Junit을 편하게 사용할 수 있도록 해주는 스프링 라이브러리 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>5.3.25</version>
+			<scope>test</scope>
+		</dependency>
+		<!--  
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
-		</dependency>        
+		</dependency> 
+		-->      
 	</dependencies>
     <build>
         <plugins>

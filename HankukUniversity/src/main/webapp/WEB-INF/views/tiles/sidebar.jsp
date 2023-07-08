@@ -263,7 +263,7 @@
 					<span class="nav-text">게시판 관리</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">학사공지 게시판</a></li>
+					<li><a href="/hankuk/admin/academicnotice">학사공지 게시판</a></li>
 					<li><a href="#">채용정보 게시판</a></li>
 					<li><a href="#">학과공지 게시판</a></li>
 				</ul>
