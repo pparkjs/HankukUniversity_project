@@ -2,7 +2,7 @@
 #tb{
 /* 	border :1px solid black; */
 	width : 50%;
-	height : 500px;
+	height : 400px;
 /* 	overflow: scroll; */
 }
 
@@ -93,11 +93,57 @@
 	margin-right: 20px;
 }
 
+.a{
+	width : 30%;	
+	height: 30px;
+	border-radius: 5px;
+	border : none;
+	box-shadow: 1px 1px 1px 1px gray;
+	text-align: center;
+	font-weight: bold;
+	color : #800000;
+}
+
 .selectCustom option{
 	font-weight: bold;
 	color : #800000;
 }
 
+.pro1{
+	width:100px;
+	height: 30px;
+}
+.pro2{
+	width:50px;
+	height: 30px;
+}
+
+.apply{
+	padding:0;
+	
+}
+#applyTable{
+	border : 1px solid black;
+	text-align: center;
+	float:right;
+	
+}
+
+#applyTable input[type="text"],
+#applyTable span{
+	 color : black;
+	 height : 40px;
+	 font-size: 18px;
+	 text-align: center;
+	
+}
+#applyTable input[type="text"]{
+	border-radius: 5px;
+}
+
+#applyTable span{
+		width : 100px;
+	}
 
   }
   
