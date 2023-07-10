@@ -43,9 +43,6 @@ public class CommonFileController {
 				MultipartFile file = preivewFiles.get(i);
 				log.info(file.getOriginalFilename());
 				log.info(file.getSize() + "");
-//				if (file.getSize()) {
-//					
-//				}
 				try {
 					if (i > 0) {
 						savedName += ",";

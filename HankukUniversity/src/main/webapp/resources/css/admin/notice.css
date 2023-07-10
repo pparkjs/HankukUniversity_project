@@ -19,3 +19,6 @@
 .previewFile span:hover {
 	color: red;
 }
+#noticeFileList{
+	border-top: 2px solid gray;
+}

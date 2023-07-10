@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.common.mapper.CommonFileMapper">
+ 	
+ 	<select id="getAttachFileNo" resultType="int">
+ 		/* kr.or.hku.common.mapper.CommonFileMapper.getAttachFileNo */
+ 		select seq_attach_file.nextval from dual
+ 	</select>
+ 	
+ 	<insert id="insertFile" parameterType="attachFileVO">
+ 		/* kr.or.hku.common.mapper.CommonFileMapper.insertFile */
+ 		INSERT INTO attach_file(
+ 			  atch_file_no
+			, atch_file_seq
+			, file_path
+			, file_orgnl_file_nm
+			, file_size
+			, file_cont_type
+			, file_down_cnt
+ 		) VALUES(
+ 			  #{atchFileNo}
+ 			, #{atchFileSeq}
+ 			, #{filePath}
+ 			, #{fileOrgnlFileNm}
+ 			, #{fileSize}
+ 			, #{fileContType}
+ 			, 0
+ 		)
+ 	</insert>
+ 	
+ 	<select id="getNoticeFile" parameterType="int" resultType="attachFileVO">
+ 		/* kr.or.hku.common.mapper.CommonFileMapper.getNoticeFile */
+ 		SELECT
+ 			  atch_file_no
+ 			, atch_file_seq
+		    , file_path
+		    , file_orgnl_file_nm
+		    , file_size
+		    , file_cont_type
+		    , file_down_cnt
+		FROM attach_file
+		WHERE atch_file_no = #{atchFileNo}
+ 	</select>
+ 	
+ </mapper>
