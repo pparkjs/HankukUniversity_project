@@ -1,5 +1,5 @@
 package kr.or.hku;
 
 public enum ServiceResult {
-	OK, FAILED, EXIST, NOTEXIST
+	OK, FAILED, EXIST, NOTEXIST, EXCEED, 
 }
