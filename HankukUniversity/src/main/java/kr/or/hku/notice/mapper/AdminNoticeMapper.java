@@ -2,7 +2,6 @@ package kr.or.hku.notice.mapper;
 
 import java.util.List;
 
-
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.hku.notice.vo.NoticeVO;
