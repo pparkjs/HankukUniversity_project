@@ -83,7 +83,7 @@
 <script type="text/javascript">
 	const myName = "${emp.empName}";
 	var noticeClsf = "${noticeClsf}";
-	var formData = new FormData();
+	noticeList(); // 노티스 리스트 가져오기
 	console.log(noticeClsf);
 	$(function(){
 		CKEDITOR.replace("noticeCn",{
@@ -102,6 +102,10 @@
 		sNoticeBtn.on('click',function(){
 			// 등록 했을떄
 			if(this.innerText == "등록"){
+
+				let formData = new FormData();
+				//let formData = new FormData();
+
 				let title = noticeTtl.val();
 				let content = CKEDITOR.instances.noticeCn.getData();
 
@@ -115,38 +119,44 @@
 					alert("내용을 입력해주세요");
 					return false;
 				}
-// 				console.log(myName);
-// 				var addData = {
-// 					noticeTtl : title,
-// 					noticeCn : content,
-// 					noticeWrtrNm : myName
-// 				};
+
+				
+				let noticeFile = document.querySelector('#noticeFile');
+				console.log(noticeFile.files);
 
 				formData.append("noticeTtl", title);
 				formData.append("noticeCn",content);
 				formData.append("noticeWrtrNm", myName);
 				formData.append("noticeClsf", noticeClsf);
 				
+				let files = noticeFile.files;
+				for(let i=0; i<files.length; i++){
+					formData.append("files", files[i]);
+				}
+				
 				console.log(formData);
-// 				return false;
-
-				var xhr = new XMLHttpRequest();
-				xhr.open("post", "/hankuk/admin/addNotice", true);
-				xhr.onreadystatechange = function() {
-					if(xhr.readyState == 4 && xhr.status == 200) {
-						let res = xhr.responseText;
-						console.log(res);
-						// if (res === "success") {
-						// 	alert("정상적으로 글이 등록 되었습니다.");	
-						// }else{
-						// 	alert("서버에러 다시 시도해주세요.");
-						// }
-						// addModal.modal('hide');
-						// // 새로운 글추가 원래 이렇게 하면안됨 나중에 수정
-						// noticeList();
+					
+				$.ajax({
+					type:"post",
+					url: "/hankuk/admin/addNotice",
+					contentType: false, // 필수 
+					processData: false, // 필수
+					cache: false,
+					data: formData,
+					dataType: "text",
+					success: function(res){
+						if(res === "success"){
+							alert("정상적으로 글이 등록되었습니다.");
+							$('#addModal').modal("hide");
+							noticeList();
+						}
+					},
+					err: function(err){
+						console.log("err:", err)
 					}
-				};
-				xhr.send(formData);
+				})
+
+
 			}else if(this.innerText == "수정"){ // 수정 버튼 눌럿 을떄
 				console.log("수정 버튼 클릭");
 				$('#deleteBtn').text("취소");
@@ -178,15 +188,20 @@
 		});
 	});
 
-	noticeList(); // 노티스 리스트 가져오기
+
 
 	// 게시판 테이블
 	const noticeTbody = document.querySelector("#noticeTbody");
 
 	// 노티스 리스트 가져오기
 	function noticeList(){
+		let clsf = "${noticeClsf}";
+		console.log("노티스 리스트 조회", clsf);
+	/* 	let noticeListClsf = {
+			"noticeClsf" : clsf
+		}; */
 		var xhr = new XMLHttpRequest();
-		xhr.open("get", "/hankuk/admin/noticeList", true);
+		xhr.open("get", `/hankuk/admin/noticeList/\${clsf}`, true);
 		xhr.onreadystatechange = function() {
 			if(xhr.readyState == 4 && xhr.status == 200) {
 				var noticeData = JSON.parse(xhr.responseText);
@@ -224,6 +239,7 @@
 				data: data,
 				dataType: "json",
 				success : function(res){
+					console.log(res);
 					$('#sNoticeBtn').text("수정"); // 등록 버튼 수정으로 바꿈
 					$('#noticeFrm').css('display', 'none'); // 등록폼 안보이게
 					$('#detailDiv').css('display', 'block');// 상세div 보이게
@@ -237,6 +253,23 @@
 					$('#detailWrtr').html(res.noticeWrtrNm);
 					$('#detailCnt').html(res.noticeReadCnt);
 					$('#detailCn').html(res.noticeCn);
+					let noticeFileList = $('#noticeFileList');
+					if(res.fileList != null && res.fileList.length > 0){
+						let fileStr = "";
+						$.each(res.fileList, function(i,v){
+							// console.log("파일 하나하나",$(this));
+							if(v.fileContType == "image/png"){	// 이미지 면 이미지 태그를 이용하려 출력
+								fileStr += `<div class="col-xl-3 col-sm-6">
+												<a href="D:/uploadfiles\${v.filePath}" download="\${v.fileOrgnlFileNm}">\${v.fileOrgnlFileNm}</a>
+											</div>`;
+							}else{
+								fileStr += `<div class="col-xl-3 col-sm-6">
+												<a href="D:/uploadfiles\${v.filePath}" download="\${v.fileOrgnlFileNm}">\${v.fileOrgnlFileNm}</a>
+											</div>`;
+							}
+						});
+						$(noticeFileList).html(fileStr);
+					}
 				}
 			});
 		});
@@ -248,6 +281,7 @@
 
 		// 파일 변경 했을떄
 		noticeFile.addEventListener('change', function(e){
+			let formData = new FormData();
 			let files = e.target.files;
 			console.log(files);
 			if(files.length == 0 || files == null){
@@ -290,6 +324,30 @@
 		// 파일 스판테그 x눌럿을때
 		$(previewFile).on('click','span',function(){
 // 			console.log(document.querySelector('#noticeFile'))
+			let files = noticeFile.files;
+			let fileName = $(this).parent("div").find("a").attr("href").split("_")[1];
+			var idx = 0;
+			console.log("삭제", fileName);
+			const dataTransfer = new DataTransfer();
+
+			for(let i=0; i<files.length; i++){
+				if(files[i].name  == fileName){
+					alert("files[i]" + files[i].name  + " : " + fileName);
+					//delete files[i];
+					//files.splice(i, 1);
+					let fileArray = Array.from(files);	//변수에 할당된 파일을 배열로 변환(FileList -> Array)
+    
+					fileArray.splice(i, 1);	//해당하는 index의 파일을 배열에서 제거
+					
+					fileArray.forEach(file => { dataTransfer.items.add(file); });
+					//남은 배열을 dataTransfer로 처리(Array -> FileList)
+					
+					noticeFile.files = dataTransfer.files;	//제거 처리된 FileList를 돌려줌
+					break;
+				}
+			}
+			
+			console.log("삭제후 파일", files);
 			$(this).parent("div").remove();
 		});
 
@@ -341,7 +399,7 @@
 			<div class="modal-body">
 				<div class="basic-form" id="regDiv">
 					<div class="form-validation">
-						<form class="needs-validation" id="noticeFrm">
+						<form class="needs-validation" id="noticeFrm" name="noticeFrm" enctype="multipart/form-data" method="post">
 							<div class="mb-3">
 								<label class="col-lg-4 col-form-label" for="validationCustom01">
 									제목 <span class="text-danger">*</span>
@@ -385,6 +443,9 @@
 					</div>
 					<div class="mb-3" id="detailCn">
 						내용
+					</div>
+					<!-- 파일들 -->
+					<div class="row" id="noticeFileList">
 					</div>
 				</div>
 			</div>
