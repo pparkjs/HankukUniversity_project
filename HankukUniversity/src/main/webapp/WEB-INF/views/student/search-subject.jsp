@@ -52,7 +52,7 @@
 			<hr>
 			<div class="card-body" style="padding-top: 0px;">
 				<div class="table-wrap">
-					<table class="table">
+					<table class="table" style="margin-top: -22px;">
 						<thead class="thead-dark">
 							<tr>
 								<th style="width:200px;">과목코드</th>
@@ -119,7 +119,7 @@ function subList(){
 	$.ajax({
 		type:"get",
 		data:selData,
-		url : "/hku/student/sub-list",
+		url : "/hku/sub-list",
 		dataType : "json",
 		success : function(res){
 			console.log(res)
