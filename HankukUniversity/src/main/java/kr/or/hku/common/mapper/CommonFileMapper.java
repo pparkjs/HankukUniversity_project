@@ -11,4 +11,5 @@ public interface CommonFileMapper {
 	public int getAttachFileNo();
 	public int insertFile(AttachFileVO fileVO);
 	public List<AttachFileVO> getNoticeFile(int atchFileNo);
+	public int deleteFile(int fileNo);
 }

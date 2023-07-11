@@ -35,12 +35,17 @@ public class CommonFileServiceImpl implements CommonFileService {
 
 	@Override
 	public int insertFile(MultipartFile file, int attachFileNo,int i) {
+		String uploadPath = "c:" + resourcePath;
+		File folder = new File(uploadPath);
+		if(!folder.exists()) {
+			folder.mkdirs();
+		}
 		// 랜덤 uuid 생성
 		String uuid = UUID.randomUUID().toString();
 		// uuid + 오리지날 네임 결합
 		String saveFileName = "/" + uuid + "_" + file.getOriginalFilename();
 		// 업로드 패스 저장
-		String uploadPath = "d:" + resourcePath + saveFileName;
+		uploadPath = "c:" + resourcePath + saveFileName;
 		
 		try {
 			file.transferTo(new File(uploadPath));
@@ -63,6 +68,11 @@ public class CommonFileServiceImpl implements CommonFileService {
 	@Override
 	public List<AttachFileVO> getNoticeFile(int atchFileNo) {
 		return fileMapper.getNoticeFile(atchFileNo);
+	}
+	
+	@Override
+	public int deleteFile(int fileNo) {
+		return fileMapper.deleteFile(fileNo);
 	}
 
 }

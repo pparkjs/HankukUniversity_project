@@ -44,4 +44,11 @@
 		WHERE atch_file_no = #{atchFileNo}
  	</select>
  	
+ 	
+ 	<delete id="deleteFile" parameterType="int">
+ 		/* kr.or.hku.common.mapper.CommonFileMapper.deleteFile */
+ 		DELETE FROM attach_file
+ 		WHERE atch_file_no = #{atchFileNo}
+ 	</delete>
+ 	
  </mapper>

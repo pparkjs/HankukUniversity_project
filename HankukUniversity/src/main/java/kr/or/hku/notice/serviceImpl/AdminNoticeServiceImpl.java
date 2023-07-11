@@ -38,4 +38,14 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 		noticeMapper.incrementNotice(noticeNo);
 		return noticeMapper.getNoticeOne(noticeNo);
 	}
+
+	@Override
+	public int updateNotice(NoticeVO noticeVO) {
+		return noticeMapper.updateNotice(noticeVO);
+	}
+	
+	@Override
+	public int deleteNotice(int noticeNo) {
+		return noticeMapper.deleteNotice(noticeNo);
+	}
 }
