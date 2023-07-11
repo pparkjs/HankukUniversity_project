@@ -28,4 +28,8 @@ public class StudentVO {
 	private String stdActno       ; //학생계좌번호
 	private String stdProfilePath ; //프로필사진경로
 	
+	// 조인해서 가져올 필드
+	private String deptNm; //학과이름
+	private String stdSttsNm; // 학적상태
+	private int grade; //학년
 }
