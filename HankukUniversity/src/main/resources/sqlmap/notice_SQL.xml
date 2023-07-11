@@ -21,7 +21,7 @@
 			, notice_regdate
 			, notice_read_cnt
 			, notice_clsf
-			, atch_file_no
+			<if test="atchFileNo != -1">, atch_file_no</if>
  		)VALUES(
  			  seq_notice.nextval
  			, #{noticeTtl}
@@ -30,7 +30,7 @@
  			, sysdate
  			, 0
  			, #{noticeClsf}
- 			, #{atchFileNo}
+ 			<if test="atchFileNo != -1">, #{atchFileNo}</if>
  		)
  	</insert>
  	
@@ -62,5 +62,23 @@
 		FROM notice 
 		WHERE notice_no = #{noticeNo}
  	</select>
+ 	
+ 	
+ 	<update id="updateNotice" parameterType="noticeVO">
+ 		/* kr.or.hku.notice.mapper.AdminNoticeMapper.updateNotice */
+ 		UPDATE notice
+ 		SET
+ 			  notice_ttl = #{noticeTtl}
+ 			, notice_cn = #{noticeCn}
+ 			, notice_regdate = sysdate
+ 			<if test="atchFileNo != -1">, atch_file_no = #{atchFileNo}</if>
+ 		WHERE notice_no = #{noticeNo}
+ 	</update>
+ 	
+ 	<delete id="deleteNotice" parameterType="int">
+ 		/* kr.or.hku.notice.mapper.AdminNoticeMapper.deleteNotice */
+ 		DELETE FROM notice
+ 		WHERE notice_no = #{noticeNo}
+ 	</delete>
  	
  </mapper>

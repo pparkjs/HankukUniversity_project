@@ -12,4 +12,6 @@ public interface AdminNoticeMapper {
 	public List<NoticeVO> noticeList(String noticeClsf);
 	public NoticeVO getNoticeOne(int noticeNo);
 	public void incrementNotice(int noticeNo);
+	public int updateNotice(NoticeVO noticeVO);
+	public int deleteNotice(int noticeNo);
 }

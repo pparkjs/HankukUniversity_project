@@ -9,4 +9,6 @@ public interface AdminNoticeService {
 	public List<NoticeVO> noticeList(String noticeClsf);
 	public ServiceResult addNotice(NoticeVO noticeVO);
 	public NoticeVO getNoticeOne(int noticeNo);
+	public int updateNotice(NoticeVO noticeVO);
+	public int deleteNotice(int noticeNo);
 }

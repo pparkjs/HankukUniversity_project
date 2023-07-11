@@ -14,4 +14,6 @@ public interface CommonFileService {
 
 	public List<AttachFileVO> getNoticeFile(int atchFileNo);
 
+	public int deleteFile(int fileNo);
+
 }

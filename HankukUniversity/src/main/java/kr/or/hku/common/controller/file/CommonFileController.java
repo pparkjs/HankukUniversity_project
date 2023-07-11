@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -90,4 +91,33 @@ public class CommonFileController {
 		}
 		return entity;
 	}
+	
+//	@ResponseBody
+//	@GetMapping("/download/{filePath}")
+//	public ResponseEntity<byte[]> fileDownLoad(@PathVariable("filePath") String filePath){
+//		
+//		log.info("다운로드 들어오나?" + filePath.split("_")[1]);
+//		InputStream in = null;
+//		ResponseEntity<byte[]> entity = null;
+//		
+//		HttpHeaders headers = new HttpHeaders();
+//		
+//		try {		
+//			in = new FileInputStream(resourcePath + "/" +filePath);
+//			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+//			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+//		} catch (Exception e) {
+//			e.printStackTrace();	
+//			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+//		}
+//		return entity;
+//	}
 }
+
+
+
+
+
+
+
+
