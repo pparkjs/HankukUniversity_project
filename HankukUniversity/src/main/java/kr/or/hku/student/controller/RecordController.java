@@ -36,8 +36,16 @@ public class RecordController {
 	    if (student == null) {
 	        return "redirect:/main/portal";
 	    }
-	    
 	    model.addAttribute("student", student);
+	    
 	    return "student/record";
+	}
+	
+	@GetMapping(value = "/recordChange")
+	public String recordChange(HttpServletRequest request, Model model) {
+	    HttpSession session = request.getSession();
+	    StudentVO stdVo = (StudentVO) session.getAttribute("std");
+	    
+		return "student/recordChange";
 	}
 }
