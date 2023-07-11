@@ -10,6 +10,7 @@
 	 -->
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<setting name="jdbcTypeForNull" value="VARCHAR" />
 	</settings>
 	
 	<!-- 자주 사용하는 타입의 별칭을 셋팅 -->
