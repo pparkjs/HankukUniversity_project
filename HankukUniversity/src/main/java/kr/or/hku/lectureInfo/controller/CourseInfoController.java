@@ -3,9 +3,12 @@ package kr.or.hku.lectureInfo.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,8 +26,10 @@ import kr.or.hku.common.service.ICommonService;
 import kr.or.hku.common.vo.CommonVO;
 import kr.or.hku.lectureInfo.service.CourseInfoService;
 import kr.or.hku.lectureInfo.vo.CartVO;
+import kr.or.hku.lectureInfo.vo.CourseRegistVO;
 import kr.or.hku.lectureInfo.vo.LectureAplyVO;
 import kr.or.hku.lectureInfo.vo.SubjectVO;
+import kr.or.hku.student.vo.StudentVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -137,5 +142,52 @@ public class CourseInfoController {
 		}
 	}
 	
+	//  수강이력 폼 이동
+	@GetMapping("/course-record")
+	public String courseRecForm(HttpSession session, Model model){
+		StudentVO std = (StudentVO)session.getAttribute("std");
+		StudentVO vo = commonService.myAllInfo(std.getStdNo());
+		model.addAttribute("std", vo);
+		log.info("회원정보 : "+std);
+		return "student/course-record";
+	}
 	
+	// 학점이수현황가져오기
+	@ResponseBody
+	@GetMapping("/cradit-history")
+	public ResponseEntity<List<CourseRegistVO>> craditHistory(String stdNo){
+		log.info("학번입니다!! : " + stdNo);
+		List<CourseRegistVO> list = courseService.craditHistory(stdNo);
+		
+		return new ResponseEntity<List<CourseRegistVO>>(list, HttpStatus.OK);
+	}
+	
+	// 과목이수현황 가져오기
+	@ResponseBody
+	@PostMapping("/sub-history")
+	public ResponseEntity<List<CourseRegistVO>> getSubRecord(@RequestBody CourseRegistVO vo){
+		log.info("이수구분코드 : " + vo.getCrsClassfCd());
+		log.info("학번 : " + vo.getStdNo());
+		
+		List<CourseRegistVO> list = courseService.getSubRecord(vo);
+		
+		return new ResponseEntity<List<CourseRegistVO>>(list, HttpStatus.OK);
+	}
+	
+	// 수강중인 강의 폼으로 이동
+	@GetMapping("/present-course")
+	public String presentCourseForm(HttpSession session, Model model) {
+		StudentVO std = (StudentVO)session.getAttribute("std");
+		StudentVO vo = commonService.myAllInfo(std.getStdNo());
+		model.addAttribute("std", vo);
+		log.info("회원정보 : "+std);
+		return "student/present-course";
+	}
+	
+	@GetMapping("/present-list")
+	public ResponseEntity<List<LectureAplyVO>> presentList(@RequestParam Map<String, Object> map){
+		map.put("aprvSttsCd", "appv");
+		List<LectureAplyVO> list = courseService.getPresentList(map);
+		return new ResponseEntity<List<LectureAplyVO>>(list, HttpStatus.OK);
+	}
 }
