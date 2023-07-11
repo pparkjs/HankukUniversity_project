@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.hku.admin.vo.DepartmentVO;
 import kr.or.hku.lectureInfo.vo.CartVO;
+import kr.or.hku.lectureInfo.vo.CourseRegistVO;
 import kr.or.hku.lectureInfo.vo.LectureAplyVO;
 import kr.or.hku.lectureInfo.vo.SubjectVO;
 
@@ -24,4 +25,7 @@ public interface CourseInfoMapper {
 	public int cartRegister(Map<String, Object> map);
 	public void courseCancle(Map<String, Object> map);
 	public int getRemainder(Map<String, Object> map);
+	public List<CourseRegistVO> craditHistory(String stdNo);
+	public List<CourseRegistVO> getSubRecord(CourseRegistVO vo);
+	public List<LectureAplyVO> getPresentList(Map<String, Object> map);
 }

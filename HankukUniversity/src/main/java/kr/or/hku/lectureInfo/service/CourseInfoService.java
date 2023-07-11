@@ -6,6 +6,7 @@ import java.util.Map;
 import kr.or.hku.ServiceResult;
 import kr.or.hku.admin.vo.DepartmentVO;
 import kr.or.hku.lectureInfo.vo.CartVO;
+import kr.or.hku.lectureInfo.vo.CourseRegistVO;
 import kr.or.hku.lectureInfo.vo.LectureAplyVO;
 import kr.or.hku.lectureInfo.vo.SubjectVO;
 
@@ -17,4 +18,7 @@ public interface CourseInfoService {
 	public List<CartVO> cartList(String stdNo);
 	public ServiceResult cartCancle(Map<String, Object> map);
 	public ServiceResult cartRegister(Map<String, Object> map);
+	public List<CourseRegistVO> craditHistory(String stdNo);
+	public List<CourseRegistVO> getSubRecord(CourseRegistVO vo);
+	public List<LectureAplyVO> getPresentList(Map<String, Object> map);
 }
