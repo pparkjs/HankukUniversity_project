@@ -206,3 +206,94 @@
     font-size: 15px;
 }
 
+/* 수강이력 CSS  */
+
+.deptText, .noText, .gradeText, .nameText, .birthText{
+	width: 100px;
+    height: 35px;
+    margin-right: 60px;
+    background: whitesmoke;
+    color: #6e6e6e;
+    font-size: 16px;
+    border-radius: 0.375rem;
+    
+}
+.deptText{
+	padding-left:15px;
+	width: 200px;
+}
+.noText{
+	padding-left:15px;
+	width: 160px;
+}
+.gradeText{
+	padding-left:15px;
+	width: 80px;
+}
+.nameText{
+	padding-left:15px;
+	width: 150px;
+}
+.birthText{
+	padding-left:15px;
+	width: 150px;
+}
+.myInfo{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 18px;
+}
+.recordMain{
+	display: flex;
+	margin-top: 20px;
+}
+.recordLeft{
+	width:30%;
+}
+.recordRight{
+	width:70%;
+	margin-left: 14px;
+}
+.record-wrap2{
+	overflow: scroll;
+    height: 598px;
+    margin-top: 13px;
+}
+.record-wrap1{
+	overflow: scroll;
+    height: 350px;
+    margin-top: 13px;
+}
+/* 수강중인강의 CSS */
+.presentCon{
+	width:100%;
+}
+.totalCdt{
+	display: flex;
+    margin-right: 36px;
+    align-items: center;
+    margin-left: 84px;
+}
+.totalCdt span{
+	color: #6e6e6e;
+    font-size: 15px;
+}
+
+.totalCdt .totalRight{
+	color: red;
+	font-size: 13px;
+	font-weight: 600px;
+}
+.tLeft{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#scheduleBtn{
+	padding: 0.319rem 1.163rem;
+    margin-left: 1034px;
+}
+.sModal{
+	--bs-modal-width: 1000px;
+}
