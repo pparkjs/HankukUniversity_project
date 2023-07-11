@@ -238,4 +238,87 @@
 		                    ELSE 0
 		                END
  	</select>
+ 	
+ 	
+ 	<!-- 나의 학점이수현황 가져오기 -->
+ 	<select id="craditHistory" resultType="courseRegistVO" parameterType="String">
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.getRemainder*/
+ 		SELECT 
+ 			  d.com_cd_nm AS crs_classf_nm
+ 			, c.crs_classf_cd
+			, sum(c.sub_crd) AS req_crd_sum 
+			, sum(NVL(a.crs_earned_crd,0)) AS crd_sum
+		FROM course_regist a, lecture_aply b, subject c, com_code d
+		WHERE a.lecap_no = b.lecap_no
+		AND b.sub_no = c.sub_no
+		AND d.com_cd = c.crs_classf_cd
+		AND a.std_no = #{stdNo}
+		GROUP BY d.com_cd_nm, c.crs_classf_cd
+		ORDER BY d.com_cd_nm DESC
+ 	</select>
+ 	
+ 	<!-- 나의 과목이수현황 가져오기 -->
+ 	<select id="getSubRecord" resultType="courseRegistVO" parameterType="courseRegistVO">
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.getSubRecord*/
+	 	SELECT 
+	 		  a.std_no
+	 		, a.lecap_no
+	 		, c.sub_nm
+	 		, c.crs_classf_cd
+	 		, a.crs_scr
+	 		, d.com_cd_nm AS crs_classf_nm
+	 		, b.lecap_yr
+	 		, b.lecap_sem
+		FROM course_regist a, lecture_aply b, subject c, com_code d
+		WHERE a.lecap_no = b.lecap_no
+		AND c.sub_no = b.sub_no
+		AND d.com_cd = c.crs_classf_cd
+		AND crs_classf_cd = #{crsClassfCd}
+		AND std_no = #{stdNo}
+		AND a.crs_scr IS NOT NULL
+		ORDER BY b.lecap_yr, b.lecap_sem
+ 	</select>
+ 	
+ 	<!-- 현재 수강중인 강의 가져오기 -->
+ 	<select id="getPresentList" resultType="lectureAplyVO" parameterType="map">
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.getPresentList*/
+ 		SELECT 
+		 		a.lecap_no			/*개설번호*/
+		 	,	a.sub_no 			/*과목번호*/
+		 	,	b.sub_nm 			/*과목이름*/
+		 	,	c.com_cd_nm  		/*이수구분이름*/
+		 	,	d.pro_nm			/*교수이름*/
+		 	,   f.dept_nm			/*학과이름*/
+		 	,	a.flcts_no			/*시설물번호*/
+		 	,   g.flcts_nm			/*시설물이름*/
+		 	,   h.flct_nm           /*시설이름*/
+			,	a.lecap_yr 			/*개설년도*/
+			,	b.sub_crd			/*학점*/
+			,	a.lecap_tg_grade 	/*대상학년*/
+			,	a.lecap_dt			/*신청일자*/
+			,	a.lecap_sem 		/*개설학기*/
+			,	e.lecsc_day 		/*강의요일*/
+			,	e.period_cd 		/*교시코드*/
+			,	lecsc_hour 			/*시수*/
+			,	a.aprv_stts_cd		/*결재상태*/
+		FROM lecture_aply a, subject b, com_code c, professor d, 
+			lecture_schedule e, department f, facilities g, facility h, course_regist i
+		WHERE a.sub_no = b.sub_no 
+		AND b.crs_classf_cd = c.com_cd
+		AND d.pro_no = a.pro_no
+		AND e.lecap_no = a.lecap_no
+		AND f.dept_cd = b.dept_cd
+		AND aprv_stts_cd like #{aprvSttsCd}
+		AND g.flcts_no = A.flcts_no
+		AND h.flct_no = g.flct_no
+		AND i.lecap_no = A.lecap_no
+		AND i.std_no = #{stdNo}
+		AND lecap_yr like TO_CHAR(sysdate, 'YYYY')
+		AND lecap_sem = CASE
+		                    WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 4 THEN 1
+		                    WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 9 THEN 2
+		                    ELSE 0
+		            	END
+ 	
+ 	</select>
  </mapper>
