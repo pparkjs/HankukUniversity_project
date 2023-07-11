@@ -33,6 +33,8 @@ public class LectureAplyVO {
 	private String deptNm; //학과이름
 	private String subCrd; //학점
 	private int remainder; //잔여정원
+	private String flctsNm; //시설물이름
+ 	private String flctNm;	//시설이름 
 	
 //	private List<LectureScheduleVO> scheduleList;
 }

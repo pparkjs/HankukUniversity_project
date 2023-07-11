@@ -6,7 +6,37 @@
  <mapper namespace="kr.or.hku.common.mapper.CommonMapper">
  	
  	<select id="getAllCommonData" resultType="commonVO">
+ 		/*kr.or.hku.common.mapper.CommonMapper.getAllCommonData*/
  		select * from com_code
  	</select>
  	
+ 	<!-- 학과이름 포함한 나의 정보 가져오기 -->
+ 	<select id="myAllInfo" parameterType="String" resultType="studentVO">
+ 	/*kr.or.hku.common.mapper.CommonMapper.myAllInfo*/
+ 		SELECT 
+ 			  a.std_no
+ 			, a.dept_cd
+ 			, b.dept_nm
+ 			, a.std_nm
+ 			, a.std_mjr_crd
+ 			, a.std_ctrl_crd
+ 			, a.std_mtcltn_yr
+ 			, a.std_stts_cd
+ 			, c.com_cd_nm AS std_stts_nm
+ 			, a.std_telno
+ 			, a.std_sex_cd
+ 			, a.std_zip
+ 			, a.std_addr
+ 			, a.std_daddr
+ 			, a.std_mail
+ 			, a.std_brdt
+ 			, a.std_rrno
+ 			, a.bank_cd
+ 			, a. std_profile_path
+ 			,(to_number(to_char(sysdate, 'YYYY')) - to_number(to_char(a.std_mtcltn_yr)) + 1) AS grade
+		FROM student a, department b, com_code c
+		WHERE a.dept_cd = b.dept_cd
+		AND c.com_cd = a.std_stts_cd
+		AND a.std_no = #{stdNo}
+ 	</select>
  </mapper>

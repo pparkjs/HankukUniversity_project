@@ -14,6 +14,7 @@ import kr.or.hku.admin.vo.DepartmentVO;
 import kr.or.hku.lectureInfo.mapper.CourseInfoMapper;
 import kr.or.hku.lectureInfo.service.CourseInfoService;
 import kr.or.hku.lectureInfo.vo.CartVO;
+import kr.or.hku.lectureInfo.vo.CourseRegistVO;
 import kr.or.hku.lectureInfo.vo.LectureAplyVO;
 import kr.or.hku.lectureInfo.vo.SubjectVO;
 
@@ -112,6 +113,21 @@ public class CourseInfoServiceImpl implements CourseInfoService {
 		}
 		
 		return res;
+	}
+
+	@Override
+	public List<CourseRegistVO> craditHistory(String stdNo) {
+		return courseMapper.craditHistory(stdNo);
+	}
+
+	@Override
+	public List<CourseRegistVO> getSubRecord(CourseRegistVO vo) {
+		return courseMapper.getSubRecord(vo);
+	}
+
+	@Override
+	public List<LectureAplyVO> getPresentList(Map<String, Object> map) {
+		return courseMapper.getPresentList(map);
 	}
 
 	

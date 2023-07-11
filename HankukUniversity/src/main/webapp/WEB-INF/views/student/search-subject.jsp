@@ -47,7 +47,7 @@
 	<div class="container-fluid subCon">
 		<div class="card" id="card-title-1">
 			<div class="card-header border-0 pb-0 ">
-				<h5 class="card-title" style="color: maroon;  font-weight: 900;}">학점이수현황</h5>
+				<h5 class="card-title" style="color: maroon;  font-weight: 900;">학점이수현황</h5>
 			</div>
 			<hr>
 			<div class="card-body" style="padding-top: 0px;">
