@@ -1,4 +1,4 @@
-package kr.or.hku.login.serviceImpl;
+package kr.or.hku.login.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

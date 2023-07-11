@@ -19,20 +19,306 @@
 			and (sub_nm like '%'||#{sub_nm}||'%')
 		</if>
  	</sql>
- 
+ 	
+<!--  	<resultMap type="lectureAplyVO" id="lectureMap"> -->
+<!--  		<id property="lecapNo" column="lecap_no"/> -->
+<!--  		<result property="lecapNo" column="lecap_no"/> -->
+<!--  		<result property="subNo" column="sub_no"/> -->
+<!--  		<result property="subNm" column="sub_nm"/> -->
+<!--  		<result property="subCrd" column="sub_crd"/> -->
+<!--  		<result property="comCdNm" column="com_cd_nm"/> -->
+<!--  		<result property="proNm" column="pro_nm"/> -->
+<!--  		<result property="deptNm" column="dept_nm"/> -->
+<!--  		<result property="flctsNo" column="flcts_no"/> -->
+<!--  		<result property="lecapYr" column="lecap_yr"/> -->
+<!--  		<result property="lecapTgGrade" column="lecap_tg_grade"/> -->
+<!--  		<result property="lecapDt" column="lecap_dt"/> -->
+<!--  		<result property="lecapCpct" column="lecap_cpct"/> -->
+<!--  		<result property="lecapSem" column="lecap_sem"/> -->
+<!--  		<result property="aprvSttsCd" column="aprv_stts_cd"/> -->
+<!--  		<result property="lecapRjctRsn" column="lecap_rjct_rsn"/> -->
+<!--  		<result property="avlCd" column="avl_cd"/> -->
+<!--  		<collection property="scheduleList" resultMap="scheduleMap"/> -->
+<!--  	</resultMap> -->
+ 	
+<!--  	<resultMap type="lectureScheduleVO" id="scheduleMap"> -->
+<!--  		<result property="lecapNo" column="lecap_no"/> -->
+<!--  		<result property="lecscDay" column="lecsc_day"/> -->
+<!--  		<result property="periodCd" column="period_cd"/> -->
+<!--  		<result property="lecscHour" column="lecsc_hour"/> -->
+<!--  	</resultMap> -->
+ 	
  <!-- 교과목 가져오기 -->
  	<select id="getList" resultType="subjectVO" parameterType="map">
- 		select A.SUB_NO, C.DEPT_NM AS DEPT_CD, A.SUB_NM, A.SUB_GRADE, A.SUB_HOUR, A.SUB_CRD, B.com_cd_nm AS CRS_CLASSF_CD, A.SUB_OTL
-		from subject A, com_code B, department C
-		where 1=1
-		and B.com_cd = A.CRS_CLASSF_CD
-		and A.DEPT_CD = C.DEPT_CD
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.getList*/
+ 		SELECT 
+ 			  a.sub_no
+ 			, c.dept_nm AS dept_cd
+ 			, a.sub_nm
+ 			, a.sub_grade
+ 			, a.sub_hour
+ 			, a.sub_crd
+ 			, b.com_cd_nm AS crs_classf_cd
+ 			, a.sub_otl
+		FROM subject a, com_code b, department C
+		WHERE 1=1
+		AND b.com_cd = a.crs_classf_cd
+		AND a.dept_cd = c.dept_cd
 		<include refid="subSearch"/>
  	</select>
  	
  	<!-- 학과가져오기 -->
  	<select id="getAllDept" resultType="departmentVO">
- 		select * from department
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.getAllDept*/
+ 		SELECT * FROM department
  	</select>
  	
+ 	<!-- 개설된 강의 리스트 가져오기 -->
+ 	<select id="getLecture" parameterType="map" resultType="lectureAplyVO">
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.getLecture*/
+	 	SELECT 
+		 		a.lecap_no			/*개설번호*/
+		 	,	a.sub_no 			/*과목번호*/
+		 	,	b.sub_nm 			/*과목이름*/
+		 	,	c.com_cd_nm  		/*이수구분이름*/
+		 	,	d.pro_nm			/*교수이름*/
+		 	,   f.dept_nm			/*학과이름*/
+		 	,	a.flcts_no			/*시설물번호*/
+			,	a.lecap_yr 			/*개설년도*/
+			,	b.sub_crd			/*학점*/
+			,	a.lecap_tg_grade 	/*대상학년*/
+			,	a.lecap_dt			/*신청일자*/
+			,	a.lecap_cpct 		/*수강정원*/
+			,   NVL(TO_NUMBER(a.lecap_cpct) - g.cnt, a.lecap_cpct) AS remainder /* 잔여 정원 */
+			,	a.lecap_sem 		/*개설학기*/
+			,	e.lecsc_day 		/*강의요일*/
+			,	e.period_cd 		/*교시코드*/
+			,	lecsc_hour 			/*시수*/
+			,	a.aprv_stts_cd		/*결재상태*/
+			,	a.lecap_rjct_rsn 	/*반려사유*/
+			,	a.avl_cd			/*계획서가용코드*/
+		FROM lecture_aply a, subject b, com_code c, professor d, 
+			lecture_schedule e, department f , (SELECT 
+														lecap_no
+													  , COUNT(*) AS cnt 
+												  FROM course_regist 
+												  GROUP BY lecap_no) g
+		WHERE a.sub_no = b.sub_no 
+		AND b.crs_classf_cd = c.com_cd
+		AND d.pro_no = a.pro_no
+		AND e.lecap_no = a.lecap_no
+		AND f.dept_cd = b.dept_cd
+		AND aprv_stts_cd like #{aprvSttsCd}
+		AND lecap_yr like TO_CHAR(sysdate, 'YYYY')
+		AND g.lecap_no(+) = a.lecap_no
+		AND lecap_sem = CASE
+		                    WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 4 THEN 1
+		                    WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 9 THEN 2
+		                    ELSE 0
+		                END
+		<include refid="subSearch"/>
+ 	</select>
+ 	
+ 	<!-- 장바구니 담기 전 중복 과목 및 요일별 시간표 중복 체크 -->
+ 	<select id="checkCart" parameterType="cartVO" resultType="int">
+ 		/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.checkCart*/
+ 		SELECT 
+ 			   count(*)
+		  FROM lecture_schedule d, (SELECT 
+		  								  a.lecap_no, a.std_no
+		  								, (period_cd + lecsc_hour - 1) AS end_period
+								      FROM cart a, lecture_schedule b
+								     WHERE a.lecap_no = b.lecap_no) c
+		 WHERE d.lecap_no = c.lecap_no
+		 AND (period_cd between #{periodCd} and #{endPeriod} OR end_period between #{periodCd} and #{endPeriod})
+		 AND lecsc_day = #{lecscDay}
+		 AND std_no = #{stdNo}
+ 	</select>
+ 	
+ 	<!-- 장바구니에 담기 -->
+ 	<insert id="cartInsert" parameterType="cartVO">
+ 		/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.cartInsert*/
+ 		insert into cart values(#{stdNo}, #{lecapNo}, sysdate, 'N', #{backColor})
+ 	</insert>
+ 	
+ 	<!--해당 학생에 대한 장바구니에 담긴 리스트 가져오기 -->
+ 	<select id="cartList" parameterType="String" resultType="cartVO">
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.cartList*/
+ 		SELECT 
+	 			b.lecap_no
+	 		  , b.sub_no
+	 		  , c.sub_nm
+	 		  , e.pro_nm
+	 		  , b.lecap_tg_grade
+	 		  , c.sub_crd
+	 		  , f.dept_nm
+	 		  , d.lecsc_day
+	 		  ,	b.lecap_yr 			/*개설년도*/
+			  ,	b.lecap_sem 		/*개설학기*/
+	 		  , d.period_cd
+	 		  , d.lecsc_hour
+	 		  , a.back_color
+	 		  , a.appl_yn
+		  FROM cart a, lecture_aply b, subject c, lecture_schedule d, professor e, department f
+		  WHERE a.lecap_no = b.lecap_no
+		  AND c.sub_no = b.sub_no
+		  AND d.lecap_no = b.lecap_no
+		  AND e.pro_no = b.pro_no
+		  AND f.dept_cd = c.dept_cd
+		  AND a.std_no = #{stdNo}
+		  AND b.lecap_yr like TO_CHAR(sysdate, 'YYYY')
+		  AND b.lecap_sem = CASE
+		                    WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 4 THEN 1
+		                    WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 9 THEN 2
+		                    ELSE 0
+		                END
+ 	</select>
+ 	
+ 	<!-- 장바구니 취소 전 수강신청한 과목 삭제하기 -->
+ 	<delete id="courseCancle" parameterType="map">
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.courseCancle*/
+ 		DELETE FROM course_regist
+ 		WHERE std_no = #{stdNo}
+ 		AND lecap_no = #{lecapNo}
+ 	</delete>
+ 	
+ 	<!-- 장바구니 취소하기 -->
+ 	<delete id="cartCancle" parameterType="map">
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.cartCancle*/
+ 		DELETE FROM cart 
+ 		WHERE std_no = #{stdNo}
+ 		AND lecap_no = #{lecapNo}
+ 	</delete>
+ 	
+ 	<!-- 나의 신청학점 총합 가져오기 -->
+ 	<select id="craditSum" parameterType="cartVO" resultType="int">
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.craditSum*/
+	 	SELECT 
+	 		  NVL(SUM(sub_crd),0)
+		FROM cart a, lecture_aply b, subject c
+		WHERE a.lecap_no = b.lecap_no
+		AND b.sub_no = c.sub_no
+		AND std_no = #{stdNo}
+ 	</select>
+ 	
+ 	<!-- 장바구니에 신청여부 Y로 업데이트 -->
+ 	<update id="cartApplUpdate" parameterType="map">
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.cartApplUpdate*/
+ 		UPDATE cart
+		SET
+			appl_yn = 'Y'
+		WHERE lecap_no = #{lecapNo}
+		AND std_no = #{stdNo}
+ 	</update>
+ 	
+ 	<!-- 수강과목에 삽입 -->
+ 	<insert id="cartRegister">
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.cartRegister*/
+ 		INSERT INTO course_regist(std_no, lecap_no) 
+ 		VALUES(#{stdNo}, #{lecapNo})
+ 	</insert>
+ 	
+ 	<!-- 잔여 정원 가져오기 -->
+ 	<select id="getRemainder" resultType="int" parameterType="map">
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.getRemainder*/
+	 	SELECT 
+			  NVL(TO_NUMBER(a.lecap_cpct) - g.cnt, a.lecap_cpct) AS remainder /* 잔여 정원 */
+		FROM lecture_aply a, (SELECT 
+                                    lecap_no
+                                  , COUNT(*) AS cnt 
+                              FROM course_regist 
+                              GROUP BY lecap_no) g
+		WHERE aprv_stts_cd like #{aprvSttsCd}
+		AND lecap_yr like TO_CHAR(sysdate, 'YYYY')
+		AND g.lecap_no(+) = a.lecap_no
+        AND a.lecap_no like #{lecapNo}
+		AND lecap_sem = CASE
+		                    WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 4 THEN 1
+		                    WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 9 THEN 2
+		                    ELSE 0
+		                END
+ 	</select>
+ 	
+ 	
+ 	<!-- 나의 학점이수현황 가져오기 -->
+ 	<select id="craditHistory" resultType="courseRegistVO" parameterType="String">
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.getRemainder*/
+ 		SELECT 
+ 			  d.com_cd_nm AS crs_classf_nm
+ 			, c.crs_classf_cd
+			, sum(c.sub_crd) AS req_crd_sum 
+			, sum(NVL(a.crs_earned_crd,0)) AS crd_sum
+		FROM course_regist a, lecture_aply b, subject c, com_code d
+		WHERE a.lecap_no = b.lecap_no
+		AND b.sub_no = c.sub_no
+		AND d.com_cd = c.crs_classf_cd
+		AND a.std_no = #{stdNo}
+		GROUP BY d.com_cd_nm, c.crs_classf_cd
+		ORDER BY d.com_cd_nm DESC
+ 	</select>
+ 	
+ 	<!-- 나의 과목이수현황 가져오기 -->
+ 	<select id="getSubRecord" resultType="courseRegistVO" parameterType="courseRegistVO">
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.getSubRecord*/
+	 	SELECT 
+	 		  a.std_no
+	 		, a.lecap_no
+	 		, c.sub_nm
+	 		, c.crs_classf_cd
+	 		, a.crs_scr
+	 		, d.com_cd_nm AS crs_classf_nm
+	 		, b.lecap_yr
+	 		, b.lecap_sem
+		FROM course_regist a, lecture_aply b, subject c, com_code d
+		WHERE a.lecap_no = b.lecap_no
+		AND c.sub_no = b.sub_no
+		AND d.com_cd = c.crs_classf_cd
+		AND crs_classf_cd = #{crsClassfCd}
+		AND std_no = #{stdNo}
+		AND a.crs_scr IS NOT NULL
+		ORDER BY b.lecap_yr, b.lecap_sem
+ 	</select>
+ 	
+ 	<!-- 현재 수강중인 강의 가져오기 -->
+ 	<select id="getPresentList" resultType="lectureAplyVO" parameterType="map">
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.getPresentList*/
+ 		SELECT 
+		 		a.lecap_no			/*개설번호*/
+		 	,	a.sub_no 			/*과목번호*/
+		 	,	b.sub_nm 			/*과목이름*/
+		 	,	c.com_cd_nm  		/*이수구분이름*/
+		 	,	d.pro_nm			/*교수이름*/
+		 	,   f.dept_nm			/*학과이름*/
+		 	,	a.flcts_no			/*시설물번호*/
+		 	,   g.flcts_nm			/*시설물이름*/
+		 	,   h.flct_nm           /*시설이름*/
+			,	a.lecap_yr 			/*개설년도*/
+			,	b.sub_crd			/*학점*/
+			,	a.lecap_tg_grade 	/*대상학년*/
+			,	a.lecap_dt			/*신청일자*/
+			,	a.lecap_sem 		/*개설학기*/
+			,	e.lecsc_day 		/*강의요일*/
+			,	e.period_cd 		/*교시코드*/
+			,	lecsc_hour 			/*시수*/
+			,	a.aprv_stts_cd		/*결재상태*/
+		FROM lecture_aply a, subject b, com_code c, professor d, 
+			lecture_schedule e, department f, facilities g, facility h, course_regist i
+		WHERE a.sub_no = b.sub_no 
+		AND b.crs_classf_cd = c.com_cd
+		AND d.pro_no = a.pro_no
+		AND e.lecap_no = a.lecap_no
+		AND f.dept_cd = b.dept_cd
+		AND aprv_stts_cd like #{aprvSttsCd}
+		AND g.flcts_no = A.flcts_no
+		AND h.flct_no = g.flct_no
+		AND i.lecap_no = A.lecap_no
+		AND i.std_no = #{stdNo}
+		AND lecap_yr like TO_CHAR(sysdate, 'YYYY')
+		AND lecap_sem = CASE
+		                    WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 4 THEN 1
+		                    WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 9 THEN 2
+		                    ELSE 0
+		            	END
+ 	
+ 	</select>
  </mapper>

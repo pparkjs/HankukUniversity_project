@@ -1,5 +1,14 @@
 package kr.or.hku.lectureInfo.vo;
 
+import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Setter
+@Getter
+@ToString
 public class LectureAplyVO {
 	private String lecapNo; // 과목신청번호
 	private String subNo; // 과목코드
@@ -19,6 +28,13 @@ public class LectureAplyVO {
 	private String comCdNm; //이수구분이름
 	private String proNm; //교수이름
 	private String lecscDay; //강의요일
-	private String periodCd; //시작교시
+	private int periodCd; //시작교시
 	private int lecscHour; // 시수
+	private String deptNm; //학과이름
+	private String subCrd; //학점
+	private int remainder; //잔여정원
+	private String flctsNm; //시설물이름
+ 	private String flctNm;	//시설이름 
+	
+//	private List<LectureScheduleVO> scheduleList;
 }
