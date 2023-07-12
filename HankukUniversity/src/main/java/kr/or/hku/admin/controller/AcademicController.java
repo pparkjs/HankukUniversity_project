@@ -24,7 +24,7 @@ import kr.or.hku.admin.vo.NextCodeVO;
 import kr.or.hku.common.service.ICommonService;
 import kr.or.hku.common.vo.CommonVO;
 import kr.or.hku.common.vo.SearchInfoVO;
-import kr.or.hku.lectureInfo.service.ICourseInfoService;
+import kr.or.hku.lectureInfo.service.CourseInfoService;
 import kr.or.hku.lectureInfo.vo.SubjectVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,7 +37,7 @@ public class AcademicController {
 	private AcademicAdm academicAdmService;
 	
 	@Autowired
-	private ICourseInfoService courseService;
+	private CourseInfoService courseService;
 	
 	@Autowired
 	private ICommonService commonService;
