@@ -126,9 +126,9 @@
 					<span class="nav-text">시설예약</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">시설예약</a></li>
-					<li><a href="#">사물함예약</a></li>
-					<li><a href="#">나의 예약 현황 </a></li>
+					<li><a href="/hku/locker-rsvt">사물함예약</a></li>
+					<li><a href="/hku/facility-rsvt">시설예약</a></li>
+					<li><a href="/hku/my-reservation">나의 예약 현황 </a></li>
 				</ul>
 			</li>
 			
