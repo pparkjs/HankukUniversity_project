@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" href="/css/table.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 
 table, th, td {
@@ -17,6 +18,7 @@ th{
   	text-align: center;
 	font-size: 1.5em;
 }
+
 	</style>
 		<meta charset="UTF-8">
 		<div class="content-body">
@@ -37,13 +39,13 @@ th{
 						<a class="btn btn-primary" href="#" role="button" id="btn1" style="margin: 10px">화상채팅</a>
 						
 						<form action="/hku/student/delStudy" method="post" id="delForm">
-							<input type="hidden" name="studyNo" value="${study.studyNo}">
+							<input type="hidden" name="studyNo" value="${study.studyNo}" id="studyNo">
 						</form>
 						<!-- 스터디장은 스터디 해체 버튼 보여주기 -->
 						<button type="button" class="btn btn-primary" style="margin: 10px" id="delBtn">
-							<i class="fa-solid fa-circle-exclamation me-2"></i>스터디 해체
+							<i class="fa-solid fa-circle-exclamation me-2"></i>스터디 삭제
 						</button>									
-						<a class="btn btn-primary" href="#" role="button" id="btn2" style="margin: 10px">스터디 탈퇴</a>																
+						<button type="button" class="btn btn-primary" style="margin: 10px" id="exitBtn"> 스터디 탈퇴</button>																							
 
 					</div>
 					<div class="card-body">
@@ -63,22 +65,46 @@ th{
 								</li>
 							</ul>
 							<div class="tab-content">
+						
 								<div class="tab-pane fade show active" id="home1" role="tabpanel">
 									<div class="pt-4">
-										<table style="width: 90%" class="table">
+										<input type="hidden" value="${study.studyNo }" id="studyNo">
+										<table style="width: 90%" class="table" id="tbl1">
 											<thead class="thead-dark">
 												<tr>
-													<th></th><th>이름 </th><th>학과 </th><th>학번 </th><th>학년 </th>
+													<th>이름 </th><th>학과 </th><th>학번 </th><th>신청일</th><th style="width: 300px;">comment</th><th> </th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td>1 </td>
-													<td>홍길동 </td>
-													<td>컴공 </td>
-													<td>202203001 </td>
-												</tr>
-												
+											<c:choose>
+												<c:when test="${empty appli}">
+													<tr><td colspan="5">가입신청 인원이 존재하지 않습니다.</td></tr>
+												</c:when>
+												<c:otherwise>
+													<c:forEach items="${appli }" var="appli">
+														<tr id="link">
+															<td>${appli.stdNm } </td>
+															<td>${appli.deptNm } </td>
+															<td id="td">${appli.stdNo }</td>
+															<td>${appli.joinRegdate }</td>
+															<td style="width: 300px;">${appli.joinReason }</td>
+															<td>
+																<div class="action-button">
+																	<form action="" method="post" id="appForm">
+																		<input type="hidden" name="joinNo" class="joinNo" value="${appli.joinNo}">																	
+																		<a href="#" class="applBtn1">
+																			<span class="badge badge-success badge-sm">승인<span class="ms-1 fa fa-check"></span></span>																	
+																		</a>
+																		<a href="#" class="applBtn2">
+																			<span class="badge badge-secondary  badge-sm">반려<span class="ms-1 fa fa-ban"></span></span>
+																		</a>
+																	</form>
+																</div>
+															</td>
+														</tr>
+													</c:forEach>
+												</c:otherwise>
+											</c:choose>											
 											</tbody>
 										</table>
 									</div>
@@ -154,45 +180,40 @@ th{
 										</table>
 									</div>		
 									<div style="width: 70%; margin-top: 45px">
-										<table style="width:100%">
+										<table style="width:850px; height: 700px;">
 											<tr>
-												<th></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th>
+												<th></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
 											</tr>
 											<tr>
-												<th>1교시</th><td></td><td></td><td></td><td></td><td></td>
+												<th>1교시</th><td></td><td></td><td></td><td></td><td></td><td></td>
 											</tr>
 											<tr>
-												<th>2교시</th><td></td><td></td><td></td><td></td><td></td>
+												<th>2교시</th><td></td><td></td><td></td><td></td><td></td><td></td>
 											</tr>
 											<tr>
-												<th>3교시</th><td></td><td></td><td></td><td></td><td></td>
+												<th>3교시</th><td></td><td></td><td></td><td></td><td></td><td></td>
 											</tr>
 											<tr>
-												<th>4교시</th><td></td><td></td><td></td><td></td><td></td>
+												<th>4교시</th><td></td><td></td><td></td><td></td><td></td><td></td>
 											</tr>
 											<tr>
-												<th>5교시</th><td></td><td></td><td></td><td></td><td></td>
+												<th>5교시</th><td></td><td></td><td></td><td></td><td></td><td></td>
 											</tr>
 											<tr>
-												<th>6교시</th><td></td><td></td><td></td><td></td><td></td>
+												<th>6교시</th><td></td><td></td><td></td><td></td><td></td><td></td>
 											</tr>
 											<tr>
-												<th>7교시</th><td></td><td></td><td></td><td></td><td></td>
+												<th>7교시</th><td></td><td></td><td></td><td></td><td></td><td></td>
 											</tr>
 											<tr>
-												<th>8교시</th><td></td><td></td><td></td><td></td><td></td>
+												<th>8교시</th><td></td><td></td><td></td><td></td><td></td><td></td>
 											</tr>
 											<tr>
-												<th>9교시</th><td></td><td></td><td></td><td></td><td></td>
+												<th>9교시</th><td></td><td></td><td></td><td></td><td></td><td></td>
 											</tr>
 									</table>
 									</div>
 									
-								</div>
-								<div class="tab-pane fade" id="message1">
-									<div class="pt-4">
-										
-									</div>
 								</div>
 							</div>
 						</div>
@@ -204,14 +225,105 @@ th{
 <script>
 $(function(){
 	var delBtn = $('#delBtn');
+	var exitBtn = $('#exitBtn');
 	var delForm = $('#delForm');
 	  
 	delBtn.on('click', function(){
-		if(confirm("정말로 해체하시겠습니까?")){
-		delForm.submit();
-		}
-		location.href = "http://localhost/hku/student/study";
+	    Swal.fire({
+	      title: '정말로 삭제하시겠습니까??',
+	      text: '삭제된 스터디룸은 되돌릴 수 없습니다!',
+	      icon: 'warning',
+	      showCancelButton: true,
+	      confirmButtonColor: '#3085d6',
+	      cancelButtonColor: '#d33',
+	      confirmButtonText: '삭제합니다!'
+	    }).then((result) => {
+	      if (result.isConfirmed) {
+	        delForm.submit();
+	      }
+	    });
+	});
 
-  	});
+	exitBtn.on('click', function(){
+		delForm.attr("action", "/hku/student/exitStudy");
+		Swal.fire({
+	      title: '정말로 탈퇴하시겠습니까??',
+	      icon: 'warning',
+	      showCancelButton: true,
+	      confirmButtonColor: '#3085d6',
+	      cancelButtonColor: '#d33',
+	      confirmButtonText: '탈퇴합니다!'
+	    }).then((result) => {
+	      if (result.isConfirmed) {
+	        delForm.submit();
+	      }
+	    });
+	})
 });
+
+$(function(){
+	var btn1 = $('.applBtn1'); 
+	var btn2 = $('.applBtn2');
+	var form = $('#applForm');
+	
+	btn1.on('click', function(){
+		var studyNo = $("#studyNo").val();
+		var pBtn = $(event.currentTarget);
+		console.log(pBtn.closest("form")[0]);
+		console.log(pBtn.closest("form")[0].joinNo.value);
+		
+		var joinNo = pBtn.closest("form")[0].joinNo.value;
+
+		$.ajax({
+			type: "post",
+			url: "/hku/student/assignStudy/"+studyNo +"/"+ joinNo,
+			data: JSON.stringify({ joinNo: joinNo, studyNo: studyNo }),
+			contentType: "application/json; charset=utf-8",
+			success: function(res){
+				var tableHtml = '<table style="width: 90%" class="table" id="tbl1">' +
+					'<thead class="thead-dark">' +
+					'<tr>' +
+					'<th>이름</th><th>학과</th><th>학번</th><th>신청일</th><th style="width: 300px;">comment</th><th></th>' +
+					'</tr>' +
+					'</thead>' +
+					'<tbody>';
+
+				if (res.length === 0) {
+					tableHtml += '<tr><td colspan="6">가입신청 인원이 존재하지 않습니다.</td></tr>';
+				} else {
+					for (var i = 0; i < res.length; i++) {
+						var row = res[i];
+						tableHtml += '<tr id="link">' +
+							'<td>' + row.stdNm + '</td>' +
+							'<td>' + row.deptNm + '</td>' +
+							'<td id="td">' + row.stdNo + '</td>' +
+							'<td>' + row.joinRegdate + '</td>' +
+							'<td style="width: 300px;">' + row.joinReason + '</td>' +
+							'<td>' +
+							'<div class="action-button">' +
+							'<form action="" method="post" id="appForm">' +
+							'<input type="hidden" name="joinNo" class="joinNo" value="' + row.joinNo + '">' +
+							'<a href="#" class="applBtn1">' +
+							'<span class="badge badge-success badge-sm">승인<span class="ms-1 fa fa-check"></span></span>' +
+							'</a>' +
+							'<a href="#" class="applBtn2">' +
+							'<span class="badge badge-secondary  badge-sm">반려<span class="ms-1 fa fa-ban"></span></span>' +
+							'</a>' +
+							'</form>' +
+							'</div>' +
+							'</td>' +
+							'</tr>';
+					}
+				}
+
+				tableHtml += '</tbody>' +
+					'</table>';
+
+				$('#tbl1').replaceWith(tableHtml);
+			}
+		});
+	});
+
+	
+})
 </script>

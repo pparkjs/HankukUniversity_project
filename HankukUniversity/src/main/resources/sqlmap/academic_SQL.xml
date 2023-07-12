@@ -15,22 +15,190 @@
 			and (dept_nm like '%'||#{searchWord}||'%')
 		</if>
  	</sql>
+ 	
+ 	<sql id="subjectSearch">
+		<if test="comCdNm != null and comCdNm != ''">
+			and (com_cd_nm like '%'||#{comCdNm}||'%')
+		</if>
+		<if test="deptNm != null and deptNm != ''">
+			and (dept_nm like '%'||#{deptNm}||'%')
+		</if>
+		<if test="subGrade != null and subGrade != ''">
+			and (sub_grade like '%'||#{subGrade}||'%')
+		</if>
+		<if test="subNm != null and subNm != ''">
+			and (sub_nm like '%'||#{subNm}||'%')
+		</if>
+ 	</sql>
  
- 	<select id="selectDepartment" parameterType="searchInfoVO" resultType="departmentVO">
-	 	select
-	 		DEPT_CD,
-			COL_CD,
-			FLCT_NO,
-			DEPT_NM,
-			DEPT_TELNO,
-			DEPT_OTL,
-			DEPT_GOAL
-		from DEPARTMENT
-		where 1=1
+ 	<select id="selectDeptList" parameterType="searchInfoVO" resultType="departmentVO">
+	 	SELECT
+	 		dept_cd
+			,col_cd
+			,flct_no
+			,dept_nm
+			,dept_telno
+			,dept_otl
+			,dept_goal
+		FROM department
+		WHERE 1=1
 		<include refid="deptSearch"></include>
  	</select>
  	
+ 	<select id="selectDept" parameterType="String" resultType="departmentVO">
+ 		SELECT
+	 		dept_cd,
+			col_cd,
+			flct_no,
+			dept_nm,
+			dept_telno,
+			dept_otl,
+			dept_goal
+		FROM department
+		WHERE dept_cd = #{deptCd}
+ 	</select>
+ 	
+ 	<select id="colList" resultType="collegeVO">
+ 		SELECT 
+ 			col_cd
+			,col_nm
+		FROM college
+ 	</select>
+ 	
+ 	<select id="flctList" resultType="flctVO">
+ 		SELECT 
+ 			flct_no
+			,flct_nm
+			,flct_clsf_cd
+		FROM facility
+ 	</select>
+ 	
+ 	<select id="deptCdSet" resultType="kr.or.hku.admin.vo.NextCodeVO">
+ 		select a.s||LPAD(a.e + 1,3,'0') as nextCode
+		from (
+		select
+		    SUBSTR(max(dept_cd),0,4) as s,
+		    SUBSTR(max(dept_cd),-3) as e
+		from
+		    department) a
+ 	</select>
+ 	
+ 	<insert id="insertDept" parameterType="departmentVO">
+ 		INSERT INTO department(
+ 			dept_cd
+			,col_cd
+			,flct_no
+			,dept_nm
+			,dept_telno
+			,dept_otl
+			,dept_goal
+ 		) VALUES(
+ 			#{deptCd}
+ 			,#{colCd}
+ 			,#{flctNo}
+ 			,#{deptNm}
+ 			,#{deptTelno}
+ 			,#{deptOtl}
+ 			,#{deptGoal}
+ 		)
+ 	</insert>
+ 	
  	<delete id="deleteDept" parameterType="String">
- 		delete from department where dept_cd = #{deptCd}
+ 		DELETE FROM department WHERE dept_cd = #{deptCd}
  	</delete>
+ 	
+ 	<update id="updateDept" parameterType="departmentVO">
+ 		UPDATE 
+ 			department 
+ 		SET 
+			col_cd = #{colCd}
+			,flct_no = #{flctNo}
+			,dept_nm = #{deptNm}
+			,dept_telno = #{deptTelno}
+			,dept_otl = #{deptOtl}
+			,dept_goal = #{deptGoal}
+		WHERE
+ 			 dept_cd = #{deptCd}
+ 	</update>
+ 	
+ 	<select id="selectSubjectList" parameterType="searchInfoVO" resultType="subjectVO">
+ 		SELECT
+		    sub_no
+		    ,b.dept_nm
+		    ,sub_nm
+		    ,sub_grade
+		    ,sub_hour
+		    ,sub_crd
+		    ,c.com_cd_nm
+		    ,sub_otl
+		FROM subject a INNER JOIN department b ON(a.dept_cd=b.dept_cd) INNER JOIN com_code c ON(a.crs_classf_cd=c.com_cd)
+		WHERE 1=1
+		<include refid="subjectSearch"></include>
+		ORDER BY 1
+ 	</select>
+ 	
+ 	<select id="subNoSet" resultType="kr.or.hku.admin.vo.NextCodeVO">
+ 		select a.s||LPAD(a.e + 1,3,'0') as nextCode
+		from (
+		select
+		    SUBSTR(max(sub_no),0,3) as s,
+		    SUBSTR(max(sub_no),-3) as e
+		from
+		    subject) a
+ 	</select>
+ 	
+ 	<insert id="insertSubject" parameterType="subjectVO">
+ 		INSERT INTO subject(
+ 			sub_no
+			,dept_cd
+			,sub_nm
+			,sub_grade
+			,sub_hour
+			,sub_crd
+			,crs_classf_cd
+			,sub_otl
+ 		) VALUES(
+ 			#{subNo}
+ 			,#{deptCd}
+ 			,#{subNm}
+ 			,#{subGrade}
+ 			,#{subHour}
+ 			,#{subCrd}
+ 			,#{crsClassfCd}
+ 			,#{subOtl}
+ 		)
+ 	</insert>
+ 	
+ 	<delete id="deleteSubject" parameterType="String">
+ 		DELETE FROM subject WHERE sub_no = #{subNo}
+ 	</delete>
+ 	
+ 	<select id="selectSubject" parameterType="String" resultType="subjectVO">
+ 		SELECT
+	 		sub_no
+			,dept_cd
+			,sub_nm
+			,sub_grade
+			,sub_hour
+			,sub_crd
+			,crs_classf_cd
+			,sub_otl
+		FROM subject
+		WHERE sub_no = #{subNo}
+ 	</select>
+ 	
+ 	<update id="updateSubject" parameterType="subjectVO">
+ 		UPDATE 
+ 			subject 
+ 		SET 
+			dept_cd = #{deptCd}
+			,sub_nm = #{subNm}
+			,sub_grade = #{subGrade}
+			,sub_hour = #{subHour}
+			,sub_crd = #{subCrd}
+			,crs_classf_cd = #{crsClassfCd}
+			,sub_otl = #{subOtl}
+		WHERE
+ 			 sub_no = #{subNo}
+ 	</update>
  </mapper>

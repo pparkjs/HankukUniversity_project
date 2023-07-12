@@ -28,4 +28,16 @@ public class StudentVO {
 	private String stdActno       ; //학생계좌번호
 	private String stdProfilePath ; //프로필사진경로
 	
+	// 공통코드 
+	private String comCd; //공통코드
+	private String comCdGrp; //공통코드 그룹
+	private String comCdNm; // 공통코드명
+	private String comCdNm1; // b.com_cd_nm
+	private String comCdNm2; // c.com_cd_nm
+	private String deptNm; // 학과명
+	
+	// 조인해서 가져올 필드
+	private String deptNm; //학과이름
+	private String stdSttsNm; // 학적상태
+	private int grade; //학년
 }
