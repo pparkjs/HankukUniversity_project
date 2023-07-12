@@ -10,6 +10,7 @@
 	 -->
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<setting name="jdbcTypeForNull" value="VARCHAR" />
 	</settings>
 	
 	<!-- 자주 사용하는 타입의 별칭을 셋팅 -->
@@ -29,6 +30,7 @@
     <typeAlias type="kr.or.hku.admin.vo.DepartmentVO" alias="departmentVO"/>
     <typeAlias type="kr.or.hku.common.vo.SearchInfoVO" alias="searchInfoVO"/>
     <typeAlias type="kr.or.hku.common.vo.CommonVO" alias="commonVO"/>
+    <typeAlias type="kr.or.hku.student.vo.RecordVO" alias="recordVo"/>
     <!-- 정수칸  밑에서만 작성 -->
     <typeAlias type="kr.or.hku.lectureInfo.vo.LectureAplyVO" alias="lectureAplyVO"/>
     <typeAlias type="kr.or.hku.lectureInfo.vo.LectureScheduleVO" alias="lectureScheduleVO"/>
@@ -36,7 +38,8 @@
     <typeAlias type="kr.or.hku.lectureInfo.vo.CourseRegistVO" alias="courseRegistVO"/>
     
     <!-- 지현칸 밑에서만 작성 -->
-    
+    <typeAlias type="kr.or.hku.lectureInfo.vo.LectureAplyVO" alias="lectureAplyVO"/>
+  
     <!-- 재균칸 밑에서만 작성 -->  
     <typeAlias type="kr.or.hku.common.vo.AttachFileVO" alias="attachFileVO"/>
     <typeAlias type="kr.or.hku.notice.vo.PaginationInfoVO" alias="pagingVO"/>

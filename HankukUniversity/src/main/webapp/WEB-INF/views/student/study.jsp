@@ -64,7 +64,7 @@
 													</li>
 												</ul>
 												<ul class="post-pos">
-													<li><span class="card__info__stats">스터디장: </span> <span>홍길동</span>
+													<li><span class="card__info__stats">스터디장: </span> <span>${study.stdNm }</span>
 													</li>
 													<span>${study.studyRegdate }</span>
 													</li>
