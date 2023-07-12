@@ -83,7 +83,7 @@
 <script type="text/javascript">
 	const myName = "${emp.empName}";
 	var noticeClsf = "${noticeClsf}";
-	var formData = new FormData();
+	noticeList(); // 노티스 리스트 가져오기
 	console.log(noticeClsf);
 	$(function(){
 		CKEDITOR.replace("noticeCn",{
@@ -102,6 +102,9 @@
 		sNoticeBtn.on('click',function(){
 			// 등록 했을떄
 			if(this.innerText == "등록"){
+
+				let formData = new FormData();
+
 				let title = noticeTtl.val();
 				let content = CKEDITOR.instances.noticeCn.getData();
 
@@ -115,38 +118,46 @@
 					alert("내용을 입력해주세요");
 					return false;
 				}
-// 				console.log(myName);
-// 				var addData = {
-// 					noticeTtl : title,
-// 					noticeCn : content,
-// 					noticeWrtrNm : myName
-// 				};
+
+				
+				let noticeFile = document.querySelector('#noticeFile');
+				console.log(noticeFile.files);
 
 				formData.append("noticeTtl", title);
 				formData.append("noticeCn",content);
 				formData.append("noticeWrtrNm", myName);
 				formData.append("noticeClsf", noticeClsf);
 				
-				console.log(formData);
-// 				return false;
-
-				var xhr = new XMLHttpRequest();
-				xhr.open("post", "/hankuk/admin/addNotice", true);
-				xhr.onreadystatechange = function() {
-					if(xhr.readyState == 4 && xhr.status == 200) {
-						let res = xhr.responseText;
-						console.log(res);
-						// if (res === "success") {
-						// 	alert("정상적으로 글이 등록 되었습니다.");	
-						// }else{
-						// 	alert("서버에러 다시 시도해주세요.");
-						// }
-						// addModal.modal('hide');
-						// // 새로운 글추가 원래 이렇게 하면안됨 나중에 수정
-						// noticeList();
+				let files = noticeFile.files;
+				if(files.length > 0 && files !=null){
+					for(let i=0; i<files.length; i++){
+						formData.append("files", files[i]);
 					}
-				};
-				xhr.send(formData);
+				}
+				
+				console.log(formData);
+					
+				$.ajax({
+					type:"post",
+					url: "/hankuk/admin/addNotice",
+					contentType: false, // 필수 
+					processData: false, // 필수
+					cache: false,
+					data: formData,
+					dataType: "text",
+					success: function(res){
+						if(res === "success"){
+							alert("정상적으로 글이 등록되었습니다.");
+							$('#addModal').modal("hide");
+							noticeList();
+						}
+					},
+					err: function(err){
+						console.log("err:", err)
+					}
+				})
+
+
 			}else if(this.innerText == "수정"){ // 수정 버튼 눌럿 을떄
 				console.log("수정 버튼 클릭");
 				$('#deleteBtn').text("취소");
@@ -156,18 +167,128 @@
 				$('#noticeFrm').css("display","block");
 				$('#noticeTtl').val($("#detailTtl").html());
 				CKEDITOR.instances.noticeCn.setData($("#detailCn").html());
-
+				$('.deleteFile').css('display','block');
 			}else if(this.innerText == "저장"){
+
+				// 공지사항 변경했을때 처리 로직
+				
 				console.log("저장 하기");
+				let formData = new FormData();
+				let title = noticeTtl.val();
+				let content = CKEDITOR.instances.noticeCn.getData();
+
+				
+				if(title == null || title == ""){
+					alert("제목을 입력해주세요");
+					return false;
+				}
+				
+				if(content == null || content == ""){
+					alert("내용을 입력해주세요");
+					return false;
+				}
+
+				
+				let noticeFile = document.querySelector('#noticeFile');
+				let noticeNo = $('#noticeNo').val();
+				let atchFileNo = $('#atchFileNo').val();
+				console.log(noticeFile.files);
+				formData.append("noticeNo", noticeNo);
+				formData.append("noticeTtl", title);
+				formData.append("atchFileNo",atchFileNo);
+				formData.append("noticeCn",content);
+				
+				let files = noticeFile.files;
+				if(files != null && files.length > 0){
+					for(let i=0; i<files.length; i++){
+						formData.append("files", files[i]);
+					}
+				}
+				
+				$.ajax({
+					type:"put",
+					url: "/hankuk/admin/updateNotice",
+					contentType: false, // 필수 
+					processData: false, // 필수
+					cache: false,
+					data: formData,
+					dataType: "json",
+					success: function(res){
+						console.log("수정된 파일",res);
+						if(res != null){
+							alert("정상적으로 글이 수정 되었습니다.");
+						}
+
+						$('#noticeNo').val(res.noticeNo);
+						$('#atchFileNo').val(res.atchFileNo);
+						$('#sNoticeBtn').text("수정"); // 등록 버튼 수정으로 바꿈
+						$('#deleteBtn').text("삭제"); // 등록 버튼 수정으로 바꿈
+						$('#noticeFrm').css('display', 'none'); // 등록폼 안보이게
+						$('#detailDiv').css('display', 'block');// 상세div 보이게
+						$('#deleteBtn').css('display', 'block');// 삭제 버튼 보이게
+						
+						noticeList();
+
+						$('#detailTtl').html(res.noticeTtl);
+						$('#detailRegDt').html(res.noticeRegdate);
+						$('#detailWrtr').html(res.noticeWrtrNm);
+						$('#detailCnt').html(res.noticeReadCnt);
+						$('#detailCn').html(res.noticeCn);
+						let noticeFileList = $('#noticeFileList');
+						if(res.fileList != null && res.fileList.length > 0){
+							let fileStr = "<br>";
+							$.each(res.fileList, function(i,v){
+								// console.log("파일 하나하나",$(this));
+								fileStr += `<div class="mailbox-attachment-info">
+													<a href="/download\${v.filePath}" download="\${v.fileOrgnlFileNm}" class="mailbox-attachment-name fileDown">
+														<input type="hidden" value="\${v.atchFileNo}">
+														<input type="hidden" value="\${v.atchFileSeq}">
+														<i class="fas fa-paperclip"></i> &nbsp;\${v.fileOrgnlFileNm} &nbsp;[\${v.fileSize}]
+													</a>
+												</div>`;
+							});
+							$(noticeFileList).html(fileStr);
+							$('.previewFile').html(fileStr);
+						}
+					},
+					err: function(err){
+						console.log("err:", err)
+					}
+				});
 			}else{
 				return false;
 			}
+			
 		});
 		
 		// 삭제 & 취소 버튼
 		$('#deleteBtn').on('click',function(){
 			if(this.innerText == "삭제"){
-				console.log("삭제 버튼 눌림");
+				if (confirm("해당 게시글을 삭제 하시겠습니까?")) {
+					console.log("삭제 버튼 눌림");
+					let noticeNo = $('#noticeNo').val();
+					let atchFileNo = $('#atchFileNo').val();
+					
+					let deleteData = {
+						noticeNo:noticeNo,
+						atchFileNo:atchFileNo
+					}
+					$.ajax({
+						type:"delete",
+						url: "/hankuk/admin/deleteNotice",
+						contentType: "application/json;charset=utf-8", // 필수 
+						data: JSON.stringify(deleteData),
+						dataType: "text",
+						success: function(res){
+							alert(res);
+							$('#addModal').modal("hide");
+							noticeList();
+						},
+						err: function(err){
+							console.log("err:", err)
+						}
+					});
+				}
 			}else if(this.innerText == "취소"){
 				console.log("취소 버튼 눌림");
 				this.innerText = "삭제";
@@ -178,15 +299,20 @@
 		});
 	});
 
-	noticeList(); // 노티스 리스트 가져오기
+
 
 	// 게시판 테이블
 	const noticeTbody = document.querySelector("#noticeTbody");
 
 	// 노티스 리스트 가져오기
 	function noticeList(){
+		let clsf = "${noticeClsf}";
+		console.log("노티스 리스트 조회", clsf);
+	/* 	let noticeListClsf = {
+			"noticeClsf" : clsf
+		}; */
 		var xhr = new XMLHttpRequest();
-		xhr.open("get", "/hankuk/admin/noticeList", true);
+		xhr.open("get", `/hankuk/admin/noticeList/\${clsf}`, true);
 		xhr.onreadystatechange = function() {
 			if(xhr.readyState == 4 && xhr.status == 200) {
 				var noticeData = JSON.parse(xhr.responseText);
@@ -224,6 +350,11 @@
 				data: data,
 				dataType: "json",
 				success : function(res){
+					// 번호 업데이트
+					$('#noticeNo').val(res.noticeNo);
+					$('#atchFileNo').val(res.atchFileNo);
+
+					console.log(res);
 					$('#sNoticeBtn').text("수정"); // 등록 버튼 수정으로 바꿈
 					$('#noticeFrm').css('display', 'none'); // 등록폼 안보이게
 					$('#detailDiv').css('display', 'block');// 상세div 보이게
@@ -237,9 +368,50 @@
 					$('#detailWrtr').html(res.noticeWrtrNm);
 					$('#detailCnt').html(res.noticeReadCnt);
 					$('#detailCn').html(res.noticeCn);
+					let noticeFileList = $('#noticeFileList');
+					if(res.fileList != null && res.fileList.length > 0){
+						let fileStr = "<br>";
+						$.each(res.fileList, function(i,v){
+							// console.log("파일 하나하나",$(this));
+							fileStr += `<div class="mailbox-attachment-info">
+												<a href="/download\${v.filePath}" download="\${v.fileOrgnlFileNm}" class="mailbox-attachment-name fileDown">
+													<input type="hidden" value="\${v.atchFileNo}">
+													<input type="hidden" value="\${v.atchFileSeq}">
+													<i class="fas fa-paperclip"></i> &nbsp;\${v.fileOrgnlFileNm} &nbsp;[\${v.fileSize}]
+												</a>
+											</div>`;
+						});
+						$(noticeFileList).html(fileStr);
+						$('.previewFile').html(fileStr);
+					}
 				}
 			});
+
+// 			$(document).on('click','.deleteFile',function(){
+// 				console.log("삭제 클릭");
+// 				$(this).parent("div").remove();
+// 			});
+// 			$('#noticeFileList').on('click',".fileDown",function(){
+// 				let atchFileNo = $(this).find("input")[0];
+// 				let atchFileSeq = $(this).find("input")[1];
+				
+// 				var downFileData = {
+// 					atchFileNo: atchFileNo,
+// 					atchFileSeq: atchFileSeq
+// 				};
+// 				$.ajax({
+// 					type : 'post',
+// 					url : '/common/file/download',
+// 					contentType : "application/json;charset=UTF-8",
+// 					data: downFileData,
+// 					dataType: "json",
+// 					success : function(res){
+// 						console.log(res);
+// 					}
+// 				});
+// 			});
 		});
+		
 
 		// 파일 이벤트
 		var noticeFile = document.querySelector('#noticeFile');
@@ -248,73 +420,101 @@
 
 		// 파일 변경 했을떄
 		noticeFile.addEventListener('change', function(e){
+			$('.previewFile').html("");
 			let files = e.target.files;
-			console.log(files);
+			
 			if(files.length == 0 || files == null){
-				previewFile.innerHTML = "";
 				return false;
 			}
-			
 			for(let i=0; i<files.length; i++){
-				formData.append("preivewFiles",files[i]);
+				let file = files[i];
+				var pTag = document.createElement("p");
+				pTag.textContent = file.name;
+				previewFile.appendChild(pTag);
 			}
-			var xhr = new XMLHttpRequest();
-			xhr.open("post", "/common/file/upload", true); 
-			xhr.onreadystatechange = function(){
-				if(xhr.readyState == 4 && xhr.status == 200){
-					let data = xhr.responseText;
-					data = data.split(',');
-					console.log(data);
-					var str = "";
-					for(let i=0; i<data.length; i++){
-						if(checkImageType(data[i])){	// 이미지 면 이미지 태그를 이용하려 출력
-							str += `<div>
-										<a href='/common/file/displayFile?fileName=\${data[i]}'>
-											<img src='/common/file/displayFile?fileName=\${getThumnailName(data[i])}'>
-										</a>
-										<span>X</span>
-									</div>`;
-						}else{
-							str += `<div>
-										<a href='/common/file/displayFile?fileName=\${data[i]}'>\${getOriginalName(data[i])}</a>
-										<span>X</span>
-									</div>`;
-						}
-						previewFile.innerHTML = str;
-					}
-				}
-			}
-			xhr.send(formData); 
+// 			let formData = new FormData();
+// 			console.log(files);
+			
+// 			for(let i=0; i<files.length; i++){
+// 				formData.append("preivewFiles",files[i]);
+// 			}
+// 			var xhr = new XMLHttpRequest();
+// 			xhr.open("post", "/common/file/upload", true); 
+// 			xhr.onreadystatechange = function(){
+// 				if(xhr.readyState == 4 && xhr.status == 200){
+// 					let data = xhr.responseText;
+// 					data = data.split(',');
+// 					console.log(data);
+// 					var str = "";
+// 					for(let i=0; i<data.length; i++){
+// 						if(checkImageType(data[i])){	// 이미지 면 이미지 태그를 이용하려 출력
+// 							str += `<div>
+// 										<a href='/common/file/displayFile?fileName=\${data[i]}'>
+// 											<img src='/common/file/displayFile?fileName=\${getThumnailName(data[i])}'>
+// 										</a>
+// 										<span>X</span>
+// 									</div>`;
+// 						}else{
+// 							str += `<div>
+// 										<a href='/common/file/displayFile?fileName=\${data[i]}'>\${getOriginalName(data[i])}</a>
+// 										<span>X</span>
+// 									</div>`;
+// 						}
+// 						previewFile.innerHTML = str;
+// 					}
+// 				}
+// 			}
+// 			xhr.send(formData); 
 		});
 		
 		// 파일 스판테그 x눌럿을때
-		$(previewFile).on('click','span',function(){
-// 			console.log(document.querySelector('#noticeFile'))
-			$(this).parent("div").remove();
-		});
+// 		$(previewFile).on('click','span',function(){
+// 			let files = noticeFile.files;
+// 			let fileName = $(this).parent("p").text().trim();
+// 			var idx = 0;
+// 			console.log("삭제", fileName);
+// 			const dataTransfer = new DataTransfer();
 
-		function getThumnailName(fileName) {
-			var front = fileName.substr(0,12);	// /2023/06/07 폴더
-			var end = fileName.substr(12);		// 뒤 파일명
-			console.log("front : " + front);
-			console.log("end : " + end);
-			return front + "s_" + end;
-		}
+// 			for(let i=0; i<files.length; i++){
+// 				if(files[i].name  == fileName){
+// 					alert("files[i]" + files[i].name  + " : " + fileName);
+// 					let fileArray = Array.from(files);	//변수에 할당된 파일을 배열로 변환(FileList -> Array)
+    
+// 					fileArray.splice(i, 1);	//해당하는 index의 파일을 배열에서 제거
+					
+// 					fileArray.forEach(file => { dataTransfer.items.add(file); });
+					
+// 					noticeFile.files = dataTransfer.files;	//제거 처리된 FileList를 돌려줌
+// 					break;
+// 				}
+// 			}
+			
+// 			console.log("삭제후 파일", files);
+// 			$(this).parents("div").remove();
+// 		});
+
+// 		function getThumnailName(fileName) {
+// 			var front = fileName.substr(0,12);	// /2023/06/07 폴더
+// 			var end = fileName.substr(12);		// 뒤 파일명
+// 			console.log("front : " + front);
+// 			console.log("end : " + end);
+// 			return front + "s_" + end;
+// 		}
 		
-		function getOriginalName(fileName) {
-			if(checkImageType(fileName)){
-				return;
-			}
-			let idx = fileName.indexOf("_") + 1;
-			return fileName.substr(idx);
-		}
+// 		function getOriginalName(fileName) {
+// 			if(checkImageType(fileName)){
+// 				return;
+// 			}
+// 			let idx = fileName.indexOf("_") + 1;
+// 			return fileName.substr(idx);
+// 		}
 		
 		
 		// 이미지 파일인지 확인한다.
-		function checkImageType(fileName) {
-			var pattern = /jpg|gif|png|jpeg/;
-			return fileName.match(pattern); // 패턴과 일치하면 true 
-		}
+// 		function checkImageType(fileName) {
+// 			var pattern = /jpg|gif|png|jpeg/;
+// 			return fileName.match(pattern); // 패턴과 일치하면 true 
+// 		}
 
 		// 모달창 닫힐떄 이벤트
 		$('#addModal').on('hidden.bs.modal', function(e){
@@ -325,7 +525,8 @@
 			$('#noticeFrm').css('display', 'block');
 			$('#sNoticeBtn').text("등록");
 			$('#deleteBtn').text("삭제");
-			$('#previewFile').html("");
+			$('.previewFile').html("");
+			$('#noticeFileList').html("");
 		});
 	});
 </script>
@@ -339,9 +540,11 @@
 				</button>
 			</div>
 			<div class="modal-body">
+				<input type="hidden" id="noticeNo">
+				<input type="hidden" id="atchFileNo">
 				<div class="basic-form" id="regDiv">
 					<div class="form-validation">
-						<form class="needs-validation" id="noticeFrm">
+						<form class="needs-validation" id="noticeFrm" name="noticeFrm" enctype="multipart/form-data" method="post">
 							<div class="mb-3">
 								<label class="col-lg-4 col-form-label" for="validationCustom01">
 									제목 <span class="text-danger">*</span>
@@ -364,7 +567,7 @@
 								<input class="form-control form-control-sm" id="noticeFile" type="file" multiple>
 							</div>
 							<!-- 파일 이미지  -->
-							<div class="mb-3 previewFile"></div>
+							<div class="row previewFile"></div>
 						</form>
 					</div>
 				</div>
@@ -385,6 +588,9 @@
 					</div>
 					<div class="mb-3" id="detailCn">
 						내용
+					</div>
+					<!-- 파일들 -->
+					<div class="row" id="noticeFileList">
 					</div>
 				</div>
 			</div>

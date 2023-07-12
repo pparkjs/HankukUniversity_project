@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -45,6 +47,15 @@
 	
 	<context:component-scan base-package="kr.or.hku" />
 	
-
+	
+	<!-- 웹 소켓 핸들러 -->
+    <websocket:handlers>
+        <websocket:mapping path="/websocket/rectureAppl.do" handler="myHandler"/>
+        <websocket:handshake-interceptors>
+	    	<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+ 	    </websocket:handshake-interceptors>
+    </websocket:handlers>
+ 
+    <beans:bean id="myHandler" class="kr.or.hku.websocket.LectureSocketHandler"/>
 	
 </beans:beans>

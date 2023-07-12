@@ -31,11 +31,15 @@
     <typeAlias type="kr.or.hku.common.vo.CommonVO" alias="commonVO"/>
     <typeAlias type="kr.or.hku.student.vo.RecordVO" alias="recordVo"/>
     <!-- 정수칸  밑에서만 작성 -->
+    <typeAlias type="kr.or.hku.lectureInfo.vo.LectureAplyVO" alias="lectureAplyVO"/>
+    <typeAlias type="kr.or.hku.lectureInfo.vo.LectureScheduleVO" alias="lectureScheduleVO"/>
+    <typeAlias type="kr.or.hku.lectureInfo.vo.CartVO" alias="cartVO"/>
+    <typeAlias type="kr.or.hku.lectureInfo.vo.CourseRegistVO" alias="courseRegistVO"/>
     
     <!-- 지현칸 밑에서만 작성 -->
     
     <!-- 재균칸 밑에서만 작성 -->  
-    
+    <typeAlias type="kr.or.hku.common.vo.AttachFileVO" alias="attachFileVO"/>
     <!-- 영우칸 밑에서만 작성-->
     
     <!-- 성희칸 밑에서만 작성-->
