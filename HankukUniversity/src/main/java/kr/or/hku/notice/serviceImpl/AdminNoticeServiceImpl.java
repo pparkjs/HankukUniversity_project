@@ -1,6 +1,7 @@
 package kr.or.hku.notice.serviceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import kr.or.hku.ServiceResult;
 import kr.or.hku.notice.mapper.AdminNoticeMapper;
 import kr.or.hku.notice.service.AdminNoticeService;
 import kr.or.hku.notice.vo.NoticeVO;
+import kr.or.hku.notice.vo.PaginationInfoVO;
 
 @Service
 public class AdminNoticeServiceImpl implements AdminNoticeService {
@@ -47,5 +49,20 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 	@Override
 	public int deleteNotice(int noticeNo) {
 		return noticeMapper.deleteNotice(noticeNo);
+	}
+	
+	@Override
+	public List<NoticeVO> noticeList2(Map<String, String> map) {
+		return noticeMapper.noticeList2(map);
+	}
+	
+	@Override
+	public int selectNoticeCount(PaginationInfoVO<NoticeVO> pagingVO) {
+		return noticeMapper.selectNoticeCount(pagingVO);
+	}
+	
+	@Override
+	public List<NoticeVO> selectNoticeList(PaginationInfoVO<NoticeVO> pagingVO) {
+		return noticeMapper.selectNoticeList(pagingVO);
 	}
 }

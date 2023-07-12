@@ -3,6 +3,7 @@ package kr.or.hku.notice.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,11 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +26,7 @@ import kr.or.hku.common.vo.AttachFileVO;
 import kr.or.hku.common.vo.CommonVO;
 import kr.or.hku.notice.service.AdminNoticeService;
 import kr.or.hku.notice.vo.NoticeVO;
+import kr.or.hku.notice.vo.PaginationInfoVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -50,13 +52,44 @@ public class AdminNoticeController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/noticeList/{clsf}")
-	public ResponseEntity<List<NoticeVO>> getNoticeList(@PathVariable("clsf") String noticeClsf){
+	@GetMapping("/noticeList")
+	public ResponseEntity<PaginationInfoVO> getNoticeList(
+			@RequestParam Map<String, String> map
+			){
+//		ResponseEntity<List<NoticeVO>> entity = null;
+		ResponseEntity<PaginationInfoVO> entity = null;
+		log.info("map 바인딩" + map.toString());
+		// stype, sword
+		
+		PaginationInfoVO<NoticeVO> pagingVO = new PaginationInfoVO<NoticeVO>();
+		
+		if (StringUtils.isBlank(map.get("stype"))) { // 디펄트 밸류
+			map.put("stype", "title");
+		}
+		
+		int currentPage = 1;
+		if (StringUtils.isNotBlank(map.get("page"))) { // 값이 있을떄
+			currentPage = Integer.parseInt(map.get("page"));
+		}
+		
+		if (StringUtils.isNotBlank(map.get("sword"))) { // 검색 했을때
+			pagingVO.setSearchType(map.get("stype"));
+			pagingVO.setSearchWord(map.get("sword"));
+		}
+		
+		pagingVO.setCurrentPage(currentPage);
+		
+		int totalRecord = noticeService.selectNoticeCount(pagingVO);
+		pagingVO.setTotalRecord(totalRecord);
+		
+		List<NoticeVO> dataList = noticeService.selectNoticeList(pagingVO);
+		pagingVO.setDataList(dataList);
+		
 		log.info("===리스트 출력===");
-		log.info("리스트 출력 전달 파라미터 : " + noticeClsf);
-		ResponseEntity<List<NoticeVO>> entity = null;
-		List<NoticeVO> noticeList = noticeService.noticeList(noticeClsf);
-		entity = new ResponseEntity<List<NoticeVO>>(noticeList, HttpStatus.OK);
+		log.info("리스트 출력 전달 파라미터 : " + map.get("noticeClsf"));
+//		List<NoticeVO> noticeList = noticeService.noticeList(map.get("noticeClsf"));
+//		List<NoticeVO> noticeList = noticeService.noticeList2(map);
+		entity = new ResponseEntity<PaginationInfoVO>(pagingVO, HttpStatus.OK);
 		return entity;
 	}
 	
