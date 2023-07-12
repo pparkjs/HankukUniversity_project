@@ -31,6 +31,16 @@ public class PaginationInfoVO<T> {
 	
 	private String searchWord;      // 검색 단어( 키워드)
 	
+	private String noticeClsf;
+	
+	public String getNoticeClsf() {
+		return noticeClsf;
+	}
+
+	public void setNoticeClsf(String noticeClsf) {
+		this.noticeClsf = noticeClsf;
+	}
+
 	public PaginationInfoVO(){}
 	
 	/*
