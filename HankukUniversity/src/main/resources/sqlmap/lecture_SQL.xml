@@ -65,5 +65,127 @@
 	<select id="getFlctsList" parameterType="String" resultType="flctsVO">
 		select * from facilities where flct_no = #{flctNo}
 	</select>
-
+	
+	<select id="getClass" parameterType="String" resultType="lectureAplyVO">
+		SELECT LECAP_NO
+			,SUB_NO
+			,PRO_NO
+			,FLCTS_NO
+			,LECAP_YR
+			,LECAP_TG_GRADE
+			,LECAP_DT
+			,LECAP_CPCT
+			,LECAP_SEM
+			,APRV_STTS_CD
+			,LECAP_RJCT_RSN
+			,AVL_CD
+		FROM LECTURE_APLY
+		WHERE FLCTS_NO = #{flctsNO}
+	</select>
+	
+	<insert id="applyLecture" parameterType="lectureAplyVO" useGeneratedKeys="true">
+	<selectKey keyProperty="lecapNo" resultType="int" order="BEFORE">
+		select SEQ_LECTURE_APLY.nextval from dual
+	</selectKey>
+		INSERT INTO LECTURE_APLY(
+			LECAP_NO
+			,SUB_NO
+			,PRO_NO
+			,FLCTS_NO
+			,LECAP_YR
+			,LECAP_TG_GRADE
+			,LECAP_DT
+			,LECAP_CPCT
+			,LECAP_SEM
+			,APRV_STTS_Cd
+			,AVL_cd
+			)
+		VALUES(
+		#{lecapNo}
+		,#{subNo}
+		,#{proNo}
+		,#{flctsNo}
+		,#{lecapYr}
+		,#{lecapTgGrade}
+		,sysdate
+		,#{lecapCpct}
+		,#{lecapSem}
+		,'wait'
+		,#{avlCd1}
+		)
+	</insert>
+	
+	<insert id="applyProgram" parameterType="lectureAplyVO">
+		insert into LECTURE_PROGRAM(
+			LECAP_NO
+			,LECPG_INTRO
+			,LECPG_LGG_CD
+			,AVL_CD
+			,LECPG_ATD
+			,LECPG_HW
+			,LECPG_MD_TEST
+			,LECPG_FN_TEST
+			,LECPG_BOOK
+			,WEEK1
+			,WEEK2
+			,WEEK3
+			,WEEK4
+			,WEEK5
+			,WEEK6
+			,WEEK7
+			,WEEK8
+			,WEEK9
+			,WEEK10
+			,WEEK11
+			,WEEK12
+			,WEEK13
+			,WEEK14
+			,WEEK15
+		)VALUES(
+			#{lecapNo},
+			#{lecpgIntro},
+			#{lecpgLggCd},
+			#{avlCd2},
+			#{lecpgAtd},
+			#{lecpgHw},
+			#{lecpgMdTest},
+			#{lecpgFnTest},
+			#{lecpgBook},
+			#{week1},
+			#{week2},
+			#{week3},
+			#{week4},
+			#{week5},
+			#{week6},
+			#{week7},
+			#{week8},
+			#{week9},
+			#{week10},
+			#{week11},
+			#{week12},
+			#{week13},
+			#{week14},
+			#{week15}
+		)
+	</insert>
+	
+	<insert id="applySchedule" parameterType="lectureAplyVO">
+		INSERT INTO LECTURE_SCHEDULE(
+			LECAP_NO
+			,LECSC_DAY
+			,PERIOD_CD
+			,LECSC_HOUR		
+		)VALUES(
+			#{lecapNo}
+			,#{lecscDay}
+			,#{periodCd}
+			,#{lecscHour}
+		)
+	</insert>
+	
+<!-- 	<select id="getLecapNo" resultType="int"> -->
+<!-- 		select SEQ_LECTURE_APLY.nextval from dual -->
+<!-- 	</select> -->
+	
+	
 </mapper>

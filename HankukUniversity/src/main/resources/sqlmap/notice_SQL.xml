@@ -4,6 +4,16 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="kr.or.hku.notice.mapper.AdminNoticeMapper">
  	
+ 	<sql id="noticeSearch">
+ 		<if test="searchType != null and searchType == 'title'">
+			AND (notice_ttl LIKE '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'writer'">
+			AND (notice_wrtr_nm LIKE '%'||#{searchWord}||'%')
+		</if>
+ 	</sql>
+ 	
+ 	
  	<update id="incrementNotice" parameterType="int">
  		update notice
  		set
@@ -80,5 +90,51 @@
  		DELETE FROM notice
  		WHERE notice_no = #{noticeNo}
  	</delete>
+ 	
+ 	<select id="noticeList2" parameterType="map" resultType="noticeVO">
+ 		/* kr.or.hku.notice.mapper.AdminNoticeMapper.noticeList2 */
+ 		SELECT 
+ 			  notice_no
+			, notice_ttl
+			, notice_wrtr_nm
+			, notice_regdate
+			, notice_read_cnt
+ 		FROM notice
+ 		WHERE 1=1
+ 		AND notice_clsf = #{noticeClsf}
+ 		<include refid="noticeSearch"/>
+ 		ORDER BY notice_no DESC
+ 	</select>
+ 	
+ 	<select id="selectNoticeCount" parameterType="pagingVO" resultType="int">
+ 		select count(notice_no)
+		from notice
+		where 1=1
+		<include refid="noticeSearch"/>
+ 	</select>
+ 	
+ 	<select id="selectNoticeList" parameterType="pagingVO" resultType="noticeVO">
+ 		SELECT
+			b.*
+		FROM(
+			SELECT
+				a.*, row_number() over (order by a.notice_no desc) rnum
+			FROM(
+				SELECT
+					  notice_no
+					, notice_ttl
+					, notice_wrtr_nm
+					, notice_regdate
+					, notice_read_cnt
+				FROM notice
+				WHERE 1=1
+				<include refid="noticeSearch"/>
+				ORDER BY notice_no DESC
+			) a
+		) b
+		<![CDATA[
+			WHERE b.rnum >= #{startRow} AND b.rnum <= #{endRow}
+		]]>
+ 	</select>
  	
  </mapper>

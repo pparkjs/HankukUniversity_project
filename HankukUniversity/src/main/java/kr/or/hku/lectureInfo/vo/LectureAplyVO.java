@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class LectureAplyVO {
-	private String lecapNo; // 과목신청번호
+	private int lecapNo; // 과목신청번호
 	private String subNo; // 과목코드
 	private String proNo; //교번
 	private String flctsNo; // 시설물번혼
@@ -21,7 +21,7 @@ public class LectureAplyVO {
 	private int lecapSem; // 개설학기
 	private String aprvSttsCd; //결재상태코드
 	private String lecapRjctRsn; //반려사유
-	private String avlCd; //가용코드
+	private String avlCd1; //가용코드
 	
 	// lecture_aply 테이블 이외에  join해서 가져올 필요한 필드
 	private String subNm; //과목이름
@@ -30,6 +30,31 @@ public class LectureAplyVO {
 	private String lecscDay; //강의요일
 	private int periodCd; //시작교시
 	private int lecscHour; // 시수
+	
+	private String lecpgIntro; //강의소개
+	private String lecpgLggCd; //언어구분
+	private String avlCd2; //대면/비대면 여부
+	private int lecpgAtd;  //출석
+	private int lecpgHw; // 과제
+	private int lecpgMdTest; //중간고사
+	private int lecpgFnTest; // 기말고사
+	private String lecpgBook; //주교재
+	private String week1    ;
+	private String week2    ;
+	private String week3    ;
+	private String week4    ;
+	private String week5    ;
+	private String week6    ;
+	private String week7    ;
+	private String week8    ;
+	private String week9    ;
+	private String week10   ;
+	private String week11   ;
+	private String week12   ;
+	private String week13   ;
+	private String week14   ;
+	private String week15   ;
+	
 	private String deptNm; //학과이름
 	private String subCrd; //학점
 	private int remainder; //잔여정원
@@ -37,4 +62,5 @@ public class LectureAplyVO {
  	private String flctNm;	//시설이름 
 	
 //	private List<LectureScheduleVO> scheduleList;
+
 }

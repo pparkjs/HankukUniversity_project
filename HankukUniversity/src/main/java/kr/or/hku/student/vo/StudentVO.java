@@ -40,4 +40,5 @@ public class StudentVO {
 	private String stdSttsNm; // 학적상태
 	private int grade; //학년
 
+
 }

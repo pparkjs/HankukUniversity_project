@@ -6,6 +6,7 @@ import java.util.Map;
 import kr.or.hku.admin.vo.CollegeVO;
 import kr.or.hku.admin.vo.DepartmentVO;
 import kr.or.hku.admin.vo.FacilityVO;
+import kr.or.hku.lectureInfo.vo.LectureAplyVO;
 import kr.or.hku.lectureInfo.vo.SubjectVO;
 
 public interface ILectureService {
@@ -27,5 +28,15 @@ public interface ILectureService {
 //	public List<FacilitiesVO> getFlctsList();
 
 	public Map<String, List<?>> getTimeTable(String flct);
+
+	public List<LectureAplyVO> getClass(String flcts);
+
+	public int applyLecture(LectureAplyVO vo);
+
+	public int getLecapNo();
+
+	public int applyProgram(LectureAplyVO vo);
+
+	public int applySchedule(LectureAplyVO vo);
 	
 }
