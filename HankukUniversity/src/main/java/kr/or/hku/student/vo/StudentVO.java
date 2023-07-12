@@ -32,4 +32,10 @@ public class StudentVO {
 	private String deptNm; //학과이름
 	private String stdSttsNm; // 학적상태
 	private int grade; //학년
+	private String flctNo; // 시설번호
+	private String flctNm; // 시설이름
+	private int floor;	// 시설 층
+	private String currentYear; //현재년도
+	private int currentSem; //현재학기
+	
 }
