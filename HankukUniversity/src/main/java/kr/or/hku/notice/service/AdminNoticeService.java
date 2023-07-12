@@ -1,19 +1,16 @@
-package kr.or.hku.notice.mapper;
+package kr.or.hku.notice.service;
 
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Mapper;
-
+import kr.or.hku.ServiceResult;
 import kr.or.hku.notice.vo.NoticeVO;
 import kr.or.hku.notice.vo.PaginationInfoVO;
 
-@Mapper
-public interface AdminNoticeMapper {
-	public int addNotice(NoticeVO noticeVO);
+public interface AdminNoticeService {
 	public List<NoticeVO> noticeList(String noticeClsf);
+	public ServiceResult addNotice(NoticeVO noticeVO);
 	public NoticeVO getNoticeOne(int noticeNo);
-	public void incrementNotice(int noticeNo);
 	public int updateNotice(NoticeVO noticeVO);
 	public int deleteNotice(int noticeNo);
 	public List<NoticeVO> noticeList2(Map<String, String> map);

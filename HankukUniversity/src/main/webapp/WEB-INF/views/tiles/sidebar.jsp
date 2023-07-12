@@ -37,10 +37,10 @@
 					<span class="nav-text">수강정보</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="/hku/student/search-subject">교과목 조회</a></li>
-					<li><a href="/hku/student/course-req">수강신청</a></li>
-					<li><a href="#">수강이력</a></li>
-					<li><a href="#">수강중인 강의</a></li>
+					<li><a href="/hku/search-subject">교과목 조회</a></li>
+					<li><a href="/hku/course-req">수강신청</a></li>
+					<li><a href="/hku/course-record">수강이력</a></li>
+					<li><a href="/hku/present-course">수강중인 강의</a></li>
 				</ul>
 			</li>
 			
@@ -196,7 +196,7 @@
 				<ul aria-expanded="false">
 					<li><a href="/hku/admin/dept-administration">학과 관리</a></li>
 					<li><a href="#">학적 관리</a></li>
-					<li><a href="#">교과목 관리</a></li>
+					<li><a href="/hku/admin/subject-administration">교과목 관리</a></li>
 					<li><a href="#">시설관리</a></li>
 					<li><a href="#">사물함관리</a></li>
 					<li><a href="#">학사 일정 관리</a></li>

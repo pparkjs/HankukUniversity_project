@@ -8,7 +8,7 @@
 	overflow: scroll;
 }
 
-.dept-body{
+.dept-body, .subject-body{
 	padding-top: 0px;
 	height: 100%
 }
@@ -16,7 +16,7 @@
 	display: flex;
     justify-content: flex-end;
 }
-.deptDiv{
+.deptDiv, .subjectDiv{
 	margin-top: -10px;
 }
 .table thead tr th {
@@ -25,4 +25,8 @@
 .table thead{
 	position: sticky;
     top: 0px;
+}
+
+.lecSearchBtn{
+	margin-top: 17px;
 }
