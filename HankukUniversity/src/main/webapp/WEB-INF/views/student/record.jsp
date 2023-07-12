@@ -1,5 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<link rel="stylesheet" href="/css/table.css">
+<style>
+.tbl{
+	text-align: center;
+}
+.tbl thead th {
+	border: none;
+   	padding: 11px;
+   	font-size: 20px;
+}
+.tbl tbody th, .tbl tbody td {
+	border: none;
+	padding: 15px;
+	font-size: 16px;
+	color:black;
+}
+
+.tbl tbody td {
+	font-size: 17px;
+}
+</style>
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
@@ -9,109 +31,120 @@
     </div>
 	<div class="container-fluid">
 		<div class="card" id="card-title-1">
-			<ul class="nav nav-pills mb-4 light">
-				<li class=" nav-item">
-					<a href="#navpills-1" class="nav-link active" data-bs-toggle="tab" aria-expanded="false">학생정보</a>
-				</li>
-				<li class="nav-item">
-					<a href="#navpills-2" class="nav-link" data-bs-toggle="tab" aria-expanded="false">학적</a>
-				</li>
-			</ul>
-			
-			<!-- tab1 -->
-			<div class="tab-content">
-				<div id="navpills-1" class="tab-pane active">
-					<div class="row">
 									
-			<!-- 프로필 -->
 			<div class="card-body">
 				<div class="row">
-					<div class="col-xl-3 col-lg-4">
-						<div class="clearfix">
-							<div class="card card-bx profile-card author-profile m-b30">
-								<div class="card-body">
-									<div class="p-5">
-										<div class="author-profile">
-											<div class="author-media">
-												<img src="images/tab/1.jpg" alt="">
-												<div class="upload-link" title="" data-toggle="tooltip" data-placement="right" data-original-title="update">
-													<input type="file" class="update-flie">
-													<i class="fa fa-camera"></i>
-												</div>
-											</div>
-											<div class="author-info">
-												프로필사진
-											</div>
+					<div class="col-xl-3 col-lg-4" style="height: 1000px;">
+						<div class="card card-bx profile-card author-profile m-b30" style="height: 300px;">
+							<div class="card-header">
+								<h6 class="title">Profile</h6>
+							</div>
+							<div class="card-body">
+								<div class="p-5">
+									<div class="author-profile">
+										<div class="author-media">
+											<div class="new-arrivals-img-contnent">
+		                                        <img class="img-fluid" src="images/product/1.jpg" alt="">
+		                                    </div>
 										</div>
-									</div>			
+										<div class="author-info">
+											<h6 class="title">asd</h6>
+											<span>컴퓨터공학</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="clearfix" style="height: 600px;">
+							<div class="card card-bx profile-card author-profile m-b30">
+								<div class="card profile-card card-bx m-b30" style="max-width: 100%;">
+								    <div class="card-header">
+								        <h6 class="title">Records changed</h6>
+								    </div>
+								    <div style="overflow-x: auto;">
+								        <table class="tbl">
+								            <thead>
+								                <tr>
+								                    <th>날짜</th>
+								                    <th>변동사항</th>
+								                    <th>승인여부</th>
+								                </tr>
+								            </thead>
+								            <tbody>
+								                <tr>
+								                    <td>2023-01-01</td>
+								                    <td>휴학</td>
+								                    <td>승인</td>
+								                </tr>
+								                <tr>
+								                    <td>2023-01-01</td>
+								                    <td>복학</td>
+								                    <td>승인</td>
+								                </tr>
+								            </tbody>
+								        </table>
+								    </div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- 프로필 end -->
 					
-					<div class="col-xl-9 col-lg-8" style="height: 40%">
+					<div class="col-xl-9 col-lg-8" style="height: 800px">
 						<div class="card profile-card card-bx m-b30">
 							<div class="card-header">
-								<h6 class="title">record information</h6>
+								<h6 class="title">Record information</h6>
 							</div>
 							<form class="profile-form">
 								<div class="card-body">
 									<div class="row">
 										<div class="col-sm-6 m-b30">
 											<label class="form-label">이름</label>
-											<input type="text" class="form-control" value="">
-										</div>
-										<div class="col-sm-6 m-b30">
-											<label class="form-label">주소</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" value="${student.stdNm }" readonly>
 										</div>
 										<div class="col-sm-6 m-b30">
 											<label class="form-label">학번</label>
-											<input type="text" class="form-control" value="">
-										</div>
-										<div class="col-sm-6 m-b30">
-											<label class="form-label">연락처</label>
-											<input type="text" class="form-control" value="">
-										</div>
-										<div class="col-sm-6 m-b30">
-											<label class="form-label">주민등록번호</label>
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" value="${student.stdNo }" readonly>
 										</div>
 										<div class="col-sm-6 m-b30">
 											<label class="form-label">성별</label>
-											<input type="text" class="form-control" value="">
+											<input type="text" class="form-control" value="${student.comCdNm2 }" readonly>
+										</div>
+										<div class="col-sm-6 m-b30">
+											<label class="form-label">학과</label>
+											<input type="text" class="form-control" value="${student.deptNm }">
+										</div>
+										<div class="col-sm-6 m-b30">
+											<label class="form-label">학적</label>
+											<input type="text" class="form-control" value="${student.comCdNm1 }">
+										</div>
+										<div class="col-sm-6 m-b30">
+											<label class="form-label">주소</label>
+											<input type="text" class="form-control" value="${student.stdAddr }${student.stdDaddr }">
+										</div>
+							
+										<div class="col-sm-6 m-b30">
+											<label class="form-label">연락처</label>
+											<input type="text" class="form-control" value="${student.stdTelno }">
+										</div>
+										<div class="col-sm-6 m-b30">
+											<label class="form-label">주민등록번호</label>
+											<input type="text" class="form-control" value="${student.stdRrno }" readonly>
 										</div>
 										<div class="col-sm-6 m-b30">
 											<label class="form-label">계좌번호</label>
-											<input type="text" class="form-control" value="">
+											<input type="text" class="form-control" value="${student.stdActno }">
 										</div>
 										<div class="col-sm-6 m-b30">
 											<label class="form-label">이메일</label>
-											<input type="text" class="form-control" value="">
+											<input type="text" class="form-control" value="${student.stdMail }">
 										</div>
 									</div>
-								</div>
-								<div class="card-footer" style="display: flex; justify-content: end; margin-right: 50px;">
-									<button class="btn btn-primary">수정</button>
 								</div>
 							</form>
 						</div>
 					</div>
-					</div>
 				</div>
-				
-				<!-- tab2 -->
-				<div id="navpills-2" class="tab-pane">
-					<div class="row">
-						Tab2
-					</div>
-				</div>
-				
-				</div>
-
-				</div>
-			</div>
+			</div>				
 		</div>
 	</div>
 </div>
