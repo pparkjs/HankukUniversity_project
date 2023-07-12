@@ -12,12 +12,55 @@
 	</insert>
 
 	<!-- 스터디 가입신청 -->
-<!-- 	<insert id="intoStudy"> -->
+<!-- 	<insert id="intoStudy" > -->
+<!-- 		insert into joinstatus( -->
+<!-- 		    join_no, -->
+<!-- 		    study_no, -->
+<!-- 		    std_no, -->
+<!-- 		    join_regdate, -->
+<!-- 		    join_reason -->
+<!-- 		) -->
+<!-- 		values(seq_joinstatus.nextval, ${studyNo}, ${stdNo}, sysdate, ${joinReason}); -->
+<!-- 	</insert> -->
+		
 <!-- 	</insert> -->
 
 	<!-- 가입신청 대기중인 리스트 -->
-<!-- 	<select id="applicationsList" resultType="studyVo"> -->
-<!-- 	</select> -->
+	<select id="applicationsList" parameterType="int" resultType="studyVo">
+		select 
+		    a.join_no,
+		    a.study_no,
+		    a.std_no,
+		    b.std_nm,
+		    a.aprv_stts_cd,
+		    c.com_cd_nm,
+		    d.dept_nm,
+		    a.join_regdate,
+		    a.join_reason
+		from joinstatus a
+			join student b on a.std_no = b.std_no
+			join com_code c on a.aprv_stts_cd = c.com_cd
+			join department d on b.dept_cd = d.dept_cd
+		where study_no = ${studyNo} and aprv_stts_cd ='wait'
+	</select>
+	
+	<!-- 가입신청 상세보기 -->
+	<select id="applDetail" resultType="studyVo" parameterType="studyVo">
+		select 
+		    a.study_no,
+		    a.std_no,
+		    b.std_nm,
+		    a.aprv_stts_cd,
+		    c.com_cd_nm,
+		    d.dept_nm,
+		    a.join_regdate,
+		    a.join_reason
+		from joinstatus a
+		    join student b on a.std_no = b.std_no
+		    join com_code c on a.aprv_stts_cd = c.com_cd
+		    join department d on b.dept_cd = d.dept_cd
+		where a.study_no = ${studyNo} and a.std_no = ${stdNo}
+	</select>
 	
 	<!-- 스터디 역할 조회 -->
 <!-- 	<select id=""> -->
@@ -25,7 +68,17 @@
 
 	<!-- 스터디리스트 -->
 	<select id="studyList" resultType="studyVo">
-		select * from studygroup order by study_no desc
+		select  
+		    a.study_no,
+		    a.std_no,
+		    b.std_nm,
+		    a.study_name,
+		    a.study_regdate,
+		    a.study_cpcy,
+		    a.study_intro 
+		from studygroup a 
+		join student b on a.std_no = b.std_no
+		order by study_no desc
 	</select>
 	
 	<!-- 스터디멤버 조회 -->
@@ -39,18 +92,59 @@
 
  	<!-- 스터디 select one -->
  	<select id="studyRoom" resultType="studyVo">
- 		select * from studygroup where study_no = #{studyNo}
+ 		select a.study_no,
+		    a.std_no,
+		    b.std_nm,
+		    a.study_name,
+		    a.study_regdate,
+		    a.study_cpcy,
+		    a.study_intro 
+		from studygroup a 
+		join student b on a.std_no = b.std_no 
+		where a.study_no = #{studyNo}
  	</select>
  	
  	<!-- 스터디 삭제 -->
  	<delete id="delStudyMem" parameterType="int">
- 		delete from studymember where study_no = #{studyNo};
+ 		delete from studymember where study_no = #{studyNo}
  	</delete>
 	<delete id="delStudy" parameterType="int">
-		delete from studygroup where study_no = #{studyNo};
+		delete from studygroup where study_no = #{studyNo}
+	</delete>
+	
+	<!-- 스터디 탈퇴 -->
+	<delete id="exitStudy" parameterType="studyVo">
+		delete from studymember
+		where study_no = ${studyNo} and std_no = ${stdNo}
 	</delete>
  	
- 	<!-- 가입신청 승인/반려 -->
-<!--  	<update id=""> -->
-<!--  	</update> -->
+ 	<!-- 가입신청 승인-->
+ 	<update id="assignStudy" parameterType="int">
+ 		update joinstatus
+		    set aprv_stts_cd = 'appv'
+		where join_no = ${joinNo}
+ 	</update>
+ 	
+ 	<!-- 가입신청 거절-->
+ 	<update id="rejStudy" parameterType="int">
+ 		update joinstatus
+		    set aprv_stts_cd = 'rej'
+		where join_no = ${joinNo}
+ 	</update>
+ 	
+ 	<!-- 시간표 조회 -->
+ 	<select id="scheduleList" parameterType="studyVo" resultType="studyVo">
+ 		select a.lecap_no, b.lecap_yr, c.lecsc_day, c.period_cd, c.lecsc_hour 
+			from course_regist a
+			join lecture_aply b on a.lecap_no = b.lecap_no
+			join lecture_schedule c on a.lecap_no = c.lecap_no
+		where a.std_no = ${stdNo} and b.lecap_yr = ${lecapYr}
+ 	</select>
+ 	
+ 	<!-- 스터디원 추방 -->
+<!--  	<delete id=""> -->
+<!--  		delete from joinstatus  -->
+<!-- 		where std_no = ${stdNo} and study_no = ${studyNo} -->
+<!--  	</delete> -->
+ 	
  </mapper>

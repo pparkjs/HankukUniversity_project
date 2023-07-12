@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -28,10 +30,6 @@ public class StudyController {
 	@Inject
 	private StudyService service;
 	
-//	@GetMapping(value = "/student/study")
-//	public String record() {
-//		return "student/study";
-//	}
 	
 	@GetMapping(value = "/student/study")
 	public String studyList(Model model) {
@@ -74,7 +72,6 @@ public class StudyController {
 	    return "student/study";
 	}
 
-
 	@GetMapping(value = "/student/studyRoom")
 	public String studyRoom(int studyNo, Model model){
 		// 스터디룸에 대한정보
@@ -86,18 +83,55 @@ public class StudyController {
 			log.info("role check: " + role);
 		}
 		// 가입신청 대기중인 멤버목록
-//		List<StudyVO> appli = service.applicationslist(studyNo);
+		List<StudyVO> appli = service.applicationsList(studyNo);
+		
 		model.addAttribute("study", study);
 		model.addAttribute("studyMem", studyMem);
-//		model.addAttribute("appli", appli);
+		model.addAttribute("appli", appli);
 		return "student/studyRoom";
+	}
+	
+	@GetMapping("/student/scheduleList")
+	public List<StudyVO> scheduleList(@RequestParam("stdNo") String stdNo, Model model) {
+		// 시간표 리스트 출력
+		StudyVO vo = new StudyVO();
+		vo.setStdNo(stdNo);
+		vo.setLecapYr("2023");
+		List<StudyVO> sList = service.scheduleList(vo);
+		model.addAttribute("sList", sList);
+		return sList;
 	}
 	
 	@PostMapping(value = "/student/delStudy")
 	public String delStudy(@RequestParam("studyNo") int studyNo) {
-		log.info("delStudy실행...");
 		service.delStudy(studyNo);
-		return "student/study";
+		return "redirect:/hku/student/study";
+	}
+	
+	@PostMapping(value = "/student/exitStudy")
+	public String exitStudy(@RequestParam("studyNo") int studyNo, HttpServletRequest request){
+	    HttpSession session = request.getSession();
+	    StudentVO stdVo = (StudentVO) session.getAttribute("std");
+		StudyVO studyVo = new StudyVO();
+		studyVo.setStudyNo(studyNo);
+		studyVo.setStdNo(stdVo.getStdNo());
+		
+		service.exitStudy(studyVo);
+		return "redirect:/hku/student/study";
+	}
+	
+	@PostMapping(value = "/student/assignStudy/{studyNo}/{joinNo}")
+	public List<StudyVO> assignStudy(@PathVariable("joinNo") int joinNo, @PathVariable("studyNo") int studyNo) {
+		service.assignStudy(joinNo);
+		List<StudyVO> appli = service.applicationsList(studyNo);
+		return appli;
+	}
+	@PutMapping(value = "/student/rejStudy/{studyNo}/{joinNo}")
+	public List<StudyVO> rejStudy(@PathVariable("joinNo") int joinNo, @PathVariable("studyNo") int studyNo) {
+		service.rejStudy(joinNo);
+		List<StudyVO> appli = service.applicationsList(studyNo);
+		return appli;
 	}
 	
 }
+
