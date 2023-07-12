@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.hku.ServiceResult;
 import kr.or.hku.common.service.CommonFileService;
-import kr.or.hku.common.service.ICommonService;
+import kr.or.hku.common.service.CommonService;
 import kr.or.hku.common.vo.AttachFileVO;
 import kr.or.hku.common.vo.CommonVO;
 import kr.or.hku.notice.service.AdminNoticeService;
@@ -42,7 +42,7 @@ public class AdminNoticeController {
 	
 	
 	@Autowired
-	private ICommonService commonService;
+	private CommonService commonService;
 	
 	@GetMapping("/notice/list")
 	public String academicNoticeList(Model model) {

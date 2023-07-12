@@ -1,4 +1,4 @@
-package kr.or.hku.student.serviceImpl;
+package kr.or.hku.student.service.impl;
 
 import java.util.List;
 
