@@ -30,7 +30,6 @@ import kr.or.hku.notice.vo.PaginationInfoVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping("/hankuk")
 @Slf4j
 public class AdminNoticeController {
 
@@ -44,7 +43,7 @@ public class AdminNoticeController {
 	@Autowired
 	private ICommonService commonService;
 	
-	@GetMapping("/notice/list")
+	@GetMapping("/hku/notice/list")
 	public String academicNoticeList(Model model) {
 		List<CommonVO> commonData = commonService.getAllCommonData();
 		model.addAttribute("commonData", commonData);
@@ -52,7 +51,7 @@ public class AdminNoticeController {
 		return "admin/notice";
 	}
 	
-	@GetMapping("/employment/list")
+	@GetMapping("/hku/employment/list")
 	public String employmentNoticeList(Model model) {
 		List<CommonVO> commonData = commonService.getAllCommonData();
 		model.addAttribute("commonData", commonData);
@@ -61,7 +60,7 @@ public class AdminNoticeController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/admin/noticeList")
+	@GetMapping("/hankuk/admin/noticeList")
 	public ResponseEntity<PaginationInfoVO> getNoticeList(
 			@RequestParam Map<String, String> map
 			){
@@ -104,7 +103,7 @@ public class AdminNoticeController {
 	
 	// 등록 로직
 	@ResponseBody
-	@RequestMapping(value = "/admin/addNotice",method = RequestMethod.POST)
+	@RequestMapping(value = "/hankuk/admin/addNotice",method = RequestMethod.POST)
 	public ResponseEntity<String> addNotice(NoticeVO noticeVO){
 		log.info("===================등록 실행====================");
 		ResponseEntity<String> entity = null;
@@ -158,13 +157,13 @@ public class AdminNoticeController {
 	
 	// 노티스 상세 보기
 	@ResponseBody
-	@GetMapping(value = "/admin/getNoticeOne", produces = "application/json;charset=utf-8")
+	@GetMapping(value = "/hankuk/admin/getNoticeOne", produces = "application/json;charset=utf-8")
 	public ResponseEntity<NoticeVO> getNoticeOne(int noticeNo){
 		ResponseEntity<NoticeVO> entity = null;
 		log.info("노티스 번호  " +noticeNo);
 		NoticeVO noticeVO = noticeService.getNoticeOne(noticeNo);
 		log.info(noticeVO.toString());
-		List<AttachFileVO> fileList = fileService.getNoticeFile(noticeVO.getAtchFileNo());
+		List<AttachFileVO> fileList = fileService.getFileList(noticeVO.getAtchFileNo());
 		noticeVO.setFileList(fileList);
 		log.info("몇개 들어오는지  " + fileList.size());
 		if (fileList != null || fileList.size() > 0) {
@@ -182,7 +181,7 @@ public class AdminNoticeController {
 	
 	// 수정 로직
 	@ResponseBody
-	@PutMapping("/admin/updateNotice")
+	@PutMapping("/hankuk/admin/updateNotice")
 	public ResponseEntity<NoticeVO> updateNotice(NoticeVO noticeVO){
 		/*
 		 	1. 파일이 들어왔을 떄 기존에 있던 파일 다 지우고 새로 업데이트 한다.
@@ -229,7 +228,7 @@ public class AdminNoticeController {
 				log.info("====공지사항 업데이트 성공====");
 			}
 			// 파일이 변경되었을떄 새로운 파일 번호로 파일들 가져오기
-			fileList = fileService.getNoticeFile(attachFileNo);
+			fileList = fileService.getFileList(attachFileNo);
 		}else { // 파일 없을떄 로직
 			// 파일이 없을떄는 flag 로 -1 파일이 변경 안됬다는 뜻
 			noticeVO.setAtchFileNo(-1);
@@ -238,7 +237,7 @@ public class AdminNoticeController {
 				log.info("공지사항 업데이트 완료");
 			}
 			// 파일이 변경 안되었을떄 기존에 있던 파일 다시 가져오기
-			fileList = fileService.getNoticeFile(noticeVO.getAtchFileNo());
+			fileList = fileService.getFileList(noticeVO.getAtchFileNo());
 		}
 		// 공지사항 번호 가져오기
 		int noticeNo = noticeVO.getNoticeNo();
@@ -254,7 +253,7 @@ public class AdminNoticeController {
 	
 	
 	@ResponseBody
-	@DeleteMapping(value = "/admin/deleteNotice", produces = "application/json;charset=utf-8")
+	@DeleteMapping(value = "/hankuk/admin/deleteNotice", produces = "application/json;charset=utf-8")
 	public String deleteNotice(@RequestBody Map<String, String> map) {
 		String msg = "";
 		log.info(map.toString());
