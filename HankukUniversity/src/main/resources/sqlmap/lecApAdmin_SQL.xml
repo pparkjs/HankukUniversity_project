@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.admin.mapper.LecAplyAdminMapper">
+ 
+ 	<select id="getLecApList" resultType="map">
+ 		/* kr.or.hku.admin.mapper.LecAplyAdminMapper.getLecApList */
+ 		SELECT 
+		      la.lecap_no AS lecap_no
+		    , s.sub_nm AS sub_nm
+		    , s.sub_no AS sub_no
+		    , p.pro_nm AS pro_nm
+		    , p.pro_no AS pro_no
+		    , la.lecap_yr AS lecap_yr
+		    , la.lecap_sem AS lecap_sem
+		    , TO_CHAR(la.lecap_dt, 'yyyy-mm-dd') AS lecap_dt
+		    , la.aprv_stts_cd AS aprv_stts_cd
+		FROM LECTURE_APLY la
+		INNER JOIN subject s ON la.sub_no = s.sub_no
+		INNER JOIN professor p ON la.pro_no = p.pro_no
+		WHERE la.aprv_stts_cd NOT IN 'CANCLE'
+		ORDER BY la.lecap_no DESC
+ 	</select>
+ 	
+ 	<select id="getLecBasicOne" parameterType="int" resultType="lecBasicVO">
+ 		/* kr.or.hku.admin.mapper.LecAplyAdminMapper.getLecBasicOne */
+ 		SELECT 
+		      la.lecap_no AS lecap_no
+		    , s.sub_no AS sub_no
+		    , s.sub_nm AS sub_nm
+		    , d.dept_nm AS dept_nm
+		    , s.sub_grade AS sub_grade
+		    , s.sub_crd AS sub_crd
+		    , la.lecap_cpct AS lecap_cpct
+		    , la.lecap_yr AS lecap_yr
+		    , la.lecap_sem AS lecap_sem
+		    , s.crs_classf_cd AS crs_classf_cd
+		    , p.pro_nm AS pro_nm
+		    , p.pro_mail AS pro_mail
+		    , p.pro_telno AS pro_telno
+		FROM LECTURE_APLY la
+		INNER JOIN subject s ON la.sub_no = s.sub_no
+		INNER JOIN professor p ON la.pro_no = p.pro_no
+		INNER JOIN department d ON s.DEPT_CD = d.dept_cd
+		WHERE la.lecap_no = #{lecapNo}
+ 	</select>
+ 	
+ 	<select id="getLecProgam" resultType="int" parameterType="lecProgramVO">
+ 		/* kr.or.hku.admin.mapper.LecAplyAdminMapper.getLecProgam */
+ 		SELECT
+ 			  lecap_no
+		    , lecpg_intro
+		    , lecpg_lgg_cd
+		    , avl_cd
+		    , lecpg_atd
+		    , lecpg_hw
+		    , lecpg_md_test
+		    , lecpg_fn_test
+		    , lecpg_book
+		    , week1
+		    , week2
+		    , week3
+		    , week4
+		    , week5
+		    , week6
+		    , week7
+		    , week8
+		    , week9
+		    , week10
+		    , week11
+		    , week12
+		    , week13
+		    , week14
+		    , week15
+		FROM lecture_program
+		WHERE lecap_no = #{lecapNo}
+ 	</select>
+ 
+ </mapper>
