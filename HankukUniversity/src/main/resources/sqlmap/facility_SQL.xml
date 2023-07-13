@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.student.mapper.FacilityMapper">
+ 	
+ 	<!-- 사물함 리스트 가져오기 -->
+ 	<select id="lockerList" resultType="lockerVO" parameterType="map">
+ 	/*kr.or.hku.student.mapper.FacilityMapper.lockerList*/
+	 	SELECT 
+	 		  a.locker_no
+	 		, a.floor
+	 		, a.flct_no
+	 		, a.avl_cd 
+		FROM locker a
+		WHERE flct_no LIKE #{fcltNo}
+		AND floor = #{floor}
+ 	</select>
+ 	
+ 	<!-- 내가 예약한 사물함이 있는지 체크! -->
+ 	<select id="lockerReservationCheck" parameterType="lockerRsvtVO" resultType="int">
+ 	/*kr.or.hku.student.mapper.FacilityMapper.lockerReservationCheck*/
+	 	SELECT COUNT(*) FROM locker_rsvt
+		WHERE std_no = #{stdNo}
+		AND locker_yr = #{lockerYr}
+		AND rsvt_sem = #{rsvtSem}
+ 	</select>
+ 	
+ 	<!-- 사물함 사용 여부 Y로 바꾸기 -->
+ 	<update id="lockerYnUpdate" parameterType="lockerRsvtVO">
+ 	/*kr.or.hku.student.mapper.FacilityMapper.lockerYnUpdate*/
+ 		UPDATE locker
+ 		SET
+ 			avl_cd = 'Y'
+ 		WHERE locker_no = #{lockerNo}
+ 		AND floor = #{floor}
+ 		AND flct_no = #{flctNo}
+ 	</update>
+ 	
+ 	<!-- 사물함 예약테이블에 insert -->
+ 	<insert id="lockerReservation" parameterType="lockerRsvtVO">
+ 	/*kr.or.hku.student.mapper.FacilityMapper.lockerReservation*/
+ 		INSERT INTO locker_rsvt
+ 		VALUES(seq_locker_rsvt.nextval, #{lockerNo}, #{floor}, #{flctNo}, #{stdNo}, #{lockerYr}, #{rsvtSem}, 'N') 
+ 	</insert>
+ 	
+ </mapper>

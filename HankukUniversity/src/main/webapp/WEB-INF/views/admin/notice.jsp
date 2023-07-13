@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:if test="${division eq 'N' }">
+	<c:set value="학사" var="dvs"/>
+</c:if>
+<c:if test="${division eq 'E' }">
+	<c:set value="채용" var="dvs"/>
+</c:if>
 <c:forEach items="${commonData }" var="cmData">
-	<c:if test="${cmData.comCdNm eq '학사'}">
+	<c:if test="${cmData.comCdNm eq dvs}">
 		<c:set var="noticeClsf" value="${cmData.comCd}"/>
 	</c:if>
 </c:forEach>
@@ -11,13 +17,13 @@
 	<div class="page-titles">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="javascript:void(0)">게시판관리</a></li>
-			<li class="breadcrumb-item active"><a href="javascript:void(0)">학사공지 게시판</a></li>
+			<li class="breadcrumb-item active"><a href="javascript:void(0)">${dvs }공지 게시판</a></li>
 		</ol>
     </div>
 	<div class="container-fluid">
 		<div class="card" id="card-title-1">
 			<div class="card-header border-0 pb-0 ">
-				<h5 class="card-title" style="font-weight: bold;">학사공지</h5>
+				<h5 class="card-title" style="font-weight: bold;">${dvs }공지관리</h5>
 			</div>
 			<div class="card-body">
 				<div class="basic-form">
@@ -119,12 +125,18 @@
 
 				
 				if(title == null || title == ""){
-					alert("제목을 입력해주세요");
+					swal({
+						title: "제목을 입력해주세요!", 
+						icon: "error"
+					});
 					return false;
 				}
 				
 				if(content == null || content == ""){
-					alert("내용을 입력해주세요");
+					swal({
+						title: "내용을 입력해주세요!", 
+						icon: "error"
+					});
 					return false;
 				}
 
@@ -156,7 +168,10 @@
 					dataType: "text",
 					success: function(res){
 						if(res === "success"){
-							alert("정상적으로 글이 등록되었습니다.");
+							swal({
+								title: "정상적으로 글이 등록되었습니다.", 
+								icon: "success"
+							});
 							$('#addModal').modal("hide");
 							noticeList();
 						}
@@ -176,7 +191,6 @@
 				$('#noticeFrm').css("display","block");
 				$('#noticeTtl').val($("#detailTtl").html());
 				CKEDITOR.instances.noticeCn.setData($("#detailCn").html());
-				$('.deleteFile').css('display','block');
 			}else if(this.innerText == "저장"){
 
 				// 공지사항 변경했을때 처리 로직
@@ -225,7 +239,10 @@
 					success: function(res){
 						console.log("수정된 파일",res);
 						if(res != null){
-							alert("정상적으로 글이 수정 되었습니다.");
+							swal({
+								title: "정상적으로 글이 수정 되었습니다.", 
+								icon: "success"
+							});
 						}
 
 						$('#noticeNo').val(res.noticeNo);
@@ -273,31 +290,42 @@
 		// 삭제 & 취소 버튼
 		$('#deleteBtn').on('click',function(){
 			if(this.innerText == "삭제"){
-				if (confirm("해당 게시글을 삭제 하시겠습니까?")) {
-					console.log("삭제 버튼 눌림");
-					let noticeNo = $('#noticeNo').val();
-					let atchFileNo = $('#atchFileNo').val();
-					
-					let deleteData = {
-						noticeNo:noticeNo,
-						atchFileNo:atchFileNo
-					}
-					$.ajax({
-						type:"delete",
-						url: "/hankuk/admin/deleteNotice",
-						contentType: "application/json;charset=utf-8", // 필수 
-						data: JSON.stringify(deleteData),
-						dataType: "text",
-						success: function(res){
-							alert(res);
-							$('#addModal').modal("hide");
-							noticeList();
-						},
-						err: function(err){
-							console.log("err:", err)
+				swal({
+					   title: '정말로 해당 글을 삭제 하시겠습니까?',
+					   text: '글이 삭제되면 되돌릴 수 없습니다.',
+					   icon: 'warning',
+					   buttons: true,
+					   dangerMode: true,
+				}).then((willDelete) => {
+					if (willDelete) {
+						console.log("삭제 버튼 눌림");
+						let noticeNo = $('#noticeNo').val();
+						let atchFileNo = $('#atchFileNo').val();
+						
+						let deleteData = {
+							noticeNo:noticeNo,
+							atchFileNo:atchFileNo
 						}
-					});
-				}
+						$.ajax({
+							type:"delete",
+							url: "/hankuk/admin/deleteNotice",
+							contentType: "application/json;charset=utf-8", // 필수 
+							data: JSON.stringify(deleteData),
+							dataType: "text",
+							success: function(res){
+								swal({
+									title: res, 
+									icon: "success"
+								});
+								$('#addModal').modal("hide");
+								noticeList();
+							},
+							err: function(err){
+								console.log("err:", err)
+							}
+						});
+					}
+				});
 			}else if(this.innerText == "취소"){
 				console.log("취소 버튼 눌림");
 				this.innerText = "삭제";
