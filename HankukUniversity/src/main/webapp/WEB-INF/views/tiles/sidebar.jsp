@@ -230,7 +230,7 @@
 					<span class="nav-text">교수행정</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">개설신청 관리</a></li>
+					<li><a href="/hku/admin/lecaplylist">개설신청 관리</a></li>
 					<li><a href="#">휴강신청 관리</a></li>
 				</ul>
 			</li>
