@@ -33,6 +33,16 @@ public class PaginationInfoVO<T> {
 	
 	private String noticeClsf;
 	
+	private String deptCd;
+	
+	public String getDeptCd() {
+		return deptCd;
+	}
+
+	public void setDeptCd(String deptCd) {
+		this.deptCd = deptCd;
+	}
+
 	public String getNoticeClsf() {
 		return noticeClsf;
 	}
