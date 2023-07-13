@@ -41,7 +41,8 @@
     
     <!-- 지현칸 밑에서만 작성 -->
     <typeAlias type="kr.or.hku.lectureInfo.vo.LectureAplyVO" alias="lectureAplyVO"/>
-  
+    <typeAlias type="kr.or.hku.lectureInfo.vo.LectureTimeTableVO" alias="timeTableVO"/>
+  	
     <!-- 재균칸 밑에서만 작성 -->  
     <typeAlias type="kr.or.hku.common.vo.AttachFileVO" alias="attachFileVO"/>
     <typeAlias type="kr.or.hku.notice.vo.PaginationInfoVO" alias="pagingVO"/>

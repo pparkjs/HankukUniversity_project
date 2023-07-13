@@ -11,6 +11,7 @@ import kr.or.hku.admin.vo.CollegeVO;
 import kr.or.hku.admin.vo.DepartmentVO;
 import kr.or.hku.admin.vo.FacilityVO;
 import kr.or.hku.lectureInfo.vo.LectureAplyVO;
+import kr.or.hku.lectureInfo.vo.LectureTimeTableVO;
 import kr.or.hku.lectureInfo.vo.SubjectVO;
 import kr.or.hku.professor.mapper.LectureMapper;
 import kr.or.hku.professor.service.ILectureService;
@@ -66,7 +67,7 @@ public class LectureServiceImpl implements ILectureService {
 		return myMap;
 	}
 	@Override
-	public List<LectureAplyVO> getClass(String flcts) {
+	public List<LectureTimeTableVO> getClass(String flcts) {
 		
 		return lectureMapper.getClass(flcts);
 	}
@@ -90,4 +91,13 @@ public class LectureServiceImpl implements ILectureService {
 		return lectureMapper.applySchedule(vo);
 	}
 	
+	@Override
+	public List<LectureAplyVO> getLectureStatus(String proNo) {
+		// TODO Auto-generated method stub
+		return lectureMapper.getLectureStatus(proNo);
+	}
+	@Override
+	public void returnLecture(String lecapNo) {
+		lectureMapper.returnLecture(lecapNo);
+	}
 }
