@@ -66,21 +66,25 @@
 		select * from facilities where flct_no = #{flctNo}
 	</select>
 	
-	<select id="getClass" parameterType="String" resultType="lectureAplyVO">
-		SELECT LECAP_NO
-			,SUB_NO
-			,PRO_NO
-			,FLCTS_NO
-			,LECAP_YR
-			,LECAP_TG_GRADE
-			,LECAP_DT
-			,LECAP_CPCT
-			,LECAP_SEM
-			,APRV_STTS_CD
-			,LECAP_RJCT_RSN
-			,AVL_CD
-		FROM LECTURE_APLY
-		WHERE FLCTS_NO = #{flctsNO}
+	<select id="getClass" parameterType="String" resultType="timeTableVO">
+		SELECT 
+		    a.LECAP_NO,
+		    LECSC_DAY,
+		    PERIOD_CD,
+		    LECSC_HOUR,
+		    c.SUB_NM,
+		    d.PRO_NM
+		FROM LECTURE_SCHEDULE a
+		JOIN LECTURE_APLY b ON a.LECAP_NO = b.LECAP_NO
+		JOIN SUBJECT c ON b.SUB_NO = c.SUB_NO
+		JOIN professor d ON b.PRO_NO = d.PRO_NO
+		WHERE b.FLCTS_NO = #{flctsNo}
+		AND b.APRV_STTS_CD !='rej'
+		AND b.LECAP_YR = EXTRACT(YEAR FROM SYSDATE)
+		AND b.LECAP_SEM = CASE
+		    WHEN EXTRACT(MONTH FROM SYSDATE)= 6 THEN '1'
+		    ELSE '2'
+		END
 	</select>
 	
 	<insert id="applyLecture" parameterType="lectureAplyVO" useGeneratedKeys="true">
@@ -183,9 +187,28 @@
 		)
 	</insert>
 	
-<!-- 	<select id="getLecapNo" resultType="int"> -->
-<!-- 		select SEQ_LECTURE_APLY.nextval from dual -->
-<!-- 	</select> -->
+	<select id="getLectureStatus" parameterType="String" resultType="lectureAplyVO">
+	SELECT 
+		A.LECAP_NO,
+		A.LECAP_DT,
+		A.LECAP_YR,
+		A.LECAP_SEM,
+		B.SUB_NM,
+		D.FLCT_NM,
+		C.FLCTS_NM,
+		A.APRV_STTS_CD
+	FROM LECTURE_APLY A
+	JOIN SUBJECT B ON A.SUB_NO = B.SUB_NO
+	JOIN FACILITIES C ON A.FLCTS_NO = C.FLCTS_NO
+	JOIN FACILITY D ON C.FLCT_NO = D.FLCT_NO
+	WHERE PRO_NO = #{PRONO}
+	ORDER BY 2 DESC
+	</select>	
 	
+	<update id="returnLecture" parameterType="String">
+		UPDATE LECTURE_APLY
+		SET APRV_STTS_CD = 'CANCLE'
+			WHERE LECAP_NO = #{LECAPNO}
+	</update>
 	
 </mapper>
