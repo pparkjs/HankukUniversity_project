@@ -214,7 +214,7 @@
 					<span class="nav-text">사용자관리</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">전체 사용자 목록</a></li>
+					<li><a href="/hku/admin/user-management">사용자관리</a></li>
 					<li><a href="#">문자 발송</a></li>
 				</ul>
 			</li>
