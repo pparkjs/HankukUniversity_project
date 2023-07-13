@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.notice.mapper.DepartmentNoticeMapper">
+ 	
+ 	<sql id="deptNoticeSearch">
+ 		AND (dept_cd = #{deptCd})
+ 		<if test="searchType != null and searchType == 'title'">
+			AND (depnt_ttl LIKE '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'writer'">
+			AND (depnt_wrtr_nm LIKE '%'||#{searchWord}||'%')
+		</if>
+ 	</sql>
+ 	
+ 	<select id="getCollege" resultType="map">
+ 		/* kr.or.hku.notice.mapper.DepartmentNoticeMapper.getCollege */
+ 		SELECT
+ 			  COL_CD
+ 			, COL_NM
+ 		FROM college
+ 		WHERE 1=1
+ 	</select>
+ 	
+ 	<select id="getDeptList" resultType="map" parameterType="string">
+ 		/* kr.or.hku.notice.mapper.DepartmentNoticeMapper.getDeptList */
+ 		SELECT
+		      dept_cd
+			, dept_nm
+ 		FROM department
+ 		WHERE 1=1
+ 		AND col_cd = #{colCd}
+ 	</select>
+ 	
+ 	<select id="selectDeptNoticeCount" parameterType="pagingVO" resultType="int">
+ 		/* kr.or.hku.notice.mapper.DepartmentNoticeMapper.selectDeptNoticeCount */
+ 		SELECT COUNT(depnt_no)
+		FROM department_notice
+		WHERE 1=1
+		<include refid="deptNoticeSearch"/>
+ 	</select>
+ 	
+ 	
+ 	<select id="selectDeptNoticeList" parameterType="pagingVO" resultType="deptNoticeVO">
+ 		/* kr.or.hku.notice.mapper.DepartmentNoticeMapper.selectDeptNoticeList */
+ 		SELECT
+			b.*
+		FROM(
+			SELECT
+				a.*, row_number() over (order by a.depnt_no desc) rnum
+			FROM(
+				SELECT
+					  depnt_no
+					, dept_cd
+					, depnt_ttl
+					, depnt_wrtr_nm
+					, depnt_regdate
+					, depnt_read_cnt
+				FROM department_notice
+				WHERE 1=1
+				<include refid="deptNoticeSearch"/>
+				ORDER BY depnt_no DESC
+			) a
+		) b
+		<![CDATA[
+			WHERE b.rnum >= #{startRow} AND b.rnum <= #{endRow}
+		]]>
+ 	</select>
+ 	
+ 	
+ 	<select id="deptNoticeDetail" parameterType="int" resultType="deptNoticeVO">
+ 		/* kr.or.hku.notice.mapper.DepartmentNoticeMapper.deptNoticeDetail */
+ 		SELECT
+ 			  depnt_no
+			, dept_cd
+			, depnt_ttl
+			, depnt_cn
+			, depnt_wrtr_nm
+			, depnt_regdate
+			, depnt_read_cnt
+			, atch_file_no
+		FROM department_notice
+		where depnt_no = #{depntNo}
+ 	</select>
+ 	
+ 	<update id="incrementReadCnt" parameterType="int">
+ 		/* kr.or.hku.notice.mapper.DepartmentNoticeMapper.incrementReadCnt */
+ 		UPDATE department_notice
+ 		SET 
+			depnt_read_cnt = depnt_read_cnt + 1
+		WHERE depnt_no = #{depntNo}
+ 	</update>
+ 	
+ 	<insert id="insertDeptNotice" parameterType="deptNoticeVO">
+ 		/* kr.or.hku.notice.mapper.DepartmentNoticeMapper.insertDeptNotice */
+ 		INSERT INTO department_notice(
+		 	  depnt_no
+			, dept_cd
+			, depnt_ttl
+			, depnt_cn
+			, depnt_wrtr_nm
+			, depnt_regdate
+			, depnt_read_cnt
+			<if test="atchFileNo != -1">, atch_file_no</if>
+ 		)VALUES(
+ 			  seq_dept_notice.nextval
+			, #{deptCd}
+			, #{depntTtl}
+			, #{depntCn}
+			, #{depntWrtrNm}
+			, sysdate
+			, 0
+			<if test="atchFileNo != -1">, #{atchFileNo}</if>
+ 		)
+ 	</insert>
+ 	
+ 	<update id="updateDeptNotice" parameterType="deptNoticeVO">
+ 		/* kr.or.hku.notice.mapper.DepartmentNoticeMapper.updateDeptNotice */
+ 		UPDATE department_notice
+ 		SET
+ 			  depnt_ttl = #{depntTtl}
+ 			, depnt_cn = #{depntCn}
+ 			, depnt_regdate = sysdate
+ 			<if test="atchFileNo != -1">, atch_file_no = #{atchFileNo}</if>
+ 		WHERE depnt_no = #{depntNo}
+ 	</update>
+ 	
+ 	<delete id="deleteDeptNotice" parameterType="int">
+ 		/* kr.or.hku.notice.mapper.DepartmentNoticeMapper.deleteDeptNotice */
+ 		DELETE FROM department_notice
+ 		WHERE depnt_no = #{depntNo}
+ 	</delete>
+ 	
+ </mapper>

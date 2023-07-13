@@ -29,7 +29,7 @@
 					<button type="button" class="btn btn-primary" onclick="deptList()">검색</button>
 				</div>
 				<div class="col-auto">
-					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deptInsertModal">학과개설</button>
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deptModal" onclick="deptCdSet()">학과개설</button>
 				</div>
 				<div class="col-auto">
 					<button type="button" class="btn btn-primary" onclick="delDept()">삭제</button>
@@ -52,49 +52,156 @@
 </div>
 
 <!-- 학과 개설 modal -->
-<div class="modal fade" id="deptInsertModal" tabindex="-1" aria-labelledby="deptInsertLabel" aria-hidden="true">
+<div class="modal fade" id="deptModal" tabindex="-1" aria-labelledby="deptLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-center">
-	  <div class="modal-content">
-		<div class="modal-header">
-		    <h1 class="modal-title fs-5" id="deptInsertLabel">학과 개설</h1>
-		    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		</div>
-		<div class="modal-body">
-			<div class="row">
-				<div class="col-xl-12">
-					<label class="form-label">Email ID<span class="text-danger">*</span></label>
-					<input type="email" class="form-control" placeholder="hello@gmail.com">
-					<label class="form-label mt-3">Employment date<span class="text-danger">*</span></label>
-					<input class="form-control" type="date">
-					<div class="row">
-						<div class="col-xl-6">
-							<label class="form-label mt-3">First Name<span class="text-danger">*</span></label>
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Name">
+	    <div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="deptLabel">학과 개설</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xl-12">
+						<form name="deptModalForm">
+							<div class="row">
+								<div class="col-xl-6">
+									<label class="form-label mt-3">대학 코드<span class="text-danger">*</span></label>
+									<div class="input-group">
+										<!-- <input type="text" class="form-control" name="colCd"> -->
+										<select class="default-select form-control" name="colCd">
+											<option value="">대학코드 선택</option>
+											<c:forEach items="${colList}" var="col">
+												<option value="${col.colCd}">${col.colNm}</option>
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+								<div class="col-xl-6">
+									<label class="form-label mt-3">학과 코드(자동생성)<span class="text-danger">*</span></label>
+									<div class="input-group">
+										<input type="text" class="form-control" name="deptCd" readonly>
+									</div>
+								</div>
+								<div class="col-xl-6 mb-3">
+									<label class="form-label mt-3">학과명<span class="text-danger">*</span></label>
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="학과명 입력" name="deptNm">
+									</div>
+								</div>
+								<div class="col-xl-6 mb-3">
+									<label class="form-label mt-3">학과 연락처<span class="text-danger">*</span></label>
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="학과 연락처 입력" name="deptTelno">
+									</div>
+								</div>
+								<div class="col-xl-12 mb-3">
+									<label class="form-label">시설 번호<span class="text-danger">*</span></label>
+									<!-- <input type ="text" class="form-control" name="flctNo"> -->
+									<select class="default-select form-control" name="flctNo">
+										<option value="">시설번호 선택</option>
+										<c:forEach items="${flctList}" var="flct">
+											<option value="${flct.flctNo}">${flct.flctNm}</option>
+										</c:forEach>
+									</select>
+								</div>
+								<div class="col-xl-12 mb-3">
+									<label class="form-label">학과 개요<span class="text-danger">*</span></label>
+									<textarea rows="3" class="form-control" name="deptOtl"></textarea>
+								</div>
+								<div class="col-xl-12 mb-3">
+									<label class="form-label">학과 목표<span class="text-danger">*</span></label>
+									<textarea rows="3" class="form-control" name="deptGoal"></textarea>
+								</div>
 							</div>
-						</div>
-						<div class="col-xl-6">
-							<label class="form-label mt-3">Last Name<span class="text-danger">*</span></label>
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Surname">
-							</div>
-						</div>
+						</form>
 					</div>
-					<div class="mt-3 invite">
-						<label class="form-label">Send invitation email<span class="text-danger">*</span></label>
-						<input type ="email" class="form-control " placeholder="+ invite">
-					</div>
-			  
 				</div>
 			</div>
-		</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">취소</button>
-				<button type="button" class="btn btn-primary">개설</button>
+				<button type="button" class="btn btn-primary" onclick="deptInsert()">개설</button>
 			</div>
 	  	</div>
 	</div>
-</div>
+</div> <!-- 모달 END -->
+
+<!-- 학과 상세, 수정 modal -->
+<div class="modal fade" id="deptModifyModal" tabindex="-1" aria-labelledby="deptModifyLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-center">
+	    <div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="deptModifyLabel">학과 상세</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xl-12">
+						<form name="deptModifyModalForm">
+							<div class="row">
+								<div class="col-xl-6">
+									<label class="form-label mt-3">대학 코드<span class="text-danger">*</span></label>
+									<div class="input-group">
+										<!-- <input type="text" class="form-control" placeholder="Name" name="mColCd"> -->
+										<select class="form-select form-control" name="mColCd">
+											<!-- <option value="">대학코드 선택</option> -->
+											<!-- <option value="">1111</option>
+											<option value="" selected="selected">2222</option> -->
+											<c:forEach items="${colList}" var="col">
+												<option value="${col.colCd}">${col.colNm}</option>
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+								<div class="col-xl-6">
+									<label class="form-label mt-3">학과 코드<span class="text-danger">*</span></label>
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="Surname" name="mDeptCd" readonly>
+									</div>
+								</div>
+								<div class="col-xl-6 mb-3">
+									<label class="form-label mt-3">학과명<span class="text-danger">*</span></label>
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="Name" name="mDeptNm">
+									</div>
+								</div>
+								<div class="col-xl-6 mb-3">
+									<label class="form-label mt-3">학과 연락처<span class="text-danger">*</span></label>
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="Surname" name="mDeptTelno">
+									</div>
+								</div>
+								<div class="col-xl-12 mb-3">
+									<label class="form-label">시설 번호<span class="text-danger">*</span></label>
+									<!-- <input type ="email" class="form-control" name="mFlctNo"> -->
+									<select class="form-select form-control" name="mFlctNo">
+										<!-- <option value="">시설번호 선택</option> -->
+										<!-- <option value="">1111</option>
+										<option value="" selected="selected">2222</option> -->
+										<c:forEach items="${flctList}" var="flct">
+											<option value="${flct.flctNo}">${flct.flctNm}</option>
+										</c:forEach>
+									</select>
+								</div>
+								<div class="col-xl-12 mb-3">
+									<label class="form-label">학과 개요<span class="text-danger">*</span></label>
+									<textarea rows="3" class="form-control" name="mDeptOtl"></textarea>
+								</div>
+								<div class="col-xl-12 mb-3">
+									<label class="form-label">학과 목표<span class="text-danger">*</span></label>
+									<textarea rows="3" class="form-control" name="mDeptGoal"></textarea>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">취소</button>
+				<button type="button" class="btn btn-primary" onclick="deptModify()">수정</button>
+			</div>
+	  	</div>
+	</div>
+</div> <!-- 모달 END -->
 <script>
 
 var deptBody = document.querySelector("#dept-body");
@@ -143,10 +250,10 @@ function deptList(){
 				// console.log("parsedeptList",deptList);
 	
 				for(let i = 0; i <deptList.length; i++) {
-					tbWrap += "<tr>";
+					tbWrap += "<tr onclick='deptDetail(this)'>";
 					tbWrap += "<td>";
 					tbWrap += "<div class='form-check custom-checkbox checkbox-danger'>";
-					tbWrap += `<input type='checkbox' class='form-check-input deptCheck' value='\${deptList[i].deptCd }'>`;
+					tbWrap += `<input type='checkbox' class='form-check-input deptCheck' value='\${deptList[i].deptCd }' onclick="onlyCheck()">`;
 					tbWrap += "</div>";
 					tbWrap += "</td>";
 					
@@ -181,11 +288,16 @@ function selectAll(target){
 		i.checked = target.checked;
 	})
 }
+function onlyCheck(){
+	event.stopPropagation();
+	console.log("오직 체크만");
+}
+
 
 function delDept(){
+	console.log("delDept");
 	var delDeptArr = new Array();
-
-
+	
 	// let data = {};
 	
 	let Depts = document.querySelectorAll(".deptCheck");
@@ -199,9 +311,9 @@ function delDept(){
 		failedAlert();
 		return false;
 	}
-	// console.log(delDeptArr);
-	// console.log(JSON.stringify(delDeptArr));
-
+	console.log(delDeptArr);
+	console.log(JSON.stringify(delDeptArr));
+	
 	let xhr = new XMLHttpRequest();
 	xhr.open("DELETE","/hku/admin/dept-administration",true);
 	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
@@ -209,25 +321,254 @@ function delDept(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			if(xhr.responseText === 'SUCCESS'){
 				deptList();
-				successAlert("삭제");
+				successAlert("삭제가 완료되었습니다!");
 			} else if(xhr.responseText === 'FAILED'){
 				console.log("삭제 실패!");
 			}
 		}
 	}
 	xhr.send(JSON.stringify(delDeptArr));
+	
+}
 
+function deptCdSet(){
+	var deptModal = $("#deptModal");
+	var deptModalForm = document.forms.deptModalForm;
+	var deptCd = deptModalForm.deptCd;
+
+	let xhr = new XMLHttpRequest();
+	xhr.open("GET","/hku/admin/deptCdSet",true);
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			var nextCode = xhr.responseText;
+			console.log(nextCode);
+			deptCd.value = nextCode;
+		}
+	}
+	xhr.send();
+}
+
+function deptInsert(){
+	var deptModal = $("#deptModal");
+	var deptModalForm = document.forms.deptModalForm;
+	// console.log(deptModalForm);
+	var colCd = deptModalForm.colCd.value;
+	var deptCd = deptModalForm.deptCd.value;
+	var deptNm = deptModalForm.deptNm.value;
+	var deptTelno = deptModalForm.deptTelno.value;
+	var flctNo = deptModalForm.flctNo.value;
+	var deptOtl = deptModalForm.deptOtl.value;
+	var deptGoal = deptModalForm.deptGoal.value;
+
+	if(colCd == ""){
+		swal({
+			title: "대학코드를 선택해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if(deptNm == ""){
+		swal({
+			title: "학과이름을 입력해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if(deptTelno == ""){
+		swal({
+			title: "학과연락처를 입력해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if(flctNo == ""){
+		swal({
+			title: "시설번호를 입력해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if(deptOtl == ""){
+		swal({
+			title: "학과개요를 입력해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if(deptGoal == ""){
+		swal({
+			title: "학과목표를 입력해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	
+	let deptInsertData = {
+		"colCd": colCd,
+		"deptCd": deptCd,
+		"deptNm": deptNm,
+		"deptTelno": deptTelno,
+		"flctNo": flctNo,
+		"deptOtl": deptOtl,
+		"deptGoal": deptGoal
+	}
+	// console.log(deptInsertData);
+
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST","/hku/admin/dept-administration",true);
+	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			if(xhr.responseText === "SUCCESS"){
+				console.log("잘 갔다왔어용");
+				// deptInsertModal.style.display = "none";
+				deptModal.modal('hide');
+				successAlert("등록이 완료되었습니다!");
+			} else if(xhr.responseText === "FAILED"){
+				console.log("등록 실패");
+			}
+			deptList();
+		}
+	}
+	xhr.send(JSON.stringify(deptInsertData));
+}
+
+function deptDetail(target){
+	var deptModifyModal = $("#deptModifyModal");
+	var deptModifyModalForm = document.forms.deptModifyModalForm;
+	// console.log(deptModalForm);
+	var colCd = deptModifyModalForm.mColCd;
+	var deptCd = deptModifyModalForm.mDeptCd;
+	var deptNm = deptModifyModalForm.mDeptNm;
+	var deptTelno = deptModifyModalForm.mDeptTelno;
+	var flctNo = deptModifyModalForm.mFlctNo;
+	var deptOtl = deptModifyModalForm.mDeptOtl;
+	var deptGoal = deptModifyModalForm.mDeptGoal;
+
+	// console.log("selectColCd",colCd);
+	// console.log("optionsColCd",colCd.options);
+	var colOptions = colCd.options;
+	var flctOptions = flctNo.options;
+
+	let deptDetail = {};
+
+	// console.log(target);
+	var selectDeptCd = target.children[2].innerText;
+	let xhr = new XMLHttpRequest();
+	xhr.open("GET", "/hku/admin/dept-select?deptCd="+selectDeptCd,true);
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			// console.log("학과상세 성공");
+			deptDetail = JSON.parse(xhr.responseText);
+			// console.log("학과상세",deptDetail);
+			// console.log(deptDetail.colCd, deptDetail.deptCd);
+			
+			// console.log("selectDeptCd",deptDetail.colCd);
+			// for(let i=0; i<colOptions.length; i++){
+			// 	console.log("1",colOptions[i]);
+			// 	if(colOptions[i].value == deptDetail.colCd){
+			// 		// console.dir(options[i]);
+			// 		// options[i].removeAttribute("selected");
+
+			// 		console.log("전",colOptions[i].selected);
+			// 		// options[i].selected = true;
+			// 		// options[i].setAttribute("selected",true);
+			// 		// console.log(options[i]);
+			// 		console.log("후",colOptions[i].selected);
+			// 	}
+			// }
+
+			// for(let i=0; i<flctOptions.length; i++){
+			// 	console.log("1",flctOptions[i]);
+			// 	if(flctOptions[i].value == deptDetail.colCd){
+			// 		// console.dir(options[i]);
+			// 		// options[i].removeAttribute("selected");
+
+			// 		console.log("전",flctOptions[i].selected);
+			// 		// options[i].selected = true;
+			// 		// options[i].setAttribute("selected",true);
+			// 		// console.log(options[i]);
+			// 		console.log("후",flctOptions[i].selected);
+			// 	}
+			// }
+			// console.log("selectColCd",colCd);
+			// console.log("optionsColCd",colCd.colOptions);
+
+			colCd.value = deptDetail.colCd;
+			deptCd.value = deptDetail.deptCd;
+			deptNm.value = deptDetail.deptNm;
+			deptTelno.value = deptDetail.deptTelno;
+			flctNo.value = deptDetail.flctNo;
+			deptOtl.value = deptDetail.deptOtl;
+			deptGoal.value = deptDetail.deptGoal;
+
+			deptModifyModal.modal('show');
+			
+		}
+	}
+	xhr.send();
+}
+
+function deptModify(){
+	var deptModifyModal = $("#deptModifyModal");
+	var deptModifyModalForm = document.forms.deptModifyModalForm;
+
+	var mColCd = deptModifyModalForm.mColCd.value;
+	var mDeptCd = deptModifyModalForm.mDeptCd.value;
+	var mDeptNm = deptModifyModalForm.mDeptNm.value;
+	var mDeptTelno = deptModifyModalForm.mDeptTelno.value;
+	var mFlctNo = deptModifyModalForm.mFlctNo.value;
+	var mDeptOtl = deptModifyModalForm.mDeptOtl.value;
+	var mDeptGoal = deptModifyModalForm.mDeptGoal.value;
+
+	let deptModifyData = {
+		"colCd": mColCd,
+		"deptCd": mDeptCd,
+		"deptNm": mDeptNm,
+		"deptTelno": mDeptTelno,
+		"flctNo": mFlctNo,
+		"deptOtl": mDeptOtl,
+		"deptGoal": mDeptGoal
+	}
+	// console.log(deptModifyData);
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST","/hku/admin/dept-update",true);
+	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState == 4 && xhr.status == 200) {
+			// console.log("학과 수정 성공!");
+			// console.log("xhr.responseText",xhr.responseText);
+			if(xhr.responseText === "SUCCESS") {
+				deptModifyModal.modal('hide');
+				deptList();
+				swal({
+					title: "수정이 완료되었습니다!", 
+					icon: "success"
+				});
+			}
+			if(xhr.responseText === "FAILED") {
+				deptModifyModal.modal('hide');
+				deptList();
+				swal({
+					title: "수정에 실패하였습니다!", 
+					icon: "error"
+				});
+			}
+
+		}
+	}
+	xhr.send(JSON.stringify(deptModifyData));
 }
 
 function successAlert(text){
     swal({
-		title: text+"가 완료되었습니다!", 
+		title: text, 
 		icon: "success"
 	});
 }
 function failedAlert(){
     swal({
-		title: "항목을 선택해주세요!", 
+		title: "항목을 선택해주세요!",
 		icon: "error"
 	});
 }

@@ -8,6 +8,8 @@ import kr.or.hku.admin.vo.CollegeVO;
 import kr.or.hku.admin.vo.DepartmentVO;
 import kr.or.hku.admin.vo.FacilitiesVO;
 import kr.or.hku.admin.vo.FacilityVO;
+import kr.or.hku.lectureInfo.vo.LectureAplyVO;
+import kr.or.hku.lectureInfo.vo.LectureTimeTableVO;
 import kr.or.hku.lectureInfo.vo.SubjectVO;
 @Mapper
 public interface LectureMapper {
@@ -25,5 +27,19 @@ public interface LectureMapper {
 	public List<FacilityVO> getFlctList();
 
 	public List<FacilitiesVO> getFlctsList(String flct);
+
+	public List<LectureTimeTableVO> getClass(String flcts);
+
+	public int applyLecture(LectureAplyVO vo);
+
+	public int getLecapNo();
+
+	public int applyProgram(LectureAplyVO vo);
+
+	public int applySchedule(LectureAplyVO vo);
+
+	public List<LectureAplyVO> getLectureStatus(String proNo);
+
+	public void returnLecture(String lecapNo);
 
 }

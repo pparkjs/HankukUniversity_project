@@ -65,5 +65,150 @@
 	<select id="getFlctsList" parameterType="String" resultType="flctsVO">
 		select * from facilities where flct_no = #{flctNo}
 	</select>
-
+	
+	<select id="getClass" parameterType="String" resultType="timeTableVO">
+		SELECT 
+		    a.LECAP_NO,
+		    LECSC_DAY,
+		    PERIOD_CD,
+		    LECSC_HOUR,
+		    c.SUB_NM,
+		    d.PRO_NM
+		FROM LECTURE_SCHEDULE a
+		JOIN LECTURE_APLY b ON a.LECAP_NO = b.LECAP_NO
+		JOIN SUBJECT c ON b.SUB_NO = c.SUB_NO
+		JOIN professor d ON b.PRO_NO = d.PRO_NO
+		WHERE b.FLCTS_NO = #{flctsNo}
+		AND b.APRV_STTS_CD !='rej'
+		AND b.LECAP_YR = EXTRACT(YEAR FROM SYSDATE)
+		AND b.LECAP_SEM = CASE
+		    WHEN EXTRACT(MONTH FROM SYSDATE)= 6 THEN '1'
+		    ELSE '2'
+		END
+	</select>
+	
+	<insert id="applyLecture" parameterType="lectureAplyVO" useGeneratedKeys="true">
+	<selectKey keyProperty="lecapNo" resultType="int" order="BEFORE">
+		select SEQ_LECTURE_APLY.nextval from dual
+	</selectKey>
+		INSERT INTO LECTURE_APLY(
+			LECAP_NO
+			,SUB_NO
+			,PRO_NO
+			,FLCTS_NO
+			,LECAP_YR
+			,LECAP_TG_GRADE
+			,LECAP_DT
+			,LECAP_CPCT
+			,LECAP_SEM
+			,APRV_STTS_Cd
+			,AVL_cd
+			)
+		VALUES(
+		#{lecapNo}
+		,#{subNo}
+		,#{proNo}
+		,#{flctsNo}
+		,#{lecapYr}
+		,#{lecapTgGrade}
+		,sysdate
+		,#{lecapCpct}
+		,#{lecapSem}
+		,'wait'
+		,#{avlCd1}
+		)
+	</insert>
+	
+	<insert id="applyProgram" parameterType="lectureAplyVO">
+		insert into LECTURE_PROGRAM(
+			LECAP_NO
+			,LECPG_INTRO
+			,LECPG_LGG_CD
+			,AVL_CD
+			,LECPG_ATD
+			,LECPG_HW
+			,LECPG_MD_TEST
+			,LECPG_FN_TEST
+			,LECPG_BOOK
+			,WEEK1
+			,WEEK2
+			,WEEK3
+			,WEEK4
+			,WEEK5
+			,WEEK6
+			,WEEK7
+			,WEEK8
+			,WEEK9
+			,WEEK10
+			,WEEK11
+			,WEEK12
+			,WEEK13
+			,WEEK14
+			,WEEK15
+		)VALUES(
+			#{lecapNo},
+			#{lecpgIntro},
+			#{lecpgLggCd},
+			#{avlCd2},
+			#{lecpgAtd},
+			#{lecpgHw},
+			#{lecpgMdTest},
+			#{lecpgFnTest},
+			#{lecpgBook},
+			#{week1},
+			#{week2},
+			#{week3},
+			#{week4},
+			#{week5},
+			#{week6},
+			#{week7},
+			#{week8},
+			#{week9},
+			#{week10},
+			#{week11},
+			#{week12},
+			#{week13},
+			#{week14},
+			#{week15}
+		)
+	</insert>
+	
+	<insert id="applySchedule" parameterType="lectureAplyVO">
+		INSERT INTO LECTURE_SCHEDULE(
+			LECAP_NO
+			,LECSC_DAY
+			,PERIOD_CD
+			,LECSC_HOUR		
+		)VALUES(
+			#{lecapNo}
+			,#{lecscDay}
+			,#{periodCd}
+			,#{lecscHour}
+		)
+	</insert>
+	
+	<select id="getLectureStatus" parameterType="String" resultType="lectureAplyVO">
+	SELECT 
+		A.LECAP_NO,
+		A.LECAP_DT,
+		A.LECAP_YR,
+		A.LECAP_SEM,
+		B.SUB_NM,
+		D.FLCT_NM,
+		C.FLCTS_NM,
+		A.APRV_STTS_CD
+	FROM LECTURE_APLY A
+	JOIN SUBJECT B ON A.SUB_NO = B.SUB_NO
+	JOIN FACILITIES C ON A.FLCTS_NO = C.FLCTS_NO
+	JOIN FACILITY D ON C.FLCT_NO = D.FLCT_NO
+	WHERE PRO_NO = #{PRONO}
+	ORDER BY 2 DESC
+	</select>	
+	
+	<update id="returnLecture" parameterType="String">
+		UPDATE LECTURE_APLY
+		SET APRV_STTS_CD = 'CANCLE'
+			WHERE LECAP_NO = #{LECAPNO}
+	</update>
+	
 </mapper>

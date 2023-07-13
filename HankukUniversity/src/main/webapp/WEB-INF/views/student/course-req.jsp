@@ -38,11 +38,11 @@
 						<option value="3">3학년</option>
 						<option value="4">4학년</option>
 					</select>
-					교과목명:&nbsp;&nbsp;&nbsp;<input type="text" class="form-control" id="subName" placeholder="교과목명을 입력하세요.">
+					교과목명:&nbsp;&nbsp;&nbsp;<input type="text" class="form-control" id="subName" style="width:274px;" placeholder="교과목명을 입력하세요.">
 					<button type="button" class="btn btn-primary" id="searchBtn">조회</button>
 					<div class="cart">
 						<img class="timeImg" src="/images/시간.png" alt="">
-						<div>오전 11:52:23</div>
+						<div id="clock"></div>
 						<img class="cartImg" src="/images/shopping-cart(white).png" alt="">
 						<button type="button" class="btn btn-primary" id="cartBtn">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;과목담기</button>
 					</div>
@@ -54,7 +54,7 @@
 		<div class="card" id="card-title-1">
 			<div class="card-body" style="padding-top: 0px;">
 				<div class="course-wrap">
-					<table class="table">
+					<table class="table" style="margin-top: -22px;">
 						<thead class="thead-dark">
 							<tr>
 								<th style="width: 130px;">과목코드</th>
@@ -70,7 +70,7 @@
 								<th style="width: 20px;">잔여</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="recBody">
 							<!-- 동적추가 -->
 						</tbody>
 					</table>
@@ -78,10 +78,15 @@
 				<div class="middle">
 					<div class="middleLeft">
 						<div class="lTitle">
-							<p style="color: maroon;  font-weight: 900; margin-bottom: -10px;">장바구니</p>
+							<div style="color: maroon;  font-weight: 900; margin-bottom: -10px;">장바구니</div>
+							<div class="totalCnt">
+								<span>신청학점&nbsp;:&nbsp;&nbsp;</span><div class="totalLeft">15학점</div>
+								<span>신청과목수&nbsp;:&nbsp;&nbsp;</span><div class="totalRight">5과목</div>
+								<div class="maxCnt"> * 최대 신청가능 학점 : 19학점 </div>
+							</div>
 						</div>
-						<div class="table-wrap">
-							<table class="table">
+						<div class="cart-wrap" style="margin-top: 10px;">
+							<table class="table" style="margin-top: -22px;">
 								<thead class="thead-dark">
 									<tr>
 										<th style="width: 130px;">과목코드</th>
@@ -94,7 +99,7 @@
 										<th style="width: 20px;">취소</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody id="cartBody">
 									<!-- 동적추가 -->
 								</tbody>
 							</table>
@@ -116,80 +121,9 @@
 										<th style="width: 30px;">금</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody id="timeBody">
 									<!-- 동적추가 -->
-									<tr class="1">
-										<td>1교시</td>
-										<td class="mon"></td>
-										<td class="tue"></td>
-										<td class="wed"></td>
-										<td class="thu"></td>
-										<td class="fri"></td>
-									</tr>
-									<tr class="2">
-										<td>2교시</td>
-										<td class="mon"></td>
-										<td class="tue"></td>
-										<td class="wed"></td>
-										<td class="thu"></td>
-										<td class="fri"></td>
-									</tr>
-									<tr class="3">
-										<td>3교시</td>
-										<td class="mon"></td>
-										<td class="tue"></td>
-										<td class="wed"></td>
-										<td class="thu"></td>
-										<td class="fri"></td>
-									</tr>
-									<tr class="4">
-										<td>4교시</td>
-										<td class="mon"></td>
-										<td class="tue"></td>
-										<td class="wed"></td>
-										<td class="thu"></td>
-										<td class="fri"></td>
-									</tr>
-									<tr class="5">
-										<td>5교시</td>
-										<td class="mon"></td>
-										<td class="tue"></td>
-										<td class="wed"></td>
-										<td class="thu"></td>
-										<td class="fri"></td>
-									</tr>
-									<tr class="6">
-										<td>6교시</td>
-										<td class="mon"></td>
-										<td class="tue"></td>
-										<td class="wed"></td>
-										<td class="thu"></td>
-										<td class="fri"></td>
-									</tr>
-									<tr class="7"> 
-										<td>7교시</td>
-										<td class="mon"></td>
-										<td class="tue"></td>
-										<td class="wed"></td>
-										<td class="thu"></td>
-										<td class="fri"></td>
-									</tr>
-									<tr class="8">
-										<td>8교시</td>
-										<td class="mon"></td>
-										<td class="tue"></td>
-										<td class="wed"></td>
-										<td class="thu"></td>
-										<td class="fri"></td>
-									</tr>
-									<tr class="9">
-										<td>9교시</td>
-										<td class="mon"></td>
-										<td class="tue"></td>
-										<td class="wed"></td>
-										<td class="thu"></td>
-										<td class="fri"></td>
-									</tr>
+
 								</tbody>
 							</table>
 						</div>
@@ -203,26 +137,298 @@
 <script>
 $(function(){
 	
-	/* subList(); */
-	
+	 rectureList(); 
+	 cartList();
+	 
 	var searchBtn = $("#searchBtn");
 	
 	// 조회버튼 클릭시 동작
 	searchBtn.on("click", function(){
-		subList();
+		rectureList();
 	})
 	
 	$(document).on("click","tr", function(){
 		$('tr').css('background', '');
+		$('tr').removeClass("selected");
+		$(this).addClass('selected');
 		$(this).css('background', '#6e6e6e26');
+		
 		var subOtl = $(this).find('.otl');
 		$(".otlContent").html(subOtl.text());
 	})
+
+	// 과목 클릭 후 장바구니 담기클릭시 동작
+	$("#cartBtn").on("click", function(){
+		var selected = document.querySelectorAll(".selected td");
+		const backgroundColor = generateReadableBackgroundColor(); // 랜덤배경색 가져옴
+		
+		console.dir(selected[0].className);
+		console.log(selected[11].innerText);
+		console.log(selected[12].innerText);
+		console.log(parseInt(selected[11].innerText) + parseInt(selected[12].innerText));
+		console.log(selected[13].innerText);
+		console.log('학점',selected[5].innerText);
+		
+		// console.log(selected.eq(0)) jquery 사용할때는 이렇게 가졍옴
+		// console.log(selected.eq(11))
+		// console.log(selected.eq(12))
+		// console.log(selected.eq(13))
+		
+		var cartObj = {
+			"stdNo" : "${sessionScope.std.stdNo}",
+			"lecapNo" : selected[0].className,
+			"periodCd" : selected[12].innerText,
+			"endPeriod" : parseInt(selected[11].innerText) + parseInt(selected[12].innerText) - 1, 
+			"lecscDay" : selected[13].innerText,
+			"subCrd" : selected[5].innerText,
+			"backColor" : backgroundColor
+		}
+		
+		$.ajax({
+			type:"post",
+			url:"/hku/subject-cart",
+			data:JSON.stringify(cartObj),
+			contentType:"application/json; charset=utf-8",
+			success: function(res){
+				console.log(res);
+				if(res == "exist"){
+					swal({
+						title: "실패",
+						text: "장바구니에 담긴 과목과 시간이 중복됩니다.",
+						icon: "error",
+						button: "닫기",
+						});
+				}else if(res == "exceed"){
+					swal({
+						title: "실패",
+						text: "신청 최대 학점을 초과하였습니다.",
+						icon: "error",
+						button: "닫기",
+						});
+					cartList();
+				}else if(res == "success"){
+					swal({
+						title: "성공",
+						text: "정상적으로 장바구니에 담겼습니다.",
+						icon: "success",
+						button: "닫기",
+						});
+					cartList();
+				}else{
+					swal({
+						title: "실패",
+						text: "장바구니 담기에 실패하였습니다. 다시 시도하세요.",
+						icon: "error",
+						button: "닫기",
+						});
+				}
+			}
+			
+		})
+	})
+	
+	// 취소버튼 클릭 시 실행
+	$(document).on("click", "#delBtn", function(){
+		var lecapNo = $(this).parent().attr("class");
+		
+		var delData = {
+			"lecapNo":lecapNo,
+			"stdNo":"${sessionScope.std.stdNo}"
+		}
+		
+		$.ajax({
+			type:"get",
+			data:delData,
+			url : "/hku/cart-cancle",
+			success : function(res){
+				if(res === "success"){
+					socketSend();
+					swal({
+						title: "취소 완료",
+						icon: "success",
+						button: "닫기",
+						});
+					cartList();
+				}else{
+					swal({
+						title: "취소 실패",
+						text: "시스템 오류입니다. 다시 시도해주세요",
+						icon: "error",
+						button: "닫기",
+						});
+				}
+			}
+		})
+		
+	})
+	
+	// 신청버튼클릭시 실행
+	$(document).on("click", "#regBtn", function(){
+		var lecapNo = $(this).parent().attr("class");
+		
+		var regData = {
+			"lecapNo":lecapNo,
+			"stdNo":"${sessionScope.std.stdNo}"
+		}
+		
+		
+		$.ajax({
+			type:"get",
+			data:regData,
+			url : "/hku/course-regist",
+			success : function(res){
+				
+				if(res === "exceed"){
+					swal({
+						title: "정원초과",
+						text: "이미 수강정원이 초과되었습니다.",
+						icon: "error",
+						button: "닫기",
+					});
+				}else if(res === "success"){
+					socketSend();
+					cartList();
+				}else{
+					swal({
+						title: "취소 실패",
+						text: "시스템 오류입니다. 다시 시도해주세요",
+						icon: "error",
+						button: "닫기",
+					});
+				}
+			}
+		})
+		
+	})
+	
 })
 
-// 과목 리스트 가져오는 함수
-function subList(){
-	var tbody = $("tbody");
+//------------------------ websocket 관련------------------------
+
+var websocket = null;
+
+connect();
+
+// 웹소켓 연결 함수
+function connect(){
+	// 웹소켓 주소
+    var wsUri = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/websocket/rectureAppl.do";
+    websocket = new WebSocket(wsUri);
+    
+    websocket.onopen = function(){
+    	console.log('info: connection opened.');
+    }
+    
+}
+
+// 웹소켓에서 메시지 받을시 실행
+websocket.onmessage = function(evt) {
+ 	console.log("evt.data : ", evt.data)
+ 	
+    if(evt.data == "reload"){
+    	rectureList();
+    }
+ }
+
+// 메시지 보내는 함수
+function socketSend(){
+	websocket.send("reload");
+}
+
+//-----------------------------------------------------------
+// 장바구니 리스트 가져오기
+function cartList(){
+	var cartBody = $("#cartBody");
+	var timeBody = $("#timeBody");
+	$.ajax({
+		type:"get",
+		url : "/hku/cart-list",
+		data:{
+			"stdNo" : "${sessionScope.std.stdNo}"
+		},
+		dataType : "json",
+		success : function(res){
+			console.log(res)
+			
+			// 해당 과목의 시간표 계산
+			var schedule = []; 
+			for(var i = 0; i < res.length; i++){
+				var period = []
+				for(var j = 0; j < `\${res[i].lecscHour}`; j++){
+					period.push(`\${res[i].periodCd + j}`)
+				}
+				schedule.push(period)
+			}
+			console.log(schedule);
+			
+			var timeTable = ''
+			for(var i = 1; i <= 9; i++){
+				timeTable += `  <tr class="\${i}" style="font-size: 13px; font-weight: 900;">
+									<td style="font-size:16px; font-weight:400;">\${i} 교시</td>
+									<td class="mon"></td>
+									<td class="tue"></td>
+									<td class="wed"></td>
+									<td class="thu"></td>
+									<td class="fri"></td>
+								</tr>`;
+			}
+			timeBody.html(timeTable);
+			
+			var data = '';
+			var subCnt = res.length;
+			var craditSum = 0;
+			for(var i = 0; i < res.length; i++){
+				craditSum += parseInt(`\${res[i].subCrd}`);
+				data += `<tr>
+							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].subNo}</th>
+							<td class="\${res[i].lecapNo} subNm" style="padding:8px;">
+								<div style="background:\${res[i].backColor}; font-weight: 900; width:30px; height:30px;">
+								</div>
+								<div class="nm">\${res[i].subNm}</div>
+							</td>
+							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].proNm}</td>
+							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].lecapTgGrade}</td>
+							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].subCrd}</td>
+							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].deptNm}</td>`
+				if(`\${res[i].applYn}` == "N"){
+					data +=		`<td class="\${res[i].lecapNo}" style="padding:8px;"><input type="button" class="btn btn-primary" id="regBtn" value="신청"></td>`
+				}else{ 
+					data +=		`<td class="\${res[i].lecapNo}" style="color:#f11212; padding:7px;">완료</td>`
+				}
+					data +=		`<td class="\${res[i].lecapNo}" style="padding:8px;"><input type="button" class="btn btn-primary" id="delBtn" value="취소"></td>`
+				data +=	`</tr>`;
+				
+				var day = dayChange(`\${res[i].lecscDay}`);
+				var cnt = 0; // 시간표에 교과목명과 담당교수 이름 넣기위함
+				
+				// 시간표 채우기
+				for(var j = 0; j < schedule[i].length; j++ ){
+					var scheduleObj = $(`.\${schedule[i][j]} .\${day}`);
+					cnt++;
+					console.log("스케줄 : ", schedule[i][j]);
+					scheduleObj.css("background", `\${res[i].backColor}`)
+					
+					if(cnt == 1){
+						scheduleObj.text(`\${res[i].subNm}`)
+					}
+					if(cnt == 2){
+						scheduleObj.text(`\${res[i].proNm}`)
+					}
+					
+				}
+			}
+			$(".totalLeft").html(craditSum + "학점")
+			$(".totalRight").html(subCnt + "과목")
+			cartBody.html(data);
+		}
+	})
+	
+	
+}
+
+// 개설된강의 리스트 가져오는 함수
+function rectureList(){
+	var recBody = $("#recBody");
 	var clsfSel = $(".clsfSel").val();
 	var deptSel = $(".deptSel").val();
 	var gradeSel = $(".gradeSel").val();
@@ -238,30 +444,115 @@ function subList(){
 	$.ajax({
 		type:"get",
 		data:selData,
-		url : "/hku/student/lecture-list",
+		url : "/hku/lecture-list",
 		dataType : "json",
 		success : function(res){
 			console.log(res)
-
-			data = '';
+			
+			// 해당 과목의 시간표 계산
+			var schedule = []; 
+			for(var i = 0; i < res.length; i++){
+				var period = []
+				for(var j = 0; j < `\${res[i].lecscHour}`; j++){
+					period.push(`\${res[i].periodCd + j}`)
+				}
+				schedule.push(period)
+			}
+			console.log(schedule)
+			
+			var data = '';
 			for(var i = 0; i < res.length; i++){
 				data += `<tr>
-							<td id="\${res[i].subNo}">\${res[i].subNo}</th>
-							<td id="\${res[i].subNo}">\${res[i].subNm}</td>
-							<td id="\${res[i].subNo}">\${res[i].crsClassfCd}</td>
-							<td id="\${res[i].subNo}">\${res[i].subGrade}</td>
-							<td id="\${res[i].subNo}">\${res[i].subCrd}</td>
-							<td id="\${res[i].subNo}">\${res[i].subHour}</td>
-							<td id="\${res[i].subNo}">\${res[i].deptCd}</td>`
-				if(`\${res[i].subOtl}` == "null" || `\${res[i].subOtl}` == null){
-					data +=	`<td id="\${res[i].subNo}" class="otl" style="display:none;">개요가 존재하지 않습니다.</td>`
+							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].subNo}</th>
+							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].subNm}</td>
+							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].comCdNm}</td>
+							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].proNm}</td>
+							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].lecapTgGrade}</td>
+							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].subCrd}</td>
+							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].lecscHour}</td>
+							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].lecscDay} \${schedule[i]}</td>
+							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].deptNm}</td>
+							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].lecapCpct}</td>`
+				if(`\${res[i].remainder}` > 0){
+					data +=		`<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].remainder}</td>`
 				}else{
-					data +=	`<td id="\${res[i].subNo}" class="otl" style="display:none;">\${res[i].subOtl}</td>`
-				}	
+					data +=		`<td class="\${res[i].lecapNo}" style="padding:8px; background: #ff000085;  color: #fff; font-weight: 500;">\${res[i].remainder}</td>`
+				}
+						
+				data +=		`<td class="\${res[i].lecapNo}" style="display:none">\${res[i].lecscHour}</td>
+							<td class="\${res[i].lecapNo}" style="display:none">\${res[i].periodCd}</td>
+							<td class="\${res[i].lecapNo}" style="display:none">\${res[i].lecscDay}</td>`
 				data +=	`</tr>`;
 			}
-			tbody.html(data);
+			recBody.html(data);
 		}
 	})
 }
+
+
+function generateRandomColor() {
+	  // 랜덤한 16진수 색상을 생성하는 함수
+	  function getRandomHex() {
+	    const hexChars = "0123456789ABCDEF";
+	    return hexChars[Math.floor(Math.random() * 16)];
+	  }
+
+	  let color = "#";
+	  for (let i = 0; i < 6; i++) {
+	    color += getRandomHex();
+	  }
+	  return color;
+}
+
+// 검은색 글씨가 잘 보이는 배경색 생성
+function generateReadableBackgroundColor() {
+	  let color = generateRandomColor();
+	  let luminance = getLuminance(color);
+
+	  // 배경색의 밝기가 일정 값 이하인 경우에는 다시 생성
+	  while (luminance > 0.5) {
+	    color = generateRandomColor();
+	    luminance = getLuminance(color);
+	  }
+
+	  return color;
+}
+
+// 색상의 밝기(luminance) 계산
+function getLuminance(color) {
+	  const hex = color.replace("#", "");
+	  const r = parseInt(hex.substr(0, 2), 16) / 255;
+	  const g = parseInt(hex.substr(2, 2), 16) / 255;
+	  const b = parseInt(hex.substr(4, 2), 16) / 255;
+
+	  const luminance = (0.299 * r + 0.587 * g + 0.114 * b);
+	  return luminance;
+}
+
+function dayChange(day){
+	if(day == "월"){
+		return "mon";
+	}else if(day == "화"){
+		return "tue";
+	}else if(day == "수"){
+		return "wed";
+	}else if(day == "목"){
+		return "thu";
+	}else if(day == "금"){
+		return "fri";
+	}
+}
+//실시간 시간
+const clock = document.querySelector("#clock");
+
+function getClock(){
+  const d = new Date();
+  const h = String(d.getHours()).padStart(2,"0");
+  const m = String(d.getMinutes()).padStart(2,"0");
+  const s = String(d.getSeconds()).padStart(2,"0");
+  clock.innerText = `\${h}:\${m}:\${s}`;
+}
+
+getClock(); //맨처음에 한번 실행
+setInterval(getClock, 1000); //1초 주기로 새로실행
 </script>

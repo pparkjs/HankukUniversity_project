@@ -1,14 +1,15 @@
 @charset "UTF-8";
+
 #tb{
-/* 	border :1px solid black; */
 	width : 50%;
 	height : 400px;
-/* 	overflow: scroll; */
 }
 
  .table thead{
  
  	background-color: #6e6e6e;
+ 	 position: sticky;
+ 	 top: 0;
  }
  
  h5{
@@ -19,9 +20,8 @@
  .table{
 /* 	 width:50%; */
 	 heigth : 50%;
-	 overflow: scroll;
+	 overflow: auto;
 	 margin : 0 auto;
-	 
  }
  
  .txt{
@@ -38,7 +38,8 @@
  
  }
  
-  .selected {
+
+ .tbtr.selected{  /* 공백없이 해야 and조건*/
     background-color: #b0b0b0;
     color : white;
   }
@@ -103,7 +104,16 @@
 	font-weight: bold;
 	color : #800000;
 }
-
+.b{
+	width : 50%;	
+	height: 30px;
+	border-radius: 5px;
+	border : none;
+	box-shadow: 1px 1px 1px 1px gray;
+	text-align: center;
+	font-weight: bold;
+	color : #800000;
+}
 .selectCustom option{
 	font-weight: bold;
 	color : #800000;
@@ -119,18 +129,19 @@
 }
 
 .apply{
-	padding:0;
+	padding-right :7%;
 	
 }
 #applyTable{
 /* 	border : 1px solid black; */
-	text-align: center;
+	text-align: right;
 	float:right;
 	
 }
 
 #applyTable input[type="text"],
-#applyTable span{
+#applyTable span
+{
 	 color : black;
 	 height : 40px;
 	 font-size: 18px;
@@ -147,4 +158,125 @@
 
   }
   
+  .card-title{
+  color : #800000;
+  	
+  }
   
+  .planTable{
+  	width :85%;
+  	height: 85px;
+  	margin:  30px auto;
+  	text-align: center;
+  }
+  
+   .planTable input[type="text"],
+    .planTable select
+   {
+	  	width:30%;
+	  	text-align: center;
+	  	border: none;
+  }
+  
+  .planTable th{
+  	background-color: #800000;
+  	color : white;
+  }
+  
+  .planTable td{
+  	width: 20%;
+  }
+  
+  /* ■■■■■■■■■ 강의실 조회 시간표 css ■■■■■■■■■ */
+  
+  .tabletime{
+/*   	border : 1px solid black; */
+  	width: 80%;
+  	text-align: center;
+  	margin : 0 auto;
+  	height: 100%;
+/*   	border-right: 1px solid #6e6e6e; */
+  	margin-top : 15px;
+  }
+  
+  .tabletime thead{
+  	background-color: #6e6e6e;
+  	color : white;
+  	height : 46px;
+
+  }
+  .tabletime td{
+  height: 46px;
+  width : 30px;
+}
+
+.timeTd:hover{
+	background-color: #b0b0b0;
+}
+	.timeTd.selected{
+	background-color: #c8feff;
+	
+	}
+
+  /* ■■■■■■■■■ 강의실 조회 시간표 css 끝 ■■■■■■■■■ */
+  
+    /* ■■■■■■■■■ 강의계획서 css ■■■■■■■■■ */
+    
+    #lecturePlan{
+    		margin : 0 auto;
+    	display: flex;
+    	flex-direction: column;
+    	}
+    #lecturePlan input[type="text"]{
+	 color : black;
+	 height : 40px;
+	 font-size: 18px;
+	margin-bottom : 5px;
+	margin-top: 3px;
+	border-radius: 5px;
+	border : 1px solid #b9b9b9;
+}
+.c{
+	width : 30%;	
+	height: 30px;
+	border-radius: 5px;
+	border : none;
+	box-shadow: 1px 1px 1px 1px gray;
+	text-align: center;
+	font-weight: bold;
+	color : #800000;
+}
+    
+      /* ■■■■■■■■■ 강의실 조회 시간표 css 끝 ■■■■■■■■■ */
+      
+    .statusTable{
+  	width :95%;
+/*   	height: 85px; */
+  	margin:  30px auto;
+  	text-align: center;
+  }
+  
+  
+  .statusTable th{
+  	background-color: #800000;
+  	color : white;
+  	height : 40px;
+  }
+  
+  .statusTable td{
+  	width: auto%;
+  	height : 40px;
+  }   
+  
+  .statusTable tr:hover{
+  	 cursor: pointer;
+ 	background-color: #b0b0b0;
+ 	color : white;
+  }    
+  
+   #statusTbody .selected{  /* 공백없이 해야 and조건*/
+    background-color: #b0b0b0;
+    color : white;
+  }
+      
+      

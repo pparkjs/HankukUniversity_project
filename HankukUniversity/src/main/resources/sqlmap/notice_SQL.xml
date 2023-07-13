@@ -3,7 +3,18 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="kr.or.hku.notice.mapper.AdminNoticeMapper">
- 
+ 	
+ 	<sql id="noticeSearch">
+ 		AND (notice_clsf = #{noticeClsf})
+ 		<if test="searchType != null and searchType == 'title'">
+			AND (notice_ttl LIKE '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'writer'">
+			AND (notice_wrtr_nm LIKE '%'||#{searchWord}||'%')
+		</if>
+ 	</sql>
+ 	
+ 	
  	<update id="incrementNotice" parameterType="int">
  		update notice
  		set
@@ -12,36 +23,119 @@
  	</update>
  
  	<insert id="addNotice" parameterType="noticeVO">
- 		insert into notice(
- 			NOTICE_NO,
-			NOTICE_TTL,
-			NOTICE_CN,
-			NOTICE_WRTR_NM,
-			NOTICE_REGDATE,
-			NOTICE_READ_CNT,
-			NOTICE_CLSF
-<!-- 			ATCH_FILE_NO -->
- 		)values(
- 			seq_notice.nextval,
- 			#{noticeTtl},
- 			#{noticeCn},
- 			#{noticeWrtrNm},
- 			sysdate,
- 			0,
- 			#{noticeClsf}
-<!--  			파일 -->
+ 		/* kr.or.hku.notice.mapper.AdminNoticeMapper.addNotice */
+ 		INSERT INTO notice(
+ 			  notice_no
+			, notice_ttl
+			, notice_cn
+			, notice_wrtr_nm
+			, notice_regdate
+			, notice_read_cnt
+			, notice_clsf
+			<if test="atchFileNo != -1">, atch_file_no</if>
+ 		)VALUES(
+ 			  seq_notice.nextval
+ 			, #{noticeTtl}
+ 			, #{noticeCn}
+ 			, #{noticeWrtrNm}
+ 			, sysdate
+ 			, 0
+ 			, #{noticeClsf}
+ 			<if test="atchFileNo != -1">, #{atchFileNo}</if>
  		)
  	</insert>
  	
- 	<select id="noticeList" resultType="noticeVO">
- 		select * from notice
- 		where 1=1
- 		order by NOTICE_NO desc
+ 	<select id="noticeList" resultType="noticeVO" parameterType="String">
+ 		/* kr.or.hku.notice.mapper.AdminNoticeMapper.noticeList */
+ 		SELECT 
+ 			  notice_no
+			, notice_ttl
+			, notice_wrtr_nm
+			, notice_regdate
+			, notice_read_cnt
+ 		FROM notice
+ 		WHERE notice_clsf = #{noticeClsf}
+ 		ORDER BY notice_no DESC
  	</select>
  	
+ 	
  	<select id="getNoticeOne" parameterType="int" resultType="noticeVO">
- 		select * from notice
- 		where NOTICE_NO = #{noticeNo}
+ 		/* kr.or.hku.notice.mapper.AdminNoticeMapper.getNoticeOne */
+ 		SELECT
+		      notice_no
+		    , notice_ttl
+		    , notice_cn
+		    , notice_wrtr_nm
+		    , notice_regdate
+		    , notice_read_cnt
+		    , notice_clsf
+		    , atch_file_no
+		FROM notice 
+		WHERE notice_no = #{noticeNo}
+ 	</select>
+ 	
+ 	
+ 	<update id="updateNotice" parameterType="noticeVO">
+ 		/* kr.or.hku.notice.mapper.AdminNoticeMapper.updateNotice */
+ 		UPDATE notice
+ 		SET
+ 			  notice_ttl = #{noticeTtl}
+ 			, notice_cn = #{noticeCn}
+ 			, notice_regdate = sysdate
+ 			<if test="atchFileNo != -1">, atch_file_no = #{atchFileNo}</if>
+ 		WHERE notice_no = #{noticeNo}
+ 	</update>
+ 	
+ 	<delete id="deleteNotice" parameterType="int">
+ 		/* kr.or.hku.notice.mapper.AdminNoticeMapper.deleteNotice */
+ 		DELETE FROM notice
+ 		WHERE notice_no = #{noticeNo}
+ 	</delete>
+ 	
+ 	<select id="noticeList2" parameterType="map" resultType="noticeVO">
+ 		/* kr.or.hku.notice.mapper.AdminNoticeMapper.noticeList2 */
+ 		SELECT 
+ 			  notice_no
+			, notice_ttl
+			, notice_wrtr_nm
+			, notice_regdate
+			, notice_read_cnt
+ 		FROM notice
+ 		WHERE 1=1
+ 		AND notice_clsf = #{noticeClsf}
+ 		<include refid="noticeSearch"/>
+ 		ORDER BY notice_no DESC
+ 	</select>
+ 	
+ 	<select id="selectNoticeCount" parameterType="pagingVO" resultType="int">
+ 		select count(notice_no)
+		from notice
+		where 1=1
+		<include refid="noticeSearch"/>
+ 	</select>
+ 	
+ 	<select id="selectNoticeList" parameterType="pagingVO" resultType="noticeVO">
+ 		SELECT
+			b.*
+		FROM(
+			SELECT
+				a.*, row_number() over (order by a.notice_no desc) rnum
+			FROM(
+				SELECT
+					  notice_no
+					, notice_ttl
+					, notice_wrtr_nm
+					, notice_regdate
+					, notice_read_cnt
+				FROM notice
+				WHERE 1=1
+				<include refid="noticeSearch"/>
+				ORDER BY notice_no DESC
+			) a
+		) b
+		<![CDATA[
+			WHERE b.rnum >= #{startRow} AND b.rnum <= #{endRow}
+		]]>
  	</select>
  	
  </mapper>

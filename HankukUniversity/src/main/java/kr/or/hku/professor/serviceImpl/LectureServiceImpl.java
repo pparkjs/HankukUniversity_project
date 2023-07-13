@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import kr.or.hku.admin.vo.CollegeVO;
 import kr.or.hku.admin.vo.DepartmentVO;
 import kr.or.hku.admin.vo.FacilityVO;
+import kr.or.hku.lectureInfo.vo.LectureAplyVO;
+import kr.or.hku.lectureInfo.vo.LectureTimeTableVO;
 import kr.or.hku.lectureInfo.vo.SubjectVO;
 import kr.or.hku.professor.mapper.LectureMapper;
 import kr.or.hku.professor.service.ILectureService;
@@ -63,5 +65,39 @@ public class LectureServiceImpl implements ILectureService {
 		Map<String, List<?>> myMap = new HashMap<String, List<?>>();
 		myMap.put("flcts",  lectureMapper.getFlctsList(flct));
 		return myMap;
+	}
+	@Override
+	public List<LectureTimeTableVO> getClass(String flcts) {
+		
+		return lectureMapper.getClass(flcts);
+	}
+	@Override
+	public int getLecapNo() {
+		return lectureMapper.getLecapNo();
+	}
+	
+	
+	@Override
+	public int applyLecture(LectureAplyVO vo) {
+		return lectureMapper.applyLecture(vo);
+	}
+	@Override
+	public int applyProgram(LectureAplyVO vo) {
+		return lectureMapper.applyProgram(vo);
+	}
+	
+	@Override
+	public int applySchedule(LectureAplyVO vo) {
+		return lectureMapper.applySchedule(vo);
+	}
+	
+	@Override
+	public List<LectureAplyVO> getLectureStatus(String proNo) {
+		// TODO Auto-generated method stub
+		return lectureMapper.getLectureStatus(proNo);
+	}
+	@Override
+	public void returnLecture(String lecapNo) {
+		lectureMapper.returnLecture(lecapNo);
 	}
 }
