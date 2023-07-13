@@ -34,9 +34,30 @@
  			, a.bank_cd
  			, a. std_profile_path
  			,(to_number(to_char(sysdate, 'YYYY')) - to_number(to_char(a.std_mtcltn_yr)) + 1) AS grade
-		FROM student a, department b, com_code c
+ 			, d.flct_no
+ 			, d.flct_nm
+ 			, TO_CHAR(sysdate, 'YYYY') AS current_year
+ 			, CASE
+                  WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 6 THEN 1
+                  WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 12 THEN 2
+                  ELSE 0
+              END AS current_sem
+		FROM student a, department b, com_code c, facility d
 		WHERE a.dept_cd = b.dept_cd
 		AND c.com_cd = a.std_stts_cd
+		AND d.flct_no = b.flct_no
 		AND a.std_no = #{stdNo}
+ 	</select>
+ 	
+ 	<!-- 해당 시설의 층 가져오기 -->
+ 	<select id="floorListFlct" parameterType="String" resultType="flctVO">
+ 	/*kr.or.hku.common.mapper.CommonMapper.floorListFlct*/
+		SELECT 
+			  a.flct_nm
+			, a.flct_no
+			, b.floor 
+		FROM facility a, facility_floor b
+		WHERE a.flct_no = b.flct_no
+		AND a.flct_no = #{flctNo}
  	</select>
  </mapper>

@@ -17,6 +17,7 @@ import kr.or.hku.ServiceResult;
 import kr.or.hku.admin.vo.CollegeVO;
 import kr.or.hku.admin.vo.FacilityVO;
 import kr.or.hku.lectureInfo.vo.LectureAplyVO;
+import kr.or.hku.lectureInfo.vo.LectureTimeTableVO;
 import kr.or.hku.lectureInfo.vo.SubjectVO;
 import kr.or.hku.professor.service.ILectureService;
 import lombok.extern.slf4j.Slf4j;
@@ -70,7 +71,7 @@ public class LectureController {//강의관리 컨트롤러
 	//강의실 선택시 출력
 	@ResponseBody
 	@GetMapping("/selClass.do")
-	public List<LectureAplyVO> getClass(String flcts){
+	public List<LectureTimeTableVO> getClass(String flcts){
 		return lectureService.getClass(flcts);
 	}
 	
@@ -100,5 +101,22 @@ public class LectureController {//강의관리 컨트롤러
 		// 황지현 바보 멍충이!!
 		return "성공";
 	}
-
+	
+	
+	//나의 신청현황가져오기
+	@ResponseBody
+	@GetMapping("/getLectureStatus.do")
+	public List<LectureAplyVO> getLectureStatus(String proNo){
+		List<LectureAplyVO> lectureStatusList = lectureService.getLectureStatus(proNo);
+		return lectureStatusList;
+	}
+	
+	//신청내역 취소하기
+	
+	@ResponseBody
+	@GetMapping("/returnLecture.do")
+	public void returnLecture (String lecapNo) {
+		lectureService.returnLecture(lecapNo);
+	}
+	
 }
