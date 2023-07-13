@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.hku.classroom.mapper.AssignmentMapper">
+ 
+<!-- 과제목록조회  -->
+<select id="assignList" resultType="assignmentVO">
+	SELECT a.asm_no 
+		  , a.lecap_no
+		  , a.asm_week 
+		  , a.asm_ttl 
+		  , a.asm_cn 
+		  , a.asm_pro_nm 
+		  , a.asm_regdate 
+		  , a.atch_file_no
+	FROM assignment a
+	JOIN lecture_aply l ON a.LECAP_NO = l.LECAP_NO
+	JOIN professor p ON l.PRO_NO = p.PRO_NO
+	WHERE p.pro_nm = #{proNm}
+ </select>
+
+
+<!-- 과제 조회 -->
+<select id="detail" resultType="assignmentVO">
+	SELECT DISTINCT std.STD_NO
+	FROM assignment asm
+	JOIN course_regist cr ON asm.LECAP_NO = cr.LECAP_NO
+	JOIN lecture_aply la ON cr.LECAP_NO = la.LECAP_NO
+	JOIN student std ON asm.STD_NO = std.STD_NO
+	WHERE la.lecap_yr like TO_CHAR(sysdate, 'YYYY')
+  	AND lecap_sem = CASE
+                          WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 7 THEN 1
+                          WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 8 AND 12 THEN 2
+                          ELSE 0
+   				    END;
+</select>
+ 
+
+<!-- 과제 등록 --> 
+<insert id="regi" parameterType="int">
+ 	INSERT INTO assignment (
+	 				asm_no 
+		 		  , a.lecap_no
+				  , a.asm_week 
+				  , a.asm_ttl 
+				  , a.asm_cn 
+				  , a.asm_pro_nm 
+				  , a.asm_regdate 
+				  , a.atch_file_no )
+	 			 
+ 	VALUES (
+	 			a.seq_assignment.nextval
+	 		  , a.#{lecapNo}
+			  , a.#{asmWeek} 
+			  , a.#{asmTtl} 
+			  , a.#{asmCn} 
+			  , a.#{asmProNm} 
+			  , a.#{asmRegdate} 
+			  , a.#{atchFileNo}
+ 	)
+ 	WHERE 
+ 	AND lecap_yr like TO_CHAR(sysdate, 'YYYY')
+	AND lecap_sem = CASE
+                          WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 7 THEN 1
+                          WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 8 AND 12 THEN 2
+                          ELSE 0
+               		 END;
+               		 
+               		 
+     INSERT INTO assignment_submit (
+     							aval_code
+     					  	  , atch_file_no)
+     VALUES ('N'
+     		, null)
+     		
+     INSERT INTO ALARM( alarm_no
+     ) VALUES ()
+     WHERE user_no =
+     
+ </insert>
+ 
+<!--  <update id="update" parameterType="assignmentVO"> -->
+
+
+<!--  </update> -->
+ 
+<!--  <delete id="delete" parameterType="int"> -->
+<!--  	DELETE FROM assignment  -->
+<!--  	WHERE asm_pro_nm = #{proNo} -->
+<!--  </delete> -->
+ 
+ 
+ 
+ </mapper>

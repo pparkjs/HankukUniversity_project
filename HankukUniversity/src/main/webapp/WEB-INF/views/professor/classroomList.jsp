@@ -1,88 +1,136 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="/css/table.css">
+<style>
+.heading {
+	font-size: 1.5rem;
+	color: var(- -secondary);
+}
 
-<div class="table-responsive">
-	<table class="table table-responsive-md">
-		<thead>
-			<tr>
-				<th style="width:50px;">
-					<div class="form-check custom-checkbox checkbox-success check-lg me-3">
-						<input type="checkbox" class="form-check-input" id="checkAll" required="">
-						<label class="form-check-label" for="checkAll"></label>
+.active-projects tbody tr td:last-child {
+	text-align: center;
+}
+
+.btn.btn-icon-xxs {
+	padding: 0.8rem 1.0rem;
+	border-radius: 30%;
+	font-weight: 500;
+	font-size: 15px;
+	line-height: 20px;
+}
+
+.active-projects thead tr th:last-child {
+	text-align: center;
+}
+
+.active-projects thead tr th {
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.font-w500 {
+	font-weight: 500;
+	font-size: 15px;
+}
+
+.filter-option {
+	font-size: 16px;
+}
+</style>
+
+<div class="content-body">
+	<!-- row -->
+	<div class="container-fluid">
+		<div class="table-responsive">
+			<div class="col-xl-12">
+				<h4 class="heading mb-0">
+					<!-- 					<i class="fa-solid fa-user-plus text-primary me-3 mb-3"></i>  -->
+					<strong>클래스룸 목록</strong>
+				</h4>
+				<br>
+				<br>
+				<div style="color: black;">
+					<div class="yNsSel"
+						style="font-size: 20px; margin-bottom: 20px; color: black;">
+						학년도 :&nbsp;&nbsp; <select>
+							<option style="font-size: 16px;">선택</option>
+							<option style="font-size: 16px;">2023년</option>
+							<option style="font-size: 16px;">2022년</option>
+							<option style="font-size: 16px;">2021년</option>
+						</select> &nbsp;&nbsp;/&nbsp;학기 : &nbsp;&nbsp; <select>
+							<option style="font-size: 16px;">1학기</option>
+							<option style="font-size: 16px;">2학기</option>
+						</select>
 					</div>
-				</th>
-				<th><strong>No</strong></th>
-				<th><strong>과목명</strong></th>
-				<th><strong>클래스룸 가기</strong></th>
-				<th><strong>성적관리</strong></th>
-				<th><strong></strong></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>
-					<div class="form-check custom-checkbox checkbox-success check-lg me-3">
-						<input type="checkbox" class="form-check-input" id="customCheckBox2" required="">
-						<label class="form-check-label" for="customCheckBox2"></label>
+				</div>
+				<div class="card h-auto">
+					<div cla ss="card-body p-0">
+						<div class="table-responsive active-projects">
+							<div id="projects-tbl_wrapper"
+								class="dataTables_wrapper no-footer">
+								<table id="projects-tbl" class="table dataTable no-footer"
+									role="grid" aria-describedby="projects-tbl_info">
+									<thead>
+										<tr role="row">
+											<th style="width: 65px;">No</th>
+											<th style="width: 132.887px;">과목명</th>
+											<th style="width: 72.0625px;">클래스룸가기</th>
+											<th style="width: 72.0625px;">성적 바로가기</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${list }" var="list" varStatus="status">
+											<tr role="row" class="">
+												<td class="">
+													<div class="">
+														<div class="ms-2">
+															<span>${status.index + 1}</span>
+														</div>
+													</div>
+												</td>
+												<td>
+													<p class="mb-0 font-w500">${list.subNm }</p>
+												</td>
+												<td><svg class="enterClassroom" id="${list.lecapNo }" width="40" height="40"
+														viewBox="0 0 20 20" fill="none"
+														xmlns="http://www.w3.org/2000/svg">
+															<path
+															d="M2.5 7.49999L10 1.66666L17.5 7.49999V16.6667C17.5 17.1087 
+															17.3244 17.5326 17.0118 17.8452C16.6993 18.1577 16.2754 18.3333 15.8333 
+															18.3333H4.16667C3.72464 18.3333 3.30072 18.1577 2.98816 17.8452C2.67559 17.5326 2.5 17.1087 2.5 16.6667V7.49999Z"
+															stroke="#888888" stroke-linecap="round"
+															stroke-linejoin="round"></path>
+															<path d="M7.5 18.3333V10H12.5V18.3333" stroke="#888888"
+															stroke-linecap="round" stroke-linejoin="round"></path>
+													</svg></td>
+												<td>
+													<button type="button" class="btn btn-primary btn-icon-xxs">
+														<i class="fas fa-pencil-alt"></i>
+													</button>
+												</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
-				</td>
-				<td><strong>542</strong></td>
-				<td>
-					<div class="d-flex align-items-center">
-						<img src="images/avatar/1.jpg" class="rounded-lg me-2" width="24" alt="">
-						<span class="w-space-no">Dr. Jackson</span>
-					</div>
-				</td>
-				<td>example@example.com	</td>
-				<td>01 August 2020</td>
-				<td><div class="d-flex align-items-center"><i class="fa fa-circle text-success me-1"></i> Successful</div></td>
-				<td>
-					<div class="d-flex">
-						<a href="#" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-pencil"></i></a>
-						<a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div class="form-check custom-checkbox checkbox-success check-lg me-3">
-						<input type="checkbox" class="form-check-input" id="customCheckBox3" required="">
-						<label class="form-check-label" for="customCheckBox3"></label>
-					</div>
-				</td>
-				<td><strong>542</strong></td>
-				<td><div class="d-flex align-items-center"><img src="images/avatar/2.jpg" class="rounded-lg me-2" width="24" alt=""> <span class="w-space-no">Dr. Jackson</span></div></td>
-				<td>example@example.com	</td>
-				<td>01 August 2020</td>
-				<td><div class="d-flex align-items-center"><i class="fa fa-circle text-danger me-1"></i> Canceled</div></td>
-				<td>
-					<div class="d-flex">
-						<a href="#" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-pencil"></i></a>
-						<a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div class="form-check custom-checkbox checkbox-success check-lg me-3">
-						<input type="checkbox" class="form-check-input" id="customCheckBox4" required="">
-						<label class="form-check-label" for="customCheckBox4"></label>
-					</div>
-				</td>
-				<td><strong>542</strong></td>
-				<td><div class="d-flex align-items-center"><img src="images/avatar/3.jpg" class="rounded-lg me-2" width="24" alt=""> <span class="w-space-no">Dr. Jackson</span></div></td>
-				<td>example@example.com	</td>
-				<td>01 August 2020</td>
-				<td><div class="d-flex align-items-center"><i class="fa fa-circle text-warning me-1"></i> Pending</div></td>
-				<td>
-					<div class="d-flex">
-						<a href="#" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-pencil"></i></a>
-						<a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
-					</div>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+<script>
+	var enterClassroom = document.querySelectorAll(".enterClassroom");
+	
+	for(let i=0; i<enterClassroom.length; i++){
+		enterClassroom[i].addEventListener("click", function(){
+			// 과목신청 번호
+			let lecApNo = this.id;
+	 		location.replace("/hku/professor/classroomMain/"+lecApNo+"");
+		})		
+	}
+
+
+</script>

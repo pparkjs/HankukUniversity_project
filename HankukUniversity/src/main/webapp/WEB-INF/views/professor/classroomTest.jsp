@@ -14,10 +14,11 @@
 <div class="content-body" style="min-height: 975px;">
 	<div class="page-titles">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a style="font-size:25px; color:black;" href="javascript:void(0)">시스템</a></li>
+			<li class="breadcrumb-item"><a style="font-size:25px; color:black;" href="javascript:void(0)">시스템프로그래밍</a></li>
 			<li class="breadcrumb-item active"><a href="javascript:void(0)">
 				클래스룸 메인</a></li>
 		</ol>		
+	
 	</div>
 	
 	<div class="container-fluid">
@@ -153,13 +154,17 @@
 <script>
 	
 	
+	
 	assignMore.addEventListener("click", function(){
-		location.href = "/hku/professor/assignmentList";
+		location.href = "/hku/professor/assignment";
 	})
 	
 	noticeMore.addEventListener("click", function(){
 		location.href = "/hku/professor/notice";
 	})
 	
+	
+
+
 
 </script>

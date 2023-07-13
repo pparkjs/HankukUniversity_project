@@ -11,5 +11,5 @@ public interface ILectureNoticeService {
 	public LectureNoticeVO boardDetail(int lecnt_no);
 	public int insertBoard(LectureNoticeVO noticeVO);
 	public int updateBoard(LectureNoticeVO noticeVO);
-	public int deleteBoard(int lecnt_no);
+	public int deleteBoard(int lecntNo);
 }

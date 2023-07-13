@@ -18,7 +18,7 @@
 											<div class="mb-3">
 												<label class="text-label form-label">제목</label> 
 												<input type="text" name="firstName" class="form-control"
-													placeholder="제 목을 입력해주세요" required value="${lecntTtl}">
+													placeholder="제목을 입력해주세요" required value="${lecntTtl}">
 											</div>
 										</div>
 										<div class="col-lg-6 mb-2">

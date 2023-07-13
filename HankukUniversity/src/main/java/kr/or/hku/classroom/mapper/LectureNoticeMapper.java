@@ -10,8 +10,8 @@ import kr.or.hku.classroom.vo.LectureNoticeVO;
 public interface LectureNoticeMapper {
 	
 	public List<LectureNoticeVO> boardList(); 
-	public LectureNoticeVO boardDetail(int lecnt_no);
+	public LectureNoticeVO boardDetail(int lecntNo);
 	public int insertBoard(LectureNoticeVO noticeVO);
 	public int updateBoard(LectureNoticeVO noticeVO);
-	public int deleteBoard(int lecnt_no);
+	public int deleteBoard(int lecntNo);
 }
