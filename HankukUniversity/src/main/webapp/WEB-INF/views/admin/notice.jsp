@@ -125,12 +125,18 @@
 
 				
 				if(title == null || title == ""){
-					alert("제목을 입력해주세요");
+					swal({
+						title: "제목을 입력해주세요!", 
+						icon: "error"
+					});
 					return false;
 				}
 				
 				if(content == null || content == ""){
-					alert("내용을 입력해주세요");
+					swal({
+						title: "내용을 입력해주세요!", 
+						icon: "error"
+					});
 					return false;
 				}
 
@@ -185,7 +191,6 @@
 				$('#noticeFrm').css("display","block");
 				$('#noticeTtl').val($("#detailTtl").html());
 				CKEDITOR.instances.noticeCn.setData($("#detailCn").html());
-				$('.deleteFile').css('display','block');
 			}else if(this.innerText == "저장"){
 
 				// 공지사항 변경했을때 처리 로직
@@ -285,34 +290,42 @@
 		// 삭제 & 취소 버튼
 		$('#deleteBtn').on('click',function(){
 			if(this.innerText == "삭제"){
-				if (confirm("해당 게시글을 삭제 하시겠습니까?")) {
-					console.log("삭제 버튼 눌림");
-					let noticeNo = $('#noticeNo').val();
-					let atchFileNo = $('#atchFileNo').val();
-					
-					let deleteData = {
-						noticeNo:noticeNo,
-						atchFileNo:atchFileNo
-					}
-					$.ajax({
-						type:"delete",
-						url: "/hankuk/admin/deleteNotice",
-						contentType: "application/json;charset=utf-8", // 필수 
-						data: JSON.stringify(deleteData),
-						dataType: "text",
-						success: function(res){
-							swal({
-								title: res, 
-								icon: "success"
-							});
-							$('#addModal').modal("hide");
-							noticeList();
-						},
-						err: function(err){
-							console.log("err:", err)
+				swal({
+					   title: '정말로 해당 글을 삭제 하시겠습니까?',
+					   text: '글이 삭제되면 되돌릴 수 없습니다.',
+					   icon: 'warning',
+					   buttons: true,
+					   dangerMode: true,
+				}).then((willDelete) => {
+					if (willDelete) {
+						console.log("삭제 버튼 눌림");
+						let noticeNo = $('#noticeNo').val();
+						let atchFileNo = $('#atchFileNo').val();
+						
+						let deleteData = {
+							noticeNo:noticeNo,
+							atchFileNo:atchFileNo
 						}
-					});
-				}
+						$.ajax({
+							type:"delete",
+							url: "/hankuk/admin/deleteNotice",
+							contentType: "application/json;charset=utf-8", // 필수 
+							data: JSON.stringify(deleteData),
+							dataType: "text",
+							success: function(res){
+								swal({
+									title: res, 
+									icon: "success"
+								});
+								$('#addModal').modal("hide");
+								noticeList();
+							},
+							err: function(err){
+								console.log("err:", err)
+							}
+						});
+					}
+				});
 			}else if(this.innerText == "취소"){
 				console.log("취소 버튼 눌림");
 				this.innerText = "삭제";

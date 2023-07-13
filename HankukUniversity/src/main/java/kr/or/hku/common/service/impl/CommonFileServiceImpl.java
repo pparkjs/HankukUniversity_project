@@ -66,7 +66,7 @@ public class CommonFileServiceImpl implements CommonFileService {
 	
 	// 공지사항 파일 가져오기
 	@Override
-	public List<AttachFileVO> getNoticeFile(int atchFileNo) {
+	public List<AttachFileVO> getFileList(int atchFileNo) {
 		return fileMapper.getNoticeFile(atchFileNo);
 	}
 	
