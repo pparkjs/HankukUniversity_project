@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.hku.ServiceResult;
 import kr.or.hku.admin.vo.DepartmentVO;
-import kr.or.hku.common.service.ICommonService;
+import kr.or.hku.common.service.CommonService;
 import kr.or.hku.common.vo.CommonVO;
 import kr.or.hku.lectureInfo.service.CourseInfoService;
 import kr.or.hku.lectureInfo.vo.CartVO;
@@ -41,7 +41,7 @@ public class CourseInfoController {
 	private CourseInfoService courseService;
 	
 	@Autowired
-	private ICommonService commonService;
+	private CommonService commonService;
 	
 	//교과목정보 페이지 이동
 	@GetMapping("/search-subject")
@@ -184,6 +184,7 @@ public class CourseInfoController {
 		return "student/present-course";
 	}
 	
+	// 수강중인 강의 리스트 가져오기
 	@GetMapping("/present-list")
 	public ResponseEntity<List<LectureAplyVO>> presentList(@RequestParam Map<String, Object> map){
 		map.put("aprvSttsCd", "appv");

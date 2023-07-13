@@ -12,4 +12,8 @@ public class FacilityVO {
 	private String flctNo      ;
 	private String flctNm      ;
 	private String flctClsfCd  ;
+	
+	// 조인한 필드
+	private int floor;
+	
 }

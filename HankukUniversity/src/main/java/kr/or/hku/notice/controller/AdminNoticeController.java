@@ -3,6 +3,7 @@ package kr.or.hku.notice.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,25 +11,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.hku.ServiceResult;
 import kr.or.hku.common.service.CommonFileService;
-import kr.or.hku.common.service.ICommonService;
+import kr.or.hku.common.service.CommonService;
 import kr.or.hku.common.vo.AttachFileVO;
 import kr.or.hku.common.vo.CommonVO;
 import kr.or.hku.notice.service.AdminNoticeService;
 import kr.or.hku.notice.vo.NoticeVO;
+import kr.or.hku.notice.vo.PaginationInfoVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping("/hankuk/admin")
+@RequestMapping("/hankuk")
 @Slf4j
 public class AdminNoticeController {
 
@@ -40,29 +42,69 @@ public class AdminNoticeController {
 	
 	
 	@Autowired
-	private ICommonService commonService;
+	private CommonService commonService;
 	
-	@GetMapping("/academicnotice")
+	@GetMapping("/notice/list")
 	public String academicNoticeList(Model model) {
 		List<CommonVO> commonData = commonService.getAllCommonData();
 		model.addAttribute("commonData", commonData);
+		model.addAttribute("division", "N");
+		return "admin/notice";
+	}
+	
+	@GetMapping("/employment/list")
+	public String employmentNoticeList(Model model) {
+		List<CommonVO> commonData = commonService.getAllCommonData();
+		model.addAttribute("commonData", commonData);
+		model.addAttribute("division", "E");
 		return "admin/notice";
 	}
 	
 	@ResponseBody
-	@GetMapping("/noticeList/{clsf}")
-	public ResponseEntity<List<NoticeVO>> getNoticeList(@PathVariable("clsf") String noticeClsf){
+	@GetMapping("/admin/noticeList")
+	public ResponseEntity<PaginationInfoVO> getNoticeList(
+			@RequestParam Map<String, String> map
+			){
+//		ResponseEntity<List<NoticeVO>> entity = null;
+		ResponseEntity<PaginationInfoVO> entity = null;
+		log.info("map 바인딩" + map.toString());
+		// stype, sword
+		
+		PaginationInfoVO<NoticeVO> pagingVO = new PaginationInfoVO<NoticeVO>();
+		pagingVO.setNoticeClsf(map.get("noticeClsf"));
+		if (StringUtils.isBlank(map.get("stype"))) { // 디펄트 밸류
+			map.put("stype", "title");
+		}
+		
+		int currentPage = 1;
+		if (StringUtils.isNotBlank(map.get("page"))) { // 값이 있을떄
+			currentPage = Integer.parseInt(map.get("page"));
+		}
+		
+		if (StringUtils.isNotBlank(map.get("sword"))) { // 검색 했을때
+			pagingVO.setSearchType(map.get("stype"));
+			pagingVO.setSearchWord(map.get("sword"));
+		}
+		
+		pagingVO.setCurrentPage(currentPage);
+		
+		int totalRecord = noticeService.selectNoticeCount(pagingVO);
+		pagingVO.setTotalRecord(totalRecord);
+		
+		List<NoticeVO> dataList = noticeService.selectNoticeList(pagingVO);
+		pagingVO.setDataList(dataList);
+		
 		log.info("===리스트 출력===");
-		log.info("리스트 출력 전달 파라미터 : " + noticeClsf);
-		ResponseEntity<List<NoticeVO>> entity = null;
-		List<NoticeVO> noticeList = noticeService.noticeList(noticeClsf);
-		entity = new ResponseEntity<List<NoticeVO>>(noticeList, HttpStatus.OK);
+		log.info("리스트 출력 전달 파라미터 : " + map.get("noticeClsf"));
+//		List<NoticeVO> noticeList = noticeService.noticeList(map.get("noticeClsf"));
+//		List<NoticeVO> noticeList = noticeService.noticeList2(map);
+		entity = new ResponseEntity<PaginationInfoVO>(pagingVO, HttpStatus.OK);
 		return entity;
 	}
 	
 	// 등록 로직
 	@ResponseBody
-	@RequestMapping(value = "/addNotice",method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/addNotice",method = RequestMethod.POST)
 	public ResponseEntity<String> addNotice(NoticeVO noticeVO){
 		log.info("===================등록 실행====================");
 		ResponseEntity<String> entity = null;
@@ -116,7 +158,7 @@ public class AdminNoticeController {
 	
 	// 노티스 상세 보기
 	@ResponseBody
-	@GetMapping(value = "/getNoticeOne", produces = "application/json;charset=utf-8")
+	@GetMapping(value = "/admin/getNoticeOne", produces = "application/json;charset=utf-8")
 	public ResponseEntity<NoticeVO> getNoticeOne(int noticeNo){
 		ResponseEntity<NoticeVO> entity = null;
 		log.info("노티스 번호  " +noticeNo);
@@ -140,7 +182,7 @@ public class AdminNoticeController {
 	
 	// 수정 로직
 	@ResponseBody
-	@PutMapping("/updateNotice")
+	@PutMapping("/admin/updateNotice")
 	public ResponseEntity<NoticeVO> updateNotice(NoticeVO noticeVO){
 		/*
 		 	1. 파일이 들어왔을 떄 기존에 있던 파일 다 지우고 새로 업데이트 한다.
@@ -212,7 +254,7 @@ public class AdminNoticeController {
 	
 	
 	@ResponseBody
-	@DeleteMapping(value = "/deleteNotice", produces = "application/json;charset=utf-8")
+	@DeleteMapping(value = "/admin/deleteNotice", produces = "application/json;charset=utf-8")
 	public String deleteNotice(@RequestBody Map<String, String> map) {
 		String msg = "";
 		log.info(map.toString());

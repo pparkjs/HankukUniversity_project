@@ -21,7 +21,7 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="/hku/student/record">기본사항</a></li>
-					<li><a href="#">학적변동</a></li>
+					<li><a href="/hku/student/recordChange">학적변동</a></li>
 					<li><a href="#">졸업</a></li>
 				</ul>
 			</li>
@@ -126,9 +126,9 @@
 					<span class="nav-text">시설예약</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">시설예약</a></li>
-					<li><a href="#">사물함예약</a></li>
-					<li><a href="#">나의 예약 현황 </a></li>
+					<li><a href="/hku/locker-rsvt">사물함예약</a></li>
+					<li><a href="/hku/facility-rsvt">시설예약</a></li>
+					<li><a href="/hku/my-reservation">나의 예약 현황 </a></li>
 				</ul>
 			</li>
 			
@@ -196,7 +196,7 @@
 				<ul aria-expanded="false">
 					<li><a href="/hku/admin/dept-administration">학과 관리</a></li>
 					<li><a href="#">학적 관리</a></li>
-					<li><a href="#">교과목 관리</a></li>
+					<li><a href="/hku/admin/subject-administration">교과목 관리</a></li>
 					<li><a href="#">시설관리</a></li>
 					<li><a href="#">사물함관리</a></li>
 					<li><a href="#">학사 일정 관리</a></li>
@@ -262,8 +262,8 @@
 					<span class="nav-text">게시판 관리</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="/hankuk/admin/academicnotice">학사공지 게시판</a></li>
-					<li><a href="#">채용정보 게시판</a></li>
+					<li><a href="/hankuk/notice/list">학사공지 게시판</a></li>
+					<li><a href="/hankuk/employment/list">채용정보 게시판</a></li>
 					<li><a href="#">학과공지 게시판</a></li>
 				</ul>
 			</li>

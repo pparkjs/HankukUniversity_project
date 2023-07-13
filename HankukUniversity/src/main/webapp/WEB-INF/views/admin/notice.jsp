@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:if test="${division eq 'N' }">
+	<c:set value="학사" var="dvs"/>
+</c:if>
+<c:if test="${division eq 'E' }">
+	<c:set value="채용" var="dvs"/>
+</c:if>
 <c:forEach items="${commonData }" var="cmData">
-	<c:if test="${cmData.comCdNm eq '학사'}">
+	<c:if test="${cmData.comCdNm eq dvs}">
 		<c:set var="noticeClsf" value="${cmData.comCd}"/>
 	</c:if>
 </c:forEach>
@@ -11,29 +17,30 @@
 	<div class="page-titles">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="javascript:void(0)">게시판관리</a></li>
-			<li class="breadcrumb-item active"><a href="javascript:void(0)">학사공지 게시판</a></li>
+			<li class="breadcrumb-item active"><a href="javascript:void(0)">${dvs }공지 게시판</a></li>
 		</ol>
     </div>
 	<div class="container-fluid">
 		<div class="card" id="card-title-1">
 			<div class="card-header border-0 pb-0 ">
-				<h5 class="card-title" style="font-weight: bold;">학사공지</h5>
+				<h5 class="card-title" style="font-weight: bold;">${dvs }공지관리</h5>
 			</div>
 			<div class="card-body">
 				<div class="basic-form">
 					<form class="row g-3 custom-form" action="">
 						<div class="col-md-2">
-						   <select class="default-select form-control">
-							  <option>== 선택 ==</option>
-							  <option>제목</option>
-							  <option>작성자</option>
+						   <select class="default-select form-control" id="stype">
+							  <option value="">== 선택 ==</option>
+							  <option value="title">제목</option>
+							  <option value="writer">작성자</option>
 						   </select>
 						</div>
 						<div class="col-md-3">
-							<input type="text" class="form-control input-default" placeholder="검색어를 입력해주세요">
+							<input type="text" class="form-control input-default" placeholder="검색어를 입력해주세요" id="sword">
 						</div>
+						<input type="hidden" name="page" id="page">
 						<div class="col-auto">
-							<button type="submit" class="btn btn-primary">검색</button>
+							<button type="button" class="btn btn-primary" id="searchBtn" onclick="searchClick()">검색</button>
 						</div>
 						<div class="col-auto">
 							<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">글쓰기</button>
@@ -41,6 +48,12 @@
 					 </form>
 				</div>
 			</div>
+			<script>
+				// 검색 
+				function searchClick(){
+					noticeList();
+				}
+			</script>
 			<div class="card-body">
 				<div class="table-responsive">
 					<table id="example" class="display table" style="min-width: 845px">
@@ -58,14 +71,15 @@
 					</table>
 				</div>
 			</div>
-			<div class="card-body">
+			<div class="card-body" id="pageNation">
 				<nav>
 					<ul class="pagination pagination-xs">
 						<li class="page-item page-indicator">
 							<a class="page-link" href="javascript:void(0)">
 							<i class="la la-angle-left"></i></a>
 						</li>
-						<li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a>
+						<li class="page-item active">
+							<a class="page-link" href="javascript:void(0)">1</a>
 						</li>
 						<li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
 						<li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
@@ -83,6 +97,7 @@
 <script type="text/javascript">
 	const myName = "${emp.empName}";
 	var noticeClsf = "${noticeClsf}";
+	var pageNo;
 	noticeList(); // 노티스 리스트 가져오기
 	console.log(noticeClsf);
 	$(function(){
@@ -147,7 +162,10 @@
 					dataType: "text",
 					success: function(res){
 						if(res === "success"){
-							alert("정상적으로 글이 등록되었습니다.");
+							swal({
+								title: "정상적으로 글이 등록되었습니다.", 
+								icon: "success"
+							});
 							$('#addModal').modal("hide");
 							noticeList();
 						}
@@ -216,7 +234,10 @@
 					success: function(res){
 						console.log("수정된 파일",res);
 						if(res != null){
-							alert("정상적으로 글이 수정 되었습니다.");
+							swal({
+								title: "정상적으로 글이 수정 되었습니다.", 
+								icon: "success"
+							});
 						}
 
 						$('#noticeNo').val(res.noticeNo);
@@ -280,7 +301,10 @@
 						data: JSON.stringify(deleteData),
 						dataType: "text",
 						success: function(res){
-							alert(res);
+							swal({
+								title: res, 
+								icon: "success"
+							});
 							$('#addModal').modal("hide");
 							noticeList();
 						},
@@ -306,27 +330,44 @@
 
 	// 노티스 리스트 가져오기
 	function noticeList(){
+// 		var searchData = {};
+		let stype = $('#stype').val();
+		let sword = $('#sword').val();
+		let page = $('#page').val();
+// 		searchData.stype = stype;
+// 		searchData.sword = sword;
+		
+// 		console.log("검색");
+// 		console.log(searchData);
+
 		let clsf = "${noticeClsf}";
 		console.log("노티스 리스트 조회", clsf);
+		
+		var queryStr = "?stype=" + stype + "&sword=" + sword + "&page=" + page
+				+ "&noticeClsf=${noticeClsf}";
 	/* 	let noticeListClsf = {
 			"noticeClsf" : clsf
 		}; */
 		var xhr = new XMLHttpRequest();
-		xhr.open("get", `/hankuk/admin/noticeList/\${clsf}`, true);
+		xhr.open("get", `/hankuk/admin/noticeList` + queryStr, true);
+		xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
 		xhr.onreadystatechange = function() {
 			if(xhr.readyState == 4 && xhr.status == 200) {
 				var noticeData = JSON.parse(xhr.responseText);
+				console.log(noticeData);
+				var noticeList = noticeData.dataList;
 				var tblStr = ``
-				for(let i=0; i<noticeData.length; i++){
+				for(let i=0; i<noticeList.length; i++){
 					tblStr += `<tr class="noticeTr">
-								 <td>\${noticeData[i].noticeNo}</td>
-								 <td>\${noticeData[i].noticeTtl}</td>
-								 <td>\${noticeData[i].noticeWrtrNm}</td>
-								 <td>\${noticeData[i].noticeRegdate}</td>
-								 <td>\${noticeData[i].noticeReadCnt}</td>
+								 <td>\${noticeList[i].noticeNo}</td>
+								 <td>\${noticeList[i].noticeTtl}</td>
+								 <td>\${noticeList[i].noticeWrtrNm}</td>
+								 <td>\${noticeList[i].noticeRegdate}</td>
+								 <td>\${noticeList[i].noticeReadCnt}</td>
 							   </tr>`
 				}
 				noticeTbody.innerHTML = tblStr;
+				$('#pageNation').html(noticeData.pagingHTML);
 			}
 		};
 		xhr.send();
@@ -515,6 +556,17 @@
 // 			var pattern = /jpg|gif|png|jpeg/;
 // 			return fileName.match(pattern); // 패턴과 일치하면 true 
 // 		}
+		
+		// 페이징
+		var pageNation = $('#pageNation');
+		
+		pageNation.on('click','a',function(event){
+			event.preventDefault();
+			pageNo = $(this).data('page'); // 페이지 번호 날라옴
+			$('#page').val(pageNo);
+			console.log("페이지번호 클릭", $('#page').val());
+			noticeList();
+		});
 
 		// 모달창 닫힐떄 이벤트
 		$('#addModal').on('hidden.bs.modal', function(e){

@@ -4,8 +4,39 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="kr.or.hku.student.mapper.RecordMapper">
- 
+ 	<!-- 현재 로그인한 학생의 정보 조회 -->
  	<select id="recordInfo" parameterType="String" resultType="studentVO">
- 		select * from student where std_no = #{stdNo }
+ 	<!--kr.or.hku.mapper.student.RecordMapper.recordInfo -->
+ 		select 
+		    a.std_no, a.dept_cd, d.dept_nm, a.std_mjr_crd, 
+		    a.std_nm, a.std_ctrl_crd, a.std_stts_cd,
+		    b.com_cd_nm as comcdnm1, a.std_mtcltn_yr, a.std_telno, 
+		    a.std_zip, a.std_sex_cd, c.com_cd_nm as comcdnm2, a.std_addr, 
+		    a.std_mail, a.std_daddr, a.std_brdt, a.std_rrno, a.bank_cd, a.std_actno,
+		    a.std_profile_path
+		from student a
+			join com_code b on a.std_stts_cd = b.com_cd 
+			join com_code c on a.std_sex_cd = c.com_cd
+			join department d on a.dept_cd = d.dept_cd
+		where a.std_no = ${stdNo}
+ 	</select>
+ 	
+ 	<!--학적변동 신청내역 조회 -->
+ 	<select id="recordList" parameterType="String" resultType="recordVo">
+ 		select a.change_no, a.std_no, a.change_type_cd, b.com_cd_nm, a.change_rsn, a.change_aply_dt, a.change_start_yr,
+	        	a.change_start_sem, a.change_end_yr, a.change_end_sem, a.aprv_stts_cd, a.change_rjct_rsn
+		from academic_change a
+		join com_code b on a.change_type_cd = b.com_cd
+		where a.std_no = ${stdNo} and a.aprv_stts_cd = 'wait'
+ 	</select>
+ 	
+ 	<!-- 학적 변동 기록 조회 -->
+ 	<select id="recordChanged" resultType="recordVo" parameterType="recordVo">
+ 		select a.change_no, a.std_no, a.change_type_cd, b.com_cd_nm, a.change_rsn, a.change_aply_dt, a.change_start_yr,
+		        a.change_start_sem, a.change_end_yr, a.change_end_sem, a.aprv_stts_cd, c.com_cd_nm, a.change_rjct_rsn
+		from academic_change a
+			join com_code b on a.change_type_cd = b.com_cd
+			join com_code c on a.aprv_stts_cd = c.com_cd
+		where a.std_no = ${stdNo} and (a.aprv_stts_cd = 'appv' or a.aprv_stts_cd = 'rej');
  	</select>
  </mapper>

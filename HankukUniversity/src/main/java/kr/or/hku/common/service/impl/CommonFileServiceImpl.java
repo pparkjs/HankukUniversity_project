@@ -1,4 +1,4 @@
-package kr.or.hku.common.serviceImpl;
+package kr.or.hku.common.service.impl;
 
 import java.io.File;
 import java.io.IOException;

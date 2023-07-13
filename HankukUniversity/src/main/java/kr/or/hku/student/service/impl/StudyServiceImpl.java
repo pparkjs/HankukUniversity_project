@@ -1,4 +1,4 @@
-package kr.or.hku.student.serviceImpl;
+package kr.or.hku.student.service.impl;
 
 import java.util.List;
 
@@ -31,10 +31,10 @@ public class StudyServiceImpl implements StudyService{
 		return mapper.studyMem(studyNo);
 	}
 	
-//	@Override
-//	public List<StudyVO> applicationsList(int studyNo) {
-//		return mapper.applicationsList(studyNo);
-//	}
+	@Override
+	public List<StudyVO> applicationsList(int studyNo) {
+		return mapper.applicationsList(studyNo);
+	}
 
 	@Override
 	public void addStudy(StudyVO studyVo) {
@@ -43,8 +43,8 @@ public class StudyServiceImpl implements StudyService{
 
 	@Override
 	public void delStudy(int studyNo) {
-		mapper.delStudy(studyNo);
 		mapper.delStudyMem(studyNo);
+		mapper.delStudy(studyNo);
 	}
 
 	@Override
@@ -53,19 +53,34 @@ public class StudyServiceImpl implements StudyService{
 	}
 
 	@Override
-	public int assignStudy(StudyVO studyVo) {
-		return 0;
-	}
-
-	@Override
-	public int exitStudy(int stdNo) {
-		return 0;
+	public int exitStudy(StudyVO studyVo) {
+		return mapper.exitStudy(studyVo);
 	}
 
 	@Override
 	public int delStudyMem(int studyNo) {
-		// TODO Auto-generated method stub
 		return mapper.delStudyMem(studyNo);
+	}
+
+	@Override
+	public StudyVO applDetail(StudyVO studyVo) {
+		return mapper.applDetail(studyVo);
+	}
+
+	@Override
+	public int assignStudy(int joinNo) {
+		return mapper.assignStudy(joinNo);
+	}
+
+	@Override
+	public int rejStudy(int joinNo) {
+		return mapper.rejStudy(joinNo);
+	}
+
+	@Override
+	public List<StudyVO> scheduleList(StudyVO studyVo) {
+		// TODO Auto-generated method stub
+		return mapper.scheduleList(studyVo);
 	}
 
 }

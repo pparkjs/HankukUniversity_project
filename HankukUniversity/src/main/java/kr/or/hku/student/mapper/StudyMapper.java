@@ -15,7 +15,11 @@ public interface StudyMapper {
 	// 스터디 멤버 조회
 	public List<StudyVO> studyMem(int studyNo);
 	// 가입신청 대기중인 멤버들
-//	public List<StudyVO> applicationsList(int studyNo);
+	public List<StudyVO> applicationsList(int studyNo);
+	// 스터디원 시간표 조회
+	public List<StudyVO> scheduleList(StudyVO studyVo);
+	// 가입신청 상세보기
+	public StudyVO applDetail(StudyVO studyVo);
 	// 스터디 생성
 	public void addStudy(StudyVO studyVo);
 	// 스터디 삭제
@@ -24,8 +28,9 @@ public interface StudyMapper {
 	// 스터디 가입신청
 	public int intoStudy(StudyVO studyVo);
 	// 스터디 가입신청 승인/반려
-	public int assignStudy(StudyVO studyVo);
+	public int assignStudy(int joinNo);
+	public int rejStudy(int joinNo);
 	// 스터디 탈퇴
-	public int exitStudy(int stdNo);
+	public int exitStudy(StudyVO studyVo);
 	
 }
