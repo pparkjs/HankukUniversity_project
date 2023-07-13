@@ -23,7 +23,7 @@ import kr.or.hku.professor.service.ILectureService;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping("/lecture")
+@RequestMapping("/hku/lecture")
 @Slf4j
 public class LectureController {//강의관리 컨트롤러
 	
