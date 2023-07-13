@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+.stdInfo{
+	height:150px;
+}
+
+.cardTitle{
+	height:40px;
+	
+}
+
+.card-body{
+	padding: 0.25rem;	
+	
+}
+.card-body.col-lg-9{
+	width:100%;
+}
+
+.stdGrade{
+	height:350px;
+}
+.grade-wrap{
+	display: flex;
+	height:300px;
+}
+
+#stdInfoTb{
+/* 	border : 1px solid black; */
+	text-align: right;
+/* 	float:right; */
+	
+}
+
+#stdInfoTb input[type="text"],
+#stdInfoTb span
+{
+	 color : black;
+	 width : 70%;
+	 height : 40px;
+	 font-size: 18px;
+	 text-align: center;
+	 margin-right: 15px;
+	
+}
+#stdInfoTb input[type="text"]{
+	border-radius: 5px;
+	margin-left : 10px;
+}
+
+#stdInfoTb span{
+		width : 100px;
+	}
+
+.selectCustom{
+	width : 40%;	
+	height: 30px;
+	border-radius: 5px;
+	border : none;
+	box-shadow: 1px 1px 1px 1px gray;
+	text-align: center;
+	font-weight: bold;
+	color : #800000;
+	margin-right: 20px;
+}
+
+ .a{
+	width : 30%;	
+	height: 30px;
+	border-radius: 5px;
+	border : none;
+	box-shadow: 1px 1px 1px 1px gray;
+	text-align: center;
+	font-weight: bold;
+	color : #800000;
+}
+.selectCustom option{
+	font-weight: bold;
+	color : #800000;
+}
+
+    
+    .radio-group label {
+      margin-right: 10px;
+    }
+    
+    label{
+    	font-size : 19px;
+    }
+    
+    
+    #submitBtn{
+    width : 50px;
+    height :30px;
+    margin-left: 300px;
+     padding : 0;
+    }
+    
+    textarea {
+	border : none;
+	border-radius: 5px;
+	background-color: #f7f7f7;
+	padding : 10px;
+}
