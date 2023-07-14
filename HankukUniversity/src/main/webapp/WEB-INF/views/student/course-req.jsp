@@ -359,7 +359,7 @@ function cartList(){
 				}
 				schedule.push(period)
 			}
-			console.log(schedule);
+			console.log("schedule: ", schedule);
 			
 			var timeTable = ''
 			for(var i = 1; i <= 9; i++){
