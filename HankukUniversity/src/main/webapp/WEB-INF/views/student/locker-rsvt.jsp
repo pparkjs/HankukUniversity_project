@@ -5,8 +5,8 @@
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="javascript:void(0)">수강정보</a></li>
-			<li class="breadcrumb-item active"><a href="javascript:void(0)">교과목 조회</a></li>
+			<li class="breadcrumb-item"><a href="javascript:void(0)">시설예약</a></li>
+			<li class="breadcrumb-item active"><a href="javascript:void(0)">사물함 예약</a></li>
 		</ol>
     </div>
 	<div class="container-fluid searchCon">
@@ -60,23 +60,7 @@
 								<span>선택</span>
 							</div>
 							<div class="lockerLeft-content">
-
-<!-- 								<table class="table" style="margin-top: -22px;"> -->
-<!-- 									<tbody id="lockerBody"> -->
-<!-- 										동적추가 -->
-<!-- 										<tr> -->
-<!-- 											<td>1</th> -->
-<!-- 											<td>2</th> -->
-<!-- 											<td>3</th> -->
-<!-- 											<td>4</th> -->
-<!-- 											<td>5</th> -->
-<!-- 											<td>6</th> -->
-<!-- 											<td>7</th> -->
-<!-- 											<td>8</th> -->
-<!-- 											<td>9</th> -->
-<!-- 										</tr> -->
-<!-- 									</tbody> -->
-<!-- 								</table> -->
+								<!-- 동적추가 -->
 							</div>
 						</div>
 					</div>
