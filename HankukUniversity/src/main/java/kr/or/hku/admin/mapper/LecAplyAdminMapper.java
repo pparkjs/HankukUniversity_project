@@ -7,10 +7,14 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.hku.admin.vo.LectureBasicVO;
 import kr.or.hku.admin.vo.LectureProgramVO;
+import kr.or.hku.admin.vo.ScheduleVO;
 
 @Mapper
 public interface LecAplyAdminMapper {
 	public List<Map<String, Object>> getLecApList();
 	public LectureBasicVO getLecBasicOne(int lecApNo);
 	public LectureProgramVO getLecProgam(int lecApNo);
+	public List<ScheduleVO> getSchedules(int lecApNo);
+	public int signOnLecture(int lecApNo);
+	public int rejectLecture(Map<String, String> map);
 }
