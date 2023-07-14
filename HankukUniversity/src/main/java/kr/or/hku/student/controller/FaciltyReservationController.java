@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.hku.ServiceResult;
+import kr.or.hku.admin.vo.FacilitiesVO;
 import kr.or.hku.admin.vo.FacilityVO;
 import kr.or.hku.common.service.CommonService;
 import kr.or.hku.student.service.FacilityService;
@@ -80,13 +81,46 @@ public class FaciltyReservationController {
 	
 	// 시설물예약으로 이동
 	@GetMapping("/facility-rsvt")
-	public String facilityRsvtForm(){
+	public String facilityRsvtForm(Model model){
 		return "student/facility-rsvt";
+	}
+	
+	// 시설에 해당하는 시설물 리스트 가져오기
+	@ResponseBody
+	@GetMapping("/flct-list")
+	public ResponseEntity<List<FacilitiesVO>> fcltsList(@RequestParam Map<String, Object> map){
+		log.info("시설물 맵 : " + map);
+		List<FacilitiesVO> list = facilityService.fcltsList(map);
+		return new ResponseEntity<List<FacilitiesVO>>(list, HttpStatus.OK);
 	}
 	
 	// 나의 예약현황으로 이동
 	@GetMapping("/my-reservation")
 	public String myReservation() {
 		return "student/my-reservation";
+	}
+	
+	// 예약테이블 리스트 가져오기
+	@ResponseBody
+	@GetMapping("/rsvt-list")
+	public ResponseEntity<List<FacilitiesVO>> rsvtList(@RequestParam Map<String, Object> map){
+		List<FacilitiesVO> list = facilityService.rsvtList(map);
+		return new ResponseEntity<List<FacilitiesVO>>(list, HttpStatus.OK);
+	}
+	
+	// 예약 신청하기
+	@PostMapping("/flcts-reservation")
+	public String flctsReservation(FacilitiesVO vo, Model model) {
+		log.info("시설물 예약 : " + vo);
+		
+		ServiceResult result = facilityService.flctsReservation(vo);
+		
+		if(result.equals(ServiceResult.OK)) {
+			return "redirect:/hku/my-reservation";
+		}else {
+			model.addAttribute("msg", "error");
+			return "student/facility-rsvt";
+		}
+		
 	}
 }
