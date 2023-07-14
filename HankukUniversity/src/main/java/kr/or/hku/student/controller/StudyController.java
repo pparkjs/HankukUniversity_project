@@ -6,6 +6,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.hku.student.service.StudyService;
 import kr.or.hku.student.vo.StudentVO;
@@ -32,15 +35,14 @@ public class StudyController {
 	
 	
 	@GetMapping(value = "/student/study")
-	public String studyList(Model model) {
-		List<StudyVO> studyList = service.studyList();
-//		for (StudyVO study : studyList) {
-//		    String studyName = study.getStudyName();
-//		    
-//		    log.info(studyName);
-//		}
-		
+	public String studyList(HttpServletRequest request,Model model) {
+		HttpSession session = request.getSession();
+		StudentVO stdVo = (StudentVO) session.getAttribute("std");
+		String stdNo = stdVo.getStdNo();
+		List<StudyVO> studyList = service.studyList(stdNo);		
+		List<StudyVO> waitStudy = service.waitStudy(stdNo);		
 		model.addAttribute("studyList", studyList);
+		model.addAttribute("waitStudy", waitStudy);
 		return "student/study";
 	}
 	
@@ -91,15 +93,26 @@ public class StudyController {
 		return "student/studyRoom";
 	}
 	
+//	@ResponseBody
+//	@GetMapping("/student/studyMem")
+//	public ResponseEntity<List<StudyVO>> memList(@RequestParam int studyNo){
+//		List<StudyVO> list = service.studyMem(studyNo);
+//		return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
+//	}
+	
+	@ResponseBody
 	@GetMapping("/student/scheduleList")
-	public List<StudyVO> scheduleList(@RequestParam("stdNo") String stdNo, Model model) {
+	public ResponseEntity<List<StudyVO>> scheduleList(@RequestParam("stdNo") String stdNo) {
+		log.info("stdNo: " + stdNo);
 		// 시간표 리스트 출력
 		StudyVO vo = new StudyVO();
 		vo.setStdNo(stdNo);
 		vo.setLecapYr("2023");
 		List<StudyVO> sList = service.scheduleList(vo);
-		model.addAttribute("sList", sList);
-		return sList;
+//		for (int i = 0; i < sList.size(); i++) {
+//			log.info("sList: "+ sList.get(i));
+//		}
+		return new ResponseEntity<List<StudyVO>>(sList,HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/student/delStudy")
@@ -120,17 +133,16 @@ public class StudyController {
 		return "redirect:/hku/student/study";
 	}
 	
-	@PostMapping(value = "/student/assignStudy/{studyNo}/{joinNo}")
-	public List<StudyVO> assignStudy(@PathVariable("joinNo") int joinNo, @PathVariable("studyNo") int studyNo) {
+	@PostMapping(value = "/student/assignStudy")
+	public String assignStudy(@RequestParam("joinNo") int joinNo) {
 		service.assignStudy(joinNo);
-		List<StudyVO> appli = service.applicationsList(studyNo);
-		return appli;
+		
+		return "redirect:/hku/student/studyRoom";
 	}
-	@PutMapping(value = "/student/rejStudy/{studyNo}/{joinNo}")
-	public List<StudyVO> rejStudy(@PathVariable("joinNo") int joinNo, @PathVariable("studyNo") int studyNo) {
+	@PutMapping(value = "/student/rejStudy")
+	public String rejStudy(@RequestParam("joinNo") int joinNo) {
 		service.rejStudy(joinNo);
-		List<StudyVO> appli = service.applicationsList(studyNo);
-		return appli;
+		return "redirect:/hku/student/studyRoom";
 	}
 	
 }
