@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.or.hku.admin.service.UserService;
 import kr.or.hku.admin.vo.DepartmentVO;
 import kr.or.hku.admin.vo.UserVO;
-import kr.or.hku.common.service.ICommonService;
+import kr.or.hku.common.service.CommonService;
 import kr.or.hku.common.vo.CommonVO;
 import kr.or.hku.lectureInfo.service.CourseInfoService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class UserManagementController {
 	private CourseInfoService courseService;
 	
 	@Autowired
-	private ICommonService commonService;
+	private CommonService commonService;
 	
 	@Autowired
 	private UserService userService;
