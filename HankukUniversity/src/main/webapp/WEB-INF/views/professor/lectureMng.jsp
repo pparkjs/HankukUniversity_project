@@ -10,7 +10,64 @@
                     <li class="breadcrumb-item active"><a href="javascript:void(0)">강의개설신청</a></li>
                 </ol>
             </div>
-            <div class="container-fluid">
+            <div class="container-fluid" style="padding-top:0.875rem;">
+            	<button type="button" class="btn btn-primary pro1" 
+                                        data-bs-toggle="modal" data-bs-target=".bd-example-modal-md"
+                                        id="statusBtn" style="margin-left: 1519px; margin-bottom: 10px; padding : 0;" >나의 신청현황</button>
+        <!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 나의신청현황 버튼 모달 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+        <div class="modal fade bd-example-modal-md" tabindex="-1" style="display: none;" aria-hidden="true"
+            id="statusModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" style="font-weight: bold;">나의 신청내역</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                        </button>
+                    </div>
+                    <div class="modal-body" style="padding:0;">
+                    
+                        <div class="basic-form" id="regDiv">
+                            <div class="form-validation">
+                                <form class="needs-validation" id="planFrm">
+                                    <div class="mb-3">
+                                    	<div style="margin-left:20px; margin-top : 30px;">
+	                                    	<input type="button" value="전체" id="statusAll" class="btn btn-primary pro2" style="padding: 0; ">
+	                                    	<input type="button" value="대기" id="statusWait" class="btn btn-primary pro2" style="padding: 0; ">
+	                                    	<input type="button" value="승인" id="statusAprv" class="btn btn-primary pro2" style="padding: 0; ">
+	                                    	<input type="button" value="반려" id="statusRej" class="btn btn-primary pro2" style="padding: 0; ">
+                                        	<input type="button" value="회수" id="applyReturn" class="btn btn-primary pro2" style="padding: 0; margin-left:490px; ">
+                                    	</div>
+                                        <div>
+                                        	 <table class="statusTable" border="1">
+                                        	 <thead>
+                                                <tr>
+                                                	<th>개설신청번호</th>
+                                                    <th>신청일</th>
+                                                    <th>개설년도</th>
+                                                    <th>개설학기</th>
+                                                    <th>과목명</th>
+                                                    <th>강의건물</th>
+                                                    <th>강의호실</th>
+                                                    <th>신청상태</th>
+                                                </tr>
+                                                </thead>
+                                               	<tbody id="statusTbody">
+                                               	
+                                               	</tbody> 
+                                                
+                                            </table>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="">종료</button>
+                    </div>
+                </div>
+            </div>
+        </div>
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 bbb" style="width: 55%">
                         <div class="card">
@@ -85,15 +142,15 @@
                                             <th>금</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <c:forEach var="i" step="1" begin="1" end="8">
+                                    <tbody id="timeBody">
+                                        <c:forEach var="i" step="1" begin="1" end="9">
                                             <tr>
-                                                <td class="time">${i}교시</td>
-                                                <td class="mon"></td>
-                                                <td class="tue"></td>
-                                                <td class="wed"></td>
-                                                <td class="thur"></td>
-                                                <td class="fri"></td>
+                                                <td class="time ">${i}교시</td>
+                                                <td class="mon timeTd"></td>
+                                                <td class="tue timeTd"></td>
+                                                <td class="wed timeTd"></td>
+                                                <td class="thur timeTd"></td>
+                                                <td class="fri timeTd"></td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
@@ -110,8 +167,10 @@
                                 <div>
                                     <!-- ■■■■■■■■■■■■■■■■■■■ 강의 계획서 첨부 버튼 ■■■■■■■■■■■■■■■■■■■ -->
                                     <button type="button" class="btn btn-primary pro1" style="padding: 0;"
-                                        data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg" id="lecturePBtn">강의계획서</button>
-                                    <input type="button" value="신청" class="btn btn-primary pro2" id="applyBtn" style="padding: 0;">
+                                        data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg"
+                                        id="lecturePBtn">강의계획서</button>
+                                    <input type="button" value="신청" class="btn btn-primary pro2" id="applyBtn"
+                                        style="padding: 0;">
                                 </div>
                             </div>
                             <div class="card-body apply">
@@ -120,7 +179,7 @@
                                     <tr>
                                         <td><span>교수명</span> <input type="text" value="${pro.proNm }"
                                                 disabled="disabled"></td>
-                                        <td><span>교수명</span> <input type="text" name="proNo" value="${pro.deptCd }"
+                                        <td><span>소속학과</span> <input type="text" name="proNo" value="${pro.deptCd }"
                                                 disabled="disabled"></td>
                                         <td><span>교번</span> <input type="text" value="${pro.proNo }" id="inProNo"
                                                 disabled="disabled"></td>
@@ -145,9 +204,9 @@
                                         <td><span>학점</span> <input type="text" id="inSubjectCrd" disabled="disabled">
                                         </td>
                                         <!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 강의실 시간표선택하면 자동으로 채워짐  ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
-                                        <td><span>개설연도</span> <input type="text" value="2023" name="lecapYr" id="inYear"
+                                        <td><span>개설연도</span> <input type="text" name="lecapYr" id="inYear"
                                                 disabled="disabled"></td>
-                                        <td><span>개설학기</span> <input type="text" value="1학기" name="lecapSem" id="inSem"
+                                        <td><span>개설학기</span> <input type="text" name="lecapSem" id="inSem"
                                                 disabled="disabled"></td>
                                     </tr>
                                     <tr>
@@ -179,7 +238,7 @@
                     <div class="modal-body">
                         <div class="basic-form" id="regDiv">
                             <div class="form-validation">
-                                <form class="needs-validation" id="noticeFrm">
+                                <form class="needs-validation" id="planFrm">
                                     <div class="mb-3">
                                         <span
                                             style="color: #800000; font-size: 1.2em; font-weight: bold;">평가기준</span><br>
@@ -191,14 +250,14 @@
                                                     <th>과제</th>
                                                     <th>중간</th>
                                                     <th>기말</th>
-                                                    <th>총점</th>
+                                                    <!--                                                     <th>총점</th> -->
                                                 </tr>
                                                 <tr>
-                                                    <td><input type="text" name="lecpgAtd" id="attendance">%</td>
-                                                    <td><input type="text" name="lecpgHw">%</td>
-                                                    <td><input type="text" name="lecpgMdTest">%</td>
-                                                    <td><input type="text" name="lecpgFnTest">%</td>
-                                                    <td style="background-color: #b0b0b0;"></td>
+                                                    <td><input type="text" name="lecpgAtd" id="lecpgAtd">%</td>
+                                                    <td><input type="text" name="lecpgHw" id="lecpgHw">%</td>
+                                                    <td><input type="text" name="lecpgMdTest" id="lecpgMdTest">%</td>
+                                                    <td><input type="text" name="lecpgFnTest" id="lecpgFnTest">%</td>
+                                                    <!--                                                     <td style="background-color: #b0b0b0; color:black;" id="allTd"></td> -->
                                                 </tr>
                                             </table>
                                         </div>
@@ -206,8 +265,8 @@
                                             <span
                                                 style="color: #800000; font-size: 1.2em; font-weight: bold;">수업유형</span><br>
                                             <span>강의유형</span> <select class="selectCustom c" id="meet">
-                                                <option value="avl">대면</option>
-                                                <option value="rej">온라인</option>
+                                                <option value="y">대면</option>
+                                                <option value="n">온라인</option>
                                             </select> <span>강의언어</span> <select class="selectCustom c"
                                                 style="margin-top: 10px;" id="lang">
                                                 <option value="ko">한국어</option>
@@ -247,52 +306,81 @@
         </div>
         <!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 모달 끝  ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
         <script>
-        var planJson = {
-
-        }
-        var lecapNo =''; //과목신청시퀀스번호
-        var flag = false; // 강의계획서 작성여부 플래그
-        var approval =''; //대면수업여부
-        var lecpgLggCd= ''; //수업언어
-        var periodCd = ''; //시작교시
-          
-        var sem = '';
-      	var lecpgAtd ='';
-        var lecpgHw = '';
-        var lecpgMdTest = $('[name="lecpgMdTest"').val();
-        var lecpgFnTest = $('[name="lecpgFnTest"').val();
-        var lecpgBook = $('[name="lecpgBook"').val();
-        var lectureIntro = $('[name="lectureIntro"').val();
-        var lecscHour = ''; //시작교시
-        var lecscDay ='';
-        var sem = '';
-        var week1 = '';
-        var week1 = '';
-        var week2 = '';
-        var week3 = '';
-        var week4 = '';
-        var week5 = '';
-        var week6 = '';
-        var week7 = '';
-        var week8 = '';
-        var week9 = '';
-        var week10 = '';
-        var week11 = '';
-        var week12 = '';
-        var week13 = '';
-        var week14 = '';
-        var week15 = ''; 
         
+        var year = new Date().getFullYear();
+        var month = new Date().getMonth();
+        /*■■■■■■■■■■■■전역변수 설정 영역■■■■■■■■■■■ */
+            var planJson = {
+
+            }
+            var lecapNo = ''; //과목신청시퀀스번호
+            var flag = false; // 강의계획서 작성여부 플래그
+            var approval = ''; //대면수업여부
+            var lecpgLggCd = ''; //수업언어
+            var periodCd = ''; //시작교시
+
+            var sem = '';
+            var lecpgAtd = '';
+            var lecpgHw = '';
+            var lecpgMdTest = $('[name="lecpgMdTest"]').val();
+            var lecpgFnTest = $('[name="lecpgFnTest"]').val();
+            var lecpgBook = $('[name="lecpgBook"]').val();
+            var lectureIntro = $('[name="lectureIntro"]').val();
+            var lecscHour = ''; //시작교시
+            var lecscDay = '';
+            var sem = '';
+            var week1 = '';
+            var week1 = '';
+            var week2 = '';
+            var week3 = '';
+            var week4 = '';
+            var week5 = '';
+            var week6 = '';
+            var week7 = '';
+            var week8 = '';
+            var week9 = '';
+            var week10 = '';
+            var week11 = '';
+            var week12 = '';
+            var week13 = '';
+            var week14 = '';
+            var week15 = '';
+
 
             /* ■■■■■■ 최초 강의관리 화면 접속시 출력되는 화면 ■■■■■■ */
             $(document).ready(function () {
                 var table = $(".table"); // 테이블 객체 가져오기
-
+                $("#inYear").val(year);
+                
+                if(month >= 6){
+                	$('#inSem').val("2학기");
+                }else{
+                	$('#inSem').val("1학기");
+                }
                 /* ■■■■■■ 교과목 클릭에 대한 이벤트  ■■■■■■ */
                 table.on("click", "tbody tr", function () {
                     var rows = table.find("tbody tr");
-                    rows.removeClass("selected");
-                    $(this).addClass("selected");
+                    if (flag === true) {
+                        swal({
+                            title: "다른과목을 선택하시겠습니까?",
+                            text: "저장되어있는 강의계획서가 초기화 됩니다.",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                        })
+                            .then((willDelete) => {
+                                if (willDelete) {
+                                    $("#planFrm")[0].reset();
+                                    flag = false;
+                                    rows.removeClass("selected");
+                                    $(this).addClass("selected");
+                                }
+                            });
+                    } else {
+                        rows.removeClass("selected");
+                        $(this).addClass("selected");
+                    }
+
 
                     var selectedRow = $(this);
                     var child = selectedRow.children();
@@ -304,6 +392,7 @@
                     $("#inSubjectClsf").val(child.eq(4).text());
                     $("#inTime").val(child.eq(6).text());
                     $("#inSubjectCrd").val(child.eq(5).text());
+                   
                 });
                 /* ■■■■■■ 시간표 테이블 객체 가져오기  ■■■■■■ */
                 var timeTable = $(".tabletime");
@@ -311,35 +400,271 @@
                 timeTable.on("click", "tbody td", function () {
                     var tdClass = $(this).attr('class');
                     var tdDay = "";
-                    if (tdClass === "mon") {
+                    if (tdClass === "mon timeTd") {
                         tdDay = "월요일";
-                    } else if (tdClass === "tue") {
+                    } else if (tdClass === "tue timeTd") {
                         tdDay = "화요일"
-                    } else if (tdClass === "wed") {
+                    } else if (tdClass === "wed timeTd") {
                         tdDay = "수요일"
-                    } else if (tdClass === "thur") {
+                    } else if (tdClass === "thur timeTd") {
                         tdDay = "목요일"
-                    } else if (tdClass === "fri") {
+                    } else if (tdClass === "fri timeTd") {
                         tdDay = "금요일"
                     }
                     $("#inDay").val(tdDay);
+                });
+  
 
-                    startTime = $(this).parent().children().first().text();
-                    $("#inStart").val(startTime);
-                    // 	    console.log("교시",classTime);
+            });
+            $(document).ready(function () {
+	                    var lecapNo ='';
+	                    var lecapStt = '';
+     				
+     				$(document).on("click", ".statusTable tbody tr", function () {
+	     				var statusT = $('.statusTable');
+	                    var rows = statusT.find("tbody tr");
+     					
+                        rows.removeClass("selected");
+                        $(this).addClass("selected");
+                        
+                        var selectedRow = $(this);
+                        var tds = selectedRow.find('td');
+                        lecapStt = tds[7].textContent;
+                        lecapNo = tds[0].textContent;
+                    });
+     				
+            	   /* ■■■■■■ 강의개설 회수버튼 클릭  ■■■■■■ *///
+                $('#applyReturn').on("click", function () {
+                	if(lecapStt ==='대기'){
+	                	swal({
+	                		  title: "정말 취소하시겠습니까?",
+	                		  text: "취소 완료 후 복구가 불가합니다.",
+	                		  icon: "warning",
+	                		  buttons: true,
+	                		  dangerMode: true,
+	                		})
+	                		.then((willDelete) => {
+	                		  if (willDelete) {
+	                			  $.ajax({
+	                      		    url: '/hku/lecture/returnLecture.do',
+	                                  method: 'get',
+	                                  data: {
+	                                      lecapNo: lecapNo
+	                                  },
+	                                  success: function (res) {
+	                                	  swal("신청이 정상적으로 취소되었습니다.", {
+	                            		      icon: "success",
+	                            		    });
+	                                  },
+	                                  error: function (xhr, status, error) {
+	                                      // swal("출력실패");
+	                                  }
+	                          })
+	                		   
+	                		  } 
+	                		});
+                	}else{
+                		swal("취소가 불가능한 상태입니다.", "교무처에 문의해주세요.", "warning");
+                	}
 
-                    var clickedIndex = $(this).index(); // 클릭한 td 요소의 인덱스를 가져옵니다.
-                    // 		console.log(clickedIndex);
-                    // 클릭한 td 요소의 다음 n개의 td 요소에 배경색을 적용합니다.
-                    // 	    var n = 3; // 원하는 n 값으로 변경 가능
-                    // 	    for (var i = clickedIndex ; i <= clickedIndex + n-1; i++) {
-                    // 	      $('td').eq(i).css('background-color', 'yellow'); // 원하는 배경색으로 변경 가능
-                    // 	    }
                 });
             });
+            
+           $('#statusBtn').on("click",function(){
+        		$.ajax({
+        		    url: '/hku/lecture/getLectureStatus.do',
+                    method: 'get',
+                    data: {
+                        proNo: '${pro.proNo}'
+                    },
+                    success: function (res) {
+                        /* ■■■■■■ 신청상태에 대한 결과 출력 ■■■■■■ *///
+                       	var appv = '';
+                        statusStr = '';
+                        for (var i = 0; i < res.length; i++) {
+                        	 if(res[i].aprvSttsCd ==='rej'){
+                             	aprv = '반려';
+                             }else if(res[i].aprvSttsCd ==='wait'){
+                             	 aprv = '대기';
+                             }else if(res[i].aprvSttsCd ==='CANCLE'){
+                            	 aprv = '취소';
+                             }else{
+                             	aprv = '승인';
+                             }
+                        	statusStr += '<tr>'
+                        	statusStr +='<td>' + res[i].lecapNo + '</td>'
+                        	statusStr +='<td>' + res[i].lecapDt + '</td>'
+                        	statusStr +='<td>' + res[i].lecapYr + '</td>'
+                        	statusStr +='<td>' + res[i].lecapSem + '</td>'
+                        	statusStr +='<td>' + res[i].subNm + '</td>'
+                        	statusStr +='<td>' + res[i].flctNm + '</td>'
+                        	statusStr +='<td>' + res[i].flctsNm + '</td>'
+                        	statusStr +='<td>' + aprv + '</td>'
+                            statusStr +=  '</tr>';
+                        }
+                        $('#statusTbody').html(statusStr);
+                    },
+                    error: function (xhr, status, error) {
+                        // swal("출력실패");
+                    }
+        			
+        		});
+           	
+           });
+           
+           $('#statusAll').on("click",function(){
+       		$.ajax({
+       		    url: '/hku/lecture/getLectureStatus.do',
+                   method: 'get',
+                   data: {
+                       proNo: '${pro.proNo}'
+                   },
+                   success: function (res) {
+                       /* ■■■■■■ 신청상태에 대한 결과 출력 ■■■■■■ *///
+                      	var appv = '';
+                      	statusStr = '';
+                       for (var i = 0; i < res.length; i++) {
+                       	 if(res[i].aprvSttsCd ==='rej'){
+                            	aprv = '반려';
+                            }else if(res[i].aprvSttsCd ==='wait'){
+                            	 aprv = '대기';
+                            }else if(res[i].aprvSttsCd ==='CANCLE'){
+                            	 aprv = '취소';
+                            }else{
+                            	aprv = '승인';
+                            }
+                       	statusStr += '<tr>'
+                       		statusStr +='<td>' + res[i].lecapNo + '</td>'
+                       	statusStr +='<td>' + res[i].lecapDt + '</td>'
+                       	statusStr +='<td>' + res[i].lecapYr + '</td>'
+                       	statusStr +='<td>' + res[i].lecapSem + '</td>'
+                       	statusStr +='<td>' + res[i].subNm + '</td>'
+                       	statusStr +='<td>' + res[i].flctNm + '</td>'
+                       	statusStr +='<td>' + res[i].flctsNm + '</td>'
+                       	statusStr +='<td>' + aprv + '</td>'
+                           statusStr +=  '</tr>';
+                       }
+                       $('#statusTbody').html(statusStr);
+                   },
+                   error: function (xhr, status, error) {
+                       // swal("출력실패");
+                   }
+       			
+       		});
+          	
+          });
+           $('#statusWait').on("click",function(){
+       		$.ajax({
+       		    url: '/hku/lecture/getLectureStatus.do',
+                   method: 'get',
+                   data: {
+                       proNo: '${pro.proNo}'
+                   },
+                   success: function (res) {
+                       /* ■■■■■■ 신청상태에 대한 결과 출력 ■■■■■■ *///
+                      	var appv = '';
+                      	statusStr = '';
+                       for (var i = 0; i < res.length; i++) {
+                       	 if(res[i].aprvSttsCd ==='wait'){
+                            	aprv = '대기';
+                             	statusStr += '<tr>'
+                             		statusStr +='<td>' + res[i].lecapNo + '</td>'
+	                           	statusStr +='<td>' + res[i].lecapDt + '</td>'
+	                           	statusStr +='<td>' + res[i].lecapYr + '</td>'
+	                           	statusStr +='<td>' + res[i].lecapSem + '</td>'
+	                           	statusStr +='<td>' + res[i].subNm + '</td>'
+	                           	statusStr +='<td>' + res[i].flctNm + '</td>'
+	                           	statusStr +='<td>' + res[i].flctsNm + '</td>'
+	                           	statusStr +='<td>' + aprv + '</td>'
+                           	 	 statusStr +=  '</tr>';
+                            }
+                      
+                       }
+                       $('#statusTbody').html(statusStr);
+                   },
+                   error: function (xhr, status, error) {
+                       // swal("출력실패");
+                   }
+       			
+       		});
+          	
+          });
+           $('#statusRej').on("click",function(){
+       		$.ajax({
+       		    url: '/hku/lecture/getLectureStatus.do',
+                   method: 'get',
+                   data: {
+                       proNo: '${pro.proNo}'
+                   },
+                   success: function (res) {
+                       /* ■■■■■■ 신청상태에 대한 결과 출력 ■■■■■■ *///
+                      	var appv = '';
+                      	statusStr = '';
+                       for (var i = 0; i < res.length; i++) {
+                       	 if(res[i].aprvSttsCd ==='rej'){
+                            	aprv = '대기';
+                             	statusStr += '<tr>'
+                             		statusStr +='<td>' + res[i].lecapNo + '</td>'
+	                           	statusStr +='<td>' + res[i].lecapDt + '</td>'
+	                           	statusStr +='<td>' + res[i].lecapYr + '</td>'
+	                           	statusStr +='<td>' + res[i].lecapSem + '</td>'
+	                           	statusStr +='<td>' + res[i].subNm + '</td>'
+	                           	statusStr +='<td>' + res[i].flctNm + '</td>'
+	                           	statusStr +='<td>' + res[i].flctsNm + '</td>'
+	                           	statusStr +='<td>' + aprv + '</td>'
+                           	 	 statusStr +=  '</tr>';
+                            }
+                      
+                       }
+                       $('#statusTbody').html(statusStr);
+                   },
+                   error: function (xhr, status, error) {
+                       // swal("출력실패");
+                   }
+       			
+       		});
+          	
+          });
+           $('#statusAprv').on("click",function(){
+       		$.ajax({
+       		    url: '/hku/lecture/getLectureStatus.do',
+                   method: 'get',
+                   data: {
+                       proNo: '${pro.proNo}'
+                   },
+                   success: function (res) {
+                       /* ■■■■■■ 신청상태에 대한 결과 출력 ■■■■■■ *///
+                      	var appv = '';
+                      	statusStr = '';
+                       for (var i = 0; i < res.length; i++) {
+                       	 if(res[i].aprvSttsCd ==='appv'){
+                            	aprv = '승인';
+                             	statusStr += '<tr>'
+                             		statusStr +='<td>' + res[i].lecapNo + '</td>'
+	                           	statusStr +='<td>' + res[i].lecapDt + '</td>'
+	                           	statusStr +='<td>' + res[i].lecapYr + '</td>'
+	                           	statusStr +='<td>' + res[i].lecapSem + '</td>'
+	                           	statusStr +='<td>' + res[i].subNm + '</td>'
+	                           	statusStr +='<td>' + res[i].flctNm + '</td>'
+	                           	statusStr +='<td>' + res[i].flctsNm + '</td>'
+	                           	statusStr +='<td>' + aprv + '</td>'
+                           	 	 statusStr +=  '</tr>';
+                            }
+                      
+                       }
+                       $('#statusTbody').html(statusStr);
+                   },
+                   error: function (xhr, status, error) {
+                       // swal("출력실패");
+                   }
+       			
+       		});
+          	
+          });
+        
+
             /* ■■■■■■ 단과대학 선택시 학과와 교과목 출력해주는 펑션  ■■■■■■ *///
             $(function () {
-
                 /* ■■■■■■ 단과대학선택을 바꿀때마다 발생event  ■■■■■■ *///
                 $('#selSub')
                     .change(
@@ -350,9 +675,8 @@
                             // 					console.log(data);
 
                             //교과목 출력끝
-                            $
-                                .ajax({
-                                    url: '/lecture/getDept.do',
+                            $.ajax({
+                                    url: '/hku/lecture/getDept.do',
                                     method: 'get',
                                     data: {
                                         college: data
@@ -397,18 +721,18 @@
                                         $('#selDept').html(deptStr);
                                     },
                                     error: function (xhr, status, error) {
-                                        // alert("출력실패");
+                                        // swal("출력실패");
                                     }
                                 });
                         });
 
-                //교과목 출력시작
+                /*■■■■■■■■■■■■교과목 출력이벤트 시작■■■■■■■■■■■ */
                 $('#selDept').change(
                     function () {
                         var dept = $(this).val();
 
                         $.ajax({
-                            url: '/lecture/selSubject.do',
+                            url: '/hku/lecture/selSubject.do',
                             method: 'get',
                             data: {
                                 deptNm: dept
@@ -437,25 +761,26 @@
                                 $('#tbtb').html(subStr);
                             },
                             error: function (xhr, status, error) {
-                                alert("출력실패");
+                                swal("출력실패");
                             }
                         });
-                    });//교과목 출력 끝
+                    });/*■■■■■■■■■■■■교과목 출력이벤트 끝 ■■■■■■■■■■■ */
 
                 /* ■■■■■■ 강의실 조회 부분의 시설,시설물 선택   ■■■■■■ *///
                 //건물출력
-                $('#selBuil')
-                    .change(
-                        function () {
-                            // 					$('#tbtb').html("");
+                $('#selBuil').change(function () {
+                            // $('#tbtb').html("");
                             var flct = $(this).val();
                             var flctNm = $('#selBuil option:selected').text();
                             var click = $(this);
 
+                            $('#timeBody').find('.timeTd').css('background-color', '');
+                            $('#timeBody').find('.timeTd').text('');
+                            $('.timeTd').find('.selected').css('background-color', '');
                             //교과목 출력끝
                             $
                                 .ajax({
-                                    url: '/lecture/selBuil.do',
+                                    url: '/hku/lecture/selBuil.do',
                                     method: 'get',
                                     data: {
                                         flct: flct
@@ -474,117 +799,133 @@
 
                                     },
                                     error: function (xhr, status, error) {
-                                        //  alert("출력실패");
+                                        //  swal("출력실패");
                                     }
                                 });
                         });
-
+                /*■■■■■■■■■■■■ 강의 건물, 호실 선택시 해당강의실에 등록되어있는 수업 불러오는 이벤트■■■■■■■■■■■ */
                 $('#selClass').change(function () {
-                    var flct = $('#selBuil option:selected').val();
+                    $('#timeBody').find('.timeTd').css('background-color', '');
+                    $('#timeBody').find('.timeTd').text('');
                     var flcts = $('#selClass option:selected').val();
                     var click = $(this);
+                    var timeBody = $("#timeBody")
                     $('#inFlcts').val($('#selClass option:selected').text());
-                    //                     console.log("건물코드",flct);
-                    //                     console.log("호실",flcts);
-                    //교과목 출력끝
                     $.ajax({
-                        url: '/lecture/selClass.do',
+                        url: '/hku/lecture/selClass.do',
                         method: 'get',
                         data: {
                             flcts: flcts
+                           
                         },
                         success: function (res) {
-                        	console.log(res);
-                            alert("성공");
+                            let data = [];
+                            for (let k = 0; k < res.length; k++) {
+                                let dataJson = {};
+                                dataJson.day = dayChange(res[k].lecscDay),
+                                dataJson.start = res[k].periodCd;
+                                dataJson.hour = res[k].lecscHour;
+                                dataJson.subNm = res[k].subNm;
+                                dataJson.proNm = res[k].proNm;
+                                data.push(dataJson);
+                            }
+
+                            /*■■■■■■■■■■■■ 시간표에 이미있는 수업 색깔뿌려줌■■■■■■■■■■■ */
+                            let tabletime = $('.tabletime');
+                            for (let i = 0; i < data.length; i++) {
+                                for (let j = 0; j < data[i].hour; j++) {
+                                	if(j === 0){
+                                		$(tabletime).find('tr').eq(parseInt(data[i].start) + j).find('td').eq(data[i].day).text(data[i].subNm);
+                                	}else if(j === 1){
+                                		$(tabletime).find('tr').eq(parseInt(data[i].start) + j).find('td').eq(data[i].day).text(data[i].proNm+"교수");
+                                	}
+                                    $(tabletime).find('tr').eq(parseInt(data[i].start) + j).find('td').eq(data[i].day).css('background', 'lightGray');
+                                    $(tabletime).find('tr').eq(parseInt(data[i].start) + j).find('td').eq(data[i].day).css('color', 'black');
+                                    
+                                }
+                            }
                         },
                         error: function (xhr, status, error) {
-                        	console.log(xhr);
-                            alert("출력실패");
+                            swal("출력실패");
                         }
                     });
                 });
-            });
-            
-            $('#lecturePBtn').on("click",function(){
-            
-//             	 $.ajax({
-//                      url: '/lecture/applyLecture.do',
-//                      method: 'post',
-                   
-//                      data: JSON.stringify(applyData),
-//                      dataType: "text",
-//                      success: function (res) {
-//                     	 console.log(res);
-//                     	 lecapNo = res;
-//                          alert(res);
-//                      },
-//                      error: function (xhr, status, error) {
-//                          alert("출력실패");
-//                      }
-//                  });
-            	
-            });
-            
+                
+                /*■■■■■■■■■■■■시간표안의 td클릭할때 다른 강의가 있을경우 신청 불가 이벤트■■■■■■■■■■■ */
+                $(document).on('click', '.timeTd', function () {
+                    var timeTable = $(".tabletime");
+                    var tds = timeTable.find(".timeTd");
+                    tds.removeClass("selected"); // 다른 td를 선택할 때 기존에 선택된 td의 selected 클래스 제거
 
+                    if ($(this).css('background-color') === 'rgb(211, 211, 211)') {
+                    	swal("이미 개설된 강의가 있습니다.", "비어있는 시간대를 클릭해주세요.", "info");
+                        return false; // 클릭 이벤트 중단
+                    } else {
+                        tds.removeClass("selected"); // 모든 td의 selected 클래스 제거
+                        $(this).addClass("selected");
+                        startTime = $(this).parent().children().first().text();
+                        $("#inStart").val(startTime);
+                    }
+                });
+                
+            });
+
+            /*■■■■■■■■■■■■강의 계획서 작성후 저장버튼 클릭시 이벤트(유효성검사)■■■■■■■■■■■ */
             $('#saveBtn').on("click", function () {
 
-            	sem = $("#inSem").val().split('')[0];
-            	
-         	  lecpgAtd = $('[name="lecpgAtd"').val();
-                if(lecpgAtd == ""){
-                	alert("출석평가 비율이 입력되지않았습니다.");
-                	 $('[name="lecpgAtd"').focus();
-                	 return;
+                lecpgAtd = $('[name="lecpgAtd"').val();
+                if (lecpgAtd == "") {
+                   	swal("확인요청!", "출석 평가 비율이 입력되지않았습니다.", "info");
+                    $('[name="lecpgAtd"').focus();
+                    return;
                 }
-                
-               lecpgHw = $('[name="lecpgHw"').val();
-                if(lecpgHw == ""){
-                	alert("과제 평가 비율이 입력되지않았습니다.");
-                	 $('[name="lecpgHw"').focus();
-                	 return;
-                }
-                
-               lecpgMdTest = $('[name="lecpgMdTest"').val();
-                if(lecpgMdTest == ""){
-                	alert("중간고사 평가 비율이 입력되지않았습니다.");
-                	 $('[name="lecpgMdTest"').focus();
-                	 return;
-                }
-                
-               lecpgFnTest = $('[name="lecpgFnTest"').val();
-                if(lecpgFnTest == ""){
-                	alert("기말고사 평가 비율이 입력되지않았습니다.");
-                	 $('[name="lecpgFnTest"').focus();
-                	 return;
-                }
-               lecpgBook = $('[name="lecpgBook"').val();
-                if(lecpgBook == ""){
-                	alert("강의 교재가 입력되지않았습니다.");
-                	 $('[name="lecpgBook"').focus();
-                	 return;
-                }
-               lectureIntro = $('[name="lectureIntro"').val();
-                if(lectureIntro == ""){
-                	alert("강의 소개가 입력되지않았습니다.");
-                	 $('[name="lectureIntro"').focus();
-                	 return;
-                }
-                
-                for (let i = 1; i <= 15; i++) {
-                	  var weekValue = $('[name="week' + i + '"]').val();
 
-                	  if (weekValue === "") {
-                	    alert(i + "주차 강의계획이 입력되지 않았습니다.");
-                	    $('[name="week' + i + '"]').focus();
-                	    return;
-                	  }
-                	}
-                
+                lecpgHw = $('[name="lecpgHw"').val();
+                if (lecpgHw == "") {
+                	swal("확인요청!", "과제 평가 비율이 입력되지않았습니다.", "info");
+                    $('[name="lecpgHw"').focus();
+                    return;
+                }
+
+                lecpgMdTest = $('[name="lecpgMdTest"').val();
+                if (lecpgMdTest == "") {
+                	swal("확인요청!", "중간고사 평가 비율이 입력되지않았습니다.", "info");
+                    $('[name="lecpgMdTest"').focus();
+                    return;
+                }
+
+                lecpgFnTest = $('[name="lecpgFnTest"').val();
+                if (lecpgFnTest == "") {
+                	swal("확인요청!", "기말고사 평가 비율이 입력되지않았습니다.", "info");
+                    $('[name="lecpgFnTest"').focus();
+                    return;
+                }
+                lecpgBook = $('[name="lecpgBook"').val();
+                if (lecpgBook == "") {
+                	swal("확인요청!", "강의교재가 입력되지않았습니다.", "info");
+                    $('[name="lecpgBook"').focus();
+                    return;
+                }
+                lectureIntro = $('[name="lectureIntro"').val();
+                if (lectureIntro == "") {
+                	swal("확인요청!", "강의소개가 입력되지않았습니다.", "info");
+                    $('[name="lectureIntro"').focus();
+                    return;
+                }
+
+                for (let i = 1; i <= 15; i++) {
+                    var weekValue = $('[name="week' + i + '"]').val();
+                    if (weekValue === "") {
+                    	swal("확인요청!", i + "주차 강의계획이 입력되지않았습니다.", "info").then(() => {
+                            $('[name="week' + i + '"]').focus();
+                        });
+                        return; // 함수 실행 종료
+                    }
+                }
+				//대면여부,강의언어
                 approval = $('#meet option:selected').val();
                 lecpgLggCd = $('#lang option:selected').val();
-                
-                
-                
+				//주차별계획
                 week1 = $('[name="week1"').val();
                 week1 = $('[name="week1"').val();
                 week2 = $('[name="week2"').val();
@@ -600,79 +941,119 @@
                 week12 = $('[name="week12"').val();
                 week13 = $('[name="week13"').val();
                 week14 = $('[name="week14"').val();
-                week15 = $('[name="week15"').val(); 
+                week15 = $('[name="week15"').val();
+				//평가기준 비율입력
+                var sum = 0;
+                sum += parseInt($("#lecpgAtd").val());
+                sum += parseInt($("#lecpgHw").val());
+                sum += parseInt($("#lecpgMdTest").val());
+                sum += parseInt($("#lecpgFnTest").val());
 
-                if (confirm("강의계획서를 저장하시겠습니가?")) {
-                    $('#addModal').modal('hide');
-                    flag = true;
-                    
-                    console.log(flag);
-                }
-            });
-            
-            
-            $('#applyBtn').on("click", function () {
-            	
-                   
-            	if(flag === false){
-            		alert("강의계획서가 작성되지않았습니다.\n 확인 후 재시도 해주세요.");
-            		
-            	}else{
-            		 planJson = {
-                        		subNo : $("#inSubjectCd").val(),
-                                proNo :  $("#inProNo").val(),
-								subNm : $("#inSubjectNm").val(),
-                                flctsNo : $('#selClass option:selected').val(),
-                                lecapYr : $("#inYear").val(),
-                                lecapSem : sem,
-                                lecapTgGrade : $("#inGrade").val(),
-                                lecapCpct : 30,
-                                lecpgAtd: lecpgAtd,
-                                lecpgHw: lecpgHw,
-                                lecpgMdTest : lecpgMdTest,
-                                lecpgFnTest : lecpgFnTest,
-                                lecpgBook : lecpgBook,
-                                lecpgIntro : lectureIntro,
-                                week1 : week1,
-                                week2 : week2,
-                                week3 : week3,
-                                week4 : week4,
-                                week5 : week5,
-                                week6 : week6,
-                                week7 : week7,
-                                week8 : week8,
-                                week9 : week9,
-                                week10 : week10,
-                                week11 : week11,
-                                week12 : week12,
-                                week13 : week13,
-                                week14 : week14,
-                                week15 : week15,
-                                avlCd1 : 'avl',
-                                avlCd2 : approval,
-            		 		  lecpgLggCd: lecpgLggCd,
-            		 		  lecscHour : $("#inStart").val().split('')[0],
-            		 		  lecscDay : $("#inDay").val(),
-            		 		  periodCd : $("#inTime").val()
+                if (sum != 100) {
+                    console.log("100 아님");
+                    swal("확인요청!", "평가기준 총합이 100%가 아닙니다.\n확인 후 수정해주세요.", "info");
+                } else {
+                    swal({
+                        title: "강의계획서를 저장하시겠습니까?",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: false,
+                    })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                $('#addModal').modal('hide');
+                                flag = true;
                             }
-            		
-            	}
-                console.log(planJson);
-            	
-                $.ajax({
-                    url: '/lecture/applyLecture.do',
-                    method: 'post',
-                    data: JSON.stringify(planJson),
-                    contentType: "application/json;charset=utf-8",
-                    dataType: "text",
-                    success: function (res) {
-                        alert("성공");
-                    },
-                    error: function (xhr, status, error) {
-                        alert("출력실패");
-                    }
-                });
-
-           
+                        });
+                };
             });
+
+
+            /*■■■■■■■■■■■■강의 개설 최종 신청 버튼 클릭시■■■■■■■■■■■ */
+            $('#applyBtn').on("click", function () {
+
+                if (flag === false) {
+                    swal("확인요청!", "강의계획서가 작성되지않았습니다.\n 확인 후 재시도 해주세요.", "warning");
+                } else {
+                	
+                    swal({
+                        title: "강의개설신청을 제출 하시겠습니까?",
+                       	text: "제출 후 수정이 불가합니다.",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: false,
+                    })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                            	 planJson = {
+                                         subNo: $("#inSubjectCd").val(),
+                                         proNo: $("#inProNo").val(),
+                                         subNm: $("#inSubjectNm").val(),
+                                         flctsNo: $('#selClass option:selected').val(),
+                                         lecapYr: $("#inYear").val(),
+                                         lecapSem: $("#inSem").val().split('')[0],
+                                         lecapTgGrade: $("#inGrade").val(),
+                                         lecapCpct: 30,
+                                         lecpgAtd: lecpgAtd,
+                                         lecpgHw: lecpgHw,
+                                         lecpgMdTest: lecpgMdTest,
+                                         lecpgFnTest: lecpgFnTest,
+                                         lecpgBook: lecpgBook,
+                                         lecpgIntro: lectureIntro,
+                                         week1: week1,
+                                         week2: week2,
+                                         week3: week3,
+                                         week4: week4,
+                                         week5: week5,
+                                         week6: week6,
+                                         week7: week7,
+                                         week8: week8,
+                                         week9: week9,
+                                         week10: week10,
+                                         week11: week11,
+                                         week12: week12,
+                                         week13: week13,
+                                         week14: week14,
+                                         week15: week15,
+                                         avlCd1: 'y',
+                                         avlCd2: approval,
+                                         lecpgLggCd: lecpgLggCd,
+                                         periodCd: $("#inStart").val().split('')[0],
+                                         lecscDay: $("#inDay").val().split('')[0],
+                                         lecscHour: $("#inTime").val().split('')[0]
+                                     }
+									console.log(planJson);
+                                $.ajax({
+                                    url: '/hku/lecture/applyLecture.do',
+                                    method: 'post',
+                                    data: JSON.stringify(planJson),
+                                    contentType: "application/json;charset=utf-8",
+                                    dataType: "text",
+                                    success: function (res) {
+                                    	swal("신청완료", "강의 개설이 신청되었습니다.", "success");
+                                    },
+                                    error: function (xhr, status, error) {
+                                        swal("출력실패");
+                                    }
+                                });
+                            }
+                        });
+                   
+                }
+
+            });
+         
+            function dayChange(day) {
+                if (day == "월") {
+                    return "1";
+                } else if (day == "화") {
+                    return "2";
+                } else if (day == "수") {
+                    return "3";
+                } else if (day == "목") {
+                    return "4";
+                } else if (day == "금") {
+                    return "5";
+                }
+            }
         </script>

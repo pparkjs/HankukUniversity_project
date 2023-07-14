@@ -38,6 +38,7 @@
  
  }
  
+
  .tbtr.selected{  /* 공백없이 해야 and조건*/
     background-color: #b0b0b0;
     color : white;
@@ -206,10 +207,14 @@
   }
   .tabletime td{
   height: 46px;
+  width : 30px;
 }
 
-  .tabletime td:hover{
+.timeTd:hover{
 	background-color: #b0b0b0;
+}
+	.timeTd.selected{
+	background-color: #c8feff;
 	
 	}
 
@@ -243,3 +248,35 @@
 }
     
       /* ■■■■■■■■■ 강의실 조회 시간표 css 끝 ■■■■■■■■■ */
+      
+    .statusTable{
+  	width :95%;
+/*   	height: 85px; */
+  	margin:  30px auto;
+  	text-align: center;
+  }
+  
+  
+  .statusTable th{
+  	background-color: #800000;
+  	color : white;
+  	height : 40px;
+  }
+  
+  .statusTable td{
+  	width: auto%;
+  	height : 40px;
+  }   
+  
+  .statusTable tr:hover{
+  	 cursor: pointer;
+ 	background-color: #b0b0b0;
+ 	color : white;
+  }    
+  
+   #statusTbody .selected{  /* 공백없이 해야 and조건*/
+    background-color: #b0b0b0;
+    color : white;
+  }
+      
+      
