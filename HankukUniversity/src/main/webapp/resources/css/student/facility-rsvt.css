@@ -347,3 +347,24 @@
     justify-content: center;
     align-items: center;
 }
+/* 나의 예약현황  */
+.table-wrap{
+	overflow: scroll;
+    height: 290px;
+    margin-top: 13px;
+}
+.thead-dark{
+      position: sticky;
+      top: 0px;
+}
+
+.rsvtCancleBtn{
+   padding: 4px 17px;
+   background: #adb17d;
+   border-color: #adb17d;
+}
+.useCancleBtn{
+	padding: 4px 17px;
+    background: #adb17d;
+    border-color: #adb17d;
+}
