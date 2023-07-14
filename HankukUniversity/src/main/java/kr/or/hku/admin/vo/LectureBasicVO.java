@@ -21,4 +21,13 @@ public class LectureBasicVO {
 	private String proNm;
 	private String proMail;
 	private String proTelno;
+	// 내 시간표
+	private String lecscDay;
+	private String periodCd;
+	private String lecscHour;
+	
+	// 건물 정보
+	private String flctsNm;
+	//강의실 번호
+	private String flctNm;
 }

@@ -299,12 +299,25 @@ $(function(){
 	var rejModal = $('#rejModal');
 	var lecApBtn = $('.lecApBtn');
 	var rejBtn = $('#rejBtn');
+	var appvBtn = $('#appvBtn');
+	var rejSendBtn = $('#rejSendBtn');
 // 	var allTbody = $('#allTbody');
 
 
 	// 강의계획서 보는 버튼 눌럿을때
 	lecApBtn.on('click',function(){
-		let lecApNo = this.id
+		let check = $(this).parents('tr').find('span').text().trim();
+
+		if(check != '대기'){
+			rejBtn.css('display','none');
+			appvBtn.css('display','none');
+		}else{
+			rejBtn.css('display','block');
+			appvBtn.css('display','block');
+		}			
+
+		let lecApNo = this.id;
+		$('#lecApNo').val(lecApNo);
 		console.log("강의 계획서 번호", lecApNo);
 		// 비동기로 데이터 가져오기
 		$.ajax({
@@ -313,7 +326,82 @@ $(function(){
 			dataType: "json",
 			success: function(res){
 				console.log("강의계획서 뿌려주기 데이터", res);
+
+				var lecBasic = res.lecBasic;
+				var lecProgram = res.lecProgram;
+				var scheduleList = res.scheduleList;
+
 				//가져온 데이터 넣어주기
+				$('#subNo').val(lecBasic.subNo);				
+				$('#subNm').val(lecBasic.subNm);				
+				$('#deptNm').val(lecBasic.deptNm);
+				$('#grade').val(lecBasic.subGrade);
+				$('#lecapCpct').val(lecBasic.lecapCpct);
+				$('#lecapYr').val(lecBasic.lecapYr);
+				$('#lecapSem').val(lecBasic.lecapSem);
+				$('#subCrd').val(lecBasic.subCrd);
+				$('#crsClassfCd').val(getCrsClassfNm(lecBasic.crsClassfCd));
+				$('#proNm').val(lecBasic.proNm);
+				$('#proMail').val(lecBasic.proMail);
+				$('#proTel').val(lecBasic.proTelno);
+
+				$('#lecpgAtd').val(lecProgram.lecpgAtd);
+				$('#lecpgHw').val(lecProgram.lecpgHw);
+				$('#lecpgMdTest').val(lecProgram.lecpgMdTest);
+				$('#lecpgFnTest').val(lecProgram.lecpgFnTest);
+				$('#meet').val(getAvlNm(lecProgram.avlCd));
+				$('#lang').val(getLanguage(lecProgram.lecpgLggCd));
+				$('#lecpgBook').val(lecProgram.lecpgBook);
+				$('#lectureIntro').val(lecProgram.lecpgIntro);
+
+				$('#week1').val(lecProgram.week1);
+				$('#week2').val(lecProgram.week2);
+				$('#week3').val(lecProgram.week3);
+				$('#week4').val(lecProgram.week4);
+				$('#week5').val(lecProgram.week5);
+				$('#week6').val(lecProgram.week6);
+				$('#week7').val(lecProgram.week7);
+				$('#week8').val(lecProgram.week8);
+				$('#week9').val(lecProgram.week9);
+				$('#week10').val(lecProgram.week10);
+				$('#week11').val(lecProgram.week11);
+				$('#week12').val(lecProgram.week12);
+				$('#week13').val(lecProgram.week13);
+				$('#week14').val(lecProgram.week14);
+				$('#week15').val(lecProgram.week15);
+
+				$('#flctsNm').val(lecBasic.flctNm);
+				$('#flctNm').val(lecBasic.flctsNm);
+				
+				$('#timeBody').find('.timeTd').css('background-color', '');
+				
+				let data = [];
+				let mySchedule = {
+					day : dayChange(lecBasic.lecscDay),
+					start: lecBasic.periodCd,
+					hour: lecBasic.lecscHour
+				};
+				data.push(mySchedule);
+				for (let k = 0; k < scheduleList.length; k++) {
+					let dataJson = {};
+					dataJson.day = dayChange(scheduleList[k].lecscDay),
+					dataJson.start = scheduleList[k].periodCd;
+					dataJson.hour = scheduleList[k].lecscHour;
+					data.push(dataJson);
+				}
+				console.log("시간데이터", data);
+
+				let tabletime = $('.tabletime');
+				for (let i = 0; i < data.length; i++) {
+					for (let j = 0; j < data[i].hour; j++) {
+						if(i === 0){
+							$(tabletime).find('tr').eq(parseInt(data[i].start) + j).find('td').eq(data[i].day).css('background', 'green');
+						}else{
+							$(tabletime).find('tr').eq(parseInt(data[i].start) + j).find('td').eq(data[i].day).css('background', 'lightGray');
+						}
+					}
+				}
+				
 
 
 				// 모달 열어주기
@@ -322,7 +410,43 @@ $(function(){
 			err: function(err){
 				console.log("err:", err)
 			}
-		})
+		});
+	});
+
+	// 승인 버튼
+	appvBtn.on('click',function(){
+		let lecApNo = $('#lecApNo').val();
+		swal({
+			   title: '해당 강의를 승인 하시겠습니까?',
+			   icon: 'warning',
+			   buttons: true,
+			   dangerMode: true,
+		}).then((willDelete) => {
+			$.ajax({
+				type:"post",
+				url: "/hku/admin/lecaplylist",
+				data: JSON.stringify({lecApNo:lecApNo}),
+				contentType: "application/json;charset=utf-8",
+				dataType: "text",
+				success: function(res){
+					if (parseInt(res) == 1) {
+						swal({
+							title: "정상적으로 승인 되었습니다.", 
+							icon: "success"
+						});
+						location.reload();
+					}else{
+						swal({
+							title: "서버에러 다시 시도해주세요.", 
+							icon: "error"
+						});
+					}
+				},
+				err: function(err){
+					console.log("err:", err)
+				}
+			});
+		});
 	});
 	
 	// 반려 모달창 띄우기
@@ -335,6 +459,101 @@ $(function(){
 		console.log("반려모달창 닫힘");
 		lecModal.modal('show');
 	});
+	
+	function getCrsClassfNm(pCode) {
+		var result = "";
+		switch(pCode){
+			case 'MR': result = '전필'; break;
+			case 'MS': result = '전선'; break;
+			case 'ER': result = '교필'; break;
+			case 'ES': result = '교선'; break;
+		}
+		return result;
+	}
+
+	function getAvlNm(pCode) {
+		var result = "";
+		switch(pCode){
+			case 'y': result = '대면'; break;
+			case 'n': result = '비대면'; break;
+		}
+		return result;
+	}
+
+	function getLanguage(pCode) {
+		var result = "";
+		switch(pCode){
+			case 'kor': result = '한국어'; break;
+			case 'eng': result = '영어'; break;
+		}
+		return result;
+	}
+
+	function dayChange(day) {
+		if (day == "월") {
+			return "1";
+		} else if (day == "화") {
+			return "2";
+		} else if (day == "수") {
+			return "3";
+		} else if (day == "목") {
+			return "4";
+		} else if (day == "금") {
+			return "5";
+		}
+	}
+
+
+	rejSendBtn.on('click',function(){
+		let lecApNo = $('#lecApNo').val();
+		let lecapRjctRsn = $('#lecapRjctRsn').val();
+
+		if(lecapRjctRsn == null || lecapRjctRsn == ""){
+			swal({
+				title: "반려사유를 입력해주세요.", 
+				icon: "error"
+			});
+			return false;
+		}
+
+		var sendData = {
+			lecapNo:lecApNo,
+			lecapRjctRsn:lecapRjctRsn
+		};
+
+
+		swal({
+			   title: '해당 강의를 반려 하시겠습니까?',
+			   icon: 'warning',
+			   buttons: true,
+			   dangerMode: true,
+		}).then((willDelete) => {
+			$.ajax({
+				type:"put",
+				url: "/hku/admin/lecaplylist",
+				data: JSON.stringify(sendData),
+				contentType: "application/json;charset=utf-8",
+				dataType: "text",
+				success: function(res){
+					if (parseInt(res) == 1) {
+						swal({
+							title: "정상적으로 반려 되었습니다.", 
+							icon: "success"
+						});
+						location.reload();
+					}else{
+						swal({
+							title: "서버에러 다시 시도해주세요.", 
+							icon: "error"
+						});
+					}
+				},
+				err: function(err){
+					console.log("err:", err)
+				}
+			});
+		});
+	});
 });
 </script>
 <!--모달창 -->
@@ -342,7 +561,8 @@ $(function(){
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" style="font-weight: bold;">학사공지 게시판</h5>
+				<h5 class="modal-title" style="font-weight: bold;">강의계획서</h5>
+				<input type="hidden" id="lecApNo">
 				<button type="button" class="btn-close" data-bs-dismiss="modal">
 				</button>
 			</div>
@@ -368,73 +588,73 @@ $(function(){
 								<label class="form-label" style="color: #800000; font-size: 1.2em; font-weight: bold;">
 									과목코드
 								</label>
-								<input type="text" class="form-control" value="John" disabled>
+								<input type="text" class="form-control" id="subNo" disabled>
 							</div>
 							<div class="col-sm-6 m-b30 mb-2">
 								<label class="form-label" style="color: #800000; font-size: 1.2em; font-weight: bold;">
 									과목명
 								</label>
-								<input type="text" class="form-control" disabled>
+								<input type="text" class="form-control" id="subNm" disabled>
 							</div>
 							<div class="col-sm-6 m-b30 mb-2">
 								<label class="form-label" style="color: #800000; font-size: 1.2em; font-weight: bold;">
 									대상학과
 								</label>
-								<input type="text" class="form-control" value="Developer" disabled>
+								<input type="text" class="form-control" id="deptNm" disabled>
 							</div>
 							<div class="col-sm-6 m-b30 mb-2">
 								<label class="form-label" style="color: #800000; font-size: 1.2em; font-weight: bold;">
 									대상학년
 								</label>
-								<input type="text" class="form-control" value="HTML,  JavaScript,  PHP" disabled>
+								<input type="text" class="form-control" id="grade" disabled>
 							</div>
 							<div class="col-sm-6 m-b30 mb-2">
 								<label class="form-label" style="color: #800000; font-size: 1.2em; font-weight: bold;">
 									학점
 								</label>
-								<input type="text" class="form-control" value="HTML,  JavaScript,  PHP" disabled>
+								<input type="text" class="form-control" id="subCrd" disabled>
 							</div>
 							<div class="col-sm-6 m-b30 mb-2">
 								<label class="form-label" style="color: #800000; font-size: 1.2em; font-weight: bold;">
 									수강정원
 								</label>
-								<input type="date" class="form-control" disabled>
+								<input type="text" class="form-control" id="lecapCpct" disabled>
 							</div>
 							<div class="col-sm-6 m-b30 mb-2">
 								<label class="form-label" style="color: #800000; font-size: 1.2em; font-weight: bold;">
 									개설년도
 								</label>
-								<input type="text" class="form-control" value="+123456789" disabled>
+								<input type="text" class="form-control" id="lecapYr" disabled>
 							</div>
 							<div class="col-sm-6 m-b30 mb-2">
 								<label class="form-label" style="color: #800000; font-size: 1.2em; font-weight: bold;">
 									개설학기
 								</label>
-								<input type="text" class="form-control" value="+123456789" disabled>
+								<input type="text" class="form-control" id="lecapSem" disabled>
 							</div>
 							<div class="col-sm-6 m-b30 mb-2">
 								<label class="form-label" style="color: #800000; font-size: 1.2em; font-weight: bold;">
 									이수구분코드
 								</label>
-								<input type="text" class="form-control" value="+123456789" disabled>
+								<input type="text" class="form-control" id="crsClassfCd" disabled>
 							</div>
 							<div class="col-sm-6 m-b30 mb-2">
 								<label class="form-label" style="color: #800000; font-size: 1.2em; font-weight: bold;">
 									담당교수 이름
 								</label>
-								<input type="text" class="form-control" value="+123456789" disabled>
+								<input type="text" class="form-control" id="proNm" disabled>
 							</div>
 							<div class="col-sm-6 m-b30 mb-2">
 								<label class="form-label" style="color: #800000; font-size: 1.2em; font-weight: bold;">
 									담당교수 이메일
 								</label>
-								<input type="text" class="form-control" value="+123456789" disabled>
+								<input type="text" class="form-control" id="proMail" disabled>
 							</div>
 							<div class="col-sm-6 m-b30 mb-2">
 								<label class="form-label" style="color: #800000; font-size: 1.2em; font-weight: bold;">
 									담당교수 연락처
 								</label>
-								<input type="text" class="form-control" value="+123456789" disabled>
+								<input type="text" class="form-control" id="proTel" disabled>
 							</div>
 						</div>
 					</div>
@@ -473,9 +693,9 @@ $(function(){
 											</span>
 											<br>
                                             <span>강의유형</span> 
-											<input  type="text" class="selectCustom c" id="meet" disabled value="대면">
+											<input  type="text" class="selectCustom c" id="meet" disabled>
 											<span>강의언어</span>
-											<input  type="text" class="selectCustom c" style="margin-top: 10px;" id="lang" value="한국어" disabled>
+											<input  type="text" class="selectCustom c" style="margin-top: 10px;" id="lang" disabled>
                                         </div>
                                     </div>
                                     <div class="mb-3">
@@ -484,14 +704,14 @@ $(function(){
 										</span>
 										<br>
                                         <div id="lecturePlan">
-                                            <input type="text" id="" name="lecpgBook" disabled>
+                                            <input type="text" id="lecpgBook" name="lecpgBook" disabled>
                                         </div>
                                         <div>
                                             <span style="color: #800000; font-size: 1.2em; font-weight: bold;">
 												강의소개
 											</span>
 											<br>
-                                            <textarea name="lectureIntro" rows="5" cols="100" disabled></textarea>
+                                            <textarea name="lectureIntro" id="lectureIntro" rows="5" cols="100" disabled></textarea>
                                         </div>
                                         <span style="color: #800000; font-size: 1.2em; font-weight: bold;">
 											주차별 계획안
@@ -500,7 +720,7 @@ $(function(){
 										<span>*주차별 학습계획을 상세히 입력해주세요.</span>
                                         <div id="lecturePlan">
                                             <c:forEach var="i" begin="1" end="15" step="1">
-                                                ${i}주차 <input type="text" name="week${i}" disabled>
+                                                ${i}주차 <input type="text" id="week${i}" name="week${i}" disabled>
                                                 <br>
                                             </c:forEach>
                                         </div>
@@ -515,13 +735,13 @@ $(function(){
 								<label class="form-label" style="color: #800000; font-size: 1.2em; font-weight: bold;">
 									건물명
 								</label>
-								<input type="text" class="form-control" value="John" disabled>
+								<input type="text" class="form-control" id="flctsNm" disabled>
 							</div>
 							<div class="col-sm-6 m-b30 mb-2">
 								<label class="form-label" style="color: #800000; font-size: 1.2em; font-weight: bold;">
 									강의실
 								</label>
-								<input type="text" class="form-control" value="John" disabled>
+								<input type="text" class="form-control" id="flctNm" disabled>
 							</div>
 						</div>
 						<table class="tabletime" border="1">
