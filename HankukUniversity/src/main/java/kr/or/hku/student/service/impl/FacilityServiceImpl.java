@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.hku.ServiceResult;
+import kr.or.hku.admin.vo.FacilitiesVO;
 import kr.or.hku.admin.vo.FacilityVO;
 import kr.or.hku.student.mapper.FacilityMapper;
 import kr.or.hku.student.service.FacilityService;
@@ -49,6 +50,33 @@ public class FacilityServiceImpl implements FacilityService {
 				result = ServiceResult.FAILED;
 			}
 		}
+		return result;
+	}
+
+	@Override
+	public List<FacilitiesVO> fcltsList(Map<String, Object> map) {
+		return facilityMapper.fcltsList(map);
+	}
+
+	@Override
+	public List<FacilitiesVO> rsvtList(Map<String, Object> map) {
+		return facilityMapper.rsvtList(map);
+	}
+
+	@Override
+	public ServiceResult flctsReservation(FacilitiesVO vo) {
+		ServiceResult result = null;
+		
+//		int check = facilityMapper.flctsReservationCheck(vo);
+		
+		int cnt = facilityMapper.flctsReservation(vo);
+		
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAILED;
+		}
+		
 		return result;
 	}
 

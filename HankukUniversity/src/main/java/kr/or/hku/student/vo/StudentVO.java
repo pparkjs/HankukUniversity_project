@@ -36,7 +36,6 @@ public class StudentVO {
 	private String comCdNm2; // c.com_cd_nm
 	
 	// 조인해서 가져올 필드
-	private String deptNm; //학과이름
 	private String stdSttsNm; // 학적상태
 	private int grade; //학년
 	private String flctNo; // 시설번호
