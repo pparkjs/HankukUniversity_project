@@ -43,5 +43,5 @@ public class StudentVO {
 	private int floor;	// 시설 층
 	private String currentYear; //현재년도
 	private int currentSem; //현재학기
-	
+	private String deptNm; //학과이름
 }

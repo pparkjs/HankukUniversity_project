@@ -80,4 +80,43 @@ public class FacilityServiceImpl implements FacilityService {
 		return result;
 	}
 
+	@Override
+	public List<FacilitiesVO> getFlctsRsvtList(String stdNo) {
+		return facilityMapper.getFlctsRsvtList(stdNo);
+	}
+
+	@Override
+	public List<LockerRsvtVO> getLockerRsvtList(String stdNo) {
+		return facilityMapper.getLockerRsvtList(stdNo);
+	}
+
+	@Transactional(rollbackFor = SQLException.class)
+	@Override
+	public ServiceResult lockerCancle(LockerRsvtVO vo) {
+		ServiceResult result = null;
+		
+		facilityMapper.updateYn(vo);
+		
+		int cnt = facilityMapper.lockerCancle(vo.getLockerRsvtNo());
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAILED;
+		}
+		return result;
+	}
+
+	@Override
+	public ServiceResult flctsCancle(String flctsRsvtNo) {
+		ServiceResult result = null;
+		
+		int cnt = facilityMapper.flctsCancle(flctsRsvtNo);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAILED;
+		}
+		return result;
+	}
+
 }
