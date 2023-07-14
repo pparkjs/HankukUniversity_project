@@ -35,7 +35,7 @@ public class CommonFileServiceImpl implements CommonFileService {
 
 	@Override
 	public int insertFile(MultipartFile file, int attachFileNo,int i) {
-		String uploadPath = "c:" + resourcePath;
+		String uploadPath = resourcePath;
 		File folder = new File(uploadPath);
 		if(!folder.exists()) {
 			folder.mkdirs();
@@ -45,7 +45,7 @@ public class CommonFileServiceImpl implements CommonFileService {
 		// uuid + 오리지날 네임 결합
 		String saveFileName = "/" + uuid + "_" + file.getOriginalFilename();
 		// 업로드 패스 저장
-		uploadPath = "c:" + resourcePath + saveFileName;
+		uploadPath = resourcePath + saveFileName;
 		
 		try {
 			file.transferTo(new File(uploadPath));
