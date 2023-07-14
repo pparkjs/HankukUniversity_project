@@ -10,6 +10,7 @@ import kr.or.hku.admin.mapper.LecAplyAdminMapper;
 import kr.or.hku.admin.service.LecAplyAdminService;
 import kr.or.hku.admin.vo.LectureBasicVO;
 import kr.or.hku.admin.vo.LectureProgramVO;
+import kr.or.hku.admin.vo.ScheduleVO;
 
 @Service
 public class LecAplyAdminServiceImpl implements LecAplyAdminService{
@@ -30,5 +31,20 @@ public class LecAplyAdminServiceImpl implements LecAplyAdminService{
 	@Override
 	public LectureProgramVO getLecProgam(int lecApNo) {
 		return lecApAdminMapper.getLecProgam(lecApNo);
+	}
+	
+	@Override
+	public List<ScheduleVO> getSchedules(int lecApNo) {
+		return lecApAdminMapper.getSchedules(lecApNo);
+	}
+	
+	@Override
+	public int signOnLecture(int lecApNo) {
+		return lecApAdminMapper.signOnLecture(lecApNo);
+	}
+	
+	@Override
+	public int rejectLecture(Map<String, String> map) {
+		return lecApAdminMapper.rejectLecture(map);
 	}
 }

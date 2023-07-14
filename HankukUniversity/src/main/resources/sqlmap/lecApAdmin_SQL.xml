@@ -39,14 +39,22 @@
 		    , p.pro_nm AS pro_nm
 		    , p.pro_mail AS pro_mail
 		    , p.pro_telno AS pro_telno
+            , ls.lecsc_day AS lecsc_day
+            , ls.period_cd AS period_cd
+            , ls.lecsc_hour AS lecsc_hour
+            , fs.flcts_nm AS flcts_nm
+            , f.flct_nm AS flct_nm
 		FROM LECTURE_APLY la
 		INNER JOIN subject s ON la.sub_no = s.sub_no
 		INNER JOIN professor p ON la.pro_no = p.pro_no
-		INNER JOIN department d ON s.DEPT_CD = d.dept_cd
+		INNER JOIN department d ON s.dept_cd = d.dept_cd
+        INNER JOIN lecture_schedule ls ON la.lecap_no = ls.lecap_no
+        INNER JOIN facilities fs ON la.flcts_no = fs.flcts_no
+        INNER JOIN facility f ON f.flct_no = fs.flct_no
 		WHERE la.lecap_no = #{lecapNo}
  	</select>
  	
- 	<select id="getLecProgam" resultType="int" parameterType="lecProgramVO">
+ 	<select id="getLecProgam" resultType="lecProgramVO" parameterType="int">
  		/* kr.or.hku.admin.mapper.LecAplyAdminMapper.getLecProgam */
  		SELECT
  			  lecap_no
@@ -76,5 +84,41 @@
 		FROM lecture_program
 		WHERE lecap_no = #{lecapNo}
  	</select>
+ 	
+ 	<select id="getSchedules" parameterType="int" resultType="scheduleVO">
+ 		/* kr.or.hku.admin.mapper.LecAplyAdminMapper.getSchedules */
+		SELECT
+		    la.lecap_no,
+		    ls.lecsc_day,
+		    ls.period_cd,
+		    ls.lecsc_hour
+		FROM lecture_aply la
+		INNER JOIN lecture_schedule ls on la.lecap_no = ls.lecap_no
+		WHERE la.FLCTS_NO IN (SELECT flcts_no FROM lecture_aply WHERE lecap_no = #{lecapNo})
+		AND la.aprv_stts_cd = 'appv'
+		AND la.LECAP_YR IN TO_CHAR(EXTRACT(YEAR FROM SYSDATE))
+		AND la.LECAP_SEM IN (CASE
+		                        WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 1 AND 6 THEN 1
+		                        WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 12 THEN 2
+		                    ELSE 0
+		                    END) 		
+ 	</select>
+ 	
+ 	<update id="signOnLecture" parameterType="int">
+ 		/* kr.or.hku.admin.mapper.LecAplyAdminMapper.signOnLecture */
+ 		UPDATE lecture_aply
+ 		SET
+ 			aprv_stts_cd = 'appv'
+ 		WHERE lecap_no = #{lecapNo}
+ 	</update>
+ 	
+ 	<update id="rejectLecture" parameterType="map">
+ 		/* kr.or.hku.admin.mapper.LecAplyAdminMapper.rejectLecture */
+ 		UPDATE lecture_aply
+ 		SET
+ 			  aprv_stts_cd = 'rej'
+ 			, lecap_rjct_rsn = #{lecapRjctRsn}
+ 		WHERE lecap_no = #{lecapNo}
+ 	</update>
  
  </mapper>

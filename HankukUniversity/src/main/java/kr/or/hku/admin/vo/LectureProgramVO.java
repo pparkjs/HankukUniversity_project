@@ -9,14 +9,14 @@ import lombok.ToString;
 @Service
 @ToString
 public class LectureProgramVO {
-	private int lecapno;
-	private String lecpgintro;
-	private String lecpglggCd;
+	private int lecapNo;
+	private String lecpgIntro;
+	private String lecpgLggCd;
 	private String avlCd;
-	private String lecpgAtd;
-	private String lecpgHw;
-	private String lecpgMdTest;
-	private String lecpgFnTest;
+	private int lecpgAtd;
+	private int lecpgHw;
+	private int lecpgMdTest;
+	private int lecpgFnTest;
 	private String lecpgBook;
 	private String week1;
 	private String week2;
