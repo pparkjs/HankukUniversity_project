@@ -37,7 +37,7 @@
 				<div style="display: flex; justify-content: end; margin-right: 80px;">
 					<a class="btn btn-primary" data-bs-toggle="offcanvas"
 						href="#offcanvasExample" role="button"
-						aria-controls="offcanvasExample" id="btn">스터디 개설</a>
+						aria-controls="offcanvasExample">스터디 개설</a>
 				</div>
 				<div class="tab-content">
 					<div id="navpills-1" class="tab-pane active">
@@ -66,7 +66,7 @@
 												<ul class="post-pos">
 													<li><span class="card__info__stats">스터디장: </span> <span>${study.stdNm }</span>
 													</li>
-													<span>${study.studyRegdate }</span>
+														<span>${study.studyRegdate }</span>
 													</li>
 												</ul>
 												
@@ -86,16 +86,53 @@
 					</div>
 				
 				<!-- 승인대기중인 스터디 목록 -->
-				<div id="navpills-2" class="tab-pane">
-					<div class="row">
-						<div class="col-md-12">
-							승인 대기중인 스터디가 존재하지 않습니다.
+				<div class="tab-content">
+					<div id="navpills-2" class="tab-pane">
+						<div class="row">
+							<div class="col-md-12">
+							<c:choose>
+								<c:when test="${empty studyList }">
+									<p>가입승인 대기중인 스터디가 없습니다.</p>
+								</c:when>
+								<c:otherwise>
+									<c:forEach items="${waitStudy }" var="waitStudy">
+									<div class="col-xl-3 col-lg-4 col-sm-6">
+										<div class="card" style="background-color: #adb17d1c;">
+											<div class="card-body">
+												<div class="card-use-box">
+													<div class="card__text">
+														<h4 class="mb-0">${waitStudy.studyName }</h4>
+														<p>${waitStudy.studyIntro }</p>
+													</div>
+													<ul class="card__info">
+														<li><span>인원수</span> <span class="card__info__stats">1 / ${waitStudy.studyCpcy }</span>
+														</li>
+													</ul>
+													<ul class="post-pos">
+														<li><span class="card__info__stats">스터디장: </span> <span>${waitStudy.stdNm }</span>
+														</li>
+														<span>${waitStudy.studyRegdate }</span>
+														</li>
+													</ul>
+													
+													<div>
+														<a href="/hku/student/studyRoom?studyNo=${waitStudy.studyNo }"
+															class="btn btn-outline-primary btn-xs">취소</a>
+														<!-- <a href="javascript:void(0)" class="btn btn-secondary btn-sm ms-2">Following</a> -->
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</c:forEach>
+								</c:otherwise>
+							</c:choose>
+							</div>
 						</div>
 					</div>
-				</div>
 				<!-- end tab -->
 				</div>
-				
+				</div>
 
 				<div class="offcanvas offcanvas-end customeoff" tabindex="-1"
 					id="offcanvasExample">
@@ -126,7 +163,7 @@
 										<label for="exampleFormControlInput2" class="form-label">
 										스터디 소개글<span class="text-danger">*</span>
 										</label>
-										<input type="text" class="form-control" name="studyIntro" id="exampleFormControlInput2" placeholder="">
+										<input type="text" class="form-control" name="studyIntro" id="" placeholder="">
 									</div>
 									<div>
 										<button class="btn btn-primary me-1" onclick="addStudy()">개설</button>
