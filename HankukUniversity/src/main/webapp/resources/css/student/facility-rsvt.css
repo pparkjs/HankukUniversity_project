@@ -191,3 +191,159 @@
 	color: #404040;
 	margin-bottom : 10px;
 }
+
+/* 시설물예약 CSS */
+.fTop{
+	display: flex;
+}
+.fBottom{
+	margin-top: -18px;
+}
+.cardLeft{
+	width: 70%;
+    margin-right: 12px;
+}
+.cardRight{
+	width: 32%;
+}
+.cardTable{
+	width:100%;
+}
+#map{
+	width: 870px;
+    height: 376px;
+    margin-left: 73px;
+    margin-bottom: 13px;
+}
+.map-wrap{
+	position: relative;
+}
+.map-wrap button{
+	background: none;
+    border: none;
+}
+.marker1, .marker2, .marker3{
+	width: 76px;
+    height: 80px;
+    position: absolute;
+}
+.marker1{
+	top: 65px;
+    left: 242px;
+}
+.marker2{
+	left: 372px;
+    bottom: 137px;
+}
+.marker3{
+    right: 273px;
+    top: 113px;
+}
+.schedule .thead-dark th {
+	color: #fff;
+	background-color: #6e6e6e;
+/* 	border: 1px solid black; */
+}
+.schedule {
+	width: 100%;
+	border-collapse: separate;
+	text-align: center;
+	border-spacing: 0 0px;
+	margin-top: 14px;
+}
+
+.schedule tbody td {
+	border: 1px solid #6e6e6e;
+    height: 65px;
+}
+.rsvt{
+    cursor: pointer;
+}
+.rsvt:hover{
+	background: rgb(255, 222, 222);
+}
+
+.modal-wrap{
+	
+}
+.modal-title1{
+	display: flex;
+    justify-content: space-between;
+    margin-right: 134px;
+    margin-bottom: 8px;
+}
+.modal-content1{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 23px;
+}
+.modal-title2{
+	display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+.modal-content2{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 23px;
+}
+.modal-title3{
+	margin-bottom: 8px;
+}
+.modal-content3{
+}
+#rsvt-stdNm{
+	width: 37%;
+    height: 33px;
+    background: #e6e6e6;
+}
+#rsvt-flctsNm{
+    width: 55%;
+    height: 33px;
+    background: #e6e6e6;
+}
+#rsvt-cnt{
+	height: 33px;
+    width: 139px;
+    color :gray;
+}
+#rsvt-date{
+	height: 33px;
+    width: 136px;
+    margin-left: 29px;
+    background: #e6e6e6;
+}
+#rsvt-startTime{
+    height: 33px;
+    width: 80px;
+    background: #e6e6e6;
+}
+#rsvt-endTime{
+    height: 33px;
+    width: 80px;
+}
+#rsvt-prps{
+	color :gray;
+}
+.sModal{
+	--bs-modal-width: 565px;
+}
+.fUseing{
+	width : 30px;
+	height : 30px;
+	background: rgb(255, 222, 222);
+	margin-left: 995px;
+}
+.fCanUse{
+	width:30px;
+	height: 30px;
+	background: white;
+	border: 1px solid #40404042;
+	margin-left: 31px;
+}
+.fTitle-wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
