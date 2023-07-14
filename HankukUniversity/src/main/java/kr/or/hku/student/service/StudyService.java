@@ -7,7 +7,9 @@ import kr.or.hku.student.vo.StudyVO;
 
 public interface StudyService {
 	// 스터디리스트
-	public List<StudyVO> studyList();
+	public List<StudyVO> studyList(String stdNo);
+	// 가입 대기중인 스터디리스트
+	public List<StudyVO> waitStudy(String stdNo);
 	// 스터디상세보기
 	public StudyVO studyRoom(int studyNo);
 	// 스터디 멤버 조회

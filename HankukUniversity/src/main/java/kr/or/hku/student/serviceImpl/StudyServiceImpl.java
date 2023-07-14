@@ -17,8 +17,8 @@ public class StudyServiceImpl implements StudyService{
 	private StudyMapper mapper;
 
 	@Override
-	public List<StudyVO> studyList() {
-		return mapper.studyList();
+	public List<StudyVO> studyList(String stdNo) {
+		return mapper.studyList(stdNo);
 	}
 
 	@Override
@@ -81,6 +81,12 @@ public class StudyServiceImpl implements StudyService{
 	public List<StudyVO> scheduleList(StudyVO studyVo) {
 		// TODO Auto-generated method stub
 		return mapper.scheduleList(studyVo);
+	}
+
+	@Override
+	public List<StudyVO> waitStudy(String stdNo) {
+		// TODO Auto-generated method stub
+		return mapper.waitStudy(stdNo);
 	}
 
 }

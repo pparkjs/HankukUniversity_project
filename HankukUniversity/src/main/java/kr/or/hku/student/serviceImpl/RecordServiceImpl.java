@@ -30,9 +30,33 @@ public class RecordServiceImpl implements RecordService{
 	}
 
 	@Override
-	public List<RecordVO> recordChanged(RecordVO recordVo) {
+	public List<RecordVO> recordChanged(String stdNo) {
 		// TODO Auto-generated method stub
-		return mapper.recordChanged(recordVo);
+		return mapper.recordChanged(stdNo);
+	}
+
+	@Override
+	public int insertAcademic(RecordVO recordVo) {
+		// TODO Auto-generated method stub
+		return mapper.insertAcademic(recordVo);
+	}
+
+	@Override
+	public int cancelRecord(int changeNo) {
+		// TODO Auto-generated method stub
+		return mapper.cancelRecord(changeNo);
+	}
+
+	@Override
+	public int gradutePostpone(RecordVO recordVo) {
+		// TODO Auto-generated method stub
+		return mapper.gradutePostpone(recordVo);
+	}
+
+	@Override
+	public int graduteApply(RecordVO recordVo) {
+		// TODO Auto-generated method stub
+		return mapper.graduteApply(recordVo);
 	}
 
 
