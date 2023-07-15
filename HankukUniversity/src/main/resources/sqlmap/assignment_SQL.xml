@@ -38,7 +38,7 @@
  
 
 <!-- 과제 등록 --> 
-<insert id="regi" parameterType="int">
+<insert id="regi" parameterType="int" >
  	INSERT INTO assignment (
 	 				asm_no 
 		 		  , a.lecap_no
@@ -59,26 +59,15 @@
 			  , a.#{asmRegdate} 
 			  , a.#{atchFileNo}
  	)
- 	WHERE 
- 	AND lecap_yr like TO_CHAR(sysdate, 'YYYY')
+ 	WHERE lecap_yr like TO_CHAR(sysdate, 'YYYY')
 	AND lecap_sem = CASE
                           WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 7 THEN 1
                           WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 8 AND 12 THEN 2
                           ELSE 0
                		 END;
                		 
-               		 
-     INSERT INTO assignment_submit (
-     							aval_code
-     					  	  , atch_file_no)
-     VALUES ('N'
-     		, null)
-     		
-     INSERT INTO ALARM( alarm_no
-     ) VALUES ()
-     WHERE user_no =
-     
  </insert>
+ 
  
 <!--  <update id="update" parameterType="assignmentVO"> -->
 

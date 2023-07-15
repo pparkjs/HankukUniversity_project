@@ -9,12 +9,13 @@
     border-color: #888888;
     margin-bottom: 4px;
     height : 10px;
+   }
 </style>
-	
+
 <div class="content-body" style="min-height: 975px;">
 	<div class="page-titles">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a style="font-size:25px; color:black;" href="javascript:void(0)">시스템</a></li>
+			<li class="breadcrumb-item"><a style="font-size:25px; color:black;" href="javascript:void(0)">${subNm }</a></li>
 			<li class="breadcrumb-item active"><a href="javascript:void(0)">
 				클래스룸 메인</a></li>
 		</ol>		
@@ -88,11 +89,18 @@
 								</tr>
 							</thead>
 							<tbody id="tbtb">
-								<tr class="tbtr">
-									<td class="">1</td>
-									<td class="">1주차 과제</td>
-									<td class="">2023-07-12</td>
-								</tr>
+							<c:if test="${not empty asgList }">
+								<c:forEach items="${asgList}" var="list" varStatus="status">
+									<tr class="tbtr">
+										<td class="">${status.index + 1}</td>
+										<td class="">${list.asmTtl }</td>
+										<td class="">${list.asmRegdate }</td>
+									</tr>
+								</c:forEach>
+							</c:if>
+							<c:if test="${ empty asgList }">
+								<tr><td>등록된 게시물이 없습니다</td><tr>
+							</c:if>
 							</tbody>
 						</table>
 					</div>
@@ -151,15 +159,15 @@
 	</div>
 </div>
 <script>
+$(function(){
+	alert("${lecapNo}");
+// 	assignList();
 	
-	
+})	
 	assignMore.addEventListener("click", function(){
 		location.href = "/hku/professor/assignmentList";
 	})
 	
-	noticeMore.addEventListener("click", function(){
-		location.href = "/hku/professor/notice";
-	})
-	
+
 
 </script>

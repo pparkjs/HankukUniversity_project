@@ -53,15 +53,18 @@
 				<div style="color: black;">
 					<div class="yNsSel"
 						style="font-size: 20px; margin-bottom: 20px; color: black;">
-						학년도 :&nbsp;&nbsp; <select>
-							<option style="font-size: 16px;">선택</option>
-							<option style="font-size: 16px;">2023년</option>
-							<option style="font-size: 16px;">2022년</option>
-							<option style="font-size: 16px;">2021년</option>
-						</select> &nbsp;&nbsp;/&nbsp;학기 : &nbsp;&nbsp; <select>
-							<option style="font-size: 16px;">1학기</option>
-							<option style="font-size: 16px;">2학기</option>
+							학년도 :&nbsp;&nbsp; 
+						<select class="year">
+<%-- 							<c:forEach items="${list }" var="list"> --%>
+								<option style="font-size: 16px;">2023학년도</option>
+								<option style="font-size: 16px;">2022학년도</option>
+<%-- 							</c:forEach> --%>
+						</select> &nbsp;&nbsp;/&nbsp;학기 : &nbsp;&nbsp; 
+						<select class="sem">
+								<option style="font-size: 16px;">2학기</option>
+								<option style="font-size: 16px;">1학기</option>
 						</select>
+						<button type="button" id="regBtn" class="btn btn-primary">조회</button>
 					</div>
 				</div>
 				<div class="card h-auto">
@@ -80,6 +83,7 @@
 										</tr>
 									</thead>
 									<tbody>
+									<c:if test="${not empty list }">
 										<c:forEach items="${list }" var="list" varStatus="status">
 											<tr role="row" class="">
 												<td class="">
@@ -87,7 +91,7 @@
 														<div class="ms-2">
 															<span>${status.index + 1}</span>
 														</div>
-													</div>
+													</div >
 												</td>
 												<td>
 													<p class="mb-0 font-w500">${list.subNm }</p>
@@ -111,6 +115,7 @@
 												</td>
 											</tr>
 										</c:forEach>
+										</c:if>
 									</tbody>
 								</table>
 							</div>
@@ -122,15 +127,23 @@
 	</div>
 </div>
 <script>
-	var enterClassroom = document.querySelectorAll(".enterClassroom");
-	
-	for(let i=0; i<enterClassroom.length; i++){
-		enterClassroom[i].addEventListener("click", function(){
-			// 과목신청 번호
-			let lecApNo = this.id;
-	 		location.replace("/hku/professor/classroomMain/"+lecApNo+"");
-		})		
-	}
+ 
+$(function(){
 
+var enterClassroom = document.querySelectorAll(".enterClassroom");
+
+for(let i=0; i<enterClassroom.length; i++){
+	enterClassroom[i].addEventListener("click", function(){
+		// 과목신청 번호
+		let lecApNo = this.id;
+		// 과목명
+		let subNm = $(this).closest("tr").find(".mb-0").html();
+		// 조성희 화이팅~~~
+		alert(subNm);
+ 		location.replace(`/hku/professor/classroomMain/\${lecApNo}/\${subNm}`);
+	})		
+}
+
+}) // -- jquery end
 
 </script>

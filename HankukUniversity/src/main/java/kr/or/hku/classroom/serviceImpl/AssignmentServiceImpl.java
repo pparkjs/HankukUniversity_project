@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.mapper.AssignmentMapper;
 import kr.or.hku.classroom.service.AssignmentService;
 import kr.or.hku.classroom.vo.AssignmentVO;
@@ -26,8 +27,8 @@ public class AssignmentServiceImpl implements AssignmentService {
 	}
 
 	@Override
-	public int regi(AssignmentVO assignmentVO) {
-		return mapper.regi(assignmentVO);
+	public ServiceResult regi(AssignmentVO assignVO) {
+		return mapper.regi(assignVO);
 	}
 
 	@Override
@@ -38,6 +39,11 @@ public class AssignmentServiceImpl implements AssignmentService {
 	@Override
 	public int delete(String proNo) {
 		return mapper.delete(proNo);
+	}
+	
+	@Override
+	public AssignmentVO getAssignOne(int lecapNo) {
+		return mapper.getAssignOne(lecapNo);
 	}
 
 }

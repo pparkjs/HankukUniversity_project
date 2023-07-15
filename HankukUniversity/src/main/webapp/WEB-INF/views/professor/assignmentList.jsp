@@ -30,7 +30,7 @@
 						</thead>
 						<tbody id="tbtb">
 							<c:forEach items="${list }" var="list" varStatus="status"> 
-							<tr class="tbtr" onClick="location.href=/hku/professor/assignmentDetail">
+							<tr class="tbtr">
 								<td class="">${status.index + 1}</td>
 								<td class="">${pro.proNm }</td>
 								<td class="">${list.asmTtl }</td>
@@ -45,15 +45,16 @@
 	</div>
 </div>
 <script>
-
-regBtn.addEventListener("click", function(){
-	location.href = "/hku/professor/regiAssignment";
+$(function(){
+	var regBtn = document.querySelector("#regBtn");
+	
+	regBtn.addEventListener("click", function(){
+		location.href = "/hku/professor/regiForm";
+	})
+	
+		
 })
-
-.tbtr("click", fucntion(){
- 	var num = $(this).attr("number");
- 	location.href = "/hku/professor/assignmentDetail?" + num;
-})
+	
 
 
 

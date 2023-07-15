@@ -26,5 +26,11 @@ public class AssignmentVO {
 	private String stdNo		;	// 학생번호	
 	private int alarmNo			;	// 알람번호
 	private String userNo		;	// 사용자번호	
+	private String subNm		;	
+	
+	private String testNo		  ;	// 시험번호
+	private String testSe         ;	// 시험구분
+	private String testBgngYmd    ;	// 시험일자
+	private String testRegdate    ;	// 출제일
     
 }
