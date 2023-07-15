@@ -326,4 +326,20 @@
 		    INNER JOIN com_code e ON(e.com_cd=a.std_sex_cd)
 		    INNER JOIN com_code g ON(g.com_cd=a.bank_cd)
  	</select>
+ 	
+ 	<delete id="deleteEmployee" parameterType="string">
+ 		DELETE FROM employee WHERE emp_no = #{userNo}
+ 	</delete>
+ 	<delete id="deleteProfessor" parameterType="string">
+ 		DELETE FROM professor WHERE pro_no = #{userNo}
+ 	</delete>
+ 	<delete id="deleteStudent" parameterType="string">
+ 		DELETE FROM student WHERE std_no = #{userNo}
+ 	</delete>
+ 	<delete id="deleteAuth" parameterType="string">
+ 		DELETE FROM user_auth WHERE user_no = #{userNo}  
+ 	</delete>
+ 	<delete id="deleteUser" parameterType="string">
+ 		DELETE FROM users WHERE user_no = #{userNo}  
+ 	</delete>
  </mapper>
