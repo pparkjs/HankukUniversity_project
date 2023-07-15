@@ -16,6 +16,7 @@ import kr.or.hku.admin.mapper.UserMapper;
 import kr.or.hku.admin.service.UserService;
 import kr.or.hku.admin.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
+import oracle.net.aso.m;
 
 @Service
 @Slf4j
@@ -71,7 +72,7 @@ public class UserServiceImpl implements UserService {
 	
 	private String getProfileImgPath(UserVO userVO) {
 		// 프로필 이미지 파일을 업로드할 경로 설정
-		String uploadPath = "C:/" + resourcePath;
+		String uploadPath = resourcePath;
 		File file = new File(uploadPath);
 		if(!file.exists()) {
 			file.mkdirs();
@@ -123,5 +124,29 @@ public class UserServiceImpl implements UserService {
 		return mapper.getAllAdmins();
 	}
 
+	@Override
+	public int deleteUser(String userNo) {
+		return mapper.deleteUser(userNo);
+	}
+
+	@Override
+	public int deleteEmployee(String userNo) {
+		return mapper.deleteEmployee(userNo);
+	}
+
+	@Override
+	public int deleteProfessor(String userNo) {
+		return mapper.deleteProfessor(userNo);
+	}
+
+	@Override
+	public int deleteStudent(String userNo) {
+		return mapper.deleteStudent(userNo);
+	}
+
+	@Override
+	public int deleteAuth(String userNo) {
+		return mapper.deleteAuth(userNo);
+	}
 
 }
