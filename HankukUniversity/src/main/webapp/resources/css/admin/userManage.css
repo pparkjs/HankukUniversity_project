@@ -3,6 +3,9 @@
 .card {
     height: calc(100% - 40px);
 }
+.content-body .dd {
+	padding-top: 0;
+}
 .profile-card .card-header {
     padding: 11px;
 }
@@ -58,6 +61,9 @@
 	display: flex;
     justify-content: flex-end;
 }
+.spaceBetween{
+    justify-content: space-between;
+}
 
 .card-header .container-fluid {
     padding-top: 0rem;
@@ -99,4 +105,18 @@ ul{
 }
 .nav-tabs .nav-link {
     border: var(--bs-nav-tabs-border-width) solid #e6e6e6;
+}
+.table-wrap {
+    height: 500px;
+    overflow: scroll;
+}
+.table thead{
+	position: sticky;
+    top: 0px;
+}
+.table thead tr th {
+	padding: 15px;
+}
+.listBtn {
+    line-height: 28px;
 }

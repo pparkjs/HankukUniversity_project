@@ -42,9 +42,11 @@ public class UserServiceImpl implements UserService {
 		userVO.setStdMtcltnYr(year);
 		
 		// 메서드를 활용해서 프로필 경로 받아오기
-		String proFileImg = getProfileImgPath(userVO);
+		if(userVO.getProfile() != null) {
+			String proFileImg = getProfileImgPath(userVO);
+			userVO.setProfilePath(proFileImg);
+		}
 		
-		userVO.setProfilePath(proFileImg);
 		
 		return mapper.insertStudent(userVO);
 	}
