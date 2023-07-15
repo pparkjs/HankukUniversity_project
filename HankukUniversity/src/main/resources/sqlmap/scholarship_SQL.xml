@@ -15,7 +15,7 @@
 			, scls_terms
  		FROM scholarship
  		WHERE 1=1
- 		AND SCLS_DEL_YN = 'N'
+ 		AND scls_del_yn = 'N'
  		ORDER BY scls_cd DESC
  	</select>
  	
@@ -40,6 +40,7 @@
 			, scls_aply_bgng_dt
 			, scls_aply_end_dt
 			, scls_terms
+			, scls_del_yn
 		)VALUES(
 			  REPLACE('SC'||TO_CHAR(seq_scholarship.NEXTVAL, '000'), ' ','')
 			, #{sclsNm}
@@ -47,14 +48,17 @@
 			, #{sclsAplyBgngDt}
 			, #{sclsAplyEndDt}
 			, #{sclsTerms}
+			, 'N'
 		)
  	</insert>
  	
- 	<delete id="deleteScls" parameterType="map">
+ 	<update id="deleteScls" parameterType="map">
  		/* kr.or.hku.admin.mapper.ScholarshipMapper.deleteScls */
- 		delete from scholarship
- 		where scls_cd = #{sclsCd}
- 	</delete>
+ 		UPDATE scholarship
+ 		SET
+ 			scls_del_yn = 'Y'
+ 		WHERE scls_cd = #{sclsCd}
+ 	</update>
  	
  	
  </mapper>
