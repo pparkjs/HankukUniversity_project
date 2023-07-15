@@ -45,4 +45,123 @@
  		VALUES(seq_locker_rsvt.nextval, #{lockerNo}, #{floor}, #{flctNo}, #{stdNo}, #{lockerYr}, #{rsvtSem}, 'N') 
  	</insert>
  	
+ 	<!-- 해당 시설의 시설물 리스트 가져오기 -->
+ 	<select id="fcltsList" resultType="flctsVO" parameterType="map">
+ 	/*kr.or.hku.student.mapper.FacilityMapper.fcltsList*/
+	 	SELECT 
+	 		  a.flct_no     	/*시설번호*/
+	 		, a.flct_nm			/*시설이름*/
+	 		, b.flcts_nm		/*시설물이름*/
+	 		, b.flcts_no		/*시설물번호*/
+		FROM facility a
+		LEFT OUTER JOIN facilities b ON(a.flct_no = b.flct_no)
+		WHERE a.flct_no LIKE #{flctNo}
+		ORDER BY b.flcts_nm
+ 	</select>
+ 	
+ 	<!-- 해당 시설에대한 시간테이블 가져오기 -->
+ 	<select id="rsvtList" parameterType="map" resultType="flctsVO">
+ 	/*kr.or.hku.student.mapper.FacilityMapper.rsvtList*/
+	 	SELECT 
+	 		  a.flcts_no
+	 		, a.flct_no
+	 		, a.flcts_nm
+	 		, b.flcts_rsvt_no
+	 		, b.std_no
+	 		, b.rsvt_date
+	 		, b.start_hours
+	 		, b.end_hours
+	 		, b.use_users
+	 		, b.use_prps
+		FROM facilities a
+		LEFT OUTER JOIN facillities_rsvt b ON(a.flcts_no = b.flcts_no)
+		WHERE a.flct_no = #{flctNo}
+		AND b.rsvt_date = #{rsvtDate}
+ 	</select>
+ 	 	<!-- 예약 신청할때 이미 해당 시간 예약 한것이 있느지 체크 -->
+ 	 	
+ 	<!-- <select id="flctsReservationCheck" parameterType=""flctsVO"">
+ 	/*kr.or.hku.student.mapper.FacilityMapper.flctsReservationCheck*/
+ 	</select>
+ 	 -->
+ 	<!-- 예약 신청하기 -->
+ 	<insert id="flctsReservation" parameterType="flctsVO">
+ 	/*kr.or.hku.student.mapper.FacilityMapper.flctsReservation*/
+ 		INSERT INTO facillities_rsvt
+ 		VALUES(seq_facilities_rsvt.nextval, #{flctsNo}, #{stdNo}, #{rsvtDate}, #{startHours}, #{endHours}, #{useUsers}, #{usePrps})
+ 	</insert>
+ 	
+ 	<!-- 사물함 예약현황 가져오기 -->
+ 	<select id="getLockerRsvtList" parameterType="String" resultType="lockerRsvtVO">
+  	/*kr.or.hku.student.mapper.FacilityMapper.getLockerRsvtList*/
+	  	SELECT 
+	  		  a.locker_rsvt_no
+	  		, a.locker_no
+	  		, a.floor
+	  		, b.flct_nm
+	  		, b.flct_no
+	  		, a.std_no
+	  		, a.locker_yr
+	  		, a.rsvt_sem
+	  		, CASE
+		         WHEN a.locker_yr != TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) THEN 0
+		         WHEN a.locker_yr = TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) AND a.rsvt_sem != CASE
+		                                                                             WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) BETWEEN 1 AND 6 THEN 1
+		                                                                             WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) BETWEEN 7 AND 12 THEN 2
+		                                                                             ELSE 0
+		                                                                           END THEN 0
+		         ELSE 1
+		      END AS present_check  /*현재년도랑 현재 학기 이외의 예약 정보는 0 현재는 1*/
+		FROM locker_rsvt a, facility b
+		WHERE std_no LIKE #{stdNo}
+		AND b.flct_no = a.flct_no
+		ORDER BY a.locker_yr DESC, a.rsvt_sem DESC
+ 	</select>
+ 	
+ 	<!-- 시설물 예약현황 가져오기 -->
+ 	<select id="getFlctsRsvtList" parameterType="String" resultType="flctsVO">
+ 	 /*kr.or.hku.student.mapper.FacilityMapper.getFlctsRsvtList*/
+ 	 	SELECT 
+ 	 		  a.flcts_rsvt_no
+ 	 		, b.flcts_nm
+ 	 		, c.flct_nm
+ 	 		, a.std_no
+ 	 		, a.rsvt_date
+ 	 		, a.start_hours
+ 	 		, a.end_hours
+ 	 		, a.use_users
+ 	 		, a.use_prps
+ 	 		, CASE WHEN a.rsvt_date || ' ' || a.start_hours > TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI') then 1
+		      	   ELSE 0
+			  END AS pass_check  /* 예약시간이 지남 0, 예약시간 안지남 1 */
+		FROM facillities_rsvt a, facilities b, facility c
+		WHERE std_no LIKE #{stdNo}
+		AND b.flcts_no = a.flcts_no
+		AND c.flct_no = b.flct_no
+		ORDER BY TO_NUMBER(a.flcts_rsvt_no) DESC
+ 	</select>
+ 	
+ 	<!-- 사물함 사용 취소시 사물함 여부 N 변경 -->
+ 	<update id="updateYn" parameterType="flctsVO">
+ 	/*kr.or.hku.student.mapper.FacilityMapper.updateYn*/
+ 		UPDATE locker
+ 		SET avl_cd = 'N'
+ 		WHERE locker_no = #{lockerNo}
+ 		AND floor = #{floor}
+ 		AND flct_no = #{flctNo}
+ 	</update>
+ 	
+ 	<!-- 사물함 사용 취소 -->
+ 	<delete id="lockerCancle" parameterType="int">
+ 	/*kr.or.hku.student.mapper.FacilityMapper.lockerCancle*/
+ 		DELETE FROM locker_rsvt
+ 		WHERE locker_rsvt_no = #{lockerRsvtNo}
+ 	</delete>
+ 	
+ 	<!-- 시설 예약 취소 -->
+ 	<delete id="flctsCancle" parameterType="String">
+ 	/*kr.or.hku.student.mapper.FacilityMapper.flctsCancle*/
+ 	 	DELETE FROM facillities_rsvt
+ 		WHERE flcts_rsvt_no = #{flctsRsvtNo}
+ 	</delete>
  </mapper>

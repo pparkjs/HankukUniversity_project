@@ -269,7 +269,7 @@
                                                 <option value="n">온라인</option>
                                             </select> <span>강의언어</span> <select class="selectCustom c"
                                                 style="margin-top: 10px;" id="lang">
-                                                <option value="ko">한국어</option>
+                                                <option value="kor">한국어</option>
                                                 <option value="eng">영어</option>
                                             </select>
                                         </div>
