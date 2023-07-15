@@ -254,4 +254,76 @@
 		    INNER JOIN com_code g ON(g.com_cd=a.bank_cd)
 		    INNER JOIN com_code h ON(h.com_cd=a.emp_jbgd_cd)
  	</select>
+ 	
+ 	<select id="getAllUsers" resultType="userVO">
+ 		SELECT
+		    b.user_cls_cd
+		    ,c.com_cd_nm as user_cls_nm
+		    ,emp_no as user_no
+		    ,emp_name as user_nm
+		    ,emp_telno as user_telno
+		    ,e.com_cd_nm as sex_nm
+		    ,emp_zip as user_zip
+		    ,emp_addr as user_addr
+		    ,emp_daddr as user_daddr
+		    ,emp_mail as user_mail
+		    ,emp_brdt as user_brdt
+		    ,emp_rrno as user_rrno
+		    ,g.com_cd_nm as bank_nm
+		    ,emp_actno as user_actno
+		    ,emp_profile_path as profile_path
+		FROM
+		    employee a INNER JOIN users b ON(a.emp_no=b.user_no)
+		    INNER JOIN com_code c ON(b.USER_CLS_CD=c.COM_CD)
+		    INNER JOIN com_code e ON(e.com_cd=a.sex_cd)
+		    INNER JOIN com_code g ON(g.com_cd=a.bank_cd)
+		    
+		UNION ALL
+		
+		SELECT 
+		    b.user_cls_cd
+		    ,c.com_cd_nm as user_cls_nm
+		    ,pro_no as user_no
+		    ,a.pro_nm as user_nm
+		    ,a.pro_telno as user_telno
+		    ,e.com_cd_nm as sex_nm
+		    ,a.pro_zip as user_zip
+		    ,a.pro_addr as user_addr
+		    ,a.pro_daddr as user_daddr
+		    ,a.pro_mail as user_mail
+		    ,a.pro_brdt as user_brdt
+		    ,a.pro_rrno as user_rrno
+		    ,g.com_cd_nm as bank_nm
+		    ,a.pro_actno as user_actno
+		    ,a.pro_profile_path as profile_path
+		FROM    
+		    professor a INNER JOIN users b ON(a.pro_no=b.user_no) 
+		    INNER JOIN com_code c ON(b.USER_CLS_CD=c.COM_CD)
+		    INNER JOIN com_code e ON(e.com_cd=a.sex_cd)
+		    INNER JOIN com_code g ON(g.com_cd=a.bank_cd)
+		            
+		UNION ALL
+		
+		SELECT 
+		    b.user_cls_cd
+		    ,c.com_cd_nm as user_cls_nm
+		    ,std_no as user_no
+		    ,std_nm as user_nm
+		    ,std_telno as user_telno
+		    ,e.com_cd_nm as sex_nm
+		    ,std_zip as user_zip
+		    ,std_addr as user_addr
+		    ,std_daddr as user_daddr
+		    ,std_mail as user_mail
+		    ,std_brdt as user_brdt
+		    ,std_rrno as user_rrno
+		    ,g.com_cd_nm as bank_nm
+		    ,std_actno as user_actno
+		    ,std_profile_path as profile_path
+		FROM 
+		    student a INNER JOIN users b ON(a.std_no=b.user_no) 
+		    INNER JOIN com_code c ON(b.USER_CLS_CD=c.COM_CD)
+		    INNER JOIN com_code e ON(e.com_cd=a.std_sex_cd)
+		    INNER JOIN com_code g ON(g.com_cd=a.bank_cd)
+ 	</select>
  </mapper>
