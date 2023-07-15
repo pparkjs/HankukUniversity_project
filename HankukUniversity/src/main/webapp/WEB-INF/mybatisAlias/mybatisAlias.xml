@@ -43,6 +43,7 @@
     <typeAlias type="kr.or.hku.lectureInfo.vo.LectureAplyVO" alias="lectureAplyVO"/>
     <typeAlias type="kr.or.hku.lectureInfo.vo.LectureTimeTableVO" alias="timeTableVO"/>
     <typeAlias type="kr.or.hku.student.vo.StudentInfoVO" alias="stdInfoVO"/>
+    <typeAlias type="kr.or.hku.student.vo.EvaluationVO" alias="evalVO"/>
   	
     <!-- 재균칸 밑에서만 작성 -->  
     <typeAlias type="kr.or.hku.common.vo.AttachFileVO" alias="attachFileVO"/>

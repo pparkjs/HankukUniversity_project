@@ -10,6 +10,7 @@
  	background-color: #6e6e6e;
  	 position: sticky;
  	 top: 0;
+ 
  }
  
  h5{
@@ -206,6 +207,7 @@
 
   }
   .tabletime td{
+  border : 1px solid  #b0b0b0;
   height: 46px;
   width : 30px;
 }

@@ -13,14 +13,14 @@
             <div class="container-fluid" style="padding-top:0.875rem;">
             	<button type="button" class="btn btn-primary pro1" 
                                         data-bs-toggle="modal" data-bs-target=".bd-example-modal-md"
-                                        id="statusBtn" style="margin-left: 1519px; margin-bottom: 10px; padding : 0;" >나의 신청현황</button>
+                                        id="statusBtn" style="margin-left: 1519px; margin-bottom: 10px; padding : 0; " >나의 신청현황</button>
         <!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 나의신청현황 버튼 모달 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
         <div class="modal fade bd-example-modal-md" tabindex="-1" style="display: none;" aria-hidden="true"
             id="statusModal">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" style="font-weight: bold;">나의 신청내역</h5>
+                        <h5 class="modal-title" style="font-weight: bold; font-size :1.5em; color: #800000;">나의 신청내역</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal">
                         </button>
                     </div>
@@ -231,7 +231,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" style="font-weight: bold;">강의계획서</h5>
+                        <h5 class="modal-title" style="font-weight: bold; font-size :1.5em; color: #800000;">강의계획서</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal">
                         </button>
                     </div>

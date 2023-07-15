@@ -11,6 +11,7 @@ import kr.or.hku.ServiceResult;
 import kr.or.hku.lectureInfo.vo.CourseRegistVO;
 import kr.or.hku.student.mapper.StdGradeCheckMapper;
 import kr.or.hku.student.service.StdGradeCheckService;
+import kr.or.hku.student.vo.EvaluationVO;
 import kr.or.hku.student.vo.StudentInfoVO;
 
 @Service
@@ -36,6 +37,20 @@ public class StdGradeCheckServiceImpl implements StdGradeCheckService {
 		}else {
 			return ServiceResult.FAILED;
 		}
+	}
+	
+	@Override
+	public ServiceResult insertEvaluation(EvaluationVO evalVO) {
+		ServiceResult result;
+		int result1= gradeCheckMapper.insertEvaluation(evalVO);
+		int result2= gradeCheckMapper.updateEvaluCd(evalVO);
+		
+		if(result1 > 0 && result2 >0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAILED;
+		}
+		return result;
 	}
 
 }

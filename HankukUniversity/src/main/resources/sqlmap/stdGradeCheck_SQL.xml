@@ -5,50 +5,64 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="kr.or.hku.student.mapper.StdGradeCheckMapper">
  	<select id="getStudentInfo" parameterType="String" resultType="stdInfoVO">
- 		SELECT 
-        A.STD_NO
-        ,STD_NM
-        ,D.SUB_CRD
-        ,E.DEPT_NM
-        ,F.COL_NM
-        ,G.COM_CD_NM AS CRS_CLASSF_NM
-        ,H.COM_CD_NM AS STD_STTS_NM
-        FROM STUDENT A
-        JOIN COURSE_REGIST B ON A.STD_NO = B.STD_NO
-        JOIN LECTURE_APLY C ON B.LECAP_NO = C.LECAP_NO
-        JOIN SUBJECT D ON C.SUB_NO = D.SUB_NO
-        JOIN DEPARTMENT E ON A.DEPT_CD = E.DEPT_CD
-        JOIN COLLEGE F ON E.COL_CD = F.COL_CD
-        JOIN COM_CODE G ON D.CRS_CLASSF_CD = G.COM_CD
-        JOIN COM_CODE H ON A.STD_STTS_CD = H.COM_CD
-        WHERE A.STD_NO = '20220004'
-        AND C.LECAP_YR = EXTRACT(YEAR FROM SYSDATE)
-		AND C.LECAP_SEM = CASE
-		    WHEN EXTRACT(MONTH FROM SYSDATE) = 6 THEN '1'
-		    ELSE '2'
-        END
+ 		<![CDATA[
+	 		SELECT 
+	        A.STD_NO
+	        ,STD_NM
+	        ,D.SUB_CRD
+	        ,E.DEPT_NM
+	        ,F.COL_NM
+	        ,G.COM_CD_NM AS CRS_CLASSF_NM
+	        ,H.COM_CD_NM AS STD_STTS_NM
+	        FROM STUDENT A
+	        JOIN COURSE_REGIST B ON A.STD_NO = B.STD_NO
+	        JOIN LECTURE_APLY C ON B.LECAP_NO = C.LECAP_NO
+	        JOIN SUBJECT D ON C.SUB_NO = D.SUB_NO
+	        JOIN DEPARTMENT E ON A.DEPT_CD = E.DEPT_CD
+	        JOIN COLLEGE F ON E.COL_CD = F.COL_CD
+	        JOIN COM_CODE G ON D.CRS_CLASSF_CD = G.COM_CD
+	        JOIN COM_CODE H ON A.STD_STTS_CD = H.COM_CD
+	        WHERE A.STD_NO = #{stdNo}
+	        AND C.LECAP_YR = EXTRACT(YEAR FROM SYSDATE)
+			AND C.LECAP_SEM = CASE
+			    WHEN EXTRACT(MONTH FROM SYSDATE) <= 7 THEN '1'
+			    ELSE '2'
+	        END
+	    ]]>
  	</select>
  	
- 	<select id="getSubjectInfo" parameterType="String" resultType="subjectVO">
- 		  SELECT
-			    b.sub_no,
-			    c.sub_nm,
-			    c.sub_crd,
-			    d.com_cd_nm AS crs_classf_cd,
-			    b.lecap_no
-			FROM
-			    course_regist a
-			    JOIN lecture_aply b ON a.lecap_no = b.lecap_no
-			    JOIN subject c ON b.sub_no = c.sub_no
-			    JOIN com_code d ON c.crs_classf_cd = d.com_cd
-			WHERE
-			    std_no = #{stdNo}
-			    AND   b.lecap_yr = EXTRACT(YEAR FROM SYSDATE)
-			    AND   b.lecap_sem =
-			        CASE
-			            WHEN EXTRACT(MONTH FROM SYSDATE) = 6 THEN '1'
-			            ELSE '2'
-        			END
+ 	<select id="getSubjectInfo" parameterType="String" resultType="courseRegistVO">
+ 		<![CDATA[
+	 		 SELECT
+				    B.SUB_NO,
+				    C.SUB_NM,
+				    C.SUB_CRD,
+				    D.COM_CD_NM AS CRS_CLASSF_CD,
+				    B.LECAP_NO,
+	                A.CRS_SCR,
+	                B.LECAP_YR,
+	                B.LECAP_SEM,
+	                E.DEPT_NM,
+	                C.SUB_NO,
+	                A.GRD_DMR_CN,
+	                A.GRD_DMR_ANS,
+	                A.GRD_DMR_STTS_CD,
+	                A.EVAL_YN_CD
+				FROM
+				    COURSE_REGIST A
+				    JOIN LECTURE_APLY B ON A.LECAP_NO = B.LECAP_NO
+				    JOIN SUBJECT C ON B.SUB_NO = C.SUB_NO
+				    JOIN COM_CODE D ON C.CRS_CLASSF_CD = D.COM_CD
+	                JOIN DEPARTMENT E ON C.DEPT_CD = E.DEPT_CD
+				WHERE
+				    STD_NO = #{stdno}
+				    AND   B.LECAP_YR = EXTRACT(YEAR FROM SYSDATE)
+				    AND   B.LECAP_SEM =
+				        CASE
+				            WHEN EXTRACT(MONTH FROM SYSDATE) <= 6 THEN '2'
+				            ELSE '1'
+	        			END
+	       ]]> 			
  	</select>
  	
  	<update id="submitobjections" parameterType="courseRegistVO">
@@ -59,5 +73,34 @@
 		AND LECAP_NO = #{lecapNo}
  	</update>
  	
+ 	<insert id="insertEvaluation" parameterType="evalVO">
+ 		INSERT INTO LECTURE_EVALUATION(
+	 		STD_NO
+			,LECAP_NO
+			,LECEV_ANS1
+			,LECEV_ANS2
+			,LECEV_ANS3
+			,LECEV_ANS4
+			,LECEV_ANS5
+			,LECEV_OVERALL_OPINION
+ 		)values(
+ 			#{stdNo}
+ 			,#{lecapNo}
+ 			,#{lecevAns1}
+ 			,#{lecevAns2}
+ 			,#{lecevAns3}
+ 			,#{lecevAns4}
+ 			,#{lecevAns5}
+ 			,#{lecevOverallOpinion}
+ 		)
+ 	</insert>
+ 	
+ 	<update id="updateEvaluCd" parameterType="evalVO">
+ 		UPDATE COURSE_REGIST
+ 			SET EVAL_YN_CD = 'Y'
+ 		WHERE STD_NO = #{stdNo}
+ 		AND LECAP_NO = #{lecapNo}
+ 	
+ 	</update>
  
  </mapper>
