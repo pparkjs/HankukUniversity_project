@@ -269,7 +269,7 @@
                                                 <option value="n">온라인</option>
                                             </select> <span>강의언어</span> <select class="selectCustom c"
                                                 style="margin-top: 10px;" id="lang">
-                                                <option value="ko">한국어</option>
+                                                <option value="kor">한국어</option>
                                                 <option value="eng">영어</option>
                                             </select>
                                         </div>
@@ -446,7 +446,7 @@
 	                		.then((willDelete) => {
 	                		  if (willDelete) {
 	                			  $.ajax({
-	                      		    url: '/lecture/returnLecture.do',
+	                      		    url: '/hku/lecture/returnLecture.do',
 	                                  method: 'get',
 	                                  data: {
 	                                      lecapNo: lecapNo
@@ -472,7 +472,7 @@
             
            $('#statusBtn').on("click",function(){
         		$.ajax({
-        		    url: '/lecture/getLectureStatus.do',
+        		    url: '/hku/lecture/getLectureStatus.do',
                     method: 'get',
                     data: {
                         proNo: '${pro.proNo}'
@@ -514,7 +514,7 @@
            
            $('#statusAll').on("click",function(){
        		$.ajax({
-       		    url: '/lecture/getLectureStatus.do',
+       		    url: '/hku/lecture/getLectureStatus.do',
                    method: 'get',
                    data: {
                        proNo: '${pro.proNo}'
@@ -555,7 +555,7 @@
           });
            $('#statusWait').on("click",function(){
        		$.ajax({
-       		    url: '/lecture/getLectureStatus.do',
+       		    url: '/hku/lecture/getLectureStatus.do',
                    method: 'get',
                    data: {
                        proNo: '${pro.proNo}'
@@ -591,7 +591,7 @@
           });
            $('#statusRej').on("click",function(){
        		$.ajax({
-       		    url: '/lecture/getLectureStatus.do',
+       		    url: '/hku/lecture/getLectureStatus.do',
                    method: 'get',
                    data: {
                        proNo: '${pro.proNo}'
@@ -627,7 +627,7 @@
           });
            $('#statusAprv').on("click",function(){
        		$.ajax({
-       		    url: '/lecture/getLectureStatus.do',
+       		    url: '/hku/lecture/getLectureStatus.do',
                    method: 'get',
                    data: {
                        proNo: '${pro.proNo}'
@@ -676,7 +676,7 @@
 
                             //교과목 출력끝
                             $.ajax({
-                                    url: '/lecture/getDept.do',
+                                    url: '/hku/lecture/getDept.do',
                                     method: 'get',
                                     data: {
                                         college: data
@@ -732,7 +732,7 @@
                         var dept = $(this).val();
 
                         $.ajax({
-                            url: '/lecture/selSubject.do',
+                            url: '/hku/lecture/selSubject.do',
                             method: 'get',
                             data: {
                                 deptNm: dept
@@ -780,7 +780,7 @@
                             //교과목 출력끝
                             $
                                 .ajax({
-                                    url: '/lecture/selBuil.do',
+                                    url: '/hku/lecture/selBuil.do',
                                     method: 'get',
                                     data: {
                                         flct: flct
@@ -812,7 +812,7 @@
                     var timeBody = $("#timeBody")
                     $('#inFlcts').val($('#selClass option:selected').text());
                     $.ajax({
-                        url: '/lecture/selClass.do',
+                        url: '/hku/lecture/selClass.do',
                         method: 'get',
                         data: {
                             flcts: flcts
@@ -1024,7 +1024,7 @@
                                      }
 									console.log(planJson);
                                 $.ajax({
-                                    url: '/lecture/applyLecture.do',
+                                    url: '/hku/lecture/applyLecture.do',
                                     method: 'post',
                                     data: JSON.stringify(planJson),
                                     contentType: "application/json;charset=utf-8",

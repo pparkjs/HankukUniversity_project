@@ -29,8 +29,8 @@ import kr.or.hku.lectureInfo.vo.SubjectVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping("/hku/admin")
 @Slf4j
+@RequestMapping("/hku/admin")
 public class AcademicController {
 	
 	@Autowired

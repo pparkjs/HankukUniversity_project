@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.admin.mapper.LecAplyAdminMapper">
+ 
+ 	<select id="getLecApList" resultType="map">
+ 		/* kr.or.hku.admin.mapper.LecAplyAdminMapper.getLecApList */
+ 		SELECT 
+		      la.lecap_no AS lecap_no
+		    , s.sub_nm AS sub_nm
+		    , s.sub_no AS sub_no
+		    , p.pro_nm AS pro_nm
+		    , p.pro_no AS pro_no
+		    , la.lecap_yr AS lecap_yr
+		    , la.lecap_sem AS lecap_sem
+		    , TO_CHAR(la.lecap_dt, 'yyyy-mm-dd') AS lecap_dt
+		    , la.aprv_stts_cd AS aprv_stts_cd
+		FROM LECTURE_APLY la
+		INNER JOIN subject s ON la.sub_no = s.sub_no
+		INNER JOIN professor p ON la.pro_no = p.pro_no
+		WHERE la.aprv_stts_cd NOT IN 'CANCLE'
+		ORDER BY la.lecap_no DESC
+ 	</select>
+ 	
+ 	<select id="getLecBasicOne" parameterType="int" resultType="lecBasicVO">
+ 		/* kr.or.hku.admin.mapper.LecAplyAdminMapper.getLecBasicOne */
+ 		SELECT 
+		      la.lecap_no AS lecap_no
+		    , s.sub_no AS sub_no
+		    , s.sub_nm AS sub_nm
+		    , d.dept_nm AS dept_nm
+		    , s.sub_grade AS sub_grade
+		    , s.sub_crd AS sub_crd
+		    , la.lecap_cpct AS lecap_cpct
+		    , la.lecap_yr AS lecap_yr
+		    , la.lecap_sem AS lecap_sem
+		    , s.crs_classf_cd AS crs_classf_cd
+		    , p.pro_nm AS pro_nm
+		    , p.pro_mail AS pro_mail
+		    , p.pro_telno AS pro_telno
+            , ls.lecsc_day AS lecsc_day
+            , ls.period_cd AS period_cd
+            , ls.lecsc_hour AS lecsc_hour
+            , fs.flcts_nm AS flcts_nm
+            , f.flct_nm AS flct_nm
+		FROM LECTURE_APLY la
+		INNER JOIN subject s ON la.sub_no = s.sub_no
+		INNER JOIN professor p ON la.pro_no = p.pro_no
+		INNER JOIN department d ON s.dept_cd = d.dept_cd
+        INNER JOIN lecture_schedule ls ON la.lecap_no = ls.lecap_no
+        INNER JOIN facilities fs ON la.flcts_no = fs.flcts_no
+        INNER JOIN facility f ON f.flct_no = fs.flct_no
+		WHERE la.lecap_no = #{lecapNo}
+ 	</select>
+ 	
+ 	<select id="getLecProgam" resultType="lecProgramVO" parameterType="int">
+ 		/* kr.or.hku.admin.mapper.LecAplyAdminMapper.getLecProgam */
+ 		SELECT
+ 			  lecap_no
+		    , lecpg_intro
+		    , lecpg_lgg_cd
+		    , avl_cd
+		    , lecpg_atd
+		    , lecpg_hw
+		    , lecpg_md_test
+		    , lecpg_fn_test
+		    , lecpg_book
+		    , week1
+		    , week2
+		    , week3
+		    , week4
+		    , week5
+		    , week6
+		    , week7
+		    , week8
+		    , week9
+		    , week10
+		    , week11
+		    , week12
+		    , week13
+		    , week14
+		    , week15
+		FROM lecture_program
+		WHERE lecap_no = #{lecapNo}
+ 	</select>
+ 	
+ 	<select id="getSchedules" parameterType="int" resultType="scheduleVO">
+ 		/* kr.or.hku.admin.mapper.LecAplyAdminMapper.getSchedules */
+		SELECT
+		    la.lecap_no,
+		    ls.lecsc_day,
+		    ls.period_cd,
+		    ls.lecsc_hour
+		FROM lecture_aply la
+		INNER JOIN lecture_schedule ls on la.lecap_no = ls.lecap_no
+		WHERE la.FLCTS_NO IN (SELECT flcts_no FROM lecture_aply WHERE lecap_no = #{lecapNo})
+		AND la.aprv_stts_cd = 'appv'
+		AND la.LECAP_YR IN TO_CHAR(EXTRACT(YEAR FROM SYSDATE))
+		AND la.LECAP_SEM IN (CASE
+		                        WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 1 AND 6 THEN 1
+		                        WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 12 THEN 2
+		                    ELSE 0
+		                    END) 		
+ 	</select>
+ 	
+ 	<update id="signOnLecture" parameterType="int">
+ 		/* kr.or.hku.admin.mapper.LecAplyAdminMapper.signOnLecture */
+ 		UPDATE lecture_aply
+ 		SET
+ 			aprv_stts_cd = 'appv'
+ 		WHERE lecap_no = #{lecapNo}
+ 	</update>
+ 	
+ 	<update id="rejectLecture" parameterType="map">
+ 		/* kr.or.hku.admin.mapper.LecAplyAdminMapper.rejectLecture */
+ 		UPDATE lecture_aply
+ 		SET
+ 			  aprv_stts_cd = 'rej'
+ 			, lecap_rjct_rsn = #{lecapRjctRsn}
+ 		WHERE lecap_no = #{lecapNo}
+ 	</update>
+ 
+ </mapper>
