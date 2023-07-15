@@ -19,4 +19,9 @@ public interface FacilityMapper {
 	public List<FacilitiesVO> rsvtList(Map<String, Object> map);
 	public int flctsReservation(FacilitiesVO vo);
 //	public int flctsReservationCheck(FacilitiesVO vo);
+	public List<FacilitiesVO> getFlctsRsvtList(String stdNo);
+	public List<LockerRsvtVO> getLockerRsvtList(String stdNo);
+	public void updateYn(LockerRsvtVO vo);
+	public int lockerCancle(int lockerRsvtNo);
+	public int flctsCancle(String flctsRsvtNo);
 }

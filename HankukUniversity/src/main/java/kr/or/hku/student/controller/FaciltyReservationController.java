@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -96,7 +97,17 @@ public class FaciltyReservationController {
 	
 	// 나의 예약현황으로 이동
 	@GetMapping("/my-reservation")
-	public String myReservation() {
+	public String myReservation(HttpSession session, Model model) {
+		StudentVO std = (StudentVO)session.getAttribute("std");
+		StudentVO vo = commonService.myAllInfo(std.getStdNo());
+		
+		List<FacilitiesVO> flctsRsvtList = facilityService.getFlctsRsvtList(std.getStdNo());
+		List<LockerRsvtVO> lockerRsvtList = facilityService.getLockerRsvtList(std.getStdNo());
+		
+		model.addAttribute("flctsRsvtList", flctsRsvtList);
+		model.addAttribute("lockerRsvtList", lockerRsvtList);
+		model.addAttribute("std", vo);
+		
 		return "student/my-reservation";
 	}
 	
@@ -118,9 +129,37 @@ public class FaciltyReservationController {
 		if(result.equals(ServiceResult.OK)) {
 			return "redirect:/hku/my-reservation";
 		}else {
-			model.addAttribute("msg", "error");
+			model.addAttribute("msg", "error	");
 			return "student/facility-rsvt";
 		}
 		
+	}
+	
+	// 사물함 사용취소
+	@ResponseBody
+	@DeleteMapping("/locker-cancle")
+	public ResponseEntity<String> lockerCancle(@RequestBody LockerRsvtVO vo){
+		log.info("브이오"  + vo);
+		ServiceResult result = facilityService.lockerCancle(vo);
+		
+		if(result.equals(ServiceResult.OK)) {
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+		}else {
+			return new ResponseEntity<String>("faild", HttpStatus.OK);
+		}
+		
+	}	
+	// 시설물 예약취소
+	@ResponseBody
+	@DeleteMapping("/flcts-cancle/{flctsRsvtNo}")
+	public ResponseEntity<String> flctsCancle(@PathVariable("flctsRsvtNo") String flctsRsvtNo){
+		log.info("시설물 번호"  + flctsRsvtNo);
+		ServiceResult result = facilityService.flctsCancle(flctsRsvtNo);
+		
+		if(result.equals(ServiceResult.OK)) {
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+		}else {
+			return new ResponseEntity<String>("faild", HttpStatus.OK);
+		}
 	}
 }

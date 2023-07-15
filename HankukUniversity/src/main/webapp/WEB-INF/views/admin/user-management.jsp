@@ -32,13 +32,13 @@
 									</div>
 								</div>
 							</div>
-							<div class="info-list">
+							<!-- <div class="info-list">
 								<ul>
 									<li><a href="app-profile.html">Models</a><span>36</span></li>
 									<li><a href="uc-lightgallery.html">Gallery</a><span>3</span></li>
 									<li><a href="app-profile.html">Lessons</a><span>1</span></li>
 								</ul>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
@@ -64,7 +64,7 @@
 								<div class="col-md-4 input-group ilgualdngrok">
 									<input class="form-control" type="file" id="formFile">
 									<span class="input-group-append">
-										<button type="button" onclick="alert('일괄등록')" class="btn btn-primary btn-flat">일괄등록</button>
+										<button type="button" onclick="poiInsert()" class="btn btn-primary btn-flat">일괄등록</button>
 									</span>
 								</div>
 								<div class="col-auto">
@@ -195,159 +195,64 @@
 				<h5 class="card-title">전체 사용자</h5>
 			</div>
 			<div class="card-body">
-				
-				<!-- Nav tabs -->
-				<ul class="nav nav-tabs" id="myTab" role="tablist">
-					<li class="nav-item" role="presentation">
-						<button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-controls="users" aria-selected="true">전체</button>
-					</li>
-					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="admins-tab" data-bs-toggle="tab" data-bs-target="#admins" type="button" role="tab" aria-controls="admins" aria-selected="false">교직원</button>
-					</li>
-					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="professors-tab" data-bs-toggle="tab" data-bs-target="#professors" type="button" role="tab" aria-controls="professors" aria-selected="false">교수</button>
-					</li>
-					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="students-tab" data-bs-toggle="tab" data-bs-target="#students" type="button" role="tab" aria-controls="students" aria-selected="false">학생</button>
-					</li>
-				</ul>
-				
+				<div class="row spaceBetween">
+					<div class="col-auto">
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs" id="myTab" role="tablist">
+							<li class="nav-item" role="presentation">
+								<button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-controls="users" aria-selected="true">전체</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="admins-tab" data-bs-toggle="tab" data-bs-target="#admins" type="button" role="tab" aria-controls="admins" aria-selected="false">교직원</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="professors-tab" data-bs-toggle="tab" data-bs-target="#professors" type="button" role="tab" aria-controls="professors" aria-selected="false">교수</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="students-tab" data-bs-toggle="tab" data-bs-target="#students" type="button" role="tab" aria-controls="students" aria-selected="false">학생</button>
+							</li>
+						</ul>
+					</div>
+					<div class="col-md-8">
+						<form class="row g-3 custom-form" action="" name="searchForm">
+							<div class="col-md-2">
+								<select class="default-select form-control form-control-sm" name="searchType">
+									<option value="colCd">학번/교번</option>
+									<option value="deptCd">이름</option>
+									<option value="deptNm">학과명</option>
+									<option value="deptNm">학과명</option>
+									<option value="deptNm">학과명</option>
+								</select>
+							</div>
+							<div class="col-md-3">
+								<input type="text" class="form-control form-control-sm input-default" name="searchWord" value="${searchWord }" placeholder="검색어를 입력해주세요">
+							</div>
+							<div class="col-auto">
+								<button type="button" class="btn btn-sm btn-primary listBtn" onclick="deptList()">검색</button>
+							</div>
+							<!-- <div class="col-auto">
+								<button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#deptModal" onclick="deptCdSet()">학과개설</button>
+							</div> -->
+							<div class="col-auto">
+								<button type="button" class="btn btn-sm btn-primary listBtn" onclick="deleteUser()">삭제</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- <button type="button" onclick="tabChange()">탭변경</button> -->
 				<!-- Tab panes -->
 				<div class="tab-content">
 					<div class="tab-pane active" id="users" role="tabpanel" aria-labelledby="users-tab" tabindex="0">
-						1
+						
 					</div>
 					<div class="tab-pane" id="admins" role="tabpanel" aria-labelledby="admins-tab" tabindex="0">
-						<div class='table-wrap'>
-							<table class='table'>
-								<thead class='thead-dark'>
-									<tr>
-										<th>
-											<div class='form-check custom-checkbox checkbox-danger'>
-												<input type='checkbox' class='form-check-input' onclick='selectAll(this)'>
-											</div>
-										</th>
-										<th>학번/교번</th>
-										<th>이름</th>
-										<th>사용자 종류</th>
-										<th>부서</th>
-										<th>직급</th>
-										<th>직책</th>
-										<th>생년월일</th>
-										<th>성별</th>
-										<th>연락처</th>
-										<th>이메일</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${adminsList }" var="admin">
-										<tr onclick='adminDetail(this)'>
-											<td>
-												<div class='form-check custom-checkbox checkbox-danger'>
-													<input type='checkbox' class='form-check-input deptCheck' value='\${deptList[i].deptCd }' onclick="onlyCheck()">
-												</div>
-											</td>
-											<td>${admin.userNo }</td>
-											<td>${admin.userNm }</td>
-											<td>${admin.userClsNm }</td>
-											<td>${admin.empDeptNm }</td>
-											<td>${admin.empJbttlNm }</td>
-											<td>${admin.empJbgdNm }</td>
-											<td>${admin.userBrdt }</td>
-											<td>${admin.sexNm }</td>
-											<td>${admin.userTelno }</td>
-											<td>${admin.userMail }</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
+						
 					</div>
 					<div class="tab-pane" id="professors" role="tabpanel" aria-labelledby="professors-tab" tabindex="0">
-						<div class='table-wrap'>
-							<table class='table'>
-								<thead class='thead-dark'>
-									<tr>
-										<th>
-											<div class='form-check custom-checkbox checkbox-danger'>
-												<input type='checkbox' class='form-check-input' onclick='selectAll(this)'>
-											</div>
-										</th>
-										<th>학번/교번</th>
-										<th>이름</th>
-										<th>사용자 종류</th>
-										<th>직책</th>
-										<th>학과</th>
-										<th>생년월일</th>
-										<th>성별</th>
-										<th>연락처</th>
-										<th>이메일</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${professorsList }" var="professor">
-										<tr onclick='professorDetail(this)'>
-											<td>
-												<div class='form-check custom-checkbox checkbox-danger'>
-													<input type='checkbox' class='form-check-input deptCheck' value='\${deptList[i].deptCd }' onclick="onlyCheck()">
-												</div>
-											</td>
-											<td>${professor.userNo }</td>
-											<td>${professor.userNm }</td>
-											<td>${professor.userClsNm }</td>
-											<td>${professor.proJbttlNm }</td>
-											<td>${professor.deptNm }</td>
-											<td>${professor.userBrdt }</td>
-											<td>${professor.sexNm }</td>
-											<td>${professor.userTelno }</td>
-											<td>${professor.userMail }</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
+						
 					</div>
 					<div class="tab-pane" id="students" role="tabpanel" aria-labelledby="students-tab" tabindex="0">
-						<div class='table-wrap'>
-							<table class='table'>
-								<thead class='thead-dark'>
-									<tr>
-										<th>
-											<div class='form-check custom-checkbox checkbox-danger'>
-												<input type='checkbox' class='form-check-input' onclick='selectAll(this)'>
-											</div>
-										</th>
-										<th>학번/교번</th>
-										<th>이름</th>
-										<th>사용자 종류</th>
-										<th>학과</th>
-										<th>생년월일</th>
-										<th>성별</th>
-										<th>연락처</th>
-										<th>이메일</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${studentsList }" var="student">
-										<tr onclick='studentDetail(this)'>
-											<td>
-												<div class='form-check custom-checkbox checkbox-danger'>
-													<input type='checkbox' class='form-check-input deptCheck' value='\${deptList[i].deptCd }' onclick="onlyCheck()">
-												</div>
-											</td>
-											<td>${student.userNo }</td>
-											<td>${student.userNm }</td>
-											<td>${student.userClsNm }</td>
-											<td>${student.deptNm }</td>
-											<td>${student.userBrdt }</td>
-											<td>${student.sexNm }</td>
-											<td>${student.userTelno }</td>
-											<td>${student.userMail }</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -370,8 +275,10 @@
 file = null;
 
 $(function(){
-	console.log("앙뇽~");
-
+	usersSet();
+	adminsSet();
+	professorsSet();
+	studentsSet();
 	var profile = $("#profile");		// 프로필 이미지 선택 Element(이미지 선택 파일)
 	var selectTarget = $("#selectTarget");
 
@@ -391,6 +298,7 @@ $(function(){
 	profile.on("change", function(event){
 		console.log($("#profile").val());
 		file = event.target.files[0];
+		console.log("file", file);
 		if(isImageFile(file)){
 			var reader = new FileReader();
 			reader.onload = function(e){
@@ -411,15 +319,367 @@ $(function(){
 	// usersSet();
 })
 
+function poiInsert(){
+	console.log("POI 실행 함수");
+// 	var formFile = $("#formFile");
+	var formFile = document.querySelector("#formFile");
+	console.log("1",formFile.files[0]);
+	if(formFile.files[0] == null){
+		swal({
+			title: "파일을 선택해주세요!",
+			icon: "error"
+		})
+		return false;
+	}
+	// console.log("2",formFile.file);
+	// console.log("3",formFile.value);
+
+	let formData = new FormData();
+	formData.append("file",formFile.files[0]);
+	
+	// window.href = "/hku/admin/insertUserExcel";
+	$.ajax({
+		type: 'POST',
+		url: '/hku/admin/insertUserExcel',
+		data: formData,
+		dataType: "JSON",
+		processData: false,
+		contentType: false,
+		success: function(res) {
+			swal({
+				title: "일괄등록 성공!!",
+				icon: "success"
+			})
+			console.log("일괄등록 완료!!!!!!");
+			console.log(res);
+			studentsSet();
+		},
+		error: function (xhr, status, error) {
+			alert("출력실패");
+		}
+	});
+}
+
+function tabChange(){
+	console.log("hi~");
+	// console.log(document.querySelector("#professors-tab").classList);
+	var tabButtons = document.querySelectorAll(".nav-link");
+	var tabPanels = document.querySelectorAll(".tab-pane");
+
+	tabButtons.forEach(function(btn) {
+        btn.classList.remove("active");
+		btn.setAttribute("aria-selected",false);
+    });
+	document.querySelector("#professors-tab").classList.add("active");
+	document.querySelector("#professors-tab").setAttribute("aria-selected",true);
+
+	tabPanels.forEach(function(panel) {
+        panel.classList.remove("active");
+	});
+
+	var targetPanelId = document.querySelector("#professors-tab").getAttribute("data-bs-target");
+	var targetPanel = document.querySelector(targetPanelId);
+    targetPanel.classList.add("active");
+}
+
+function selectAll(target){
+	const checkboxes = document.querySelectorAll(".userCheck");
+	checkboxes.forEach(function(i){
+		i.checked = target.checked;
+	})
+}
+function onlyCheck(target){
+	event.stopPropagation();
+	console.log("오직 체크만",target.value);
+	
+}
+
 function usersSet(){
-	var users = $("#users");
-	var admins = $("#admins");
-	var professors = $("#professors");
-	var students = $("#students");
-	users.html("사용자들");
-	admins.html("교직원들");
-	professors.html("교수들");
-	students.html("학생들임");
+	$.ajax({
+		type: 'POST',
+		url: '/hku/admin/user-list',
+		// data: formData,
+		dataType: "JSON",
+		// processData: false,
+		// contentType: false,
+		success: function(res) {
+			var users = $("#users");
+			var tblStr = "";
+			tblStr += `<div class='table-wrap'>
+				<table class='table'>
+					<thead class='thead-dark'>
+						<tr>
+							<th>
+								<div class='form-check custom-checkbox checkbox-danger'>
+									<input type='checkbox' class='form-check-input' onclick='selectAll(this)'>
+								</div>
+							</th>
+							<th>학번/교번</th>
+							<th>이름</th>
+							<th>사용자 종류</th>
+							<th>생년월일</th>
+							<th>성별</th>
+							<th>연락처</th>
+							<th>이메일</th>
+						</tr>
+					</thead>
+					<tbody>`;
+						for(let i=0; i<res.length; i++) {
+							tblStr += `<tr onclick='studentDetail(this)'>
+								<td>
+									<div class='form-check custom-checkbox checkbox-danger'>
+										<input type='checkbox' class='form-check-input userCheck' value='\${res[i].userNo }' onclick="onlyCheck(this)">
+									</div>
+								</td>
+								<td>\${res[i].userNo }</td>
+								<td>\${res[i].userNm }</td>
+								<td>\${res[i].userClsNm }</td>
+								<td>\${res[i].userBrdt }</td>
+								<td>\${res[i].sexNm }</td>
+								<td>\${res[i].userTelno }</td>
+								<td>\${res[i].userMail }</td>
+							</tr>`;
+						}
+			tblStr += `</tbody>
+				</table>
+			</div>`;
+			users.html(tblStr);
+		},
+		error: function (xhr, status, error) {
+			alert("출력실패");
+		}
+	});
+}
+function adminsSet(){
+	$.ajax({
+		type: 'POST',
+		url: '/hku/admin/admin-list',
+		// data: formData,
+		dataType: "JSON",
+		// processData: false,
+		// contentType: false,
+		success: function(res) {
+			var admins = $("#admins");
+			var tblStr = "";
+			tblStr += `<div class='table-wrap'>
+				<table class='table'>
+					<thead class='thead-dark'>
+						<tr>
+							<th>
+								<div class='form-check custom-checkbox checkbox-danger'>
+									<input type='checkbox' class='form-check-input' onclick='selectAll(this)'>
+								</div>
+							</th>
+							<th>학번/교번</th>
+							<th>이름</th>
+							<th>사용자 종류</th>
+							<th>부서</th>
+							<th>직급</th>
+							<th>직책</th>
+							<th>생년월일</th>
+							<th>성별</th>
+							<th>연락처</th>
+							<th>이메일</th>
+						</tr>
+					</thead>
+					<tbody>`;
+						for(let i=0; i<res.length; i++){
+							tblStr += `<tr onclick='adminDetail(this)'>
+								<td>
+									<div class='form-check custom-checkbox checkbox-danger'>
+										<input type='checkbox' class='form-check-input userCheck' value='\${res[i].userNo }' onclick="onlyCheck(this)">
+									</div>
+								</td>
+								<td>\${res[i].userNo }</td>
+								<td>\${res[i].userNm }</td>
+								<td>\${res[i].userClsNm }</td>
+								<td>\${res[i].empDeptNm }</td>
+								<td>\${res[i].empJbttlNm }</td>
+								<td>\${res[i].empJbgdNm }</td>
+								<td>\${res[i].userBrdt }</td>
+								<td>\${res[i].sexNm }</td>
+								<td>\${res[i].userTelno }</td>
+								<td>\${res[i].userMail }</td>
+							</tr>`;
+						}
+			tblStr += `</tbody>
+				</table>
+			</div>`;
+			admins.html(tblStr);
+		},
+		error: function (xhr, status, error) {
+			alert("출력실패");
+		}
+	});
+}
+function professorsSet(){
+	$.ajax({
+		type: 'POST',
+		url: '/hku/admin/professor-list',
+		// data: formData,
+		dataType: "JSON",
+		// processData: false,
+		// contentType: false,
+		success: function(res) {
+			var professors = $("#professors");
+			var tblStr = "";
+			tblStr += `<div class='table-wrap'>
+				<table class='table'>
+					<thead class='thead-dark'>
+						<tr>
+							<th>
+								<div class='form-check custom-checkbox checkbox-danger'>
+									<input type='checkbox' class='form-check-input' onclick='selectAll(this)'>
+								</div>
+							</th>
+							<th>학번/교번</th>
+							<th>이름</th>
+							<th>사용자 종류</th>
+							<th>직책</th>
+							<th>학과</th>
+							<th>생년월일</th>
+							<th>성별</th>
+							<th>연락처</th>
+							<th>이메일</th>
+						</tr>
+					</thead>
+					<tbody>`;
+						for(let i=0; i<res.length; i++) {
+
+							tblStr += `<tr onclick='professorDetail(this)'>
+									<td>
+										<div class='form-check custom-checkbox checkbox-danger'>
+											<input type='checkbox' class='form-check-input userCheck' value='\${res[i].userNo }' onclick="onlyCheck(this)">
+										</div>
+									</td>
+									<td>\${res[i].userNo }</td>
+									<td>\${res[i].userNm }</td>
+									<td>\${res[i].userClsNm }</td>
+									<td>\${res[i].proJbttlNm }</td>
+									<td>\${res[i].deptNm }</td>
+									<td>\${res[i].userBrdt }</td>
+									<td>\${res[i].sexNm }</td>
+									<td>\${res[i].userTelno }</td>
+									<td>\${res[i].userMail }</td>
+								</tr>`;
+						}
+			tblStr += `</tbody>
+				</table>
+			</div>`;
+			professors.html(tblStr);
+		},
+		error: function (xhr, status, error) {
+			alert("출력실패");
+		}
+	});
+}
+function studentsSet(){
+	$.ajax({
+		type: 'POST',
+		url: '/hku/admin/student-list',
+		// data: formData,
+		dataType: "JSON",
+		// processData: false,
+		// contentType: false,
+		success: function(res) {
+			// console.log("또체킁 : ",res);
+			var students = $("#students");
+			var tblStr = "";
+			tblStr += `<div class='table-wrap'>
+				<table class='table'>
+					<thead class='thead-dark'>
+						<tr>
+							<th>
+								<div class='form-check custom-checkbox checkbox-danger'>
+									<input type='checkbox' class='form-check-input' onclick='selectAll(this)'>
+								</div>
+							</th>
+							<th>학번/교번</th>
+							<th>이름</th>
+							<th>사용자 종류</th>
+							<th>학과</th>
+							<th>생년월일</th>
+							<th>성별</th>
+							<th>연락처</th>
+							<th>이메일</th>
+						</tr>
+					</thead>
+					<tbody>`;
+				for(let i=0; i<res.length; i++){
+					tblStr += `<tr onclick='studentDetail(this)'>
+						<td>
+							<div class='form-check custom-checkbox checkbox-danger'>
+								<input type='checkbox' class='form-check-input userCheck' value='\${res[i].userNo }' onclick="onlyCheck(this)">
+							</div>
+						</td>
+						<td>\${res[i].userNo }</td>
+						<td>\${res[i].userNm }</td>
+						<td>\${res[i].userClsNm }</td>
+						<td>\${res[i].deptNm }</td>
+						<td>\${res[i].userBrdt }</td>
+						<td>\${res[i].sexNm }</td>
+						<td>\${res[i].userTelno }</td>
+						<td>\${res[i].userMail }</td>
+					</tr>`;
+				}
+			tblStr += `</tbody>
+				</table>
+			</div>`;
+			students.html(tblStr);
+		},
+		error: function (xhr, status, error) {
+			alert("출력실패");
+		}
+	});
+}
+function deleteUser(){
+	var delUserArr = new Array();
+	// let users = document.querySelectorAll(".userCheck");
+	let users = $(".userCheck");
+	for(let i=0; i<users.length; i++){
+		if(users[i].checked == true){
+			console.log(users[i]);
+			let userType = $(users[i]).parents("tr").children().eq(3).html();
+			console.log(userType);
+
+			let delUser = {
+				"type": userType,
+				"userNo": users[i].value
+			};
+			delUserArr.push(delUser);
+		}
+	}
+	if(delUserArr.length == 0){
+		swal({
+			title: "항목을 선택해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	console.log(delUserArr);
+	console.log(JSON.stringify(delUserArr));
+	$.ajax({
+		type: 'DELETE',
+		url: '/hku/admin/user-management',
+		data: JSON.stringify(delUserArr),
+		dataType: "text",
+		// processData: false,
+		contentType: 'application/json;charset=UTF-8',
+		success: function (res) {
+			usersSet();
+			adminsSet();
+			professorsSet();
+			studentsSet();
+
+			swal({
+				title: "삭제가 완료되었습니다!",
+				icon: "success"
+			});
+		},
+		error: function (xhr, status, error) {
+			alert("출력실패");
+		}
+	});
 }
 
 // 이미지 파일인지 체크(확장자를 이용해서)
@@ -451,13 +711,9 @@ function insertFormSet(param){
 				</c:forEach>
 		formText+=`</select>
 		</div>
-		<div class="col-sm-3 mbKYW">
+		<div class="col-sm-2 mbKYW">
 			<label class="form-label lmbKYW">생년월일</label>
-			<input type="text" class="form-control" id="userBrdt" placeholder="생년월일을 입력해주세요(8자리)">
-		</div>
-		<div class="col-sm-3 mbKYW">
-			<label class="form-label lmbKYW">주민등록번호</label>
-			<input type="text" class="form-control" id="userRrno" placeholder="주민등록번호를 입력해주세요">
+			<input type="text" class="form-control" id="userBrdt" placeholder="생년월일(8자리)">
 		</div>
 		<div class="col-sm-2 mbKYW">
 			<label class="form-label lmbKYW">성별</label>
@@ -469,6 +725,10 @@ function insertFormSet(param){
 					</c:if>
 				</c:forEach>
 		formText+= `</select>
+		</div>
+		<div class="col-sm-4 mbKYW">
+			<label class="form-label lmbKYW">주민등록번호</label>
+			<input type="text" class="form-control" id="userRrno" placeholder="주민등록번호를 입력해주세요">
 		</div>
 		<div class="col-sm-4 mbKYW">
 			<label class="form-label lmbKYW">연락처</label>
@@ -759,13 +1019,159 @@ function userInsert(event){
 	console.log("등록버튼");
 	var userClsCd = $("#selectTarget").val();	// 사용자 구분
 	var userPw = $("#userBrdt").val();
-	// if(userClsCd == 'student') {
-	// 	userPw = $("#stdBrdt").val();
-	// } else if(userClsCd == 'professor'){
-	// 	userPw = $("#proBrdt").val();
-	// } else if(userClsCd == 'admin'){
-	// 	userPw = $("#empBrdt").val();
-	// }
+
+	if($("#userNo").val() == ''){
+		swal({
+			title: "학번/교번을 입력해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if($("#userNm").val() == ''){
+		swal({
+			title: "이름을 입력해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if($("#userBrdt").val() == ''){
+		swal({
+			title: "생년월일을 입력해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if($("#userRrno").val() == ''){
+		swal({
+			title: "주민등록번호를 입력해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if($("#sexCd").val() == ''){
+		swal({
+			title: "성별을 선택해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if($("#userTelno").val() == ''){
+		swal({
+			title: "연락처를 입력해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if($("#userMail").val() == ''){
+		swal({
+			title: "이메일을 입력해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if($("#bankCd").val() == ''){
+		swal({
+			title: "은행을 선택해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if($("#userActno").val() == ''){
+		swal({
+			title: "계좌번호를 입력해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if($("#userZip").val() == ''){
+		swal({
+			title: "우편번호를 입력해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if($("#userAddr").val() == ''){
+		swal({
+			title: "기본주소를 입력해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if($("#userDaddr").val() == ''){
+		swal({
+			title: "상세주소를 입력해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+
+	if(userClsCd == 'student') {
+		if($("#deptCd").val() == ''){
+			swal({
+				title: "학과를 선택해주세요!", 
+				icon: "error"
+			});
+			return false;
+		}	
+	} else if(userClsCd == 'professor'){
+		if($("#deptCd").val() == ''){
+			swal({
+				title: "학과를 선택해주세요!", 
+				icon: "error"
+			});
+			return false;
+		}	
+		if($("#proJbttlCd").val() == ''){
+			swal({
+				title: "직책을 선택해주세요!", 
+				icon: "error"
+			});
+			return false;
+		}	
+		if($("#proJncmpYmd").val() == ''){
+			swal({
+				title: "입사일을 선택해주세요!", 
+				icon: "error"
+			});
+			return false;
+		}	
+		if($("#proLab").val() == ''){
+			swal({
+				title: "연구실을 입력해주세요!", 
+				icon: "error"
+			});
+			return false;
+		}	
+		if($("#proLabTelno").val() == ''){
+			swal({
+				title: "연구실 전화번호를 입력해주세요!", 
+				icon: "error"
+			});
+			return false;
+		}	
+	} else if(userClsCd == 'admin'){
+		if($("#empDeptCd").val() == ''){
+			swal({
+				title: "부서를 선택해주세요!", 
+				icon: "error"
+			});
+			return false;
+		}	
+		if($("#empJbttlCd").val() == ''){
+			swal({
+				title: "직급을 선택해주세요!", 
+				icon: "error"
+			});
+			return false;
+		}	
+		if($("#empJbgdCd").val() == ''){
+			swal({
+				title: "직책을 선택해주세요!", 
+				icon: "error"
+			});
+			return false;
+		}
+	}
 
 	// var files = event.target.files;
 	console.log("file",file);
@@ -810,68 +1216,6 @@ function userInsert(event){
 
 	}
 
-	let userInsertData = {
-		"userNo": $("#userNo").val(),
-		"userPw": userPw,
-		"userClsCd": userClsCd,
-		// "enabled": $("#enabled").val(),
-
-		"deptCd": $("#deptCd").val(),
-		"bankCd": $("#bankCd").val(),
-		"sexCd": $("#sexCd").val(),
-
-		"stdNo": $("#stdNo").val(),
-		"stdNm": $("#stdNm").val(),
-		"stdMjrCrd": $("#stdMjrCrd").val(),		//	필요 X
-		"stdCtrlCrd": $("#stdCtrlCrd").val(),	//	필요 X
-		"stdMtcltnYr": $("#stdMtcltnYr").val(),	//	필요 X
-		"stdSttsCd": $("#stdSttsCd").val(),		//	필요 X
-		"stdTelno": $("#stdTelno").val(),
-		"stdSexCd": $("#stdSexCd").val(),
-		"stdZip": $("#stdZip").val(),
-		"stdAddr": $("#stdAddr").val(),
-		"stdDaddr": $("#stdDaddr").val(),
-		"stdMail": $("#stdMail").val(),
-		"stdBrdt": $("#stdBrdt").val(),
-		"stdRrno": $("#stdRrno").val(),
-		"stdActno": $("#stdActno").val(),
-		"stdProfile": $("#stdProfile").val(),
-		"stdProfilePath": $("#stdProfilePath").val(),
-
-		"empNo": $("#empNo").val(),
-		"empName": $("#empName").val(),
-		"empMail": $("#empMail").val(),
-		"empBrdt": $("#empBrdt").val(),
-		"empJncmpYmd": $("#empJncmpYmd").val(),
-		"empRsgntnYmd": $("#empRsgntnYmd").val(),
-		"empTelno": $("#empTelno").val(),
-		"empZip": $("#empZip").val(),
-		"empAddr": $("#empAddr").val(),
-		"empDaddr": $("#empDaddr").val(),
-		"empRrno": $("#empRrno").val(),
-		"empActno": $("#empActno").val(),
-		"empProfilePath": $("#empProfilePath").val(),
-		"empDeptCd": $("#empDeptCd").val(),
-		"empJbttlCd": $("#empJbttlCd").val(),
-		"empJbgdCd": $("#empJbgdCd").val(),
-
-		"proNo": $("#proNo").val(),
-		"proJbttlCd": $("#proJbttlCd").val(),
-		"proJncmpYmd": $("#proJncmpYmd").val(),
-		"proRsgntnYmd": $("#proRsgntnYmd").val(),
-		"proLab": $("#proLab").val(),
-		"proLabTelno": $("#proLabTelno").val(),
-		"proNm": $("#proNm").val(),
-		"proTelno": $("#proTelno").val(),
-		"proZip": $("#proZip").val(),
-		"proAddr": $("#proAddr").val(),
-		"proDaddr": $("#proDaddr").val(),
-		"proMail": $("#proMail").val(),
-		"proBrdt": $("#proBrdt").val(),
-		"proRrno": $("#proRrno").val(),
-		"proActno": $("#proActno").val(),
-		"proProfilePath": $("#proProfilePath").val(),
-	};
 	// console.log(userInsertData);
 	console.log("formData",formData);	
 
@@ -883,7 +1227,17 @@ function userInsert(event){
 		processData: false,
 		contentType: false,
 		success: function (res) {
-			alert("성공");
+			if(userClsCd == "student"){
+				studentsSet();
+			} else if(userClsCd == "professor"){
+				professorsSet();
+			} else if(userClsCd == "admin"){
+				adminsSet();
+			}
+			swal({
+				title: "사용자 등록이 완료되었습니다!", 
+				icon: "success"
+			});
 		},
 		error: function (xhr, status, error) {
 			alert("출력실패");

@@ -14,4 +14,8 @@ public interface FacilityService {
 	public List<FacilitiesVO> fcltsList(Map<String, Object> map);
 	public List<FacilitiesVO> rsvtList(Map<String, Object> map);
 	public ServiceResult flctsReservation(FacilitiesVO vo);
+	public List<FacilitiesVO> getFlctsRsvtList(String stdNo);
+	public List<LockerRsvtVO> getLockerRsvtList(String stdNo);
+	public ServiceResult lockerCancle(LockerRsvtVO vo);
+	public ServiceResult flctsCancle(String flctsRsvtNo);
 }
