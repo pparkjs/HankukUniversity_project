@@ -16,4 +16,7 @@ public class LockerRsvtVO {
 	private String lockerYr;	// 신청년도
 	private int rsvtSem;  // 신청학기
 	private String avlCd;	// 열쇠불출여부
+	
+	private String presentCheck; //현재 년도 현재 학기인지 체크
+	private String flctNm;
 }

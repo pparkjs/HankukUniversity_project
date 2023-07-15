@@ -9,12 +9,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.hku.admin.service.LecAplyAdminService;
 import kr.or.hku.admin.vo.LectureBasicVO;
 import kr.or.hku.admin.vo.LectureProgramVO;
+import kr.or.hku.admin.vo.ScheduleVO;
 import kr.or.hku.common.service.CommonService;
 import kr.or.hku.common.vo.CommonVO;
 import lombok.extern.slf4j.Slf4j;
@@ -51,10 +55,34 @@ public class LecAplyAdminController {
 		
 		LectureBasicVO basicVO = lecApAdminService.getLecBasicOne(lecApNo);
 		LectureProgramVO lectureProgramVO = lecApAdminService.getLecProgam(lecApNo);
+		List<ScheduleVO> scheduleList = lecApAdminService.getSchedules(lecApNo);
 		
 		
 		dataMap.put("lecBasic", basicVO);
 		dataMap.put("lecProgram", lectureProgramVO);
+		dataMap.put("scheduleList", scheduleList);
 		return dataMap;
+	}
+	
+	@ResponseBody
+	@PostMapping("/lecaplylist")
+	public int signOnLecture(@RequestBody Map<String, String> map) {
+		log.info(map.toString());
+		int res = lecApAdminService.signOnLecture(Integer.parseInt(map.get("lecApNo")));
+		
+		// 예시로 하기
+//		int res = 1;
+		return res;
+	}
+	
+	@ResponseBody
+	@PutMapping("/lecaplylist")
+	public int rejectLecture(@RequestBody Map<String, String> map) {
+		log.info(map.toString());
+		int res = lecApAdminService.rejectLecture(map);
+		
+		// 예시로 하기
+//		int res = 1;
+		return res;
 	}
 }
