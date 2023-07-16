@@ -39,6 +39,8 @@
     <typeAlias type="kr.or.hku.lectureInfo.vo.CourseRegistVO" alias="courseRegistVO"/>
     <typeAlias type="kr.or.hku.student.vo.LockerVO" alias="lockerVO"/>
     <typeAlias type="kr.or.hku.student.vo.LockerRsvtVO" alias="lockerRsvtVO"/>
+    <typeAlias type="kr.or.hku.counseling.vo.CounselingRsvtVO" alias="counselingRsvtVO"/>
+    <typeAlias type="kr.or.hku.common.vo.AlarmVO" alias="alarmVO"/>
     
     <!-- 지현칸 밑에서만 작성 -->
     <typeAlias type="kr.or.hku.lectureInfo.vo.LectureTimeTableVO" alias="timeTableVO"/>
