@@ -29,4 +29,6 @@ public class ProfessorVO {
 	private String proActno       ;
 	private String proProfilePath;
 	
+	// 조인해서 가져올 학과이름
+	private String deptNm;
 }

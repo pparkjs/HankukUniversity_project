@@ -98,8 +98,8 @@
 					<span class="nav-text">상담</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">상담신청</a></li>
-					<li><a href="#">신청내역 조회</a></li>
+					<li><a href="/hku/counseling-req">상담신청</a></li>
+					<li><a href="/hku//counseling-record">신청내역 조회</a></li>
 				</ul>
 			</li>
 			
