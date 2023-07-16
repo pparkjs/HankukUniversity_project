@@ -53,6 +53,7 @@
     <typeAlias type="kr.or.hku.admin.vo.LectureBasicVO" alias="lecBasicVO"/>
     <typeAlias type="kr.or.hku.admin.vo.LectureProgramVO" alias="lecProgramVO"/>
     <typeAlias type="kr.or.hku.admin.vo.ScheduleVO" alias="scheduleVO"/>
+    <typeAlias type="kr.or.hku.admin.vo.ScholarshipVO" alias="scholarshipVO"/>
     <!-- 영우칸 밑에서만 작성-->
     
     <typeAlias type="kr.or.hku.admin.vo.UserVO" alias="userVO"/>

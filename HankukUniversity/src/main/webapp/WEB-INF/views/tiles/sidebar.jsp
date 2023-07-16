@@ -246,7 +246,7 @@
 					<span class="nav-text">장학금</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">장학금 정보 등록</a></li>
+					<li><a href="/hku/admin/scholarship-info">장학금 정보 등록</a></li>
 					<li><a href="#">장학금 신청 내역</a></li>
 				</ul>
 			</li>
