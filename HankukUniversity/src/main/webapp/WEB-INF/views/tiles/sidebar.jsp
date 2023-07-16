@@ -199,7 +199,7 @@
 					<li><a href="/hku/admin/subject-administration">교과목 관리</a></li>
 					<li><a href="#">시설관리</a></li>
 					<li><a href="#">사물함관리</a></li>
-					<li><a href="#">학사 일정 관리</a></li>
+					<li><a href="/hku/admin/calendar">학사 일정 관리</a></li>
 				</ul>
 			</li>
 			
