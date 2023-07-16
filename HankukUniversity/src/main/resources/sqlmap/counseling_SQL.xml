@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.counseling.mapper.CounselingMapper">
+ 	
+ 	<select id="getProList" parameterType="String" resultType="professorVO">
+ 	/*kr.or.hku.counseling.mapper.getProList*/
+ 		SELECT 
+ 		     a.pro_no
+ 		   , a.dept_cd
+ 		   , a.pro_lab
+ 		   , a.pro_lab_telno
+ 		   , a.pro_nm 
+ 		   , b.dept_nm
+ 		FROM professor a, department b
+ 		WHERE a.dept_cd LIKE #{deptCd} 
+ 		AND a.pro_jbttl_cd LIKE 'fullpro'
+ 		AND a.dept_cd = b.dept_cd
+ 	</select>
+ 	
+ 	<!-- 교수의 시간표 가져오기 -->
+ 	<select id="getLecList" parameterType="String" resultType="lectureScheduleVO">
+ 	/*kr.or.hku.counseling.mapper.getLecList*/
+ 		SELECT 
+ 		     a.lecap_no
+ 		   , a.lecsc_day
+ 		   , a.period_cd
+ 		   , a.lecsc_hour
+		FROM lecture_schedule a, lecture_aply b
+		WHERE a.lecap_no = b.lecap_no
+		AND b.pro_no = #{proNo}
+		AND b.aprv_stts_cd LIKE 'appv'
+		AND b.lecap_yr LIKE TO_CHAR(sysdate, 'YYYY')
+		AND b.lecap_sem = CASE
+		                        WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 6 THEN 1
+		                        WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 12 THEN 2
+		                        ELSE 0
+		                    END
+ 	</select>
+ 	
+ 	<!-- 해당 교수한테 예약된 상담 리스트 가져오기 -->
+ 	<select id="getCounseList" parameterType="String" resultType="counselingRsvtVO">
+ 	/*kr.or.hku.counseling.mapper.getCounsList*/
+ 		SELECT 
+ 			  a.dscsn_no
+ 			, a.std_no
+ 			, a.pro_no
+ 			, a.dscsn_rsn
+ 			, a.dscsn_aply_dt
+ 			, a.period_cd
+ 			, a.attend_mode_cd
+ 			, a.aprv_stts_cd
+		FROM discussion a
+		WHERE a.pro_no LIKE #{proNo}
+		AND a.dscsn_aply_dt LIKE '%'||TO_CHAR(sysdate, 'YYYY')||'%'
+ 	</select>
+ 	
+	<!-- 상담예약 신청하기 -->
+	<insert id="counselingRsvt" parameterType="counselingRsvtVO">
+	/*kr.or.hku.counseling.mapper.counselingRsvt*/
+		INSERT INTO discussion 
+		VALUES(seq_discussion.nextval, #{stdNo}, #{proNo}, #{dscsnRsn}, #{dscsnAplyDt}, #{periodCd}, #{attendModeCd}, 'wait')
+	</insert>
+ </mapper>
