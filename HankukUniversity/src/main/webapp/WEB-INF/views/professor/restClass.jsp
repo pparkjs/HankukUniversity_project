@@ -108,9 +108,9 @@ $(document).ready(function() {
 	      height: 450,
 	      aspectRatio: 1.1,
 	      headerToolbar: {
-	         left: 'prev,next today',
+	         left: '',
 	         center: 'title',
-	         right: 'dayGridMonth'
+	         right: 'prev,next today'
 	      },
 	      dateClick: function(info) {
 	    	  mydate = info.dateStr;
@@ -274,7 +274,7 @@ $('.myTd').click(function(){
             
         },
         error: function (xhr, status, error) {
-        	
+        	$('#submitBtn').text("제출");
         }
 		
 	});
@@ -361,7 +361,7 @@ $('#submitBtn').click(function(){
 				            $('#inWeek').val('');
 				        	$('#inDate').val('');
 				        	$('#insubNm').val('');
-				            
+				        	 $('#submitBtn').text("제출");
 				            
 				        },
 				        error: function (xhr, status, error) {
