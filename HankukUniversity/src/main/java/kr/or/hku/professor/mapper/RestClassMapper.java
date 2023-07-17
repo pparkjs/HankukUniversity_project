@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.or.hku.ServiceResult;
 import kr.or.hku.lectureInfo.vo.LectureTimeTableVO;
 @Mapper
 public interface RestClassMapper {
@@ -14,5 +15,9 @@ public interface RestClassMapper {
 	public LectureTimeTableVO setRestTable(Map<String,String> myMap);
 
 	public int insertRestTable(Map<String, String> myMap);
+
+	public String ifSameData(Map<String, String> myMap);
+
+	public int deleteRestTable(String subclNo);
 
 }
