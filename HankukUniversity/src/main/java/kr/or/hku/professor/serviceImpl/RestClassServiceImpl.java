@@ -39,4 +39,16 @@ public class RestClassServiceImpl implements RestClassService {
 		}
 		return result;
 	}
+	
+	@Override
+	public int ifSameData(Map<String, String> myMap) {
+		int res = Integer.parseInt(restClassMapper.ifSameData(myMap));
+		return res;
+	}
+	
+	@Override
+	public int deleteRestTable(String subclNo) {
+		int res = restClassMapper.deleteRestTable(subclNo);
+		return res;
+	}
 }

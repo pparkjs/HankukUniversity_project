@@ -15,4 +15,8 @@ public interface RestClassService {
 
 	public ServiceResult insertRestTable(Map<String, String> myMap);
 
+	public int ifSameData(Map<String, String> myMap);
+
+	public int deleteRestTable(String subclNo);
+
 }
