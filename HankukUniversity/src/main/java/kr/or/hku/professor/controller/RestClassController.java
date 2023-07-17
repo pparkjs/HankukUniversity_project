@@ -50,5 +50,19 @@ public class RestClassController {
 		ServiceResult result = restClassService.insertRestTable(myMap);
 		return result;
 	}
+	@PostMapping(value="/ifSameData")
+	@ResponseBody
+	public int ifSameData(@RequestBody Map<String,String> myMap){
+		int result = restClassService.ifSameData(myMap);
+		return result;
+	}
+	@GetMapping(value="/deleteRestTable")
+	@ResponseBody
+	public int deleteRestTable(String subclNo){
+		int result = restClassService.deleteRestTable(subclNo);
+		return result;
+	}
+	
+	
 
 }
