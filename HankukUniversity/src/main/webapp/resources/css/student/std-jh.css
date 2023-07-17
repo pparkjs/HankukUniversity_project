@@ -102,3 +102,95 @@
 	background-color: #f7f7f7;
 	padding : 10px;
 }
+
+#gradeTable{
+	height: 300px;
+	text-align: center;
+	border : 1px solid white;
+	overflow: scroll;
+}
+
+#gradeTable th{
+	background : #800000;
+	border : 1px solid white;
+	color : white;
+	height:20px;
+}
+#gradeTable tbody{
+	background : #e1e2e3;
+	color : black;
+}
+#gradeTable td{
+	border : 1px solid white;
+		height: 20px;
+}
+  #testBtn{
+    width : 68px;
+    height :25px;
+     padding : 0;
+    }
+   
+ 
+ #dmrSttTable{
+	text-align: center;
+	border-collapse:collapse;
+	border : 1px solid white;
+	border-color : white;
+	overflow: scroll;
+}
+
+#dmrSttTable th{
+	background : #800000;
+	border : 1px solid white;
+	color : white;
+	height:35px;
+}
+#dmrSttTable tbody{
+	background : #e1e2e3;
+	color : black;
+}
+#dmrSttTable td{
+		height: 35px;
+		border : 1px solid white;
+}
+
+#dmrSttTable tr:hover{
+	background : #ccced0;
+	cursor: pointer;
+}
+
+#dmrSttTable .selected{
+	background : #ccced0;
+}
+  
+#drmCn,#drmAns{
+	font-size: 15px;
+}
+    
+#testTable{
+	height: 500px;
+	text-align: center;
+	border : 1px solid white;
+	overflow: scroll;
+}
+
+#testTable th{
+	background : #800000;
+	border : 1px solid white;
+	color : white;
+	height:10%;
+}
+#testTable tbody{
+	background : #e1e2e3;
+	color : black;
+}
+#testTable td{
+	border : 1px solid white;
+		height: 10%;
+}
+
+textarea{
+	background-color:  #e1e2e3;
+	border:none;
+	resize:none;
+}
