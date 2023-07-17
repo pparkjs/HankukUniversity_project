@@ -157,11 +157,10 @@
 		width : 100px;
 	}
 
-  }
+  
   
   .card-title{
   color : #800000;
-  	
   }
   
   .planTable{
@@ -195,7 +194,7 @@
   	width: 80%;
   	text-align: center;
   	margin : 0 auto;
-  	height: 100%;
+  	height: 95%;
 /*   	border-right: 1px solid #6e6e6e; */
   	margin-top : 15px;
   }
@@ -280,5 +279,48 @@
     background-color: #b0b0b0;
     color : white;
   }
-      
-      
+  
+  
+/* ■■■■■■■휴강신청CSS■■■■■■■ */  
+#outCardBox{
+	display:flex;
+	justify-content: space-between;
+	height : 560px;
+}
+ 
+#submitBtn{
+	padding : 0px;
+}
+
+.card-header{
+	height : 40px;
+}
+
+#restTable{
+/* 	border : 1px solid black; */
+/* 	text-align: right; */
+/* 	float:right; */
+	
+}
+
+#restTable input[type="text"],
+#restTable span
+{
+	 color : black;
+	 height : 40px;
+	 font-size: 18px;
+	 text-align: center;
+	border-radius: 5px;
+	
+}
+
+#restTable span{
+		width : 100px;
+	}
+
+#restTable td{
+	text-align: right;
+	
+}
+
+
