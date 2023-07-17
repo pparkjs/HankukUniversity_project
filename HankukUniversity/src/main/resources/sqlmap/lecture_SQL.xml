@@ -67,6 +67,7 @@
 	</select>
 	
 	<select id="getClass" parameterType="String" resultType="timeTableVO">
+	<![CDATA[
 		SELECT 
 		    a.LECAP_NO,
 		    LECSC_DAY,
@@ -82,9 +83,10 @@
 		AND b.APRV_STTS_CD !='rej'
 		AND b.LECAP_YR = EXTRACT(YEAR FROM SYSDATE)
 		AND b.LECAP_SEM = CASE
-		    WHEN EXTRACT(MONTH FROM SYSDATE)= 6 THEN '1'
+		    WHEN EXTRACT(MONTH FROM SYSDATE)<= 7 THEN '1'
 		    ELSE '2'
 		END
+		]]>
 	</select>
 	
 	<insert id="applyLecture" parameterType="lectureAplyVO" useGeneratedKeys="true">
