@@ -120,3 +120,16 @@ ul{
 .listBtn {
     line-height: 28px;
 }
+.author-profile .info-list li {
+    display: block;
+/*     align-items: center; */
+/*     justify-content: space-between; */
+    font-size: 15px;
+    border-top: 1px solid #CCCCCC;
+    padding: 18px 30px;
+    color: #6e6e6e;
+}
+#notice {
+	font-weight: bold;
+    color: #800000;
+}

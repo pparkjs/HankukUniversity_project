@@ -32,13 +32,17 @@
 									</div>
 								</div>
 							</div>
-							<!-- <div class="info-list">
+							<div class="info-list">
 								<ul>
-									<li><a href="app-profile.html">Models</a><span>36</span></li>
-									<li><a href="uc-lightgallery.html">Gallery</a><span>3</span></li>
-									<li><a href="app-profile.html">Lessons</a><span>1</span></li>
+									<li>
+										<p id="notice">사용자 등록 주의사항</p>
+										<div style="text-align:left;">
+											- 항목을 정확히 모두 입력해주세요.<br/>
+											- 엑셀 파일 일괄등록 시 엑셀 형식을 꼭 맞춰주세요.<br/>
+										</div>
+									</li>
 								</ul>
-							</div> -->
+							</div>
 						</div>
 					</div>
 				</div>
@@ -61,11 +65,13 @@
 										<option value="student" selected>학생</option>
 									</select>
 								</div>
-								<div class="col-md-4 input-group ilgualdngrok">
-									<input class="form-control" type="file" id="formFile">
-									<span class="input-group-append">
-										<button type="button" onclick="poiInsert()" class="btn btn-primary btn-flat">일괄등록</button>
-									</span>
+								<div class="col-md-4 ilgualdngrok">
+									<form action="/hku/admin/insertUserExcel" class="input-group" id="excelForm" method="POST" enctype="multipart/form-data">
+										<input class="form-control" type="file" id="formFile" name="formFile">
+										<span class="input-group-append">
+											<button type="button" onclick="poiInsert()" class="btn btn-primary btn-flat">일괄등록</button>
+										</span>
+									</form>
 								</div>
 								<div class="col-auto">
 									<button type="button" class="btn btn-primary" onclick="userInsert()">등록</button>
@@ -331,33 +337,34 @@ function poiInsert(){
 		})
 		return false;
 	}
+	$("#excelForm").submit();
 	// console.log("2",formFile.file);
 	// console.log("3",formFile.value);
 
-	let formData = new FormData();
-	formData.append("file",formFile.files[0]);
+	// let formData = new FormData();
+	// formData.append("file",formFile.files[0]);
 	
-	// window.href = "/hku/admin/insertUserExcel";
-	$.ajax({
-		type: 'POST',
-		url: '/hku/admin/insertUserExcel',
-		data: formData,
-		dataType: "JSON",
-		processData: false,
-		contentType: false,
-		success: function(res) {
-			swal({
-				title: "일괄등록 성공!!",
-				icon: "success"
-			})
-			console.log("일괄등록 완료!!!!!!");
-			console.log(res);
-			studentsSet();
-		},
-		error: function (xhr, status, error) {
-			alert("출력실패");
-		}
-	});
+	// // window.href = "/hku/admin/insertUserExcel";
+	// $.ajax({
+	// 	type: 'POST',
+	// 	url: '/hku/admin/insertUserExcel',
+	// 	data: formData,
+	// 	dataType: "JSON",
+	// 	processData: false,
+	// 	contentType: false,
+	// 	success: function(res) {
+	// 		swal({
+	// 			title: "일괄등록 성공!!",
+	// 			icon: "success"
+	// 		})
+	// 		console.log("일괄등록 완료!!!!!!");
+	// 		console.log(res);
+	// 		studentsSet();
+	// 	},
+	// 	error: function (xhr, status, error) {
+	// 		alert("출력실패");
+	// 	}
+	// });
 }
 
 function tabChange(){
@@ -1238,6 +1245,12 @@ function userInsert(event){
 				title: "사용자 등록이 완료되었습니다!", 
 				icon: "success"
 			});
+			var selectTarget = $("#selectTarget");
+			var stVal = selectTarget.val();
+			$("#profileImg").attr("src", "/images/user(2).png");
+			$("#profile").val(null); // ????
+			insertFormSet(stVal);
+			console.log("휴~");
 		},
 		error: function (xhr, status, error) {
 			alert("출력실패");
