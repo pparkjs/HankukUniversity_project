@@ -12,7 +12,7 @@ public interface CommonFileService {
 
 	public int insertFile(MultipartFile file, int attachFileNo, int i);
 
-	public List<AttachFileVO> getNoticeFile(int atchFileNo);
+	public List<AttachFileVO> getFileList(int atchFileNo);
 
 	public int deleteFile(int fileNo);
 

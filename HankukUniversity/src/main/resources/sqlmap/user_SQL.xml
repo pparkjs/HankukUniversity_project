@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.admin.mapper.UserMapper">
+ 
+ 	<insert id="insertUser" parameterType="userVO">
+ 		INSERT INTO users(
+ 			user_no
+			,user_pw
+			,user_cls_cd
+			,enabled
+ 		) values(
+		 	#{userNo}	
+		 	,#{userPw}	
+		 	,#{userClsCd}	
+		 	,'1'	
+ 		)
+ 	</insert>
+ 	<insert id="insertStudent" parameterType="userVO">
+ 		INSERT INTO student(
+ 			std_no
+			,dept_cd
+			,std_nm
+			,std_mjr_crd
+			,std_ctrl_crd
+			,std_mtcltn_yr
+			,std_stts_cd
+			,std_telno
+			,std_sex_cd
+			,std_zip
+			,std_addr
+			,std_daddr
+			,std_mail
+			,std_brdt
+			,std_rrno
+			,bank_cd
+			,std_actno
+			,std_profile_path
+ 		) values(
+		 	#{userNo}	
+		 	,#{deptCd}	
+		 	,#{userNm}
+		 	,0
+		 	,0
+		 	,#{stdMtcltnYr}
+		 	,'stts01'
+		 	,#{userTelno}
+		 	,#{sexCd}
+		 	,#{userZip}
+		 	,#{userAddr}
+		 	,#{userDaddr}
+		 	,#{userMail}
+		 	,#{userBrdt}
+		 	,#{userRrno}
+		 	,#{bankCd}
+		 	,#{userActno}
+		 	,#{profilePath}
+ 		)
+ 	</insert>
+ 	
+ 	<insert id="insertProfessor" parameterType="userVO">
+ 		INSERT INTO professor(
+ 			pro_no
+			,dept_cd
+			,pro_jbttl_cd
+			,pro_jncmp_ymd
+<!-- 			,pro_rsgntn_ymd -->
+			,pro_lab
+			,pro_lab_telno
+			,pro_nm
+			,pro_telno
+			,sex_cd
+			,pro_zip
+			,pro_addr
+			,pro_daddr
+			,pro_mail
+			,pro_brdt
+			,pro_rrno
+			,bank_cd
+			,pro_actno
+			,pro_profile_path
+ 		) values(
+ 			#{userNo}
+			,#{deptCd}
+			,#{proJbttlCd}
+			,#{proJncmpYmd}
+<!-- 			,#{proRsgntnYmd} -->
+			,#{proLab}
+			,#{proLabTelno}
+			,#{userNm}
+			,#{userTelno}
+			,#{sexCd}
+			,#{userZip}
+			,#{userAddr}
+			,#{userDaddr}
+			,#{userMail}
+			,#{userBrdt}
+			,#{userRrno}
+			,#{bankCd}
+			,#{userActno}
+			,#{profilePath}
+ 		)
+ 	</insert>
+ 	
+ 	<insert id="insertEmployee" parameterType="userVO">
+ 		INSERT INTO employee(
+	 		emp_no
+			,emp_name
+			,emp_mail
+			,emp_brdt
+			,emp_jncmp_ymd
+<!-- 			,emp_rsgntn_ymd -->
+			,emp_telno
+			,sex_cd
+			,emp_zip
+			,emp_addr
+			,emp_daddr
+			,emp_rrno
+			,bank_cd
+			,emp_actno
+			,emp_profile_path
+			,emp_dept_cd
+			,emp_jbttl_cd
+			,emp_jbgd_cd
+ 		) values(
+ 			#{userNo}
+			,#{userNm}
+			,#{userMail}
+			,#{userBrdt}
+			,#{empJncmpYmd}
+<!-- 			,emp_rsgntn_ymd -->
+			,#{userTelno}
+			,#{sexCd}
+			,#{userZip}
+			,#{userAddr}
+			,#{userDaddr}
+			,#{userRrno}
+			,#{bankCd}
+			,#{userActno}
+			,#{profilePath}
+			,#{empDeptCd}
+			,#{empJbttlCd}
+			,#{empJbgdCd}
+ 		)
+ 	</insert>
+ 	
+ 	<insert id="insertUserAuth" parameterType="userVO">
+ 		INSERT INTO user_auth(
+ 			user_no
+			,user_auth
+ 		) values(
+ 			#{userNo}
+ 			,#{userAuth}
+ 		)
+ 	</insert>
+ 	
+<!--  	<select id="getAllUsers" resultType="userVO"> -->
+ 	
+<!--  	</select> -->
+ 	
+ 	<select id="getAllStudents" resultType="userVO">
+ 		SELECT 
+		    b.user_cls_cd
+		    ,c.com_cd_nm as user_cls_nm
+		    ,std_no as user_no
+		    ,d.dept_nm
+		    ,std_nm as user_nm
+		    ,std_mjr_crd
+		    ,std_ctrl_crd
+		    ,std_mtcltn_yr
+		    ,f.com_cd_nm as std_stts_nm
+		    ,std_telno as user_telno
+		    ,e.com_cd_nm as sex_nm
+		    ,std_zip as user_zip
+		    ,std_addr as user_addr
+		    ,std_daddr as user_daddr
+		    ,std_mail as user_mail
+		    ,std_brdt as user_brdt
+		    ,std_rrno as user_rrno
+		    ,g.com_cd_nm as bank_nm
+		    ,std_actno as user_actno
+		    ,std_profile_path as profile_path
+		FROM 
+		    student a INNER JOIN users b ON(a.std_no=b.user_no) 
+		    INNER JOIN com_code c ON(b.USER_CLS_CD=c.COM_CD)
+		    INNER JOIN department d ON(d.dept_cd=a.dept_cd)
+		    INNER JOIN com_code e ON(e.com_cd=a.std_sex_cd)
+		    INNER JOIN com_code f ON(f.com_cd=a.std_stts_cd)
+		    INNER JOIN com_code g ON(g.com_cd=a.bank_cd)
+ 	</select>
+ 	
+ 	<select id="getAllProfessors" resultType="userVO">
+	 	SELECT 
+		    b.user_cls_cd
+		    ,c.com_cd_nm as user_cls_nm
+		    ,pro_no as user_no
+		    ,d.dept_nm
+		    ,f.com_cd_nm as pro_jbttl_nm
+		    ,a.pro_jncmp_ymd
+		    ,a.pro_rsgntn_ymd
+		    ,a.pro_lab
+		    ,a.pro_lab_telno
+		    ,a.pro_nm as user_nm
+		    ,a.pro_telno as user_telno
+		    ,e.com_cd_nm as sex_nm
+		    ,a.pro_zip as user_zip
+		    ,a.pro_addr as user_addr
+		    ,a.pro_daddr as user_daddr
+		    ,a.pro_mail as user_mail
+		    ,a.pro_brdt as user_brdt
+		    ,a.pro_rrno as user_rrno
+		    ,g.com_cd_nm as bank_nm
+		    ,a.pro_actno as user_actno
+		    ,a.pro_profile_path as profile_path
+		FROM    
+		    professor a INNER JOIN users b ON(a.pro_no=b.user_no) 
+		    INNER JOIN com_code c ON(b.USER_CLS_CD=c.COM_CD)
+		    INNER JOIN department d ON(d.dept_cd=a.dept_cd)
+		    INNER JOIN com_code e ON(e.com_cd=a.sex_cd)
+		    INNER JOIN com_code f ON(f.com_cd=a.pro_jbttl_cd)
+		    INNER JOIN com_code g ON(g.com_cd=a.bank_cd)
+ 	</select>
+ 	
+ 	<select id="getAllAdmins" resultType="userVO">
+ 		SELECT
+		    b.user_cls_cd
+		    ,c.com_cd_nm as user_cls_nm
+		    ,emp_no as user_no
+		    ,emp_name as user_nm
+		    ,emp_mail as user_mail
+		    ,emp_brdt as user_brdt
+		    ,emp_jncmp_ymd
+		    ,emp_rsgntn_ymd
+		    ,emp_telno as user_telno
+		    ,e.com_cd_nm as sex_nm
+		    ,emp_zip as user_zip
+		    ,emp_addr as user_addr
+		    ,emp_daddr as user_daddr
+		    ,emp_rrno as user_rrno
+		    ,g.com_cd_nm as bank_nm
+		    ,emp_actno as user_actno
+		    ,emp_profile_path as profile_path
+		    ,d.com_cd_nm as emp_dept_nm
+		    ,f.com_cd_nm as emp_jbttl_nm
+		    ,h.com_cd_nm as emp_jbgd_nm
+		FROM
+		    employee a INNER JOIN users b ON(a.emp_no=b.user_no)
+		    INNER JOIN com_code c ON(b.USER_CLS_CD=c.COM_CD)
+		    INNER JOIN com_code d ON(d.com_cd=a.emp_dept_cd)
+		    INNER JOIN com_code e ON(e.com_cd=a.sex_cd)
+		    INNER JOIN com_code f ON(f.com_cd=a.emp_jbttl_cd)
+		    INNER JOIN com_code g ON(g.com_cd=a.bank_cd)
+		    INNER JOIN com_code h ON(h.com_cd=a.emp_jbgd_cd)
+ 	</select>
+ 	
+ 	<select id="getAllUsers" resultType="userVO">
+ 		SELECT
+		    b.user_cls_cd
+		    ,c.com_cd_nm as user_cls_nm
+		    ,emp_no as user_no
+		    ,emp_name as user_nm
+		    ,emp_telno as user_telno
+		    ,e.com_cd_nm as sex_nm
+		    ,emp_zip as user_zip
+		    ,emp_addr as user_addr
+		    ,emp_daddr as user_daddr
+		    ,emp_mail as user_mail
+		    ,emp_brdt as user_brdt
+		    ,emp_rrno as user_rrno
+		    ,g.com_cd_nm as bank_nm
+		    ,emp_actno as user_actno
+		    ,emp_profile_path as profile_path
+		FROM
+		    employee a INNER JOIN users b ON(a.emp_no=b.user_no)
+		    INNER JOIN com_code c ON(b.USER_CLS_CD=c.COM_CD)
+		    INNER JOIN com_code e ON(e.com_cd=a.sex_cd)
+		    INNER JOIN com_code g ON(g.com_cd=a.bank_cd)
+		    
+		UNION ALL
+		
+		SELECT 
+		    b.user_cls_cd
+		    ,c.com_cd_nm as user_cls_nm
+		    ,pro_no as user_no
+		    ,a.pro_nm as user_nm
+		    ,a.pro_telno as user_telno
+		    ,e.com_cd_nm as sex_nm
+		    ,a.pro_zip as user_zip
+		    ,a.pro_addr as user_addr
+		    ,a.pro_daddr as user_daddr
+		    ,a.pro_mail as user_mail
+		    ,a.pro_brdt as user_brdt
+		    ,a.pro_rrno as user_rrno
+		    ,g.com_cd_nm as bank_nm
+		    ,a.pro_actno as user_actno
+		    ,a.pro_profile_path as profile_path
+		FROM    
+		    professor a INNER JOIN users b ON(a.pro_no=b.user_no) 
+		    INNER JOIN com_code c ON(b.USER_CLS_CD=c.COM_CD)
+		    INNER JOIN com_code e ON(e.com_cd=a.sex_cd)
+		    INNER JOIN com_code g ON(g.com_cd=a.bank_cd)
+		            
+		UNION ALL
+		
+		SELECT 
+		    b.user_cls_cd
+		    ,c.com_cd_nm as user_cls_nm
+		    ,std_no as user_no
+		    ,std_nm as user_nm
+		    ,std_telno as user_telno
+		    ,e.com_cd_nm as sex_nm
+		    ,std_zip as user_zip
+		    ,std_addr as user_addr
+		    ,std_daddr as user_daddr
+		    ,std_mail as user_mail
+		    ,std_brdt as user_brdt
+		    ,std_rrno as user_rrno
+		    ,g.com_cd_nm as bank_nm
+		    ,std_actno as user_actno
+		    ,std_profile_path as profile_path
+		FROM 
+		    student a INNER JOIN users b ON(a.std_no=b.user_no) 
+		    INNER JOIN com_code c ON(b.USER_CLS_CD=c.COM_CD)
+		    INNER JOIN com_code e ON(e.com_cd=a.std_sex_cd)
+		    INNER JOIN com_code g ON(g.com_cd=a.bank_cd)
+ 	</select>
+ 	
+ 	<delete id="deleteEmployee" parameterType="string">
+ 		DELETE FROM employee WHERE emp_no = #{userNo}
+ 	</delete>
+ 	<delete id="deleteProfessor" parameterType="string">
+ 		DELETE FROM professor WHERE pro_no = #{userNo}
+ 	</delete>
+ 	<delete id="deleteStudent" parameterType="string">
+ 		DELETE FROM student WHERE std_no = #{userNo}
+ 	</delete>
+ 	<delete id="deleteAuth" parameterType="string">
+ 		DELETE FROM user_auth WHERE user_no = #{userNo}  
+ 	</delete>
+ 	<delete id="deleteUser" parameterType="string">
+ 		DELETE FROM users WHERE user_no = #{userNo}  
+ 	</delete>
+ </mapper>

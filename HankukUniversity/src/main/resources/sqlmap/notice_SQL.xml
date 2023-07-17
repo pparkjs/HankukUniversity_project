@@ -5,6 +5,7 @@
  <mapper namespace="kr.or.hku.notice.mapper.AdminNoticeMapper">
  	
  	<sql id="noticeSearch">
+ 		AND (notice_clsf = #{noticeClsf})
  		<if test="searchType != null and searchType == 'title'">
 			AND (notice_ttl LIKE '%'||#{searchWord}||'%')
 		</if>

@@ -18,4 +18,8 @@ public class SubjectVO {
 	private String crsClassfCd;
 	private String comCdNm;	// 전필,전선 등등...
 	private String subOtl;
+	
+	
+	
+	private String lecapNo;
 }

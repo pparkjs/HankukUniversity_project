@@ -108,6 +108,7 @@
 					<div class="middleRight">
 						<div class="rTitle">
 							<p style="color: maroon;  font-weight: 900; margin-bottom: -10px;">시간표 배정</p>
+							<div class="exp"> * 장바구니에 담긴 과목에 대한 시간표입니다.</div>
 						</div>
 						<div class="schedule-wrap">
 							<table class="schedule" border=1>
