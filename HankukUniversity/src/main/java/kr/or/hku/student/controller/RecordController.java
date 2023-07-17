@@ -172,7 +172,7 @@ public class RecordController {
 		recordVo.setStdNo(stdNo);
 		log.info("recordVO: " + recordVo.toString());
 		
-		int res = service.insertAcademic(recordVo);
+		int res = service.gradutePostpone(recordVo);
 		
 		log.info("insert status : " + res);
 		
