@@ -70,7 +70,7 @@ public class LoginController {
 	//포탈페이지 호출 
 	@GetMapping("/portal")
 	public String goPortal() {
-		return "student/main";
+		return "hku-portal";
 	}
 	
 	@GetMapping("/emp")
