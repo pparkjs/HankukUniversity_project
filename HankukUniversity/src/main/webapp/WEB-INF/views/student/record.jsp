@@ -63,7 +63,7 @@
 								    </div>
 								    <div style="overflow-x: auto;">
 								        <table class="tbl">
-								            <thead>
+								            <thead>            
 								                <tr>
 								                    <th>날짜</th>
 								                    <th>변동사항</th>
@@ -71,16 +71,22 @@
 								                </tr>
 								            </thead>
 								            <tbody>
-								                <tr>
-								                    <td>2023-01-01</td>
-								                    <td>휴학</td>
-								                    <td>승인</td>
-								                </tr>
-								                <tr>
-								                    <td>2023-01-01</td>
-								                    <td>복학</td>
-								                    <td>승인</td>
-								                </tr>
+								                <c:choose>
+									            	<c:when test="${empty recordList }">
+									            		<tr>
+									            			<td colspan="3" style="color: red;">학적변동 기록이 없습니다</td>
+									            		</tr>
+									            	</c:when>
+									            	<c:otherwise>
+									            		<c:forEach items="${recordList }" var="list">
+									            			 <tr>
+											                    <td>${list.changeAplyDt }</td>
+											                    <td>${list.comCdNm1 }</td>
+											                    <td>${list.comCdNm2 }</td>
+											               	 </tr>
+									            		</c:forEach>
+									            	</c:otherwise>
+								            	</c:choose>						              
 								            </tbody>
 								        </table>
 								    </div>
@@ -111,20 +117,20 @@
 										</div>
 										<div class="col-sm-6 m-b30">
 											<label class="form-label">학과</label>
-											<input type="text" class="form-control" value="${student.deptNm }">
+											<input type="text" class="form-control" value="${student.deptNm }" readonly>
 										</div>
 										<div class="col-sm-6 m-b30">
 											<label class="form-label">학적</label>
-											<input type="text" class="form-control" value="${student.comCdNm1 }">
+											<input type="text" class="form-control" value="${student.comCdNm1 }" readonly>
 										</div>
 										<div class="col-sm-6 m-b30">
 											<label class="form-label">주소</label>
-											<input type="text" class="form-control" value="${student.stdAddr }${student.stdDaddr }">
+											<input type="text" class="form-control" value="${student.stdAddr }${student.stdDaddr }" readonly>
 										</div>
 							
 										<div class="col-sm-6 m-b30">
 											<label class="form-label">연락처</label>
-											<input type="text" class="form-control" value="${student.stdTelno }">
+											<input type="text" class="form-control" value="${student.stdTelno }" readonly>
 										</div>
 										<div class="col-sm-6 m-b30">
 											<label class="form-label">주민등록번호</label>
@@ -132,11 +138,11 @@
 										</div>
 										<div class="col-sm-6 m-b30">
 											<label class="form-label">계좌번호</label>
-											<input type="text" class="form-control" value="${student.stdActno }">
+											<input type="text" class="form-control" value="${student.stdActno }" readonly>
 										</div>
 										<div class="col-sm-6 m-b30">
 											<label class="form-label">이메일</label>
-											<input type="text" class="form-control" value="${student.stdMail }">
+											<input type="text" class="form-control" value="${student.stdMail }" readonly>
 										</div>
 									</div>
 								</div>
