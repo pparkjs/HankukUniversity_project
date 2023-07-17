@@ -1,0 +1,228 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200;600&display=swap');
+
+body{
+    color:#666;
+    font-family:'Noto sans', sans-serif;
+    font-weight:400;
+    letter-spacing:-1.2px
+}
+h1, h2, h3, h4, h5, h6{
+    font-family:'Noto sans', sans-serif;
+    font-weight:600; 
+    letter-spacing:-1.2px
+}
+big, strong, b, dt, th{
+    font-family:'Noto sans', sans-serif;
+    font-weight:600; 
+    letter-spacing:-1.2px
+}
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, ins, kbd, q, s, samp, small, strike, strong, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, article, aside, canvas, details, embed, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video{
+    border:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    vertical-align:baseline;
+}
+
+.main_wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    height: 100vh;
+    min-height: 1000px;
+    width: 100%;
+    background: url(../images/main_bg_v2.jpg) no-repeat 50% 50%;
+    background-size: cover;
+    line-height: 1.4;
+}
+.main_wrap {
+    letter-spacing: -0.6px;
+}
+.main_wrap {
+    min-height: 930px;
+}
+
+.main_wrap .main_inner {
+    position: relative;
+    max-width: 1440px;
+    width: 100%;
+    height: 100%;
+    max-height: 1000px;
+    margin: 0 auto;
+    padding: 0 60px;
+}
+
+@media only screen and (max-width:1560px) {
+    .main_wrap .main_inner{padding:0 15px}
+	.main_wrap .logo_wrap{padding:0}
+	.main_wrap .lang_select{display:flex;top:54px;left:calc(33.33% - 96px);z-index:10;width:66px;}
+	.main_wrap .lang_select a{font-size:12px;color:rgba(255,255,255,0.5)}
+	.main_wrap .lang_select li.on a{border:0}
+	.main_wrap .lang_select li + li{margin:0}
+	.main_wrap .lang_select li + li::before{content:'';display:inline-block;width:1px;height:8px;margin:0 10px;background:rgba(255,255,255,0.5)}
+    .main_wrap .main_cont{padding:30px}
+	.main_wrap .cont_box{margin-top:0}
+
+	.main_wrap .main_inner::before,
+	.main_wrap .main_inner::after{display:none}
+	.main_wrap .login_box .text_wrap::before{right:3vw}
+
+}
+
+.main_wrap .main_cont_wrap {
+    display: flex;
+    overflow: hidden;
+    height: 100%;
+}
+.main_wrap .main_cont {
+    position: relative;
+    width: 33.33%;
+    padding: 30px 50px;
+    background: #fff;
+}
+
+.main_wrap .main_cont.my_info {
+    padding-bottom: 110px;
+    background: rgba(4,35,92,0.9) url(../images/main_my_info_bg.png) 50% 100% no-repeat;
+}
+.main_wrap .logo_wrap {
+    padding: 12px 0 0 0;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+a, span {
+    display: inline-block;
+}
+a, a:active, a:visited {
+    text-decoration: none;
+    /* color: inherit; */
+}
+.main_wrap .logo_wrap a {
+    display: block;
+    width: 100%;
+    height: 50px;
+    background: url(../images/ys_portal_logo.png) no-repeat 0 50%;
+}
+.main_wrap .logo_wrap a{
+    height:65px;
+    background-size: 275px;
+}
+.sr-only {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    font-size: 0;
+}
+
+.main_wrap .login_box .text_wrap {
+    position: relative;
+    margin-top: 230px;
+    padding-top: 50px;
+    text-align: center;
+    background: url(../../images/main/login_box_text_bg.gif) no-repeat 50% 40px;
+}
+.main_wrap .login_box .text_wrap {
+    background: transparent;
+}
+
+.main_wrap .login_box .text_wrap .balloon {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px 20px;
+    border-radius: 50px;
+    background: #fff;
+    font-weight: 500;
+    font-size: 14px;
+    color: #003671;
+}
+.main_wrap .login_box .text_wrap .balloon::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -6px;
+    right: 3px;
+    width: 10px;
+    height: 13px;
+    background: url(../images/balloon_dot.png) no-repeat 0 0;
+}
+.main_wrap .login_box .text_wrap p {
+    font-weight: 300;
+    font-size: 27px;
+    color: #fff;
+}
+.main_wrap .en {
+    font-family: 'Crimson Pro', serif;
+}
+.main_wrap .login_box .text_wrap .title {
+    margin-top: 5px;
+    font-weight: 600;
+    font-size: 50px;
+    line-height: 1;
+    text-transform: uppercase;
+}
+.main_wrap .login_box .text_wrap .desc {
+    margin: 15px 0 36px;
+    font-weight: 300;
+    font-size: 18px;
+    color: #fff;
+    opacity: 0.11;
+    text-transform: uppercase;
+}
+.main_wrap .login_box .login_btn {
+    display: block;
+    width: 100%;
+    height: 50px;
+    margin-top: 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 50px;
+    color: #003671;
+    background: #FFC933;
+    text-align: center;
+}
+.main_wrap .footer_txt {
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+}
+.main_wrap .pers_terms {
+    bottom: 100px;
+    color: #B9C7E5;
+}
+.main_wrap .pers_terms {
+    bottom: 70px;
+    color: #B9C7E5;
+}
+.main_wrap .pers_terms {
+    font-weight: 300;
+}
+
+@media only screen and (max-width:1024px) {
+	.main_wrap .login_box .text_wrap .balloon{display:none}
+}
+@media only screen and (max-width:1280px) {
+    .main_wrap .login_box .text_wrap .balloon{right:4.5vw}
+}
+@media only screen and (max-width:1560px) {
+    .main_wrap .login_box .text_wrap .balloon{right:2vw}
+}
+
