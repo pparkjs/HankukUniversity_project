@@ -24,4 +24,15 @@ public interface UserService {
 
 	public List<UserVO> getAllAdmins();
 
+	public int deleteUser(String userNo);
+
+	public int deleteEmployee(String userNo);
+
+	public int deleteProfessor(String userNo);
+
+	public int deleteStudent(String userNo);
+
+	public int deleteAuth(String userNo);
+
+
 }

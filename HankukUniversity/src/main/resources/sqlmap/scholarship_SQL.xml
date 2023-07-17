@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.admin.mapper.ScholarshipMapper">
+ 	
+ 	<select id="getSclsList" resultType="scholarshipVO">
+ 		/* kr.or.hku.admin.mapper.ScholarshipMapper.scholarshipVO */
+ 		SELECT 
+ 		      scls_cd
+			, scls_nm
+			, scls_amt
+			, scls_aply_bgng_dt
+			, scls_aply_end_dt
+			, scls_terms
+ 		FROM scholarship
+ 		WHERE 1=1
+ 		AND scls_del_yn = 'N'
+ 		ORDER BY scls_cd DESC
+ 	</select>
+ 	
+ 	<update id="modifyScls" parameterType="scholarshipVO">
+ 		/* kr.or.hku.admin.mapper.ScholarshipMapper.modifyScls */
+ 		UPDATE scholarship
+ 		SET
+ 			  scls_nm = #{sclsNm}
+			, scls_amt = #{sclsAmt}
+			, scls_aply_bgng_dt = #{sclsAplyBgngDt}
+			, scls_aply_end_dt = #{sclsAplyEndDt}
+			, scls_terms = #{sclsTerms}
+		WHERE scls_cd = #{sclsCd}
+ 	</update>
+ 	
+ 	<insert id="insertScls" parameterType="scholarshipVO">
+ 		/* kr.or.hku.admin.mapper.ScholarshipMapper.insertScls */
+		INSERT INTO scholarship(
+			  scls_cd
+			, scls_nm
+			, scls_amt
+			, scls_aply_bgng_dt
+			, scls_aply_end_dt
+			, scls_terms
+			, scls_del_yn
+		)VALUES(
+			  REPLACE('SC'||TO_CHAR(seq_scholarship.NEXTVAL, '000'), ' ','')
+			, #{sclsNm}
+			, #{sclsAmt}
+			, #{sclsAplyBgngDt}
+			, #{sclsAplyEndDt}
+			, #{sclsTerms}
+			, 'N'
+		)
+ 	</insert>
+ 	
+ 	<update id="deleteScls" parameterType="map">
+ 		/* kr.or.hku.admin.mapper.ScholarshipMapper.deleteScls */
+ 		UPDATE scholarship
+ 		SET
+ 			scls_del_yn = 'Y'
+ 		WHERE scls_cd = #{sclsCd}
+ 	</update>
+ 	
+ 	
+ </mapper>

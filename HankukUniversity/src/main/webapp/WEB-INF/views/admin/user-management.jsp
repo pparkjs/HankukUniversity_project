@@ -32,13 +32,13 @@
 									</div>
 								</div>
 							</div>
-							<div class="info-list">
+							<!-- <div class="info-list">
 								<ul>
 									<li><a href="app-profile.html">Models</a><span>36</span></li>
 									<li><a href="uc-lightgallery.html">Gallery</a><span>3</span></li>
 									<li><a href="app-profile.html">Lessons</a><span>1</span></li>
 								</ul>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
@@ -217,8 +217,10 @@
 						<form class="row g-3 custom-form" action="" name="searchForm">
 							<div class="col-md-2">
 								<select class="default-select form-control form-control-sm" name="searchType">
-									<option value="colCd">대학코드</option>
-									<option value="deptCd">학과코드</option>
+									<option value="colCd">학번/교번</option>
+									<option value="deptCd">이름</option>
+									<option value="deptNm">학과명</option>
+									<option value="deptNm">학과명</option>
 									<option value="deptNm">학과명</option>
 								</select>
 							</div>
@@ -232,7 +234,7 @@
 								<button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#deptModal" onclick="deptCdSet()">학과개설</button>
 							</div> -->
 							<div class="col-auto">
-								<button type="button" class="btn btn-sm btn-primary listBtn" onclick="delDept()">삭제</button>
+								<button type="button" class="btn btn-sm btn-primary listBtn" onclick="deleteUser()">삭제</button>
 							</div>
 						</form>
 					</div>
@@ -322,8 +324,15 @@ function poiInsert(){
 // 	var formFile = $("#formFile");
 	var formFile = document.querySelector("#formFile");
 	console.log("1",formFile.files[0]);
-	console.log("2",formFile.file);
-	console.log("3",formFile.value);
+	if(formFile.files[0] == null){
+		swal({
+			title: "파일을 선택해주세요!",
+			icon: "error"
+		})
+		return false;
+	}
+	// console.log("2",formFile.file);
+	// console.log("3",formFile.value);
 
 	let formData = new FormData();
 	formData.append("file",formFile.files[0]);
@@ -623,6 +632,55 @@ function studentsSet(){
 		}
 	});
 }
+function deleteUser(){
+	var delUserArr = new Array();
+	// let users = document.querySelectorAll(".userCheck");
+	let users = $(".userCheck");
+	for(let i=0; i<users.length; i++){
+		if(users[i].checked == true){
+			console.log(users[i]);
+			let userType = $(users[i]).parents("tr").children().eq(3).html();
+			console.log(userType);
+
+			let delUser = {
+				"type": userType,
+				"userNo": users[i].value
+			};
+			delUserArr.push(delUser);
+		}
+	}
+	if(delUserArr.length == 0){
+		swal({
+			title: "항목을 선택해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	console.log(delUserArr);
+	console.log(JSON.stringify(delUserArr));
+	$.ajax({
+		type: 'DELETE',
+		url: '/hku/admin/user-management',
+		data: JSON.stringify(delUserArr),
+		dataType: "text",
+		// processData: false,
+		contentType: 'application/json;charset=UTF-8',
+		success: function (res) {
+			usersSet();
+			adminsSet();
+			professorsSet();
+			studentsSet();
+
+			swal({
+				title: "삭제가 완료되었습니다!",
+				icon: "success"
+			});
+		},
+		error: function (xhr, status, error) {
+			alert("출력실패");
+		}
+	});
+}
 
 // 이미지 파일인지 체크(확장자를 이용해서)
 function isImageFile(file){
@@ -653,13 +711,9 @@ function insertFormSet(param){
 				</c:forEach>
 		formText+=`</select>
 		</div>
-		<div class="col-sm-3 mbKYW">
+		<div class="col-sm-2 mbKYW">
 			<label class="form-label lmbKYW">생년월일</label>
-			<input type="text" class="form-control" id="userBrdt" placeholder="생년월일을 입력해주세요(8자리)">
-		</div>
-		<div class="col-sm-3 mbKYW">
-			<label class="form-label lmbKYW">주민등록번호</label>
-			<input type="text" class="form-control" id="userRrno" placeholder="주민등록번호를 입력해주세요">
+			<input type="text" class="form-control" id="userBrdt" placeholder="생년월일(8자리)">
 		</div>
 		<div class="col-sm-2 mbKYW">
 			<label class="form-label lmbKYW">성별</label>
@@ -671,6 +725,10 @@ function insertFormSet(param){
 					</c:if>
 				</c:forEach>
 		formText+= `</select>
+		</div>
+		<div class="col-sm-4 mbKYW">
+			<label class="form-label lmbKYW">주민등록번호</label>
+			<input type="text" class="form-control" id="userRrno" placeholder="주민등록번호를 입력해주세요">
 		</div>
 		<div class="col-sm-4 mbKYW">
 			<label class="form-label lmbKYW">연락처</label>
