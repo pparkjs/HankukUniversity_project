@@ -78,14 +78,14 @@ public class UserServiceImpl implements UserService {
 			file.mkdirs();
 		}
 		
-		String proFileImg = "";		// memberVO안에 프로필 이미지 경로를 담을 변수
+		String saveFileName = "";		// memberVO안에 프로필 이미지 경로를 담을 변수
 		MultipartFile proFileImgFile = userVO.getProfile();
+		
 		log.info("원본파일 이름 : " + proFileImgFile.getOriginalFilename());
 		if(proFileImgFile.getOriginalFilename() != null && !proFileImgFile.getOriginalFilename().equals("")) {
-			String fileName = UUID.randomUUID().toString();
-			fileName += "_" + proFileImgFile.getOriginalFilename();
-			
-			uploadPath += "/" + fileName;
+			String uuid = UUID.randomUUID().toString();
+			saveFileName += "/" + uuid + "_" + proFileImgFile.getOriginalFilename();
+			uploadPath += "/" + saveFileName;
 			
 			try {
 				proFileImgFile.transferTo(new File(uploadPath));	// 파일 복사
@@ -94,9 +94,8 @@ public class UserServiceImpl implements UserService {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			proFileImg = resourcePath+ "/" + fileName;
 		}
-		return proFileImg;
+		return saveFileName;
 	}
 
 	@Override
