@@ -295,7 +295,7 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="/hku/lecture/open">강의 개설신청</a></li>
-					<li><a href="#">휴강 신청</a></li>
+					<li><a href="/hku/professor/restClass">휴강 신청</a></li>
 				</ul>
 			</li>
 			
