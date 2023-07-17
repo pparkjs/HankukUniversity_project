@@ -28,8 +28,14 @@
                             <p class="en title">Hankuk Portal</p>
                             <p class="en desc">Hankuk university</p>
                         </div>
-                        <div class="login_btn" style="cursor:pointer;">
+                        <div class="sidemenu_btn" style="cursor:pointer;">
                             <a href="/main/student">통합학사시스템</a>
+                        </div>
+                        <div class="sidemenu_btn" style="cursor:pointer;">
+                            <a href="/main/student">스터디게시판</a>
+                        </div>
+                        <div class="sidemenu_btn" style="cursor:pointer;">
+                            <a href="/main/student">공지사항</a>
                         </div>
                     </div>
                     <div class="footer_txt pers_terms">
