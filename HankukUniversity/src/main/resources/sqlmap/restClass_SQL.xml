@@ -57,14 +57,28 @@
 			,LECAP_NO
 			,PRO_NO
 			,SUNCL_RSN
-			,SUBCL_APLY_DT)
+			,SUBCL_APLY_DT
+			,SUBCL_APLY_WK)
 		VALUES(
 		SEQ_SUBJECTCANCEL.NEXTVAL,
 		#{lecapNo},
 		#{proNo},
 		#{sunclRsn},
-		#{subclAplyDt}
+		#{subclAplyDt},
+		#{subclAplyWk}
 		)
 	</insert>
+	
+	<select id="ifSameData" parameterType="map" resultType="String">
+		   SELECT SUBCL_NO FROM SUBJECT_CANCEL
+        WHERE PRO_NO = #{proNo}
+        AND LECAP_NO =#{lecapNo}
+        AND SUBCL_APLY_WK = #{subclAplyWk}
+	</select>
+	
+	<delete id="deleteRestTable" parameterType="String">
+		DELETE FROM SUBJECT_CANCEL
+		WHERE SUBCL_NO = #{subclNo}
+	</delete>
 	
  </mapper>
