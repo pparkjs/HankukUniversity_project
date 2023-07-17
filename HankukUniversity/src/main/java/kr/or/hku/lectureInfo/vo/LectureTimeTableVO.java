@@ -16,9 +16,6 @@ public class LectureTimeTableVO {
     private String lecscHour  ;
     private String subNm      ;
     private String proNm      ;
-    
-    
-    
-     
+    private String subNo      ;
 
 }
