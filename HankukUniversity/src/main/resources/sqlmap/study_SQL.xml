@@ -41,7 +41,7 @@
 			join student b on a.std_no = b.std_no
 			join com_code c on a.aprv_stts_cd = c.com_cd
 			join department d on b.dept_cd = d.dept_cd
-		where study_no = ${studyNo} and aprv_stts_cd ='wait'
+		where study_no = #{studyNo} and aprv_stts_cd ='wait'
 	</select>
 	
 	<!-- 가입신청 상세보기 -->
@@ -59,26 +59,53 @@
 		    join student b on a.std_no = b.std_no
 		    join com_code c on a.aprv_stts_cd = c.com_cd
 		    join department d on b.dept_cd = d.dept_cd
-		where a.study_no = ${studyNo} and a.std_no = ${stdNo}
+		where a.study_no = #{studyNo} and a.std_no = #{stdNo}
 	</select>
 	
 	<!-- 스터디 역할 조회 -->
 <!-- 	<select id=""> -->
 <!-- 	</select> -->
 
-	<!-- 스터디리스트 -->
-	<select id="studyList" resultType="studyVo">
-		select  
-		    a.study_no,
-		    a.std_no,
-		    b.std_nm,
-		    a.study_name,
-		    a.study_regdate,
-		    a.study_cpcy,
-		    a.study_intro 
-		from studygroup a 
-		join student b on a.std_no = b.std_no
-		order by study_no desc
+	<!--가입중인 스터디리스트 -->
+	<select id="studyList" resultType="studyVo" parameterType="String">
+		 select 
+            a.study_no,
+            a.std_no,
+            a.study_role,
+            b.std_no,
+            c.std_nm,
+            b.study_no,
+            b.study_name,
+            b.study_regdate,
+            b.study_cpcy,
+            b.study_intro
+		from studymember a
+		join studygroup b on a.study_no = b.study_no
+        join student c on b.std_no = c.std_no
+        where a.std_no = #{stdNo}
+	        order by
+	    a.study_no DESC
+	</select>
+	
+	<!-- 본인의 가입신청 대기중인 스터디 리스트 -->
+	<select id="waitStudy" resultType="studyVo" parameterType="String">
+		select a.join_no,
+		       a.study_no,
+		       a.std_no,
+		       a.aprv_stts_cd,
+		       a.join_regdate,
+		       a.join_reason,
+		       b.study_no,
+		       b.std_no,
+		       c.std_nm,
+		       b.study_name,
+		       b.study_regdate,
+		       b.study_cpcy,
+		       b.study_intro
+		from joinstatus a
+		join studygroup b on a.study_no = b.study_no
+		join student c on b.std_no = c.std_no
+		where a.std_no = #{stdNo} and a.aprv_stts_cd = 'wait'
 	</select>
 	
 	<!-- 스터디멤버 조회 -->
@@ -87,7 +114,7 @@
 			from studymember a
 			join student b on b.std_no = a.std_no
 			join department d on d.dept_cd = b.dept_cd
-		where study_no = ${studyNo}
+		where study_no = #{studyNo}
 	</select>
 
  	<!-- 스터디 select one -->
@@ -115,21 +142,21 @@
 	<!-- 스터디 탈퇴 -->
 	<delete id="exitStudy" parameterType="studyVo">
 		delete from studymember
-		where study_no = ${studyNo} and std_no = ${stdNo}
+		where study_no = #{studyNo} and std_no = #{stdNo}
 	</delete>
  	
  	<!-- 가입신청 승인-->
  	<update id="assignStudy" parameterType="int">
  		update joinstatus
 		    set aprv_stts_cd = 'appv'
-		where join_no = ${joinNo}
+		where join_no = #{joinNo}
  	</update>
  	
  	<!-- 가입신청 거절-->
  	<update id="rejStudy" parameterType="int">
  		update joinstatus
 		    set aprv_stts_cd = 'rej'
-		where join_no = ${joinNo}
+		where join_no = #{joinNo}
  	</update>
  	
  	<!-- 시간표 조회 -->
@@ -138,7 +165,7 @@
 			from course_regist a
 			join lecture_aply b on a.lecap_no = b.lecap_no
 			join lecture_schedule c on a.lecap_no = c.lecap_no
-		where a.std_no = ${stdNo} and b.lecap_yr = ${lecapYr}
+		where a.std_no = #{stdNo} and b.lecap_yr = #{lecapYr}
  	</select>
  	
  	<!-- 스터디원 추방 -->

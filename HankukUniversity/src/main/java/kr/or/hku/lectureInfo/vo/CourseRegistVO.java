@@ -25,4 +25,7 @@ public class CourseRegistVO {
 	private String lecapYr; //개설년도
 	private int lecapSem; // 개설학기
 	private String subNm; // 과목이름
+	private String deptNm; //수강과목의 학과
+	private String subNo; //수강과목번호
+	private String subCrd; //수강과목번호
 }

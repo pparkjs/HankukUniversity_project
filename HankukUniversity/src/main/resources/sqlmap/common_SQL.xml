@@ -60,4 +60,11 @@
 		WHERE a.flct_no = b.flct_no
 		AND a.flct_no = #{flctNo}
  	</select>
+ 	
+ 	<!-- 알람 등록하기 -->
+ 	<insert id="alarmInsert" parameterType="alarmVO">
+ 	/*kr.or.hku.common.mapper.CommonMapper.alarmInsert*/
+ 		INSERT INTO alarm
+ 		VALUES(seq_alarm.nextval, #{receiveUserNo}, #{alarmType}, #{alarmTtl}, sysdate, null, #{sendUserNo})
+ 	</insert>
  </mapper>

@@ -17,6 +17,7 @@ import kr.or.hku.ServiceResult;
 import kr.or.hku.lectureInfo.vo.CourseRegistVO;
 import kr.or.hku.login.service.ILoginService;
 import kr.or.hku.student.service.StdGradeCheckService;
+import kr.or.hku.student.vo.EvaluationVO;
 import kr.or.hku.student.vo.StudentInfoVO;
 import kr.or.hku.student.vo.StudentVO;
 import lombok.extern.slf4j.Slf4j;
@@ -54,4 +55,15 @@ public class StdGradeCheckController {
 		}
 		return result;
 	}
+	
+	@PostMapping("/insertEvaluation")
+	@ResponseBody
+	public ServiceResult insertEvaluation(EvaluationVO evalVO) {
+		ServiceResult result ;
+		result = gradeCheckService.insertEvaluation(evalVO);
+			
+		return result;
+	}
+	
+	
 }
