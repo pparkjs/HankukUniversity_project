@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.professor.mapper.RestClassMapper">
+ 	<select id="getMyTimetable" parameterType="String" resultType="timeTableVO">
+	<![CDATA[
+		SELECT 
+		    a.LECAP_NO,
+		    LECSC_DAY,
+		    PERIOD_CD,
+		    LECSC_HOUR,
+		    c.SUB_NM,
+		    d.PRO_NM
+		FROM LECTURE_SCHEDULE a
+		JOIN LECTURE_APLY b ON a.LECAP_NO = b.LECAP_NO
+		JOIN SUBJECT c ON b.SUB_NO = c.SUB_NO
+		JOIN professor d ON b.PRO_NO = d.PRO_NO
+		WHERE d.pro_no = #{proNo}
+		AND b.APRV_STTS_CD !='rej'
+		AND b.LECAP_YR = EXTRACT(YEAR FROM SYSDATE)
+		AND b.LECAP_SEM = CASE
+		    WHEN EXTRACT(MONTH FROM SYSDATE)<= 7 THEN '1'
+		    ELSE '2'
+		END
+		]]>
+	</select>
+	
+ 	<select id="setRestTable" parameterType="Map" resultType="timeTableVO">
+	<![CDATA[
+		SELECT 
+		    a.LECAP_NO,
+		    LECSC_DAY,
+		    PERIOD_CD,
+		    LECSC_HOUR,
+		    c.SUB_NO,
+		    c.SUB_NM,
+		    d.PRO_NM
+		FROM LECTURE_SCHEDULE a
+		JOIN LECTURE_APLY b ON a.LECAP_NO = b.LECAP_NO
+		JOIN SUBJECT c ON b.SUB_NO = c.SUB_NO
+		JOIN professor d ON b.PRO_NO = d.PRO_NO
+		WHERE d.pro_no = #{proNo}
+		AND C.SUB_NM = #{subNm}
+		AND b.APRV_STTS_CD !='rej'
+		AND b.LECAP_YR = EXTRACT(YEAR FROM SYSDATE)
+		AND b.LECAP_SEM = CASE
+		    WHEN EXTRACT(MONTH FROM SYSDATE)<= 7 THEN '1'
+		    ELSE '2'
+		END
+		]]>
+	</select>
+	
+	<insert id="insertRestTable" parameterType="map" >
+		INSERT INTO SUBJECT_CANCEL
+			(SUBCL_NO
+			,LECAP_NO
+			,PRO_NO
+			,SUNCL_RSN
+			,SUBCL_APLY_DT)
+		VALUES(
+		SEQ_SUBJECTCANCEL.NEXTVAL,
+		#{lecapNo},
+		#{proNo},
+		#{sunclRsn},
+		#{subclAplyDt}
+		)
+	</insert>
+	
+ </mapper>
