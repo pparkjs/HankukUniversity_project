@@ -197,7 +197,7 @@
 					<li><a href="/hku/admin/dept-administration">학과 관리</a></li>
 					<li><a href="#">학적 관리</a></li>
 					<li><a href="/hku/admin/subject-administration">교과목 관리</a></li>
-					<li><a href="#">시설관리</a></li>
+					<li><a href="/hku/admin/facility-administration">시설관리</a></li>
 					<li><a href="#">사물함관리</a></li>
 					<li><a href="/hku/admin/calendar">학사 일정 관리</a></li>
 				</ul>
