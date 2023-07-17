@@ -23,24 +23,25 @@
 	</div>
 	<div class="container-fluid">
 		<div class="card" id="card-title-1">
-			<div class="card-header border-0 pb-0 "></div>
 			<div class="card-body">
-				<p class="card-text"></p>
-				<ul class="nav nav-pills mb-4 light">
-					<li class=" nav-item">
-						<a href="#navpills-1" class="nav-link active" data-bs-toggle="tab" aria-expanded="true">가입중인스터디</a>
-					</li>
-					<li class="nav-item">
-						<a href="#navpills-2" class="nav-link" data-bs-toggle="tab" aria-expanded="false">승인 대기목록</a>
-					</li>
-				</ul>
-				<div style="display: flex; justify-content: end; margin-right: 80px;">
-					<a class="btn btn-primary" data-bs-toggle="offcanvas"
-						href="#offcanvasExample" role="button"
-						aria-controls="offcanvasExample">스터디 개설</a>
+				<div class="title-wrap" style="display:flex; justify-content: space-between; margin-bottom: -18px;">
+					<ul class="nav nav-pills mb-4 light">
+						<li class=" nav-item">
+							<a href="#navpills-1" class="nav-link active" data-bs-toggle="tab" aria-expanded="true">가입중인스터디</a>
+						</li>
+						<li class="nav-item">
+							<a href="#navpills-2" class="nav-link" data-bs-toggle="tab" aria-expanded="false">승인 대기목록</a>
+						</li>
+					</ul>
+					<div style="display: flex; justify-content: end; margin-right: 80px;">
+						<a class="btn btn-primary" data-bs-toggle="offcanvas"
+							href="#offcanvasExample" role="button"
+							aria-controls="offcanvasExample" style="padding: 9px 20px; height: 37px;">스터디 개설</a>
+					</div>
 				</div>
+				<hr>
 				<div class="tab-content">
-					<div id="navpills-1" class="tab-pane active">
+					<div id="navpills-1" class="tab-pane active" style="margin-top: -37px;">
 
 						<br>
 						<br>

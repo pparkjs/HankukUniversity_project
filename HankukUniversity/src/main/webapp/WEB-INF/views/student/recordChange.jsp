@@ -31,14 +31,15 @@
 		</ol>
     </div>
 <div class="container-fluid">
-	<div class="card" id="card-title-1">
-		<div class="card-header border-0 pb-0 ">
-			<h5 class="card-title">학적변동 신청</h5>
-		</div>
-		<ul class="nav nav-pills mb-4 light" style="margin-bottom:0px;">
-		</ul>
-		<div style="display: flex; justify-content: end; margin-right: 80px;">
-			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertModal">신청하기</button>
+		<div class="title-wrap" style="display:flex; justify-content: space-between; margin-bottom: 10px;">
+			<div class="card-header border-0 pb-0 ">
+				<h5 class="card-title">신청 내역</h5>
+			</div>
+			<ul class="nav nav-pills mb-4 light" style="margin-bottom:0px;">
+			</ul>
+			<div style="display: flex; justify-content: end; margin-right: 80px;">
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertModal">신청하기</button>
+			</div>
 		</div>
 		<div class="row">
 			<div class="card-body">
