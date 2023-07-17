@@ -59,7 +59,7 @@
 	                <h4 class="card-title" style="font-weight: bold; font-size :1.5em; color: #800000;">휴강 신청</h4>
 	               <button type="button" class="btn btn-primary pro1" id="submitBtn">제출</button>
 	            </div>
-	            <div class="card-body" > 
+	            <div class="card-body" style="padding-right:60px; padding-left:0px"> 
 	            <table id="restTable" style="width: 100%; height: 100%; margin:auto auto;">
                                     <tr>
                                         <td><span>과목명</span> <input type="text" id ="insubNm"
@@ -77,14 +77,14 @@
                                     <tr>
                                         <td><span>휴강주차</span> <input type="text" id="inWeek"
                                                 disabled="disabled"></td>
-                                        <td><span>휴강신청일</span> <input type="text" id="inDate" disabled="disabled">
-                                        </td>
                                         <td><span>강의요일</span> <input type="text" id="inDay" disabled="disabled">
                                         </td>
                                         <td><span>시작교시</span> <input type="text" id="inStart" disabled="disabled"></td>
+                                        <td><span>강의시수</span> <input type="text" id="inHour" disabled="disabled">
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td rowspan="2" colspan="4"><span>휴가사유</span> <textarea rows="3" cols="198" style="resize:none;" id="sunclRsn"></textarea></td>
+                                        <td rowspan="2" colspan="4"><span>휴가사유</span> <textarea rows="3" cols="198.5" style="resize:none;" id="sunclRsn"></textarea></td>
                                         <td></td>
                                     </tr>
                                 </table>
@@ -96,7 +96,8 @@
 <script>
 
 var mydate = '';
-var lecalNo = '';
+var lecapNo ;
+var subclNo;
 $(document).ready(function() {
 	   var calendarEl = document.getElementById('calendar');
 
@@ -210,20 +211,32 @@ $(document).ready(function() {
 $('.myTd').click(function(){
 	var subNm = $(this).text();
 	var proNo = ${pro.proNo};
+	var lecscDay ;
+	var lecscHour ;
+	var periodCd ;
+	var subNo;
+	
 	console.log("교번:",proNo)
 	data = {
 		 proNo: proNo,
 			subNm : subNm
 	}
+
 	$('#insubNm').val(subNm);
 	console.log(subNm);
 	$.ajax({
 		url: '/hku/professor/setRestTable',
         type: 'post',
+        async:false,
         contentType : "application/json;charset=utf-8",
         data:JSON.stringify(data),
         success: function (res) {
+        	console.log("Data",res);
         	lecapNo = res.lecapNo;
+        	lecscDay = res.lecscDay;
+        	lecscHour = res.lecscHour;
+        	periodCd = res.periodCd;
+        	subNo = res.subNo;
         	
             $('#inDay').val(res.lecscDay);
             $('#inHour').val(res.lecscHour);
@@ -238,16 +251,48 @@ $('.myTd').click(function(){
         }
 		
 	});
+	
+	data2 = {
+			 proNo: proNo,
+			lecapNo : lecapNo,
+			subclAplyWk : $('#inWeek').val()
+	}
+	
+	console.log("데이타2",data2);
+	
+	$.ajax({
+		url: '/hku/professor/ifSameData',
+        type: 'post',
+        contentType : "application/json;charset=utf-8",
+        async:false,
+        data:JSON.stringify(data2),
+        success: function (res) {
+        	console.log(res);
+            swal("동일한 내용의 신청 내역이있습니다.");
+            subclNo = res;
+            $('#submitBtn').text("취소");
+            
+        },
+        error: function (xhr, status, error) {
+        	
+        }
+		
+	});
+	
+	
 });
 
 $('#submitBtn').click(function(){
 	data = {
-			
 			lecapNo : lecapNo,
 			proNo : ${pro.proNo},
 			sunclRsn : $('#sunclRsn').val(),
-			subclAplyDt : mydate
+			subclAplyDt : mydate,
+			subclAplyWk : $('#inWeek').val()
 		}
+	console.log("신청",data);
+	if($('#submitBtn').text() == '제출'){
+	 
 	swal({
 		  title: "휴강을 신청하시겠습니까?",
 		  icon: "warning",
@@ -263,7 +308,14 @@ $('#submitBtn').click(function(){
 			        data:JSON.stringify(data),
 			        success: function (res) {
 			          swal("휴강 신청이 완료되었습니다.");
-			            
+			          $('#inDay').val('');
+			            $('#inHour').val('');
+			            $('#inStart').val('');
+			            $('#insubNo').val('');
+			            $('#sunclRsn').val('');
+			            $('#inWeek').val('');
+			        	$('#inDate').val('');
+			        	$('#insubNm').val('');
 			            
 			        },
 			        error: function (xhr, status, error) {
@@ -281,6 +333,46 @@ $('#submitBtn').click(function(){
 	
 	console.log("신청내용: ",data);
 	
+	}else if($('#submitBtn').text() == '취소'){
+		console.log(subclNo);
+		swal({
+			  title: "휴강신청을 취소하시겠습니까?",
+			  icon: "warning",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {
+				  $.ajax({
+						url: '/hku/professor/deleteRestTable',
+				        type: 'get',
+// 				        contentType : "application/json;charset=utf-8",
+				        data:{
+				        	subclNo : subclNo
+				        	},
+				        success: function (res) {
+				        
+				          swal("휴강 신청이 취소되었습니다.");
+				          $('#inDay').val('');
+				            $('#inHour').val('');
+				            $('#inStart').val('');
+				            $('#insubNo').val('');
+				            $('#sunclRsn').val('');
+				            $('#inWeek').val('');
+				        	$('#inDate').val('');
+				        	$('#insubNm').val('');
+				            
+				            
+				        },
+				        error: function (xhr, status, error) {
+				        	
+				        }
+						
+					});
+			  } 
+			});
+		
+	}
 	
 });
 
