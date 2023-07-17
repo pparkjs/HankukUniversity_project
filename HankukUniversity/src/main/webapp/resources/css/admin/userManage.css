@@ -1,5 +1,8 @@
 @charset "UTF-8";
 
+.content-body .container-fluid {
+    padding-top: 0.875rem;
+}
 .card {
     height: calc(100% - 40px);
 }
@@ -83,8 +86,8 @@ ul{
 }
 
 .author-profile .author-media img {
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
     border: 3px solid #800000;
     border-radius: 50%;
 }
