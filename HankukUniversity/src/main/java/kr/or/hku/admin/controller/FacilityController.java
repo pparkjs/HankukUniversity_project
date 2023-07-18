@@ -14,6 +14,7 @@ public class FacilityController {
 	@GetMapping("/facility-administration")
 	public String facility() {
 		log.info("facility() 실행...!");
+		
 		return "admin/facility-administration";
 	}
 }
