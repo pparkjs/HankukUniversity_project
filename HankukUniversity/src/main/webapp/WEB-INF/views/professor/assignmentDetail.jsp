@@ -1,29 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<link rel="stylesheet" href="/css/table.css">
+<link rel="stylesheet" href="/css/pro-jh.css">
 <style>
 .form-control:disabled, .form-control[readonly] {
-    background: #e9ecef;
-    opacity: 1;
+	background: #fafafa;
+	opacity: 1;
 }
 
 .col-form-label {
-    padding-top: calc(0.375rem + 1px);
-    padding-bottom: calc(0.375rem + 1px);
-    margin-bottom: 0;
-    font-size: 16px;
-    line-height: 1.5;
-    color : #716f6f;
+	padding-top: calc(0.375rem + 1px);
+	padding-bottom: calc(0.375rem + 1px);
+	margin-bottom: 0;
+	font-size: 16px;
+	line-height: 1.5;
+	color: #716f6f;
 }
 
 .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
-    overflow: hidden;
-    font-size: 14px;
+	overflow: hidden;
+	font-size: 14px;
 }
 
-.text{
-	font-size:15px;
+.text {
+	font-size: 15px;
+}
+
+.active-projects thead tr th {
+	background-color:#800000;
+}
+.active-projects.manage-client tbody tr td:last-child {
+    text-align: center;
+}
+
+.active-projects .tbl-caption {
+    padding: 0px;
+}
+
+.form-control {
+	font-size: 14px;
+	color: #535353;
 }
 
 </style>
@@ -35,22 +52,25 @@
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-header">
-						<h4 class="card-title" style="font-size:2em;">과제등록</h4>
+						<h4 class="card-title" style="font-size:1.5em;">과제상세</h4>
+						<div class="col-lg-7 ms-auto" style="padding-left:45%;" >
+							<button type="button" id="updateBtn" class="btn btn-primary">수정</button>
+							<button type="button" id="listBtn" class="btn btn-danger light">목록</button>
+						</div>
 					</div>
-					<div class="card-body">
+					<div class="card-body" style="height:430px;">
 						<div class="form-validation">
-							<form class="needs-validation" action="/hku/professor/regiAssignment" method="post" enctype="multipart/form-data">
+							<form class="needs-validation">
+								<input type="hidden" name="asmNo" value="${sessionScope.asmNo}">
 								<div class="row">
 									<div class="col-xl-12">
 										<div class="mb-3 row">
-											<label class="col-lg-1 col-form-label"   
-												for="validationCustom01">교수명
-											</label>
+											<label class="col-lg-1 col-form-label"
+												for="validationCustom01">교수명 </label>
 											<div class="col-lg-3">
 												<input type="text" class="form-control"
-													id="validationCustom01" disabled value=${pro.proNm }>
-												<div class="invalid-feedback">
-												</div>
+													id="validationCustom01"  disabled value=${pro.proNm }>
+												<div class="invalid-feedback"></div>
 											</div>
 											<label class="col-lg-1 col-form-label"
 												for="validationCustom02">과목명 <span
@@ -58,53 +78,50 @@
 											</label>
 											<div class="col-lg-3">
 												<input type="text" class="form-control
-													id="validationCustom02" value="시스템프로그래밍"
-													disabled>
+													id="
+													validationCustom02" value="${sessionScope.subNm }" disabled name="subNm">
 												<div class="invalid-feedback"></div>
 											</div>
 										</div>
-										
+
 										<div class="mb-3 row">
 											<label class="col-lg-1 col-form-label"
-												for="validationCustom03">제목<span
-												class="text-danger">*</span>
+												for="validationCustom03">제목<span class="text-danger"></span>
 											</label>
 											<div class="col-lg-7">
-												<input type="text" id="asmTtl" class="form-control"
-													id="validationCustom03" placeholder="제목을 입력하세요"
-													required="">
-												<div class="invalid-feedback">
-												</div>
+												<input type="text" id="asmTtl"  disabled class="form-control"
+													id="validationCustom03" name="asmTtl" 
+													value="${assignVo.asmTtl}">
+												<div class="invalid-feedback"></div>
 											</div>
 										</div>
 										<div class="mb-3 row">
 											<label class="col-lg-1 col-form-label"
 												for="validationCustom04">내용 <span
-												class="text-danger">*</span>
+												class="text-danger"></span>
 											</label>
 											<div class="col-lg-7">
-												<textarea id="asmCn" class="form-control h-50" id="validationCustom04"
-													 rows="10" placeholder="내용을 입력하세요"
-													required=""></textarea>
-												<div class="invalid-feedback">내용을 입력해주세요 </div>
+												<textarea id="asmCn" class="form-control h-50"
+													id="validationCustom04" rows="5" disabled name="asmCn">${assignVo.asmCn}</textarea>
+												<div class="invalid-feedback"></div>
 											</div>
 										</div>
-										
+
 										<div class="mb-3 row">
 											<label class="col-lg-1 col-form-label"
 												for="validationCustom05">주차 <span
-												class="text-danger">*</span>
+												class="text-danger"></span>
 											</label>
 											<div class="col-lg-4">
 												<div
 													class="dropdown bootstrap-select default-select wide form-control">
 													<select class="default-select wide form-control"
-														id="validationCustom05">
+														id="validationCustom05" disabled>
 														<c:forEach var="i" begin="1" end="15" step="1">
-															<option><span>${i }주차</span></option>
+															<option name="asmWeek"><span>${assignVo.asmWeek}주차</span></option>
 														</c:forEach>
 													</select>
-													
+
 													<div class="dropdown-menu ">
 														<div class="inner show" role="listbox" id="bs-select-1"
 															tabindex="-1">
@@ -122,16 +139,8 @@
 											</label>
 											<div class="col-lg-4">
 												<input type="file" class="form-control"
-													id="validationCustom06" placeholder="파일을 선택하세요">
-												<div class="invalid-feedback">
-												</div>
-											</div>
-										</div>
-										<hr>
-										<div class="mb-3 row">
-											<div class="col-lg-7 ms-auto" style="padding-left:40%">
-												<button type="submit" id="regBtn" class="btn btn-primary">등록</button>
-												<button type="button" id="listBtn" class="btn btn-danger light">목록</button>
+													id="validationCustom06">
+												<div class="invalid-feedback"></div>
 											</div>
 										</div>
 									</div>
@@ -141,80 +150,106 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="col-xl-12">
-						<div class="card">
-							<div class="card-body p-0">
-								<div class="table-responsive active-projects manage-client">
-								<div class="tbl-caption">
-									<h4 class="heading mb-0">과제제출현황</h4>
-								</div>
-								<table>
-										<thead>
-											<tr role="row">
-											<th class="sorting_asc" tabindex="0" aria-controls="reports-tbl" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Invoice #: activate to sort column descending" style="width: 150.406px;">학번</th>
-											<th class="sorting" tabindex="0" aria-controls="reports-tbl" rowspan="1" colspan="1" aria-label="Customer: activate to sort column ascending" style="width: 157.297px;">이름</th>
-											<th class="sorting" tabindex="0" aria-controls="reports-tbl" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 151.422px;">학과</th>
-											<th class="sorting" tabindex="0" aria-controls="reports-tbl" rowspan="1" colspan="1" aria-label="Due Date: activate to sort column ascending" style="width: 151.422px;">제출일자</th>
-											<th class="sorting" tabindex="0" aria-controls="reports-tbl" rowspan="1" colspan="1" aria-label="Amount: activate to sort column ascending" style="width: 123.234px;">과제확인</th>
-											<th class="sorting" tabindex="0" aria-controls="reports-tbl" rowspan="1" colspan="1" aria-label="Amount Open: activate to sort column ascending" style="width: 182.953px;">과제점수</th>
-											<th class="sorting" tabindex="0" aria-controls="reports-tbl" rowspan="1" colspan="1" aria-label="Adjustment: activate to sort column ascending" style="width: 156.109px;">제출확인</th>
-										</thead>
-										<tbody>											
-										<tr role="row" class="odd">
-												<td class="sorting_1">
-													<a href="javascript:void(0)" class="text-primary">INV-00001</a>
-												</td>
-												<td><span>2022001</span></td>
-												<td>
-													<span>황지현</span>
-												</td>
-												<td>
-													<span>컴퓨터공학</span>
-												</td>	
-												<td>
-													<span class="text-secondary">2023/07/13</span>
-												</td>
-												<td>
-													<span class="text-secondary">다운로드</span>
-												</td>
-												<td>
-													<span class="text-secondary">80</span>
-												</td>
-												<td>
-													<button type="button" class="btn btn-primary">확인</button>
-												</td>
-											</tr>
-											</tbody>
-										</table>
-									<div class="dataTables_info" id="reports-tbl_info" role="status" aria-live="polite">Showing 1 to 10 of 24 entries</div><div class="dataTables_paginate paging_simple_numbers" id="reports-tbl_paginate"><a class="paginate_button previous disabled" aria-controls="reports-tbl" data-dt-idx="0" tabindex="0" id="reports-tbl_previous"><i class="fa-solid fa-angle-left"></i></a><span><a class="paginate_button current" aria-controls="reports-tbl" data-dt-idx="1" tabindex="0">1</a><a class="paginate_button " aria-controls="reports-tbl" data-dt-idx="2" tabindex="0">2</a><a class="paginate_button " aria-controls="reports-tbl" data-dt-idx="3" tabindex="0">3</a></span><a class="paginate_button next" aria-controls="reports-tbl" data-dt-idx="4" tabindex="0" id="reports-tbl_next"><i class="fa-solid fa-angle-right"></i></a></div></div>
-								</div>
+				<div class="card">
+					<div class="card-body p-0">
+						<div class="tbl-caption" style="padding-top: 15px; padding-left: 15px;">
+							<h4 class="heading mb-0" style="font-size:1.5em;">과제제출현황</h4><hr>
+						</div>
+						<div class="table-responsive active-projects manage-client">
+							<div class="card-body ccc" style="padding-top: 0; height:40%;">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>No</th>
+											<th>학번</th>
+											<th>이름</th>
+											<th>학과</th>
+											<th>제출일자</th>
+											<th>제출파일</th>  
+											<th>과제점수</th>
+											<th style="text-align:center;">제출확인</th>
+										</tr>
+									</thead>
+									<tbody id="tBody">
+									<!-- 동적추가 -->
+							
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+</div>
 <script>
-var asmCn = document.querySelector("#asmCn"); 
-var asmTtl = document.querySelector("#asmTtl"); 
+$(function(){
+	assignList();
 	
-	function alertF(){
-		if(asmCn == " " || asmCn == null){
-			alert("내용을 입력해주세요");
-			return false;
-			asmCn.focus();
-		}
-		
-		if( asmTtl == " " || asmTtl == null){
-			alert("제목을 입력해주세요");
-			return false;
-			asmCn.focus();
-		}
-	}
-
-listBtn.addEventListener("click", function(){
-	location.href="/hku/professor/assignmentList";
 })
 
+var updateBtn = document.querySelector("#updateBtn");
+updateBtn.addEventListener("click", function(){
+	location.href = "/hku/professor/regiForm";
+})
 
+function assignList(){
+	var tBody = $("#tBody");
+	var assObj = {
+		asmNo : "${assignVo.asmNo}"
+	}
+
+	$.ajax({
+		url : "/hku/professor/assignmentDetail",  
+		type : "get",    
+		data : assObj,
+		dataType : "json",  
+		success : function(res){
+			console.log(res);
+
+			data = '';
+			for(var i = 0; i < res.length; i++){
+				data += `<tr role="row">
+							<td class="sorting_1"><a href="javascript:void(0)"
+								class="text-primary">\${i+1}</a></td>
+							<td><span>\${res[i].stdNm }</span></td>
+							<td><span>\${res[i].stdNo }</span></td>
+							<td><span>\${res[i].deptNm }</span></td>`
+				if(res[i].asmsbDt == null || res[i].asmsbDt == ''){
+					data += `<td>0</td>`
+				} else {
+					data += `<td><span class="text-secondary">\${res[i].asmsbDt }</span></td>
+							 <td><span class="text-secondary">다운로드</span></td>`
+					}
+				if(res[i].asmsbScr == '' || res[i].asmsbScr == null ){
+					data += `<td>
+								<select id="srcSel">
+									<option value="0">0</option>
+									<option value="20">20</option>
+									<option value="40">40</option>
+									<option value="60">60</option>
+									<option value="80">80</option>
+									<option value="100">100</option>
+								</select>
+							</td>`
+					data += `<td>
+								<button type="button" class="btn btn-primary" style="width:60px; height:30px;font-size:12px;">확인</button>
+							</td>`		 
+				}else{
+					data += `<td>성적부여완료</td>`;
+				}
+				data +=	`</tr>`;
+			}
+			tBody.html(data);
+		}
+	})
+}
+
+listBtn.addEventListener("click", function() {
+	location.href = "/hku/professor/assignmentList";
+})
+	
 </script>
