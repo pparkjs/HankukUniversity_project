@@ -1,239 +1,206 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<link rel="stylesheet" href="/css/table.css">
+<link rel="stylesheet" href="/css/pro-jh.css">
+<style>
+.light.btn-primary {
+    background-color: rgb(128 0 0 / 0%);
+    border-color: #888888;
+    margin-bottom: 4px;
+    height : 10px;
+   }
+   .table thead th {
+	border: none;
+    padding: 8px;
+    font-size: 16px;
+	color: #fff;
+}
+.table tbody th, .table tbody td {
+    border: none;
+    padding: 9px;
+    font-size: 15px;
+    color: black;
+}
+.container {
+  display: flex; 
+}
 
+.section {
+  flex: 1;
+  border:1px solid gray; 
+  border-radius:20%; 
+  height:150px; 
+  padding-top:5px;
+  margin-right: 20px; 
+  margin-left: 20px; 
+  
+}
 
-<div class="col-xl-9 bst-seller">
-	<div class="card">
-		<div class="card-body p-0">
-			<div
-				class="table-responsive active-projects style-1 ItemsCheckboxSec shorting ">
-				<div class="tbl-caption">
-					<h4 class="heading mb-0">Employees</h4>
-					<div>
-						<a class="btn btn-primary btn-sm" data-bs-toggle="offcanvas"
-							href="#offcanvasExample" role="button"
-							aria-controls="offcanvasExample">+ Add Employee</a>
-						<button type="button" class="btn btn-secondary btn-sm"
-							data-bs-toggle="modal" data-bs-target="#exampleModal1">+
-							Invite Employee</button>
+</style>
+
+<div class="content-body" style="min-height: 975px;">
+	<div class="page-titles">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a style="font-size:25px; color:black;" href="javascript:void(0)">${subNm }</a></li>
+			<li class="breadcrumb-item active"><a href="javascript:void(0)">
+				클래스룸 메인</a></li>
+		</ol>		
+	</div>
+	
+	<div class="container-fluid" style="padding-top: 1rem;">
+	<div class="buttons" style="padding-left:80%; padding-bottom:10px;">
+		<button type="button" id="attendBtn" onClick="" style="padding: 0.6rem 1.0rem;" class="btn btn-primary">출석관리</button>
+		<button type="button" id="attendDmrBtn" onClick="" style="padding: 0.6rem 1.2rem;" class="btn btn-primary">이의신청관리</button>
+	</div>
+		<div class="row">
+		<input type="hidden" name="lecapNo" value="${lecapNo }">	
+			<div class="col-xl-6 col-lg-6 bbb" style="width: 45%; height:350px;" >
+				<div class="card">
+				
+
+			<!------------- 시험관리 --------------->
+					<div class="card-header aaa">
+						<h4 class="card-title"
+							style="font-weight: bold; font-size: 1.2em; color: #800000;">
+							온라인시험</h4>
+							<button type="button" class="btn btn-primary" id="testBtn">출제하기</button>
+      
+      							<!-------------- 더보기버튼 필요없으면 삭제  -------------->		
+<!-- 							<button type="button" id="testMore" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="false"> -->
+<!-- 								<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"> -->
+<!-- 								<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> -->
+<!-- 								<rect x="0" y="0" width="24" height="24"></rect> -->
+<%-- 								<circle fill="#000000" cx="5" cy="12" r="2"></circle> --%>
+<%-- 								<circle fill="#000000" cx="12" cy="12" r="2"></circle> --%>
+<%-- 								<circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg> --%>
+<!-- 							</button> -->
+					</div>
+					<div class="container" style="padding-top: 0; margin-top: 1.8rem; width: 95%;">
+						<div class="section">
+							<button type="button" class="btn btn-primary">상세보기</button>
+						</div>
+						<div class="section" >
+							<button type="button" class="btn btn-primary">상세보기</button>
+						</div>
 					</div>
 				</div>
-				<div id="empoloyees-tbl_wrapper"
-					class="dataTables_wrapper no-footer">
-					<div class="dt-buttons">
-						<button
-							class="dt-button buttons-excel buttons-html5 btn btn-sm border-0"
-							tabindex="0" aria-controls="empoloyees-tbl" type="button">
-							<span><i class="fa-solid fa-file-excel"></i> Export Report</span>
-						</button>
-					</div>
-					<table id="empoloyees-tbl" class="table dataTable no-footer"
-						role="grid" aria-describedby="empoloyees-tbl_info">
-						<thead>
-							<tr role="row">
-								<th class="sorting_asc" tabindex="0"
-									aria-controls="empoloyees-tbl" rowspan="1" colspan="1"
-									aria-sort="ascending"
-									aria-label=": activate to sort column descending"
-									style="width: 27.8px;">
-									<div class="form-check custom-checkbox ms-0">
-										<input type="checkbox" class="form-check-input checkAllInput"
-											id="checkAll2" required=""> <label
-											class="form-check-label" for="checkAll2"></label>
-									</div>
-								</th>
-								<th class="sorting" tabindex="0" aria-controls="empoloyees-tbl"
-									rowspan="1" colspan="1"
-									aria-label="Employee ID: activate to sort column ascending"
-									style="width: 98.6px;">Employee ID</th>
-								<th class="sorting" tabindex="0" aria-controls="empoloyees-tbl"
-									rowspan="1" colspan="1"
-									aria-label="Employee Name: activate to sort column ascending"
-									style="width: 167.4px;">Employee Name</th>
-								<th class="sorting" tabindex="0" aria-controls="empoloyees-tbl"
-									rowspan="1" colspan="1"
-									aria-label="Email Address: activate to sort column ascending"
-									style="width: 107.225px;">Email Address</th>
-								<th class="sorting" tabindex="0" aria-controls="empoloyees-tbl"
-									rowspan="1" colspan="1"
-									aria-label="Contact Number: activate to sort column ascending"
-									style="width: 124.787px;">Contact Number</th>
-								<th class="sorting" tabindex="0" aria-controls="empoloyees-tbl"
-									rowspan="1" colspan="1"
-									aria-label="Gender: activate to sort column ascending"
-									style="width: 65.0125px;">Gender</th>
-								<th class="sorting" tabindex="0" aria-controls="empoloyees-tbl"
-									rowspan="1" colspan="1"
-									aria-label="Location: activate to sort column ascending"
-									style="width: 72.3875px;">Location</th>
-								<th class="sorting" tabindex="0" aria-controls="empoloyees-tbl"
-									rowspan="1" colspan="1"
-									aria-label="Status: activate to sort column ascending"
-									style="width: 74.0625px;">Status</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr role="row" class="odd">
-								<td class="sorting_1">
-									<div class="form-check custom-checkbox">
-										<input type="checkbox" class="form-check-input"
-											id="customCheckBox100" required=""> <label
-											class="form-check-label" for="customCheckBox100"></label>
-									</div>
-								</td>
-								<td><span>1018</span></td>
-								<td>
-									<div class="products">
-										<img src="images/contacts/pic2.jpg" class="avatar avatar-md"
-											alt="">
-										<div>
-											<h6>
-												<a href="javascript:void(0)">Mony Antony</a>
-											</h6>
-											<span>Web Designer</span>
-										</div>
-									</div>
-								</td>
-								<td><a href="javascript:void(0)" class="text-primary">ma@gmail.com</a></td>
-								<td><span>+62 123 456 7890</span></td>
-								<td><span>Female</span></td>
-								<td><span>WA</span></td>
-								<td><span class="badge badge-success light border-0">Active</span>
-								</td>
-							</tr>
-							<tr role="row" class="even">
-								<td class="sorting_1">
-									<div class="form-check custom-checkbox">
-										<input type="checkbox" class="form-check-input"
-											id="customCheckBox1111" required=""> <label
-											class="form-check-label" for="customCheckBox1111"></label>
-									</div>
-								</td>
-								<td><span>1018</span></td>
-								<td>
-									<div class="products">
-										<img src="images/contacts/pic1.jpg" class="avatar avatar-md"
-											alt="">
-										<div>
-											<h6>
-												<a href="javascript:void(0)">Ankites Risher</a>
-											</h6>
-											<span>Web Designer</span>
-										</div>
-									</div>
-								</td>
-								<td><a href="javascript:void(0)" class="text-primary">ar@gmail.com</a></td>
-								<td><span>+62 123 456 7890</span></td>
-								<td><span>Female</span></td>
-								<td><span>AL</span></td>
-								<td><span class="badge badge-success light border-0">Active</span>
-								</td>
-							</tr>
-							<tr role="row" class="odd">
-								<td class="sorting_1">
-									<div class="form-check custom-checkbox">
-										<input type="checkbox" class="form-check-input"
-											id="customCheckBox1111" required=""> <label
-											class="form-check-label" for="customCheckBox1111"></label>
-									</div>
-								</td>
-								<td><span>1018</span></td>
-								<td>
-									<div class="products">
-										<img src="images/contacts/pic2.jpg" class="avatar avatar-md"
-											alt="">
-										<div>
-											<h6>
-												<a href="javascript:void(0)">Elijah James</a>
-											</h6>
-											<span>Software Developer</span>
-										</div>
-									</div>
-								</td>
-								<td><a href="javascript:void(0)" class="text-primary">ar@gmail.com</a></td>
-								<td><span>+85 123 456 7890</span></td>
-								<td><span>Female</span></td>
-								<td><span>AL</span></td>
-								<td><span class="badge badge-success light border-0">Active</span>
-								</td>
-							</tr>
-							<tr role="row" class="even">
-								<td class="sorting_1">
-									<div class="form-check custom-checkbox">
-										<input type="checkbox" class="form-check-input"
-											id="customCheckBox1122" required=""> <label
-											class="form-check-label" for="customCheckBox1122"></label>
-									</div>
-								</td>
-								<td><span>1018</span></td>
-								<td>
-									<div class="products">
-										<img src="images/contacts/pic3.jpg" class="avatar avatar-md"
-											alt="">
-										<div>
-											<h6>
-												<a href="javascript:void(0)">Elijah James</a>
-											</h6>
-											<span>Software Developer</span>
-										</div>
-									</div>
-								</td>
-								<td><a href="javascript:void(0)" class="text-primary">ej@gmail.com</a></td>
-								<td><span>+69 123 456 7890</span></td>
-								<td><span>Male</span></td>
-								<td><span>AL</span></td>
-								<td><span class="badge badge-success light border-0">Active</span>
-								</td>
-							</tr>
-							<tr role="row" class="odd">
-								<td class="sorting_1">
-									<div class="form-check custom-checkbox">
-										<input type="checkbox" class="form-check-input"
-											id="customCheckBox100" required=""> <label
-											class="form-check-label" for="customCheckBox100"></label>
-									</div>
-								</td>
-								<td><span>1018</span></td>
-								<td>
-									<div class="products">
-										<img src="images/contacts/pic3.jpg" class="avatar avatar-md"
-											alt="">
-										<div>
-											<h6>
-												<a href="javascript:void(0)">Tony Antony</a>
-											</h6>
-											<span>Web Designer</span>
-										</div>
-									</div>
-								</td>
-								<td><a href="javascript:void(0)" class="text-primary">ta@gmail.com</a></td>
-								<td><span>+78 123 456 7890</span></td>
-								<td><span>Female</span></td>
-								<td><span>NYC</span></td>
-								<td><span class="badge badge-success light border-0">Active</span>
-								</td>
-							</tr>
-						</tbody>
+			</div>
 
-					</table>
-					<div class="dataTables_info" id="empoloyees-tbl_info" role="status"
-						aria-live="polite">Showing 6 to 10 of 15 entries</div>
-					<div class="dataTables_paginate paging_simple_numbers"
-						id="empoloyees-tbl_paginate">
-						<a class="paginate_button previous" aria-controls="empoloyees-tbl"
-							data-dt-idx="0" tabindex="0" id="empoloyees-tbl_previous"><i
-							class="fa-solid fa-angle-left"></i></a><span><a
-							class="paginate_button " aria-controls="empoloyees-tbl"
-							data-dt-idx="1" tabindex="0">1</a><a
-							class="paginate_button current" aria-controls="empoloyees-tbl"
-							data-dt-idx="2" tabindex="0">2</a><a class="paginate_button "
-							aria-controls="empoloyees-tbl" data-dt-idx="3" tabindex="0">3</a></span><a
-							class="paginate_button next" aria-controls="empoloyees-tbl"
-							data-dt-idx="4" tabindex="0" id="empoloyees-tbl_next"><i
-							class="fa-solid fa-angle-right"></i></a>
+			<!------------- 과제관리 --------------->
+			<div class="col-xl-6 col-lg-6 bbb" style="width: 55%; height:350px;">
+				<div class="card">
+					<div class="card-header aaa">
+						<h4 class="card-title"
+							style="font-weight: bold; font-size: 1.2em; color: #800000;">
+							과제관리</h4>
+							<button type="button" id="assignMore" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="false">
+								<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1">
+								<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+								<rect x="0" y="0" width="24" height="24"></rect>
+								<circle fill="#000000" cx="5" cy="12" r="2"></circle>
+								<circle fill="#000000" cx="12" cy="12" r="2"></circle>
+								<circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+							</button>
+					</div>
+					<div class="card-body ccc" style="padding-top: 0;">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>제목</th>
+									<th>작성일시</th>
+								</tr>
+							</thead>
+							<tbody id="tbtb">
+							<c:set value="${asgList }" var="asgList"/>
+							<c:choose>
+								<c:when test="${empty asgList }">
+									<tr>
+										<td colspan="5">등록된 게시글이 없습니다</td>
+									</tr>
+								</c:when>
+								<c:when test="${not empty asgList }">
+									<c:forEach items="${asgList}" var="list" varStatus="status">
+										<tr class="tbtr">
+											<td class="">${status.index + 1}</td>
+											<td class="">
+												<a href="/hku/professor/assignmentDetail/${list.asmNo}">${list.asmTtl }</a>
+											</td>
+											<td class="">${list.asmRegdate }</td>
+										</tr>
+									</c:forEach>
+								</c:when>
+							</c:choose>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+
+			<!------------- 공지사항 게시판 --------------->
+			<div class="col-xl-5 col-lg-5 bbb"
+				style="width: 100%; height: 350px;">
+				<div class="card">
+					<div class="card-header aaa">
+						<h4 class="card-title"
+							style="font-weight: bold; font-size: 1.2em; color: #800000;">
+							공지사항</h4>
+							<button type="button" id="noticeMore" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="false">
+								<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1">
+								<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+								<rect x="0" y="0" width="24" height="24"></rect>
+								<circle fill="#000000" cx="5" cy="12" r="2"></circle>
+								<circle fill="#000000" cx="12" cy="12" r="2"></circle>
+								<circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+							</button>
+					</div>
+					<div class="card-body ccc" style="padding-top: 0;">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>제목</th>
+									<th>작성일</th>
+									<th>조회수</th>
+								</tr>
+							</thead>
+							<tbody id="tbtb">
+								<tr class="tbtr">
+									<td class="">1</td>
+									<td class="">6주차 휴강안내</td>
+									<td class="">2023-07-12</td>
+								</tr>
+								<tr class="tbtr">
+									<td class="">2</td>
+									<td class="">공결신청 관련 안내</td>
+									<td class="">2023-07-10</td>
+								</tr> 
+								<tr class="tbtr">
+									<td class="">3</td>
+									<td class="">중간고사 시험 안내</td>
+									<td class="">2023-07-21</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script>
+$(function(){
+// 	alert("${lecapNo}");
+// 	assignList();
+	
+	var assignMore = document.querySelector("#assignMore");
+	
+	assignMore.addEventListener("click", function(){
+		location.href = `/hku/professor/assignmentList/${lecapNo}`;
+	})
+
+})
+
+</script>

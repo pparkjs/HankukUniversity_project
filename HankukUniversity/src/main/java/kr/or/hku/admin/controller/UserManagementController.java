@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -147,19 +150,18 @@ public class UserManagementController {
 	}
 	
 	@PostMapping("/insertUserExcel")
-	@ResponseBody
-	public ResponseEntity<List<UserVO>> insertUserExcel(MultipartFile file) throws IOException {
+	public String insertUserExcel(MultipartFile formFile, HttpServletRequest request) throws IOException {
 		log.info("insertUserExcel() 실행...!");
-		ResponseEntity<List<UserVO>> entity = null;
+//		ResponseEntity<List<UserVO>> entity = null;
 //		byte[] bytes = file.getBytes();
 ////		File file = new 
 //		log.info("OFName : " + file.getOriginalFilename());
 //		File convFile = new File(file.getOriginalFilename());
-		log.info("oName : " + file.getOriginalFilename());
-		log.info("name : " + file.getName());
-		log.info("contentType : " + file.getContentType());
-		log.info("size : " + file.getSize());
-		InputStream file2 = file.getInputStream();
+		log.info("oName : " + formFile.getOriginalFilename());
+		log.info("name : " + formFile.getName());
+		log.info("contentType : " + formFile.getContentType());
+		log.info("size : " + formFile.getSize());
+		InputStream file2 = formFile.getInputStream();
 		
 		
 //		FileInputStream file2 = new FileInputStream(new File("D:/students.xlsx"));
@@ -234,20 +236,40 @@ public class UserManagementController {
 				excelInsList.add(userVO);
 			}
 		}
-		for(UserVO user : excelInsList) {
-			int cnt = userService.insertUser(user);
-			int cnt1 = userService.insertStudent(user);
-			int cnt2 = userService.insertUserAuth(user);
-			if(cnt==0 || cnt1==0 || cnt2==0) {
-				status = 0;
-			}
-		}
+		HttpSession session = request.getSession();
+		session.setAttribute("excelInsList", excelInsList);
+		
+//		for(UserVO user : excelInsList) {
+//			int cnt = userService.insertUser(user);
+//			int cnt1 = userService.insertStudent(user);
+//			int cnt2 = userService.insertUserAuth(user);
+//			if(cnt==0 || cnt1==0 || cnt2==0) {
+//				status = 0;
+//			}
+//		}
+				
 		log.info(excelInsList.toString());
-		if(status > 0) {
-			entity = new ResponseEntity<List<UserVO>>(excelInsList,HttpStatus.OK);
-		}
+//		if(status > 0) {
+//			entity = new ResponseEntity<List<UserVO>>(excelInsList,HttpStatus.OK);
+//		}
 		workbook.close();
-		return entity;
+		return "admin/excelUserInsert";
+	}
+	
+	@GetMapping("/excel-insert")
+	public String excelInsert(){
+//		List<UserVO> excelInsList = excelUsers;
+//		int status = 1;
+//		for(UserVO user : excelInsList) {
+//			int cnt = userService.insertUser(user);
+//			int cnt1 = userService.insertStudent(user);
+//			int cnt2 = userService.insertUserAuth(user);
+//			if(cnt==0 || cnt1==0 || cnt2==0) {
+//				status = 0;
+//			}
+//		}
+		
+		return "admin/user-management";
 	}
 	
 	@DeleteMapping("/user-management")

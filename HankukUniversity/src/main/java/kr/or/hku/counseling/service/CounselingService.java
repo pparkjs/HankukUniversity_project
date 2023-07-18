@@ -12,4 +12,8 @@ public interface CounselingService {
 	public List<LectureScheduleVO> getLecList(String proNo);
 	public List<CounselingRsvtVO> getCounseList(String proNo);
 	public ServiceResult counselingRsvt(CounselingRsvtVO vo);
+	public List<CounselingRsvtVO> counselingRecord(String stdNo);
+	public List<CounselingRsvtVO> studentCounseList(String proNo);
+	public ServiceResult studentCounseAppv(int dscsnNo);
+	public ServiceResult studentCounseRej(CounselingRsvtVO vo);
 }

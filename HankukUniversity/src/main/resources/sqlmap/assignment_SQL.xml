@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.hku.classroom.mapper.AssignmentMapper">
+
+	<!-- 과제 조회 -->
+	<select id="assignOne" parameterType="string" resultType="assignmentVO">
+		/*kr.or.hku.classroom.mapper.AssignmentMapper.assignOne */
+		SELECT
+			  asm_no
+			, lecap_no
+			, asm_week
+			, asm_ttl
+			, asm_cn
+			, asm_pro_nm
+			, asm_regdate
+			, atch_file_no
+		FROM assignment 
+		WHERE asm_no = ${asmNo}
+	</select>
+
+
+	<!-- 과제 등록 -->
+	<insert id="regi" parameterType="assignmentVO" useGeneratedKeys="true">
+	/*kr.or.hku.classroom.mapper.AssignmentMapper.regi */
+		<selectKey keyProperty="asmNo" resultType="string"
+			order="BEFORE">
+			SELECT SEQ_ASSIGNMENT.nextval from dual
+		</selectKey>
+		INSERT INTO ASSIGNMENT(
+			asm_no
+			, lecap_no
+			, asm_week
+			, asm_ttl
+			, asm_cn
+			, asm_pro_nm
+			, asm_regdate
+			<if test="atchFileNo != -1">, atch_file_no</if>
+		)VALUES(
+			#{asmNo}
+			, #{lecapNo}
+			, #{asmWeek}
+			, #{asmTtl}
+			, #{asmCn}
+			, #{asmProNm}
+			, sysdate
+			<if test="atchFileNo != -1">, #{atchFileNo}</if>
+		)
+	</insert>
+	
+	<!-- 학생 리스트 불러오기 (과제및 알람등록용) -->
+	<select id="getStdList" parameterType="string" resultType="String">
+	/*kr.or.hku.classroom.mapper.AssignmentMapper.getStdList */
+		SELECT
+		  s.std_no
+		FROM
+		  course_regist cr
+		  JOIN student s ON cr.STD_NO = s.STD_NO
+		  JOIN lecture_aply l ON cr.LECAP_NO = l.LECAP_NO
+		WHERE
+		  l.lecap_no = #{lecapNo}
+	</select>
+	
+	<!-- 학생 리스트 불러오기 (과제 상세보기 가져오는 용) -->
+	<select id="getStdListByAssign" parameterType="string" resultType="assignmentVO">
+	/*kr.or.hku.classroom.mapper.AssignmentMapper.getStdList */
+		select 
+		    a.asmsb_no, a.asm_no, a.asmsb_dt, a.asmsb_scr, a.avl_code, a.atch_file_no, a.std_no
+		    ,c.dept_nm, b.std_nm
+		from assignment_submit a 
+        inner join student b on a.std_no = b.std_no
+        inner join department c on b.dept_cd = c.dept_cd
+		where a.asm_no = #{asmNo}
+	</select>
+	
+
+	<!-- 과제 출제 -->
+	<insert id="giveAssignToStd" parameterType="map">
+	/*kr.or.hku.classroom.mapper.AssignmentMapper.giveAssignToStd */
+		INSERT INTO ASSIGNMENT_SUBMIT(
+			asmsb_no
+			, asm_no
+			, std_no
+			, avl_code
+		)VALUES(
+			seq_assign_submit.nextval
+			, #{asmNo}
+			, #{stdNo}
+			, 'N'
+		)
+	</insert>
+	
+	
+	<!-- 과제 수정 -->
+	<update id="update" parameterType="assignmentVO">
+		UPDATE assignment  
+		SET 
+			asm_ttl = #{asmTtl},
+			asm_cn = #{asmCn},
+			asm_week = #{asmWeek},
+			asm_reg
+		WHERE asm_no = #{asmNo}
+	</update>
+
+	<!-- <delete id="delete" parameterType="int"> -->
+	<!-- DELETE FROM assignment -->
+	<!-- WHERE asm_pro_nm = #{proNo} -->
+	<!-- </delete> -->
+
+
+
+</mapper>

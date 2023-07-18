@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.hku.admin.mapper.AcademicMapper;
 import kr.or.hku.admin.service.AcademicAdm;
+import kr.or.hku.admin.vo.AcademicChangeVO;
 import kr.or.hku.admin.vo.CollegeVO;
 import kr.or.hku.admin.vo.DepartmentVO;
 import kr.or.hku.admin.vo.FacilityVO;
@@ -16,7 +17,7 @@ import kr.or.hku.lectureInfo.vo.SubjectVO;
 
 @Service
 public class AcademicAdmImpl implements AcademicAdm {
-	
+
 	@Autowired
 	private AcademicMapper mapper;
 
@@ -88,6 +89,16 @@ public class AcademicAdmImpl implements AcademicAdm {
 	@Override
 	public int updateSubject(SubjectVO subjectVO) {
 		return mapper.updateSubject(subjectVO);
+	}
+
+	@Override
+	public List<AcademicChangeVO> getAcademicAplyList() {
+		return mapper.getAcademicAplyList();
+	}
+
+	@Override
+	public int academicProccess(AcademicChangeVO academicChangeVO) {
+		return mapper.academicProccess(academicChangeVO);
 	}
 
 }
