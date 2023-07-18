@@ -103,4 +103,88 @@
  	
  	</update>
  
+ 	<select id="getAllSubjectInfo" parameterType="String" resultType="courseRegistVO">
+ 			<![CDATA[
+	 		 SELECT
+				    B.SUB_NO,
+				    C.SUB_NM,
+				    C.SUB_CRD,
+				    D.COM_CD_NM AS CRS_CLASSF_CD,
+				    B.LECAP_NO,
+	                A.CRS_SCR,
+	                B.LECAP_YR,
+	                B.LECAP_SEM,
+	                E.DEPT_NM,
+	                C.SUB_NO
+				FROM
+				    COURSE_REGIST A
+				    JOIN LECTURE_APLY B ON A.LECAP_NO = B.LECAP_NO
+				    JOIN SUBJECT C ON B.SUB_NO = C.SUB_NO
+				    JOIN COM_CODE D ON C.CRS_CLASSF_CD = D.COM_CD
+	                JOIN DEPARTMENT E ON C.DEPT_CD = E.DEPT_CD
+				WHERE
+				    STD_NO = #{stdNo}
+				ORDER BY B.LECAP_YR DESC, B.LECAP_SEM ASC
+	       ]]> 			
+ 	</select>
+ 	
+ 	<select id="getDeptCrtr" parameterType="String" resultType="crtrVO">
+ 		SELECT DEPT_CD
+				,DEPCR_YR
+				,DEPCR_SEM
+				,DEPCR_MJR_GRDTN_CRD
+				,DEPCR_CTRL_GRDTN_CRD
+				,DEPCR_REG_AMT
+				,DEPCR_CPCT
+				,EARLY_GRADT_GPA
+	FROM DEPARTMENT_CRTR
+	WHERE DEPT_CD = #{deptCd}
+	AND DEPCR_YR like TO_CHAR(sysdate, 'YYYY')
+    AND DEPCR_SEM = CASE
+                       WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 7 THEN 1
+                       WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 8 AND 12 THEN 2
+                    ELSE 0
+                      END
+ 	</select>
+ 	
+ 	<select id="getSubjectYear" parameterType="String" resultType="String">
+  	SELECT
+        DISTINCT(B.LECAP_YR)
+	FROM
+	    COURSE_REGIST A
+	    JOIN LECTURE_APLY B ON A.LECAP_NO = B.LECAP_NO
+	    JOIN SUBJECT C ON B.SUB_NO = C.SUB_NO
+	    JOIN COM_CODE D ON C.CRS_CLASSF_CD = D.COM_CD
+              JOIN DEPARTMENT E ON C.DEPT_CD = E.DEPT_CD
+	WHERE
+	    STD_NO = #{stdNo}
+	ORDER BY B.LECAP_YR ASC
+ 	</select>
+ 	
+ 	
+ 	<select id="getAllgrade" parameterType="Map" resultType="courseRegistVO">
+ 		 SELECT
+				    B.SUB_NO,
+				    C.SUB_NM,
+				    C.SUB_CRD,
+				    D.COM_CD_NM AS CRS_CLASSF_CD,
+				    B.LECAP_NO,
+	                A.CRS_SCR,
+	                B.LECAP_YR,
+	                B.LECAP_SEM,
+	                E.DEPT_NM
+				FROM
+				    COURSE_REGIST A
+				    JOIN LECTURE_APLY B ON A.LECAP_NO = B.LECAP_NO
+				    JOIN SUBJECT C ON B.SUB_NO = C.SUB_NO
+				    JOIN COM_CODE D ON C.CRS_CLASSF_CD = D.COM_CD
+	                JOIN DEPARTMENT E ON C.DEPT_CD = E.DEPT_CD
+				WHERE 1=1
+					<if test="lecapYr != null and lecapYr != '' ">				
+				    	AND B.LECAP_YR = #{lecapYr}
+				    </if>
+				    <if test="lecapSem != null and lecapSem != ''">
+						AND	B.LECAP_SEM = #{lecapSem}
+				    </if>
+ 	</select>
  </mapper>
