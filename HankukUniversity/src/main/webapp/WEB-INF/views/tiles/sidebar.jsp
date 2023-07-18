@@ -99,7 +99,7 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="/hku/counseling-req">상담신청</a></li>
-					<li><a href="/hku//counseling-record">신청내역 조회</a></li>
+					<li><a href="/hku/counseling-record">신청내역 조회</a></li>
 				</ul>
 			</li>
 			
@@ -321,7 +321,7 @@
 					<span class="nav-text">상담 관리</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">학생상담 신청 내역</a></li>
+					<li><a href="/hku/student-counseling">학생상담 신청 내역</a></li>
 				</ul>
 			</li>
 			</c:if>
