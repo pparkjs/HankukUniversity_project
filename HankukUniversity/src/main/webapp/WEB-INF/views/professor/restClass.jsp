@@ -14,6 +14,7 @@
     </div>
 	<div class="container-fluid">
 	<div id="outCardBox" >
+	<!-- ■■■■■■■ 주차 선택하는 카드  ■■■■■■■ -->
         <div class="card" style="width:48%; margin-bottom: 0;">
             <div class="card-header  cardTitle">
                 <h4 class="card-title" style="font-weight: bold; font-size: 1.2em; color: #800000;">날짜 선택</h4>
@@ -23,12 +24,11 @@
             </div>
    
         </div>
+        <!-- ■■■■■■■ 나의 시간표 출력, 선택하는 카드  ■■■■■■■ -->
         <div class="card" style="width:48%; margin-bottom: 0;">
             <div class="card-header  cardTitle">
                 <h4 class="card-title" style="font-weight: bold; font-size: 1.2em; color: #800000;">나의 시간표</h4>
             </div>
-<!-- <div id="openweathermap-widget-15"></div> -->
-<!-- <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 15,cityid: '1835224',appid: 'cb67762ab54bc7033bd6d74f4597ada9',units: 'metric',containerid: 'openweathermap-widget-15', lang:'kr' });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script> -->
 
             <table class="tabletime" border="1" style="margin: auto auto;">
                                     <thead>
@@ -56,6 +56,7 @@
                                 </table>
         </div>
         </div>
+        <!-- ■■■■■■■ 휴강신청폼  ■■■■■■■ -->
         <div class="grade-wrap">
 	        <div class="card" style="width:100%; margin-bottom: 0; height:300px;">
 		        <div class="card-header  cardTitle">
@@ -111,9 +112,9 @@ $(document).ready(function() {
 	      height: 450,
 	      aspectRatio: 1.1,
 	      headerToolbar: {
-	         left: '',
+	         left: 'today',
 	         center: 'title',
-	         right: 'prev,next today'
+	         right: 'prev,next'
 	      },
 	      dateClick: function(info) {
 	    	  mydate = info.dateStr;
