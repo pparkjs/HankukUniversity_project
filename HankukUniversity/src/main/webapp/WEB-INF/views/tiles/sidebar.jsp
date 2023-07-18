@@ -55,7 +55,7 @@
 					<span class="nav-text">성적</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">전체학기 성적 조회</a></li>
+					<li><a href="/hku/student/all-grade">전체학기 성적 조회</a></li>
 					<li><a href="/hku/student/subject-grade">당학기 성적 조회</a></li>
 				</ul>
 			</li>

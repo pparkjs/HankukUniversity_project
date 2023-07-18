@@ -1,5 +1,5 @@
 @charset "UTF-8";
-
+/* ■■■■■■■■■■■■ 당학기 성적조회  ■■■■■■■■■■■■ */
 .stdInfo{
 	height:150px;
 }
@@ -193,4 +193,73 @@ textarea{
 	background-color:  #e1e2e3;
 	border:none;
 	resize:none;
+}
+/* ■■■■■■■■■■■■ 당학기 성적조회  끝■■■■■■■■■■■■ */
+
+/* ■■■■■■■■■■■■ 전체학기 성적조회 ■■■■■■■■■■■■ */
+
+.allCrd{
+	height: 300px;
+	text-align: center;
+}
+
+.allCrd th{
+	background : #800000;
+	border : 1px solid white;
+	color : white;
+	height:30px;
+}
+.allCrd tbody{
+	background : #e1e2e3;
+	color : black;
+}
+.allCrd td{
+	border : 1px solid white;
+		height: 50px;
+}
+.all-grade-wrap{
+	display: flex;
+	height:177px;
+}
+
+.selectC{
+	width : 70%;	
+	height: 30px;
+	border-radius: 5px;
+	border : none;
+	box-shadow: 1px 1px 1px 1px gray;
+	text-align: center;
+	font-weight: bold;
+	color : #800000;
+	margin-right: 15px;
+}
+
+.selectC option{
+	font-weight: bold;
+	color : #800000;
+}
+#allGradeTable{
+/* 	height: 500px; */
+	text-align: center;
+	border : 1px solid white;
+}
+#allGradeTable thead{
+	position: sticky;
+	top:0px;
+}
+
+#allGradeTable th{
+	background : #800000;
+	border : 1px solid white;
+	color : white;
+	height:20px;
+	
+}
+#allGradeTable tbody{
+	background : #e1e2e3;
+	color : black;
+}
+#allGradeTable td{
+	border : 1px solid white;
+	height: 40px;
 }

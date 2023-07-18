@@ -104,7 +104,7 @@
         <div class="grade-wrap">
 	        <div class="card" style="width:50%; margin-bottom: 0.563rem;">
 		        <div class="card-header  cardTitle">
-	                <h4 class="card-title" style="font-weight: bold; font-size :1.5em; color: #800000;">이의신청</h4>
+	                <h4 class="card-title" style="font-weight: bold; font-size :1.2em; color: #800000;">이의신청</h4>
 	               <button type="button" class="btn btn-primary pro1" id="submitBtn">제출</button>
 	            </div>
 	            <div class="card-body" style="padding-left:40px;"> 
@@ -328,7 +328,6 @@
 <script>
 let stdInfo = [];
 let one;
-
 
 </script>
 <c:forEach items="${map.stdInfo}" var="stdVO">
