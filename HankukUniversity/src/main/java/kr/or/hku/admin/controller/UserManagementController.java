@@ -1,13 +1,14 @@
 package kr.or.hku.admin.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.poi.ss.usermodel.Cell;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -17,8 +18,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -147,19 +150,18 @@ public class UserManagementController {
 	}
 	
 	@PostMapping("/insertUserExcel")
-	@ResponseBody
-	public ResponseEntity<List<UserVO>> insertUserExcel(MultipartFile file) throws IOException {
+	public String insertUserExcel(MultipartFile formFile, HttpServletRequest request) throws IOException {
 		log.info("insertUserExcel() 실행...!");
-		ResponseEntity<List<UserVO>> entity = null;
+//		ResponseEntity<List<UserVO>> entity = null;
 //		byte[] bytes = file.getBytes();
 ////		File file = new 
 //		log.info("OFName : " + file.getOriginalFilename());
 //		File convFile = new File(file.getOriginalFilename());
-		log.info("oName : " + file.getOriginalFilename());
-		log.info("name : " + file.getName());
-		log.info("contentType : " + file.getContentType());
-		log.info("size : " + file.getSize());
-		InputStream file2 = file.getInputStream();
+		log.info("oName : " + formFile.getOriginalFilename());
+		log.info("name : " + formFile.getName());
+		log.info("contentType : " + formFile.getContentType());
+		log.info("size : " + formFile.getSize());
+		InputStream file2 = formFile.getInputStream();
 		
 		
 //		FileInputStream file2 = new FileInputStream(new File("D:/students.xlsx"));
@@ -171,7 +173,6 @@ public class UserManagementController {
 //		log.info("row first : " + row.getFirstCellNum());
 //		log.info("row last : " + row.getLastCellNum());
 		List<UserVO> excelInsList = new ArrayList<UserVO>();
-		UserVO userVO = new UserVO();
 		int status = 1;
 		for(Row row : sheet) {
 			if(!(row.getRowNum() == 0)) {
@@ -202,10 +203,14 @@ public class UserManagementController {
 				String userRrno = row.getCell(10).getStringCellValue();
 				String bankCd = row.getCell(11).getStringCellValue();
 				String userActno = row.getCell(12).getStringCellValue();
+				String userClsCd = row.getCell(13).getStringCellValue();
+				
+				UserVO userVO = new UserVO();
 				
 				userVO.setUserNo(userNo);
 				userVO.setUserPw(userBrdt);
-				userVO.setUserClsCd("student");
+				userVO.setUserClsCd(userClsCd);
+				userVO.setUserAuth("ROLE_STUDENT");
 				
 				userVO.setDeptCd(deptCd);
 				userVO.setUserNm(userNm);
@@ -231,13 +236,78 @@ public class UserManagementController {
 				excelInsList.add(userVO);
 			}
 		}
-		for(UserVO user : excelInsList) {
-			userService.insertUser(user);
-		}
-		if(status > 0) {
-			entity = new ResponseEntity<List<UserVO>>(excelInsList,HttpStatus.OK);
-		}
+		HttpSession session = request.getSession();
+		session.setAttribute("excelInsList", excelInsList);
+		
+//		for(UserVO user : excelInsList) {
+//			int cnt = userService.insertUser(user);
+//			int cnt1 = userService.insertStudent(user);
+//			int cnt2 = userService.insertUserAuth(user);
+//			if(cnt==0 || cnt1==0 || cnt2==0) {
+//				status = 0;
+//			}
+//		}
+				
+		log.info(excelInsList.toString());
+//		if(status > 0) {
+//			entity = new ResponseEntity<List<UserVO>>(excelInsList,HttpStatus.OK);
+//		}
 		workbook.close();
+		return "admin/excelUserInsert";
+	}
+	
+	@GetMapping("/excel-insert")
+	public String excelInsert(){
+//		List<UserVO> excelInsList = excelUsers;
+//		int status = 1;
+//		for(UserVO user : excelInsList) {
+//			int cnt = userService.insertUser(user);
+//			int cnt1 = userService.insertStudent(user);
+//			int cnt2 = userService.insertUserAuth(user);
+//			if(cnt==0 || cnt1==0 || cnt2==0) {
+//				status = 0;
+//			}
+//		}
+		
+		return "admin/user-management";
+	}
+	
+	@DeleteMapping("/user-management")
+	@ResponseBody
+	public ResponseEntity<String> deleteUser(
+			@RequestBody List<Map<String, String>> delUserArr
+			){
+		ResponseEntity<String> entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		int successFlag = 1;
+		
+		log.info("deleteUser() 실행...!");
+		log.info("delUserArr : " + delUserArr);
+		
+		for(int i=0; i<delUserArr.size(); i++) {
+			String userType = delUserArr.get(i).get("type");
+			String userNo = delUserArr.get(i).get("userNo");
+			log.info("type : " + userType);
+			log.info("userNo : " + userNo);
+			
+			int cnt = 0;
+			if(userType.equals("직원")) {
+				cnt = userService.deleteEmployee(userNo);
+			} else if(userType.equals("교수")) {
+				cnt = userService.deleteProfessor(userNo);
+			} else if(userType.equals("학생")) {
+				cnt = userService.deleteStudent(userNo);
+			}
+//			String userNo = delUserArr.get(i);
+			int authCnt = userService.deleteAuth(userNo);
+			int status = userService.deleteUser(userNo);
+			
+			if(status == 0) {
+				successFlag = 0;
+			}
+		}
+		if(successFlag == 0) {
+			entity = new ResponseEntity<String>("FAILED", HttpStatus.OK);
+		}
 		return entity;
 	}
 }

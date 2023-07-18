@@ -21,8 +21,8 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="/hku/student/record">기본사항</a></li>
-					<li><a href="/hku/student/recordChange">학적변동</a></li>
-					<li><a href="#">졸업</a></li>
+					<li><a href="/hku/student/recordChange">학적변동 신청</a></li>
+					<li><a href="/hku/student/gradute">졸업</a></li>
 				</ul>
 			</li>
 			
@@ -98,8 +98,8 @@
 					<span class="nav-text">상담</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">상담신청</a></li>
-					<li><a href="#">신청내역 조회</a></li>
+					<li><a href="/hku/counseling-req">상담신청</a></li>
+					<li><a href="/hku/counseling-record">신청내역 조회</a></li>
 				</ul>
 			</li>
 			
@@ -197,9 +197,9 @@
 					<li><a href="/hku/admin/dept-administration">학과 관리</a></li>
 					<li><a href="#">학적 관리</a></li>
 					<li><a href="/hku/admin/subject-administration">교과목 관리</a></li>
-					<li><a href="#">시설관리</a></li>
+					<li><a href="/hku/admin/facility-administration">시설관리</a></li>
 					<li><a href="#">사물함관리</a></li>
-					<li><a href="#">학사 일정 관리</a></li>
+					<li><a href="/hku/admin/calendar">학사 일정 관리</a></li>
 				</ul>
 			</li>
 			
@@ -246,7 +246,7 @@
 					<span class="nav-text">장학금</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">장학금 정보 등록</a></li>
+					<li><a href="/hku/admin/scholarship-info">장학금 정보 등록</a></li>
 					<li><a href="#">장학금 신청 내역</a></li>
 				</ul>
 			</li>
@@ -295,7 +295,7 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="/hku/lecture/open">강의 개설신청</a></li>
-					<li><a href="#">휴강 신청</a></li>
+					<li><a href="/hku/professor/restClass">휴강 신청</a></li>
 				</ul>
 			</li>
 			
@@ -321,7 +321,7 @@
 					<span class="nav-text">상담 관리</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">학생상담 신청 내역</a></li>
+					<li><a href="/hku/student-counseling">학생상담 신청 내역</a></li>
 				</ul>
 			</li>
 			</c:if>

@@ -16,6 +16,7 @@ import kr.or.hku.admin.mapper.UserMapper;
 import kr.or.hku.admin.service.UserService;
 import kr.or.hku.admin.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
+import oracle.net.aso.m;
 
 @Service
 @Slf4j
@@ -71,20 +72,20 @@ public class UserServiceImpl implements UserService {
 	
 	private String getProfileImgPath(UserVO userVO) {
 		// 프로필 이미지 파일을 업로드할 경로 설정
-		String uploadPath = "C:/" + resourcePath;
+		String uploadPath = resourcePath;
 		File file = new File(uploadPath);
 		if(!file.exists()) {
 			file.mkdirs();
 		}
 		
-		String proFileImg = "";		// memberVO안에 프로필 이미지 경로를 담을 변수
+		String saveFileName = "";		// memberVO안에 프로필 이미지 경로를 담을 변수
 		MultipartFile proFileImgFile = userVO.getProfile();
+		
 		log.info("원본파일 이름 : " + proFileImgFile.getOriginalFilename());
 		if(proFileImgFile.getOriginalFilename() != null && !proFileImgFile.getOriginalFilename().equals("")) {
-			String fileName = UUID.randomUUID().toString();
-			fileName += "_" + proFileImgFile.getOriginalFilename();
-			
-			uploadPath += "/" + fileName;
+			String uuid = UUID.randomUUID().toString();
+			saveFileName += "/" + uuid + "_" + proFileImgFile.getOriginalFilename();
+			uploadPath += "/" + saveFileName;
 			
 			try {
 				proFileImgFile.transferTo(new File(uploadPath));	// 파일 복사
@@ -93,9 +94,8 @@ public class UserServiceImpl implements UserService {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			proFileImg = resourcePath+ "/" + fileName;
 		}
-		return proFileImg;
+		return saveFileName;
 	}
 
 	@Override
@@ -123,5 +123,29 @@ public class UserServiceImpl implements UserService {
 		return mapper.getAllAdmins();
 	}
 
+	@Override
+	public int deleteUser(String userNo) {
+		return mapper.deleteUser(userNo);
+	}
+
+	@Override
+	public int deleteEmployee(String userNo) {
+		return mapper.deleteEmployee(userNo);
+	}
+
+	@Override
+	public int deleteProfessor(String userNo) {
+		return mapper.deleteProfessor(userNo);
+	}
+
+	@Override
+	public int deleteStudent(String userNo) {
+		return mapper.deleteStudent(userNo);
+	}
+
+	@Override
+	public int deleteAuth(String userNo) {
+		return mapper.deleteAuth(userNo);
+	}
 
 }

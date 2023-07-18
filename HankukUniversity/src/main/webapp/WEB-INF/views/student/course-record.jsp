@@ -124,7 +124,7 @@ function craditList(){
 		url : "/hku/cradit-history",
 		dataType : "json",
 		success : function(res){
-			console.log(res)
+			console.log("res:",res)
 
 			var data = '';
 			var sum = 0;
