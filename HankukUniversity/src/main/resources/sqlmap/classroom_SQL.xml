@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.hku.classroom.mapper.ClassroomMapper">
+	
+	<!-- 학생 클래스룸 목록  -->
+	<select id="selectList" resultType="classroomVO">
+		SELECT
+			  b.sub_nm
+			, d.pro_nm
+		FROM
+		student a
+		JOIN course_regist c ON a.std_no = c.std_no
+		JOIN lecture_aply e ON c.lecap_no = e.lecap_no
+		JOIN subject b ON e.sub_no = b.sub_no
+		JOIN professor d ON e.pro_no = d.pro_no
+		WHERE
+		a.std_no = #{stdNo}
+	</select>
+
+	<!-- 교수 클래스룸 목록 -->
+	<select id="proSelectList" parameterType="String" resultType="lectureAplyVO">
+		SELECT
+			  c.lecap_no
+			, b.sub_nm
+			, c.lecap_yr
+			, c.lecap_sem
+		FROM professor a
+		JOIN lecture_aply c ON c.pro_no = a.pro_no
+		JOIN subject b ON c.sub_no = b.sub_no
+		WHERE
+			a.pro_no = #{proNo}
+		and c.aprv_stts_cd like 'appv'
+		and c.lecap_yr like TO_CHAR(sysdate, 'YYYY')
+		AND c.lecap_sem = CASE
+                  WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 6 THEN 1
+                  WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 12 THEN 2
+                  ELSE 0
+                 END
+	</select>
+	
+
+	<!-- 해당 과목에대한 과제 리스트 메인-->
+	<select id="getAssignList" parameterType="String" resultType="assignmentVO">
+		SELECT
+		    a.asm_no,
+		    a.lecap_no,
+		    a.asm_week,
+		    a.asm_ttl,
+		    a.asm_cn,
+		    a.asm_pro_nm,
+		    a.asm_regdate,
+		    a.atch_file_no
+		FROM
+	    assignment a
+	    JOIN lecture_aply l ON l.lecap_no = a.lecap_no
+			WHERE l.lecap_no = #{lecapNo}
+			AND l.lecap_yr like TO_CHAR(sysdate, 'YYYY')
+			AND l.lecap_sem = CASE
+			                      WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 6 THEN 1
+			                      WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 12 THEN 2
+			                      ELSE 0
+			                  END
+	</select>
+	
+		
+</mapper>
