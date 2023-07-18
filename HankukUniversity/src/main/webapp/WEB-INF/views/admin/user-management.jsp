@@ -1064,7 +1064,6 @@ function userModify(param){
 }
 
 function userDetail(target){
-	console.log("파겟체킁",target);
 	var userClsNm = target.children[3].innerText;
 	var selectUserNo = target.children[1].innerText;
 	console.log(userClsNm, selectUserNo);
