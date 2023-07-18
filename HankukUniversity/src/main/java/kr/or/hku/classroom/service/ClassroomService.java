@@ -9,6 +9,8 @@ import kr.or.hku.lectureInfo.vo.LectureAplyVO;
 public interface ClassroomService {
 	
 	public List<ClassroomVO> selectList(String stdNo); 
+	
 	public List<LectureAplyVO> proSelectList(String proNo);
-	public List<AssignmentVO> getClassList(int lecapNo); 
+	
+	public List<AssignmentVO> getAssignList(String lecapNo); 
 }

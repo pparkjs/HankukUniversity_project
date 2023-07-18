@@ -29,8 +29,8 @@ public class ClassroomServiceImpl implements ClassroomService {
 	}
 	
 	@Override
-	public List<AssignmentVO> getClassList(int lecapNo) {
-		return classroomMapper.getClassList(lecapNo);
+	public List<AssignmentVO> getAssignList(String lecapNo) {
+		return classroomMapper.getAssignList(lecapNo);
 	}
 
 }
