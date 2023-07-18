@@ -14,7 +14,7 @@
     </div>
 	<div class="container-fluid">
 	<div id="outCardBox" >
-	<!-- ■■■■■■■ 주차 선택하는 카드  ■■■■■■■ -->
+	<!-- ■■■■■■■ 주차 선택하는 카드  ■■■■■■ -->
         <div class="card" style="width:48%; margin-bottom: 0;">
             <div class="card-header  cardTitle">
                 <h4 class="card-title" style="font-weight: bold; font-size: 1.2em; color: #800000;">날짜 선택</h4>
