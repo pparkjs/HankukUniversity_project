@@ -29,7 +29,8 @@
 </div>
 </body>
 <script>
-const api_key = 'cb67762ab54bc7033bd6d74f4597ada9';
+//오픈웨더 날씨API키 입력해야됨
+const api_key = '';
 
 function onGeoOk(position) {
   const lat = position.coords.latitude;
