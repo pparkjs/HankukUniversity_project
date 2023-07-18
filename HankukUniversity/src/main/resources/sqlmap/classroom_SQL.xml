@@ -42,8 +42,8 @@
 	</select>
 	
 
-	<!-- 교수 클래스룸 메인-->
-	<select id="getClassList" parameterType="int" resultType="assignmentVO">
+	<!-- 해당 과목에대한 과제 리스트 메인-->
+	<select id="getAssignList" parameterType="String" resultType="assignmentVO">
 		SELECT
 		    a.asm_no,
 		    a.lecap_no,
@@ -53,17 +53,9 @@
 		    a.asm_pro_nm,
 		    a.asm_regdate,
 		    a.atch_file_no
-<!-- 		    t.test_no, -->
-<!-- 		    t.lecap_no, -->
-<!-- 		    t.test_se, -->
-<!-- 		    t.test_bgng_ymd, -->
-<!-- 		    t.test_time_limit, -->
-<!-- 		    t.test_regdate, -->
-<!-- 		    t.test_file -->
 		FROM
 	    assignment a
 	    JOIN lecture_aply l ON l.lecap_no = a.lecap_no
-<!-- 	    JOIN test t ON t.lecap_no = a.lecap_no -->
 			WHERE l.lecap_no = #{lecapNo}
 			AND l.lecap_yr like TO_CHAR(sysdate, 'YYYY')
 			AND l.lecap_sem = CASE
