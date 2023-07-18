@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.classroom.mapper.AttendanceMapper">
+ 
+<!--  <select id="dmrList" resultType="attendanceVO"> -->
+<!--  	SELECT  -->
+<!--  		a.atdc_no -->
+<!--  	  , a.atdc_dmr_rsn -->
+<!--  	  , a.stdc_dmr_stts_cd -->
+<!--  	FROM attendance_dmr  -->
+<!--  </select> -->
+ 
+<!--  <select id="dmrDetail" parameterType="string" resultType="attendanceVO"> -->
+<!--  	SELECT  -->
+<!--  		a.atdc_no -->
+<!--  	  , a.atdc_dmr_rsn -->
+<!--  	  , a.stdc_dmr_stts_cd -->
+<!--  	FROM attendance_dmr a, attendance b,  -->
+<!--  	WHERE a.atdc_no = b.atdc_no -->
+<!--  	AND  -->
+ 
+<!--  </select> -->
+ 
+<!--  <insert id="writeDmr" parameterType="attendanceVO"> -->
+<!-- INSERT INTO Attendance_dmr (ATDC_NO, ATDC_DMR_RSN, STDC_DMR_STTS_CD) -->
+<!-- VALUES ((SELECT ATDC_NO FROM ATTENDANCE  -->
+<!-- 		 WHERE STD_NO = #{stdNo}), -->
+<!--         				#{atdc_dmr_rsn}, -->
+<!-- ); -->
+
+<!--  </insert> -->
+ 
+<!--  <update id="updateDmr" parameterType="attendanceVO"> -->
+ 
+<!--  </update> -->
+ 
+<!--  <delete id="deleteDmr"> -->
+<!--  	DELETE FROM attendance_dmr  -->
+<!--  	WHERE std_no = #{stdNo} -->
+<!--  </delete> -->
+ 
+ </mapper>

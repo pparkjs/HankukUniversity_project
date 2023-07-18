@@ -43,6 +43,7 @@
     <typeAlias type="kr.or.hku.common.vo.AlarmVO" alias="alarmVO"/>
     
     <!-- 지현칸 밑에서만 작성 -->
+<!--     <typeAlias type="kr.or.hku.lectureInfo.vo.LectureAplyVO" alias="lectureAplyVO"/> -->
     <typeAlias type="kr.or.hku.lectureInfo.vo.LectureTimeTableVO" alias="timeTableVO"/>
     <typeAlias type="kr.or.hku.student.vo.StudentInfoVO" alias="stdInfoVO"/>
     <typeAlias type="kr.or.hku.student.vo.EvaluationVO" alias="evalVO"/>
@@ -60,7 +61,10 @@
     
     <typeAlias type="kr.or.hku.admin.vo.UserVO" alias="userVO"/>
     <!-- 성희칸 밑에서만 작성-->
-    
+     <typeAlias type="kr.or.hku.classroom.vo.ClassroomVO" alias="classroomVO"/>
+     <typeAlias type="kr.or.hku.classroom.vo.AttendanceVO" alias="attendanceVO"/>
+     <typeAlias type="kr.or.hku.classroom.vo.AssignmentVO" alias="assignmentVO"/>
+     
     <!-- 성일칸 밑에서만 작성 -->
     
 	</typeAliases>

@@ -11,6 +11,8 @@ import kr.or.hku.classroom.vo.LectureNoticeVO;
 @RequestMapping("/hku/professor")
 public class LectureNoticeController {
 	
+	
+	
 //	@GetMapping("/noticeList")
 //	public String noticeList() {
 //		return "professor/lectureNoticeList";
