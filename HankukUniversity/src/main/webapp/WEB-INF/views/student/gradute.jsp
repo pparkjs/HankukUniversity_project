@@ -69,7 +69,7 @@
 									
 									<td>${student.stdMjrCrd }</td>
 									<td>${student.stdCtrlCrd }</td>
-									<td></td>
+									<td id="res"> </td>
 								</tr>
 							</tbody>
 						</table>
@@ -77,37 +77,41 @@
 			</div>
 				
 			<div class="col-xl-12">
-				<ul class="nav nav-pills mb-4 light">
-					<li class=" nav-item">
-						<a href="#navpills-1" class="nav-link active" data-bs-toggle="tab" aria-expanded="false">졸업유예</a>
-					</li>
-					<li class="nav-item">
-						<a href="#navpills-2" class="nav-link" data-bs-toggle="tab" aria-expanded="false">조기졸업</a>
-					</li>
-				</ul>
+				<div class="custom-tab-1" style="margin-left:20px;">
+					<ul class="nav nav-tabs" style="margin-bottom: 40px">
+						<li class="nav-item">
+							<a class="nav-link active" data-bs-toggle="tab" href="#home1"> <i class="fa-solid fa-user-plus me-2"></i> 졸업유예</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-bs-toggle="tab" href="#profile1"><i class="far fa-user me-2"></i> 조기졸업</a>
+						</li>
+					</ul>
 				<div class="tab-content">
-					<div id="navpills-1" class="tab-pane active">
+					<div class="tab-pane fade show active" id="home1" role="tabpanel">
 						<div class="col-xl-12">
 							<div class="row">
 								<div class="col-md-12">
 									졸업유예 신청
-									<form name="form1">
-										<div class="row" style="margin: 10px;">
-											<div style=" display: flex; justify-content: space-between;">
-												<div class="input-group" style="width: 25%; margin: 10px; font-size: 20px;">
-													이름 &nbsp; <input type="text" class="form-control" value="${student.stdNm }" placeholder="Surname" name="${student.stdNm }" readonly="readonly">
-												</div>
-												<div class="input-group" style="width: 30%; margin: 10px; font-size: 20px;">
-													학과 &nbsp; <input type="text" class="form-control" value="${student.deptNm }" placeholder="Surname" name="${student.deptNm }" readonly="readonly">
-												</div>
-												<div class="input-group" style="width: 35%; margin: 10px; font-size: 20px;">
-													학번 &nbsp; <input type="text" class="form-control" value="${student.stdNo }" placeholder="Surname" name="${student.stdNo }" readonly="readonly">
-												</div>
-											</div>
+									<form name="form1" id="form1">
+										  <div class="row" style="margin: 10px;">
+											    <div style=" display: flex; justify-content: space-between;">
+											      <div class="input-group" style="width: 25%; margin: 10px;">
+											        <label for="stdNm" style="font-size: 20px;">이름</label> &nbsp;
+											        <input type="text" class="form-control" value="${student.stdNm }" name="stdNm" readonly="readonly">
+											      </div>
+											      <div class="input-group" style="width: 30%; margin: 10px;">
+											        <label for="deptNm" style="font-size: 20px;">학과</label>&nbsp;
+											        <input type="text" class="form-control" value="${student.deptNm }" name="deptNm" readonly="readonly">
+											      </div>
+											      <div class="input-group" style="width: 35%; margin: 10px;">
+											        <label for="stdNo" style="font-size: 20px;">학번</label>&nbsp;
+											        <input type="text" class="form-control" value="${student.stdNo }" name="stdNo" readonly="readonly">
+											      </div>
+										    </div>
 											<div style=" display: flex; justify-content: space-between;">
 												<div class="input-group" style="width: 30%;">
 													<div style="font-size: 20px;">
-														끝년도  &nbsp; &nbsp;
+														<label class="form-label mt-3" style="font-size: 20px;">끝년도<span class="text-danger">*</span></label>&nbsp;
 													</div>
 													<select class="default-select form-control" name="changeEndYr">
 														<option value="">년도 선택</option>
@@ -123,7 +127,7 @@
 												</div>
 												<div class="input-group"  style="width: 30%;">
 													<div style="font-size: 20px;">
-														끝학기  &nbsp; &nbsp; 
+														<label class="form-label mt-3" style="font-size: 20px;">끝학기<span class="text-danger">*</span></label>&nbsp;
 													</div>
 													<select class="default-select form-control" name="changeEndSem">
 										               <option value="" >학기선택</option>
@@ -134,9 +138,10 @@
 											</div>
 											</div>
 											<div style="font-size: 20px;">
-												유예 사유 &nbsp;
-												<textarea rows="5" class="form-control" name="changeRsn"></textarea>
+												<label for="changeRsn">유예 사유</label>
+												<textarea rows="5" class="form-control" name="changeRsn" id="changeRsn"></textarea>
 											</div>
+										</form>	
 											<div style="font-size: 20px;">
 												공지사항 &nbsp;
 												<textarea rows="20" class="form-control" name="changeRsn" readonly="readonly">2022학년도 전기(2023.2.17 졸업) 학사학위취득(졸업) 유예 신청 안내
@@ -176,22 +181,51 @@
 											<div style="display: flex; justify-content: end; margin-right: 80px; margin-top: 10px;">
 												<button type="button" class="btn btn-primary" onclick="gradutePostpone()">신청</button>																	
 											</div>
-										</div>
-									</form>		
+										</div>	
 								</div>
 							</div>
 						</div>
 					</div>
 
-					<div id="navpills-2" class="tab-pane">
+					<div class="tab-pane fade" id="profile1">
 						<div class="row">
 							<div class="col-md-12">
 								<form name="form2">
 									<div style="display: flex; justify-content: space-between; margin: 30px; margin-top: -20px;">
 									  <div style="display: flex; flex-direction: column; width: 50%;">
-									    <div>1</div>
-									    <div>2</div>
-									    <div>3</div>
+									    <div>
+											 <div class="input-group" style="width: 25%; margin: 10px;">
+												<label for="stdNm" style="font-size: 20px;">이름</label>&nbsp;
+												<input type="text" class="form-control" value="${student.stdNm }" name="stdNm" readonly="readonly">
+											</div>
+											<div class="input-group" style="width: 30%; margin: 10px;">
+												<label for="deptNm" style="font-size: 20px;">학과</label>&nbsp;
+												<input type="text" class="form-control" value="${student.deptNm }" name="deptNm" readonly="readonly">
+											</div>
+											<div class="input-group" style="width: 35%; margin: 10px;">
+												<label for="stdNo" style="font-size: 20px;">학번</label>&nbsp;
+												<input type="text" class="form-control" value="${student.stdNo }" name="stdNo" readonly="readonly">
+											</div>
+									    	<div class="input-group" style="width: 80%; margin: 10px;">
+												<label for="stdMjrCrd" style="font-size: 20px;">전공학점</label>&nbsp;
+												<input type="text" class="form-control" value="${student.stdMjrCrd }" placeholder="Surname" readonly="readonly">
+											</div>
+									    	<div class="input-group" style="width: 80%; margin: 10px;">
+												<label for="stdCtrlCrd" style="font-size: 20px;">교양학점</label>&nbsp;
+												<input type="text" class="form-control" value="${student.stdCtrlCrd }" placeholder="Surname" readonly="readonly">
+											</div>
+											<div>
+												<label for="changeRsn" style="font-size: 20px;">사유</label>
+												<textarea rows="5" class="form-control" name="changeRsn" id="changeRsn2"></textarea>
+											</div>
+									    	<div class="input-group" style="width: 80%; margin: 10px; font-size: 20px;">
+												<input type="text" class="form-control" value="" name="rest" readonly="readonly">
+											</div>
+											<br>
+											<div style="display: flex; justify-content: end; margin-right: 120px; margin-top: 10px;">
+												<button type="button" class="btn btn-primary" onclick="graduteApply()">신청</button>																	
+											</div>
+									    </div>
 									  </div>
 									  <div style="font-size: 20px; width: 50%;">
 									    공지사항 &nbsp;
@@ -224,8 +258,136 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 <script type="text/javascript">
-function gradutePostpone(){
+$(document).ready(function() {
+	const stdMjrCrdString = '${student.stdMjrCrd}'; 
+	const stdCtrlCrdString = '${student.stdCtrlCrd}';
+	
+	const stdMjrCrd = parseInt(stdMjrCrdString, 10);
+	const stdCtrlCrd = parseInt(stdCtrlCrdString, 10); 
+	
+	console.log(stdMjrCrd);
+	console.log(stdCtrlCrd); 
 
+	var res = stdMjrCrd + stdCtrlCrd
+	
+	document.getElementById("res").textContent = res;
+
+	var inputElement = document.querySelector('input[name="rest"]');
+
+	if (res > 120) {
+	  inputElement.style.color = "green";
+	  inputElement.value = "조기졸업 신청 가능한 학점입니다.";
+	} else {
+	  inputElement.style.color = "red";
+	  inputElement.value = "조기졸업 신청 불가능한 학점입니다.";
+	}
+	
+})
+
+function gradutePostpone(){
+	var form1 = $("#form1");
+	
+	var stdNm = document.querySelector('input[name="stdNm"]').value;
+	var deptNm = document.querySelector('input[name="deptNm"]').value;
+	var stdNo = document.querySelector('input[name="stdNo"]').value;
+
+	var changeEndYr = document.querySelector('select[name="changeEndYr"]').value;
+	var changeEndSem = document.querySelector('select[name="changeEndSem"]').value;
+
+	var changeRsn = document.querySelector('#changeRsn').value;
+	
+	if(changeRsn == ""){
+		swal({
+			title: "사유를 입력해주세요.", 
+			icon: "error"
+		});
+		return false;
+	}
+
+	var reqData = {
+		
+		"stdNm": stdNm,
+		"deptNm": deptNm,
+		"stdNo": stdNo,
+		"changeEndYr": changeEndYr,
+		"changeEndSem": changeEndSem,
+		"changeRsn": changeRsn
+		}
+
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST","/hku/student/gradutePostpone",true);
+	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			if(xhr.responseText === "SUCCESS"){
+				 swal({
+						title: "신청이 완료되었습니다.", 
+						icon: "success"
+					});
+			} else if(xhr.responseText === "FAILED"){
+				swal({
+					title: "신청 실패.", 
+					icon: "error"
+				});
+			}
+		}
+	}
+	xhr.send(JSON.stringify(reqData));
+}
+
+function graduteApply(){
+	var form2 = $("#form2");
+	
+	var stdNm2 = document.querySelector('input[name="stdNm"]').value;
+	var deptNm2 = document.querySelector('input[name="deptNm"]').value;
+	var stdNo2 = document.querySelector('input[name="stdNo"]').value;
+	
+	var changeRsn2 = document.querySelector('#changeRsn2').value;
+
+	
+	if(changeRsn2 == ""){
+		swal({
+			title: "사유를 입력해주세요.", 
+			icon: "error"
+		});
+		return false;
+	}
+
+	var reqData = {
+		
+		"stdNm": stdNm2,
+		"deptNm": deptNm2,
+		"stdNo": stdNo2,
+		"changeRsn": changeRsn2
+		}
+	if (res > 120){
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST","/hku/student/graduteApply",true);
+		xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				if(xhr.responseText === "SUCCESS"){
+					 swal({
+							title: "신청이 완료되었습니다.", 
+							icon: "success"
+						});
+				} else if(xhr.responseText === "FAILED"){
+					swal({
+						title: "신청 실패.", 
+						icon: "error"
+					});
+				}
+			}
+		}
+		xhr.send(JSON.stringify(reqData));
+	}else{
+		swal({
+			title: "이수학점이 부족합니다!", 
+			icon: "error"
+		});
+	}
+	
 }
 </script>

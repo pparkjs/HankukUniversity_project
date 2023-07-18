@@ -20,7 +20,7 @@
 	 
 	 <!-- 서버에 파일 저장할  upload폴더 설정 -->
 	 <bean id="uploadPath" class="java.lang.String">
-	 	<constructor-arg value="/uploadfiles"/>
+	 	<constructor-arg value="C:/uploadfiles"/>
 	 </bean>
 	 
 	 <!-- dataSource : 데이터베이스와 관련된 정보를 설정한다. -->
