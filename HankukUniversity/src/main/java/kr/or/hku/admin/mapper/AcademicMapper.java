@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.or.hku.admin.vo.AcademicChangeVO;
 import kr.or.hku.admin.vo.CollegeVO;
 import kr.or.hku.admin.vo.DepartmentVO;
 import kr.or.hku.admin.vo.FacilityVO;
@@ -40,5 +41,13 @@ public interface AcademicMapper {
 	public SubjectVO selectSubject(String subNo);
 
 	public int updateSubject(SubjectVO subjectVO);
+
+	public List<AcademicChangeVO> getAcademicAplyList();
+
+	public int academicAppv(AcademicChangeVO academicChangeVO);
+
+	public int academicRej(AcademicChangeVO academicChangeVO);
+
+	public int academicProccess(AcademicChangeVO academicChangeVO);
 
 }
