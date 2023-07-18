@@ -16,6 +16,8 @@ public class CounselingRsvtVO {
 	private String periodCd; //교시코드
 	private String attendModeCd; // 참석방식코드
 	private String aprvSttsCd; //결재상태코드
+	private String rejCon; //반려사유
 	
 	private String stdNm; //신청자 이름
+	private String proNm; //교수이름
 }

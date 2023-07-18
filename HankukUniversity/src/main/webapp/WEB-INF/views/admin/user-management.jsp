@@ -32,13 +32,17 @@
 									</div>
 								</div>
 							</div>
-							<!-- <div class="info-list">
+							<div class="info-list">
 								<ul>
-									<li><a href="app-profile.html">Models</a><span>36</span></li>
-									<li><a href="uc-lightgallery.html">Gallery</a><span>3</span></li>
-									<li><a href="app-profile.html">Lessons</a><span>1</span></li>
+									<li>
+										<p id="notice">사용자 등록 주의사항</p>
+										<div style="text-align:left;">
+											- 항목을 정확히 모두 입력해주세요.<br/>
+											- 엑셀 파일 일괄등록 시 엑셀 형식을 꼭 맞춰주세요.<br/>
+										</div>
+									</li>
 								</ul>
-							</div> -->
+							</div>
 						</div>
 					</div>
 				</div>
@@ -61,11 +65,13 @@
 										<option value="student" selected>학생</option>
 									</select>
 								</div>
-								<div class="col-md-4 input-group ilgualdngrok">
-									<input class="form-control" type="file" id="formFile">
-									<span class="input-group-append">
-										<button type="button" onclick="poiInsert()" class="btn btn-primary btn-flat">일괄등록</button>
-									</span>
+								<div class="col-md-4 ilgualdngrok">
+									<form action="/hku/admin/insertUserExcel" class="input-group" id="excelForm" method="POST" enctype="multipart/form-data">
+										<input class="form-control" type="file" id="formFile" name="formFile">
+										<span class="input-group-append">
+											<button type="button" onclick="poiInsert()" class="btn btn-primary btn-flat">일괄등록</button>
+										</span>
+									</form>
 								</div>
 								<div class="col-auto">
 									<button type="button" class="btn btn-primary" onclick="userInsert()">등록</button>
@@ -228,7 +234,7 @@
 								<input type="text" class="form-control form-control-sm input-default" name="searchWord" value="${searchWord }" placeholder="검색어를 입력해주세요">
 							</div>
 							<div class="col-auto">
-								<button type="button" class="btn btn-sm btn-primary listBtn" onclick="deptList()">검색</button>
+								<button type="button" class="btn btn-sm btn-primary listBtn">검색</button>
 							</div>
 							<!-- <div class="col-auto">
 								<button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#deptModal" onclick="deptCdSet()">학과개설</button>
@@ -254,6 +260,151 @@
 					<div class="tab-pane" id="students" role="tabpanel" aria-labelledby="students-tab" tabindex="0">
 						
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 학생 상세보기 -->
+	<div class="modal modal-lg fade" id="studentDetailModal" tabindex="-1" aria-labelledby="studentDetailLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-center">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="studentDetailLabel">학생 상세</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" style="padding: 0.575rem 1.875rem;">
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="row">
+
+								<div class="col-xl-6">
+									<div class="p-4">
+										<div class="author-profile">
+											<div class="author-media">
+												<img id="profileImg" src="/images/user(2).png" alt="">
+												<!-- 										<span class="basicProfileImg flaticon-381-user-4"></span> -->
+												<div class="upload-link" title="" data-toggle="tooltip" data-placement="right" data-original-title="update">
+													<input type="file" class="update-flie" id="profile" name="profile">
+													<i class="fa fa-camera"></i>
+												</div>
+											</div>
+											<div class="author-info">
+												<h5 class="title">프로필 이미지</h5>
+											</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-6">
+								<div class="row">
+									<div class="col-xl-12">
+										<label class="form-label mt-3">학번<span class="text-danger">*</span></label>
+										<div class="input-group">
+											<select class="form-select form-control" name="mColCd">
+												<c:forEach items="${colList}" var="col">
+													<option value="${col.colCd}">${col.colNm}</option>
+												</c:forEach>
+											</select>
+										</div>
+									</div>
+									<div class="col-xl-12">
+										<label class="form-label mt-3">이름<span class="text-danger">*</span></label>
+										<div class="input-group">
+											<select class="form-select form-control" name="mColCd">
+												<c:forEach items="${colList}" var="col">
+													<option value="${col.colCd}">${col.colNm}</option>
+												</c:forEach>
+											</select>
+										</div>
+									</div>
+									<div class="col-xl-12">
+										<label class="form-label mt-3">학과<span class="text-danger">*</span></label>
+										<div class="input-group">
+											<select class="form-select form-control" name="mColCd">
+												<c:forEach items="${colList}" var="col">
+													<option value="${col.colCd}">${col.colNm}</option>
+												</c:forEach>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							</div>
+						</div>
+						<div class="col-xl-6">
+							<label class="form-label mt-3">생년 월일<span class="text-danger">*</span></label>
+							<div class="input-group">
+								<select class="form-select form-control" name="mColCd">
+									<c:forEach items="${colList}" var="col">
+										<option value="${col.colCd}">${col.colNm}</option>
+									</c:forEach>
+								</select>
+							</div>
+						</div>
+						<div class="col-xl-6">
+							<label class="form-label mt-3">성별<span class="text-danger">*</span></label>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Surname" name="mDeptCd" readonly>
+							</div>
+						</div>
+						<div class="col-xl-6 mb-3">
+							<label class="form-label mt-3">주민등록번호<span class="text-danger">*</span></label>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Name" name="mDeptNm">
+							</div>
+						</div>
+						<div class="col-xl-6 mb-3">
+							<label class="form-label mt-3">연락처<span class="text-danger">*</span></label>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Surname" name="mDeptTelno">
+							</div>
+						</div>
+						<div class="col-xl-6 mb-3">
+							<label class="form-label">은행<span class="text-danger">*</span></label>
+							<select class="form-select form-control" id="mBankCd">
+								<option value="">Please select</option>
+								<c:forEach items="${commonList}" var="common">
+									<c:if test="${common.comCdGrp eq 'BANK' }">
+										<option value='${common.comCd }'>${common.comCdNm }</option>
+									</c:if>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="col-xl-6 mb-3">
+							<label class="form-label">계좌번호<span class="text-danger">*</span></label>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Surname" name="mDeptTelno">
+							</div>
+						</div>
+						<div class="col-xl-6 mb-3">
+							<label class="form-label">이메일<span class="text-danger">*</span></label>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Surname" name="mDeptTelno">
+							</div>
+						</div>
+						<div class="col-xl-6 mb-3">
+							<label class="form-label">우편번호<span class="text-danger">*</span></label>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Surname" name="mDeptTelno">
+							</div>
+						</div>
+						<div class="col-xl-6 mb-3">
+							<label class="form-label">기본주소<span class="text-danger">*</span></label>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Name" name="mDeptNm">
+							</div>
+						</div>
+						<div class="col-xl-6 mb-3">
+							<label class="form-label">상세주소<span class="text-danger">*</span></label>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Surname" name="mDeptTelno">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary" onclick="deptModify()">수정</button>
 				</div>
 			</div>
 		</div>
@@ -319,6 +470,20 @@ $(function(){
 	// usersSet();
 })
 
+function userDetail(target){
+	var userClsNm = target.children[3].innerText;
+	var selectUserNo = target.children[1].innerText;
+	console.log(userClsNm, selectUserNo);
+
+	if(userClsNm == "직원"){
+		console.log("교직원 모달");
+	} else if(userClsNm == "교수"){
+		console.log("교수 모달");
+	} else if(userClsNm == "학생"){
+		$("#studentDetailModal").modal('show');
+	}
+}
+
 function poiInsert(){
 	console.log("POI 실행 함수");
 // 	var formFile = $("#formFile");
@@ -331,33 +496,34 @@ function poiInsert(){
 		})
 		return false;
 	}
+	$("#excelForm").submit();
 	// console.log("2",formFile.file);
 	// console.log("3",formFile.value);
 
-	let formData = new FormData();
-	formData.append("file",formFile.files[0]);
+	// let formData = new FormData();
+	// formData.append("file",formFile.files[0]);
 	
-	// window.href = "/hku/admin/insertUserExcel";
-	$.ajax({
-		type: 'POST',
-		url: '/hku/admin/insertUserExcel',
-		data: formData,
-		dataType: "JSON",
-		processData: false,
-		contentType: false,
-		success: function(res) {
-			swal({
-				title: "일괄등록 성공!!",
-				icon: "success"
-			})
-			console.log("일괄등록 완료!!!!!!");
-			console.log(res);
-			studentsSet();
-		},
-		error: function (xhr, status, error) {
-			alert("출력실패");
-		}
-	});
+	// // window.href = "/hku/admin/insertUserExcel";
+	// $.ajax({
+	// 	type: 'POST',
+	// 	url: '/hku/admin/insertUserExcel',
+	// 	data: formData,
+	// 	dataType: "JSON",
+	// 	processData: false,
+	// 	contentType: false,
+	// 	success: function(res) {
+	// 		swal({
+	// 			title: "일괄등록 성공!!",
+	// 			icon: "success"
+	// 		})
+	// 		console.log("일괄등록 완료!!!!!!");
+	// 		console.log(res);
+	// 		studentsSet();
+	// 	},
+	// 	error: function (xhr, status, error) {
+	// 		alert("출력실패");
+	// 	}
+	// });
 }
 
 function tabChange(){
@@ -425,7 +591,7 @@ function usersSet(){
 					</thead>
 					<tbody>`;
 						for(let i=0; i<res.length; i++) {
-							tblStr += `<tr onclick='studentDetail(this)'>
+							tblStr += `<tr onclick='userDetail(this)'>
 								<td>
 									<div class='form-check custom-checkbox checkbox-danger'>
 										<input type='checkbox' class='form-check-input userCheck' value='\${res[i].userNo }' onclick="onlyCheck(this)">
@@ -484,7 +650,7 @@ function adminsSet(){
 					</thead>
 					<tbody>`;
 						for(let i=0; i<res.length; i++){
-							tblStr += `<tr onclick='adminDetail(this)'>
+							tblStr += `<tr onclick='userDetail(this)'>
 								<td>
 									<div class='form-check custom-checkbox checkbox-danger'>
 										<input type='checkbox' class='form-check-input userCheck' value='\${res[i].userNo }' onclick="onlyCheck(this)">
@@ -546,7 +712,7 @@ function professorsSet(){
 					<tbody>`;
 						for(let i=0; i<res.length; i++) {
 
-							tblStr += `<tr onclick='professorDetail(this)'>
+							tblStr += `<tr onclick='userDetail(this)'>
 									<td>
 										<div class='form-check custom-checkbox checkbox-danger'>
 											<input type='checkbox' class='form-check-input userCheck' value='\${res[i].userNo }' onclick="onlyCheck(this)">
@@ -606,7 +772,7 @@ function studentsSet(){
 					</thead>
 					<tbody>`;
 				for(let i=0; i<res.length; i++){
-					tblStr += `<tr onclick='studentDetail(this)'>
+					tblStr += `<tr onclick='userDetail(this)'>
 						<td>
 							<div class='form-check custom-checkbox checkbox-danger'>
 								<input type='checkbox' class='form-check-input userCheck' value='\${res[i].userNo }' onclick="onlyCheck(this)">
@@ -1238,6 +1404,12 @@ function userInsert(event){
 				title: "사용자 등록이 완료되었습니다!", 
 				icon: "success"
 			});
+			var selectTarget = $("#selectTarget");
+			var stVal = selectTarget.val();
+			$("#profileImg").attr("src", "/images/user(2).png");
+			$("#profile").val(null); // ????
+			insertFormSet(stVal);
+			console.log("휴~");
 		},
 		error: function (xhr, status, error) {
 			alert("출력실패");
