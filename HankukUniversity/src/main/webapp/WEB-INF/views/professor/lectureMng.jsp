@@ -85,8 +85,8 @@
                                     <option value="all2">학과선택</option>
                                 </select>
                             </div>
-                            <div class="card-body ccc" style="padding-top: 0;">
-                                <table class="table">
+                            <div class="card-body ccc" style="padding-top: 0; overflow: scroll;">
+                                <table class="table" style="border-spacing: 1px;">
                                     <thead>
                                         <tr>
                                             <th>과목코드</th>
@@ -131,7 +131,7 @@
                                 </select>
                             </div>
                             <div class="card-body ccc" style="padding-top: 0;">
-                                <table class="tabletime" border="1">
+                                <table class="tabletime" border="1" style="border-spacing: 1px; margin-top:0px;">
                                     <thead>
                                         <tr>
                                             <th style="width: 20%;">구분</th>

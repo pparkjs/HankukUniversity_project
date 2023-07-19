@@ -137,7 +137,7 @@ for(let i=0; i<enterClassroom.length; i++){
 		// 과목명
 		let subNm = $(this).closest("tr").find(".mb-0").html();
 		// 조성희 화이팅~~~
- 		location.replace(`/hku/professor/classroomMain/\${lecApNo}/\${subNm}`);
+ 		location.replace(`/hku/professor/classroomMain/\${lecApNo}`);
 	})		
 }
 
