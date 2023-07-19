@@ -190,24 +190,20 @@
   /* ■■■■■■■■■ 강의실 조회 시간표 css ■■■■■■■■■ */
   
   .tabletime{
-/*   	border : 1px solid black; */
   	width: 80%;
   	text-align: center;
-  	margin : 0 auto;
-  	height: 95%;
-/*   	border-right: 1px solid #6e6e6e; */
-  	margin-top : 15px;
+  	margin : auto auto;
   }
   
   .tabletime thead{
   	background-color: #6e6e6e;
   	color : white;
-  	height : 46px;
+  	height : 40px;
 
   }
   .tabletime td{
   border : 1px solid  #b0b0b0;
-  height: 46px;
+  height: 44px;
   width : 30px;
 }
 

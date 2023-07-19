@@ -1,18 +1,19 @@
-package kr.or.hku.classroom.mapper;
+package kr.or.hku.classroom.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import kr.or.hku.classroom.vo.LectureNoticeVO;
 
-@Mapper
-public interface LectureNoticeMapper {
-	
+public interface LectureNoticeService {
+
 	public List<LectureNoticeVO> getNoticeList(String lecapNo);
+
 	public int insertNotice(LectureNoticeVO noticeVO);
-	public LectureNoticeVO getNoticeDetail(int lecntNo);
-	public void updateReadCnt(int lecntNo);
+
+	public LectureNoticeVO getNotcieDetail(int lecntNo);
+
 	public int updateNotice(LectureNoticeVO noticeVO);
+
 	public int deleteNotice(int lecntNo);
+	
 }
