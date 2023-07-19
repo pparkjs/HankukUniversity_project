@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.or.hku.admin.mapper.UserMapper;
 import kr.or.hku.admin.service.UserService;
 import kr.or.hku.admin.vo.UserVO;
+import kr.or.hku.common.vo.SearchInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import oracle.net.aso.m;
 
@@ -104,23 +105,23 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserVO> getAllUsers() {
-		return mapper.getAllUsers();
+	public List<UserVO> getAllUsers(SearchInfoVO searchInfoVO) {
+		return mapper.getAllUsers(searchInfoVO);
 	}
 
 	@Override
-	public List<UserVO> getAllStudents() {
-		return mapper.getAllStudents();
+	public List<UserVO> getAllStudents(SearchInfoVO searchInfoVO) {
+		return mapper.getAllStudents(searchInfoVO);
 	}
 
 	@Override
-	public List<UserVO> getAllProfessors() {
-		return mapper.getAllProfessors();
+	public List<UserVO> getAllProfessors(SearchInfoVO searchInfoVO) {
+		return mapper.getAllProfessors(searchInfoVO);
 	}
 
 	@Override
-	public List<UserVO> getAllAdmins() {
-		return mapper.getAllAdmins();
+	public List<UserVO> getAllAdmins(SearchInfoVO searchInfoVO) {
+		return mapper.getAllAdmins(searchInfoVO);
 	}
 
 	@Override
@@ -146,6 +147,45 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int deleteAuth(String userNo) {
 		return mapper.deleteAuth(userNo);
+	}
+
+	@Override
+	public UserVO studentDetail(String userNo) {
+		return mapper.studentDetail(userNo);
+	}
+
+	@Override
+	public UserVO professorDetail(String userNo) {
+		return mapper.professorDetail(userNo);
+	}
+
+	@Override
+	public UserVO employeeDetail(String userNo) {
+		return mapper.employeeDetail(userNo);
+	}
+
+	@Override
+	public int updateStudent(UserVO userVO) {
+		String proFileImg = getProfileImgPath(userVO);
+		userVO.setProfilePath(proFileImg);
+		
+		return mapper.updateStudent(userVO);
+	}
+
+	@Override
+	public int updateProfessor(UserVO userVO) {
+		String proFileImg = getProfileImgPath(userVO);
+		userVO.setProfilePath(proFileImg);
+		
+		return mapper.updateProfessor(userVO);
+	}
+
+	@Override
+	public int updateEmployee(UserVO userVO) {
+		String proFileImg = getProfileImgPath(userVO);
+		userVO.setProfilePath(proFileImg);
+		
+		return mapper.updateEmployee(userVO);
 	}
 
 }

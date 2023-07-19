@@ -14,7 +14,8 @@ public interface ClassroomMapper {
 //  클래스룸 리스트 출력
 	public List<ClassroomVO> selectList(String stdNo); 
 	public List<LectureAplyVO> proSelectList(String proNo);
-	public List<AssignmentVO> getAssignList(String lecapNo); 
+	public List<AssignmentVO> getAssignList(String lecapNo);
+	public String getSubNm(String lecapNo); 
 	
 // 클래스룸 메인 
 	

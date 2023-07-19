@@ -60,15 +60,16 @@ public class ProClassroomController {
 	}
 	
 	// 클래스룸 메인
-	@GetMapping("/classroomMain/{lecapNo}/{subNm}")
+	@GetMapping("/classroomMain/{lecapNo}")
 	public String enterClass(@PathVariable String lecapNo,
-							@PathVariable String subNm,
 							Model model,
 							HttpSession session) {
 		session.setAttribute("lecapNo", lecapNo);
-		session.setAttribute("subNm", subNm);
-		log.info("개설신청번호 들어와 =>   " + lecapNo);
 		
+		String subNm =  classService.getSubNm(lecapNo);
+		session.setAttribute("subNm", subNm);
+		
+		log.info("개설신청번호 들어와 =>   " + lecapNo);
 		// 해당 과목에 해당 년도 학기에 대한 과제 리스트 가져옴
 		List<AssignmentVO> asgList = classService.getAssignList(lecapNo);
 		

@@ -55,7 +55,7 @@
 					<span class="nav-text">성적</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">전체학기 성적 조회</a></li>
+					<li><a href="/hku/student/all-grade">전체학기 성적 조회</a></li>
 					<li><a href="/hku/student/subject-grade">당학기 성적 조회</a></li>
 				</ul>
 			</li>
@@ -195,7 +195,7 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="/hku/admin/dept-administration">학과 관리</a></li>
-					<li><a href="#">학적 관리</a></li>
+					<li><a href="/hku/admin/academic/fluctuation-list">학적 관리</a></li>
 					<li><a href="/hku/admin/subject-administration">교과목 관리</a></li>
 					<li><a href="/hku/admin/facility-administration">시설관리</a></li>
 					<li><a href="#">사물함관리</a></li>
@@ -247,7 +247,7 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="/hku/admin/scholarship-info">장학금 정보 등록</a></li>
-					<li><a href="#">장학금 신청 내역</a></li>
+					<li><a href="/hku/admin/scholarship-aply-list">장학금 신청 내역</a></li>
 				</ul>
 			</li>
 			
