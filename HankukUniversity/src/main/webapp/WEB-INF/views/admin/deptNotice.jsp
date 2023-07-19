@@ -92,7 +92,7 @@ $(function(){
 		footnotesPrefix : "a"
 // 		filebrowserUploadUrl : '/imageUpload.do?${_csrf.parameterName }=${_csrf.token}'
 	});
-// 	CKEDITOR.config.allowedContent = true;
+	CKEDITOR.config.allowedContent = true;
 	//============================
 		
 	// 대학 선택

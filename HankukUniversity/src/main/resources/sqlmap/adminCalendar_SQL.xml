@@ -4,33 +4,6 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.hku.admin.mapper.CalendarMapper">
 	
-	
-	<select id="getCurrentCalendar" resultType="calendarVO">
-		/* kr.or.hku.admin.mapper.CalendarMapper.getCurrentCalendar */
-		SELECT 
-		      cal_ttl
-		    , cal_bgng_dt
-		    , cal_end_dt
-		    , cal_color
-		FROM calendar
-		WHERE cal_bgng_dt LIKE TO_CHAR(SYSDATE, 'YYYY')||'-'||TO_CHAR(SYSDATE, 'MM')||'%'
-		AND cal_clsf_cd = 'uni'
-		ORDER BY CAL_BGNG_DT ASC
-	</select>
-	
-	<select id="getCalendarInfoList" parameterType="calendarVO" resultType="calendarVO">
-		/* kr.or.hku.admin.mapper.CalendarMapper.getCalendarInfoList */
-		SELECT 
-		      cal_ttl
-		    , cal_bgng_dt
-		    , cal_end_dt
-		    , cal_color
-		FROM calendar
-		WHERE cal_bgng_dt LIKE #{calBgngDt}||'%'
-		AND cal_clsf_cd = #{calClsfCd}
-		ORDER BY CAL_BGNG_DT ASC
-	</select>
-	
 	<select id="getCalendarList" resultType="calendarVO">
 		/* kr.or.hku.admin.mapper.CalendarMapper.getCalendarList */
 		SELECT
@@ -42,7 +15,7 @@
 			, cal_color
 			, cal_clsf_cd 
 		FROM CALENDAR
-		WHERE cal_clsf_cd = #{calClsfCd}
+		WHERE 1=1
 	</select>
 	
 	<insert id="addCalendar" parameterType="calendarVO" useGeneratedKeys="true">
@@ -68,30 +41,4 @@
 			, #{calClsfCd}
 		)
 	</insert>
-	
-	<update id="changeCalendar" parameterType="calendarVO">
-		/* kr.or.hku.admin.mapper.CalendarMapper.changeCalendar */
-		UPDATE calendar
-		SET
-			  cal_ttl = #{calTtl}
-			, cal_cn = #{calCn}
-			, cal_bgng_dt = #{calBgngDt}
-			, cal_end_dt = #{calEndDt}
-			, cal_color = #{calColor}
-		WHERE cal_no = #{calNo}
-	</update>
-	
-	<delete id="deleteCalendar" parameterType="map">
-		/* kr.or.hku.admin.mapper.CalendarMapper.deleteCalendar */
-		DELETE FROM calendar
-		WHERE cal_no = #{calNo}
-	</delete>
-	
-	<select id="getDeptList" resultType="map">
-		/* kr.or.hku.admin.mapper.CalendarMapper.getDeptList */
-		SELECT
-			  dept_cd
-			, dept_nm
-		FROM department
-	</select>
 </mapper>

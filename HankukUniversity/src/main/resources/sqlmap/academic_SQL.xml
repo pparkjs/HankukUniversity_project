@@ -201,38 +201,4 @@
 		WHERE
  			 sub_no = #{subNo}
  	</update>
- 	
- 	<select id="getAcademicAplyList" resultType="academicChangeVO">
- 		/* kr.or.hku.admin.mapper.AcademicMapper.getAcademicAplyList */
- 		SELECT
-		      change_no AS change_no
-		    , ac.std_no AS std_no 
-		    , s.std_nm AS std_nm
-		    , c1.com_cd_nm AS change_type_cd
-		    , change_rsn AS change_rsn
-		    , change_aply_dt AS change_aply_dt
-		    , change_start_yr AS change_start_yr
-		    , change_start_sem AS change_start_sem
-		    , change_end_yr AS change_end_yr
-		    , change_end_sem AS change_end_sem
-		    , c2.com_cd_nm AS aprv_stts_cd
-		    , change_rjct_rsn AS change_rjct_rsn
-		FROM ACADEMIC_CHANGE ac
-		INNER JOIN student s ON ac.std_no = s.std_no
-		INNER JOIN com_code c1 ON ac.change_type_cd = c1.com_cd
-		INNER JOIN com_code c2 ON ac.aprv_stts_cd = c2.com_cd
-		ORDER BY change_no DESC
- 	</select>
- 	
- 	<update id="academicProccess" parameterType="academicChangeVO">
- 		/* kr.or.hku.admin.mapper.AcademicMapper.academicProccess */
- 		UPDATE academic_change
- 		SET
- 			aprv_stts_cd = #{aprvSttsCd}
- 			<if test="changeRjctRsn != null and changeRjctRsn != ''">
- 				, change_rjct_rsn = #{changeRjctRsn}
- 			</if>
- 		WHERE change_no = #{changeNo}
- 	</update>
- 	
  </mapper>

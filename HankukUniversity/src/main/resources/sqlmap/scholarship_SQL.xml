@@ -60,33 +60,5 @@
  		WHERE scls_cd = #{sclsCd}
  	</update>
  	
- 	<select id="getAllSclsAplyList" resultType="sclsAplyVO">
- 		/* kr.or.hku.admin.mapper.ScholarshipMapper.deleteScls */
-		SELECT
-		      sclsap_no AS sclsap_no
-		    , c.scls_cd AS scls_cd
-		    , c.scls_nm AS scls_nm
-		    , a.std_no AS std_no
-		    , b.std_nm AS std_nm
-		    , TO_CHAR(sclsap_dt, 'YYYY-MM-DD') as sclsap_dt
-		    , aprv_stts_cd
-		    , a.atch_file_no
-		FROM scholarship_aply a
-		INNER join student b ON a.std_no = b.std_no
-		INNER join scholarship c ON a.scls_cd = c.scls_cd 		
-		ORDER BY a.sclsap_dt DESC
- 	</select>
- 	
- 	<update id="handleScholarshipApplicationOutcome" parameterType="map">
- 		/* kr.or.hku.admin.mapper.ScholarshipMapper.handleScholarshipApplicationOutcome */
- 		UPDATE scholarship_aply
- 		SET
- 			  aprv_stts_cd = #{aprvSttsCd}
-		  	<if test="sclsapRjctRsn != null and sclsapRjctRsn != ''">
- 				, SCLSAP_RJCT_RSN = #{sclsapRjctRsn}
- 			</if>
- 		WHERE sclsap_no = #{sclsapNo}
- 	</update>
- 	
  	
  </mapper>

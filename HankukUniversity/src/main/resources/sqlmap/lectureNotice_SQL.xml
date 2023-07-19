@@ -4,78 +4,70 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.hku.classroom.mapper.LectureNoticeMapper">
-	<select id="getNoticeList" parameterType="String" resultType="lectureNoticeVO">
-		select LECNT_NO
-				,LECAP_NO
-				,LECNT_TTL
-				,LECNT_CN
-				,LECNT_REGDATE
-				,LECNT_WRITER
-				,LECNT_READ_CNT
-				,ATCH_FILE_NO
-		FROM LECTURE_NOTICE
-		WHERE LECAP_NO = #{lecapNo}
-	</select>
-		
-	<insert id="insertNotice" parameterType="lectureNoticeVO">
-		INSERT INTO LECTURE_NOTICE(
-					LECNT_NO
-					,LECAP_NO
-					,LECNT_TTL
-					,LECNT_CN
-					,LECNT_REGDATE
-					,LECNT_WRITER
-					,LECNT_READ_CNT
-					<if test="atchFileNo != 0">
-						,ATCH_FILE_NO
-					</if>
-		)VALUES(
-					SEQ_LECTURENOTICE.NEXTVAL
-					,#{lecapNo}
-					,#{lecntTtl}
-					,#{lecntCn}
-					,sysdate
-					,#{lecntWriter}
-					,0
-					<if test="atchFileNo != 0">
-						,#{atchFileNo}
-					</if>
-					)
- 	</insert>
- 	<select id="getNoticeDetail" parameterType="int" resultType="lectureNoticeVO">
- 		SELECT LECNT_NO
-				,LECAP_NO
-				,LECNT_TTL
-				,LECNT_CN
-				,LECNT_REGDATE
-				,LECNT_WRITER
-				,LECNT_READ_CNT
-				,ATCH_FILE_NO
-		FROM LECTURE_NOTICE
-		WHERE LECNT_NO = #{lecntNo}		
- 	
- 	</select>
- 	
- 	<update id="updateReadCnt" parameterType="int">
- 		UPDATE LECTURE_NOTICE
- 		 SET LECNT_READ_CNT = LECNT_READ_CNT +1
- 		 WHERE LECNT_NO = #{lecntNo}
- 	</update>
- 	
- 	<update id="updateNotice" parameterType="lectureNoticeVO">
- 		UPDATE LECTURE_NOTICE
-		 SET 	LECNT_TTL = #{lecntTtl}
-				,LECNT_CN = #{lecntCn}
-				,LECNT_REGDATE = sysdate
-				<if test="atchFileNo != 0">
-				,ATCH_FILE_NO = #{atchFileNo}
-				</if>
- 		 WHERE LECNT_NO = #{lecntNo}
- 	
- 	</update>
- 	
- 	<delete id="deleteNotice" parameterType="int" >
-	 	DELETE FROM LECTURE_NOTICE
-	 		  WHERE LECNT_NO = #{lecntNo}
- 	</delete>
+
+<select id="boardList" resultType="lectureNoticeVO">
+	SELECT 
+		  lecnt_no
+		, lecnt_ttl
+		, lecnt_cn 
+		, lecnt_regdate
+		, lecnt_writer
+		, lecnt_read_cnt
+		, atch_file_no
+	 FROM lecture_notice
+</select>
+
+<select id="boardDetail" parameterType="int" resultType="lectureNoticeVO">
+	SELECT 
+		  lecnt_no
+		, lecnt_ttl
+		, lecnt_cn 
+		, lecnt_regdate
+		, lecnt_writer
+		, lecnt_read_cnt
+		, atch_file_no	
+ 	FROM lecture_notice 
+	WHERE lecnt_no = #{lecntNo}
+</select>
+
+<insert id="insertBoard" parameterType="lectureNoticeVO">
+	INSERT INTO lecture_notice (
+			  lecnt_no
+			, lecnt_ttl
+			, lecnt_cn 
+			, lecnt_regdate
+			, lecnt_writer
+			, lecnt_read_cnt
+			, atch_file_no
+		  ) 
+	VALUES(
+			seq_lectureNotice.nextval
+		  	, #{lecntTtl}
+		  	, #{lecntCn}
+		  	, sysdate
+		  	, #{lecntWriter}	 
+		  	, 0
+		  	, null
+		  )
+</insert>
+
+<update id="updateBoard" parameterType="lectureNoticeVO">
+	UPDATE lecture_notice 
+	SET 
+		lecnt_no = #{lecntNo}, 
+   <!-- lecap_no = #{lecapNo}   과목신청번호 --> 
+		lecnt_ttl = #{lecntTtl}, 
+		lecnt_cn = #{lecntCn}, 
+		lecnt_regdate = sysdate, 
+		lecnt_writer =	#{lecntWriter}, 
+		lecnt_read_cnt = 0, 
+		atch_file_no = null
+</update>
+
+<delete id="deleteBoard" parameterType="int">
+	DELETE FROM lecture_notice 
+	WHERE lecnt_no = #{lecntNo}
+</delete>
+
+ 
 </mapper>

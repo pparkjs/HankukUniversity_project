@@ -55,7 +55,7 @@
 					<span class="nav-text">성적</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="/hku/student/all-grade">전체학기 성적 조회</a></li>
+					<li><a href="#">전체학기 성적 조회</a></li>
 					<li><a href="/hku/student/subject-grade">당학기 성적 조회</a></li>
 				</ul>
 			</li>
@@ -76,7 +76,7 @@
 			</li>
 			
 			<li>
-				<a href="/hku/student/stdClassroomList" class="" aria-expanded="false">
+				<a href="/hku/student/stdClassroomMain" class="" aria-expanded="false">
 					<div class="menu-icon">
 						<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path fill-rule="evenodd" clip-rule="evenodd" d="M10.986 14.0673C7.4407 14.0673 4.41309 14.6034 4.41309 16.7501C4.41309 18.8969 7.4215 19.4521 10.986 19.4521C14.5313 19.4521 17.5581 18.9152 17.5581 16.7693C17.5581 14.6234 14.5505 14.0673 10.986 14.0673Z" stroke="#888888" stroke-linecap="round" stroke-linejoin="round"/>
@@ -99,12 +99,12 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="/hku/counseling-req">상담신청</a></li>
-					<li><a href="/hku/counseling-record">신청내역 조회</a></li>
+					<li><a href="/hku//counseling-record">신청내역 조회</a></li>
 				</ul>
 			</li>
 			
 			<li>
-				<a href="/hku/student/study" class="" aria-expanded="false">
+				<a href="javascript:void(0);" class="" aria-expanded="false">
 					<div class="menu-icon">
 						<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path fill-rule="evenodd" clip-rule="evenodd" d="M10.986 14.0673C7.4407 14.0673 4.41309 14.6034 4.41309 16.7501C4.41309 18.8969 7.4215 19.4521 10.986 19.4521C14.5313 19.4521 17.5581 18.9152 17.5581 16.7693C17.5581 14.6234 14.5505 14.0673 10.986 14.0673Z" stroke="#888888" stroke-linecap="round" stroke-linejoin="round"/>
@@ -113,6 +113,10 @@
 					</div>	
 					<span class="nav-text">스터디</span>
 				</a>
+				<ul aria-expanded="false">
+					<li><a href="/hku/student/study">스터디룸</a></li>
+					<li><a href="/hku/student/studyBoard">스터디게시판</a></li>
+				</ul>
 			</li>
 			
 			<li>
@@ -195,9 +199,9 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="/hku/admin/dept-administration">학과 관리</a></li>
-					<li><a href="/hku/admin/academic/fluctuation-list">학적 관리</a></li>
+					<li><a href="#">학적 관리</a></li>
 					<li><a href="/hku/admin/subject-administration">교과목 관리</a></li>
-					<li><a href="/hku/admin/facility-administration">시설관리</a></li>
+					<li><a href="#">시설관리</a></li>
 					<li><a href="#">사물함관리</a></li>
 					<li><a href="/hku/admin/calendar">학사 일정 관리</a></li>
 				</ul>
@@ -231,7 +235,7 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="/hku/admin/lecaplylist">개설신청 관리</a></li>
-					<li><a href="/hku/admin/lecture-canceled/management">휴강신청 관리</a></li>
+					<li><a href="#">휴강신청 관리</a></li>
 				</ul>
 			</li>
 			
@@ -247,7 +251,7 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="/hku/admin/scholarship-info">장학금 정보 등록</a></li>
-					<li><a href="/hku/admin/scholarship-aply-list">장학금 신청 내역</a></li>
+					<li><a href="#">장학금 신청 내역</a></li>
 				</ul>
 			</li>
 			
@@ -300,7 +304,7 @@
 			</li>
 			
 			<li>
-				<a href="/hku/professor/proClassroomList" class="" aria-expanded="false">
+				<a href="/hku/professor/classroomList" class="" aria-expanded="false">
 					<div class="menu-icon">
 						<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path fill-rule="evenodd" clip-rule="evenodd" d="M10.986 14.0673C7.4407 14.0673 4.41309 14.6034 4.41309 16.7501C4.41309 18.8969 7.4215 19.4521 10.986 19.4521C14.5313 19.4521 17.5581 18.9152 17.5581 16.7693C17.5581 14.6234 14.5505 14.0673 10.986 14.0673Z" stroke="#888888" stroke-linecap="round" stroke-linejoin="round"/>
@@ -321,7 +325,7 @@
 					<span class="nav-text">상담 관리</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="/hku/student-counseling">학생상담 신청 내역</a></li>
+					<li><a href="#">학생상담 신청 내역</a></li>
 				</ul>
 			</li>
 			</c:if>
