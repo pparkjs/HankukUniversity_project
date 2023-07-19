@@ -4,6 +4,36 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="kr.or.hku.admin.mapper.UserMapper">
+ 	<sql id="studentSearch">
+ 		<if test="searchType != null and searchType == 'userNo'">
+			and (std_no like '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'userNm'">
+			and (std_nm like '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'deptNm'">
+			and (dept_nm like '%'||#{searchWord}||'%')
+		</if>
+ 	</sql>
+ 	<sql id="professorSearch">
+ 		<if test="searchType != null and searchType == 'userNo'">
+			and (pro_no like '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'userNm'">
+			and (pro_nm like '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'deptNm'">
+			and (dept_nm like '%'||#{searchWord}||'%')
+		</if>
+ 	</sql>
+ 	<sql id="employeeSearch">
+ 		<if test="searchType != null and searchType == 'userNo'">
+			and (emp_no like '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'userNm'">
+			and (emp_name like '%'||#{searchWord}||'%')
+		</if>
+ 	</sql>
  
  	<insert id="insertUser" parameterType="userVO">
  		INSERT INTO users(
@@ -160,7 +190,7 @@
  	
 <!--  	</select> -->
  	
- 	<select id="getAllStudents" resultType="userVO">
+ 	<select id="getAllStudents" parameterType="searchInfoVO" resultType="userVO">
  		SELECT 
 		    b.user_cls_cd
 		    ,c.com_cd_nm as user_cls_nm
@@ -189,6 +219,8 @@
 		    INNER JOIN com_code e ON(e.com_cd=a.std_sex_cd)
 		    INNER JOIN com_code f ON(f.com_cd=a.std_stts_cd)
 		    INNER JOIN com_code g ON(g.com_cd=a.bank_cd)
+		WHERE 1=1
+		<include refid="studentSearch"></include>
  	</select>
  	
  	<select id="getAllProfessors" resultType="userVO">
@@ -221,6 +253,8 @@
 		    INNER JOIN com_code e ON(e.com_cd=a.sex_cd)
 		    INNER JOIN com_code f ON(f.com_cd=a.pro_jbttl_cd)
 		    INNER JOIN com_code g ON(g.com_cd=a.bank_cd)
+		WHERE 1=1
+		<include refid="professorSearch"></include>
  	</select>
  	
  	<select id="getAllAdmins" resultType="userVO">
@@ -253,6 +287,8 @@
 		    INNER JOIN com_code f ON(f.com_cd=a.emp_jbttl_cd)
 		    INNER JOIN com_code g ON(g.com_cd=a.bank_cd)
 		    INNER JOIN com_code h ON(h.com_cd=a.emp_jbgd_cd)
+		WHERE 1=1
+		<include refid="employeeSearch"></include>
  	</select>
  	
  	<select id="getAllUsers" resultType="userVO">
@@ -277,6 +313,8 @@
 		    INNER JOIN com_code c ON(b.USER_CLS_CD=c.COM_CD)
 		    INNER JOIN com_code e ON(e.com_cd=a.sex_cd)
 		    INNER JOIN com_code g ON(g.com_cd=a.bank_cd)
+		WHERE 1=1
+		<include refid="employeeSearch"></include>
 		    
 		UNION ALL
 		
@@ -301,6 +339,8 @@
 		    INNER JOIN com_code c ON(b.USER_CLS_CD=c.COM_CD)
 		    INNER JOIN com_code e ON(e.com_cd=a.sex_cd)
 		    INNER JOIN com_code g ON(g.com_cd=a.bank_cd)
+		WHERE 1=1
+		<include refid="professorSearch"></include>
 		            
 		UNION ALL
 		
@@ -325,6 +365,8 @@
 		    INNER JOIN com_code c ON(b.USER_CLS_CD=c.COM_CD)
 		    INNER JOIN com_code e ON(e.com_cd=a.std_sex_cd)
 		    INNER JOIN com_code g ON(g.com_cd=a.bank_cd)
+		WHERE 1=1
+		<include refid="studentSearch"></include>
  	</select>
  	
  	<delete id="deleteEmployee" parameterType="string">
@@ -342,4 +384,159 @@
  	<delete id="deleteUser" parameterType="string">
  		DELETE FROM users WHERE user_no = #{userNo}  
  	</delete>
+ 	
+ 	<select id="studentDetail" parameterType="string" resultType="userVO">
+ 		SELECT
+ 			std_no as user_no
+			,dept_cd
+			,std_nm as user_nm
+			,std_mjr_crd
+			,std_ctrl_crd
+			,std_mtcltn_yr
+			,std_stts_cd
+			,std_telno as user_telno
+			,std_sex_cd as sex_cd
+			,std_zip as user_zip
+			,std_addr as user_addr
+			,std_daddr as user_daddr
+			,std_mail as user_mail
+			,std_brdt as user_brdt
+			,std_rrno as user_rrno
+			,bank_cd
+			,std_actno as user_actno
+			,std_profile_path as profile_path
+		FROM 
+			student
+		WHERE std_no = #{userNo}
+ 	</select>
+ 	
+ 	<select id="professorDetail" parameterType="string" resultType="userVO">
+ 		SELECT
+ 			pro_no as user_no
+			,dept_cd
+			,pro_jbttl_cd
+			,pro_jncmp_ymd
+			,pro_rsgntn_ymd
+			,pro_lab
+			,pro_lab_telno
+			,pro_nm as user_nm
+			,pro_telno as user_telno
+			,sex_cd
+			,pro_zip as user_zip
+			,pro_addr as user_addr
+			,pro_daddr as user_daddr
+			,pro_mail as user_mail
+			,pro_brdt as user_brdt
+			,pro_rrno as user_rrno
+			,bank_cd
+			,pro_actno as user_actno
+			,pro_profile_path as profile_path
+ 		FROM 
+ 			professor
+ 		WHERE pro_no = #{userNo}
+ 	</select>
+ 	
+ 	<select id="employeeDetail" parameterType="string" resultType="userVO">
+ 		SELECT
+ 			emp_no as user_no
+			,emp_name as user_nm
+			,emp_mail as user_mail
+			,emp_brdt as user_brdt
+			,emp_jncmp_ymd
+			,emp_rsgntn_ymd
+			,emp_telno as user_telno
+			,sex_cd
+			,emp_zip as user_zip
+			,emp_addr as user_addr
+			,emp_daddr as user_daddr
+			,emp_rrno as user_rrno
+			,bank_cd
+			,emp_actno as user_actno
+			,emp_profile_path as profile_path
+			,emp_dept_cd
+			,emp_jbttl_cd
+			,emp_jbgd_cd
+ 		FROM 
+ 			employee
+ 		WHERE emp_no = #{userNo}
+ 	</select>
+ 	
+ 	<update id="updateStudent" parameterType="userVO">
+ 		UPDATE student
+ 		SET
+			dept_cd = #{deptCd}
+			,std_nm = #{userNm}
+<!-- 			,std_mjr_crd = #{stdMjrCrd} -->
+<!-- 			,std_ctrl_crd = #{} -->
+			,std_mtcltn_yr = #{stdMtcltnYr}
+			,std_stts_cd = #{stdSttsCd}
+			,std_telno = #{userTelno}
+			,std_sex_cd = #{sexCd}
+			,std_zip = #{userZip}
+			,std_addr = #{userAddr}
+			,std_daddr = #{userDaddr}
+			,std_mail = #{userMail}
+			,std_brdt = #{userBrdt}
+			,std_rrno = #{userRrno}
+			,bank_cd = #{bankCd}
+			,std_actno = #{userActno}
+			<if test="profilePath != null and profilePath != ''">
+				,std_profile_path = #{profilePath}
+			</if>
+		WHERE
+			std_no = #{userNo}
+ 	</update>
+ 	
+ 	<update id="updateProfessor" parameterType="userVO">
+ 		UPDATE professor
+ 		SET
+			dept_cd = #{deptCd}
+			,pro_jbttl_cd = #{proJbttlCd}
+			,pro_jncmp_ymd = #{proJncmpYmd}
+<!-- 			,pro_rsgntn_ymd -->
+			,pro_lab = #{proLab}
+			,pro_lab_telno = #{proLabTelno}
+			,pro_nm = #{userNm}
+			,pro_telno = #{userTelno}
+			,sex_cd = #{sexCd}
+			,pro_zip = #{userZip}
+			,pro_addr = #{userAddr}
+			,pro_daddr = #{userDaddr}
+			,pro_mail = #{userMail}
+			,pro_brdt = #{userBrdt}
+			,pro_rrno = #{userRrno}
+			,bank_cd = #{bankCd}
+			,pro_actno = #{userActno}
+			<if test="profilePath != null and profilePath != ''">
+				,pro_profile_path = #{profilePath}
+			</if>
+		WHERE
+			pro_no = #{userNo}
+ 	</update>
+ 	
+ 	<update id="updateEmployee" parameterType="userVO">
+ 		UPDATE employee
+ 		SET
+			emp_name = #{userNm}
+			,emp_mail = #{userMail}
+			,emp_brdt = #{userBrdt}
+			,emp_jncmp_ymd = #{empJncmpYmd}
+			,emp_rsgntn_ymd = #{empRsgntnYmd}
+			,emp_telno = #{userTelno}
+			,sex_cd = #{sexCd}
+			,emp_zip = #{userZip}
+			,emp_addr = #{userAddr}
+			,emp_daddr = #{userDaddr}
+			,emp_rrno = #{userRrno}
+			,bank_cd = #{bankCd}
+			,emp_actno = #{userActno}
+			,emp_dept_cd = #{empDeptCd}
+			,emp_jbttl_cd = #{empJbttlCd}
+			,emp_jbgd_cd = #{empJbgdCd}
+			<if test="profilePath != null and profilePath != ''">
+				,emp_profile_path = #{profilePath}
+			</if>
+		WHERE
+			emp_no = #{userNo}
+ 	</update>
  </mapper>

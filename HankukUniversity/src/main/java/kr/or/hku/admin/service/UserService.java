@@ -3,6 +3,7 @@ package kr.or.hku.admin.service;
 import java.util.List;
 
 import kr.or.hku.admin.vo.UserVO;
+import kr.or.hku.common.vo.SearchInfoVO;
 
 public interface UserService {
 
@@ -16,13 +17,13 @@ public interface UserService {
 
 	public int insertUserAuth(UserVO userVO);
 
-	public List<UserVO> getAllUsers();
+	public List<UserVO> getAllUsers(SearchInfoVO searchInfoVO);
 
-	public List<UserVO> getAllStudents();
+	public List<UserVO> getAllStudents(SearchInfoVO searchInfoVO);
 
-	public List<UserVO> getAllProfessors();
+	public List<UserVO> getAllProfessors(SearchInfoVO searchInfoVO);
 
-	public List<UserVO> getAllAdmins();
+	public List<UserVO> getAllAdmins(SearchInfoVO searchInfoVO);
 
 	public int deleteUser(String userNo);
 
@@ -33,6 +34,18 @@ public interface UserService {
 	public int deleteStudent(String userNo);
 
 	public int deleteAuth(String userNo);
+
+	public UserVO studentDetail(String userNo);
+
+	public UserVO professorDetail(String userNo);
+
+	public UserVO employeeDetail(String userNo);
+
+	public int updateStudent(UserVO userVO);
+
+	public int updateProfessor(UserVO userVO);
+
+	public int updateEmployee(UserVO userVO);
 
 
 }
