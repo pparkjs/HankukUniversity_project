@@ -10,5 +10,4 @@ public interface StdMypageMapper {
 	
 	public StudentVO detailInfo(String stdNo);
 	public int updateInfo(StudentVO studentVO);
-	
 }

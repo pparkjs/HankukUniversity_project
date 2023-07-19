@@ -14,8 +14,4 @@ public interface CounselingMapper {
 	public List<LectureScheduleVO> getLecList(String proNo);
 	public List<CounselingRsvtVO> getCounseList(String proNo);
 	public int counselingRsvt(CounselingRsvtVO vo);
-	public List<CounselingRsvtVO> counselingRecord(String stdNo);
-	public List<CounselingRsvtVO> studentCounseList(String proNo);
-	public int studentCounseAppv(int dscsnNo);
-	public int studentCounseRej(CounselingRsvtVO vo);
 }

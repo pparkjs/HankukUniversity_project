@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.or.hku.admin.mapper.UserMapper;
 import kr.or.hku.admin.service.UserService;
 import kr.or.hku.admin.vo.UserVO;
-import kr.or.hku.common.vo.SearchInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import oracle.net.aso.m;
 
@@ -79,14 +78,14 @@ public class UserServiceImpl implements UserService {
 			file.mkdirs();
 		}
 		
-		String saveFileName = "";		// memberVO안에 프로필 이미지 경로를 담을 변수
+		String proFileImg = "";		// memberVO안에 프로필 이미지 경로를 담을 변수
 		MultipartFile proFileImgFile = userVO.getProfile();
-		
 		log.info("원본파일 이름 : " + proFileImgFile.getOriginalFilename());
 		if(proFileImgFile.getOriginalFilename() != null && !proFileImgFile.getOriginalFilename().equals("")) {
-			String uuid = UUID.randomUUID().toString();
-			saveFileName += "/" + uuid + "_" + proFileImgFile.getOriginalFilename();
-			uploadPath += "/" + saveFileName;
+			String fileName = UUID.randomUUID().toString();
+			fileName += "_" + proFileImgFile.getOriginalFilename();
+			
+			uploadPath += "/" + fileName;
 			
 			try {
 				proFileImgFile.transferTo(new File(uploadPath));	// 파일 복사
@@ -95,8 +94,9 @@ public class UserServiceImpl implements UserService {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			proFileImg = resourcePath+ "/" + fileName;
 		}
-		return saveFileName;
+		return proFileImg;
 	}
 
 	@Override
@@ -105,23 +105,23 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserVO> getAllUsers(SearchInfoVO searchInfoVO) {
-		return mapper.getAllUsers(searchInfoVO);
+	public List<UserVO> getAllUsers() {
+		return mapper.getAllUsers();
 	}
 
 	@Override
-	public List<UserVO> getAllStudents(SearchInfoVO searchInfoVO) {
-		return mapper.getAllStudents(searchInfoVO);
+	public List<UserVO> getAllStudents() {
+		return mapper.getAllStudents();
 	}
 
 	@Override
-	public List<UserVO> getAllProfessors(SearchInfoVO searchInfoVO) {
-		return mapper.getAllProfessors(searchInfoVO);
+	public List<UserVO> getAllProfessors() {
+		return mapper.getAllProfessors();
 	}
 
 	@Override
-	public List<UserVO> getAllAdmins(SearchInfoVO searchInfoVO) {
-		return mapper.getAllAdmins(searchInfoVO);
+	public List<UserVO> getAllAdmins() {
+		return mapper.getAllAdmins();
 	}
 
 	@Override
@@ -147,45 +147,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int deleteAuth(String userNo) {
 		return mapper.deleteAuth(userNo);
-	}
-
-	@Override
-	public UserVO studentDetail(String userNo) {
-		return mapper.studentDetail(userNo);
-	}
-
-	@Override
-	public UserVO professorDetail(String userNo) {
-		return mapper.professorDetail(userNo);
-	}
-
-	@Override
-	public UserVO employeeDetail(String userNo) {
-		return mapper.employeeDetail(userNo);
-	}
-
-	@Override
-	public int updateStudent(UserVO userVO) {
-		String proFileImg = getProfileImgPath(userVO);
-		userVO.setProfilePath(proFileImg);
-		
-		return mapper.updateStudent(userVO);
-	}
-
-	@Override
-	public int updateProfessor(UserVO userVO) {
-		String proFileImg = getProfileImgPath(userVO);
-		userVO.setProfilePath(proFileImg);
-		
-		return mapper.updateProfessor(userVO);
-	}
-
-	@Override
-	public int updateEmployee(UserVO userVO) {
-		String proFileImg = getProfileImgPath(userVO);
-		userVO.setProfilePath(proFileImg);
-		
-		return mapper.updateEmployee(userVO);
 	}
 
 }

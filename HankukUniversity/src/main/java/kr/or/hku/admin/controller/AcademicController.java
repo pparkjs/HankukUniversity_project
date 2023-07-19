@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.hku.admin.service.AcademicAdm;
-import kr.or.hku.admin.vo.AcademicChangeVO;
 import kr.or.hku.admin.vo.CollegeVO;
 import kr.or.hku.admin.vo.DepartmentVO;
 import kr.or.hku.admin.vo.FacilityVO;
@@ -309,33 +307,4 @@ public class AcademicController {
 		
 		return entity;
 	}
-	
-	// 학적관리
-	@GetMapping("/academic/fluctuation-list")
-	public String showAcademicFluctuation(Model model) {
-		List<CommonVO> commonData = commonService.getAllCommonData();
-		List<AcademicChangeVO> academicAplyList = academicAdmService.getAcademicAplyList();
-		log.info("academicAplyList => ", academicAplyList.toString());
-		model.addAttribute("commonData", commonData);
-		model.addAttribute("academicAplyList", academicAplyList);
-		return "admin/academicFluctuation";
-	}
-	
-	@PostMapping("/academic/fluctuation-list")
-	public String academicProccess(AcademicChangeVO academicChangeVO,
-			RedirectAttributes ra) {
-		log.info("전달 파라미더 > " + academicChangeVO.toString());
-		
-		int res = academicAdmService.academicProccess(academicChangeVO);
-		
-		if (res > 0) {
-			if(academicChangeVO.getAprvSttsCd().equals("appv")) {
-				ra.addFlashAttribute("msg", "appvSuccess");
-			}else {
-				ra.addFlashAttribute("msg", "rejSuccess");
-			}
-		}
-		return "redirect:/hku/admin/academic/fluctuation-list";
-	}
-	
 }

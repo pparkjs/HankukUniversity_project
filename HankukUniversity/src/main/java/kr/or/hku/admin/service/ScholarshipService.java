@@ -3,7 +3,6 @@ package kr.or.hku.admin.service;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.hku.admin.vo.ScholarshipAplyVO;
 import kr.or.hku.admin.vo.ScholarshipVO;
 
 public interface ScholarshipService {
@@ -11,6 +10,4 @@ public interface ScholarshipService {
 	public int modifyScls(ScholarshipVO sclsVO);
 	public int insertScls(ScholarshipVO sclsVO);
 	public int deleteScls(Map<String, Object> map);
-	public List<ScholarshipAplyVO> getAllSclsAplyList();
-	public String handleScholarshipApplicationOutcome(Map<String, String> map);
 }

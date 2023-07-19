@@ -2,7 +2,6 @@ package kr.or.hku.admin.service;
 
 import java.util.List;
 
-import kr.or.hku.admin.vo.AcademicChangeVO;
 import kr.or.hku.admin.vo.CollegeVO;
 import kr.or.hku.admin.vo.DepartmentVO;
 import kr.or.hku.admin.vo.FacilityVO;
@@ -43,9 +42,5 @@ public interface AcademicAdm {
 	public SubjectVO selectSubject(String subNo);
 
 	public int updateSubject(SubjectVO subjectVO);
-
-	public List<AcademicChangeVO> getAcademicAplyList();
-
-	public int academicProccess(AcademicChangeVO academicChangeVO);
 
 }

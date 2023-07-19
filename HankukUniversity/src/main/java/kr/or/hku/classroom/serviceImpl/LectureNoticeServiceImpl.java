@@ -6,40 +6,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.hku.classroom.mapper.LectureNoticeMapper;
-import kr.or.hku.classroom.service.LectureNoticeService;
+import kr.or.hku.classroom.service.ILectureNoticeService;
 import kr.or.hku.classroom.vo.LectureNoticeVO;
 
 @Service
-public class LectureNoticeServiceImpl implements LectureNoticeService{
+public class LectureNoticeServiceImpl implements ILectureNoticeService{
 	
 	@Autowired
-	LectureNoticeMapper noticeMapper;
-	
+	private LectureNoticeMapper lectureNoticeMapper;
+
 	@Override
-	public List<LectureNoticeVO> getNoticeList(String lecapNo) {
-		return noticeMapper.getNoticeList(lecapNo);
+	public List<LectureNoticeVO> boardList() {
+		return lectureNoticeMapper.boardList();
 	}
-	
+
 	@Override
-	public int insertNotice(LectureNoticeVO noticeVO) {
-		return noticeMapper.insertNotice(noticeVO);
+	public LectureNoticeVO boardDetail(int lecnt_no) {
+		return lectureNoticeMapper.boardDetail(lecnt_no);
 	}
-	
+
 	@Override
-	public LectureNoticeVO getNotcieDetail(int lecntNo) {
-		LectureNoticeVO vo = noticeMapper.getNoticeDetail(lecntNo);
-		noticeMapper.updateReadCnt(lecntNo);
-		return vo;
+	public int insertBoard(LectureNoticeVO noticeVO) {
+		return lectureNoticeMapper.insertBoard(noticeVO);
 	}
-	
+
 	@Override
-	public int updateNotice(LectureNoticeVO noticeVO) {
-		return noticeMapper.updateNotice(noticeVO);
+	public int updateBoard(LectureNoticeVO noticeVO) {
+		return lectureNoticeMapper.updateBoard(noticeVO);
 	}
+
 	@Override
-	public int deleteNotice(int lecntNo) {
-		// TODO Auto-generated method stub
-		return noticeMapper.deleteNotice(lecntNo);
+	public int deleteBoard(int lecnt_no) {
+		return lectureNoticeMapper.deleteBoard(lecnt_no);
 	}
 	
 }

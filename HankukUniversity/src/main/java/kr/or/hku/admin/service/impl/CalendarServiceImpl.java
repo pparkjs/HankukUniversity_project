@@ -1,7 +1,6 @@
 package kr.or.hku.admin.service.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,37 +16,12 @@ public class CalendarServiceImpl implements CalendarService {
 	private CalendarMapper calendarMapper;
 	
 	@Override
-	public List<CalendarVO> getCurrentCalendar() {
-		return calendarMapper.getCurrentCalendar();
-	}
-	
-	@Override
-	public List<CalendarVO> getCalendarList(Map<String, String> map) {
-		return calendarMapper.getCalendarList(map);
+	public List<CalendarVO> getCalendarList() {
+		return calendarMapper.getCalendarList();
 	}
 	
 	@Override
 	public int addCalendar(CalendarVO calendarVO) {
 		return calendarMapper.addCalendar(calendarVO);
-	}
-	
-	@Override
-	public int changeCalendar(CalendarVO calendarVO) {
-		return calendarMapper.changeCalendar(calendarVO);
-	}
-	
-	@Override
-	public int deleteCalendar(Map<String, String> map) {
-		return calendarMapper.deleteCalendar(map);
-	}
-	
-	@Override
-	public List<CalendarVO> getCalendarInfoList(CalendarVO calendarVO) {
-		return calendarMapper.getCalendarInfoList(calendarVO);
-	}
-	
-	@Override
-	public List<Map<String, String>> getDeptList() {
-		return calendarMapper.getDeptList();
 	}
 }
