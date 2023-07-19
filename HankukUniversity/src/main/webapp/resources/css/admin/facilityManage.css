@@ -1,7 +1,56 @@
 @charset "UTF-8";
 
 .content-body .container-fluid {
-    padding-top: 0.875rem;
+    padding-top: 0.475rem;
     padding-right: 0.875rem;
     padding-left: 0.875rem;
+}
+.card-header {
+	padding: 0.5rem 1.25rem 1.25rem;
+}
+.card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #800000;
+}
+.card-body {
+    padding: 0.25rem;
+}
+hr{
+	margin: 0;
+}
+.custom-form {
+	display: flex;
+    justify-content: flex-end;
+}
+.fcltBtn {
+	line-height: 27px;
+}
+.table {
+    border-spacing: 0px;
+}
+.table thead tr th {
+	padding: 7px;
+    font-size: 18px;
+}
+.table tbody td {
+	padding: 7px;
+	font-size: 17px;
+}
+.fleft {
+    padding-right: 0;
+}
+.fright {
+    padding-left: 0;
+}
+.table-wrap {
+    height: 300px;
+    overflow: scroll;
+}
+.table thead{
+	position: sticky;
+    top: 0px;
+}
+#flctModalBody {
+    padding: 0 1.875rem;
 }
