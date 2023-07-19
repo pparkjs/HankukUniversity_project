@@ -53,7 +53,7 @@
   .card-body{
   	align-items: center;
   	height : 450px;
-/*   	overflow: scroll; */
+  	overflow: scroll;
   
   }
   
@@ -190,20 +190,24 @@
   /* ■■■■■■■■■ 강의실 조회 시간표 css ■■■■■■■■■ */
   
   .tabletime{
+/*   	border : 1px solid black; */
   	width: 80%;
   	text-align: center;
-  	margin : auto auto;
+  	margin : 0 auto;
+  	height: 95%;
+/*   	border-right: 1px solid #6e6e6e; */
+  	margin-top : 15px;
   }
   
   .tabletime thead{
   	background-color: #6e6e6e;
   	color : white;
-  	height : 40px;
+  	height : 46px;
 
   }
   .tabletime td{
   border : 1px solid  #b0b0b0;
-  height: 44px;
+  height: 46px;
   width : 30px;
 }
 

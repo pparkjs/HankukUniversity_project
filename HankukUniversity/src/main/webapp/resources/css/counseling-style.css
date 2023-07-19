@@ -159,39 +159,3 @@
     align-items: center;
     
 }
-.custom-tab-1 .nav-link{
-	font-weight: 800;
-	color: #444444;
-	font-size: 17px;
-}
-.appv{
-/*     width: 65px; */
-/*     height: 32px; */
-/*     font-weight: 500; */
-/*     font-size: 15px; */
-/*     background: #e6b9b8; */
-/*     display: flex; */
-/*     justify-content: center; */
-/*     align-items: center; */
-}
-.wait{
-    width: 65px;
-    height: 32px;
-    font-weight: 500;
-    font-size: 15px;
-    background: #e6b9b8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.rej{
-    width: 84px;
-    height: 32px;
-    font-weight: 500;
-    font-size: 15px;
-    background: #ff4343;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
