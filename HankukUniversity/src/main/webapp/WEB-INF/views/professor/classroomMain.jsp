@@ -64,7 +64,7 @@
 						<h4 class="card-title"
 							style="font-weight: bold; font-size: 1.2em; color: #800000;">
 							온라인시험</h4>
-							<button type="button" class="btn btn-primary" id="testBtn">출제하기</button>
+							<a href="/hku/test-presentation" class="btn btn-primary" id="testBtn">출제하기</a>
       
       							<!-------------- 더보기버튼 필요없으면 삭제  -------------->		
 <!-- 							<button type="button" id="testMore" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="false"> -->
@@ -78,10 +78,10 @@
 					</div>
 					<div class="container" style="padding-top: 0; margin-top: 1.8rem; width: 95%;">
 						<div class="section">
-							<button type="button" class="btn btn-primary">상세보기</button>
+							<button type="button" class="btn btn-primary" id="middleBtn">상세보기</button>
 						</div>
 						<div class="section" >
-							<button type="button" class="btn btn-primary">상세보기</button>
+							<button type="button" class="btn btn-primary" id="finalBtn">상세보기</button>
 						</div>
 					</div>
 				</div>
@@ -202,5 +202,74 @@ $(function(){
 	})
 
 })
+
+var middleBtn = $("#middleBtn");
+var finalBtn = $("#finalBtn");
+
+middleBtn.on("click", function(){
+
+	var obj = {
+		lecapNo: "${sessionScope.lecapNo}",
+		testSe: "middle"
+	}
+
+	$.ajax({
+		url:"/hku/testCheck",
+		type:"get",
+		data:obj,
+		success:function(res){
+			if(res === "exist"){
+				location.href = `/hku/testUpdate?lecapNo=\${obj.lecapNo}&testSe=middle`;
+			}else{
+				swal({
+					title: "시험을 출제해주세요",
+                    icon: "warning",
+                    button: "닫기"
+				})
+			}
+		}
+	})
+})
+finalBtn.on("click", function(){
+
+	var obj = {
+		lecapNo: "${sessionScope.lecapNo}",
+		testSe: "final"
+	}
+
+	$.ajax({
+		url:"/hku/testCheck",
+		type:"get",
+		data:obj,
+		success:function(res){
+			if(res === "exist"){
+				location.href = `/hku/testUpdate?lecapNo=\${obj.lecapNo}&testSe=final`;
+			}else{
+				swal({
+					title: "시험을 출제해주세요",
+                    icon: "warning",
+                    button: "닫기"
+				})
+			}
+		}
+	})
+})
+
+
+
+if("${msg}" == "success"){
+	swal({
+		title: "시험이 정상적으로 출제되었습니다.",
+		icon: "success",
+		button: "닫기"
+	})
+}else if("${msg}" == "update-success"){
+	swal({
+		title: "시험 수정을 완료하였습니다.",
+		icon: "success",
+		button: "닫기"
+	})
+}
+
 
 </script>
