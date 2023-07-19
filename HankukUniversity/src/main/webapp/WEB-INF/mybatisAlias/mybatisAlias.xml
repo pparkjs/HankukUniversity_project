@@ -64,9 +64,11 @@
     <typeAlias type="kr.or.hku.admin.vo.ScholarshipAplyVO" alias="sclsAplyVO"/>
     <typeAlias type="kr.or.hku.admin.vo.SubjectCancelVO" alias="subCancelVO"/>
     <typeAlias type="kr.or.hku.admin.vo.StudentVO" alias="lecInStdVO"/>
-    <!-- 영우칸 밑에서만 작성-->
     
+    <!-- 영우칸 밑에서만 작성-->
     <typeAlias type="kr.or.hku.admin.vo.UserVO" alias="userVO"/>
+    <typeAlias type="kr.or.hku.admin.vo.FlctFloorVO" alias="flctFloorVO"/>
+    
     <!-- 성희칸 밑에서만 작성-->
      <typeAlias type="kr.or.hku.classroom.vo.ClassroomVO" alias="classroomVO"/>
      <typeAlias type="kr.or.hku.classroom.vo.AttendanceVO" alias="attendanceVO"/>
