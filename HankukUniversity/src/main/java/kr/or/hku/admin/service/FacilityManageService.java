@@ -32,4 +32,16 @@ public interface FacilityManageService {
 
 	public List<FacilityVO> flctsModalSelectBoxSet();
 
+	public NextCodeVO flctsNoSet();
+
+	public int flctsInsert(FacilitiesVO flctsVO);
+
+	public int deleteFlcts(String flctsNo);
+
+	public FacilitiesVO selectFlcts(String flctsNo);
+
+	public int updateFlcts(FacilitiesVO flctsVO);
+
+	public int deleteFlctsRsvt(String flctsRsvtNo);
+
 }

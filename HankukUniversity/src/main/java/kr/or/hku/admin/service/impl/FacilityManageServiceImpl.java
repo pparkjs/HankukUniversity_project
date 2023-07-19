@@ -108,4 +108,34 @@ public class FacilityManageServiceImpl implements FacilityManageService {
 		return mapper.flctsModalSelectBoxSet();
 	}
 
+	@Override
+	public NextCodeVO flctsNoSet() {
+		return mapper.flctsNoSet();
+	}
+
+	@Override
+	public int flctsInsert(FacilitiesVO flctsVO) {
+		return mapper.flctsInsert(flctsVO);
+	}
+
+	@Override
+	public int deleteFlcts(String flctsNo) {
+		return mapper.deleteFlcts(flctsNo);
+	}
+
+	@Override
+	public FacilitiesVO selectFlcts(String flctsNo) {
+		return mapper.selectFlcts(flctsNo);
+	}
+
+	@Override
+	public int updateFlcts(FacilitiesVO flctsVO) {
+		return mapper.updateFlcts(flctsVO);
+	}
+
+	@Override
+	public int deleteFlctsRsvt(String flctsRsvtNo) {
+		return mapper.deleteFlctsRsvt(flctsRsvtNo);
+	}
+
 }

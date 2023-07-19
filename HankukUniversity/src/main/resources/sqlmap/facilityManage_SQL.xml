@@ -82,7 +82,7 @@
 		order by TO_NUMBER(a.flcts_rsvt_no)
  	</select>
  	
- 	<select id="flctNoSet" resultType="kr.or.hku.admin.vo.NextCodeVO">
+ 	<select id="flctNoSet" resultType="nextCodeVO">
  		SELECT a.s||LPAD(a.e + 1,3,'0') AS nextCode
 		FROM (
 			SELECT
@@ -163,4 +163,61 @@
 		    facility
 		ORDER BY 1
  	</select>
+ 	
+ 	<select id="flctsNoSet" resultType="nextCodeVO">
+ 		SELECT a.s||LPAD(a.e + 1,3,'0') AS nextCode
+		FROM (
+			SELECT
+			    SUBSTR(MAX(flcts_no),0,5) AS s,
+			    SUBSTR(MAX(flcts_no),-3) AS e
+			FROM
+			    facilities) a
+ 	</select>
+ 	
+ 	<insert id="flctsInsert" parameterType="flctsVO">
+ 		INSERT INTO facilities(
+	 		flcts_no
+			,flct_no
+			,flcts_nm
+ 		) VALUES(
+ 			#{flctsNo}
+ 			,#{flctNo}
+ 			,#{flctsNm}
+ 		)
+ 	</insert>
+ 	
+ 	<delete id="deleteFlcts" parameterType="string">
+ 		DELETE FROM 
+ 			facilities
+ 		WHERE 
+ 			flcts_no = #{flctsNo}
+ 	</delete>
+ 	
+ 	<select id="selectFlcts" parameterType="string" resultType="flctsVO">
+ 		SELECT 
+	 		flct_no
+			,flcts_no
+			,flcts_nm
+ 		FROM 
+ 			facilities
+ 		WHERE 
+ 			flcts_no = #{flctsNo}
+ 	</select>
+ 	
+ 	<update id="updateFlcts" parameterType="flctsVO">
+ 		UPDATE
+ 			facilities
+ 		SET
+			flct_no = #{flctNo}
+			,flcts_nm = #{flctsNm}
+		WHERE
+			flcts_no = #{flctsNo}
+ 	</update>
+ 	
+ 	<delete id="deleteFlctsRsvt" parameterType="string">
+ 		DELETE FROM
+ 			facillities_rsvt
+ 		WHERE
+ 			flcts_rsvt_no = #{flctsRsvtNo}
+ 	</delete>
  </mapper>
