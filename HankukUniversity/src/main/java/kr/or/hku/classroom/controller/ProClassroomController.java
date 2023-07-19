@@ -13,15 +13,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.service.AssignmentService;
+import kr.or.hku.classroom.service.AttendanceService;
 import kr.or.hku.classroom.service.ClassroomService;
 import kr.or.hku.classroom.vo.AssignmentVO;
+import kr.or.hku.classroom.vo.AttendanceVO;
 import kr.or.hku.common.service.CommonFileService;
 import kr.or.hku.lectureInfo.vo.LectureAplyVO;
 import kr.or.hku.professor.vo.ProfessorVO;
@@ -40,6 +42,9 @@ public class ProClassroomController {
 	
 	@Autowired
 	private AssignmentService assignService;
+	
+	@Autowired
+	private AttendanceService attendService;
 	
 	// 클래스룸 목록
 	@GetMapping("/proClassroomList")
@@ -136,14 +141,14 @@ public class ProClassroomController {
 			log.info("파일 저장 성공했는지  " + resultCnt);
 		}
 		
-		// 파일이 없으면 위에 if문 실행 안되서 -1 들어 갈거고 파일이 있으며 attachFileNo = fileService.getAttachFileNo(); 여기서 생긴 번호가 들어감
+		// 파일이 없으면 위에 if문 실행 안되서 -1 들어 갈거고 파일이 있으면 attachFileNo = fileService.getAttachFileNo(); 여기서 생긴 번호가 들어감
 		vo.setAtchFileNo(attachFileNo);
 		
 		int regiCnt = assignService.regi(vo);
 		
 		log.info("인서트한 vo" + vo.toString());
 		
-		// 해당 과목을 듣는 학생 리스트 (별첨 : 과제제출 테이블 컬럼과 함께 -> 여기서는 학번만 필요함)
+		// 해당 과목을 듣는 학생 리스트 (과제제출 테이블 컬럼과 함께 -> 여기서는 학번만 필요함)
 		List<String> stdList = assignService.getStdList(vo.getLecapNo()); 
 		
 		log.info("stdList : " + stdList.toString());
@@ -159,32 +164,34 @@ public class ProClassroomController {
 		return "redirect:/hku/professor/assignmentList/"+vo.getLecapNo();
 	}
 	
-	// 과제수정
-	@GetMapping("/updateForm/${lecapNo}")
-	public String updateForm(@PathVariable String asmNo, Model model) {
+	// 과제 수정폼
+	@GetMapping("/updateForm/{asmNo}")
+	public String updateForm(@PathVariable("asmNo") String asmNo, Model model) {
 		AssignmentVO vo = assignService.assignOne(asmNo);
+		model.addAttribute("vo", vo);
 		model.addAttribute("status", "u");
 		return "professor/regiForm";
 	}
 	
-	@PostMapping("/updateAssignment")
+	// 과제 수정
+	@PostMapping(value = "/updateAssignment")
 	public String update(AssignmentVO vo, Model model) {
 		String goPage = "";
 		ServiceResult result = assignService.update(vo);
 		if(result.equals(ServiceResult.OK)) {
-			goPage = "redirect:/assignmentDetail?asmNo=" + vo.getAsmsbNo();
-		} else {
+			goPage = "redirect:/hku/professor/assignmentDetail/" + vo.getAsmNo();
+		}
+		else {
 			model.addAttribute("vo", vo);
 			model.addAttribute("status", "u");
 			goPage = "/regiForm";
 		}
-		return "goPage";
+		return goPage;
 	}
-	
 	
 	// 과제삭제 
 	@PostMapping("/deleteAssignment")
-	public String delete(String proNo) {
+	public String delete(String asmNo) {
 		return "professor/assignmentList";
 	}         
 	
@@ -194,5 +201,36 @@ public class ProClassroomController {
 	public ResponseEntity<List<AssignmentVO>> getStdListByAssign(String asmNo){
 		List<AssignmentVO> list = assignService.getStdListByAssign(asmNo);
 		return new ResponseEntity<List<AssignmentVO>>(list, HttpStatus.OK);
+	}
+	
+	// 해당 과제에 성적 부여
+	@ResponseBody
+	@PostMapping("/giveScore")
+	public String giveScore(@RequestBody AssignmentVO assignmentVO){
+		log.info("giveScore 전달 파라미터" + assignmentVO.toString());
+		int res = assignService.giveScore(assignmentVO);
+		
+		String msg = null;
+		if (res > 0) {
+			msg = "success";
+		}
+		return msg;
+	} 
+	
+	// 출석관리
+	@GetMapping("/manageAttendance")
+	public String attendanceList(AttendanceVO vo, Model model) {
+		AttendanceVO attendVo = attendService.manageAttendance(vo);
+		model.addAttribute("attendVo", attendVo);
+		return "professor/stdAttendanceList"; 
+	}
+	
+	// 해당 과목 수강하는 학생들 리스트 불러오기 (출석부분)
+	@ResponseBody
+	@GetMapping("/stdAttendanceList")
+	public ResponseEntity<List<AttendanceVO>> getStdList(String lecapNo) {
+		List<AttendanceVO> list = attendService.getStdList(lecapNo);
+		log.info("list : " + list.toString());
+		return new ResponseEntity<List<AttendanceVO>>(list, HttpStatus.OK);
 	}
 }

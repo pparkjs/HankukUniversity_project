@@ -26,7 +26,6 @@ public class AssignmentServiceImpl implements AssignmentService {
 		return mapper.assignOne(asmNo);
 	}
 
-	
 	@Transactional(rollbackFor = SQLException.class)
 	@Override
 	public ServiceResult giveAssignToStds(List<String> stdList, String asmNo) {
@@ -49,7 +48,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 		}
 		return res;
 	}
-	
+
 	@Override
 	public List<String> getStdList(String lecapNo) {
 		return mapper.getStdList(lecapNo);
@@ -64,7 +63,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 	public ServiceResult update(AssignmentVO vo) {
 		ServiceResult result = null;
 		int status = mapper.update(vo);
-		if(status > 0) {
+		if (status > 0) {
 			result = ServiceResult.OK;
 		} else {
 			result = ServiceResult.FAILED;
@@ -73,8 +72,8 @@ public class AssignmentServiceImpl implements AssignmentService {
 	}
 
 	@Override
-	public int delete(String lecapNo) {
-		return mapper.delete(lecapNo);
+	public int delete(String asmNo) {
+		return mapper.delete(asmNo);
 	}
 
 	@Override
@@ -97,6 +96,11 @@ public class AssignmentServiceImpl implements AssignmentService {
 	@Override
 	public List<AssignmentVO> getStdListByAssign(String asmNo) {
 		return mapper.getStdListByAssign(asmNo);
+	}
+
+	@Override
+	public int giveScore(AssignmentVO assignmentVO) {
+		return mapper.giveScore(assignmentVO);
 	}
 
 }

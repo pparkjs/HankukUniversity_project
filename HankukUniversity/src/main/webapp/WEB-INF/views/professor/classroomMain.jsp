@@ -34,9 +34,10 @@
   padding-top:5px;
   margin-right: 20px; 
   margin-left: 20px; 
-  
 }
-
+.card-body {
+	overflow: scroll;
+}
 </style>
 
 <div class="content-body" style="min-height: 975px;">
@@ -64,7 +65,7 @@
 						<h4 class="card-title"
 							style="font-weight: bold; font-size: 1.2em; color: #800000;">
 							온라인시험</h4>
-							<button type="button" class="btn btn-primary" id="testBtn">출제하기</button>
+<!-- 							<button type="button" class="btn btn-primary" id="testBtn">출제하기</button> -->
       
       							<!-------------- 더보기버튼 필요없으면 삭제  -------------->		
 <!-- 							<button type="button" id="testMore" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="false"> -->
@@ -78,10 +79,10 @@
 					</div>
 					<div class="container" style="padding-top: 0; margin-top: 1.8rem; width: 95%;">
 						<div class="section">
-							<button type="button" class="btn btn-primary">상세보기</button>
+<!-- 							<button type="button" class="btn btn-primary">상세보기</button> -->
 						</div>
 						<div class="section" >
-							<button type="button" class="btn btn-primary">상세보기</button>
+<!-- 							<button type="button" class="btn btn-primary">상세보기</button> -->
 						</div>
 					</div>
 				</div>

@@ -64,7 +64,7 @@
 	
 	<!-- 학생 리스트 불러오기 (과제 상세보기 가져오는 용) -->
 	<select id="getStdListByAssign" parameterType="string" resultType="assignmentVO">
-	/*kr.or.hku.classroom.mapper.AssignmentMapper.getStdList */
+	/*kr.or.hku.classroom.mapper.AssignmentMapper.getStdListByAssign */
 		select 
 		    a.asmsb_no, a.asm_no, a.asmsb_dt, a.asmsb_scr, a.avl_code, a.atch_file_no, a.std_no
 		    ,c.dept_nm, b.std_nm
@@ -94,20 +94,38 @@
 	
 	<!-- 과제 수정 -->
 	<update id="update" parameterType="assignmentVO">
-		UPDATE assignment  
-		SET 
-			asm_ttl = #{asmTtl},
-			asm_cn = #{asmCn},
-			asm_week = #{asmWeek},
-			asm_reg
-		WHERE asm_no = #{asmNo}
+	/* kr.or.hku.classroom.mapper.AssignmentMapper.update */
+		UPDATE assignment
+        SET 
+            asm_week = #{asmWeek},
+            asm_ttl = #{asmTtl},
+            asm_cn = #{asmCn},
+            asm_regdate = sysdate,
+      		atch_file_no = null
+        WHERE asm_no = #{asmNo} 
+        AND lecap_no = #{lecapNo}
 	</update>
-
-	<!-- <delete id="delete" parameterType="int"> -->
+	
+	
+	<!-- 성적 부여 -->
+	<update id="giveScore" parameterType="assignmentVO">
+	/* kr.or.hku.classroom.mapper.AssignmentMapper.giveScore */
+		UPDATE assignment_submit 
+		SET 
+			asmsb_scr = #{asmsbScr},
+			avl_code = 'Y'
+		WHERE std_no = #{stdNo}
+		AND asm_no = #{asmNo}	
+	</update>
+	
+	
+	<!-- 과제 삭제  -->
+	<!-- <delete id="delete" parameterType="string"> -->
 	<!-- DELETE FROM assignment -->
 	<!-- WHERE asm_pro_nm = #{proNo} -->
 	<!-- </delete> -->
 
-
+	
+	
 
 </mapper>
