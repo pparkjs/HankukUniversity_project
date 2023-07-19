@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.classroom.mapper.TestPresMapper">
+ 	
+	<resultMap type="testVO" id="testMap">
+		<id property="testNo" column="test_no"/>
+		<id property="lecapNo" column="lecap_no"/>
+		<result property="testNo" column="test_no"/>
+		<result property="lecapNo" column="lecap_no"/>
+		<result property="testSe" column="test_se"/>
+		<result property="testBgngYmd" column="test_bgng_ymd"/>
+		<result property="testTimeLimit" column="test_time_limit"/>
+		<result property="testRegdate" column="test_regdate"/>
+		<result property="testFile" column="test_file"/>
+		<collection property="answerList" resultMap="answerMap"/>
+	</resultMap> 	
+	
+	<resultMap type="testAnswerVO" id="answerMap">
+		<result property="testNo" column="test_no"/>
+		<result property="lecapNo" column="lecap_no"/>
+		<result property="taNo" column="ta_no"/>
+		<result property="taAns" column="ta_ans"/>
+		<result property="taScr" column="ta_scr"/>
+		<result property="answerCh" column="answer_ch"/>
+	</resultMap>
+ 	
+ 	<!-- 해당 강의 중간고사 또는 기말고사 이미 출제했는지 확인 -->
+ 	<select id="testCheck" resultType="int" parameterType="testVO">
+ 	/*kr.or.hku.classroom.mapper.TestPresMapper.testCheck */
+ 		SELECT count(*)
+		FROM test
+		WHERE lecap_no = #{lecapNo}
+		AND test_se like #{testSe}
+ 	</select>
+ 	
+ 	<!-- 시험 테이블에 저장 -->
+ 	<insert id="testInsert" parameterType="testVO" useGeneratedKeys="true">
+ 	/*kr.or.hku.classroom.mapper.TestPresMapper.testInsert */
+ 	<selectKey keyProperty="testNo" resultType="String" order="BEFORE">
+ 		SELECT seq_test.nextval FROM dual
+ 	</selectKey>
+ 		INSERT INTO test 
+ 		VALUES(#{testNo}, #{lecapNo}, #{testSe}, #{testBgngYmd}, #{testTimeLimit}, sysdate, #{testFile})
+ 	</insert>
+ 	
+ 	<!-- 시험 정답 테이블에 저장  -->
+ 	<insert id="testAnswerInsert" parameterType="testAnswerVO">
+ 	/*kr.or.hku.classroom.mapper.TestPresMapper.testAnswerInsert */
+ 		INSERT INTO test_answer 
+ 		VALUES(#{lecapNo}, #{testNo}, #{taNo}, #{taAns}, #{taScr}, #{answerCh})
+ 	</insert>
+ 	
+ 	<!-- 해당 시험지 상세 가져오기 -->
+ 	<select id="testDetail" parameterType="testVO" resultMap="testMap">
+ 	/*kr.or.hku.classroom.mapper.TestPresMapper.testDetail */
+	 	SELECT 
+	 		  a.test_no
+	 	    , a.lecap_no
+	 	    , a.test_se
+	 	    , a.test_bgng_ymd
+	 	    , a.test_time_limit
+	 	    , a.test_regdate
+	 	    , a.test_file
+	 	    , b.ta_no
+	 	    , b.ta_ans
+	 	    , b.ta_scr
+	 	    , b.answer_ch
+		FROM test a 
+		LEFT OUTER JOIN test_answer b ON(a.test_no = b.test_no)
+		WHERE a.lecap_no = #{lecapNo}
+		AND a.test_se = #{testSe}
+		ORDER BY b.ta_no
+ 	</select>
+ 	
+ 	<!-- 시험지 테이블 수정 -->
+ 	<update id="testUpdate" parameterType="testVO">
+ 	/*kr.or.hku.classroom.mapper.TestPresMapper.testUpdate */
+ 		UPDATE test
+ 		SET
+ 		   test_bgng_ymd = #{testBgngYmd},
+ 		   test_time_limit = #{testTimeLimit},
+ 		   test_regdate = sysdate
+ 		   <if test="testFile != '' and testFile != null">
+ 		   		,test_file = #{testFile}																																																	
+ 		   </if>
+ 		WHERE test_no = #{testNo}
+ 	</update>
+ 	
+ 	<!-- 시험지 답안 삭제 -->
+ 	<delete id="testAnswerDelete" parameterType="string">
+ 	/*kr.or.hku.classroom.mapper.TestPresMapper.testAnswerUpdate */
+		DELETE FROM test_answer
+		WHERE test_no = #{testNo}
+ 	</delete>
+ </mapper>

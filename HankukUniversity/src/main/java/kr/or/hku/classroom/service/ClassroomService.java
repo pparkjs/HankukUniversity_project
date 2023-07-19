@@ -12,5 +12,7 @@ public interface ClassroomService {
 	
 	public List<LectureAplyVO> proSelectList(String proNo);
 	
-	public List<AssignmentVO> getAssignList(String lecapNo); 
+	public List<AssignmentVO> getAssignList(String lecapNo);
+
+	public String getSubNm(String lecapNo); 
 }

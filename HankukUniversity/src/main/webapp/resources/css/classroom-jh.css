@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+#noticeTable{
+	
+	width: 100%;
+	text-align: center;
+}
+
+#noticeTable thead{
+	height: 40px;
+	background-color: #6e6e6e;
+	color: white;
+	font-size: 1.2em;
+	font-weight: bold;
+
+	}
+#noticeTable tbody tr{
+	border-bottom : 1px solid #e5e5e5;
+	
+	
+}
+#noticeTable tbody tr:hover{
+	
+	background-color: #e5e5e5;
+	cursor: pointer;
+}
+
+#noticeTable td{
+	height: 40px;
+	
+}
