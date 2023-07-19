@@ -2,41 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<style>
-
-.title{
-    line-height: 1.5;
-    font-weight: bold;
-    font-size: 20px;
-}
-.author-profile .upload-link {
-    position: initial;
-    width: 60px;
-    height: 60px;
-    line-height: 32px;
-    background: var(--primary);
-    bottom: 0;
-    right: 0px;
-    box-shadow: 0 0 10px 0 rgba(0, 24, 128, 0.1);
-    border-radius: 100%;
-    color: #fff;
-    overflow: hidden;
-    border: 2px solid #fff;
-}
-
-.profile-form .form-label {
-    color: #6e6e6e;
-    font-size: 18px;
-    margin-bottom: 12px;
-    font-weight: 500;
-}
-
-.form-control:disabled, .form-control[readonly] {
-    background: #f4f4f4;
-    opacity: 1;
-}
-</style>
-
 <div class="content-body">
 	<!-- row -->
 	<div class="container-fluid">
@@ -49,11 +14,11 @@
 							<div class="p-5">
 								<div class="author-profile">
 									<div class="author-media">
-										<img src="images/tab/1.jpg" class="img" alt="">
+										<img src="images/tab/1.jpg" alt="">
 										<div class="upload-link" title="" data-toggle="tooltip"
 											data-placement="right" data-original-title="update">
-											<input type="file" class="update-flie"> 
-											<i class="fa fa-camera"></i>
+											<input type="file" class="update-flie"> <i
+												class="fa fa-camera"></i>
 										</div>
 									</div>
 									<div class="author-info">
@@ -62,14 +27,21 @@
 									</div>
 								</div> 
 							</div>
+<!-- 							<div class="info-list"> -->
+<!-- 								<ul> -->
+<!-- 									<li><a href="app-profile.html">Models</a><span>36</span></li> -->
+<!-- 									<li><a href="uc-lightgallery.html">Gallery</a><span>3</span></li> -->
+<!-- 									<li><a href="app-profile.html">Lessons</a><span>1</span></li> -->
+<!-- 								</ul> -->
+<!-- 							</div> -->
 						</div>
 						<div class="card-footer">
 							<div class="input-group mb-3">
 								<div class="form-control rounded text-center bg-white">Portfolio</div>
 							</div>
 							<div class="input-group">
-								<a href="https://www.github.com/"
-									class="form-control text-primary rounded text-start bg-white">https://www.github.com/</a>
+								<a href="https://www.dexignzone.com/"
+									class="form-control text-primary rounded text-start bg-white">https://www.dexignzone.com/</a>
 							</div>
 						</div>
 					</div>
@@ -78,42 +50,35 @@
 			<div class="col-xl-9 col-lg-8">
 				<div class="card profile-card card-bx m-b30">
 					<div class="card-header">
-						<h6 class="title" style="font-size:17px bold;">마이페이지</h6>
+						<h6 class="title">내 정보</h6>
 					</div>
 					<form class="profile-form">
 						<div class="card-body">
 							<div class="row">
 								<div class="col-sm-6 m-b30">
 									<label class="form-label">이름</label> 
-									<input type="text" disabled name="stdNm" class="form-control" value="${std.stdNm} ">
+									<input type="text" name="stdNm" class="form-control" readonly value="${std.stdNo} ">
 								</div>
 								<div class="col-sm-6 m-b30">
 									<label class="form-label">학번</label> 
-									<input type="text" disabled name="stdNo" class="form-control" readonly value="${std.stdNo }">
+									<input type="text" name="stdNo" class="form-control" readonly value="${std.stdNo }">
 								</div>
 								<div class="col-sm-6 m-b30">
 									<label class="form-label">학과</label> 
-									<input type="text" disabled  name="std" class="form-control" readonly value="컴퓨터공학">
+									<input type="text"  name="std" class="form-control" readonly value="컴퓨터공학">
 								</div>
 								<div class="col-sm-6 m-b30">
 									<label class="form-label">비밀번호</label>
-									<button type="button" onclick="pwBtnF()" style="padding: 0.3rem 0.8rem;" class="btn btn-primary">비밀번호 변경</button>
-									<input type="password" id="pw" name="stdPw" class="form-control" value="">
+							<!-- 	<button class="btn btn-primary pwBtn" id="pwBtn">비밀번호변경</button> -->
+									<input type="password" name="stdPw" class="form-control" value="">
 								</div>
 								<div class="col-sm-6 m-b30">
-									<label class="form-label">성별</label>
-<%-- 									<c:forEach items="${cVo }" var="cVo"> --%>
-<%-- 										<c:if test="${cVo.comCdGrp eq 'sex'}"> --%>
-<%-- 											<c:if test="${cVo.comCd eq std.stdSexCd}"> --%>
-<%-- 											 <c:out value=""></c:out> --%>
-											<input type="text" disabled name="stdSexCd" class="form-control" value="?">
-<%-- 											</c:if> --%>
-<%-- 										</c:if> --%>
-<%-- 									</c:forEach> --%>
+									<label class="form-label" >성별</label>
+									<input type="text" name="stdSexCd" class="form-control" value="">
 								</div>
 								<div class="col-sm-6 m-b30">
 									<label class="form-label">생년월일</label> 
-									<input type="text" disabled name="stdBrdt" class="form-control" value="${std.stdBrdt }">
+									<input type="text" name="stdBrdt" class="form-control" value="${std.stdBrdt }">
 								</div>
 								<div class="col-sm-6 m-b30">
 									<label class="form-label">연락처</label> 
@@ -125,7 +90,7 @@
 								</div>
 								<div class="col-sm-6 m-b30">
 									<label class="form-label">우편번호</label>
-									<button type="button" style="padding: 0.3rem 0.8rem;" onclick="DaumPostcode()" class="btn btn-primary" id="zipBtn">우편번호 찾기</button>
+									<button type="button" onclick="DaumPostcode()" class="btn btn-primary" id="zipBtn">우편번호 찾기</button>
 									 <input type="text" id="stdZip" name="stdZip" class="form-control" value="${std.stdZip }">
 								</div>
 								<div class="col-sm-6 m-b30">
@@ -138,8 +103,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="card-footer" style="padding-left:800px;">
-							<button class="btn btn-primary" id="updateBtn" onclick="updateF()">수정하기</button>
+						<div class="card-footer">
+							<button class="btn btn-primary">수정하기</button>
 <!-- 							<a href="page-register.html" class="btn-link">Forgot your -->
 <!-- 								password?</a> -->
 						</div>
@@ -149,40 +114,13 @@
 		</div>
 	</div>
 </div>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 
 // $(function() {
 // 	var pwBtn = $("#pwBtn");
 // 	var zipBtn = $("#zipBtn");
-// 	var updateBtn = $("#updateBtn");
-
-	function pwBtnF(){
-		
-	}
 	
-	function chkPW(){
-	
-	 var pw = $("#pw").val();
-	 var num = pw.search(/[0-9]/g);
-	 var eng = pw.search(/[a-z]/ig);
-	 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-	
-	 if(pw.length < 10 || pw.length > 20){
-	  alert("10자리 ~ 20자리 이내로 입력해주세요.");
-	  return false;
-	 }else if(pw.search(/\s/) != -1){
-	  alert("비밀번호는 공백 없이 입력해주세요.");
-	  return false;
-	 }else if( (num < 0 && eng < 0) || (eng < 0 && spe < 0) || (spe < 0 && num < 0) ){
-	  alert("영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.");
-	  return false;
-	 }else {
-		console.log("오케!");	 
-	 }
-}
-
 	
 	// 주소 찾기
 	function DaumPostcode() {
@@ -225,10 +163,6 @@
 				document.getElementById("stdDaddr").focus();
 			}
 		}).open();
-	}
-	
-	function updateF(){
-		swal("Good job!", "수정이 완료되었습니다", "success");	
 	}
 // })
 </script>
