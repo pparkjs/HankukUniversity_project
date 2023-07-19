@@ -65,5 +65,13 @@
 			                  END
 	</select>
 	
+	<select id="getSubNm" parameterType="string" resultType="string">
+		select 
+			s.sub_nm
+		from subject s
+		inner join lecture_aply l on s.sub_no = l.sub_no
+		where lecap_no = #{lecapNo}
+	</select>
+	
 		
 </mapper>

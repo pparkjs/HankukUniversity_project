@@ -3,12 +3,14 @@ package kr.or.hku.admin.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -25,12 +27,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.hku.admin.service.UserService;
 import kr.or.hku.admin.vo.DepartmentVO;
 import kr.or.hku.admin.vo.UserVO;
 import kr.or.hku.common.service.CommonService;
 import kr.or.hku.common.vo.CommonVO;
+import kr.or.hku.common.vo.SearchInfoVO;
 import kr.or.hku.lectureInfo.service.CourseInfoService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -67,52 +71,119 @@ public class UserManagementController {
 	
 	@PostMapping("/user-list")
 	@ResponseBody
-	public ResponseEntity<List<UserVO>> userList() {
+	public ResponseEntity<List<UserVO>> userList(
+			@RequestBody HashMap<String, String> data,
+			Model model) {
 		ResponseEntity<List<UserVO>> entity = null;
-		List<UserVO> usersList = userService.getAllUsers();
 		
-		if(usersList != null && usersList.size() > 0) {
-			entity = new ResponseEntity<List<UserVO>>(usersList, HttpStatus.OK);
+		String searchType = data.get("searchType");
+		String searchWord = data.get("searchWord");
+		log.info("searchType : " + searchType);
+		log.info("searchWord : " + searchWord);
+		
+		SearchInfoVO searchInfoVO = new SearchInfoVO();
+		if(StringUtils.isNotBlank(searchWord)) {
+			searchInfoVO.setSearchType(searchType);
+			searchInfoVO.setSearchWord(searchWord);
+			model.addAttribute("searchType",searchType);
+			model.addAttribute("searchWord",searchWord);
 		}
+		
+		List<UserVO> usersList = userService.getAllUsers(searchInfoVO);
+		
+//		if(usersList != null && usersList.size() > 0) {
+			entity = new ResponseEntity<List<UserVO>>(usersList, HttpStatus.OK);
+//		}
 //		log.info(usersList.toString());
 		return entity;
 	}
 	
 	@PostMapping("/student-list")
 	@ResponseBody
-	public ResponseEntity<List<UserVO>> studentList() {
+	public ResponseEntity<List<UserVO>> studentList(
+			@RequestBody HashMap<String, String> data,
+			Model model
+			) {
 		ResponseEntity<List<UserVO>> entity = null;
-		List<UserVO> studentsList = userService.getAllStudents();
 		
-		if(studentsList != null && studentsList.size() > 0) {
-			entity = new ResponseEntity<List<UserVO>>(studentsList, HttpStatus.OK);
+		String searchType = data.get("searchType");
+		String searchWord = data.get("searchWord");
+		log.info("searchType : " + searchType);
+		log.info("searchWord : " + searchWord);
+		
+		SearchInfoVO searchInfoVO = new SearchInfoVO();
+		if(StringUtils.isNotBlank(searchWord)) {
+			searchInfoVO.setSearchType(searchType);
+			searchInfoVO.setSearchWord(searchWord);
+			model.addAttribute("searchType",searchType);
+			model.addAttribute("searchWord",searchWord);
 		}
+		
+		List<UserVO> studentsList = userService.getAllStudents(searchInfoVO);
+		
+//		if(studentsList != null && studentsList.size() > 0) {
+			entity = new ResponseEntity<List<UserVO>>(studentsList, HttpStatus.OK);
+//		}
 //		log.info(studentsList.toString());
 		return entity;
 	}
 	
 	@PostMapping("/professor-list")
 	@ResponseBody
-	public ResponseEntity<List<UserVO>> professorList() {
+	public ResponseEntity<List<UserVO>> professorList(
+			@RequestBody HashMap<String, String> data,
+			Model model
+			) {
 		ResponseEntity<List<UserVO>> entity = null;
-		List<UserVO> professorsList = userService.getAllProfessors();
 		
-		if(professorsList != null && professorsList.size() > 0) {
-			entity = new ResponseEntity<List<UserVO>>(professorsList, HttpStatus.OK);
+		String searchType = data.get("searchType");
+		String searchWord = data.get("searchWord");
+		log.info("searchType : " + searchType);
+		log.info("searchWord : " + searchWord);
+		
+		SearchInfoVO searchInfoVO = new SearchInfoVO();
+		if(StringUtils.isNotBlank(searchWord)) {
+			searchInfoVO.setSearchType(searchType);
+			searchInfoVO.setSearchWord(searchWord);
+			model.addAttribute("searchType",searchType);
+			model.addAttribute("searchWord",searchWord);
 		}
+		
+		List<UserVO> professorsList = userService.getAllProfessors(searchInfoVO);
+		
+//		if(professorsList != null && professorsList.size() > 0) {
+			entity = new ResponseEntity<List<UserVO>>(professorsList, HttpStatus.OK);
+//		}
 //		log.info(professorsList.toString());
 		return entity;
 	}
 	
 	@PostMapping("/admin-list")
 	@ResponseBody
-	public ResponseEntity<List<UserVO>> adminList() {
+	public ResponseEntity<List<UserVO>> adminList(
+			@RequestBody HashMap<String, String> data,
+			Model model
+			) {
 		ResponseEntity<List<UserVO>> entity = null;
-		List<UserVO> adminsList = userService.getAllAdmins();
 		
-		if(adminsList != null && adminsList.size() > 0) {
-			entity = new ResponseEntity<List<UserVO>>(adminsList, HttpStatus.OK);
+		String searchType = data.get("searchType");
+		String searchWord = data.get("searchWord");
+		log.info("searchType : " + searchType);
+		log.info("searchWord : " + searchWord);
+		
+		SearchInfoVO searchInfoVO = new SearchInfoVO();
+		if(StringUtils.isNotBlank(searchWord)) {
+			searchInfoVO.setSearchType(searchType);
+			searchInfoVO.setSearchWord(searchWord);
+			model.addAttribute("searchType",searchType);
+			model.addAttribute("searchWord",searchWord);
 		}
+		
+		List<UserVO> adminsList = userService.getAllAdmins(searchInfoVO);
+		
+//		if(adminsList != null && adminsList.size() > 0) {
+		entity = new ResponseEntity<List<UserVO>>(adminsList, HttpStatus.OK);
+//		}
 //		log.info(adminsList.toString());
 		return entity;
 	}
@@ -257,19 +328,26 @@ public class UserManagementController {
 	}
 	
 	@GetMapping("/excel-insert")
-	public String excelInsert(){
-//		List<UserVO> excelInsList = excelUsers;
-//		int status = 1;
-//		for(UserVO user : excelInsList) {
-//			int cnt = userService.insertUser(user);
-//			int cnt1 = userService.insertStudent(user);
-//			int cnt2 = userService.insertUserAuth(user);
-//			if(cnt==0 || cnt1==0 || cnt2==0) {
-//				status = 0;
-//			}
-//		}
+	public String excelInsert(HttpServletRequest request, RedirectAttributes redirectAttribute){
+		log.info("excel-insert() 실행...!");
+		HttpSession session = request.getSession();
 		
-		return "admin/user-management";
+		List<UserVO> excelInsList = (List<UserVO>) session.getAttribute("excelInsList");
+		int status = 1;
+		for(UserVO user : excelInsList) {
+			int cnt = userService.insertUser(user);
+			int cnt1 = userService.insertStudent(user);
+			int cnt2 = userService.insertUserAuth(user);
+			if(cnt==0 || cnt1==0 || cnt2==0) {
+				status = 0;
+			}
+		}
+		
+		if(status > 0) {
+			redirectAttribute.addFlashAttribute("ilgualStatus", "1");
+		}
+		
+		return "redirect:/hku/admin/user-management";
 	}
 	
 	@DeleteMapping("/user-management")
@@ -308,6 +386,59 @@ public class UserManagementController {
 		if(successFlag == 0) {
 			entity = new ResponseEntity<String>("FAILED", HttpStatus.OK);
 		}
+		return entity;
+	}
+	
+	@PostMapping("/userDetail")
+	@ResponseBody
+	public ResponseEntity<UserVO> userDetail(@RequestBody HashMap<String, String> userData) {
+		ResponseEntity<UserVO> entity = null;
+		log.info("1 : " + userData.get("userNo"));
+		log.info("2 : " + userData.get("userClsNm"));
+		String userNo = userData.get("userNo");
+		String userClsNm = userData.get("userClsNm");
+		UserVO userVO = null;
+		if(userClsNm.equals("학생")) {
+			log.info("학생 상세 실행");
+			userVO = userService.studentDetail(userNo);
+		} else if(userClsNm.equals("교수")) {
+			log.info("교수 상세 실행");
+			userVO = userService.professorDetail(userNo);
+		} else if(userClsNm.equals("직원")) {
+			log.info("직원 상세 실행");
+			userVO = userService.employeeDetail(userNo);
+		}
+		
+		entity = new ResponseEntity<UserVO>(userVO, HttpStatus.OK); 
+		return entity;
+	}
+	
+	@PostMapping("/userModify")
+	@ResponseBody
+	public ResponseEntity<String> userModify(UserVO userVO){
+		ResponseEntity<String> entity = null;
+		log.info("사용자 수정 실행!");
+		log.info(userVO.toString());
+		int status = 0;
+		
+		if(userVO.getUserClsNm().equals("student")) {
+			log.info("학생수정");
+			status = userService.updateStudent(userVO);
+			
+			
+		} else if(userVO.getUserClsNm().equals("professor")) {
+			log.info("교수수정");
+			status = userService.updateProfessor(userVO);
+			
+		} else if(userVO.getUserClsNm().equals("employee")) {
+			log.info("직원수정");
+			status = userService.updateEmployee(userVO);
+			
+		}
+		if(status > 0) {
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}
+		
 		return entity;
 	}
 }

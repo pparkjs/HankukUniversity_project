@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.hku.admin.mapper.ScholarshipMapper;
 import kr.or.hku.admin.service.ScholarshipService;
+import kr.or.hku.admin.vo.ScholarshipAplyVO;
 import kr.or.hku.admin.vo.ScholarshipVO;
 
 @Service
@@ -34,5 +35,24 @@ public class ScholarshipServiceImpl implements ScholarshipService {
 	@Override
 	public int deleteScls(Map<String, Object> map) {
 		return scholarshipMapper.deleteScls(map);
+	}
+	
+	@Override
+	public List<ScholarshipAplyVO> getAllSclsAplyList() {
+		return scholarshipMapper.getAllSclsAplyList();
+	}
+	
+	@Override
+	public String handleScholarshipApplicationOutcome(Map<String, String> map) {
+		String resMsg = null;
+		int res = scholarshipMapper.handleScholarshipApplicationOutcome(map);
+		if (res > 0) {
+			if (map.get("aprvSttsCd").equals("appv")) {
+				resMsg = "appvSuccess";
+			}else {
+				resMsg = "rejSuccess";
+			}
+		}
+		return resMsg;
 	}
 }
