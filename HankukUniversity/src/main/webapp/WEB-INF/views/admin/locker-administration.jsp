@@ -292,6 +292,7 @@ function ilgualBtnSwitch(){
 				for(let i=0; i<resetTarget.length; i++){
 					resetTarget[i].checked = false;
 				}
+				$("#lockerAllCheck").prop("checked", false);
 			}
 			swal({
 				title: "상태변경이 완료되었습니다!",
@@ -325,6 +326,7 @@ function ilgualRsvtBtnSwitch(){
 				for(let i=0; i<resetTarget.length; i++){
 					resetTarget[i].checked = false;
 				}
+				$("#lockerRsvtAllCheck").prop("checked", false);
 			}
 			swal({
 				title: "상태변경이 완료되었습니다!",
@@ -416,7 +418,7 @@ function lockerList(){
 						<tr>
 							<th style='width:4%'>
 								<div class='form-check custom-checkbox checkbox-danger'>
-									<input type='checkbox' class='form-check-input' onclick='selectLockerAll(this)'>
+									<input type='checkbox' class='form-check-input' onclick='selectLockerAll(this)' id="lockerAllCheck">
 								</div>
 							</th>
 							<th style='width:24%'>사물함번호</th>
@@ -499,7 +501,7 @@ function lockerRsvtList(){
 						<tr>
 							<th style='width:4%'>
 								<div class='form-check custom-checkbox checkbox-danger'>
-									<input type='checkbox' class='form-check-input' onclick='selectLockerRsvtAll(this)'>
+									<input type='checkbox' class='form-check-input' onclick='selectLockerRsvtAll(this)' id="lockerRsvtAllCheck">
 								</div>
 							</th>
 							<th>예약 번호</th>
