@@ -12,4 +12,7 @@ import kr.or.hku.admin.vo.SubjectCancelVO;
 public interface ClassCancelledMapper {
 	public List<SubjectCancelVO> getClassCancelledList();
 	public List<StudentVO> getStdInLecture(Map<String, String> map);
+	public void calcelProccess(String subclNo);
+	public void addTextDetail(String subclNo);
+	public List<Map<String, String>> getTextDetail();
 }

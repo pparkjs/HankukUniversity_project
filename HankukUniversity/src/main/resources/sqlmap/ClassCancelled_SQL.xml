@@ -6,7 +6,7 @@
  
  	<select id="getClassCancelledList" resultType="subCancelVO">
  		/* kr.or.hku.admin.mapper.ClassCancelledMapper.getClassCancelledList */
- 		SELECT
+ 		 SELECT
 			  a.subcl_no AS subcl_no
 			, a.lecap_no AS lecap_no
 			, d.sub_nm AS sub_nm
@@ -19,6 +19,12 @@
 		INNER JOIN professor b ON a.pro_no = b.pro_no
 		INNER JOIN lecture_aply c ON a.lecap_no = c.lecap_no
 		INNER JOIN subject d ON c.sub_no = d.sub_no
+        AND c.lecap_yr IN TO_CHAR(EXTRACT(YEAR FROM SYSDATE))
+        AND c.lecap_sem IN (CASE
+                        WHEN TO_NUMBER(TO_CHAR(sysdate, 'mm')) BETWEEN 1 AND 6 THEN 1
+                        WHEN TO_NUMBER(TO_CHAR(sysdate, 'mm')) BETWEEN 7 AND 12 THEN 2
+                        ELSE 0
+                    END)
 		ORDER BY a.subcl_no DESC
  	</select>
  	
@@ -32,7 +38,36 @@
 		FROM course_regist a
 		INNER join student b ON a.std_no = b.std_no
 		INNER join department c ON b.dept_cd = c.dept_cd
-		WHERE a.lecap_no = 12
+		WHERE a.lecap_no = #{lecapNo}
+ 	</select>
+ 	
+ 	<delete id="calcelProccess" parameterType="string">
+ 		/* kr.or.hku.admin.mapper.ClassCancelledMapper.calcelProccess */
+ 		DELETE FROM subject_cancel
+ 		WHERE subcl_no = #{subclno}
+ 	</delete>
+ 	
+ 	<insert id="addTextDetail" parameterType="string">
+ 		insert into sms
+		(
+		    SMS_NO, SMS_SENDER, SMS_RECEIVER, SMS_SEND_DT
+		)values(
+		    seq_sms.nextval,
+		    '조교',
+		    (SELECT
+					 d.sub_nm AS sub_nm
+				FROM subject_cancel a
+				INNER JOIN lecture_aply c ON a.lecap_no = c.lecap_no
+				INNER JOIN subject d ON c.sub_no = d.sub_no
+		        where a.SUBCL_NO = #{subclno})|| ' 학부생',
+		        sysdate
+		)
+ 	</insert>
+ 	
+ 	<select id="getTextDetail" resultType="map">
+	    SELECT sms_no, sms_receiver, sms_send_dt
+	    FROM sms
+	    ORDER BY sms_no DESC
  	</select>
  
  </mapper>
