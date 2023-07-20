@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.hku.student.service.StudyService;
+import kr.or.hku.student.vo.RecordVO;
 import kr.or.hku.student.vo.StudentVO;
 import kr.or.hku.student.vo.StudyVO;
 import lombok.extern.slf4j.Slf4j;
@@ -133,16 +135,32 @@ public class StudyController {
 		return "redirect:/hku/student/study";
 	}
 	
+	//가입 승인
+	@ResponseBody
 	@PostMapping(value = "/student/assignStudy")
-	public String assignStudy(@RequestParam("joinNo") int joinNo) {
-		service.assignStudy(joinNo);
+	public ResponseEntity<Integer> assignStudy(@RequestParam("joinNo") int joinNo) {
+		int res = service.assignStudy(joinNo);
 		
-		return "redirect:/hku/student/studyRoom";
+		return new ResponseEntity<Integer>(res,HttpStatus.OK);
 	}
-	@PutMapping(value = "/student/rejStudy")
-	public String rejStudy(@RequestParam("joinNo") int joinNo) {
-		service.rejStudy(joinNo);
-		return "redirect:/hku/student/studyRoom";
+
+	@ResponseBody
+	@PostMapping(value = "/student/rejStudy")
+	public ResponseEntity<Integer> rejStudy(@RequestParam("joinNo") int joinNo) {
+		int res = service.rejStudy(joinNo);
+		
+		return new ResponseEntity<Integer>(res,HttpStatus.OK);
+	}
+	
+	@ResponseBody
+	@GetMapping("/student/chatList")
+	public ResponseEntity<List<StudyVO>> chatList( HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		StudentVO stdVo = (StudentVO) session.getAttribute("std");
+		String stdNo = stdVo.getStdNo();
+		
+		List<StudyVO> cList = service.studyList(stdNo);
+		return new ResponseEntity<List<StudyVO>>(cList,HttpStatus.OK);
 	}
 	
 }

@@ -12,18 +12,16 @@
 	</insert>
 
 	<!-- 스터디 가입신청 -->
-<!-- 	<insert id="intoStudy" > -->
-<!-- 		insert into joinstatus( -->
-<!-- 		    join_no, -->
-<!-- 		    study_no, -->
-<!-- 		    std_no, -->
-<!-- 		    join_regdate, -->
-<!-- 		    join_reason -->
-<!-- 		) -->
-<!-- 		values(seq_joinstatus.nextval, ${studyNo}, ${stdNo}, sysdate, ${joinReason}); -->
-<!-- 	</insert> -->
-		
-<!-- 	</insert> -->
+	<insert id="intoStudy" parameterType="studyVo">
+		insert into joinstatus(
+		    join_no,
+		    study_no,
+		    std_no, 
+		    join_regdate,
+		    join_reason
+		)
+		values(seq_joinstatus.nextval, #{studyNo}, #{stdNo}, sysdate, #{joinReason})
+	</insert>
 
 	<!-- 가입신청 대기중인 리스트 -->
 	<select id="applicationsList" parameterType="int" resultType="studyVo">
@@ -69,23 +67,57 @@
 	<!--가입중인 스터디리스트 -->
 	<select id="studyList" resultType="studyVo" parameterType="String">
 		 select 
-            a.study_no,
-            a.std_no,
-            a.study_role,
-            b.std_no,
-            c.std_nm,
-            b.study_no,
-            b.study_name,
-            b.study_regdate,
-            b.study_cpcy,
-            b.study_intro
-		from studymember a
-		join studygroup b on a.study_no = b.study_no
-        join student c on b.std_no = c.std_no
-        where a.std_no = #{stdNo}
+	        a.study_no,
+	        a.std_no,
+	        a.study_role,
+	        b.std_no,
+	        c.std_nm,
+	        b.study_no,
+	        b.study_name,
+	        b.study_regdate,
+	        b.study_cpcy,
+	        b.study_intro,
+	       (SELECT COUNT(*) FROM studymember WHERE study_no= a.study_no) as count
+	    from studymember a
+	    join studygroup b on a.study_no = b.study_no
+	    join student c on b.std_no = c.std_no
+	    where a.std_no = #{stdNo}
 	        order by
 	    a.study_no DESC
 	</select>
+	
+	<select id="getMemberCount" parameterType="int">
+		SELECT COUNT(*) cnt FROM studymember WHERE study_no= #{studyNo}
+	</select>
+	
+	<select id="getUnreadCntByUser" parameterType="studyVo" resultType="int">
+		select msg_no from unreadmessage
+			where study_no = #{studyNo} 
+			and unread_mem = #{unreadMem}
+	</select>
+	
+	<!-- 방안에서 해당 메시지 읽음 카운트 -1 처리 -->
+	<update id="readMessageInRoom" parameterType="studyVo">
+		update chatmessage
+	    set
+	    	unread_mem_cnt = unread_mem_cnt - 1
+	    where study_no = #{studyno}
+	    and msg_no = #{msgno}
+	</update>
+	
+	<!-- 채팅들 읽음 처리 -->
+ 	<update id="readChatMessage" parameterType="studyVo">
+ 		update STUDYMEMBER
+ 		set
+ 			UNREAD_MSG_CNT = 0
+ 		where STD_NO = #{stdNo}
+ 		and study_no = #{studyNo}
+ 	</update>
+ 	 	<!-- 메시지 등록하기 -->
+ 	<insert id="insertMessage" parameterType="studyVo">
+ 		insert into chatmessage
+ 		values(seq_chatmessage.nextval, #{studyNo}, #{stdNo}, #{msgContent}, sysdate, #{unreadMemCnt})  
+ 	</insert>
 	
 	<!-- 본인의 가입신청 대기중인 스터디 리스트 -->
 	<select id="waitStudy" resultType="studyVo" parameterType="String">
@@ -173,5 +205,130 @@
 <!--  		delete from joinstatus  -->
 <!-- 		where std_no = ${stdNo} and study_no = ${studyNo} -->
 <!--  	</delete> -->
+
+	<!-- 스터디게시판 리스트 -->
+ 	<select id="studyBoardList" resultType="studyVo">
+ 		select a.stbo_no,
+		    a.study_no,
+		    b.study_name,
+		    a.stbo_title,
+		    a.stbo_content,
+		    a.stbo_writer,
+		    a.stbo_regdate,
+		    a.stbo_read_cnt
+		from studyboard a
+		join studygroup b on a.study_no = b.study_no
+		order by a.stbo_no desc
+ 	</select>
  	
+ 	<!-- 스터디 게시글 상세보기 -->
+ 	<select id="studyBoardDetail" resultType="studyVo" parameterType="int">
+ 		select
+		    stbo_no,
+		    study_no,
+		    stbo_title,
+		    stbo_content,
+		    stbo_writer,
+		    stbo_regdate,
+		    stbo_read_cnt
+		from studyboard
+		where stbo_no = #{stboNo}
+ 	</select>
+ 	
+ 	<!-- 내가 스터디장으로 있는 스터디 리스트 -->
+ 	<select id="myStudy" resultType="studyVo" parameterType="string">
+ 		select     
+	        a.study_no,
+	        a.std_no,
+	        b.std_nm,
+	        a.study_name,
+	        a.study_regdate,
+	        a.study_cpcy,
+	        a.study_intro,
+	        a.atch_file_no
+		from studygroup a
+		join student b on a.std_no = b.std_no
+		where a.std_no = #{stdNo}
+ 	</select>
+ 	
+ 	<!-- 스터디 게시판 글작성 -->
+ 	<insert id="insertStudyBoard" parameterType="studyVo">
+ 		insert into studyboard(stbo_no,
+		            study_no,
+		            stbo_title,
+		            stbo_content,
+		            stbo_writer,
+		            stbo_regdate)
+		values(seq_studyboard.nextval, #{studyNo}, #{stboTitle}, #{stboContent}, #{stboWriter}, sysdate)
+ 	</insert>
+ 	
+ 	<sql id="boardSearch">
+ 		<if test="searchType != null and searchType == 'title'">
+			AND (stbo_title LIKE '%'||#{stboTitle}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'writer'">
+			AND (stbo_writer LIKE '%'||#{stboWriter}||'%')
+		</if>
+ 	</sql>
+ 	
+ 	<select id="boardCount" parameterType="pagingVO" resultType="int">
+ 		select count(stbo_no)
+		from studyboard
+		where 1=1
+		<include refid="boardSearch"/>
+ 	</select>
+ 	
+ 	<delete id="deleteStudyBoard" parameterType="int">
+ 		delete from studyboard
+		where stbo_no = #{stboNo}
+ 	</delete>
+ 	
+ 	<select id="boardSelect" parameterType="pagingVO" resultType="studyVo">
+	 	SELECT
+			b.*
+		FROM(
+			SELECT
+				a.*,
+				row_number() over (order by a.stbo_no desc) rnum
+			FROM(
+				SELECT
+					a.stbo_no,
+				    a.study_no,
+				    b.study_name,
+				    a.stbo_title,
+				    a.stbo_content,
+				    a.stbo_writer,
+				    a.stbo_regdate,
+				    a.stbo_read_cnt
+				FROM studyboard a
+				JOIN studygroup b ON a.study_no = b.study_no
+				WHERE 1=1
+				<include refid="boardSearch"/>
+				ORDER BY a.stbo_no DESC
+			) a
+		) b
+		<![CDATA[
+			WHERE b.rnum >= #{startRow} AND b.rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<update id="modifyStudyBoard" parameterType="studyVo">
+		update studyboard
+		set stbo_title = #{stboTitle}, stbo_content = #{stboContent}
+		where stbo_no = #{stboNo}
+	</update>
+	
+	<!-- 스터디 게시판 조회수 -->
+	<update id="studyBoHit" parameterType="int">
+		update studyboard
+		set
+		stbo_read_cnt = stbo_read_cnt +1
+		where stbo_no = #{stboNo}
+	</update>
+	
+	<!-- 스터디룸 인원수 카운트 -->
+	<select id="studyMemCnt" parameterType="int">
+		select study_no, count(*) as count from studymember group by study_no
+	</select>
+
  </mapper>

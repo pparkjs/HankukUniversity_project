@@ -61,7 +61,7 @@
 													<p>${study.studyIntro }</p>
 												</div>
 												<ul class="card__info">
-													<li><span>인원수</span> <span class="card__info__stats">1 / ${study.studyCpcy }</span>
+													<li><span>인원수</span> <span class="card__info__stats">${study.count} / ${study.studyCpcy }</span>
 													</li>
 												</ul>
 												<ul class="post-pos">

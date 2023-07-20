@@ -17,4 +17,14 @@ public class SearchInfoVO {
 	private String deptNm;
 	private String subGrade;
 	private String subNm;
+	
+	// 사물함 조회 할때 쓰임 by KYW
+	private String flctNo;
+	private String floor;
+	private String avlCd;
+	
+	// 사물함 예약 조회
+	private String lockerYr;
+	private String rsvtSem;
+	private String stdNo;
 }
