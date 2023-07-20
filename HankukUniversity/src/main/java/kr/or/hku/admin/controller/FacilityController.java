@@ -225,4 +225,119 @@ public class FacilityController {
 		
 		return new ResponseEntity<List<FacilityVO>>(flctList, HttpStatus.OK);
 	}
+	
+	@GetMapping("/flctsNoSet")
+	public ResponseEntity<String> flctsNoSet(){
+		NextCodeVO nextCode = fcltService.flctsNoSet();
+		log.info(nextCode.toString());
+		
+		return new ResponseEntity<String>(nextCode.getNextCode(), HttpStatus.OK);
+	}
+	
+	@PostMapping("/flctsInsert")
+	@ResponseBody
+	public ResponseEntity<String> flctsInsert(@RequestBody FacilitiesVO flctsVO){
+		ResponseEntity<String> entity = null;
+		int successFlag = 1;
+		
+		log.info("flctsVO : " + flctsVO.toString());
+		
+		int status = fcltService.flctsInsert(flctsVO);
+		
+//		if(flctVO.getFlctClsfCd().equals("clsf01")) {
+//			int maxFloor = flctVO.getFloor();
+//			FlctFloorVO flctFloorVO = new FlctFloorVO();
+//			flctFloorVO.setFlctNo(flctVO.getFlctNo());
+//			for(int i=1; i<=maxFloor; i++) {
+//				flctFloorVO.setFloor(i);
+//				int floorStatus = fcltService.insertFloor(flctFloorVO);
+//				
+//				if(floorStatus == 0) {
+//					successFlag = 0;
+//				}
+//			}
+//		}
+//		log.info("status : " + status);
+		if(status > 0) {
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}else {
+			entity = new ResponseEntity<String>("FAILED", HttpStatus.OK);
+		}
+		
+		return entity;
+	}
+	
+	@DeleteMapping("/deleteFlcts")
+	@ResponseBody
+	public ResponseEntity<String> deleteFlcts(@RequestBody List<String> delFlctsList){
+		ResponseEntity<String> entity = null;
+		int successFlag = 1;
+		
+		for(int i=0; i<delFlctsList.size(); i++) {
+			String flctsNo = delFlctsList.get(i);
+			int status = fcltService.deleteFlcts(flctsNo);
+			if(status == 0) {
+				successFlag = 0;
+			}
+		}
+		
+		if(successFlag == 1) {
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} else {
+			entity = new ResponseEntity<String>("FAILED", HttpStatus.OK);
+		}
+		
+		return entity;
+	}
+	
+	@GetMapping("/selectFlcts")
+	@ResponseBody
+	public ResponseEntity<FacilitiesVO> selectFlcts(String flctsNo){
+		ResponseEntity<FacilitiesVO> entity = null;
+		log.info("flctsNo : " + flctsNo);
+		
+		FacilitiesVO flctsVO = fcltService.selectFlcts(flctsNo);
+		log.info("flctsVO : " + flctsVO.toString());
+		entity = new ResponseEntity<FacilitiesVO>(flctsVO, HttpStatus.OK);
+		
+		return entity;
+	}
+	
+	@PutMapping("/flctsModify")
+	@ResponseBody
+	public ResponseEntity<String> updateFlcts(@RequestBody FacilitiesVO flctsVO){
+		ResponseEntity<String> entity = null;
+		log.info("수정 flctsVO : " + flctsVO.toString());
+		int status = fcltService.updateFlcts(flctsVO);
+		
+		if(status > 0) {
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} else {
+			entity = new ResponseEntity<String>("FAILED", HttpStatus.OK);
+		}
+		return entity;
+	}
+	
+	@DeleteMapping("/deleteFlctsRsvt")
+	@ResponseBody
+	public ResponseEntity<String> deleteFlctsRsvt(@RequestBody List<String> delFlctsRsvtList){
+		ResponseEntity<String> entity = null;
+		int successFlag = 1;
+		
+		for(int i=0; i<delFlctsRsvtList.size(); i++) {
+			String flctsRsvtNo = delFlctsRsvtList.get(i);
+			int status = fcltService.deleteFlctsRsvt(flctsRsvtNo);
+			if(status == 0) {
+				successFlag = 0;
+			}
+		}
+		
+		if(successFlag == 1) {
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} else {
+			entity = new ResponseEntity<String>("FAILED", HttpStatus.OK);
+		}
+		
+		return entity;
+	}
 }

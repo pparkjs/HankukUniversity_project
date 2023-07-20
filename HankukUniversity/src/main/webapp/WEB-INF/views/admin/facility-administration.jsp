@@ -68,7 +68,7 @@
 							<button type="button" class="btn btn-sm btn-primary fcltBtn" id="insertFlctsGoGo" data-bs-toggle="modal" data-bs-target="#flctsModal">시설물등록</button>
 						</div>
 						<div class="col-auto">
-							<button type="button" class="btn btn-sm btn-primary fcltBtn" onclick="delDept()">삭제</button>
+							<button type="button" class="btn btn-sm btn-primary fcltBtn" onclick="deleteFlcts()">삭제</button>
 						</div>
 					</div>
 				</div>
@@ -103,7 +103,7 @@
 							<button type="button" class="btn btn-sm btn-primary fcltBtn" onclick="fcltsRsvtList()">검색</button>
 						</div>
 						<div class="col-auto">
-							<button type="button" class="btn btn-sm btn-primary fcltBtn" onclick="delDept()">취소</button>
+							<button type="button" class="btn btn-sm btn-primary fcltBtn" onclick="deleteFlctsRsvt()">취소</button>
 						</div>
 					</div>
 				</div>
@@ -194,34 +194,27 @@
 					<div class="col-xl-12">
 						<label class="form-label mt-3">시설명<span class="text-danger">*</span></label>
 						<div class="input-group" id="flctsModalSelect">
-							<select class="form-control form-select" id="flctClsfCd">
-								<option value="">Please Select</option>
-								<c:forEach items="${commonList}" var="common">
-									<c:if test="${common.comCdGrp eq 'FLCT_CLSF'}">
-										<option value="${common.comCd }">${common.comCdNm }</option>
-									</c:if>
-								</c:forEach>
-							</select>
+							
 						</div>
 					</div>
 					<div class="col-xl-12">
 						<label class="form-label mt-3">시설물 번호(자동생성)<span class="text-danger">*</span></label>
 						<div class="input-group">
-							<input type="text" class="form-control" id="nextFlctNo" readonly>
+							<input type="text" class="form-control" id="flctsNo" readonly>
 						</div>
 					</div>
 					<div class="col-xl-12 mb-3">
 						<label class="form-label mt-3">시설물명<span class="text-danger">*</span></label>
 						<div class="input-group">
-							<input type="text" class="form-control" placeholder="시설명 입력" id="flctNm">
+							<input type="text" class="form-control" placeholder="시설명 입력" id="flctsNm">
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-sm btn-danger light fcltBtn" data-bs-dismiss="modal">취소</button>
-				<button type="button" class="btn btn-sm btn-primary fcltBtn" id="flctInsertBtn" onclick="flctInsert()">등록</button>
-				<button type="button" class="btn btn-sm btn-primary fcltBtn" id="flctModifyBtn" onclick="flctModify()" style="display: none;">수정</button>
+				<button type="button" class="btn btn-sm btn-primary fcltBtn" id="flctsInsertBtn" onclick="flctsInsert()">등록</button>
+				<button type="button" class="btn btn-sm btn-primary fcltBtn" id="flctsModifyBtn" onclick="flctsModify()" style="display: none;">수정</button>
 			</div>
 	  	</div>
 	</div>
@@ -262,6 +255,12 @@ $(function(){
 	$("#insertFlctsGoGo").on("click", function(){
 		// flctsModalSelectBoxSet();
 		console.log("시설물모달");
+		$("#flctsLabel").text("시설물 등록");
+		$("#flctNo").val('');
+		$("#flctsNo").val('');
+		$("#flctsNm").val('');
+
+		flctsNoSet();
 	});
 });
 function flctNoSet(){
@@ -278,6 +277,21 @@ function flctNoSet(){
 		}
 	}
 	xhr.send();
+}
+function flctsNoSet(){
+	console.log("시설물다음번호");
+	$.ajax({
+		type: "GET",
+		url: "/hku/admin/flctsNoSet",
+		dataType: "text",
+		success: function(res){
+			console.log("시설물 다음 번호",res);
+			$("#flctsNo").val(res);
+		},
+		error: function(){
+			alert("시설물번호 출력 실패");
+		}
+	});
 }
 function flctInsert(){
 	var flctClsfCd = $("#flctClsfCd").val();
@@ -339,6 +353,68 @@ function flctInsert(){
 				flctsModalSelectBoxSet();
 				fcltList();
 				$('#facility').scrollTop($('#facility')[0].scrollHeight);
+			}
+		},
+		error: function(){
+			alert("시설등록 실패");
+		}
+	});
+}
+function flctsInsert(){
+	var flctNo = $("#flctNo").val();
+	var flctsNo= $("#flctsNo").val();
+	var flctsNm = $("#flctsNm").val();
+
+	let flctsInsertData = {
+		"flctNo": flctNo,
+		"flctsNo": flctsNo,
+		"flctsNm": flctsNm
+	};
+	// console.log("flctsInsertData",flctsInsertData);
+
+	if(flctNo == '') {
+		swal({
+			title: "시설을 선택해주세요!",
+			icon: "error"
+		});
+		return false;
+	}
+	if(flctsNm == '') {
+		swal({
+			title: "시설물명을 작성해주세요!",
+			icon: "error"
+		});
+		return false;
+	}
+
+	$.ajax({
+		type: "POST",
+		url: "/hku/admin/flctsInsert",
+		data: JSON.stringify(flctsInsertData),
+		dataType: "text",
+		contentType: 'application/json;charset=UTF-8',
+		success: function(res){
+			if(res === "SUCCESS"){
+				swal({
+					title: "시설물등록이 완료되었습니다!",
+					icon: "success"
+				});
+				$("#flctNo").val('');
+				$("#flctsNo").val('');
+				$("#flctsNm").val('');
+
+				// $("#flctFloorDiv").css("display","none");
+
+				$("#flctsModal").modal('hide');
+
+				// flctsModalSelectBoxSet();
+				fcltsList();
+				$('#facilities').scrollTop($('#facilities')[0].scrollHeight);
+			} else {
+				swal({
+					title: "시설물등록에 실패하였습니다!",
+					icon: "error"
+				});
 			}
 		},
 		error: function(){
@@ -450,10 +526,11 @@ function fcltsList(){
 		data: JSON.stringify(searchData),
 		dataType: "JSON",
 		contentType: 'application/json;charset=UTF-8',
+		async: false,
 		success: function(res){
 			// alert("시설리스트 체킁");
 			var tblStr = "";
-			tblStr += `<div class='table-wrap'>
+			tblStr += `<div class='table-wrap' id='facilities'>
 				<table class='table mb-0'>
 					<thead class='thead-dark'>
 						<tr>
@@ -470,7 +547,7 @@ function fcltsList(){
 					<tbody>`;
 						if(res != null && res.length > 0) {
 							for(let i=0; i<res.length; i++) {
-								tblStr += `<tr onclick='userDetail(this)'>
+								tblStr += `<tr onclick='flctsDetail(this)'>
 									<td>
 										<div class='form-check custom-checkbox checkbox-danger'>
 											<input type='checkbox' class='form-check-input flctsCheck' value='\${res[i].flctsNo }' onclick="onlyCheck(this)">
@@ -601,6 +678,33 @@ function flctDetail(target){
 		}
 	});
 }
+function flctsDetail(target){
+	console.log("시설물 상세 체킁");
+	var flctsModal = $("#flctsModal");
+	var flctsNo = $(target).children().eq(1).text();
+	console.log("flctsNo",flctsNo);
+
+	$.ajax({
+		type: "GET",
+		url: "/hku/admin/selectFlcts?flctsNo=" + flctsNo,
+		// data: flctNo,
+		dataType: "JSON",
+		success: function(res){
+			console.log(res);
+			$("#flctsLabel").text("시설물 상세");
+			$("#flctNo").val(res.flctNo);
+			$("#flctsNo").val(res.flctsNo);
+			$("#flctsNm").val(res.flctsNm);
+
+			$("#flctsInsertBtn").css('display', 'none');
+			$("#flctsModifyBtn").css('display', 'inline');
+			flctsModal.modal('show');
+		},
+		error: function(){
+			alert("시설물상세 못가져옴");
+		}
+	});
+}
 function flctModify(){
 	console.log("시설수정 체킁");
 	var flctClsfCd = $("#flctClsfCd").val();
@@ -673,6 +777,67 @@ function flctModify(){
 		}
 	});
 }
+function flctsModify(){
+	var flctNo = $("#flctNo").val();
+	var flctsNo= $("#flctsNo").val();
+	var flctsNm = $("#flctsNm").val();
+	
+	let flctsModifyData = {
+		"flctNo": flctNo,
+		"flctsNo": flctsNo,
+		"flctsNm": flctsNm
+	};
+	console.log("flctsModifyData",flctsModifyData);
+
+	if(flctNo == '') {
+		swal({
+			title: "시설을 선택해주세요!",
+			icon: "error"
+		});
+		return false;
+	}
+	if(flctsNm == '') {
+		swal({
+			title: "시설물명을 작성해주세요!",
+			icon: "error"
+		});
+		return false;
+	}
+
+	$.ajax({
+		type: "PUT",
+		url: "/hku/admin/flctsModify",
+		data: JSON.stringify(flctsModifyData),
+		dataType: "text",
+		contentType: 'application/json;charset=UTF-8',
+		success: function(res){
+			if(res === "SUCCESS"){
+				swal({
+					title: "시설물수정이 완료되었습니다!",
+					icon: "success"
+				});
+				$("#flctNo").val('');
+				$("#flctsNo").val('');
+				$("#flctsNm").val('');
+
+				// $("#flctFloorDiv").css("display","none");
+				$("#flctsModal").modal('hide');
+
+				// flctsModalSelectBoxSet();
+				fcltsList();
+				// $('#facility').scrollTop($('#facility')[0].scrollHeight);
+			} else {
+				swal({
+					title: "시설물수정에 실패하였습니다!",
+					icon: "error"
+				});
+			}
+		},
+		error: function(){
+			alert("시설물수정 실패");
+		}
+	});
+}
 
 function deleteFlct(){
 	var delFlctArr = new Array();
@@ -733,6 +898,115 @@ function deleteFlct(){
 		}
 	});
 }
+function deleteFlcts(){
+	console.log("delFlcts");
+	var delFlctsArr = new Array();
+	
+	// let data = {};
+	
+	let facilities = document.querySelectorAll(".flctsCheck");
+	// console.log(delDepts);
+	for(let i=0; i<facilities.length; i++){
+		if(facilities[i].checked == true){
+			delFlctsArr.push(facilities[i].value);
+		}
+	}
+	if(delFlctsArr.length == 0){
+		swal({
+			title: "항목을 선택해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	console.log(delFlctsArr);
+	console.log(JSON.stringify(delFlctsArr));
+
+	swal({
+		title: "삭제를 진행하시겠습니까?",
+		text: "삭제 후 되돌릴 수 없습니다!",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+	.then((willDelete) => {
+		if (willDelete) {
+			console.log(delFlctsArr);
+			console.log(JSON.stringify(delFlctsArr));
+			$.ajax({
+				type: 'DELETE',
+				url: '/hku/admin/deleteFlcts',
+				data: JSON.stringify(delFlctsArr),
+				dataType: "text",
+				// processData: false,
+				contentType: 'application/json;charset=UTF-8',
+				success: function (res) {
+					fcltsList();
+					swal({
+						title: "삭제가 완료되었습니다!",
+						icon: "success"
+					});
+				},
+				error: function (xhr, status, error) {
+					alert("출력실패");
+				}
+			});
+		} else {
+			return false;
+		}
+	});
+}
+function deleteFlctsRsvt(){
+	var delFlctsRsvtArr = new Array();
+	
+	let flctRsvts = document.querySelectorAll(".flctsRsvtCheck");
+	for(let i=0; i<flctRsvts.length; i++){
+		if(flctRsvts[i].checked == true){
+			delFlctsRsvtArr.push(flctRsvts[i].value);
+		}
+	}
+	if(delFlctsRsvtArr.length == 0){
+		swal({
+			title: "항목을 선택해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+	console.log(delFlctsRsvtArr);
+
+	swal({
+		title: "삭제를 진행하시겠습니까?",
+		text: "삭제 후 되돌릴 수 없습니다!",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+	.then((willDelete) => {
+		if (willDelete) {
+			console.log(delFlctsRsvtArr);
+			console.log(JSON.stringify(delFlctsRsvtArr));
+			$.ajax({
+				type: 'DELETE',
+				url: '/hku/admin/deleteFlctsRsvt',
+				data: JSON.stringify(delFlctsRsvtArr),
+				dataType: "text",
+				// processData: false,
+				contentType: 'application/json;charset=UTF-8',
+				success: function (res) {
+					fcltsRsvtList();
+					swal({
+						title: "삭제가 완료되었습니다!",
+						icon: "success"
+					});
+				},
+				error: function (xhr, status, error) {
+					alert("출력실패");
+				}
+			});
+		} else {
+			return false;
+		}
+	});
+}
 
 function flctsModalSelectBoxSet(){
 	console.log("시설물모달 셀렉트박스 세팅 체킁");
@@ -746,10 +1020,10 @@ function flctsModalSelectBoxSet(){
 
 			let selStr = "";
 			selStr += `
-			<select class="form-control form-select" id="flctClsfCd">
+			<select class="form-control form-select" id="flctNo">
 				<option value="">Please Select</option>`;
 				for(let i=0; i<res.length; i++) {
-					selStr += `<option value="\${res[i].flctCd}">\${res[i].flctNm}</option>`
+					selStr += `<option value="\${res[i].flctNo}">\${res[i].flctNm}</option>`
 				}
 			selStr += `</select>`;
 			$("#flctsModalSelect").html(selStr);

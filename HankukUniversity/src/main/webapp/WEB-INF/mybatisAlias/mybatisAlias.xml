@@ -68,6 +68,7 @@
     <!-- 영우칸 밑에서만 작성-->
     <typeAlias type="kr.or.hku.admin.vo.UserVO" alias="userVO"/>
     <typeAlias type="kr.or.hku.admin.vo.FlctFloorVO" alias="flctFloorVO"/>
+    <typeAlias type="kr.or.hku.admin.vo.NextCodeVO" alias="nextCodeVO"/>
     
     <!-- 성희칸 밑에서만 작성-->
      <typeAlias type="kr.or.hku.classroom.vo.ClassroomVO" alias="classroomVO"/>
