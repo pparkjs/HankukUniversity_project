@@ -189,6 +189,13 @@
 			<version>3.6</version>
 		</dependency>
 		
+		<!-- 문자메세지 보내기 위한 라이브러리 추가 -->
+	   	<dependency>
+            <groupId>net.nurigo</groupId>
+            <artifactId>sdk</artifactId>
+            <version>4.3.0</version>
+        </dependency>
+		
 		<!-- 채팅 위한 라이브러리 (websocket, jackson-databind) -->
 		  <dependency> 
 		      <groupId>org.springframework</groupId> 
