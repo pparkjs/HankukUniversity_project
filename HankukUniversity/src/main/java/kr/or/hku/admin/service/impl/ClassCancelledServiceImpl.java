@@ -28,4 +28,15 @@ public class ClassCancelledServiceImpl implements ClassCancelledService {
 	public List<StudentVO> getStdInLecture(Map<String, String> map) {
 		return classCancelledMapper.getStdInLecture(map);
 	}
+	
+	@Override
+	public void calcelProccess(String subclNo) {
+		classCancelledMapper.addTextDetail(subclNo);
+		classCancelledMapper.calcelProccess(subclNo);
+	}
+	
+	@Override
+	public List<Map<String, String>> getTextDetail() {
+		return classCancelledMapper.getTextDetail();
+	}
 }
