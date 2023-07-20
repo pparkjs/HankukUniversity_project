@@ -6,7 +6,9 @@
 		<!-- row -->
 		<div class="row">
 			<form id="insertFrm" method="post" action="/hku/professor/insertNotice" enctype="multipart/form-data" class="col-xl-12 col-xxl-12">
-				<input type="hidden" value="${notice.lecntNo}" name="lecntNo">
+				<c:if test="${not empty notice }">
+					<input type="hidden" value="${notice.lecntNo}" name="lecntNo">
+				</c:if>
 				<div class="card">
 					<div class="card-header">
 					<c:if test="${empty notice}">

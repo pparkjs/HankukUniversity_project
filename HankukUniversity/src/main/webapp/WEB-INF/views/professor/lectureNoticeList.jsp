@@ -20,12 +20,19 @@
 					<h4 class="card-title" 
 						style="font-weight: bold; font-size: 1.2em; color: #800000;">
 						${subNm} 공지사항</h4>
-					<button type="button" id="regBtn"
+						<button type="button" id="regBtn"
 						style="padding: 0.5rem 1.0rem; width: 80px; "
 						class="btn btn-primary">글쓰기</button>
 				</div>
 				<div class="card-body ccc" style="padding-top: 0; height:40%;">
 					<div class="table-wrap" style="margin-top: 10px;">
+										
+					<div class="input-group" style="width:20%; float:right; margin-bottom: 10px;">
+				<input type="text" class="form-control" id="searchWord" placeholder="검색어를 입력하세요">
+				<span class="input-group-append">
+					<button type="button" id="searchBtn" class="btn btn-primary btn-flat">검색</button>
+				</span>
+			</div>
 						<table id="noticeTable">
 							<thead>
 								<tr>
@@ -36,7 +43,7 @@
 									<td>조회수</td>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="noticeTb">
 								<c:forEach items="${noticeList}" var="notice" varStatus="status">
 									<tr>
 										<td>${status.index+1}<input type="hidden" value="${notice.lecntNo }" id="lecntNo"></td>
@@ -57,15 +64,53 @@
 </div>
 </body>
 <script type="text/javascript">
+
+
+	
 $('#regBtn').click(function(){
 	location.href = "/hku/professor/noticeform";
 })
-
-$('#noticeTable tr').click(function(){
+	
+$('#searchBtn').click(function(){
+	var searchWord = $('#searchWord').val();
+	console.log(searchWord);
+	
+	$.ajax({
+		url : '/hku/professor/search',
+		type: 'get',
+		data : {
+			searchWord : searchWord
+		},
+		success: function(res){
+			console.log(res);
+			searchStr = '';
+		for(let i=0; i < res.length; i++){
+				searchStr+= '<tr>'
+				searchStr+= '<td>'+ (i+1) +'<input type="hidden" value="'+res[i].lecntNo+'" id="lecntNo"></td>'
+				searchStr+= '<td style="text-align: left;">'+res[i].lecntTtl+'</td>';
+				searchStr+= '<td>'+res[i].lecntRegdate+'</td>';
+				searchStr+= '<td>'+res[i].lecntWriter+'</td>';
+				searchStr+= '<td>'+res[i].lecntReadCnt+'</td>';
+				searchStr+= '</tr>'	;
+		}
+			$('#noticeTb').html(searchStr);
+	
+		},
+		error: function(){
+			
+		}
+		
+	})
+	
+})
+	
+$('#noticeTb').on('click','tr',function(){
 	var lecntNo = $(this).find('#lecntNo').val();
 	console.log(lecntNo);
 	location.href= "/hku/professor/detailNotice/"+lecntNo;
 })
+
+
 
 </script>
 </html>

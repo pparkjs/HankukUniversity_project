@@ -7,10 +7,10 @@
 }
 
 #noticeTable thead{
-	height: 40px;
+	height:50px;
 	background-color: #6e6e6e;
 	color: white;
-	font-size: 1.2em;
+	font-size: 1.3em;
 	font-weight: bold;
 
 	}
@@ -26,6 +26,6 @@
 }
 
 #noticeTable td{
-	height: 40px;
-	
+	height: 50px;
+		font-size: 1.2em;
 }
