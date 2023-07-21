@@ -168,6 +168,22 @@ public class StudyController {
 	}
 	
 	@ResponseBody
+	@GetMapping(value="/student/messageList")
+	public ResponseEntity<List<StudyVO>> messageList(@RequestParam("studyNo") int studyNo, @RequestParam("stdNo") String stdNo) {
+	    // 해당 방의 메시지 리스트 가져오기
+	    List<StudyVO> list = service.messageList(studyNo); 
+	    // userId 는 안읽은 메시지 처리 위해서 받아온건데 1:1이 아니라 멀티 채팅방일때 생각중
+	    return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
+	}
+	
+	@ResponseBody
+	@GetMapping(value="/student/studymemberList")
+	public ResponseEntity<List<StudyVO>> studymemberList(int studyNo) {
+		// 해당 방의 멤버 리스트 가져오기
+		List<StudyVO> list = service.studyMem(studyNo); 
+		return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
+	}
+		
 	@GetMapping("/student/study-calendar")
 	public List<StdCalendarVO> getStdCalList(@RequestParam Map<String, String> map){
 		log.info("캘리더 정보 가져오기" + map.toString());

@@ -125,7 +125,7 @@
 													        <option value="2030">2030</option>
 													</select>
 												</div>
-												<div class="input-group"  style="width: 30%;">
+												<div class="input-group"  style="width: 30%; margin-right: 470px;">
 													<div style="font-size: 20px;">
 														<label class="form-label mt-3" style="font-size: 20px;">끝학기<span class="text-danger">*</span></label>&nbsp;
 													</div>
@@ -185,74 +185,73 @@
 								</div>
 							</div>
 						</div>
-					</div>
-
-					<div class="tab-pane fade" id="profile1">
-						<div class="row">
-							<div class="col-md-12">
-								<form name="form2">
-									<div style="display: flex; justify-content: space-between; margin: 30px; margin-top: -20px;">
-									  <div style="display: flex; flex-direction: column; width: 50%;">
-									    <div>
-											 <div class="input-group" style="width: 25%; margin: 10px;">
-												<label for="stdNm" style="font-size: 20px;">이름</label>&nbsp;
-												<input type="text" class="form-control" value="${student.stdNm }" name="stdNm" readonly="readonly">
-											</div>
-											<div class="input-group" style="width: 30%; margin: 10px;">
-												<label for="deptNm" style="font-size: 20px;">학과</label>&nbsp;
-												<input type="text" class="form-control" value="${student.deptNm }" name="deptNm" readonly="readonly">
-											</div>
-											<div class="input-group" style="width: 35%; margin: 10px;">
-												<label for="stdNo" style="font-size: 20px;">학번</label>&nbsp;
-												<input type="text" class="form-control" value="${student.stdNo }" name="stdNo" readonly="readonly">
-											</div>
-									    	<div class="input-group" style="width: 80%; margin: 10px;">
-												<label for="stdMjrCrd" style="font-size: 20px;">전공학점</label>&nbsp;
-												<input type="text" class="form-control" value="${student.stdMjrCrd }" placeholder="Surname" readonly="readonly">
-											</div>
-									    	<div class="input-group" style="width: 80%; margin: 10px;">
-												<label for="stdCtrlCrd" style="font-size: 20px;">교양학점</label>&nbsp;
-												<input type="text" class="form-control" value="${student.stdCtrlCrd }" placeholder="Surname" readonly="readonly">
-											</div>
-											<div>
-												<label for="changeRsn" style="font-size: 20px;">사유</label>
-												<textarea rows="5" class="form-control" name="changeRsn" id="changeRsn2"></textarea>
-											</div>
-									    	<div class="input-group" style="width: 80%; margin: 10px; font-size: 20px;">
-												<input type="text" class="form-control" value="" name="rest" readonly="readonly">
-											</div>
-											<br>
-											<div style="display: flex; justify-content: end; margin-right: 120px; margin-top: 10px;">
-												<button type="button" class="btn btn-primary" onclick="graduteApply()">신청</button>																	
-											</div>
-									    </div>
-									  </div>
-									  <div style="font-size: 20px; width: 50%;">
-									    공지사항 &nbsp;
-									    <textarea rows="20" class="form-control" name="changeRsn" readonly="readonly">
-2022학년도 전기(2023.2.17. 졸업) 조기졸업 신청 안내
-
-학칙 제69조 및 학사운영규정 제84조에 따라 학사과정 학생이 수업연한을 단축하여 조기졸업을 할 수 있으므로, 조기졸업을 하고자하는 학생은 다음과 같이 신청하시기 바랍니다.
-
-조기졸업 신청기한 후에는 철회 또는 추가신청이 불가하니 신중히 결정한 후 신청하시기 바랍니다.
-1. 신청기한 : 2023. 1. 26.(목)까지
-2. 신청대상 : 6학기(건축학과 8학기, 편입생 3학기) 이상 이수하고, 성적평점평균이 4.00(A0) 이상인 학생으로 2023년 2월 졸업이 가능한 학생
-    - 반드시 졸업요건이 충족되었는지 소속 학과사무실에 확인 후 신청
-3. 방법 : 본교 통합학사정보시스템을 통하여 신청
-4. 처리절차
-  ① 학생이 통합학사정보시스템에 로그인하여 “졸업관리-조기졸업관리-조기졸업신청”에 신청
-  ② 학과, 단과대학, 교무처 검토
-  ③ 조기졸업 승인
-  ④ 학생이 통합학사정보시스템에 로그인하여 처리결과 확인
-    (별도로 개인에게 처리결과를 통보하지 않음)
-									    </textarea>
-									  </div>
-									</div>
-								</form>
+						<div class="tab-pane fade" id="profile1">
+							<div class="row">
+								<div class="col-md-12">
+									<form name="form2">
+										<div style="display: flex; justify-content: space-between; margin: 30px; margin-top: -20px;">
+										  <div style="display: flex; flex-direction: column; width: 50%;">
+										    <div>
+												 <div class="input-group" style="width: 25%; margin: 10px;">
+													<label for="stdNm" style="font-size: 20px;">이름</label>&nbsp;
+													<input type="text" class="form-control" value="${student.stdNm }" name="stdNm" readonly="readonly">
+												</div>
+												<div class="input-group" style="width: 30%; margin: 10px;">
+													<label for="deptNm" style="font-size: 20px;">학과</label>&nbsp;
+													<input type="text" class="form-control" value="${student.deptNm }" name="deptNm" readonly="readonly">
+												</div>
+												<div class="input-group" style="width: 35%; margin: 10px;">
+													<label for="stdNo" style="font-size: 20px;">학번</label>&nbsp;
+													<input type="text" class="form-control" value="${student.stdNo }" name="stdNo" readonly="readonly">
+												</div>
+										    	<div class="input-group" style="width: 80%; margin: 10px;">
+													<label for="stdMjrCrd" style="font-size: 20px;">전공학점</label>&nbsp;
+													<input type="text" class="form-control" value="${student.stdMjrCrd }" placeholder="Surname" readonly="readonly">
+												</div>
+										    	<div class="input-group" style="width: 80%; margin: 10px;">
+													<label for="stdCtrlCrd" style="font-size: 20px;">교양학점</label>&nbsp;
+													<input type="text" class="form-control" value="${student.stdCtrlCrd }" placeholder="Surname" readonly="readonly">
+												</div>
+												<div>
+													<label for="changeRsn" style="font-size: 20px;">사유</label>
+													<textarea rows="5" class="form-control" name="changeRsn" id="changeRsn2"></textarea>
+												</div>
+										    	<div class="input-group" style="width: 80%; margin: 10px; font-size: 20px;">
+													<input type="text" class="form-control" value="" name="rest" readonly="readonly">
+												</div>
+												<br>
+												<div style="display: flex; justify-content: end; margin-right: 120px; margin-top: 10px;">
+													<button type="button" class="btn btn-primary" onclick="graduteApply()">신청</button>																	
+												</div>
+										    </div>
+										  </div>
+										  <div style="font-size: 20px; width: 50%;">
+										    공지사항 &nbsp;
+										    <textarea rows="20" class="form-control" name="changeRsn" readonly="readonly">
+	2022학년도 전기(2023.2.17. 졸업) 조기졸업 신청 안내
+	
+	학칙 제69조 및 학사운영규정 제84조에 따라 학사과정 학생이 수업연한을 단축하여 조기졸업을 할 수 있으므로, 조기졸업을 하고자하는 학생은 다음과 같이 신청하시기 바랍니다.
+	
+	조기졸업 신청기한 후에는 철회 또는 추가신청이 불가하니 신중히 결정한 후 신청하시기 바랍니다.
+	1. 신청기한 : 2023. 1. 26.(목)까지
+	2. 신청대상 : 6학기(건축학과 8학기, 편입생 3학기) 이상 이수하고, 성적평점평균이 4.00(A0) 이상인 학생으로 2023년 2월 졸업이 가능한 학생
+	    - 반드시 졸업요건이 충족되었는지 소속 학과사무실에 확인 후 신청
+	3. 방법 : 본교 통합학사정보시스템을 통하여 신청
+	4. 처리절차
+	  ① 학생이 통합학사정보시스템에 로그인하여 “졸업관리-조기졸업관리-조기졸업신청”에 신청
+	  ② 학과, 단과대학, 교무처 검토
+	  ③ 조기졸업 승인
+	  ④ 학생이 통합학사정보시스템에 로그인하여 처리결과 확인
+	    (별도로 개인에게 처리결과를 통보하지 않음)
+										    </textarea>
+										  </div>
+										</div>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
-					
+ 
 				</div>
 			</div>
 		</div>

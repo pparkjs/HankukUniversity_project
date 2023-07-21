@@ -45,6 +45,8 @@ public interface StudyMapper {
 	public void readChatMessage(StudyVO studyVo);
 	//방안에서 해당 메시지 읽음 카운트 -1 처리
 	public void readMessageInRoom(StudyVO studyVo);
+	//해당 채팅방의 메세지 리스트
+	public List<StudyVO> messageList(int studyNo);
 	// 스터디 게시판 리스트
 	public List<StudyVO> studyBoardList();
 	// 총 게시글 개수

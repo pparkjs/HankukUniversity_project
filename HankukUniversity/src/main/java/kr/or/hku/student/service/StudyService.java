@@ -24,6 +24,8 @@ public interface StudyService {
 	public List<Integer> getUnreadCntByUser(StudyVO studyVo);
 	//방안에서 해당 메시지 읽음 카운트 -1 처리
 	public void readMessageInRoom(StudyVO studyVo);
+	//해당 채팅방의 메세지 리스트
+	public List<StudyVO> messageList(int studyNo);
 	
 	public void readChatMessage(StudyVO studyVo);
 	// 메세지 등록

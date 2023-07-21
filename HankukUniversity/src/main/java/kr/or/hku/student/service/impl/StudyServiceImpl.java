@@ -187,6 +187,12 @@ public class StudyServiceImpl implements StudyService{
 		return mapper.updateStdCalList(stdCalendarVO);
 	}
 
+	@Override
+	public List<StudyVO> messageList(int studyNo) {
+		// TODO Auto-generated method stub
+		return mapper.messageList(studyNo);
+	}
+
 	
 	@Override
 	public int addStdCalList(StdCalendarVO stdCalendarVO) {

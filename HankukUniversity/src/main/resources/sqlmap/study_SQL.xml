@@ -140,7 +140,7 @@
 	    a.study_no DESC
 	</select>
 	
-	<select id="getMemberCount" parameterType="int">
+	<select id="getMemberCount" parameterType="int" resultType="int">
 		SELECT COUNT(*) cnt FROM studymember WHERE study_no= #{studyNo}
 	</select>
 	
@@ -384,5 +384,10 @@
 	<select id="studyMemCnt" parameterType="int">
 		select study_no, count(*) as count from studymember group by study_no
 	</select>
-
+	
+	<select id="messageList" parameterType="int" resultType="studyVo">
+		select msg_no, study_no, std_no, msg_content, msg_regdate, unread_mem_cnt
+		from chatmessage
+		where study_no = #{studyNo}
+	</select>
  </mapper>

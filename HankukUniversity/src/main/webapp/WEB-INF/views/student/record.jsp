@@ -65,9 +65,9 @@
 								        <table class="tbl">
 								            <thead>            
 								                <tr>
-								                    <th>날짜</th>
-								                    <th>변동사항</th>
-								                    <th>승인여부</th>
+								                    <th style="width: 30%">날짜</th>
+								                    <th style="width: 35%">변동사항</th>
+								                    <th style="width: 35%">승인여부</th>
 								                </tr>
 								            </thead>
 								            <tbody>
