@@ -175,4 +175,10 @@ public class StudyServiceImpl implements StudyService{
 		return mapper.insertMessage(studyVo);
 	}
 
+	@Override
+	public List<StudyVO> messageList(int studyNo) {
+		// TODO Auto-generated method stub
+		return mapper.messageList(studyNo);
+	}
+
 }
