@@ -3,42 +3,48 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="kr.or.hku.classroom.mapper.AttendanceMapper">
- 
-<!--  <select id="dmrList" resultType="attendanceVO"> -->
-<!--  	SELECT  -->
-<!--  		a.atdc_no -->
-<!--  	  , a.atdc_dmr_rsn -->
-<!--  	  , a.stdc_dmr_stts_cd -->
-<!--  	FROM attendance_dmr  -->
-<!--  </select> -->
- 
-<!--  <select id="dmrDetail" parameterType="string" resultType="attendanceVO"> -->
-<!--  	SELECT  -->
-<!--  		a.atdc_no -->
-<!--  	  , a.atdc_dmr_rsn -->
-<!--  	  , a.stdc_dmr_stts_cd -->
-<!--  	FROM attendance_dmr a, attendance b,  -->
-<!--  	WHERE a.atdc_no = b.atdc_no -->
-<!--  	AND  -->
- 
-<!--  </select> -->
- 
-<!--  <insert id="writeDmr" parameterType="attendanceVO"> -->
-<!-- INSERT INTO Attendance_dmr (ATDC_NO, ATDC_DMR_RSN, STDC_DMR_STTS_CD) -->
-<!-- VALUES ((SELECT ATDC_NO FROM ATTENDANCE  -->
-<!-- 		 WHERE STD_NO = #{stdNo}), -->
-<!--         				#{atdc_dmr_rsn}, -->
-<!-- ); -->
 
-<!--  </insert> -->
- 
-<!--  <update id="updateDmr" parameterType="attendanceVO"> -->
- 
-<!--  </update> -->
- 
-<!--  <delete id="deleteDmr"> -->
-<!--  	DELETE FROM attendance_dmr  -->
-<!--  	WHERE std_no = #{stdNo} -->
-<!--  </delete> -->
- 
+		<!-- 해당 과목 수강하는 학생 리스트 가져오기 -->
+	 	<select id="getStdList" resultType="attendanceVO" parameterType="string">
+	 	/*kr.or.hku.classroom.mapper.AttendanceMapper.getStdList */
+			SELECT
+			  s.std_no
+			, s.std_nm
+			, d.dept_nm
+			FROM 
+			  course_regist cr
+			  JOIN student s ON cr.std_no = s.std_no
+			  JOIN department d ON s.dept_cd = d.dept_cd
+			  JOIN lecture_aply l ON cr.lecap_no = l.lecap_no
+			WHERE
+			  l.lecap_no = #{lecapNo}
+		</select>
+ 		
+ 		<!-- 학생 출석 여부 리스트 가져오기  -->
+ 		<select id="getStdAttendanceList" parameterType="attendanceVO" resultType="attendanceVO">
+ 		/*kr.or.hku.classroom.mapper.AttendanceMapper.getStdAttendanceList */
+ 			select 
+ 				atdc_no,
+ 				atdc_yn_cd,
+ 				atdc_week
+ 			FROM attendance 
+ 			WHERE lecap_no = #{lecapNo}
+ 			AND std_no = #{stdNo}
+ 		</select>
+ 		
+ 		<!-- 출석 변경  -->
+		<update id="updateAttendance" parameterType="attendanceVO">
+		/*kr.or.hku.classroom.mapper.AttendanceMapper.updateAttendance */
+			UPDATE attendance 
+	        SET                 
+	        	<if test='atdcYnCd == "Y"'>
+		           atdc_yn_cd = 'N' 
+	        	</if>                 
+	        	<if test='atdcYnCd == "N" or atdcYnCd == "x"'>
+		           atdc_yn_cd = 'Y' 
+	        	</if>                 
+	        WHERE atdc_no = #{atdcNo} 
+		</update>
+		
+		
  </mapper>

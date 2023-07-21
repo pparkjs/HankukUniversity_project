@@ -1,66 +1,65 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <style>
 .form-control:disabled, .form-control[readonly] {
-    background: #e9ecef;
-    opacity: 1;
+	background: #e9ecef;
+	opacity: 1;
 }
 
 .col-form-label {
-    padding-top: calc(0.375rem + 1px);
-    padding-bottom: calc(0.375rem + 1px);
-    margin-bottom: 0;
-    font-size: 16px;
-    line-height: 1.5;
-    color : #716f6f;
+	padding-top: calc(0.375rem + 1px);
+	padding-bottom: calc(0.375rem + 1px);
+	margin-bottom: 0;
+	font-size: 16px;
+	line-height: 1.5;
+	color: #716f6f;
 }
 
 .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
-    overflow: hidden;
-    font-size: 14px;
+	overflow: hidden;
+	font-size: 14px;
 }
 
-.text{
-	font-size:15px;
+.text {
+	font-size: 15px;
 }
-
 </style>
 
 <div class="content-body">
-<c:set value="등록" var="name"/>
-<c:if test="${status eq 'u' }"> 
-<c:set value="수정" var="name"/>
-</c:if>
+	<c:set value="등록" var="name" />
+	<c:if test="${status eq 'u' }">
+		<c:set value="수정" var="name" />
+	</c:if>
 	<div class="container-fluid">
 		<!-- row -->
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-header">
-						<h4 class="card-title" style="font-size:2em;">과제 ${name }</h4>
+						<h4 class="card-title" style="font-size: 2em;">과제 ${name }</h4>
 					</div>
 					<div class="card-body">
 						<div class="form-validation">
-							<form class="needs-validation" action="/hku/professor/regiAssignment" method="post" 
-									id= "regiForm" enctype="multipart/form-data">
-								<div class="row">
+							<form class="needs-validation"
+								action="/hku/professor/regiAssignment" method="post"
+								id="regiForm" enctype="multipart/form-data">
+								<input type="hidden" name="lecapNo" id="lecapNo"
+									value="${sessionScope.lecapNo }" />
 								<c:if test="${status eq 'u' }">
-									<input type="hidden" name="asmNo" id="asmNo" value="${asmNo }"/>
+									<input type="hidden" name="asmNo" id="asmNo"
+										value="${vo.asmNo }" />
 								</c:if>
-								<input type="hidden" name="lecapNo" value="${sessionScope.lecapNo }"/>
+								<div class="row">
 									<div class="col-xl-12">
 										<div class="mb-3 row">
-											<label class="col-lg-1 col-form-label"   
-												for="validationCustom01">교수명
-											</label>
+											<label class="col-lg-1 col-form-label"
+												for="validationCustom01">교수명 </label>
 											<div class="col-lg-3">
 												<input type="text" class="form-control" name="asmProNm"
 													id="validationCustom01" readonly value="${pro.proNm }">
-												<div class="invalid-feedback">
-												</div>
+												<div class="invalid-feedback"></div>
 											</div>
 											<label class="col-lg-1 col-form-label"
 												for="validationCustom02">과목명 <span
@@ -68,22 +67,21 @@
 											</label>
 											<div class="col-lg-3">
 												<input type="text" class="form-control" name="subNm"
-													id="validationCustom02" readonly value="${sessionScope.subNm }">
+													id="validationCustom02" readonly
+													value="${sessionScope.subNm }">
 												<div class="invalid-feedback"></div>
 											</div>
 										</div>
-										
+
 										<div class="mb-3 row">
 											<label class="col-lg-1 col-form-label"
-												for="validationCustom03">제목<span
-												class="text-danger">*</span>
+												for="validationCustom03">제목<span class="text-danger">*</span>
 											</label>
 											<div class="col-lg-7">
-												<input type="text" id="asmTtl" class="form-control" name="asmTtl"
-													id="asmTtl" placeholder="제목을 입력하세요" value="${assignVo.asmTtl }"
-													required="">
-												<div class="invalid-feedback">
-												</div>
+												<input type="text" id="asmTtl" class="form-control"
+													name="asmTtl" id="asmTtl" placeholder="제목을 입력하세요"
+													value="${vo.asmTtl }" required="">
+												<div class="invalid-feedback"></div>
 											</div>
 										</div>
 										<div class="mb-3 row">
@@ -92,13 +90,12 @@
 												class="text-danger">*</span>
 											</label>
 											<div class="col-lg-7">
-												<textarea id="asmCn" class="form-control h-50" name="asmCn" id="asmCn"
-													 rows="10" placeholder="내용을 입력하세요"
-													required="">${assignVo.asmTtl }</textarea>
-												<div class="invalid-feedback">내용을 입력해주세요 </div>
+												<textarea class="form-control h-50" name="asmCn" id="asmCn"
+													rows="10" placeholder="내용을 입력하세요" required="">${vo.asmTtl }</textarea>
+												<div class="invalid-feedback">내용을 입력해주세요</div>
 											</div>
 										</div>
-										
+
 										<div class="mb-3 row">
 											<label class="col-lg-1 col-form-label"
 												for="validationCustom05">주차 <span
@@ -107,13 +104,13 @@
 											<div class="col-lg-4">
 												<div
 													class="dropdown bootstrap-select default-select wide form-control">
-													<select class="default-select wide form-control" name="asmWeek"
-														id="weekSel" value="${assignVo.asmWeek }">
+													<select class="default-select wide form-control"
+														name="asmWeek" id="weekSel">
 														<c:forEach var="i" begin="1" end="15" step="1">
 															<option value="${i }">${i }주차</option>
 														</c:forEach>
 													</select>
-													
+
 													<div class="dropdown-menu ">
 														<div class="inner show" role="listbox" id="bs-select-1"
 															tabindex="-1">
@@ -131,14 +128,14 @@
 											</label>
 											<div class="col-lg-4">
 												<input type="file" class="form-control" name="assignFile"
-													id="validationCustom05" placeholder="파일을 선택하세요" value="">
-												<div class="invalid-feedback">
-												</div>
+													id="atchFileNo" placeholder="파일을 선택하세요"
+													value="${atchFileNo }">
+												<div class="invalid-feedback"></div>
 											</div>
 										</div>
 										<hr>
 										<div class="mb-3 row">
-											<div class="col-lg-7 ms-auto" style="padding-left:40%">
+											<div class="col-lg-7 ms-auto" style="padding-left:47%">
 												<input type="button" id="regBtn" value="${name}" class="btn btn-primary"/>
 												<c:if test="${status eq 'u' }">
 													<input type="button" id="cancelBtn" value="취소" class="btn btn-primary"/>
@@ -159,47 +156,44 @@
 	</div>
 </div>
 <script>
+$(function(){
+	
+var listBtn = $("#listBtn");
+var regBtn = $("#regBtn");
+var cancelBtn = $("#cancelBtn");
+var regiForm = $("#regiForm");
+var asmNo = $("#asmNo").val();
 
-var listBtn = document.querySelector("#listBtn");
-var regBtn = document.querySelector("#regBtn");
-// var weekSel = document.querySelector("#asmWeek");
-// weekSel.addEventListener("change", selWeekF);
-
-// function selWeekF(){
- 	
-// }
-
-listBtn.addEventListener("click", function(){
-	location.href="/hku/professor/assignmentList";
+listBtn.on("click", function(){
+	var lecapNo = $("#lecapNo").val();
+	location.href= "/hku/professor/assignmentList/"+lecapNo ;
 })
 
-cancelBtn.addEventListener("click", function(){
-	location.href = "/hku/professor/assignmentDetail/${asmNo}"
-}
+cancelBtn.on("click", function(){
+	location.href = "/hku/professor/assignmentDetail/"+asmNo;
+})
 
-regBtn.addEventListener("click", function(){
-	event.preventDefault();
-	var asmTtl = document.querySelector("#asmTtl");
-	var asmCn = document.querySelector("#asmCn");
+regBtn.on("click", function(){
+	var asmTtl = $("#asmTtl").val();
+	var asmCn = $("#asmCn").val();
 	
-	if(asmTtl == '' && asmTtl == null){
-		Swal.fire({
-			  icon: 'error',				 
-			  text: '제목을 입력해주세요!'
-			})
+	if(asmTtl == '' || asmTtl == null){
+		swal ("", "제목을 입력해주세요","error");
 		return false;
 	}
 	
-	if(asmCn == '' && asmCn == null) {
-		Swal.fire({
-			  icon: 'error',				 
-			  text: '내용을 입력해주세요!'
-			})
+	if(asmCn == '' || asmCn == null) {
+		swal ("", "내용을 입력해주세요","error");
+		
 		return false;
  	}
-	
+
+	if($(this).val() == "수정"){
+		console.log("여기 실행")
+		regiForm.attr("action", "/hku/professor/updateAssignment");
+	} 
 	regiForm.submit();
 	
+  })
 })
-
 </script>

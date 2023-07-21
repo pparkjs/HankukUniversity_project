@@ -34,7 +34,13 @@
   padding-top:5px;
   margin-right: 20px; 
   margin-left: 20px; 
-  
+}
+.card-body {
+	overflow: scroll;
+}
+
+.active-projects tbody tr td {
+    font-size: 20px;
 }
 
 </style>
@@ -49,12 +55,12 @@
 	</div>
 	
 	<div class="container-fluid" style="padding-top: 1rem;">
-	<div class="buttons" style="padding-left:80%; padding-bottom:10px;">
-		<button type="button" id="attendBtn" onClick="" style="padding: 0.6rem 1.0rem;" class="btn btn-primary">출석관리</button>
-		<button type="button" id="attendDmrBtn" onClick="" style="padding: 0.6rem 1.2rem;" class="btn btn-primary">이의신청관리</button>
+	<div class="buttons" style="padding-left:85%; padding-bottom:10px;">
+		<button type="button" id="attendBtn" style="padding: 0.6rem 1.0rem;" class="btn btn-primary">출석관리</button>
+		<button type="button" id="attendDmrBtn" style="padding: 0.6rem 1.2rem;" class="btn btn-primary">이의신청관리</button>
 	</div>
 		<div class="row">
-		<input type="hidden" name="lecapNo" value="${lecapNo }">	
+		<input type="hidden" name="lecapNo" id="lecapNo" value="${lecapNo }">	
 			<div class="col-xl-6 col-lg-6 bbb" style="width: 45%; height:350px;" >
 				<div class="card">
 				
@@ -65,19 +71,9 @@
 							style="font-weight: bold; font-size: 1.2em; color: #800000;">
 							온라인시험</h4>
 							<a href="/hku/test-presentation" class="btn btn-primary" id="testBtn">출제하기</a>
-      
-      							<!-------------- 더보기버튼 필요없으면 삭제  -------------->		
-<!-- 							<button type="button" id="testMore" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="false"> -->
-<!-- 								<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"> -->
-<!-- 								<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> -->
-<!-- 								<rect x="0" y="0" width="24" height="24"></rect> -->
-<%-- 								<circle fill="#000000" cx="5" cy="12" r="2"></circle> --%>
-<%-- 								<circle fill="#000000" cx="12" cy="12" r="2"></circle> --%>
-<%-- 								<circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg> --%>
-<!-- 							</button> -->
 					</div>
 					<div class="container" style="padding-top: 0; margin-top: 1.8rem; width: 95%;">
-						<div class="section">
+						<div class="section" >
 							<button type="button" class="btn btn-primary" id="middleBtn">상세보기</button>
 						</div>
 						<div class="section" >
@@ -127,7 +123,7 @@
 											<td class="">
 												<a href="/hku/professor/assignmentDetail/${list.asmNo}">${list.asmTtl }</a>
 											</td>
-											<td class="">${list.asmRegdate }</td>
+											<td class="">${list.asmRegdate}</td>
 										</tr>
 									</c:forEach>
 								</c:when>
@@ -197,17 +193,32 @@ $('#noticeMore').click(function(){
 })
 
 $(function(){
-// 	alert("${lecapNo}");
-// 	assignList();
+
 	
 	var assignMore = document.querySelector("#assignMore");
 	
 	assignMore.addEventListener("click", function(){
 		location.href = `/hku/professor/assignmentList/${lecapNo}`;
 	})
+	
+	
+	var attendBtn = document.querySelector("#attendBtn");
+	var lecapNo = $("#lecapNo").val();
+	console.log("lecapNo : ", lecapNo);
+	
+	attendBtn.addEventListener("click", function(){
+		location.href = `/hku/professor/manageAttendance?lecapNo=\${lecapNo}`;
+	})
 
 })
 
+
+
+
+
+
+
+//------ 온라인시험 ------// 
 var middleBtn = $("#middleBtn");
 var finalBtn = $("#finalBtn");
 
