@@ -23,11 +23,11 @@
 	        JOIN COM_CODE G ON D.CRS_CLASSF_CD = G.COM_CD
 	        JOIN COM_CODE H ON A.STD_STTS_CD = H.COM_CD
 	        WHERE A.STD_NO = #{stdNo}
-<!-- 	        AND C.LECAP_YR = EXTRACT(YEAR FROM SYSDATE) -->
-<!-- 			AND C.LECAP_SEM = CASE -->
-<!-- 			    WHEN EXTRACT(MONTH FROM SYSDATE) <= 7 THEN '1' -->
-<!-- 			    ELSE '2' -->
-<!-- 	        END -->
+	        AND C.LECAP_YR = EXTRACT(YEAR FROM SYSDATE)
+			AND C.LECAP_SEM = CASE
+			    WHEN EXTRACT(MONTH FROM SYSDATE) <= 6 THEN '1'
+			    ELSE '2'
+	        END
 	    ]]>
  	</select>
  	
