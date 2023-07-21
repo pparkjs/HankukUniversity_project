@@ -37,7 +37,7 @@ public class StudyBoardController {
 	    StudentVO stdVo = (StudentVO) session.getAttribute("std");
 	    
 	    if (stdVo == null) {
-	        return "redirect:/main//login";
+	        return "redirect:/main/login";
 	    }
 	    String stdNo = stdVo.getStdNo();
 	    log.info("userNo: "+ stdNo);
