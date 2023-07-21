@@ -1,6 +1,7 @@
 package kr.or.hku.student.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import kr.or.hku.notice.vo.PaginationInfoVO;
 import kr.or.hku.student.mapper.StudyMapper;
 import kr.or.hku.student.service.StudyService;
+import kr.or.hku.student.vo.StdCalendarVO;
 import kr.or.hku.student.vo.StudyVO;
 
 @Service
@@ -174,11 +176,34 @@ public class StudyServiceImpl implements StudyService{
 		// TODO Auto-generated method stub
 		return mapper.insertMessage(studyVo);
 	}
+	
+	@Override
+	public List<StdCalendarVO> getStdCalList(Map<String, String> map) {
+		return mapper.getStdCalList(map);
+	}
+	
+	@Override
+	public int updateStdCalList(StdCalendarVO stdCalendarVO) {
+		return mapper.updateStdCalList(stdCalendarVO);
+	}
 
+<<<<<<< HEAD
 	@Override
 	public List<StudyVO> messageList(int studyNo) {
 		// TODO Auto-generated method stub
 		return mapper.messageList(studyNo);
 	}
 
+=======
+	
+	@Override
+	public int addStdCalList(StdCalendarVO stdCalendarVO) {
+		return mapper.addStdCalList(stdCalendarVO);
+	}
+	
+	@Override
+	public int deleteStdCalendar(Map<String, String> map) {
+		return mapper.deleteStdCalendar(map);
+	}
+>>>>>>> 1fb070c3deb7f52466a44bf76b0ace3c716dd140
 }

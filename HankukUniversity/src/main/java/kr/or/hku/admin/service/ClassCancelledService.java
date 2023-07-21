@@ -9,4 +9,6 @@ import kr.or.hku.admin.vo.SubjectCancelVO;
 public interface ClassCancelledService {
 	public List<SubjectCancelVO> getClassCancelledList();
 	public List<StudentVO> getStdInLecture(Map<String, String> map);
+	public void calcelProccess(String subclNo);
+	public List<Map<String, String>> getTextDetail();
 }

@@ -14,4 +14,5 @@ public class LockerVO {
 	private String avlCd;
 	
 	// 조인시 가져올 필드
+	private String flctNm;
 }

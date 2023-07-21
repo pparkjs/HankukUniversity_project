@@ -1,6 +1,7 @@
 package kr.or.hku.student.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.hku.student.service.StudyService;
 import kr.or.hku.student.vo.RecordVO;
+import kr.or.hku.student.vo.StdCalendarVO;
 import kr.or.hku.student.vo.StudentVO;
 import kr.or.hku.student.vo.StudyVO;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +37,7 @@ public class StudyController {
 	
 	@Inject
 	private StudyService service;
+	
 	
 	
 	@GetMapping(value = "/student/study")
@@ -178,6 +182,38 @@ public class StudyController {
 		// 해당 방의 멤버 리스트 가져오기
 		List<StudyVO> list = service.studyMem(studyNo); 
 		return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
+	}
+		
+	@GetMapping("/student/study-calendar")
+	public List<StdCalendarVO> getStdCalList(@RequestParam Map<String, String> map){
+		log.info("캘리더 정보 가져오기" + map.toString());
+		return service.getStdCalList(map);
+	}
+	
+	@ResponseBody
+	@PutMapping("/student/study-calendar")
+	public int updateStdCalList(@RequestBody StdCalendarVO stdCalendarVO){
+		log.info("캘리더 수정" + stdCalendarVO.toString());
+		return service.updateStdCalList(stdCalendarVO);
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/student/study-calendar")
+	public StdCalendarVO addStdCalList(@RequestBody StdCalendarVO stdCalendarVO){
+		log.info("캘리더 저장" + stdCalendarVO.toString());
+		int res = service.addStdCalList(stdCalendarVO);
+		return stdCalendarVO;
+	}
+	
+	@ResponseBody
+	@DeleteMapping("/student/study-calendar")
+	public int deleteCalendar(@RequestBody Map<String, String> map) {
+		log.info("삭제 할떄 하는 데이터 " + map.toString());
+		
+		int res = service.deleteStdCalendar(map);
+		
+		return res;
 	}
 	
 }

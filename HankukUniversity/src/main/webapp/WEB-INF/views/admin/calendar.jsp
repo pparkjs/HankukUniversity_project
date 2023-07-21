@@ -544,7 +544,7 @@ $(document).ready(function() {
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" style="font-weight: bold;">학사 일정 추가</h5>
+				<h5 class="modal-title" style="font-weight: bold;">일정 추가</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal">
 				</button>
 			</div>

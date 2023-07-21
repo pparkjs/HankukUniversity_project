@@ -5,6 +5,60 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="kr.or.hku.student.mapper.StudyMapper">
  
+ 
+ 	<delete id="deleteStdCalendar" parameterType="map">
+ 		DELETE FROM STUDYCALENDAR
+		WHERE cal_no = #{calNo}
+ 	</delete>
+ 
+ 	<insert id="addStdCalList" parameterType="stdCalVO">
+ 		<selectKey keyProperty="calNo" resultType="string" order="BEFORE">
+			SELECT seq_study_calendar.NEXTVAL FROM dual
+		</selectKey>
+		INSERT INTO STUDYCALENDAR(
+			  cal_no
+			, cal_ttl
+			, cal_cn
+			, cal_bgng_dt
+			, cal_end_dt
+			, cal_color
+			, study_no
+		)VALUES(
+			  #{calNo}
+			, #{calTtl}
+			, #{calCn}
+			, #{calBgngDt}
+			, #{calEndDt}
+			, #{calColor}
+			, #{studyNo}
+		)
+ 	</insert>
+ 
+ 	<update id="updateStdCalList" parameterType="stdCalVO">
+		UPDATE STUDYCALENDAR
+		SET
+			  cal_ttl = #{calTtl}
+			, cal_cn = #{calCn}
+			, cal_bgng_dt = #{calBgngDt}
+			, cal_end_dt = #{calEndDt}
+			, cal_color = #{calColor}
+		WHERE cal_no = #{calNo} 	
+ 	</update>
+ 
+ 	<!-- 캘린더 가져오기 -->
+ 	<select id="getStdCalList" parameterType="map" resultType="stdCalVO">
+ 		SELECT
+			  cal_no
+			, cal_ttl
+			, cal_cn
+			, cal_bgng_dt
+			, cal_end_dt
+			, cal_color
+			, STUDY_NO 
+		FROM STUDYCALENDAR
+		WHERE STUDY_NO = #{studyNo}
+ 	</select>
+ 
 	<!-- 스터디 생성 -->
 	<insert id="addStudy" parameterType="studyVo">
 		insert into studygroup (study_no, std_no, study_name, study_regdate, study_cpcy, study_intro)

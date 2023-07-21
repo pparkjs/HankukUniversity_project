@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.admin.mapper.LockerMapper">
+ 	<sql id="lockerSearch">
+		<if test="flctNo != null and flctNo != ''">
+			and (a.flct_no = #{flctNo})
+		</if>
+		<if test="floor != null and floor != ''">
+			and (a.floor = #{floor})
+		</if>
+		<if test="avlCd != null and avlCd != ''">
+			and (a.avl_cd = #{avlCd})
+		</if>
+ 	</sql>
+ 	<sql id="lockerRsvtSearch">
+		<if test="flctNo != null and flctNo != ''">
+			and (a.flct_no = #{flctNo})
+		</if>
+		<if test="floor != null and floor != ''">
+			and (a.floor = #{floor})
+		</if>
+		<if test="lockerYr != null and lockerYr != ''">
+			and (a.locker_yr = #{lockerYr})
+		</if>
+		<if test="rsvtSem != null and rsvtSem != ''">
+			and (a.rsvt_sem = #{rsvtSem})
+		</if>
+		<if test="avlCd != null and avlCd != ''">
+			and (a.avl_cd = #{avlCd})
+		</if>
+		<if test="stdNo != null and stdNo != ''">
+			and (c.std_no like '%'||#{stdNo}||'%')
+		</if>
+ 	</sql>
+ 	
+ 	<select id="getFlctList" resultType="flctVO">
+	 	SELECT
+		    flct_no
+		    ,flct_nm
+		FROM 
+		    facility
+		WHERE
+			flct_clsf_cd = 'clsf01'
+		ORDER BY 1
+ 	</select>
+ 	
+ 	<select id="floorSet" parameterType="string" resultType="string">
+ 		SELECT
+ 			floor
+ 		FROM
+ 			facility_floor
+ 		WHERE
+ 			flct_no = #{flctNo}
+ 		ORDER BY 1
+ 	</select>
+ 	
+ 	<select id="selectLockers" parameterType="searchInfoVO" resultType="lockerVO">
+	 	SELECT
+		    a.locker_no
+		    ,a.floor
+		    ,a.flct_no
+		    ,b.flct_nm
+		    ,a.avl_cd
+		FROM
+		    locker a INNER JOIN facility b ON(a.flct_no=b.flct_no)
+		WHERE 1=1
+		<include refid="lockerSearch"></include>
+		ORDER BY 3 ASC, 2 ASC, 1 ASC
+ 	</select>
+ 	
+ 	<select id="selectLockerRsvts" parameterType="searchInfoVO" resultType="lockerRsvtVO">
+	 	SELECT
+		    locker_rsvt_no
+		    ,a.std_no
+		    ,c.std_nm
+		    ,a.flct_no
+		    ,b.flct_nm
+		    ,a.floor
+		    ,a.locker_no
+		    ,a.locker_yr
+		    ,a.rsvt_sem
+		    ,a.avl_cd
+		FROM
+		    locker_rsvt a INNER JOIN facility b ON(a.flct_no=b.flct_no)
+		    INNER JOIN student c ON(a.std_no=c.std_no)
+		WHERE 1=1
+		<include refid="lockerRsvtSearch"></include>
+		ORDER BY 1 ASC, 8 ASC, 9 ASC
+ 	</select>
+ 	
+ 	<insert id="insertLocker" parameterType="lockerVO">
+	 	INSERT INTO locker(
+		    locker_no
+		    ,floor
+		    ,flct_no
+		    ,avl_cd
+		) VALUES(
+		    (SELECT
+		    	NVL(MAX(locker_no),0)+1
+			FROM 
+			    locker
+			WHERE
+			    flct_no = #{flctNo} AND floor = #{floor})
+		    ,#{floor}
+		    ,#{flctNo}
+		    ,'N')
+ 	</insert>
+ 	
+ 	<delete id="deleteLockerRsvt" parameterType="string">
+ 		DELETE FROM locker_rsvt
+ 		WHERE flct_no = #{flctNo}
+ 		AND floor = #{floor}
+ 		AND locker_no = #{lockerNo}
+ 	</delete>
+ 	
+ 	<delete id="deleteLocker" parameterType="string">
+ 		DELETE FROM locker
+ 		WHERE flct_no = #{flctNo} 
+ 		AND floor = #{floor}
+ 		AND locker_no = #{lockerNo}
+ 	</delete>
+ 	
+ 	<update id="btnSwitch" parameterType="map">
+ 		UPDATE
+ 			locker
+ 		SET
+ 			avl_cd = #{avlCd}
+ 		WHERE
+ 			flct_no = #{flctNo} AND locker_no = #{lockerNo} AND floor = #{floor}
+ 	
+ 	</update>
+ 	<update id="rsvtBtnSwitch" parameterType="map">
+ 		UPDATE
+ 			locker_rsvt
+ 		SET
+ 			avl_cd = #{avlCd}
+ 		WHERE
+ 			locker_rsvt_no = #{lockerRsvtNo}
+ 	</update>
+ </mapper>

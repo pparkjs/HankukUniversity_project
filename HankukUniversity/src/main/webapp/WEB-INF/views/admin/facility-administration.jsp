@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 	<link rel="stylesheet" href="/css/table.css">
 	<link rel="stylesheet" href="/css/admin/facilityManage.css">
-<div class="content-body" style="min-height: 948px;">
+<div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="javascript:void(0)">학사관리</a></li>

@@ -1,7 +1,9 @@
 package kr.or.hku.classroom.controller;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,6 +23,7 @@ import kr.or.hku.classroom.service.LectureNoticeService;
 import kr.or.hku.classroom.vo.LectureNoticeVO;
 import kr.or.hku.common.service.CommonFileService;
 import kr.or.hku.common.vo.AttachFileVO;
+import kr.or.hku.notice.vo.NoticeVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -137,6 +141,19 @@ public class LectureNoticeController {
 		}
 
 		return goPage;
+	}
+	
+	@GetMapping("/search")
+	@ResponseBody
+	public List<NoticeVO> search(HttpSession session,String searchWord) {
+		log.info("검색어"+searchWord);
+		Map<String, String> map = new HashMap<String,String>();
+		String lecapNo = session.getAttribute("lecapNo").toString();
+		map.put("lecapNo", lecapNo);
+		map.put("searchWord", searchWord);
+		List<NoticeVO> searchList = noticeService.getSearchList(map);
+		
+		return searchList;
 	}
 	
 }

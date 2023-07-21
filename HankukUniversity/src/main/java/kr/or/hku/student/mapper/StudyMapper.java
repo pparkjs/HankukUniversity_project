@@ -1,10 +1,12 @@
 package kr.or.hku.student.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.hku.notice.vo.PaginationInfoVO;
+import kr.or.hku.student.vo.StdCalendarVO;
 import kr.or.hku.student.vo.StudyVO;
 @Mapper
 public interface StudyMapper {
@@ -65,4 +67,10 @@ public interface StudyMapper {
 	public int studyBoHit(int stboNo);
 	// 스터디 인원수
 	public int getMemberCount(int studyNo);
+	
+	// 캘린더 가져오기
+	public List<StdCalendarVO> getStdCalList(Map<String, String> map);
+	public int updateStdCalList(StdCalendarVO stdCalendarVO);
+	public int addStdCalList(StdCalendarVO stdCalendarVO);
+	public int deleteStdCalendar(Map<String, String> map);
 }
