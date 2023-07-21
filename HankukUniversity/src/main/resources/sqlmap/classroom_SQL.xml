@@ -6,22 +6,56 @@
 <mapper namespace="kr.or.hku.classroom.mapper.ClassroomMapper">
 	
 	<!-- 학생 클래스룸 목록  -->
-	<select id="selectList" resultType="classroomVO">
-		SELECT
-			  b.sub_nm
-			, d.pro_nm
+	<select id="stdSelectList" parameterType="string" resultType="classroomVO" >
+	/*kr.or.hku.classroom.mapper.ClassroomMapper.stdSelectList */
+		 SELECT
+			  c.lecap_no
+            , c.std_no  
+			, b.sub_nm
+			, d.pro_nm          
 		FROM
-		student a
+			student a
 		JOIN course_regist c ON a.std_no = c.std_no
 		JOIN lecture_aply e ON c.lecap_no = e.lecap_no
 		JOIN subject b ON e.sub_no = b.sub_no
 		JOIN professor d ON e.pro_no = d.pro_no
 		WHERE
-		a.std_no = #{stdNo}
+			a.std_no = #{stdNo}
+		AND e.aprv_stts_cd like 'appv'
 	</select>
+	
+	
+	<!-- 학생 클래스룸 메인  / 과제 리스트 -->
+	<select id="stdMainAssignList" parameterType="assignmentVO" resultType="assignmentVO">
+        SELECT
+		    a.asm_no,
+		    a.lecap_no,
+		    a.asm_week,
+		    a.asm_ttl,
+		    a.asm_cn,
+		    a.asm_pro_nm,
+		    a.asm_regdate,
+		    a.atch_file_no
+		FROM
+	   		assignment a
+	    JOIN course_regist c ON c.lecap_no = a.lecap_no
+		WHERE c.lecap_no = #{lecapNo}
+        AND c.std_no = #{stdNo}
+		ORDER BY asm_regdate desc
+	</select>
+
+	<select id="getMyAttendance" resultType="attendanceVO" parameterType="map">
+		SELECT 
+			atdc_no
+		FROM attendance 
+		WHERE std_no = #{stdNo}
+		AND lecap_no = #{lecapNo} 
+	</select>
+
 
 	<!-- 교수 클래스룸 목록 -->
 	<select id="proSelectList" parameterType="String" resultType="lectureAplyVO">
+	/*kr.or.hku.classroom.mapper.ClassroomMapper.proSelectList */
 		SELECT
 			  c.lecap_no
 			, b.sub_nm
@@ -42,7 +76,7 @@
 	</select>
 	
 
-	<!-- 해당 과목에대한 과제 리스트 메인-->
+	<!-- 교수 클래스룸 메인 / 과제관리 리스트-->
 	<select id="getAssignList" parameterType="String" resultType="assignmentVO">
 		SELECT
 		    a.asm_no,
@@ -54,7 +88,7 @@
 		    a.asm_regdate,
 		    a.atch_file_no
 		FROM
-	    assignment a
+	   		 assignment a
 	    JOIN lecture_aply l ON l.lecap_no = a.lecap_no
 			WHERE l.lecap_no = #{lecapNo}
 			AND l.lecap_yr like TO_CHAR(sysdate, 'YYYY')
@@ -63,7 +97,9 @@
 			                      WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 12 THEN 2
 			                      ELSE 0
 			                  END
+		ORDER BY asm_regdate desc
 	</select>
+	
 	
 	<select id="getSubNm" parameterType="string" resultType="string">
 		select 
@@ -73,5 +109,6 @@
 		where lecap_no = #{lecapNo}
 	</select>
 	
-		
+	
+	
 </mapper>

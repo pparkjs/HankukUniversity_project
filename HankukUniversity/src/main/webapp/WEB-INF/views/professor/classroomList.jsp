@@ -42,11 +42,10 @@
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a
-				style="font-size: 25px; color: black;" href="javascript:void(0)">클래스룸 목록</a></li>
+			<li class="breadcrumb-item"><a href="javascript:void(0)">클래스룸 목록</a></li>
+			<li class="breadcrumb-item active"><a href="javascript:void(0)">클래스룸</a></li>
 		</ol>
 	</div>
-	<!-- row -->
 	<div class="container-fluid">
 		<div class="table-responsive">
 			<div class="col-xl-12">
@@ -80,7 +79,7 @@
 											<th style="width: 72.0625px;">성적 바로가기</th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody id="tBody">
 										<c:if test="${not empty list }">
 											<c:forEach items="${list }" var="list" varStatus="status">
 												<tr role="row" >
@@ -107,7 +106,7 @@
 																stroke-linecap="round" stroke-linejoin="round"></path>
 													</svg></td>
 													<td>
-														<button type="button" class="btn btn-primary btn-icon-xxs">
+														<button type="button" class="btn btn-primary btn-icon-xxs enterGrade">
 															<i class="fas fa-pencil-alt"></i>
 														</button>
 													</td>
@@ -128,21 +127,28 @@
  
 $(function(){
 
-var enterClassroom = document.querySelectorAll(".enterClassroom");
+	var enterClassroom = document.querySelectorAll(".enterClassroom");
+	
+	for(let i=0; i<enterClassroom.length; i++){
+		enterClassroom[i].addEventListener("click", function(){
+			// 과목신청 번호
+			let lecApNo = this.id;
+			// 과목명
+			let subNm = $(this).closest("tr").find(".mb-0").html();
+			// 조성희 화이팅~~~
+	 		location.replace(`/hku/professor/classroomMain/\${lecApNo}`);
+		})		
+	}
+	
+	 var tBody = $("#tBody");
+	 
+	 var enterGrade = $(".enterGrade");
+	 tBody.on("click", '.enterGrade', function(){
+		 console.log("this!!!", $(this).parents('tr').find('svg').attr('id'));
+		 var lecapNo = $(this).parents('tr').find('svg').attr('id');
+		 location.href = `/hku/professor/stdGradeList/\${lecapNo}`;
+	 })
 
-for(let i=0; i<enterClassroom.length; i++){
-	enterClassroom[i].addEventListener("click", function(){
-		// 과목신청 번호
-		let lecApNo = this.id;
-		// 과목명
-		let subNm = $(this).closest("tr").find(".mb-0").html();
-		// 조성희 화이팅~~~
- 		location.replace(`/hku/professor/classroomMain/\${lecApNo}`);
-	})		
-}
-
-
-
-}) // -- jquery end
+}) 
 
 </script>
