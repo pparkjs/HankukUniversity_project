@@ -127,17 +127,17 @@ function chatList() {
 </div>
 
 <script>
-var chatSocket = null;
-connect();
-//입장 버튼을 눌렀을 때 호출되는 함수
-function connect() {
-  // 웹소켓 주소
-  var wsUri = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/websocket/studyChat.do";
-  // 소켓 객체 생성
-  chatSocket = new WebSocket(wsUri);
-  //웹 소켓에 이벤트가 발생했을 때 호출될 함수 등록 (오버라이딩)
-  chatSocket.onopen = function(){
-  	console.log('info: connection opened.');
-  }
-}
+// var chatSocket = null;
+// connect();
+// //입장 버튼을 눌렀을 때 호출되는 함수
+// function connect() {
+//   // 웹소켓 주소
+//   var wsUri = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/websocket/studyChat.do";
+//   // 소켓 객체 생성
+//   chatSocket = new WebSocket(wsUri);
+//   //웹 소켓에 이벤트가 발생했을 때 호출될 함수 등록 (오버라이딩)
+//   chatSocket.onopen = function(){
+//   	console.log('info: connection opened.');
+//   }
+// }
 </script>

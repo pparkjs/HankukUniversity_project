@@ -64,6 +64,7 @@
     <typeAlias type="kr.or.hku.admin.vo.ScholarshipAplyVO" alias="sclsAplyVO"/>
     <typeAlias type="kr.or.hku.admin.vo.SubjectCancelVO" alias="subCancelVO"/>
     <typeAlias type="kr.or.hku.admin.vo.StudentVO" alias="lecInStdVO"/>
+    <typeAlias type="kr.or.hku.student.vo.StdCalendarVO" alias="stdCalVO"/>
     
     <!-- 영우칸 밑에서만 작성-->
     <typeAlias type="kr.or.hku.admin.vo.UserVO" alias="userVO"/>
