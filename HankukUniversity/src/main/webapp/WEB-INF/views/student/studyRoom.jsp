@@ -35,6 +35,26 @@ border-color: #6e6e6e;
 .schedule td{
 	padding:22px;
 }
+.fCanUse {
+    width: 30px;
+    height: 30px;
+    background: white;
+    border: 1px solid #40404042;
+    margin-left: 25px;
+    margin-right: 8px;
+}
+.fUseing {
+    width: 30px;
+    height: 30px;
+    background: rgb(255, 222, 222);
+    margin-left: 25px;
+    margin-right: 8px;
+}
+.fTitle-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 #redColor{
 	background-color: #FF5733;
 	z-index:1;
@@ -105,16 +125,16 @@ input[name=color]:checked + label{
 								<a class="nav-link" data-bs-toggle="tab" href="#message1" id="calRender"><i class="ti-calendar me-2"></i> 일정</a>
 							</li>
 						</ul>
-						<a class="btn btn-primary" href="#" role="button" id="btn1" style="margin-left: 733px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
+						<a class="btn btn-primary" href="#" role="button" id="btn1" style="margin-left: 733px; margin-bottom: 10px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
 					
 						<form action="/hku/student/delStudy" method="post" id="delForm">
 							<input type="hidden" name="studyNo" value="${study.studyNo}" id="studyNo">
 						</form>
 						<!-- 스터디장은 스터디 해체 버튼 보여주기 -->
-						<button type="button" class="btn btn-primary" style="margin-left: 14px; background: #ff4343; border-color: #ff4343;" id="delBtn">
+						<button type="button" class="btn btn-primary" style="margin-left: 14px; margin-bottom: 10px; background: #ff4343; border-color: #ff4343;" id="delBtn">
 							<i class="fa-solid fa-circle-exclamation me-2"></i>스터디 삭제
 						</button>									
-						<button type="button" class="btn btn-primary" style="margin-left: 14px;" id="exitBtn"> 스터디 탈퇴</button>																							
+						<button type="button" class="btn btn-primary" style="margin-left: 14px; margin-bottom: 10px;" id="exitBtn"> 스터디 탈퇴</button>																							
 					</div>
 					<div class="card" id="card-title-1">
 						<div class="card-body" style="padding-top: 0px;">
@@ -213,7 +233,9 @@ input[name=color]:checked + label{
 							<div class="tab-pane fade" id="contact1">
 								<div style="display: flex;">
 									<div style="width: 53%; margin-top: 23px">
-										<div class="exp"> * 스터디원간 시간표를 비교해 겹치지 않는 일정을 확인할 수 있습니다.</div>
+										<div class="exp" style="margin-top: 13px;"> * 스터디원간 시간표를 비교해 겹치지 않는 일정을 확인할 수 있습니다.						
+										</div>
+										
 										<table style="width: 100%; border: none;" class="table">
 										<thead class="thead-dark">
 											<tr>
@@ -233,9 +255,15 @@ input[name=color]:checked + label{
 										</table>
 										<button type="button" class="btn btn-primary" style="margin: 10px" onclick="resetSList()" id="resetBtn"> 초기화</button>	
 									</div>		
-									<div style="width: 70%; margin-top: 45px">
+									<div style="width: 70%; margin-top: 22px">
+										<div class="fTitle-wrap" style="margin-left: 70% ">
+											<div class="fUseing"></div>
+											<span style="margin-right : 0px; font-size: 18px;">중복시간</span>
+											<div class="fCanUse"></div>
+											<span style="margin-right: 0px; font-size: 18px;">빈시간</span>	
+										</div>
 										<div class="schedule-wrap">
-											<table class="schedule" border=1 style="width: 92%; margin-left: 61px; margin-top: 14px;" >
+											<table class="schedule" border=1 style="width: 92%; margin-left: 61px; margin-top: 20px;" >
 												<thead class="thead-dark" style="background: #6e6e6e; color: white;">
 													<tr>
 														<th style="width: 150px; padding: 10px;"></th>
@@ -396,7 +424,7 @@ function sList(element) {
                 var cellIndex = (rowNum - 1) * WEEKDAYS + colNum - 1;
 
                 for (var i = 0; i < lecscHour; i++) {
-                    tableCells.eq(cellIndex + i * WEEKDAYS).css('background-color', 'gray');
+                    tableCells.eq(cellIndex + i * WEEKDAYS).css('background-color', 'rgb(250, 220, 220)');
                 }
             }
            
@@ -533,6 +561,8 @@ $(document).on('DOMContentLoaded', function() {
 			center: 'title',
 			right: 'next'
 		},
+		height: 730,
+		width: 500,
 	 	eventClick : function(info){
 	 		detailCalendar(info.event);
 	 	},
