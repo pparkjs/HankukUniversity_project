@@ -29,7 +29,7 @@
 			SELECT SEQ_ASSIGNMENT.nextval from dual
 		</selectKey>
 		INSERT INTO ASSIGNMENT(
-			asm_no
+			  asm_no
 			, lecap_no
 			, asm_week
 			, asm_ttl
@@ -50,7 +50,7 @@
 	</insert>
 	
 	<!-- 학생 리스트 불러오기 (과제및 알람등록용) -->
-	<select id="getStdList" parameterType="string" resultType="String">
+	<select id="getStdList" parameterType="string" resultType="string">
 	/*kr.or.hku.classroom.mapper.AssignmentMapper.getStdList */
 		SELECT
 		  s.std_no
@@ -74,7 +74,7 @@
 		where a.asm_no = #{asmNo}
 	</select>
 	
-
+	
 	<!-- 과제 출제 -->
 	<insert id="giveAssignToStd" parameterType="map">
 	/*kr.or.hku.classroom.mapper.AssignmentMapper.giveAssignToStd */
@@ -90,7 +90,6 @@
 			, 'N'
 		)
 	</insert>
-	
 	
 	<!-- 과제 수정 -->
 	<update id="update" parameterType="assignmentVO">
@@ -125,7 +124,5 @@
 	<!-- WHERE asm_pro_nm = #{proNo} -->
 	<!-- </delete> -->
 
-	
-	
 
 </mapper>
