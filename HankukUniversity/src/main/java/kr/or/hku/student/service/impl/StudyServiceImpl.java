@@ -187,14 +187,12 @@ public class StudyServiceImpl implements StudyService{
 		return mapper.updateStdCalList(stdCalendarVO);
 	}
 
-<<<<<<< HEAD
 	@Override
 	public List<StudyVO> messageList(int studyNo) {
 		// TODO Auto-generated method stub
 		return mapper.messageList(studyNo);
 	}
 
-=======
 	
 	@Override
 	public int addStdCalList(StdCalendarVO stdCalendarVO) {
@@ -205,5 +203,4 @@ public class StudyServiceImpl implements StudyService{
 	public int deleteStdCalendar(Map<String, String> map) {
 		return mapper.deleteStdCalendar(map);
 	}
->>>>>>> 1fb070c3deb7f52466a44bf76b0ace3c716dd140
 }
