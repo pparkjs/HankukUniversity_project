@@ -184,6 +184,7 @@ public class StudyController {
 		return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
 	}
 		
+	@ResponseBody
 	@GetMapping("/student/study-calendar")
 	public List<StdCalendarVO> getStdCalList(@RequestParam Map<String, String> map){
 		log.info("캘리더 정보 가져오기" + map.toString());
