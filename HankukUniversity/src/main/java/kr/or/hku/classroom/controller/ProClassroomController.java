@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -65,7 +66,6 @@ public class ProClassroomController {
 							Model model,
 							HttpSession session) {
 		session.setAttribute("lecapNo", lecapNo);
-		
 		String subNm =  classService.getSubNm(lecapNo);
 		session.setAttribute("subNm", subNm);
 		
@@ -87,10 +87,7 @@ public class ProClassroomController {
 	// 과제 목록
 	@GetMapping("/assignmentList/{lecapNo}")
 	public String assignList(@PathVariable String lecapNo,
-							Model model, 
-							HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		ProfessorVO proVo = (ProfessorVO) session.getAttribute("pro");
+							Model model) {
 		List<AssignmentVO> list =  classService.getAssignList(lecapNo);
 		log.info("lecapNo" + lecapNo);
 		model.addAttribute("lecapNo", lecapNo);
@@ -220,18 +217,45 @@ public class ProClassroomController {
 	
 	// 출석관리
 	@GetMapping("/manageAttendance")
-	public String attendanceList(AttendanceVO vo, Model model) {
-		AttendanceVO attendVo = attendService.manageAttendance(vo);
-		model.addAttribute("attendVo", attendVo);
+	public String getStdList(String lecapNo, Model model) {
+		model.addAttribute("lecapNo", lecapNo);
 		return "professor/stdAttendanceList"; 
 	}
 	
-	// 해당 과목 수강하는 학생들 리스트 불러오기 (출석부분)
+	//사용자 리스트를 가져오는 비동기 
 	@ResponseBody
-	@GetMapping("/stdAttendanceList")
-	public ResponseEntity<List<AttendanceVO>> getStdList(String lecapNo) {
-		List<AttendanceVO> list = attendService.getStdList(lecapNo);
-		log.info("list : " + list.toString());
-		return new ResponseEntity<List<AttendanceVO>>(list, HttpStatus.OK);
+	@GetMapping("/getStdAttendance") 
+	public List<AttendanceVO> getStdAttendance(AttendanceVO vo) {
+		log.info("list!!!!!!!! : " + vo.toString());
+		List<AttendanceVO> list = attendService.getStdList(vo.getLecapNo());
+		log.info("list!!!!!!!! : " + list.toString());
+		return list;
+	}
+	
+	//출석 여부 리스트 가져오기
+	@ResponseBody
+	@GetMapping("/getStdAttendance-list") 
+	public List<AttendanceVO> getStdAttendanceList(AttendanceVO vo) {
+		List<AttendanceVO> list = attendService.getStdAttendanceList(vo);
+		return list;
+	}
+	
+	//출석 변경 이벤트 
+	@ResponseBody
+	@PutMapping("/updateAttendance")
+	public String updateAttendance(@RequestBody AttendanceVO vo) {
+		log.info("updateAttendance 전달 파라미터" + vo.toString());
+		int res = attendService.updateAttendance(vo);
+			String msg = null;
+			if(res > 0) {
+			 msg = "success"; 
+		}
+		return msg;
+	}
+		
+	// 학생 성적 관리
+	@GetMapping("/stdGradeList/{lecapNo}")
+	public String stdGradeList(@PathVariable("lecapNo") String lecapNo) {
+		return "professor/gradeTable";
 	}
 }
