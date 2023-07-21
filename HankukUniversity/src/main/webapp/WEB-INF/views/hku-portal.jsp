@@ -32,7 +32,7 @@
                             <a href="/main/student">통합학사시스템</a>
                         </div>
                         <div class="sidemenu_btn" style="cursor:pointer;">
-                            <a href="/main/student">스터디게시판</a>
+                            <a href="/hku/student/studyBoard">스터디게시판</a>
                         </div>
                         <div class="sidemenu_btn" style="cursor:pointer;">
                             <a href="/main/student">공지사항</a>
@@ -84,3 +84,6 @@
     </div>
 </body>
 </html>
+<script>
+
+</script>
