@@ -41,18 +41,19 @@ border-color: #6e6e6e;
     background: white;
     border: 1px solid #40404042;
     margin-left: 25px;
+    margin-right: 8px;
 }
 .fUseing {
     width: 30px;
     height: 30px;
     background: rgb(255, 222, 222);
     margin-left: 25px;
+    margin-right: 8px;
 }
 .fTitle-wrap {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
 }
 #redColor{
 	background-color: #FF5733;
@@ -232,10 +233,10 @@ input[name=color]:checked + label{
 							<div class="tab-pane fade" id="contact1">
 								<div style="display: flex;">
 									<div style="width: 53%; margin-top: 23px">
-										<div class="exp" style="margin-top: 10px;"> * 스터디원간 시간표를 비교해 겹치지 않는 일정을 확인할 수 있습니다.						
+										<div class="exp" style="margin-top: 13px;"> * 스터디원간 시간표를 비교해 겹치지 않는 일정을 확인할 수 있습니다.						
 										</div>
 										
-										<table style="width: 100%; margin-top: 20px; border: none;" class="table">
+										<table style="width: 100%; border: none;" class="table">
 										<thead class="thead-dark">
 											<tr>
 										    	<th>이름</th><th>학번</th><th>학과</th>
@@ -560,6 +561,8 @@ $(document).on('DOMContentLoaded', function() {
 			center: 'title',
 			right: 'next'
 		},
+		height: 730,
+		width: 500,
 	 	eventClick : function(info){
 	 		detailCalendar(info.event);
 	 	},
