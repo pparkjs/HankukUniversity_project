@@ -18,7 +18,25 @@ th{
   	text-align: center;
 	font-size: 1.5em;
 }
-
+.fCanUse {
+    width: 30px;
+    height: 30px;
+    background: white;
+    border: 1px solid #40404042;
+    margin-left: 25px;
+}
+.fUseing {
+    width: 30px;
+    height: 30px;
+    background: rgb(255, 222, 222);
+    margin-left: 25px;
+}
+.fTitle-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
 	</style>
 		<meta charset="UTF-8">
 		<div class="content-body">
@@ -28,21 +46,20 @@ th{
 					<li class="breadcrumb-item active"><a href="javascript:void(0)">study room</a></li>
 				</ol>
 			</div >
-				<div style="display: flex; justify-content: end; margin-right: 80px; margin-top: 10px;">
-					<a class="btn btn-primary" href="#" role="button" id="btn1" style="margin: 10px">화상채팅</a>
-					
-					<form action="/hku/student/delStudy" method="post" id="delForm">
-						<input type="hidden" name="studyNo" value="${study.studyNo}" id="studyNo">
-					</form>
-					<!-- 스터디장은 스터디 해체 버튼 보여주기 -->
-					<button type="button" class="btn btn-primary" style="margin: 10px" id="delBtn">
-						<i class="fa-solid fa-circle-exclamation me-2"></i>스터디 삭제
-					</button>									
-					<button type="button" class="btn btn-primary" style="margin: 10px" id="exitBtn"> 스터디 탈퇴</button>																							
-
-				</div>
+				
 				<div>
 					<div class="custom-tab-1" style="margin-left:20px;">
+						<div style="display: flex; justify-content: end; margin-right: 80px; margin-top: 10px;">
+							<a class="btn btn-primary" href="#" role="button" id="btn1" style="margin: 10px">화상채팅</a>
+							<form action="/hku/student/delStudy" method="post" id="delForm">
+								<input type="hidden" name="studyNo" value="${study.studyNo}" id="studyNo">
+							</form>
+							<!-- 스터디장은 스터디 해체 버튼 보여주기 -->
+							<button type="button" class="btn btn-primary" style="margin: 10px" id="delBtn">
+								<i class="fa-solid fa-circle-exclamation me-2"></i>스터디 삭제
+							</button>									
+							<button type="button" class="btn btn-primary" style="margin: 10px" id="exitBtn"> 스터디 탈퇴</button>																							
+						</div>
 						<ul class="nav nav-tabs">
 							
 							<li class="nav-item">
@@ -56,8 +73,7 @@ th{
 							</li>
 						</ul>
 						<div class="tab-content">
-					
-							
+						
 							<div class="tab-pane fade show active" id="profile1">
 								<div class="pt-4">
 									<div>
@@ -148,8 +164,9 @@ th{
 								</div>
 							</div>
 							</div>
+								
 							<div class="tab-pane fade" id="contact1" style="display: flex;">
-								<div style="width: 30%; margin-top: 45px">
+								<div style="width: 30%; margin-top: 20px">
 									<table style="width: 90%" class="table">
 									<thead class="thead-dark">
 										<tr>
@@ -167,9 +184,15 @@ th{
 									</tbody>
 									
 									</table>
-									<button type="button" class="btn btn-primary" style="margin: 10px" onclick="resetSList()" id="resetBtn"> 초기화</button>	
+									<button type="button" class="btn btn-primary" style="margin: 10px; margin-left: 250px;" onclick="resetSList()" id="resetBtn"> 초기화</button>
+									<div class="fTitle-wrap">
+										<div class="fUseing"></div>
+										<span style="margin-right : 0px; font-size: 18px;">중복시간</span>
+										<div class="fCanUse"></div>
+										<span style="margin-right: 0px; font-size: 18px;">빈시간</span>	
+									</div>
 								</div>		
-								<div style="width: 70%; margin-top: 45px">
+								<div style="width: 70%; margin-top: 20px">
 									<div class="schedule-wrap">
 										<table class="schedule" border=1 style="width: 85%">
 											<thead class="thead-dark">
@@ -254,7 +277,7 @@ function sList(element) {
                 var cellIndex = (rowNum - 1) * WEEKDAYS + colNum - 1;
 
                 for (var i = 0; i < lecscHour; i++) {
-                    tableCells.eq(cellIndex + i * WEEKDAYS).css('background-color', 'gray');
+                    tableCells.eq(cellIndex + i * WEEKDAYS).css('background-color', 'rgb(250, 220, 220)');
                 }
             }
            
