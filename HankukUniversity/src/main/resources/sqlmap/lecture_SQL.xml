@@ -81,10 +81,11 @@
 		JOIN professor d ON b.PRO_NO = d.PRO_NO
 		WHERE b.FLCTS_NO = #{flctsNo}
 		AND b.APRV_STTS_CD !='rej'
-		AND b.LECAP_YR = EXTRACT(YEAR FROM SYSDATE)
-		AND b.LECAP_SEM = CASE
-		    WHEN EXTRACT(MONTH FROM SYSDATE)<= 7 THEN '1'
-		    ELSE '2'
+		AND b.LECAP_YR like TO_CHAR(sysdate, 'YYYY')
+		AND b.LECAP_SEM  = CASE
+            WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 1 AND 6 THEN 1
+            WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 12 THEN 2
+      	 ELSE 0
 		END
 		]]>
 	</select>
