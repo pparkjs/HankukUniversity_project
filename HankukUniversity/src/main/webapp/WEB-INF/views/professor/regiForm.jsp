@@ -135,7 +135,7 @@
 										</div>
 										<hr>
 										<div class="mb-3 row">
-											<div class="col-lg-7 ms-auto" style="padding-left: 40%">
+											<div class="col-lg-7 ms-auto" style="padding-left:47%">
 												<input type="button" id="regBtn" value="${name}" class="btn btn-primary"/>
 												<c:if test="${status eq 'u' }">
 													<input type="button" id="cancelBtn" value="취소" class="btn btn-primary"/>
