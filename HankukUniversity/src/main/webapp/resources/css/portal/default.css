@@ -1049,7 +1049,7 @@ footer .footer_w .sns a.youtube{background-image:url(../../images/work/footer_sn
     background-size:cover;
     line-height:1.4
 }
-.main_wrap .en{font-family: 'Crimson Pro', serif;}
+.main_wrap .en{font-family: 'Noto sans', sans-serif;}
 .main_wrap .main_inner{position:relative;max-width:1440px;width:100%;height:100%;max-height:1000px;margin:0 auto;
     /* padding:0 60px; */
 }
@@ -1075,11 +1075,31 @@ footer .footer_w .sns a.youtube{background-image:url(../../images/work/footer_sn
     padding: 0 30px;
 }
 .main_wrap .logo_wrap{width:100%;padding:20px 0;}
-.main_wrap .logo_wrap a{display:block;width:100%;height:50px;background:url(/images/portal/ys_portal_logo.png) no-repeat 0 50%}
-.main_wrap .login_box .text_wrap{position:relative;margin-top:230px;padding-top:50px;text-align:center;background:url(../images/login_box_text_bg.gif) no-repeat 50% 40px}
+.main_wrap .logo_wrap a{
+    display:block;
+    width:100%;
+    height:100%;
+    background:url(/images/portal/hankuk_logo.png) no-repeat 0 50%}
+.main_wrap .login_box .text_wrap{
+    position:relative;
+    margin-top:10px;
+    padding-top:50px;
+    text-align:center;
+    background:url(../images/login_box_text_bg.gif) no-repeat 50% 40px
+}
 
-.main_wrap .login_box .text_wrap p{font-weight:300;font-size:27px;color:#fff}
-.main_wrap .login_box .text_wrap .title{margin-top:5px;font-weight:600;font-size:50px;line-height:1;text-transform:uppercase}
+.main_wrap .login_box .text_wrap p{
+    font-weight:300;
+    font-size:27px;
+    color:#fff
+}
+.main_wrap .login_box .text_wrap .title{
+    margin-top:5px;
+    font-weight:500;
+    font-size:50px;
+    line-height:1;
+    text-transform:uppercase
+}
 .main_wrap .login_box .text_wrap .desc{margin:15px 0 36px;font-weight:300;font-size:18px;color:#fff;opacity:0.11;text-transform:uppercase}
 .main_wrap .login_box .sidemenu_btn{
     display:block;
@@ -1097,12 +1117,12 @@ footer .footer_w .sns a.youtube{background-image:url(../../images/work/footer_sn
 .main_wrap .side_box .sidemenu_btn{
     display:block;
     width:100%;
-    height:50px;
-    margin-top:30px;
+    height:45px;
+    margin-top:20px;
     border-radius:50px;
     font-weight:600;
     font-size:18px;
-    line-height:50px;
+    line-height:44px;
     color:#000;
     background:#fff;
     text-align:center
@@ -1947,4 +1967,72 @@ footer .footer_w .sns a.youtube{background-image:url(../../images/work/footer_sn
 @media only screen and (max-width:1024px) {
     .main_wrap .timer_wrap{display:none}
     .main_wrap .lang_select{display:none}
+}
+
+.main_wrap .text_wrap > ul {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 15px;
+    justify-content: center;
+}
+.main_wrap .text_wrap > ul > li {
+    width: 80px;
+    padding: 0;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.main_wrap .text_wrap .bb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    padding: 0;
+    text-align: center;
+    font-size: 13px;
+    background: no-repeat 0 2px;
+    color: #fff;
+}
+
+.main_wrap .std_info {
+    display: flex;
+    /* top: 15px;
+    left: calc(33.33% - 156px); */
+    z-index: 10;
+    width: 66px;
+}
+.main_wrap .std_info li + li {
+    margin: 0;
+}
+/* .main_wrap .std_info li + li::before {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 8px;
+    margin: 0 10px;
+    background: rgba(255,255,255,0.5);
+} */
+.main_wrap .std_info a {
+    font-size: 18px;
+    color: rgba(255,255,255,0.5);
+}
+.chatbot {
+    position: fixed;
+    bottom: 65px;
+    right: 150px;
+    z-index: 2147483647;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #2155A4 url(https://chat.cau.ac.kr/img/sitelink_img.png) no-repeat;
+    background-size: contain;
+    border: 1px solid #fff;
+    margin: 15px auto 0;
+    cursor: pointer;
+}
+.chatbot_pulse {
+    animation: chatbot_bound 1.2s ease-in-out 3 forwards, chatbot_pulse 3s infinite;
+    -webkit-animation: chatbot_bound 1.2s ease-in-out 3 forwards, chatbot_pulse 3s infinite;
 }
