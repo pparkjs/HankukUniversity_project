@@ -111,7 +111,11 @@
                 </div>
                 <div class="main_cont" id="jjgDiv" style="height:auto; overflow: auto;">
                     <div class="main_cont_header" style="height: 50px; border: 1px solid black;">
-
+                        <!-- <form class="search-container">
+                            <input type="text" id="search-bar" placeholder="검색어를 입력해주세요">
+                            <a href="#"><img class="search-icon" src="/images/portal/search.png" style="width: 30px; height: 30px;"></a>
+                        </form> -->
+                        
                     </div>
                     <!-- tiles 했을 때 content 부분 -->
                     <div class="container-fluid mt-3">
@@ -274,6 +278,7 @@
         </div>
     </div>
 </body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script>
 var options = { // 여기에 그리드 스택 옵션 삽입
     disableOneColumnMode: true, // jfidle 작은 창 크기용
@@ -282,4 +287,5 @@ var options = { // 여기에 그리드 스택 옵션 삽입
     removeTimeout: 100
 };
 var grid = GridStack.init(options);
+
 </script>

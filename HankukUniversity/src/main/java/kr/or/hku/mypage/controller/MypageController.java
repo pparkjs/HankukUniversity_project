@@ -12,7 +12,7 @@ import kr.or.hku.mypage.service.IMypageService;
 import kr.or.hku.student.vo.StudentVO;
 
 @Controller
-@RequestMapping("/hku/student")
+@RequestMapping("/hku/")
 public class MypageController {
 	
 	@Autowired

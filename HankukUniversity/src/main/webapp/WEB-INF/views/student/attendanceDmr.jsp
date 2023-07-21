@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="/css/table.css">
 
+
 <style>
 .col-lg-6 {
 	flex: 0 0 auto;
@@ -22,17 +23,31 @@ label {
 .form-label1{
 	  color: #6e6e6e;
 }
+
+.form-control{
+	width : 400px;
+}
+
+.bootstrap-select .btn {
+    width: 400px;
+}
 </style>
 
-<div class="content-body">
-	<!-- row -->
+<div class="content-body" style="min-height: 975px;">
+	<div class="page-titles">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">출석이의신청</a></li>
+			<li class="breadcrumb-item active"><a href="javascript:void(0)">클래스룸</a></li>
+		</ol>		
+	</div>
 	<div class="container-fluid">
+		<div class="row">
 		<div class="col-xl-6 col-lg-12" style="width:100%;">
 			<div class="card" >
-				<div class="card-header">
-					<h4 class="card-title">
-						출석 이의신청
-					</h4>
+				<div class="card-header aaa">
+						<h4 class="card-title"
+							style="font-weight: bold; font-size: 1.2em; color: #800000;">
+							출석 이의신청</h4>
 				</div>
 				<div class="card-body">
 					<div class="basic-form">
@@ -40,11 +55,11 @@ label {
 							<div class="row">
 								<div class="mb-3 col-md-6">
 									<label class="form-label1">이름</label> 
-									<input type="text" class="form-control" disabled value="${stdNm }">
+									<input type="text" class="form-control" readonly value="${std.stdNm }">
 								</div>
 								<div class="mb-3 col-md-6">
 									<label class="form-label1">학과</label> 
-									<input type="text" class="form-control" value="컴퓨터공학">
+									<input type="text" class="form-control" readonly value="${std.deptNm }">
 								</div>
 								<div class="mb-3 col-md-6">
 									<label>파일첨부</label> 
@@ -55,7 +70,7 @@ label {
 									<div
 										class="dropdown bootstrap-select default-select form-control wide">
 										<select id="inputState"
-											class="default-select form-control wide" tabindex="null">
+											class="default-select form-control wide" style="width :300px;">
 											<c:forEach begin="1" end="15" var="i" step="1">
 												<option style="font-size: 15px;">${i }주차</option>
 											</c:forEach>
@@ -71,14 +86,14 @@ label {
 									<div class="card-body">
 										<div class="basic-form">
 											<div class="mb-3">
-												<textarea class="form-txtarea form-control" rows="8"
-													id="reason"></textarea>
+												<textarea class="form-txtarea form-control" style="width:100%;" 
+												rows="8" id="content"></textarea>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="mb-3" style="padding-left:1120px;">
+							<div class="mb-3" style="padding-left:92%;">
 								<button type="button" id="submitBtn" onclick="submitF()" class="btn btn-primary">신청하기</button>
 							</div>
 						</form>
@@ -86,27 +101,39 @@ label {
 				</div>
 			</div>
 		</div>
-		<hr>
-		<div class="">
-			<h4 class="card-title">이의신청현황</h4>
+		
+		<div class="col-xl-6 col-lg-12" style="width:100%;">
+			<div class="card" >
+				<div class="card-header aaa">
+						<h4 class="card-title"
+							style="font-weight: bold; font-size: 1.2em; color: #800000;">
+							이의신청현황</h4>
+				</div>
+				<div class="card-body ccc" style="padding-top: 0;">
+						<table class="table">
+							<thead class="thead" >
+								<tr class="ths">
+									<th>No</th>
+									<th>이름</th>
+									<th>학번</th>
+									<th>학과</th>
+									<th>신청일자</th>
+									<th>승인여부</th>
+								</tr>
+							</thead>
+							<tbody id="tbtb">
+			
+							</tbody>
+						</table>
+					</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div id="disp">
-			<table class="table">
-				<thead class="thead-dark">
-					<tr>
-						<th>No</th>
-						<th>제목</th>
-						<th>신청일</th>
-						<th>승인여부</th>
-					</tr>
-				</thead>
-				<tbody>
-					<!-- 여기 + -->
-				</tbody>
-			</table>
 		</div>
-	</div>
-</div>
+
+		
+		
 <script> 
 
 //  	var submitBtn = document.querySelector("#submitBtn");
