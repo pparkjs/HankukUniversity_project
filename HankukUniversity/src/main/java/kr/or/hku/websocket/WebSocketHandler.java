@@ -46,7 +46,9 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		System.out.println(session.getId() + " 연결 성공 => 총 접속 인원 : " + i + "명");
 		System.out.println();
 		String stdNo = getUserId(session);
+		
 		userSessionMap.put(session, stdNo);
+		log.info("연결한놈 stdNo: " + stdNo);
 		
 		sessionList.add(session);
 		
@@ -79,11 +81,17 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	// 웹소켓으로 HttpSession에 있는 userId 가져오기
 	private String getUserId(WebSocketSession session) {
 		Map<String, Object> httpSession = session.getAttributes();
+		 for (String key : httpSession.keySet()) {
+	            Object value = httpSession.get(key);
+	            log.info("key: "+key + ": " + value);
+	        }
 		StudentVO loginUser = (StudentVO) httpSession.get("std");
-
+		log.info("사람 여기 있어요 !: " + loginUser);
 		if (loginUser == null) {
+			log.info("여기체킁1");
 			return session.getId(); // WebSocketSession의 sessionid 반환
 		} else {
+			log.info("여기체킁2");
 			return loginUser.getStdNo();
 		}
 	}
@@ -157,6 +165,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			if(list != null) {
 				for (StudyVO study : list) {
 						// roomList에 내가 속해있는 모든방에 나의 session 삭제
+						log.info(""+study.getStdNo());
 						roomList.get(study.getStudyNo()).remove(session);
 				}
 				roomList.get(studyNo).add(session); // 방에 들어온 유저 세션리스트에 세션 추가

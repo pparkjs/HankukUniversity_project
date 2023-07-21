@@ -29,7 +29,7 @@
 		<div class="col-xl-6 col-lg-6 bbb" style="width: 100%; height: 100%;">
 			<div class="card">
 				<div class="card-header" style="display: flex; justify-content: space-between; height: 61px;">
-				<input type="hidden" name="lecapNo" value="${lecapNo }">	
+				<input type="hidden" name="lecapNo" id="lecapNo" value="${lecapNo }">	
 					<h4 class="card-title" 
 						style="font-weight: bold; font-size: 1.2em; color: #800000;">
 						과제관리</h4>

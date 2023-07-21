@@ -1,8 +1,10 @@
 package kr.or.hku.student.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.hku.notice.vo.PaginationInfoVO;
+import kr.or.hku.student.vo.StdCalendarVO;
 import kr.or.hku.student.vo.StudyVO;
 
 public interface StudyService {
@@ -22,6 +24,8 @@ public interface StudyService {
 	public List<Integer> getUnreadCntByUser(StudyVO studyVo);
 	//방안에서 해당 메시지 읽음 카운트 -1 처리
 	public void readMessageInRoom(StudyVO studyVo);
+	//해당 채팅방의 메세지 리스트
+	public List<StudyVO> messageList(int studyNo);
 	
 	public void readChatMessage(StudyVO studyVo);
 	// 메세지 등록
@@ -60,6 +64,12 @@ public interface StudyService {
 	public int modifyStudyBoard(StudyVO studyVo);
 	// 스터디 게시글 조회수
 	public int studyBoHit(int stboNo);
+	
+	// 캘린더 가져오기
+	public List<StdCalendarVO> getStdCalList(Map<String, String> map);
+	public int updateStdCalList(StdCalendarVO stdCalendarVO);
+	public int addStdCalList(StdCalendarVO stdCalendarVO);
+	public int deleteStdCalendar(Map<String, String> map);
 	
 	
 	

@@ -36,16 +36,24 @@ public class RecordController {
 	@GetMapping(value = "/record")
 	public String record(HttpServletRequest request, Model model) {
 	    HttpSession session = request.getSession();
-	    StudentVO userVo = (StudentVO) session.getAttribute("std");
+	    StudentVO stdVo = (StudentVO) session.getAttribute("std");
 	    
-	    if (userVo == null) {
-	        return "redirect:/main//login";
+	    if (stdVo == null) {
+	        return "redirect:/main/login";
 	    }
-	    String userNo = userVo.getStdNo();
-	    log.info("userNo: "+ userNo);
+	    String stdNo = stdVo.getStdNo();
+	    log.info("userNo: "+ stdNo);
 	    
-	    StudentVO student = service.recordInfo(userNo);
-	    List<RecordVO> recordList = service.recordChanged(userNo);
+	    StudentVO student = service.recordInfo(stdNo);
+	    List<RecordVO> recordList = service.recordChanged(stdNo);
+	    
+	    for (RecordVO record : recordList) {
+            // RecordVO 객체의 필드를 가져와서 log.info로 출력
+            log.info("RecordVO 객체 출력: " + record.toString());
+            // 또는, 원하는 필드를 개별적으로 출력할 수도 있습니다.
+            log.info("필드1: " + record.getChangeRsn());
+            // 필드1, 필드2는 RecordVO에 존재하는 실제 필드명으로 대체되어야 합니다.
+        }
 	    if (student == null) {
 	        return "redirect:/main/portal";
 	    }

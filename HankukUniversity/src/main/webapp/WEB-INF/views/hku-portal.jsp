@@ -92,7 +92,7 @@
                             <a href="/main/student">통합학사시스템</a>
                         </div>
                         <div class="sidemenu_btn" style="cursor:pointer;">
-                            <a href="/main/student">스터디게시판</a>
+                            <a href="/hku/student/studyBoard">스터디게시판</a>
                         </div>
                         <div class="sidemenu_btn" style="cursor:pointer;">
                             <a href="/main/student">공지사항</a>
@@ -289,4 +289,3 @@ var options = { // 여기에 그리드 스택 옵션 삽입
 var grid = GridStack.init(options);
 
 </script>
-</html>
