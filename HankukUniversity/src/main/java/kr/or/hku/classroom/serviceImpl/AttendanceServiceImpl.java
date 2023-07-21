@@ -16,22 +16,29 @@ public class AttendanceServiceImpl implements AttendanceService {
 	private AttendanceMapper attendanceMapper;
 	
 	// 출석관리 
-	
+	@Override
+	public AttendanceVO manageAttendance(AttendanceVO vo) {
+		return attendanceMapper.manageAttendance(vo);
+	}
 	
 	// 해당 과목 수강하는 학생 리스트 
 	@Override
 	public List<AttendanceVO> getStdList(String lecapNo) {
 		return attendanceMapper.getStdList(lecapNo);
 	}
-
+	
+	// 학생 출석 여부 가져오는 리스트
 	@Override
-	public AttendanceVO manageAttendance(AttendanceVO vo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public List<AttendanceVO> getStdAttendanceList(AttendanceVO vo) {
+		return attendanceMapper.getStdAttendanceList(vo);
+	}	
 
-	
-	
+	// 출석 변경 
+	@Override
+	public int updateAttendance(AttendanceVO vo) {
+		return attendanceMapper.updateAttendance(vo);
+	}
+		
 	
 // ------------------------ 학생 출석 이의신청 ----------------------------// 
 //	@Override
