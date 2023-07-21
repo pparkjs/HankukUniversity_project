@@ -102,7 +102,7 @@ input[name=color]:checked + label{
 								<a class="nav-link" data-bs-toggle="tab" href="#contact1"><i class="far fa-clock me-2"></i> 시간표</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" data-bs-toggle="tab" href="#message1"><i class="ti-calendar me-2"></i> 일정</a>
+								<a class="nav-link" data-bs-toggle="tab" href="#message1" id="calRender"><i class="ti-calendar me-2"></i> 일정</a>
 							</li>
 						</ul>
 						<a class="btn btn-primary" href="#" role="button" id="btn1" style="margin-left: 733px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
@@ -813,6 +813,11 @@ $(document).on('DOMContentLoaded', function() {
 			}
 		});
 	}
+	
+	// 일정 버튼 눌럿을떄 캘린더 다시 랜더링
+	$('#calRender').click(function(){
+		calendar.render();
+	});
 });
 </script>
 <!-- 캘린더 스크립트 끝======================================================== -->
