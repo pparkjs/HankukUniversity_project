@@ -26,10 +26,7 @@ public interface AssignmentMapper {
 	//과제 상세페이지 성적 부여 
 	public int giveScore(AssignmentVO assignmentVO);
 	
-	// 과제제출테이블
-	public int insertAssignSubmit(AssignmentVO vo);	 
-	
 	// 알람테이블
-	public int insertAlarm(AssignmentVO vo);
+//	public int insertAlarm();
 	
 }
