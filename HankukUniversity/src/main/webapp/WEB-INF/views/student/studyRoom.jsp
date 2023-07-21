@@ -19,28 +19,6 @@
   	text-align: center;
 	font-size: 1.5em;
 }
-<<<<<<< HEAD
-.fCanUse {
-    width: 30px;
-    height: 30px;
-    background: white;
-    border: 1px solid #40404042;
-    margin-left: 25px;
-}
-.fUseing {
-    width: 30px;
-    height: 30px;
-    background: rgb(255, 222, 222);
-    margin-left: 25px;
-}
-.fTitle-wrap {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-	</style>
-=======
 .custom-tab-1 .nav-link {
     font-weight: 800;
     color: #444444;
@@ -112,21 +90,6 @@ input[name=color]:checked + label{
 					<li class="breadcrumb-item active"><a href="javascript:void(0)">study room</a></li>
 				</ol>
 			</div >
-				
-				<div>
-					<div class="custom-tab-1" style="margin-left:20px;">
-						<div style="display: flex; justify-content: end; margin-right: 80px; margin-top: 10px;">
-							<a class="btn btn-primary" href="#" role="button" id="btn1" style="margin: 10px">화상채팅</a>
-							<form action="/hku/student/delStudy" method="post" id="delForm">
-								<input type="hidden" name="studyNo" value="${study.studyNo}" id="studyNo">
-							</form>
-							<!-- 스터디장은 스터디 해체 버튼 보여주기 -->
-							<button type="button" class="btn btn-primary" style="margin: 10px" id="delBtn">
-								<i class="fa-solid fa-circle-exclamation me-2"></i>스터디 삭제
-							</button>									
-							<button type="button" class="btn btn-primary" style="margin: 10px" id="exitBtn"> 스터디 탈퇴</button>																							
-						</div>
-=======
 <!-- 				<div style="display: flex; justify-content: end; margin-right: 80px; margin-top: 10px;"> -->
 <!-- 				</div> -->
 			<div class="container-fluid subCon">
@@ -139,132 +102,9 @@ input[name=color]:checked + label{
 								<a class="nav-link" data-bs-toggle="tab" href="#contact1"><i class="far fa-clock me-2"></i> 시간표</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" data-bs-toggle="tab" href="#message1"><i class="ti-calendar me-2"></i> 일정</a>
+								<a class="nav-link" data-bs-toggle="tab" href="#message1" id="calRender"><i class="ti-calendar me-2"></i> 일정</a>
 							</li>
 						</ul>
-						<div class="tab-content">
-						
-							<div class="tab-pane fade show active" id="profile1">
-								<div class="pt-4">
-									<div>
-										<h3>스터디 소개</h3>
-										<c:choose>
-											<c:when test="${empty study }">
-												<p>스터디 소개글이 존재하지 않습니다.</p>
-											</c:when>
-											<c:otherwise>
-												<p> ${study.studyIntro }</p>																						
-											</c:otherwise>
-										</c:choose>
-										<br>
-									</div>
-									<div style="display: flex;">
-										<div style="width: 40%; margin-top: 20px">
-										<p>스터디원</p>
-										<table style="width: 90%" class="table">
-										<thead class="thead-dark">
-											<tr>
-										    	<th>이름</th><th>학번</th><th>학과</th><th>학년</th>
-										    </tr>
-										</thead>
-										  <c:choose>
-										    <c:when test="${empty studyMem }">
-										      <tr>
-										        <td colspan="5">스터디원이 존재하지 않습니다.</td>
-										      </tr>
-										    </c:when>
-										    <c:otherwise>
-										      <tbody>
-										        <c:forEach items="${studyMem }" var="studyMem">
-										          <tr>
-										            <td>${studyMem.stdNm}</td>
-										            <td>${studyMem.stdNo}</td>
-										            <td>${studyMem.deptNm}</td>
-										            <td>2</td>
-										  
-										          </tr>
-										        </c:forEach>
-										      </tbody>
-										    </c:otherwise>
-										  </c:choose>
-									</table>
-								</div>
-								<div style="width: 60%; margin-top: 20px">
-									<p>가입신청자 목록</p>
-									<input type="hidden" value="${study.studyNo }" id="studyNo">
-									<table style="width: 90%" class="table" id="tbl1">
-										<thead class="thead-dark">
-											<tr>
-												<th>이름 </th><th>학과 </th><th>학번 </th><th>신청일</th><th style="width: 300px;">comment</th><th> </th>
-											</tr>
-										</thead>
-										<tbody>
-										<c:choose>
-											<c:when test="${empty appli}">
-												<tr><td colspan="5">가입신청 인원이 존재하지 않습니다.</td></tr>
-											</c:when>
-											<c:otherwise>
-												<c:forEach items="${appli }" var="appli">
-													<tr id="link">
-														<td>${appli.stdNm } </td>
-														<td>${appli.deptNm } </td>
-														<td id="td">${appli.stdNo }</td>
-														<td>${appli.joinRegdate }</td>
-														<td style="width: 300px;">${appli.joinReason }</td>
-														<td>
-															<div class="action-button">
-																<form action="" method="post" id="applFrm" name="applFrm">
-																	<input type="hidden" name="joinNo" id="joinNo" value="${appli.joinNo}">																	
-																	<a href="#" class="applBtn1" onclick="assignStudy()">
-																		<span class="badge badge-success badge-sm">승인<span class="ms-1 fa fa-check"></span></span>																	
-																	</a>
-																	<a href="#" class="applBtn2" onclick="rejStudy()">
-																		<span class="badge badge-secondary  badge-sm">반려<span class="ms-1 fa fa-ban"></span></span>
-																	</a>
-																</form>
-															</div>
-														</td>
-													</tr>
-												</c:forEach>
-											</c:otherwise>
-										</c:choose>											
-										</tbody>
-									</table>
-								</div>
-								</div>
-							</div>
-							</div>
-								
-							<div class="tab-pane fade" id="contact1" style="display: flex;">
-								<div style="width: 30%; margin-top: 20px">
-									<table style="width: 90%" class="table">
-									<thead class="thead-dark">
-										<tr>
-									    	<th>이름</th><th>학번</th><th>학과</th>
-									    </tr>
-									</thead>
-									<tbody id="tbody">
-										<c:forEach items="${studyMem}" var="study" varStatus="status">
-											<tr>
-												<td id="${study.stdNo}" onclick="sList(this)">${study.stdNm}</td>
-												<td id="${study.stdNo}"	onclick="sList(this)">${study.stdNo}</td>
-												<td id="${study.stdNo}"	onclick="sList(this)">${study.deptNm}</td>	
-											</tr>
-										</c:forEach>
-									</tbody>
-									
-									</table>
-									<button type="button" class="btn btn-primary" style="margin: 10px; margin-left: 250px;" onclick="resetSList()" id="resetBtn"> 초기화</button>
-									<div class="fTitle-wrap">
-										<div class="fUseing"></div>
-										<span style="margin-right : 0px; font-size: 18px;">중복시간</span>
-										<div class="fCanUse"></div>
-										<span style="margin-right: 0px; font-size: 18px;">빈시간</span>	
-									</div>
-								</div>		
-								<div style="width: 70%; margin-top: 20px">
-									<div class="schedule-wrap">
-										<table class="schedule" border=1 style="width: 85%">
 						<a class="btn btn-primary" href="#" role="button" id="btn1" style="margin-left: 733px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
 					
 						<form action="/hku/student/delStudy" method="post" id="delForm">
@@ -556,7 +396,7 @@ function sList(element) {
                 var cellIndex = (rowNum - 1) * WEEKDAYS + colNum - 1;
 
                 for (var i = 0; i < lecscHour; i++) {
-                    tableCells.eq(cellIndex + i * WEEKDAYS).css('background-color', 'rgb(250, 220, 220)');
+                    tableCells.eq(cellIndex + i * WEEKDAYS).css('background-color', 'gray');
                 }
             }
            
@@ -973,6 +813,11 @@ $(document).on('DOMContentLoaded', function() {
 			}
 		});
 	}
+	
+	// 일정 버튼 눌럿을떄 캘린더 다시 랜더링
+	$('#calRender').click(function(){
+		calendar.render();
+	});
 });
 </script>
 <!-- 캘린더 스크립트 끝======================================================== -->
