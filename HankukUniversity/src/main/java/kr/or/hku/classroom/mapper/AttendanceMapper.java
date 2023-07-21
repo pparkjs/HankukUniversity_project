@@ -15,6 +15,11 @@ public interface AttendanceMapper {
 	// 해당 과목 수강하는 학생 리스트 
 	public List<AttendanceVO> getStdList(String lecapNo);
 	
+	public List<AttendanceVO> getStdAttendanceList(AttendanceVO vo);
+	
+	// 출석 변경 
+	public int updateAttendance(AttendanceVO vo);
+	
 
 	
 // ------------------------ 학생 출석 이의신청 ----------------------------// 	
