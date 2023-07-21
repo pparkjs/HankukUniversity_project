@@ -1572,7 +1572,7 @@ function deleteUser(){
 		return false;
 	}
 	swal({
-		title: "삭제를 진행하시겠습니까??",
+		title: "삭제를 진행하시겠습니까?",
 		text: "삭제 후 되돌릴 수 없습니다!",
 		icon: "warning",
 		buttons: true,

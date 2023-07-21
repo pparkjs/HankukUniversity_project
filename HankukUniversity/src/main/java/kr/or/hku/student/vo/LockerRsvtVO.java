@@ -19,4 +19,5 @@ public class LockerRsvtVO {
 	
 	private String presentCheck; //현재 년도 현재 학기인지 체크
 	private String flctNm;
+	private String stdNm;
 }

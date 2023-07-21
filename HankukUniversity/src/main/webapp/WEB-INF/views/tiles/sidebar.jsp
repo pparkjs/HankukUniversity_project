@@ -198,7 +198,7 @@
 					<li><a href="/hku/admin/academic/fluctuation-list">학적 관리</a></li>
 					<li><a href="/hku/admin/subject-administration">교과목 관리</a></li>
 					<li><a href="/hku/admin/facility-administration">시설관리</a></li>
-					<li><a href="#">사물함관리</a></li>
+					<li><a href="/hku/admin/locker-administration">사물함관리</a></li>
 					<li><a href="/hku/admin/calendar">학사 일정 관리</a></li>
 				</ul>
 			</li>
@@ -231,7 +231,7 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="/hku/admin/lecaplylist">개설신청 관리</a></li>
-					<li><a href="#">휴강신청 관리</a></li>
+					<li><a href="/hku/admin/lecture-canceled/management">휴강신청 관리</a></li>
 				</ul>
 			</li>
 			

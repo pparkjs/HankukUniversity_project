@@ -187,6 +187,11 @@
 	</div>
 </div>
 <script>
+$('#noticeMore').click(function(){
+	console.log(${lecapNo});
+	location.href = `/hku/professor/noticeList`;
+})
+
 $(function(){
 
 	

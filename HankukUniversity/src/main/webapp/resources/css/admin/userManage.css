@@ -109,7 +109,7 @@ ul{
 .nav-tabs .nav-link {
     border: var(--bs-nav-tabs-border-width) solid #e6e6e6;
 }
-.table-wrap {
+#users, #admins, #professors, #students {
     height: 500px;
     overflow: scroll;
 }
@@ -135,4 +135,7 @@ ul{
 #notice {
 	font-weight: bold;
     color: #800000;
+}
+table{
+    margin-top: -22px;
 }

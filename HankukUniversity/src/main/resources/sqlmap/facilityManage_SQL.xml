@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.admin.mapper.FacilityManageMapper">
+ 	<sql id="flctSearch">
+ 		<if test="searchType != null and searchType == 'flctNo'">
+			and (flct_no LIKE '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'flctNm'">
+			and (flct_nm LIKE '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'comCdNm'">
+			and (com_cd_nm LIKE '%'||#{searchWord}||'%')
+		</if>
+ 	</sql>
+ 	<sql id="flctsSearch">
+ 		<if test="searchType != null and searchType == 'flctsNo'">
+			and (flcts_no LIKE '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'flctNo'">
+			and (flct_no LIKE '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'flctsNm'">
+			and (flcts_nm LIKE '%'||#{searchWord}||'%')
+		</if>
+ 	</sql>
+ 	<sql id="flctRsvSearch">
+ 		<if test="searchType != null and searchType == 'flctsRsvtNo'">
+			and (flcts_rsvt_no LIKE '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'flctsNm'">
+			and (flcts_nm LIKE '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'rsvtDate'">
+			and (rsvt_date LIKE '%'||#{searchWord}||'%')
+		</if>
+ 	</sql>
+ 
+ 	<select id="selectFcltList" parameterType="searchInfoVO" resultType="flctVO">
+ 		SELECT 
+		    a.flct_no
+		    ,a.flct_nm
+		    ,a.flct_clsf_cd
+		    ,b.com_cd_nm as flct_clsf_nm
+		FROM
+		    facility a INNER JOIN com_code b ON(a.FLCT_CLSF_CD=b.com_cd)
+		WHERE 1=1
+		<include refid="flctSearch"></include>
+		ORDER BY 1
+ 	</select>
+ 	
+ 	<select id="selectFcltsList" parameterType="searchInfoVO" resultType="flctsVO">
+ 		SELECT
+		    flcts_no
+		    ,flct_no
+		    ,flcts_nm
+		FROM
+		    facilities
+		WHERE 1=1
+		<include refid="flctsSearch"></include>
+		ORDER BY 1
+ 	</select>
+ 	
+ 	<select id="selectFcltRsvList" parameterType="searchInfoVO" resultType="flctsVO">
+ 		SELECT
+		    a.flcts_rsvt_no
+		    ,a.flcts_no
+		    ,c.flcts_nm
+		    ,a.std_no
+		    ,b.std_nm
+		    ,a.rsvt_date
+		    ,a.start_hours
+		    ,a.end_hours
+		    ,a.use_users
+		    ,a.use_prps
+		FROM
+		    FACILLITIES_RSVT a INNER JOIN student b ON(a.std_no=b.std_no)
+		    INNER JOIN facilities c ON(a.flcts_no=c.flcts_no)
+		WHERE 1=1
+		<include refid="flctRsvSearch"></include>
+		order by TO_NUMBER(a.flcts_rsvt_no)
+ 	</select>
+ 	
+ 	<select id="flctNoSet" resultType="nextCodeVO">
+ 		SELECT a.s||LPAD(a.e + 1,3,'0') AS nextCode
+		FROM (
+			SELECT
+			    SUBSTR(MAX(flct_no),0,4) AS s,
+			    SUBSTR(MAX(flct_no),-3) AS e
+			FROM
+			    facility) a
+ 	</select>
+ 	
+ 	<insert id="flctInsert" parameterType="flctVO">
+ 		INSERT INTO facility(
+ 			flct_no
+			,flct_nm
+			,flct_clsf_cd
+ 		) VALUES(
+ 			#{flctNo}
+ 			,#{flctNm}
+ 			,#{flctClsfCd}
+ 		)
+ 	</insert>
+ 	<insert id="insertFloor" parameterType="flctFloorVO">
+ 		INSERT INTO facility_floor(
+ 			floor
+			,flct_no
+ 		) VALUES(
+ 			#{floor}
+ 			,#{flctNo}
+ 		)
+ 	</insert>
+ 	
+ 	<delete id="deleteFloor" parameterType="string">
+ 		DELETE FROM
+ 			facility_floor
+ 		WHERE
+ 			flct_no = #{flctNo}
+ 	</delete>
+ 	<delete id="deleteFlct" parameterType="string">
+ 		DELETE FROM 
+ 			facility
+ 		WHERE 
+ 			flct_no = #{flctNo}
+ 	</delete>
+ 	
+ 	<select id="selectFlct" parameterType="string" resultType="flctVO">
+ 		SELECT 
+	 		flct_no
+			,flct_nm
+			,flct_clsf_cd
+ 		FROM 
+ 			facility
+ 		WHERE 
+ 			flct_no = #{flctNo}
+ 	</select>
+ 	<select id="selectFlctFloor" parameterType="string" resultType="int">
+ 		SELECT
+ 			MAX(floor)
+ 		FROM 
+ 			facility_floor
+ 		WHERE 
+ 			flct_no = #{flctNo}
+ 	</select>
+ 	
+ 	<update id="updateFlct" parameterType="flctVO">
+ 		UPDATE
+ 			facility
+ 		SET
+			flct_nm = #{flctNm}
+			,flct_clsf_cd = #{flctClsfCd}
+		WHERE
+			flct_no = #{flctNo}
+ 	</update>
+ 	
+ 	<select id="flctsModalSelectBoxSet" resultType="flctVO">
+ 		SELECT
+		    flct_no
+		    ,flct_nm
+		FROM 
+		    facility
+		ORDER BY 1
+ 	</select>
+ 	
+ 	<select id="flctsNoSet" resultType="nextCodeVO">
+ 		SELECT a.s||LPAD(a.e + 1,3,'0') AS nextCode
+		FROM (
+			SELECT
+			    SUBSTR(MAX(flcts_no),0,5) AS s,
+			    SUBSTR(MAX(flcts_no),-3) AS e
+			FROM
+			    facilities) a
+ 	</select>
+ 	
+ 	<insert id="flctsInsert" parameterType="flctsVO">
+ 		INSERT INTO facilities(
+	 		flcts_no
+			,flct_no
+			,flcts_nm
+ 		) VALUES(
+ 			#{flctsNo}
+ 			,#{flctNo}
+ 			,#{flctsNm}
+ 		)
+ 	</insert>
+ 	
+ 	<delete id="deleteFlcts" parameterType="string">
+ 		DELETE FROM 
+ 			facilities
+ 		WHERE 
+ 			flcts_no = #{flctsNo}
+ 	</delete>
+ 	
+ 	<select id="selectFlcts" parameterType="string" resultType="flctsVO">
+ 		SELECT 
+	 		flct_no
+			,flcts_no
+			,flcts_nm
+ 		FROM 
+ 			facilities
+ 		WHERE 
+ 			flcts_no = #{flctsNo}
+ 	</select>
+ 	
+ 	<update id="updateFlcts" parameterType="flctsVO">
+ 		UPDATE
+ 			facilities
+ 		SET
+			flct_no = #{flctNo}
+			,flcts_nm = #{flctsNm}
+		WHERE
+			flcts_no = #{flctsNo}
+ 	</update>
+ 	
+ 	<delete id="deleteFlctsRsvt" parameterType="string">
+ 		DELETE FROM
+ 			facillities_rsvt
+ 		WHERE
+ 			flcts_rsvt_no = #{flctsRsvtNo}
+ 	</delete>
+ </mapper>
