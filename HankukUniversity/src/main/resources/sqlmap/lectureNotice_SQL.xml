@@ -78,4 +78,18 @@
 	 	DELETE FROM LECTURE_NOTICE
 	 		  WHERE LECNT_NO = #{lecntNo}
  	</delete>
+ 	
+ 	<select id="getSearchList" parameterType="map" resultType="lectureNoticeVO">
+ 			select LECNT_NO
+				,LECAP_NO
+				,LECNT_TTL
+				,LECNT_CN
+				,LECNT_REGDATE
+				,LECNT_WRITER
+				,LECNT_READ_CNT
+				,ATCH_FILE_NO
+		FROM LECTURE_NOTICE
+		WHERE LECAP_NO = #{lecapNo}
+		AND LECNT_TTL LIKE '%'||#{searchWord}||'%'
+ 	</select>
 </mapper>

@@ -1,6 +1,7 @@
 package kr.or.hku.classroom.serviceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import kr.or.hku.classroom.mapper.LectureNoticeMapper;
 import kr.or.hku.classroom.service.LectureNoticeService;
 import kr.or.hku.classroom.vo.LectureNoticeVO;
+import kr.or.hku.notice.vo.NoticeVO;
 
 @Service
 public class LectureNoticeServiceImpl implements LectureNoticeService{
@@ -27,8 +29,8 @@ public class LectureNoticeServiceImpl implements LectureNoticeService{
 	
 	@Override
 	public LectureNoticeVO getNotcieDetail(int lecntNo) {
-		LectureNoticeVO vo = noticeMapper.getNoticeDetail(lecntNo);
 		noticeMapper.updateReadCnt(lecntNo);
+		LectureNoticeVO vo = noticeMapper.getNoticeDetail(lecntNo);
 		return vo;
 	}
 	
@@ -40,6 +42,12 @@ public class LectureNoticeServiceImpl implements LectureNoticeService{
 	public int deleteNotice(int lecntNo) {
 		// TODO Auto-generated method stub
 		return noticeMapper.deleteNotice(lecntNo);
+	}
+	
+	@Override
+	public List<NoticeVO> getSearchList(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return noticeMapper.getSearchList(map);
 	}
 	
 }
