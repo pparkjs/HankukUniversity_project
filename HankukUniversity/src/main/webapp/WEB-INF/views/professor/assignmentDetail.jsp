@@ -44,12 +44,19 @@
 	font-size: 14px;
 	color: #535353;
 }
- .srcSel{
-	border : 1px solid gray;
-	border-radius: 10px;
-	width:100px;
-	height : 30px;
-	text-align: center;
+
+#srcSel {
+    width: 100px;
+    text-align: center;
+    border: 1px solid #cfc8c8;
+    border-radius: 11px;
+    height: 30px;
+}
+.card-body {
+	overflow: scroll;	
+}
+.active-projects tbody tr td {
+    font-size: 15px;
 }
 
 </style>
@@ -61,13 +68,15 @@
 			<div class="col-lg-12" style="padding-bottom:0;">
 				<div class="card">
 					<div class="card-header" style="height: 60px;">
-						<h4 class="card-title" style="font-size: 1.5em; color: #2c2c2c">과제상세</h4>
-						<div class="col-lg-7 ms-auto" style="padding-left: 45%;">
+						<h4 class="card-title"
+							style="font-weight: bold; font-size: 1.2em; color: #800000;">
+							과제상세</h4>
+						<div class="col-lg-7 ms-auto" style="padding-left: 47%;">
 							<button type="button" id="updateBtn" class="btn btn-primary">수정</button>
 							<button type="button" id="listBtn" class="btn btn-danger light">목록</button>
 						</div>
 					</div>
-					<div class="card-body" style="height: 430px;">
+					<div class="card-body" style="height:420px;">
 						<div class="form-validation">
 							<form class="needs-validation">
 								<input type="hidden" name="asmNo" id="asmNo" value="${assignVo.asmNo}"> 
@@ -147,22 +156,23 @@
 												class="text-danger"></span>
 											</label>
 											<div class="col-lg-4">
-													<ul
-														class="mailbox-attachments d-flex align-items-stretch clearfix">
-														<li>
-															<div class="mailbox-attachment-info">
-																<a href="#" class="mailbox-attachment-name"> 
-																<i class="fas fa-paperclip"></i> 
-																</a> <span class="mailbox-attachment-size clearfix mt-1">
-																	<span>파일다운로드</span> <a href="다운로드 url"> <span
-																		class="btn btn-default btn-sm float-right"> <i
-																			class="fas fa-download"></i>
-																	</span>
-																</a>
+												<ul
+													class="mailbox-attachments d-flex align-items-stretch clearfix">
+													<li>
+														<div class="mailbox-attachment-info">
+															<a href="#" class="mailbox-attachment-name"> 
+															<i class="fas fa-paperclip"></i> 
+															</a> <span class="mailbox-attachment-size clearfix mt-1">
+																<span>파일다운로드</span> <a href="다운로드 url"> <span
+																	class="btn btn-default btn-sm float-right"> <i
+																		class="fas fa-download"></i>
 																</span>
-															</div></li>
-													</ul>
-												</div>
+															</a>
+															</span>
+														</div>
+													</li>
+												</ul>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -177,14 +187,16 @@
 					<div class="card-body p-0">
 						<div class="tbl-caption"
 							style="padding-top: 15px; padding-left: 15px;">
-							<h4 class="heading mb-0" style="font-size: 1.5em;">과제제출현황</h4>
+							<h4 class="card-title"
+							style="font-weight: bold; font-size: 1.2em; color: #800000;">
+							과제제출현황</h4>
 							<hr>
 						</div>
 						<div class="table-responsive active-projects manage-client">
-							<div class="card-body ccc" style="padding-top: 0; height: 40%;">
-								<table class="table">
+							<div class="card-body ccc" style="padding-top: 0px;">
+								<table class="table" style="margin-top: -22px;">
 									<thead>
-										<tr class="ths">
+										<tr class="">
 											<th>No</th>
 											<th>학번</th>
 											<th>이름</th>
@@ -208,7 +220,6 @@
 		</div>
 	</div>
 </div>
-
 
 
 <script>
@@ -271,20 +282,17 @@ function assignList(){
 								</select>
 							</td>`
 					data += `<td>
-								<button type="button" id="okBtn" class="btn btn-primary" style="width:60px; height:30px;font-size:12px;">확인</button>
+								<button type="button" id="okBtn" class="btn btn-primary">확인</button>
 							</td>`		 
 				}else{
-					data += `<td>완료</td>`;
+					data += `<td>\${res[i].asmsbScr}</td>
+							 <td>완료</td>`;
 				}
 				data +=	`</tr>`;
 			}
 			tBody.html(data);
 		}
 	})
-}
-
-function enterF(target){
-	console.log("target : ", target);
 }
 
 	var tBody = $('#tBody');
