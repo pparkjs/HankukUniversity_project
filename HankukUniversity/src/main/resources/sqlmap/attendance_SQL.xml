@@ -4,30 +4,47 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="kr.or.hku.classroom.mapper.AttendanceMapper">
 
-	<select id="attendanceList" resultType="attendanceVO">
-		SELECT
-			 a.atdc_no
-			,a.lecap_no
-			,a.std_no
-			,a.atdc_yn_cd
-			,a.atdc_week
-		FORM attendance a, lecture_aply b
-		WHERE a.lecap_no = b.lecap_no
-	</select>
-	
-	 	
-	<!--  	해당 과목 수강하는 학생 리스트 가져오기 -->
-	 	<select id="getStdList" resultType="string" parameterType="string">
+		<!-- 해당 과목 수강하는 학생 리스트 가져오기 -->
+	 	<select id="getStdList" resultType="attendanceVO" parameterType="string">
 	 	/*kr.or.hku.classroom.mapper.AttendanceMapper.getStdList */
 			SELECT
 			  s.std_no
+			, s.std_nm
+			, d.dept_nm
 			FROM 
 			  course_regist cr
-			  JOIN student s ON cr.STD_NO = s.STD_NO
-			  JOIN lecture_aply l ON cr.LECAP_NO = l.LECAP_NO
+			  JOIN student s ON cr.std_no = s.std_no
+			  JOIN department d ON s.dept_cd = d.dept_cd
+			  JOIN lecture_aply l ON cr.lecap_no = l.lecap_no
 			WHERE
 			  l.lecap_no = #{lecapNo}
 		</select>
-
- 
+ 		
+ 		<!-- 학생 출석 여부 리스트 가져오기  -->
+ 		<select id="getStdAttendanceList" parameterType="attendanceVO" resultType="attendanceVO">
+ 		/*kr.or.hku.classroom.mapper.AttendanceMapper.getStdAttendanceList */
+ 			select 
+ 				atdc_no,
+ 				atdc_yn_cd,
+ 				atdc_week
+ 			FROM attendance 
+ 			WHERE lecap_no = #{lecapNo}
+ 			AND std_no = #{stdNo}
+ 		</select>
+ 		
+ 		<!-- 출석 변경  -->
+		<update id="updateAttendance" parameterType="attendanceVO">
+		/*kr.or.hku.classroom.mapper.AttendanceMapper.updateAttendance */
+			UPDATE attendance 
+	        SET                 
+	        	<if test='atdcYnCd == "Y"'>
+		           atdc_yn_cd = 'N' 
+	        	</if>                 
+	        	<if test='atdcYnCd == "N" or atdcYnCd == "x"'>
+		           atdc_yn_cd = 'Y' 
+	        	</if>                 
+	        WHERE atdc_no = #{atdcNo} 
+		</update>
+		
+		
  </mapper>
