@@ -27,4 +27,16 @@ public class TestVO {
 	private int hours;
 	private int minutes;
 	private int seconds;
+	
+	// 조인해서 가져올 필드
+	private String stdNo;
+	private int lecapSem;
+	private String lecapYr;
+	private String subNm;
+	private int subGrade;
+	
+	// 응시번호
+	private int ttNo;
+	private String ttDt;
+	private int ttScr;
 }
