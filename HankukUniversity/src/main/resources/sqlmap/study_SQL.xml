@@ -170,7 +170,7 @@
  	 	<!-- 메시지 등록하기 -->
  	<insert id="insertMessage" parameterType="studyVo">
  		insert into CHATMESSAGE(MSG_NO, STUDY_NO, STD_NO, MSG_CONTENT, MSG_REGDATE, UNREAD_MEM_CNT)
-		values(SEQ_CHATMESSAGE.nextval, #{studyNo}, #{stdNo}, #{msgContent}, sysdate, 0)  
+		values(SEQ_CHATMESSAGE.nextval, #{studyNo}, #{stdNo}, #{msgContent}, sysdate, #{unreadMemCnt})  
  	</insert>
 	
 	<!-- 본인의 가입신청 대기중인 스터디 리스트 -->
