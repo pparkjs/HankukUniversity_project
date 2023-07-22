@@ -170,8 +170,12 @@ public class StudyController {
 	@ResponseBody
 	@GetMapping(value="/student/messageList")
 	public ResponseEntity<List<StudyVO>> messageList(@RequestParam("studyNo") int studyNo, @RequestParam("stdNo") String stdNo) {
-	    // 해당 방의 메시지 리스트 가져오기
+	    log.info("msgList실행!");
+		// 해당 방의 메시지 리스트 가져오기
 	    List<StudyVO> list = service.messageList(studyNo); 
+	    for(int i = 0; i< list.size(); i++) {
+	    	log.info("msgList: " + list);
+	    }
 	    // userId 는 안읽은 메시지 처리 위해서 받아온건데 1:1이 아니라 멀티 채팅방일때 생각중
 	    return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
 	}
