@@ -1,15 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<link rel="stylesheet" href="/css/table.css">
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<style>
 
-.schedule, .schedule th, .schedule td {
-   border: 1px solid black;
-   border-collapse: collapse;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    text-align: center;
-   width : 100px;
+   width : 100px;"C:/Users/PC-10/Desktop/중프"
    height: 40px;
 }
 .schedule th, .schedule td {
