@@ -115,7 +115,7 @@
                             <input type="text" id="search-bar" placeholder="검색어를 입력해주세요">
                             <a href="#"><img class="search-icon" src="/images/portal/search.png" style="width: 30px; height: 30px;"></a>
                         </form> -->
-                        
+                        <button class="btn btn-primary" id="savePortletBtn">포틀릿저장</button>
                     </div>
                     <!-- tiles 했을 때 content 부분 -->
                     <div class="container-fluid mt-3">
@@ -280,51 +280,100 @@
 </body>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script>
-window.onload = function(){
+$(document).ready(function(){
     var grid = GridStack.init({ // 여기에 그리드 스택 옵션 삽입
         disableOneColumnMode: true, // jfidle 작은 창 크기용
         float: false,
         removable: "#trash", // drag-out delete class
         removeTimeout: 100
     });
+
+    var savePortletBtn = $('#savePortletBtn'); // 포틀렛 저장버튼
     
     const regex = /[^0-9]/g;
+
+    const portletSeq = [
+        {pX : "0", pY : "0"},
+        {pX : "6", pY : "0"},
+        {pX : "0", pY : "4"},
+        {pX : "6", pY : "4"},
+        {pX : "0", pY : "8"},
+        {pX : "6", pY : "8"}
+    ];
+    
 
     // 내가 설정한 포틀릿순서대로 보여주는 함수실행
     sortPortlet();
 
     // 내가 설정한 포틀릿순서대로 보여주는 함수
     function sortPortlet(){
-        // 포틀렛 예시
-        var dataBasePortlet = "251643";
-        // var myPortlet = ["2","5","1","6","4","3"];
-        var myPortlet = dataBasePortlet.split("");
+    	let myGrid = JSON.parse(localStorage.getItem("myGrid"));
 
-        var gridArea = document.querySelector(".grid-stack");
-
-        // 클래스 item 을 가지고 있는 포틀렛 배열
         var gridItem = document.querySelectorAll(".grid-stack-item");
-        console.log(gridItem);
-        for(let i =0; i<myPortlet.length; i++){
-            for(let j=0; j<gridItem.length; j++){
-                let stack = gridItem[j];
-                // console.log(stack);
-                let stackNum = stack.className;
-                // console.log(stackNum);
-                stackNum = stackNum.replaceAll(regex, "");
-                // console.log(stackNum);
-                if(myPortlet[i] == stackNum){
-                    console.log(stack);
-                    // portletSeq += stackNum;
-                    gridArea.appendChild(stack);
-                    break;
-                }
+        if(myGrid != null && myGrid.length > 0){
+            // for(let i=0; i<gridItem.length; i++){
+            //     gridItem[i].setAttribute('gs-x',myGrid[i].x);
+            //     gridItem[i].setAttribute('gs-y',myGrid[i].y);
+            // }
+            for(let i=0; i<myGrid.length; i++){
+                let ptl = document.querySelector('.'+myGrid[i].id);
+                ptl.setAttribute('gs-x',myGrid[i].x);
+                ptl.setAttribute('gs-y',myGrid[i].y);
             }
         }
     }
+//     function sortPortlet(){
+//         var mySeq = 0;
+//         // 포틀렛 예시
+// //         var dataBasePortlet = "251643"; // 1번쨰 케이스
+// //         var dataBasePortlet = "123456"; // 2번째 케이스 
+//         var dataBasePortlet = "623514"; // 3번쨰 케이스 
+//         // var myPortlet = ["2","5","1","6","4","3"];
+//         var myPortlet = dataBasePortlet.split("");
 
-}
+//         var gridArea = document.querySelector(".grid-stack");
 
+//         // 클래스 item 을 가지고 있는 포틀렛 배열
+//         var gridItem = document.querySelectorAll(".grid-stack-item");
+//         console.log(gridItem);
+//         for(let i =0; i<myPortlet.length; i++){
+//             for(let j=0; j<gridItem.length; j++){
+//                 let stack = gridItem[j];
+//                 // console.log(stack);
+//                 let stackNum = stack.className;
+//                 // console.log(stackNum);
+//                 stackNum = stackNum.replaceAll(regex, "");
+//                 // console.log(stackNum);
+//                 if(myPortlet[i] == stackNum){
+//                     console.log(stack);
+// //                     console.log("몇번 실행되는지" , mySeq);
+//                     console.log("x좌표 => " + stack.getAttribute('gs-x'));
+//                     console.log("y좌표 => " + stack.getAttribute('gs-y'));
+//                     stack.setAttribute('gs-x',portletSeq[mySeq].pX);
+//                     stack.setAttribute('gs-y',portletSeq[mySeq++].pY);
+//                     // portletSeq += stackNum;
+//                     // gridArea.appendChild(stack);
+//                     break;
+//                 }
+//             }
+//         }
+//     }
 
-
+    
+    // 포틀릿 저장 버튼 눌럿을떄
+    savePortletBtn.on('click', function(){
+    	var myPortletArr = [];
+        var gridItem = document.querySelectorAll(".grid-stack-item");
+        for(let i=0; i<gridItem.length; i++){
+            let saveData = {};
+            let item = gridItem[i];
+            saveData.id = $(item).attr('class').split(" ")[1].trim();
+            saveData.x = item.getAttribute("gs-x");
+            saveData.y = item.getAttribute("gs-y");
+            myPortletArr.push(saveData);
+        }
+        console.log("myPortletArr", myPortletArr);
+        localStorage.setItem("myGrid", JSON.stringify(myPortletArr));
+    });
+});
 </script>
