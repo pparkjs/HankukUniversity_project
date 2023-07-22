@@ -54,14 +54,14 @@
 		<div class="row">
 		<input type="hidden" name="lecapNo" id="lecapNo" value="${lecapNo }">	
 			<p style="font-size:18px; color:black; margin-bottom: 0px;">${subNm }</p>
-			<!-------------출석현황 --------------->
+			<!-------------출결현황 --------------->
 			<div class="col-xl-5 col-lg-5 bbb"
 				style="width: 100%; height:330px;">
 				<div class="card">
 					<div class="card-header aaa" style="height: 60px;">
 						<h4 class="card-title"
 							style="font-weight: bold; font-size: 1.2em; color: #800000;">
-							출석현황</h4>
+							출결현황</h4>
 						<div>
 							<!-- Button trigger modal -->
 							<button type="button" id="attendDmr" class="btn btn-primary btn-sm"
@@ -105,7 +105,7 @@
 										<tr role="row" class="odd">
 											<td class="sorting_1">
 												<div class="products" style="text-align: center;">
-													<img src="images/contacts/pic2.jpg"
+													<img src="/resources/images/profile11.png"
 														class="avatar avatar-md" alt="">
 													<div style="text-align: center;">
 														<h6 style="font-size: 15px;">${std.stdNm }</h6>
@@ -113,39 +113,26 @@
 													</div>
 												</div>
 											</td>
-											<td><span class="text-danger"><i
+											<c:forEach items="${attendList }" var="list">
+												<c:if test="${list.atdcYnCd eq 'Y' }">
+													<td><span class="text-success" style="width:15px;">
+														<i class="fa-solid fa-check"></i>
+													</span></td>
+												</c:if>	
+												<c:if test="${list.atdcYnCd eq 'N' }">
+													<td><span class="text-danger"><i
 													class="fa-regular fa-xmark"></i></span></td>
-											<td><span class="text-danger"><i
-													class="fa-regular fa-xmark"></i></span></td>
-											<td><span class="text-danger"><i
-													class="fa-regular fa-xmark"></i></span></td>
-											<td><span class="text-danger"><i
-													class="fa-regular fa-xmark"></i></span></td>
-											<td><span class="text-danger"><i
-													class="fa-regular fa-xmark"></i></span></td>
-											<td><span class="text-danger"><i
-													class="fa-regular fa-xmark"></i></span></td>
-											<td><span class="text-danger"><i
-													class="fa-regular fa-xmark"></i></span></td>
-											<td><span class="text-danger"><i
-													class="fa-regular fa-xmark"></i></span></td>
-											<td><span class="text-danger"><i
-													class="fa-regular fa-xmark"></i></span></td>
-											<td><span class="text-danger"><i
-													class="fa-regular fa-xmark"></i></span></td>
-											<td><span class="text-danger"><i
-													class="fa-regular fa-xmark"></i></span></td>
-											<td><span class="text-danger"><i
-													class="fa-regular fa-xmark"></i></span></td>
-											<td><span class="text-danger"><i
-													class="fa-regular fa-xmark"></i></span></td>
-											<td><span class="text-danger"><i
-													class="fa-regular fa-xmark"></i></span></td>
-											<td><span class="text-danger"><i
-													class="fa-regular fa-xmark"></i></span></td>
-											<td class="text-center"><span style="font-size: 15px;">13/15</span></td>
+												</c:if>							
+												<c:if test="${list.atdcYnCd eq 'x' }">
+													<td><span>
+														<img src="/resources/images/jshminus.png" style="width:12px;">
+													</span></td>
+												</c:if>	
+											</c:forEach>
+											<td class="text-center">
+												<span style="font-size: 15px;">13/15</span>
+											</td>
 										</tr>
-										
 									</tbody>
 								</table>
 							</div>

@@ -46,7 +46,7 @@
 
 	<select id="getMyAttendance" resultType="attendanceVO" parameterType="map">
 		SELECT 
-			atdc_no
+			atdc_yn_cd 
 		FROM attendance 
 		WHERE std_no = #{stdNo}
 		AND lecap_no = #{lecapNo} 
