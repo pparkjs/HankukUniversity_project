@@ -16,7 +16,7 @@ public interface AssignmentService {
 	
 	public ServiceResult update(AssignmentVO vo);
 	
-	public int delete(String lecapNo);
+	public int delete(String asmNo);
 	
 	public AssignmentVO getAssignOne(String lecapNo);
 	
@@ -27,12 +27,12 @@ public interface AssignmentService {
 	//과제 상세페이지 학생 리스트
 	public List<AssignmentVO> getStdListByAssign(String asmNo);
 	
+	//과제 상세페이지 성적 부여 
+	public int giveScore(AssignmentVO assignmentVO);
 	
-	// 과제제출테이블
-	public int insertAssignSubmit(AssignmentVO vo);	 
-	
-	// 알람테이블
-	public int insertAlarm(AssignmentVO vo);
+	// 과제 등록 시 알람테이블에 정보 insert
+//	public int insertAlarm();
+
 
 
 

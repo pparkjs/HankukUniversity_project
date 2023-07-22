@@ -76,6 +76,10 @@
 									<form name="insertModalForm">
 										<div class="row">
 											<div class="col-xl-6">
+												<label class="form-label mt-3">신청자</label>
+												<input type="text" class="form-control" value="${student.stdNm }" readonly>
+											</div>
+											<div class="col-xl-6">
 												<label class="form-label mt-3">신청종류<span class="text-danger">*</span></label>
 												<div class="input-group">
 													<!-- <input type="text" class="form-control" name="colCd"> -->

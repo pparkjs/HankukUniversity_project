@@ -22,7 +22,8 @@ public class FacilitiesVO {
 	private int useUsers;	//사용인원
 	private String usePrps;	//사용목적
 	
-	private String stdNm;		//예약자 학번
+	private String stdNm;		//예약자 이름
 	
 	private int passCheck; // 예약시간이 지났는지 아닌지 체크
+	
 }

@@ -13,4 +13,6 @@ public class ClassroomVO {
 	private String proNm;
 	private String lecapNo;
 	private String proNo;
+	private String asmNo;
+	
 }

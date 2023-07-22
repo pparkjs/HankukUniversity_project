@@ -52,11 +52,15 @@
 	<!-- 웹 소켓 핸들러 -->
     <websocket:handlers>
         <websocket:mapping path="/websocket/rectureAppl.do" handler="myHandler"/>
+        <websocket:mapping path="/websocket/studyChat.do" handler="chatHandler"/>
         <websocket:handshake-interceptors>
 	    	<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
  	    </websocket:handshake-interceptors>
     </websocket:handlers>
  
     <beans:bean id="myHandler" class="kr.or.hku.websocket.LectureSocketHandler"/>
+
+
+    <beans:bean id="chatHandler" class="kr.or.hku.websocket.WebSocketHandler"/>
 	
 </beans:beans>
