@@ -94,4 +94,102 @@
 		DELETE FROM test_answer
 		WHERE test_no = #{testNo}
  	</delete>
+ 	
+ 	<!-- 해당 학생의 모든 과목에 대한 시험 리스트 가져오기 -->
+ 	<select id="getTestList" parameterType="string" resultType="testVO">
+ 	/*kr.or.hku.classroom.mapper.TestPresMapper.getTestList */
+	 	SELECT a.test_no, a.lecap_no, a.test_se, a.test_bgng_ymd, a.test_time_limit, a.test_file, b.std_no,
+		c.lecap_sem, c.lecap_yr, d.sub_nm, d.sub_grade
+		FROM test a
+		LEFT OUTER JOIN course_regist b ON(b.lecap_no = a.lecap_no)
+		LEFT OUTER JOIN lecture_aply c ON(b.lecap_no = c.lecap_no)
+		LEFT OUTER JOIN subject d ON(d.sub_no = c.sub_no)
+		WHERE b.std_no = #{stdNo}
+		AND c.lecap_yr like TO_CHAR(sysdate, 'YYYY')
+		AND c.lecap_sem = CASE
+		                        WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 6 THEN 1
+		                        WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 12 THEN 2
+		                        ELSE 0
+		                    END
+		ORDER BY a.test_no DESC
+ 	</select>
+ 	
+ 	<!-- 선지의 최대값 가져오기 -->
+ 	<select id="getMaxCh" parameterType="testVO" resultType="int">
+ 	/*kr.or.hku.classroom.mapper.TestPresMapper.getMaxCh */
+ 		SELECT MAX(a.ta_scr)
+		FROM test_answer a, test b
+		WHERE a.test_no = b.test_no
+		AND b.test_se like #{testSe}
+		AND b.lecap_no = #{lecapNo}
+ 	</select>
+ 	
+ 	<!-- 시험답안 리스트 가져오기 -->
+ 	<select id="getAnswerList" resultType="testAnswerVO" parameterType="testVO">
+ 	/*kr.or.hku.classroom.mapper.TestPresMapper.getAnswerList */	
+	 	SELECT 
+	 		  a.lecap_no
+	 		, a.test_no
+	 		, a.ta_no
+	 		, a.ta_ans
+	 		, a.ta_scr
+	 		, a.answer_ch
+		FROM test_answer a, test b
+		WHERE a.test_no = b.test_no
+		AND b.test_se like #{testSe}
+		AND b.lecap_no = #{lecapNo}
+		ORDER BY a.ta_no
+ 	</select>
+ 	
+ 	<!-- 시험 시작 할 시 등록될 테이블 -->
+ 	<insert id="testTakeInsert" parameterType="testVO" useGeneratedKeys="true">
+ 	/*kr.or.hku.classroom.mapper.TestPresMapper.testTakeInsert */	
+ 	<selectKey keyProperty="ttNo" resultType="int" order="BEFORE">
+ 		SELECT seq_test_take.nextval FROM dual
+ 	</selectKey>
+ 		INSERT INTO test_take
+ 		VALUES(#{ttNo}, #{lecapNo}, #{testNo}, #{stdNo}, sysdate, 0)
+ 	</insert>
+ 	
+ 	<!-- 학생 제출 답안 등록 -->
+ 	<insert id="studentTestAnswerInsert" parameterType="studentAnswerVO">
+ 	/*kr.or.hku.classroom.mapper.TestPresMapper.studentTestAnswerInsert */
+ 		INSERT INTO student_test_answer
+ 		VALUES(#{ttNo}, #{lecapNo}, #{testNo}, #{staNo}, #{staAns})
+ 	</insert>
+ 	
+ 	<!-- 시험 점수 결과 업데이트 -->
+ 	<update id="scoreUpdate" parameterType="map">
+ 	/*kr.or.hku.classroom.mapper.TestPresMapper.scoreUpdate */	
+ 		UPDATE test_take 
+ 		SET
+ 			tt_scr = #{ttScr}
+ 		WHERE tt_no = #{ttNo}
+ 	</update>
+ 	
+ 	<!-- 시험에 응시했었는지 체크 -->
+ 	<select id="preTestCheck" parameterType="map" resultType="int">
+ 	/*kr.or.hku.classroom.mapper.TestPresMapper.preTestCheck */	
+ 		SELECT COUNT(*)
+ 		FROM test_take
+ 		WHERE test_no = #{testNo}
+ 		AND std_no = #{stdNo}	
+ 	</select>
+ 	
+ 	<!-- 응시번호 가져오기 -->
+ 	<select id="getTtNo" parameterType="testVO" resultType="testVO">
+ 	/*kr.or.hku.classroom.mapper.TestPresMapper.getTtNo */	
+ 		SELECT tt_no, tt_dt, tt_scr
+ 		FROM test_take
+ 		WHERE std_no = #{stdNo}
+ 		AND test_no = #{testNo}
+ 	</select>
+ 	
+ 	<!-- 해당 응시번호의 제출 답안 리스트 가져오기 -->
+ 	<select id="getStuAnsList" parameterType="int" resultType="studentAnswerVO">
+ 	/*kr.or.hku.classroom.mapper.TestPresMapper.getStuAnsList */	
+ 		SELECT tt_no, test_no, lecap_no, sta_no, sta_ans
+ 		FROM student_test_answer
+ 		WHERE tt_no = #{ttNo}
+ 	</select>
  </mapper>
