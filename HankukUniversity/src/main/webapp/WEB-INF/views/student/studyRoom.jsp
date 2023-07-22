@@ -833,7 +833,7 @@ $(document).on('DOMContentLoaded', function() {
 							// 여기 이제 구현하면 됨
 							var eventToDelete = calendar.getEventById(pCalNo);
 							eventToDelete.remove();
-							getCalendarInfoList(moment(calendar.getDate()).format("YYYY-MM-DD"));
+// 							getCalendarInfoList(moment(calendar.getDate()).format("YYYY-MM-DD"));
 						}
 					},
 					err: function(err){
