@@ -169,8 +169,8 @@
  	</update>
  	 	<!-- 메시지 등록하기 -->
  	<insert id="insertMessage" parameterType="studyVo">
- 		insert into chatmessage
- 		values(seq_chatmessage.nextval, #{studyNo}, #{stdNo}, #{msgContent}, sysdate, #{unreadMemCnt})  
+ 		insert into CHATMESSAGE(MSG_NO, STUDY_NO, STD_NO, MSG_CONTENT, MSG_REGDATE, UNREAD_MEM_CNT)
+		values(SEQ_CHATMESSAGE.nextval, #{studyNo}, #{stdNo}, #{msgContent}, sysdate, 0)  
  	</insert>
 	
 	<!-- 본인의 가입신청 대기중인 스터디 리스트 -->
@@ -386,8 +386,11 @@
 	</select>
 	
 	<select id="messageList" parameterType="int" resultType="studyVo">
-		select msg_no, study_no, std_no, msg_content, msg_regdate, unread_mem_cnt
-		from chatmessage
-		where study_no = #{studyNo}
+		SELECT msg_no, study_no, a.std_no, std_nm, msg_content, msg_regdate, unread_mem_cnt
+			FROM chatmessage a
+			JOIN STUDENT b ON a.std_no = b.std_no
+			WHERE study_no = #{studyNo}
+		ORDER BY msg_no
 	</select>
+	
  </mapper>
