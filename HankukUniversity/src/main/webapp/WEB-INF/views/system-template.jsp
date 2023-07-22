@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,16 +60,16 @@
 		<tiles:insertAttribute name="sidebar"/>
 		
 		<!-- 여기는 spring 권한별로 달라져야하는 부분 -->
-		<c:if test="${not empty std}">
+		<sec:authorize access="hasRole('ROLE_STUDENT')">
 		<tiles:insertAttribute name="studentContent"/>
 <%-- 	<tiles:insertAttribute name="portalContent"/> --%>  
-		</c:if>
-		<c:if test="${not empty emp }">
+		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
 	 	<tiles:insertAttribute name="adminContent"/> 
-		</c:if>
-		<c:if test="${not empty pro }">
+		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_PROFESSOR')">
 		<tiles:insertAttribute name="professorContent"/>
-		</c:if>
+		</sec:authorize>
 
 		
 		<!-- Content body start -->

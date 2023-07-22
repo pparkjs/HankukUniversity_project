@@ -5,12 +5,30 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-<!-- 	<security:http> -->
 		<!-- 기본적인 폼 인증 기반의 인증 기능을 사용한다. -->
-<!-- 		<security:form-login/> -->
-<!-- 	</security:http> -->
-<!-- 	<bean id="customAccessDenied" class="kr.or.hku.security.CustomAccessDeniedHandler"></bean>	 -->
-<!-- 	<bean id="customLoginSuccess" class="kr.or.hku.security.CustomLoginSuccesHandler"></bean>	 -->
-
-<!-- 	<security:authentication-manager></security:authentication-manager> -->
+	
+	<bean id="customLoginSuccess" class="kr.or.hku.security.CustomLoginSuccessHandler"></bean>	
+	<bean id="customAccessDenied" class="kr.or.hku.security.CustomAccessDeniedHandler"></bean>	
+	<!-- 스프링 시큐리티에서 제공하는 BCryptPasswordEncoder 클래스를 자바빈으로 등록 -->
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+<!-- 	<bean id= "customPasswordEncoder" class="kr.or.hku.security.CustomNoOpPasswordEncoder"></bean> -->
+	<bean id="customUserDetailsService" class="kr.or.hku.security.CustomUserDetailsService"></bean>
+	<security:http pattern="/images/**" security="none" />
+	<security:http pattern="/js/**" security="none" />
+	<security:http pattern="/css/**" security="none" />
+	
+<!-- 	<security:http pattern="/main/login" security="none" />
+	<security:http pattern="/main/logout" security="none" />
+ -->	
+ 	<security:http>
+		<security:form-login login-page="/main/login" authentication-success-handler-ref="customLoginSuccess"/>
+		<security:access-denied-handler ref="customAccessDenied"/>
+		<security:logout logout-url="/main/logout" invalidate-session="true"/>
+<!-- 		<security:csrf disabled="false" /> -->
+	</security:http>
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="customUserDetailsService">
+			<security:password-encoder ref="bcryptPasswordEncoder"/>
+		</security:authentication-provider>
+	</security:authentication-manager>
 </beans>
