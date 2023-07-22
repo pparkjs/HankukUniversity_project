@@ -36,27 +36,28 @@
 </style>
 
 <div class="content-body">
-	<!-- row -->
+	<div class="page-titles">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">클래스룸 목록</a></li>
+			<li class="breadcrumb-item active"><a href="javascript:void(0)">클래스룸</a></li>
+		</ol>
+	</div>
 	<div class="container-fluid">
 		<div class="table-responsive">
 			<div class="col-xl-12">
-				<h4 class="heading mb-0">
-<!-- 					<i class="fa-solid fa-user-plus text-primary me-3 mb-3"></i>  -->
-					<strong>클래스룸 목록</strong>
-				</h4><br><br>
-				<div class="yNsSel">
-					<h4>학년도 :</h4> 
-					<select>
-						<option value="1">2021년</option>
-						<option value="2">2022년</option>
-						<option value="3">2023년</option>
-					</select>
-					<h4>학기 :</h4> 
-					<select>
-						<option value="1">1학기</option>
-						<option value="2">2학기</option>
-					</select>
-				</div>
+					<div class="yNsSel"
+						style="font-size: 20px; margin-bottom: 20px; color: black;">
+						학년도 :&nbsp;&nbsp; <select class="year">
+							<%-- 							<c:forEach items="${list }" var="list"> --%>
+							<option style="font-size: 16px;">2023학년도</option>
+							<option style="font-size: 16px;">2022학년도</option>
+							<%-- 							</c:forEach> --%>
+						</select> &nbsp;&nbsp;/&nbsp;학기 : &nbsp;&nbsp; <select class="sem">
+							<option style="font-size: 16px;">2학기</option>
+							<option style="font-size: 16px;">1학기</option>
+						</select>
+						<button type="button" id="regBtn" class="btn btn-primary">조회</button>
+					</div>
 				<div class="card h-auto"> 
 					<div class="card-body p-0">
 						<div class="table-responsive active-projects">
@@ -88,7 +89,8 @@
 												<td>
 													<p class="mb-0 font-w500">${list.proNm }</p>
 												</td>
-												<td><svg width="40" height="40" viewBox="0 0 20 20"
+												<td>
+													<svg class="enterClassroom" id="${list.lecapNo }" width="40" height="40" viewBox="0 0 20 20"
 														fill="none" xmlns="http://www.w3.org/2000/svg">
 															<path
 															d="M2.5 7.49999L10 1.66666L17.5 7.49999V16.6667C17.5 17.1087 17.3244 17.5326 17.0118 17.8452C16.6993 18.1577 16.2754 18.3333 15.8333 18.3333H4.16667C3.72464 18.3333 3.30072 18.1577 2.98816 17.8452C2.67559 17.5326 2.5 17.1087 2.5 16.6667V7.49999Z"
@@ -111,6 +113,19 @@
 	</div>
 </div>
 <script>
+$(function(){
 
+	var enterClassroom = document.querySelectorAll(".enterClassroom");
+	
+	for(let i = 0; i < enterClassroom.length; i++){
+		enterClassroom[i].addEventListener("click", function(){
+			let lecapNo = this.id;
+			console.log("enterClassroom!!!", enterClassroom);
+			
+			location.replace(`/hku/student/stdClassroomMain/\${lecapNo}`);
+			
+		})
+	}
+})
 
 </script>

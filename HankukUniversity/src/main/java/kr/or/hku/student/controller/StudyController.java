@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.hku.student.service.StudyService;
-import kr.or.hku.student.vo.RecordVO;
 import kr.or.hku.student.vo.StdCalendarVO;
 import kr.or.hku.student.vo.StudentVO;
 import kr.or.hku.student.vo.StudyVO;
@@ -170,8 +168,12 @@ public class StudyController {
 	@ResponseBody
 	@GetMapping(value="/student/messageList")
 	public ResponseEntity<List<StudyVO>> messageList(@RequestParam("studyNo") int studyNo, @RequestParam("stdNo") String stdNo) {
-	    // 해당 방의 메시지 리스트 가져오기
+	    log.info("msgList실행!");
+		// 해당 방의 메시지 리스트 가져오기
 	    List<StudyVO> list = service.messageList(studyNo); 
+	    for(int i = 0; i< list.size(); i++) {
+	    	log.info("msgList: " + list);
+	    }
 	    // userId 는 안읽은 메시지 처리 위해서 받아온건데 1:1이 아니라 멀티 채팅방일때 생각중
 	    return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
 	}
@@ -184,6 +186,7 @@ public class StudyController {
 		return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
 	}
 		
+	@ResponseBody
 	@GetMapping("/student/study-calendar")
 	public List<StdCalendarVO> getStdCalList(@RequestParam Map<String, String> map){
 		log.info("캘리더 정보 가져오기" + map.toString());

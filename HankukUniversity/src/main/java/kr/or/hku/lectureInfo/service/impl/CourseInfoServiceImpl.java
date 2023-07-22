@@ -11,18 +11,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.hku.ServiceResult;
 import kr.or.hku.admin.vo.DepartmentVO;
+import kr.or.hku.classroom.mapper.AssignmentMapper;
 import kr.or.hku.lectureInfo.mapper.CourseInfoMapper;
 import kr.or.hku.lectureInfo.service.CourseInfoService;
 import kr.or.hku.lectureInfo.vo.CartVO;
 import kr.or.hku.lectureInfo.vo.CourseRegistVO;
 import kr.or.hku.lectureInfo.vo.LectureAplyVO;
 import kr.or.hku.lectureInfo.vo.SubjectVO;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class CourseInfoServiceImpl implements CourseInfoService {
 	
 	@Autowired
 	private CourseInfoMapper courseMapper;
+	
+	@Autowired
+	private AssignmentMapper assignMapper;
 	
 	@Override
 	public List<SubjectVO> getList(Map<String, Object> map) {
@@ -105,6 +112,13 @@ public class CourseInfoServiceImpl implements CourseInfoService {
 			int insertCnt = courseMapper.cartRegister(map);
 			
 			if(insertCnt > 0) {
+				
+				// 수강신청시 출석테이블에 15주차치 들어가기
+				for(int i = 1; i <= 15; i++) {
+					log.info("출석맵 : " + map);
+					map.put("atdcWeek", i);
+					courseMapper.attendInsert(map);
+				}
 				res = ServiceResult.OK;
 			}else {
 				res = ServiceResult.FAILED;

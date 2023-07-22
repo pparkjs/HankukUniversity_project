@@ -26,7 +26,6 @@ public class AssignmentServiceImpl implements AssignmentService {
 		return mapper.assignOne(asmNo);
 	}
 
-	
 	@Transactional(rollbackFor = SQLException.class)
 	@Override
 	public ServiceResult giveAssignToStds(List<String> stdList, String asmNo) {
@@ -49,7 +48,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 		}
 		return res;
 	}
-	
+
 	@Override
 	public List<String> getStdList(String lecapNo) {
 		return mapper.getStdList(lecapNo);
@@ -64,7 +63,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 	public ServiceResult update(AssignmentVO vo) {
 		ServiceResult result = null;
 		int status = mapper.update(vo);
-		if(status > 0) {
+		if (status > 0) {
 			result = ServiceResult.OK;
 		} else {
 			result = ServiceResult.FAILED;
@@ -73,8 +72,8 @@ public class AssignmentServiceImpl implements AssignmentService {
 	}
 
 	@Override
-	public int delete(String lecapNo) {
-		return mapper.delete(lecapNo);
+	public int delete(String asmNo) {
+		return mapper.delete(asmNo);
 	}
 
 	@Override
@@ -82,21 +81,23 @@ public class AssignmentServiceImpl implements AssignmentService {
 		return mapper.getAssignOne(lecapNo);
 	}
 
-	// 과제제출 테이블에 가용코드(과제제출여부 N) ,파일 null
-	@Override
-	public int insertAssignSubmit(AssignmentVO vo) {
-		return mapper.insertAssignSubmit(vo);
-	}
 
 	// 알람테이블 알람번호, 알람 등록일, 알람제목, 알람타입
-	@Override
-	public int insertAlarm(AssignmentVO vo) {
-		return mapper.insertAlarm(vo);
-	}
-
+//	@Override
+//	public int insertAlarm() {
+//		return mapper.insertAlarm();
+//	}
+	
+	// 과제 상세페이지 학생 리스트
 	@Override
 	public List<AssignmentVO> getStdListByAssign(String asmNo) {
 		return mapper.getStdListByAssign(asmNo);
+	}
+	
+	// 과제 상세페이지 학생 성적 부여
+	@Override
+	public int giveScore(AssignmentVO assignmentVO) {
+		return mapper.giveScore(assignmentVO);
 	}
 
 }
