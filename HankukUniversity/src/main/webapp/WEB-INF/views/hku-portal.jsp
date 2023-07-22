@@ -122,14 +122,14 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="grid-stack">
-                                    <div class="grid-stack-item portlet0" gs-w="6" gs-h="4">
+                                    <div class="grid-stack-item portlet1" gs-w="6" gs-h="4">
                                         <div class="grid-stack-item-content">
                                             <div class="card portlet-item">
                                                 <div class="card-body">
                                                     <div style="display: flex; justify-content: space-between;">
                                                         <div>
                                                             <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
-                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;일정</h4>
+                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;1일정</h4>
                                                         </div>
                                                         <div>
                                                             <a href='/calendar/main' class="ti-plus"></a>&nbsp;&nbsp;
@@ -142,14 +142,14 @@
                                             </div>
                                         </div>   
                                     </div>
-                                    <div class="grid-stack-item portlet0" gs-w="6" gs-h="4">
+                                    <div class="grid-stack-item portlet2" gs-w="6" gs-h="4">
                                         <div class="grid-stack-item-content">
                                             <div class="card portlet-item">
                                                 <div class="card-body">
                                                     <div style="display: flex; justify-content: space-between;">
                                                         <div>
                                                             <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
-                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;공지</h4>
+                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;2공지</h4>
                                                         </div>
                                                         <div>
                                                             <a href='/calendar/main' class="ti-plus"></a>&nbsp;&nbsp;
@@ -162,14 +162,14 @@
                                             </div>
                                         </div>   
                                     </div>
-                                    <div class="grid-stack-item portlet0" gs-w="6" gs-h="4">
+                                    <div class="grid-stack-item portlet3" gs-w="6" gs-h="4">
                                         <div class="grid-stack-item-content">
                                             <div class="card portlet-item">
                                                 <div class="card-body">
                                                     <div style="display: flex; justify-content: space-between;">
                                                         <div>
                                                             <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
-                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;날씨</h4>
+                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;3날씨</h4>
                                                         </div>
                                                         <div>
                                                             <a href='/calendar/main' class="ti-plus"></a>&nbsp;&nbsp;
@@ -182,14 +182,14 @@
                                             </div>
                                         </div>   
                                     </div>
-                                    <div class="grid-stack-item portlet0" gs-w="6" gs-h="4">
+                                    <div class="grid-stack-item portlet4" gs-w="6" gs-h="4">
                                         <div class="grid-stack-item-content">
                                             <div class="card portlet-item">
                                                 <div class="card-body">
                                                     <div style="display: flex; justify-content: space-between;">
                                                         <div>
                                                             <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
-                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;시간표</h4>
+                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;4시간표</h4>
                                                         </div>
                                                         <div>
                                                             <a href='/calendar/main' class="ti-plus"></a>&nbsp;&nbsp;
@@ -202,14 +202,14 @@
                                             </div>
                                         </div>   
                                     </div>
-                                    <div class="grid-stack-item portlet0" gs-w="6" gs-h="4">
+                                    <div class="grid-stack-item portlet5" gs-w="6" gs-h="4">
                                         <div class="grid-stack-item-content">
                                             <div class="card portlet-item">
                                                 <div class="card-body">
                                                     <div style="display: flex; justify-content: space-between;">
                                                         <div>
                                                             <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
-                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;이수정보</h4>
+                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;5이수정보</h4>
                                                         </div>
                                                         <div>
                                                             <a href='/calendar/main' class="ti-plus"></a>&nbsp;&nbsp;
@@ -222,14 +222,14 @@
                                             </div>
                                         </div>   
                                     </div>
-                                    <div class="grid-stack-item portlet0" gs-w="6" gs-h="4">
+                                    <div class="grid-stack-item portlet6" gs-w="6" gs-h="4">
                                         <div class="grid-stack-item-content">
                                             <div class="card portlet-item">
                                                 <div class="card-body">
                                                     <div style="display: flex; justify-content: space-between;">
                                                         <div>
                                                             <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
-                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;식단표</h4>
+                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;6식단표</h4>
                                                         </div>
                                                         <div>
                                                             <a href='/calendar/main' class="ti-plus"></a>&nbsp;&nbsp;
@@ -280,12 +280,51 @@
 </body>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script>
-var options = { // 여기에 그리드 스택 옵션 삽입
-    disableOneColumnMode: true, // jfidle 작은 창 크기용
-    float: false,
-    removable: "#trash", // drag-out delete class
-    removeTimeout: 100
-};
-var grid = GridStack.init(options);
+window.onload = function(){
+    var grid = GridStack.init({ // 여기에 그리드 스택 옵션 삽입
+        disableOneColumnMode: true, // jfidle 작은 창 크기용
+        float: false,
+        removable: "#trash", // drag-out delete class
+        removeTimeout: 100
+    });
+    
+    const regex = /[^0-9]/g;
+
+    // 내가 설정한 포틀릿순서대로 보여주는 함수실행
+    sortPortlet();
+
+    // 내가 설정한 포틀릿순서대로 보여주는 함수
+    function sortPortlet(){
+        // 포틀렛 예시
+        var dataBasePortlet = "251643";
+        // var myPortlet = ["2","5","1","6","4","3"];
+        var myPortlet = dataBasePortlet.split("");
+
+        var gridArea = document.querySelector(".grid-stack");
+
+        // 클래스 item 을 가지고 있는 포틀렛 배열
+        var gridItem = document.querySelectorAll(".grid-stack-item");
+        console.log(gridItem);
+        for(let i =0; i<myPortlet.length; i++){
+            for(let j=0; j<gridItem.length; j++){
+                let stack = gridItem[j];
+                // console.log(stack);
+                let stackNum = stack.className;
+                // console.log(stackNum);
+                stackNum = stackNum.replaceAll(regex, "");
+                // console.log(stackNum);
+                if(myPortlet[i] == stackNum){
+                    console.log(stack);
+                    // portletSeq += stackNum;
+                    gridArea.appendChild(stack);
+                    break;
+                }
+            }
+        }
+    }
+
+}
+
+
 
 </script>
