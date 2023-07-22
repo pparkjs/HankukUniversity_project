@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
 			String uuid = UUID.randomUUID().toString();
 			saveFileName += "/" + uuid + "_" + proFileImgFile.getOriginalFilename();
 			uploadPath += "/" + saveFileName;
-			
+			log.info("uploadPath : " + uploadPath);
 			try {
 				proFileImgFile.transferTo(new File(uploadPath));	// 파일 복사
 			} catch (IllegalStateException e) {
