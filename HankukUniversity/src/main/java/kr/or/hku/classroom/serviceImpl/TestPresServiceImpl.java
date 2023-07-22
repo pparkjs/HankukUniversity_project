@@ -1,6 +1,7 @@
 package kr.or.hku.classroom.serviceImpl;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.mapper.TestPresMapper;
 import kr.or.hku.classroom.service.TestPresService;
+import kr.or.hku.classroom.vo.StudentAnswerVO;
 import kr.or.hku.classroom.vo.TestAnswerVO;
 import kr.or.hku.classroom.vo.TestVO;
 
@@ -117,5 +119,49 @@ public class TestPresServiceImpl implements TestPresService {
 		return vo;
 	}
 
+	@Override
+	public List<TestVO> getTestList(String stdNo) {
+		return testPresMapper.getTestList(stdNo);
+	}
+
+	@Override
+	public List<TestAnswerVO> getAnswerList(TestVO test) {
+		return testPresMapper.getAnswerList(test);
+	}
+
+	@Override
+	public int getMaxCh(TestVO test) {
+		return testPresMapper.getMaxCh(test);
+	}
+
+	@Override
+	public int testTakeInsert(TestVO test) {
+		return testPresMapper.testTakeInsert(test);
+	}
+
+	@Override
+	public void studentTestAnswerInsert(StudentAnswerVO sAnsVO) {
+		testPresMapper.studentTestAnswerInsert(sAnsVO);
+	}
+
+	@Override
+	public int scoreUpdate(Map<String, Object> map) {
+		return testPresMapper.scoreUpdate(map);
+	}
+
+	@Override
+	public int preTestCheck(Map<String, Object> map) {
+		return testPresMapper.preTestCheck(map);
+	}
+
+	@Override
+	public TestVO getTtNo(TestVO test) {
+		return testPresMapper.getTtNo(test);
+	}
+
+	@Override
+	public List<StudentAnswerVO> getStuAnsList(int ttNo) {
+		return testPresMapper.getStuAnsList(ttNo);
+	}
 
 }
