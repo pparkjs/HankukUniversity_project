@@ -212,10 +212,17 @@
  	</update>
  	
  	<!-- 수강과목에 삽입 -->
- 	<insert id="cartRegister">
+ 	<insert id="cartRegister" parameterType="map">
  	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.cartRegister*/
  		INSERT INTO course_regist(std_no, lecap_no) 
  		VALUES(#{stdNo}, #{lecapNo})
+ 	</insert>
+ 	
+ 	<!-- 수강 신청시 출석테이블에 등록 -->
+ 	<insert id="attendInsert" parameterType="map">
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.attendInsert*/	
+ 		INSERT INTO attendance
+ 		VALUES(seq_attendance.nextval, #{lecapNo}, #{stdNo}, 'x', #{atdcWeek})
  	</insert>
  	
  	<!-- 잔여 정원 가져오기 -->
