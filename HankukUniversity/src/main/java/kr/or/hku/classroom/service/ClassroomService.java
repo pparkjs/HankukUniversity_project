@@ -22,7 +22,7 @@ public interface ClassroomService {
 	// 교수 클래스룸 목록
 	public List<ClassroomVO> stdSelectList(String stdNo); 
 	// 학생 클래스룸 메인 과제 리스트 
-	public List<AssignmentVO> stdMainAssignList(String lecapNo);
+	public List<AssignmentVO> stdMainAssignList(Map<String, String> map);
 	// 학생 클래스룸 메인 출석현황
 	public List<AttendanceVO> getMyAttendance(Map<String, String> map);
 	

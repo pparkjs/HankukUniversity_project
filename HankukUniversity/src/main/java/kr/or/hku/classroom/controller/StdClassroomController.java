@@ -68,7 +68,7 @@ public class StdClassroomController {
 		log.info("stdNo" + stdVo.getStdNo());
 
 		// 공지사항, 과제, 출석 정보를 맵에 담은 변수를 통해 가져옴 
-		List<AssignmentVO> list = classService.stdMainAssignList(lecapNo);
+		List<AssignmentVO> list = classService.stdMainAssignList(map);
 		List<AttendanceVO> attendList = classService.getMyAttendance(map);
 		log.info("list!!!!!!!=>" + list.toString());
 		model.addAttribute("list", list);

@@ -22,6 +22,12 @@
 		WHERE
 			a.std_no = #{stdNo}
 		AND e.aprv_stts_cd like 'appv'
+		AND e.lecap_yr like TO_CHAR(sysdate, 'YYYY')
+		AND e.lecap_sem = CASE
+                  WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 6 THEN 1
+                  WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 12 THEN 2
+                  ELSE 0
+                 END
 	</select>
 	
 	
@@ -46,7 +52,7 @@
 
 	<select id="getMyAttendance" resultType="attendanceVO" parameterType="map">
 		SELECT 
-			atdc_no
+			atdc_yn_cd 
 		FROM attendance 
 		WHERE std_no = #{stdNo}
 		AND lecap_no = #{lecapNo} 

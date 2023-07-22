@@ -44,7 +44,7 @@ public class LoginController {
 		if(userVo.getUserClsCd().equals("student")) {
 			StudentVO stdVo = loginService.studentUser(userVo.getUserNo());
 			session.setAttribute("std", stdVo);
-	
+			
 			goPage = "redirect:/main/portal";
 		}else if(userVo.getUserClsCd().equals("professor")) {//사용자식별코드가 교수일경우
 			ProfessorVO proVo = loginService.professorUser(userVo.getUserNo());

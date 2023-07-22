@@ -71,7 +71,7 @@
 					<span class="nav-text">시험</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">응시과목 정보</a></li>
+					<li><a href="/hku/test-info">응시과목 정보</a></li>
 				</ul>
 			</li>
 			

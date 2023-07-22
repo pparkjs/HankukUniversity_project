@@ -45,8 +45,8 @@ public class ClassroomServiceImpl implements ClassroomService {
 	
 	// 학생 클래스룸 메인 과제 리스트
 	@Override
-	public List<AssignmentVO> stdMainAssignList(String lecapNo) {
-		return classroomMapper.stdMainAssignList(lecapNo);
+	public List<AssignmentVO> stdMainAssignList(Map<String, String> map) {
+		return classroomMapper.stdMainAssignList(map);
 	}
 	
 	// 클래스룸 메인 출석 현황
