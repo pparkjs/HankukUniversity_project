@@ -41,7 +41,7 @@
 	<div class="container-fluid deptDiv">
 		<div class="card" id="card-title-1">
 			<div class="card-header border-0 pb-0 ">
-				<h5 class="card-title">학과</h5>
+				<h5 class="card-title">학과 정보</h5>
 			</div>
 			<hr/>
 			<div class="card-body dept-body" id="dept-body">
@@ -203,6 +203,9 @@
 	</div>
 </div> <!-- 모달 END -->
 <script>
+function beforesend(xhr){
+	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+}
 
 var deptBody = document.querySelector("#dept-body");
 
@@ -220,11 +223,12 @@ function deptList(){
 	// console.log("searchData=" + JSON.stringify(searchData));
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST","/hku/admin/dept-list",true);
+	beforesend(xhr);
 	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			let tbWrap = "<div class='table-wrap'>";
-			tbWrap += "<table class='table'>";
+			tbWrap += "<table class='table' style='margin-top:-22px;'>";
 
 			tbWrap += "<thead class='thead-dark'>";
 			tbWrap += "<tr>";
@@ -269,7 +273,6 @@ function deptList(){
 				tbWrap += "<tr><td colspan=6>데이터가 존재하지 않습니다.</td></tr>";
 			}
 
-
 			tbWrap += "</tbody>";
 			tbWrap += "</table>";
 			tbWrap += "</div>"
@@ -290,12 +293,12 @@ function selectAll(target){
 }
 function onlyCheck(){
 	event.stopPropagation();
-	console.log("오직 체크만");
+// 	console.log("오직 체크만");
 }
 
 
 function delDept(){
-	console.log("delDept");
+// 	console.log("delDept");
 	var delDeptArr = new Array();
 	
 	// let data = {};
@@ -313,22 +316,37 @@ function delDept(){
 	}
 	console.log(delDeptArr);
 	console.log(JSON.stringify(delDeptArr));
-	
-	let xhr = new XMLHttpRequest();
-	xhr.open("DELETE","/hku/admin/dept-administration",true);
-	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-	xhr.onreadystatechange = function(){
-		if(xhr.readyState == 4 && xhr.status == 200){
-			if(xhr.responseText === 'SUCCESS'){
-				deptList();
-				successAlert("삭제가 완료되었습니다!");
-			} else if(xhr.responseText === 'FAILED'){
-				console.log("삭제 실패!");
+
+
+	swal({
+		title: "삭제를 진행하시겠습니까?",
+		text: "삭제 후 복구가 불가능합니다",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+	.then((willDelete) => {
+		if (willDelete) {
+			let xhr = new XMLHttpRequest();
+			xhr.open("DELETE","/hku/admin/dept-administration",true);
+			beforesend(xhr);
+			xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == 4 && xhr.status == 200){
+					if(xhr.responseText === 'SUCCESS'){
+						deptList();
+						successAlert("삭제가 완료되었습니다!");
+					} else if(xhr.responseText === 'FAILED'){
+						console.log("삭제 실패!");
+					}
+				}
 			}
+			xhr.send(JSON.stringify(delDeptArr));
+
+		} else {
+			return false;
 		}
-	}
-	xhr.send(JSON.stringify(delDeptArr));
-	
+	});
 }
 
 function deptCdSet(){
@@ -338,6 +356,7 @@ function deptCdSet(){
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("GET","/hku/admin/deptCdSet",true);
+	beforesend(xhr);
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			var nextCode = xhr.responseText;
@@ -416,6 +435,7 @@ function deptInsert(){
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST","/hku/admin/dept-administration",true);
+	beforesend(xhr);
 	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
@@ -456,43 +476,10 @@ function deptDetail(target){
 	var selectDeptCd = target.children[2].innerText;
 	let xhr = new XMLHttpRequest();
 	xhr.open("GET", "/hku/admin/dept-select?deptCd="+selectDeptCd,true);
+	beforesend(xhr);
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
-			// console.log("학과상세 성공");
 			deptDetail = JSON.parse(xhr.responseText);
-			// console.log("학과상세",deptDetail);
-			// console.log(deptDetail.colCd, deptDetail.deptCd);
-			
-			// console.log("selectDeptCd",deptDetail.colCd);
-			// for(let i=0; i<colOptions.length; i++){
-			// 	console.log("1",colOptions[i]);
-			// 	if(colOptions[i].value == deptDetail.colCd){
-			// 		// console.dir(options[i]);
-			// 		// options[i].removeAttribute("selected");
-
-			// 		console.log("전",colOptions[i].selected);
-			// 		// options[i].selected = true;
-			// 		// options[i].setAttribute("selected",true);
-			// 		// console.log(options[i]);
-			// 		console.log("후",colOptions[i].selected);
-			// 	}
-			// }
-
-			// for(let i=0; i<flctOptions.length; i++){
-			// 	console.log("1",flctOptions[i]);
-			// 	if(flctOptions[i].value == deptDetail.colCd){
-			// 		// console.dir(options[i]);
-			// 		// options[i].removeAttribute("selected");
-
-			// 		console.log("전",flctOptions[i].selected);
-			// 		// options[i].selected = true;
-			// 		// options[i].setAttribute("selected",true);
-			// 		// console.log(options[i]);
-			// 		console.log("후",flctOptions[i].selected);
-			// 	}
-			// }
-			// console.log("selectColCd",colCd);
-			// console.log("optionsColCd",colCd.colOptions);
 
 			colCd.value = deptDetail.colCd;
 			deptCd.value = deptDetail.deptCd;
@@ -533,6 +520,7 @@ function deptModify(){
 	// console.log(deptModifyData);
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST","/hku/admin/dept-update",true);
+	beforesend(xhr);
 	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200) {
