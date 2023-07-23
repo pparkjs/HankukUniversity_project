@@ -1,8 +1,6 @@
 package kr.or.hku.classroom.controller;
 
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,15 +9,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -44,12 +40,14 @@ public class testPresController {
 	@Autowired
 	private TestPresService testPresService;
 	
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')") 
 	@GetMapping("/test-presentation")
 	public String testForm() {
 		return "professor/test-form";
 	}
 	
 	// 시험 출제
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')") 
 	@PostMapping("/test-insert")
 	public String testInsert(TestVO test, Model model, HttpSession session, RedirectAttributes redi) throws IOException {
 		log.info("시험지 vo : " + test);
@@ -107,6 +105,7 @@ public class testPresController {
 	}
 	
 	// 수정하기폼으로 이동
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')") 
 	@GetMapping("/testUpdate")
 	public String testUpdateForm(TestVO test, Model model) {
 		log.info("시험!! : " + test);
@@ -123,6 +122,7 @@ public class testPresController {
 	}
 	
 	// 수정하기 처리
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')") 
 	@PostMapping("/test-update")
 	public String testUpdate(TestVO test, Model model, HttpSession session, RedirectAttributes redi) throws IOException {
 		
@@ -168,8 +168,8 @@ public class testPresController {
 	// 시험에 응시 했는지 체크
 	@ResponseBody
 	@GetMapping("/preTest-check")
-	public String preTestCheck(@RequestParam Map<String, Object> map) {
-		int cnt = testPresService.preTestCheck(map);
+	public String preTestCheck(TestVO test) {
+		int cnt = testPresService.preTestCheck(test);
 		if(cnt > 0) {
 			return "exist";
 		}else {
@@ -179,28 +179,37 @@ public class testPresController {
 	
 	// 시험응시 시작
 	@GetMapping("/open-test")
-	public String openTest(TestVO test, Model model, HttpSession session) {
+	public String openTest(TestVO test, Model model, HttpSession session, RedirectAttributes redi) {
 		TestVO testVO = testPresService.timeChange(test);
 		
-		// 시험 응시 버튼 클릭 시 시험 응시테이블에 삽입 (응시번호 selectKey로 가져옴)
-		testPresService.testTakeInsert(test);
+		int cnt = testPresService.preTestCheck(test);
+		if(cnt > 0) {
+			redi.addFlashAttribute("msg", "exist");
+			return "redirect:/hku/test-info";
+		}else {
+			// 시험 응시 버튼 클릭 시 시험 응시테이블에 삽입 (응시번호 selectKey로 가져옴)
+			testPresService.testTakeInsert(test);
+			
+			int maxCh = testPresService.getMaxCh(test); // 선지의 최대 수 가져오기
+			
+			// 해당시험 답지 리스트 가져오기
+			List<TestAnswerVO> list = testPresService.getAnswerList(test);
+			
+			log.info("ttNo : " + test.getTtNo());
+			session.setAttribute("testVO", test); // 시험지 정보 세션에 담기
+			session.setAttribute("ttNo", test.getTtNo());
+			
+			model.addAttribute("answerList", list);
+			model.addAttribute("maxCh", maxCh);
+			return "open-test";
+		}
 		
-		int maxCh = testPresService.getMaxCh(test); // 선지의 최대 수 가져오기
 		
-		// 해당시험 답지 리스트 가져오기
-		List<TestAnswerVO> list = testPresService.getAnswerList(test);
-		
-		log.info("ttNo : " + test.getTtNo());
-		session.setAttribute("testVO", test); // 시험지 정보 세션에 담기
-		session.setAttribute("ttNo", test.getTtNo());
-		
-		model.addAttribute("answerList", list);
-		model.addAttribute("maxCh", maxCh);
-		return "open-test";
 	}
 	
 	// 시험 답안 제출
 	@ResponseBody
+	@PreAuthorize("hasRole('ROLE_STUDENT')") 
 	@PostMapping("/studentAnswerInsert")
 	public String studentAnswerInsert(@RequestBody List<StudentAnswerVO> studentAnsList, HttpSession session) {
 		

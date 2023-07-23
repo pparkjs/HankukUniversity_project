@@ -121,6 +121,9 @@ function subList(){
 		data:selData,
 		url : "/hku/sub-list",
 		dataType : "json",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success : function(res){
 			console.log(res)
 

@@ -32,28 +32,26 @@
             </div>
             <div class="modal-body">
 				<div class="modal-wrap">
-					<form action="/hku/flcts-reservation" method="post">
-						<div class="modal-title1">
-							<span style="font-size: 19px;">시험일자</span>
-							<span style="margin-right: 29px; font-size: 19px;">응시일자</span>
-						</div>
-						<div class="modal-content1">
-							<input type="text" class="form-control" id="testDate" readonly>
-							<input type="text" class="form-control" id="test-takeDate" readonly>
-						</div>
-						<div class="modal-title2">
-							<span style="font-size: 19px;">총 문제 수</span>
-							<span style="margin-right: 13px; font-size: 19px;">맞은개수/틀린개수</span>
-							<span style="margin-right: 27px; font-size: 19px;">총점</span>
-							<span style="margin-right: 8px; font-size: 19px;">나의점수</span>
-						</div>
-						<div class="modal-content2">
-							<input type="text" class="form-control" id="totalQu" readonly>
-							<input type="text" class="form-control" id="cnt" readonly>
-							<input type="text" class="form-control" id="scoreSum" readonly>
-							<input type="text" class="form-control" id="myScore" readonly>
-						</div>
-					</form>
+					<div class="modal-title1">
+						<span style="font-size: 19px;">시험일자</span>
+						<span style="margin-right: 29px; font-size: 19px;">응시일자</span>
+					</div>
+					<div class="modal-content1">
+						<input type="text" class="form-control" id="testDate" readonly>
+						<input type="text" class="form-control" id="test-takeDate" readonly>
+					</div>
+					<div class="modal-title2">
+						<span style="font-size: 19px;">총 문제 수</span>
+						<span style="margin-right: 13px; font-size: 19px;">맞은개수/틀린개수</span>
+						<span style="margin-right: 27px; font-size: 19px;">총점</span>
+						<span style="margin-right: 8px; font-size: 19px;">나의점수</span>
+					</div>
+					<div class="modal-content2">
+						<input type="text" class="form-control" id="totalQu" readonly>
+						<input type="text" class="form-control" id="cnt" readonly>
+						<input type="text" class="form-control" id="scoreSum" readonly>
+						<input type="text" class="form-control" id="myScore" readonly>
+					</div>
 				</div>
             </div>
             <div class="modal-footer">
@@ -66,6 +64,7 @@
 $(function(){
 	testList()
 })
+var childWindow;
 
 function testList(){
 	var cardBody = $(".card-body");
@@ -78,6 +77,9 @@ function testList(){
         type:"get",
         dataType:"json",
 		data:obj,
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
         success:function(res){
 			console.log(res);
 			data = '';
@@ -171,6 +173,9 @@ $(document).on("click", "#testBtn", function(){
 			url:"/hku/preTest-check",
 			type:"get",
 	        data:preObj,
+			beforeSend : function(xhr){
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
 			success:function(res){
 				if(res === "exist"){
 					swal({
@@ -180,8 +185,9 @@ $(document).on("click", "#testBtn", function(){
 						})
 				}else if(res === "notExist"){
 					console.log(testNo, testFile, testSe, lecapNo, subNm, testTimeLimit);
-					window.open("/hku/open-test?testNo="+testNo+"&testFile="+testFile+"&lecapNo="+lecapNo+"&testSe="+testSe+"&subNm="
-							+subNm+"&testTimeLimit="+testTimeLimit+"&testBgngYmd="+testBgngYmd+"&stdNo="+stdNo, "시험지", windowFeatures);
+					childWindow = window.open("/hku/open-test?testNo="+testNo+"&testFile="+testFile+"&lecapNo="+lecapNo+"&testSe="+testSe+"&subNm="
+								+subNm+"&testTimeLimit="+testTimeLimit+"&testBgngYmd="+testBgngYmd+"&stdNo="+stdNo, "시험지", windowFeatures);
+					console.log("윈도우",childWindow)
 				}
 			}
 		})
@@ -234,6 +240,9 @@ $(document).on("click", "#infoBtn", function(){
 		url:"/hku/preTest-check",
 		type:"get",
         data:preObj,
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success:function(res){
 			if(res === "exist"){
 				console.log("체킁1 ",res)
@@ -259,6 +268,9 @@ function testRecord(obj){
 		type:"get",
         data:obj,
 		dataType:"json",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success: function(res){
 			$("#testDate").val(res.testDate);
 			$("#test-takeDate").val(res.takeDate);
@@ -279,5 +291,13 @@ function getCurrentDate() {
 	  const day = String(currentDate.getDate()).padStart(2, '0');
 	  
 	  return `\${year}-\${month}-\${day}`;
+}
+
+if("${msg}" == "exist"){
+	swal({
+		title: "이미 시험에 응시하였습니다.",
+		icon: "warning",
+		button: "닫기"
+	})
 }
 </script>

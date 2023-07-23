@@ -10,10 +10,13 @@
 		</layout>
 	</appender>
 	
+	
 	<!-- Application Loggers -->
 	<logger name="kr.or.hku">
-		<level value="debug" />
+		<level value="INFO" />
 	</logger>
+	
+<!-- 	<logger name="kr.or.hku.common.mapper.CommonMapper" level="ERROR"/> -->
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">

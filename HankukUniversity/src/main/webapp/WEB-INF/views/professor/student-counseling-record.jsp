@@ -126,19 +126,34 @@ $(function(){
 })
 
 var rejBtn = $("#rejBtn");
+var dscsnNo;
+var stdNo;
+
+$(document).on("click","#rejBtn2", function(){
+	dscsnNo = $(this).val();
+	stdNo = $(this).parents("tr").find('.stdNo').data("stdno");
+// 	console.log("체킹체킹",dscsnNo,stdNo)
+})
 
 $(document).on("click","#regBtn",function(){
-	var dscsnNo = $(this).val();
-	console.log(dscsnNo);	
+	var dscsnNo2 = $(this).val();
+	var stdNo2 = $(this).parents("tr").find('.stdNo').data("stdno");
+	console.log("승인상담번호",dscsnNo2);
+	console.log("승인학번",stdNo2);
+	
 	var obj = {
-		dscsnNo:dscsnNo
-	}
-
+			dscsnNo:dscsnNo2,
+			stdNo:stdNo2
+		}
+	
 	$.ajax({
 		url:"/hku/stduentCounse-appv",
 		data:JSON.stringify(obj),
 		contentType:"application/json; charset=UTF-8",
 		type:"put",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success:function(res){
 			if(res === "success"){
 				swal({
@@ -161,8 +176,10 @@ $(document).on("click","#regBtn",function(){
 })
 
 rejBtn.on("click",function(){
-	var dscsnNo = $(this).val();
-	console.log(dscsnNo);
+// 	var dscsnNo = $(this).val();
+// 	var stdNo = $(this).parents("tr").find('.stdNo').data("stdNo");
+	console.log("거절 상담번호",dscsnNo);
+	console.log("학번",stdNo);
 	
 	var rejText = $("#rejText").val();
 	
@@ -176,14 +193,19 @@ rejBtn.on("click",function(){
 	}
 	
 	var obj = {
-		dscsnNo:$("#rejBtn2").val(),
-		rejCon:rejText
+		dscsnNo:dscsnNo,
+// 		dscsnNo:$("#rejBtn2").val(),
+		rejCon:rejText,
+		stdNo:stdNo
 	}
 	$.ajax({
 		url:"/hku/stduentCounse-rej",
 		data:JSON.stringify(obj),
 		contentType:"application/json; charset=UTF-8",
 		type:"put",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success:function(res){
 			if(res === "success"){
 				swal({
@@ -220,6 +242,9 @@ function counselingReqList(){
 		data:cObj,
 		dataType:"json",
 		type:"get",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success:function(res){
 			console.log(res);
 			
@@ -233,7 +258,7 @@ function counselingReqList(){
 				for(var i=0; i<res.length; i++){
 					if(res[i].aprvSttsCd == 'wait'){
 						waitData += `<tr>
-										<td><c:out value="\${res[i].stdNo }"></c:out></td>
+										<td class="stdNo" data-stdno="\${res[i].stdNo }"><c:out value="\${res[i].stdNo }"></c:out></td>
 										<td><c:out value="\${res[i].stdNm }"></c:out></td>
 										<td><c:out value="\${res[i].dscsnAplyDt }"></c:out></td>
 										<td><c:out value="\${res[i].periodCd }"></c:out></td>

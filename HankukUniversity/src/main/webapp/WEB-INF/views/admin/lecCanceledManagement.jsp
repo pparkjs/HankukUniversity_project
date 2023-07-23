@@ -222,6 +222,9 @@ $(function(){
 		$.ajax({
 			type: 'post',
 			url: '/hku/admin/lec-cancel-TextMsg-spread',
+			beforeSend : function(xhr){
+               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 			contentType : "application/json;charset=utf-8",
 			dataType:"text",
 			data: JSON.stringify(realSendData),
