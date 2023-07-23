@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="/css/portal/webfonts.css">
     <link rel="stylesheet" href="/css/portal/default.css">
     <link href="https://cdn.jsdelivr.net/npm/gridstack@8.2.1/dist/gridstack.min.css" rel="stylesheet"/>
+    <!-- toastr -->
+	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />	
+	
+    <!-- toastr -->
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>		
     <title>한국대학교 포탈</title>
 </head>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gridstack@8.2.1/dist/gridstack-all.js"></script>
@@ -362,18 +367,48 @@ $(document).ready(function(){
     
     // 포틀릿 저장 버튼 눌럿을떄
     savePortletBtn.on('click', function(){
-    	var myPortletArr = [];
-        var gridItem = document.querySelectorAll(".grid-stack-item");
-        for(let i=0; i<gridItem.length; i++){
-            let saveData = {};
-            let item = gridItem[i];
-            saveData.id = $(item).attr('class').split(" ")[1].trim();
-            saveData.x = item.getAttribute("gs-x");
-            saveData.y = item.getAttribute("gs-y");
-            myPortletArr.push(saveData);
-        }
-        console.log("myPortletArr", myPortletArr);
-        localStorage.setItem("myGrid", JSON.stringify(myPortletArr));
+    	let serializedData = grid.save();
+    	
+    	let gridData = JSON.stringify(serializedData, null, ' ');
+    	
+    	gridData = JSON.parse(gridData);
+    	console.log(gridData);
+// 		toastr.options.escapeHtml = true;
+// 		toastr.options.closeButton = true;
+// 		toastr.options.newestOnTop = false;
+// 		toastr.options.progressBar = true;
+// 		toastr.success('화면 설정이 저장되었습니다.', {timeOut: 2000});    	
+//     	toastr.options = {
+// 				  "closeButton": false,
+// 				  "debug": false,
+// 				  "newestOnTop": false,
+// 				  "progressBar": true,
+// 				  "positionClass": "toast-top-center",
+// 				  "preventDuplicates": false,
+// 				  "onclick": null,
+// 				  "showDuration": "100",
+// 				  "hideDuration": "1000",
+// 				  "timeOut": "1000",
+// 				  "extendedTimeOut": "1000",
+// 				  "showEasing": "swing",
+// 				  "hideEasing": "linear",
+// 				  "showMethod": "fadeIn",
+// 				  "hideMethod": "fadeOut"
+// 		};
+// 		toastr.success('화면 설정이 저장되었습니다.');
+		
+//     	var myPortletArr = [];
+//         var gridItem = document.querySelectorAll(".grid-stack-item");
+//         for(let i=0; i<gridItem.length; i++){
+//             let saveData = {};
+//             let item = gridItem[i];
+//             saveData.id = $(item).attr('class').split(" ")[1].trim();
+//             saveData.x = item.getAttribute("gs-x");
+//             saveData.y = item.getAttribute("gs-y");
+//             myPortletArr.push(saveData);
+//         }
+//         console.log("myPortletArr", myPortletArr);
+//         localStorage.setItem("myGrid", JSON.stringify(myPortletArr));
     });
 });
 </script>
