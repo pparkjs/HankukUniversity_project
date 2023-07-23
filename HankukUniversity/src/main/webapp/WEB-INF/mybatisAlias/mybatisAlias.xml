@@ -51,6 +51,8 @@
     <typeAlias type="kr.or.hku.student.vo.StudentInfoVO" alias="stdInfoVO"/>
     <typeAlias type="kr.or.hku.student.vo.EvaluationVO" alias="evalVO"/>
     <typeAlias type="kr.or.hku.student.vo.DepartmentCrtrVO" alias="crtrVO"/>
+    <typeAlias type="kr.or.hku.admin.vo.userAuthVO" alias="userAuthVO"/>
+     <typeAlias type="kr.or.hku.login.vo.SecUserVO" alias="secUserVO"/>
   	
     <!-- 재균칸 밑에서만 작성 -->  
     <typeAlias type="kr.or.hku.common.vo.AttachFileVO" alias="attachFileVO"/>
@@ -71,6 +73,7 @@
     <typeAlias type="kr.or.hku.admin.vo.UserVO" alias="userVO"/>
     <typeAlias type="kr.or.hku.admin.vo.FlctFloorVO" alias="flctFloorVO"/>
     <typeAlias type="kr.or.hku.admin.vo.NextCodeVO" alias="nextCodeVO"/>
+    <typeAlias type="kr.or.hku.student.vo.TuitionVO" alias="tuitionVO"/>
     
     <!-- 성희칸 밑에서만 작성-->
      <typeAlias type="kr.or.hku.classroom.vo.ClassroomVO" alias="classroomVO"/>

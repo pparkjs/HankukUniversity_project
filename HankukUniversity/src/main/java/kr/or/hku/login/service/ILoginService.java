@@ -7,7 +7,7 @@ import kr.or.hku.student.vo.StudentVO;
 
 public interface ILoginService {
 	
-	public UsersVO loginUser(UsersVO userVo) ;
+	public UsersVO loginUser(String username) ;
 
 	public StudentVO studentUser(String userNo);
 

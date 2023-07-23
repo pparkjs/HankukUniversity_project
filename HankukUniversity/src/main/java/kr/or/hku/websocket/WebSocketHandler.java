@@ -66,6 +66,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		for (StudyVO study : list) {
 			System.out.println("님이 속해 있는 방 : " + study.getStudyName());
 		}
+		
 		System.out.println();
 		System.out.println("연결 후 roomList 상태 : " + roomList);
 		for(int i = 14; i <= 17; i++) {

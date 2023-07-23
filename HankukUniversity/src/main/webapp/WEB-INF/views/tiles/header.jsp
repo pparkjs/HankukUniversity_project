@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<link rel="stylesheet" href="/css/alarm-style.css">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <style>
 .notification_dropdown {
 position: relative;
@@ -40,29 +40,37 @@ position: relative;
 .notification-show .dropdown-menu {
   display: block;
 }
+.tCon{
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    margin-right: 15px;
+    height: 40px;
+    margin-top: 6px;
+}
 </style>
 <div class="header">
 	<div class="header-content">
 		<nav class="navbar navbar-expand">
 			<div class="collapse navbar-collapse justify-content-between">
 				<div class="header-left">
-				
+
 					<!--  검색에 대한 div -->
 					<div class="input-group search-area">
-						<span class="input-group-text">
-							<a href="javascript:void(0)">
-								<svg width="19" height="19" viewBox="0 0 19 19" fill="none"
+						<span class="input-group-text"> <a
+							href="javascript:void(0)"> <svg width="19" height="19"
+									viewBox="0 0 19 19" fill="none"
 									xmlns="http://www.w3.org/2000/svg">
 									<circle cx="8.78605" cy="8.78605" r="8.23951" stroke="white"
 										stroke-linecap="round" stroke-linejoin="round" />
 									<path d="M14.5168 14.9447L17.7471 18.1667" stroke="white"
 										stroke-linecap="round" stroke-linejoin="round" />
 								</svg>
-							</a>
-						</span>
-						<input type="text" class="form-control" placeholder="Search">
+						</a>
+						</span> <input type="text" class="form-control" placeholder="Search">
 					</div>
-					
+
 				</div>
 				<ul class="navbar-nav header-right">
 					<li class="nav-item dropdown notification_dropdown">
@@ -129,8 +137,13 @@ position: relative;
 						</div>
 					</li>
 
+			<!-- 알람  + 로그인 타이머 -->
+					<div class="tCon">
+						<span id="timer" style=" margin-right:4px; font-size:1.3em; color:white; font-weight: 500; width: 97px;"></span>
+						<i id="refresh" class="fa-solid fa-rotate-right fa-lg" style="color: #ffffff; font-size: 1.5em; cursor:pointer;"></i>
+					</div>
 					<li class="nav-item dropdown notification_dropdown" id="notification-icon">
-						<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+						<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"> 
 							<img alt="" src="/images/알람3.svg" width="30" height="27">
 						</a>
 						<div class="dropdown-menu dropdown-menu-end">
@@ -138,17 +151,15 @@ position: relative;
 								style="height: 380px;">
 								<ul class="timeline">
 									<li>
-										<a href="/hku/counseling-req">
-											<div class="timeline-panel">
-												<div class="media me-2">
-													<img alt="image" width="50" src="/images/avatar/1.jpg">
-												</div>
-												<div class="media-body">
-													<h6 class="mb-1">정은지교수님의 과제등록</h6>
-													<small class="d-block">29 July 2020 - 02:26 PM</small>
-												</div>
+										<div class="timeline-panel">
+											<div class="media me-2">
+												<img alt="image" width="50" src="/images/avatar/1.jpg">
 											</div>
-										</a>
+											<div class="media-body">
+												<h6 class="mb-1">Dr sultads Send you Photo</h6>
+												<small class="d-block">29 July 2020 - 02:26 PM</small>
+											</div>
+										</div>
 									</li>
 									<li>
 										<div class="timeline-panel">
@@ -172,9 +183,15 @@ position: relative;
 									</li>
 								</ul>
 							</div>
+							<a class="all-notification" href="javascript:void(0);">See
+								all notifications <i class="ti-arrow-end"></i>
+							</a>
 						</div>
-						<div class="notification-shadow"></div>
+						 <!-- 알림 아이콘 주변에 잔상을 표시하는 요소 -->
+  						<div class="notification-shadow"></div>
 					</li>
+					
+					
 					<!-- message -->
 					<c:if test="${not empty std }">
 						<li class="nav-item dropdown notification_dropdown"><a
@@ -190,11 +207,10 @@ position: relative;
 										stroke="white" stroke-width="1.5" stroke-linecap="round"
 										stroke-linejoin="round" />
 									</svg>
-	
 						</a></li>
 					</c:if>
 					<li class="nav-item align-items-center header-border"><a
-						href="#" class="btn btn-primary btn-sm" onclick="logout()">Logout</a></li>
+						href="/main/logout" class="btn btn-primary btn-sm" onclick="logout()">Logout</a></li>
 					<li class="nav-item ps-3">
 						<div class="dropdown header-profile2">
 							<a class="nav-link" href="javascript:void(0);" role="button"
@@ -204,40 +220,40 @@ position: relative;
 										<img src="/images/tab/1.jpg" alt="">
 									</div>
 									<div class="header-info">
-									<c:if test="${not empty std}">
-										<h6>${std.stdNm}</h6>
-										<p>${std.stdNo}</p>
-									</c:if>
-									<c:if test="${not empty pro}">
+										<c:if test="${not empty std}">
+											<h6>${std.stdNm}</h6>
+											<p>${std.stdNo}</p>
+										</c:if>
+										<c:if test="${not empty pro}">
 											<h6>${pro.proNm}</h6>
 											<p>${pro.proNo}</p>
-									</c:if>		
-									<c:if test="${not empty emp}">
+										</c:if>
+										<c:if test="${not empty emp}">
 											<h6>${emp.empName}</h6>
 											<p>${emp.empNo}</p>
-									</c:if>		
+										</c:if>
 									</div>
-									
+
 								</div>
 							</a>
 							<div class="dropdown-menu dropdown-menu-end" style="">
 								<div class="card border-0 mb-0">
 									<div class="card-header py-2">
-										<div class="products"> 
+										<div class="products">
 											<img src="/images/tab/1.jpg" class="avatar avatar-md" alt="">
 											<div>
-											<c:if test="${not empty std}">
-												<h6>${std.stdNm}</h6>
-												<span>${std.stdNo }</span>
-											</c:if>
-											<c:if test="${not empty pro}">
-												<h6>${pro.proNm}</h6>
-												<span>${pro.proNo }</span>
-											</c:if>
-											<c:if test="${not empty emp}">
-												<h6>${emp.empName}</h6>
-												<span>${emp.empNo }</span>
-											</c:if>
+												<c:if test="${not empty std}">
+													<h6>${std.stdNm}</h6>
+													<span>${std.stdNo }</span>
+												</c:if>
+												<c:if test="${not empty pro}">
+													<h6>${pro.proNm}</h6>
+													<span>${pro.proNo }</span>
+												</c:if>
+												<c:if test="${not empty emp}">
+													<h6>${emp.empName}</h6>
+													<span>${emp.empNo }</span>
+												</c:if>
 											</div>
 										</div>
 									</div>
@@ -324,12 +340,61 @@ position: relative;
 	</div>
 </div>
 <script>
+
+	var timer = document.getElementById("timer")
 	function logout(){
 		location.replace("/main/logout");
 	}
+	var time = 10799;
+	var hour ="";
+	var min = ""; 
+	var sec = ""; 
+	function formatTwoDigits(number) {
+	    return number.toString().padStart(2, '0');
+	}
+	function updateTimer() {
+	    hour =formatTwoDigits( parseInt(time / 3600)); 
+	    min = formatTwoDigits(parseInt((time % 3600) / 60)); 
+	    sec = formatTwoDigits(time % 60); 
+	    timer.innerHTML = hour + " : " + min + " : " + sec;
+	    time--;
+	    
+	    if(time <= 0){
+	        clearInterval(x); 
+			swal({
+				  title: "로그인을 연장하시겠습니까?",
+				  text: "취소버튼을 누를 경우 보안을 위해 로그아웃 처리됩니다.",
+				  icon: "warning",
+				  buttons: true,
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+				    swal("시간이 연장되었습니다.", {
+				      icon: "success",
+				    }).then(() => {
+	                    time = 10799; // 연장 후 시간을 다시 5로 설정
+	                    x = setInterval(updateTimer, 1000); // 타이머 다시 시작
+	                });
+				  } else {
+				    swal("로그아웃되었습니다.");
+				    location.replace("/main/logout");
+				  }
+				});
+		};
+	};
+
+	var x = setInterval(updateTimer, 1000);
+
+	var refresh = document.getElementById("refresh");
+	refresh.addEventListener("click", function() {
+	    clearInterval(x); 
+	    time = 10799; 
+	    x = setInterval(updateTimer, 1000); 
+	});
 	
-	// AJAX를 통해 알림이 있는지 확인하는 함수
-// 	function getAlarmList() {
+// 	AJAX를 통해 알림이 있는지 확인하는 함수
+	function getAlarmList() {
 // 		var userObj = {
 			
 // 		}
@@ -337,7 +402,6 @@ position: relative;
 		$.ajax({
 			url: "/main/getAlarmList",
             type: "GET",
-			get
             dataType: "json",
             success: function(res) {
                 if(res.length == 1) {
@@ -368,4 +432,5 @@ position: relative;
 // 		setTimeout(hideNotificationShadow, 1000);
 	},
 	3000);
+	
 </script>

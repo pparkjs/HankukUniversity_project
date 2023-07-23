@@ -450,6 +450,8 @@
 	                                  method: 'get',
 	                                  data: {
 	                                      lecapNo: lecapNo
+	                                  },  beforeSend : function(xhr){
+	                                      xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 	                                  },
 	                                  success: function (res) {
 	                                	  swal("신청이 정상적으로 취소되었습니다.", {
@@ -477,6 +479,9 @@
                     data: {
                         proNo: '${pro.proNo}'
                     },
+                    beforeSend : function(xhr){
+                        xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                     },
                     success: function (res) {
                         /* ■■■■■■ 신청상태에 대한 결과 출력 ■■■■■■ *///
                        	var appv = '';
@@ -519,6 +524,9 @@
                    data: {
                        proNo: '${pro.proNo}'
                    },
+                   beforeSend : function(xhr){
+                       xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                    },
                    success: function (res) {
                        /* ■■■■■■ 신청상태에 대한 결과 출력 ■■■■■■ *///
                       	var appv = '';
@@ -560,6 +568,9 @@
                    data: {
                        proNo: '${pro.proNo}'
                    },
+                   beforeSend : function(xhr){
+                       xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                    },
                    success: function (res) {
                        /* ■■■■■■ 신청상태에 대한 결과 출력 ■■■■■■ *///
                       	var appv = '';
@@ -618,6 +629,9 @@
                        }
                        $('#statusTbody').html(statusStr);
                    },
+                   beforeSend : function(xhr){
+                       xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                    },
                    error: function (xhr, status, error) {
                        // swal("출력실패");
                    }
@@ -654,6 +668,9 @@
                        }
                        $('#statusTbody').html(statusStr);
                    },
+                   beforeSend : function(xhr){
+                       xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                    },
                    error: function (xhr, status, error) {
                        // swal("출력실패");
                    }
@@ -680,6 +697,8 @@
                                     method: 'get',
                                     data: {
                                         college: data
+                                    },  beforeSend : function(xhr){
+                                        xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
                                     },
                                     success: function (res) {
                                         /* ■■■■■■ 단과대학에 대한 교과목출력  ■■■■■■ *///
@@ -737,6 +756,9 @@
                             data: {
                                 deptNm: dept
                             },
+                            beforeSend : function(xhr){
+                                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                             },
                             success: function (res) {
                                 subStr = '';
                                 for (var i = 0; i < res.length; i++) {
@@ -778,13 +800,15 @@
                             $('#timeBody').find('.timeTd').text('');
                             $('.timeTd').find('.selected').css('background-color', '');
                             //교과목 출력끝
-                            $
-                                .ajax({
+                            $.ajax({
                                     url: '/hku/lecture/selBuil.do',
                                     method: 'get',
                                     data: {
                                         flct: flct
                                     },
+                                    beforeSend : function(xhr){
+                                        xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                                     },
                                     success: function (res) {
                                         //                             console.log(res.flcts.length);
                                         flctsStr = '<option selected>강의실선택</option>';
@@ -818,6 +842,9 @@
                             flcts: flcts
                            
                         },
+                        beforeSend : function(xhr){
+                            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                         },
                         success: function (res) {
                             let data = [];
                             for (let k = 0; k < res.length; k++) {
@@ -1029,6 +1056,9 @@
                                     data: JSON.stringify(planJson),
                                     contentType: "application/json;charset=utf-8",
                                     dataType: "text",
+                                    beforeSend : function(xhr){
+                                        xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                                     },
                                     success: function (res) {
                                     	swal("신청완료", "강의 개설이 신청되었습니다.", "success");
                                     },

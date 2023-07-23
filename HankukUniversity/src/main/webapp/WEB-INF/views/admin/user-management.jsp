@@ -941,7 +941,7 @@ function userModify(param){
 			processData: false,
 			contentType: false,
 			success: function(res){
-				alert("수정 잘 갔다옴");
+// 				alert("수정 잘 갔다옴");
 				studentsSet();
 				swal({
 					title: "수정이 완료되었습니다!",
@@ -1244,8 +1244,26 @@ function tabChange(){
     targetPanel.classList.add("active");
 }
 
-function selectAll(target){
+function selectUserAll(target){
 	const checkboxes = document.querySelectorAll(".userCheck");
+	checkboxes.forEach(function(i){
+		i.checked = target.checked;
+	})
+}
+function selectEmpAll(target){
+	const checkboxes = document.querySelectorAll(".empCheck");
+	checkboxes.forEach(function(i){
+		i.checked = target.checked;
+	})
+}
+function selectProAll(target){
+	const checkboxes = document.querySelectorAll(".proCheck");
+	checkboxes.forEach(function(i){
+		i.checked = target.checked;
+	})
+}
+function selectStdAll(target){
+	const checkboxes = document.querySelectorAll(".stdCheck");
 	checkboxes.forEach(function(i){
 		i.checked = target.checked;
 	})
@@ -1282,7 +1300,7 @@ function usersSet(){
 						<tr>
 							<th>
 								<div class='form-check custom-checkbox checkbox-danger'>
-									<input type='checkbox' class='form-check-input' onclick='selectAll(this)'>
+									<input type='checkbox' class='form-check-input' onclick='selectUserAll(this)'>
 								</div>
 							</th>
 							<th>학번/교번</th>
@@ -1352,7 +1370,7 @@ function adminsSet(){
 						<tr>
 							<th>
 								<div class='form-check custom-checkbox checkbox-danger'>
-									<input type='checkbox' class='form-check-input' onclick='selectAll(this)'>
+									<input type='checkbox' class='form-check-input' onclick='selectEmpAll(this)'>
 								</div>
 							</th>
 							<th>학번/교번</th>
@@ -1373,7 +1391,7 @@ function adminsSet(){
 								tblStr += `<tr onclick='userDetail(this)'>
 									<td>
 										<div class='form-check custom-checkbox checkbox-danger'>
-											<input type='checkbox' class='form-check-input userCheck' value='\${res[i].userNo }' onclick="onlyCheck(this)">
+											<input type='checkbox' class='form-check-input empCheck' value='\${res[i].userNo }' onclick="onlyCheck(this)">
 										</div>
 									</td>
 									<td>\${res[i].userNo }</td>
@@ -1427,7 +1445,7 @@ function professorsSet(){
 						<tr>
 							<th>
 								<div class='form-check custom-checkbox checkbox-danger'>
-									<input type='checkbox' class='form-check-input' onclick='selectAll(this)'>
+									<input type='checkbox' class='form-check-input' onclick='selectProAll(this)'>
 								</div>
 							</th>
 							<th>학번/교번</th>
@@ -1448,7 +1466,7 @@ function professorsSet(){
 								tblStr += `<tr onclick='userDetail(this)'>
 										<td>
 											<div class='form-check custom-checkbox checkbox-danger'>
-												<input type='checkbox' class='form-check-input userCheck' value='\${res[i].userNo }' onclick="onlyCheck(this)">
+												<input type='checkbox' class='form-check-input proCheck' value='\${res[i].userNo }' onclick="onlyCheck(this)">
 											</div>
 										</td>
 										<td>\${res[i].userNo }</td>
@@ -1502,7 +1520,7 @@ function studentsSet(){
 						<tr>
 							<th>
 								<div class='form-check custom-checkbox checkbox-danger'>
-									<input type='checkbox' class='form-check-input' onclick='selectAll(this)'>
+									<input type='checkbox' class='form-check-input' onclick='selectStdAll(this)'>
 								</div>
 							</th>
 							<th>학번/교번</th>
@@ -1521,7 +1539,7 @@ function studentsSet(){
 								tblStr += `<tr onclick='userDetail(this)'>
 									<td>
 										<div class='form-check custom-checkbox checkbox-danger'>
-											<input type='checkbox' class='form-check-input userCheck' value='\${res[i].userNo }' onclick="onlyCheck(this)">
+											<input type='checkbox' class='form-check-input stdCheck' value='\${res[i].userNo }' onclick="onlyCheck(this)">
 										</div>
 									</td>
 									<td>\${res[i].userNo }</td>
@@ -1556,10 +1574,56 @@ function deleteUser(){
 			console.log(users[i]);
 			let userType = $(users[i]).parents("tr").children().eq(3).html();
 			console.log(userType);
+			console.log(users[i].value);
 
 			let delUser = {
 				"type": userType,
 				"userNo": users[i].value
+			};
+			delUserArr.push(delUser);
+		}
+	}
+	let students = $(".stdCheck");
+	for(let i=0; i<students.length; i++){
+		if(students[i].checked == true){
+			console.log(students[i]);
+			let userType = $(students[i]).parents("tr").children().eq(3).html();
+			console.log(userType);
+			console.log(students[i].value);
+
+			let delUser = {
+				"type": userType,
+				"userNo": students[i].value
+			};
+			delUserArr.push(delUser);
+		}
+	}
+	let professors = $(".proCheck");
+	for(let i=0; i<professors.length; i++){
+		if(professors[i].checked == true){
+			console.log(professors[i]);
+			let userType = $(professors[i]).parents("tr").children().eq(3).html();
+			console.log(userType);
+			console.log(professors[i].value);
+
+			let delUser = {
+				"type": userType,
+				"userNo": professors[i].value
+			};
+			delUserArr.push(delUser);
+		}
+	}
+	let employees = $(".empCheck");
+	for(let i=0; i<employees.length; i++){
+		if(employees[i].checked == true){
+			console.log(employees[i]);
+			let userType = $(employees[i]).parents("tr").children().eq(3).html();
+			console.log(userType);
+			console.log(employees[i].value);
+
+			let delUser = {
+				"type": userType,
+				"userNo": employees[i].value
 			};
 			delUserArr.push(delUser);
 		}

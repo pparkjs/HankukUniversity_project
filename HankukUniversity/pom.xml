@@ -82,7 +82,7 @@
 			</exclusions>
 			<scope>runtime</scope>
 		</dependency>
-
+		
 		<!-- @Inject -->
 		<dependency>
 			<groupId>javax.inject</groupId>
@@ -173,7 +173,18 @@
 			<version>21.1.0.0</version>
 		</dependency>
 	<!-- 데이터베이스 라이브러리 의존 관계 정의끝 -->
-	
+	<!-- 자바메일 라이브러리 의존 관계 정의 -->
+	<dependency>
+		<groupId>javax.mail</groupId>
+		<artifactId>mail</artifactId>
+		<version>1.4.7</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context-support</artifactId>
+		<version>${org.springframework-version}</version>
+	</dependency>
+	<!-- 자바메일 라이브러리 의존 관계 정의 끝 -->
 	<!-- lombok 라이브러리 추가 -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -236,25 +247,25 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
-			<version>5.0.7.RELEASE</version>
+			<version>5.3.13.RELEASE</version>
 		</dependency>
 		<!-- 스프링 시큐리티 설정을도와준다. -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
-			<version>5.0.7.RELEASE</version>
+			<version>5.3.13.RELEASE</version>
 		</dependency>
 		<!-- 스프링 시큐리티 일반적인 기능을 사용하도록 도와준다. -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<version>5.0.7.RELEASE</version>
+			<version>5.3.13.RELEASE</version>
 		</dependency>
 		<!-- 스프링 시큐리티와 태그 라이브러리를 연결해준다. -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
-			<version>5.0.7.RELEASE</version>
+			<version>5.3.13.RELEASE</version>
 		</dependency>
 		<!-- 스프링 시큐리티 라이브러리 의존 관계 정의 End -->
 		

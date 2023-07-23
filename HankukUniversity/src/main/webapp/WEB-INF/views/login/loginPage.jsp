@@ -1,8 +1,7 @@
-<!-- <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%> -->
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
-
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.1.18/jquery.backstretch.min.js"></script>
@@ -205,8 +204,8 @@
 
     </div>
     <h1 id="mainName"> Hankuk <br>University</h1>
-
-  <form action="/main/login" method="post">
+<!--   <form action="/main/login" method="post"> -->
+  <form action="/login" method="post">
     <table >
         <tr id="trone">
         	<td rowspan="3" style="width : 300px">
@@ -221,13 +220,14 @@
                 <label for='idtEmp'>&nbsp;직원</label>
             </td>
         </tr>
-
         <tr id="trtwo">
             <td>
+           
                     <span>학번</span><br>
-                    <input type="text" id="userNo" name="userNo" style="width:100%; height:30px; " placeholder="학번/교번/사번을 입력해주세요"><br>
+                    <input type="text" id="username" name="username" style="width:100%; height:30px; " placeholder="학번/교번/사번을 입력해주세요"><br>
                     <span>비밀번호</span><br>
-                    <input type="password" id="userPw" name="userPw" style="width:100%; height:30px; "><br>
+                    <input type="password" id="password" name="password" style="width:100%; height:30px; "><br>
+               
             </td>
             <td>
                 <input type="submit" id="loginBtn" value="포털입장하기">
@@ -239,34 +239,8 @@
             </td>
         </tr>
     </table>
+     <sec:csrfInput/>
   </form>
-    <!--  <div id='loginArea'> -->
-
-    <!--         <form id='loginForm'> -->
-    <!--             <div class="loginCon"> -->
-    <!--                 <div class="radioCk"> -->
-    <!--                     <input type="radio" name="idt" id="idtStd" value='std' checked="checked" /> -->
-    <!--                     <label for='idtStd'>학생</label> -->
-    <!--                     <input type="radio" name="idt" id="idtPro" value='pro' /> -->
-    <!--                     <label for='idtPro'>교수</label> -->
-    <!--                     <input type="radio" name="idt" id="idtEmp" value='emp' /> -->
-    <!--                     <label for='idtEmp'>직원</label> -->
-    <!--                 </div> -->
-    <!--                 <div class="container"> -->
-    <!--                     <div id="textArea"> -->
-    <!--                         <span>학번</span> -->
-    <!--                         <input type="text" id="userId"><br> -->
-    <!--                         <span>비밀번호</span> -->
-    <!--                         <input type="password" id="password"><br> -->
-    <!--                     </div> -->
-    <!--                     <input type="button" id="loginBtn" value="포털 입장하기"><br> -->
-    <!--                 </div> -->
-    <!--                 <a href="#">계정을 잊어버리셨나요?</a> -->
-    <!--             </div> -->
-    <!--         </form> -->
-
-    <!--     </div> -->
-
 </body>
 <script type="text/javascript">
     $.backstretch(['/images/login/imgSub135000_01.jpg',
