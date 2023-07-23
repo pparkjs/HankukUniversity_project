@@ -18828,7 +18828,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
       fill: #fff; }
   [data-headerbg="color_4"][data-theme-version="dark"] .header-right .notification_dropdown .nav-link.show,
   [data-headerbg="color_4"] .header-right .notification_dropdown .nav-link.show {
-    background-color: #202020; }
+    background-color: #ffdede5e; }
   [data-headerbg="color_4"][data-theme-version="dark"] .header-right .nav-item svg path,
   [data-headerbg="color_4"][data-theme-version="dark"] .header-right .nav-item svg circle,
   [data-headerbg="color_4"] .header-right .nav-item svg path,
