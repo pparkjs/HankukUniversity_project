@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="/css/portal/webfonts.css">
     <link rel="stylesheet" href="/css/portal/default.css">
     <link href="https://cdn.jsdelivr.net/npm/gridstack@8.2.1/dist/gridstack.min.css" rel="stylesheet"/>
+    <!-- toastr -->
+	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />	
+	
+    <!-- toastr -->
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>		
     <title>한국대학교 포탈</title>
 </head>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gridstack@8.2.1/dist/gridstack-all.js"></script>
@@ -142,7 +147,7 @@
                                             </div>
                                         </div>   
                                     </div>
-                                    <div class="grid-stack-item portlet2" gs-w="6" gs-h="4">
+                                    <div class="grid-stack-item portlet2" gs-w="12" gs-h="4">
                                         <div class="grid-stack-item-content">
                                             <div class="card portlet-item">
                                                 <div class="card-body">
@@ -307,57 +312,19 @@ $(document).ready(function(){
 
     // 내가 설정한 포틀릿순서대로 보여주는 함수
     function sortPortlet(){
+    	// 지금 로컬 스토리지 쓰는데 이거를 데이터 베이스 에서 끌고 오면 됨
     	let myGrid = JSON.parse(localStorage.getItem("myGrid"));
-
+//     	myGrid ="";
+		console.log("myGrid, ", myGrid);
         var gridItem = document.querySelectorAll(".grid-stack-item");
         if(myGrid != null && myGrid.length > 0){
-            // for(let i=0; i<gridItem.length; i++){
-            //     gridItem[i].setAttribute('gs-x',myGrid[i].x);
-            //     gridItem[i].setAttribute('gs-y',myGrid[i].y);
-            // }
             for(let i=0; i<myGrid.length; i++){
                 let ptl = document.querySelector('.'+myGrid[i].id);
-                ptl.setAttribute('gs-x',myGrid[i].x);
-                ptl.setAttribute('gs-y',myGrid[i].y);
+                console.log("포틀릿 섞기 ", ptl);
+                grid.update(ptl, {x:parseInt(myGrid[i].x) , y:parseInt(myGrid[i].y)});
             }
         }
     }
-//     function sortPortlet(){
-//         var mySeq = 0;
-//         // 포틀렛 예시
-// //         var dataBasePortlet = "251643"; // 1번쨰 케이스
-// //         var dataBasePortlet = "123456"; // 2번째 케이스 
-//         var dataBasePortlet = "623514"; // 3번쨰 케이스 
-//         // var myPortlet = ["2","5","1","6","4","3"];
-//         var myPortlet = dataBasePortlet.split("");
-
-//         var gridArea = document.querySelector(".grid-stack");
-
-//         // 클래스 item 을 가지고 있는 포틀렛 배열
-//         var gridItem = document.querySelectorAll(".grid-stack-item");
-//         console.log(gridItem);
-//         for(let i =0; i<myPortlet.length; i++){
-//             for(let j=0; j<gridItem.length; j++){
-//                 let stack = gridItem[j];
-//                 // console.log(stack);
-//                 let stackNum = stack.className;
-//                 // console.log(stackNum);
-//                 stackNum = stackNum.replaceAll(regex, "");
-//                 // console.log(stackNum);
-//                 if(myPortlet[i] == stackNum){
-//                     console.log(stack);
-// //                     console.log("몇번 실행되는지" , mySeq);
-//                     console.log("x좌표 => " + stack.getAttribute('gs-x'));
-//                     console.log("y좌표 => " + stack.getAttribute('gs-y'));
-//                     stack.setAttribute('gs-x',portletSeq[mySeq].pX);
-//                     stack.setAttribute('gs-y',portletSeq[mySeq++].pY);
-//                     // portletSeq += stackNum;
-//                     // gridArea.appendChild(stack);
-//                     break;
-//                 }
-//             }
-//         }
-//     }
 
     
     // 포틀릿 저장 버튼 눌럿을떄
@@ -372,7 +339,8 @@ $(document).ready(function(){
             saveData.y = item.getAttribute("gs-y");
             myPortletArr.push(saveData);
         }
-        console.log("myPortletArr", myPortletArr);
+        console.log("저장배열", myPortletArr);
+        // 지금 로컬 스토리지로 저장하는데 이걸 데이터베이스에 저장하면됨
         localStorage.setItem("myGrid", JSON.stringify(myPortletArr));
     });
 });
