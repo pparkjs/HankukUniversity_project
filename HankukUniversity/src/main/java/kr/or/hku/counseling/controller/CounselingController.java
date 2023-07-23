@@ -112,9 +112,9 @@ public class CounselingController {
 	
 	@ResponseBody
 	@PutMapping("/stduentCounse-appv")
-	public ResponseEntity<String> studentCounseAppv(@RequestBody CounselingRsvtVO vo){
+	public ResponseEntity<String> studentCounseAppv(@RequestBody CounselingRsvtVO vo, HttpSession session){
 		log.info("상담번호"+ vo.getDscsnNo());
-		ServiceResult result = counselingService.studentCounseAppv(vo.getDscsnNo());
+		ServiceResult result = counselingService.studentCounseAppv(vo, session);
 		
 		if(result.equals(ServiceResult.OK)) {
 			return new ResponseEntity<String>("success", HttpStatus.OK);
@@ -126,9 +126,9 @@ public class CounselingController {
 	
 	@ResponseBody
 	@PutMapping("/stduentCounse-rej")
-	public ResponseEntity<String> studentCounseRej(@RequestBody CounselingRsvtVO vo){
+	public ResponseEntity<String> studentCounseRej(@RequestBody CounselingRsvtVO vo, HttpSession session){
 		log.info("vo : " + vo);
-		ServiceResult result = counselingService.studentCounseRej(vo);
+		ServiceResult result = counselingService.studentCounseRej(vo, session);
 		
 		if(result.equals(ServiceResult.OK)) {
 			return new ResponseEntity<String>("success", HttpStatus.OK);

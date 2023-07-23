@@ -15,4 +15,5 @@ public interface CommonService {
 	public StudentVO myAllInfo(String stdNo);
 	public List<FacilityVO> floorListFlct(String flctNo);
 	public List<AlarmVO> getAlarmList(User users);
+	public int alarmDelete(int alarmNo);
 }
