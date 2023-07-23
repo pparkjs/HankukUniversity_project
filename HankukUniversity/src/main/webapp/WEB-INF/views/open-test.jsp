@@ -25,7 +25,7 @@
 }
 </style>
 </head>
-<body>
+<body oncontextmenu="return false">
 <c:set value="중간고사" var="se"/>
 <c:if test="${sessionScope.testVO.testSe == 'final'}">
 	<c:set value="기말고사" var="se"/>
@@ -51,7 +51,7 @@
 				<table class="omr">
 					<thead>
 						<tr>
-							<th colspan="<c:out value='${maxCh}'/>">OMR 카드</th>
+							<th colspan="<c:out value='${maxCh + 1}'/>">OMR 카드</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -77,7 +77,7 @@
 </body>
 <script type="text/javascript">
 var option = {
-		height: "1030px",
+		height: "937px",
 		pdfOpenParams: {view: 'FitV', page: '1'},
 		toolbar:0
 }
@@ -186,5 +186,16 @@ function answerArrPush(){
 
 	return obj;
 }
+function noEvent() {
+    if (event.keyCode == 116) {
+        event.keyCode= 2;
+        return false;
+    }
+    else if(event.ctrlKey && (event.keyCode==78 || event.keyCode == 82))
+    {
+        return false;
+    }
+}
+document.onkeydown = noEvent;
 </script>
 </html>

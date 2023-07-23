@@ -117,7 +117,7 @@
  	<!-- 선지의 최대값 가져오기 -->
  	<select id="getMaxCh" parameterType="testVO" resultType="int">
  	/*kr.or.hku.classroom.mapper.TestPresMapper.getMaxCh */
- 		SELECT MAX(a.ta_scr)
+ 		SELECT MAX(a.answer_ch)
 		FROM test_answer a, test b
 		WHERE a.test_no = b.test_no
 		AND b.test_se like #{testSe}
@@ -168,7 +168,7 @@
  	</update>
  	
  	<!-- 시험에 응시했었는지 체크 -->
- 	<select id="preTestCheck" parameterType="map" resultType="int">
+ 	<select id="preTestCheck" parameterType="testVO" resultType="int">
  	/*kr.or.hku.classroom.mapper.TestPresMapper.preTestCheck */	
  		SELECT COUNT(*)
  		FROM test_take
