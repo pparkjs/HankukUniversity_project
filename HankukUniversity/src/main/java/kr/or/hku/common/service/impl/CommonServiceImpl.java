@@ -42,5 +42,10 @@ public class CommonServiceImpl implements CommonService{
 		return commonMapper.getAlarmList(user.getUsername());
 	}
 
+	@Override
+	public int alarmDelete(int alarmNo) {
+		return commonMapper.alarmDelete(alarmNo);
+	}
+
 
 }

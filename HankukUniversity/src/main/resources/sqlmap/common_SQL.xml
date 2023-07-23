@@ -86,4 +86,10 @@
 		ORDER BY a.alarm_no DESC
  	</select>
  	
+ 	<!-- 알람 읽음처리 -->
+ 	<delete id="alarmDelete" parameterType="int">
+ 	/*kr.or.hku.common.mapper.CommonMapper.alarmDelete*/
+ 		DELETE FROM alarm
+ 		WHERE alarm_no = #{alarmNo}
+ 	</delete>
  </mapper>

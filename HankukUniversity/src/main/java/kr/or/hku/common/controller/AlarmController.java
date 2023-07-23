@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,8 +31,19 @@ public class AlarmController {
 	@GetMapping("/getAlarmList")
 	public List<AlarmVO> getAlarmList(){
 		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		log.info("user아이디 : " + users.getUsername());
-		log.info("user권한 : " + users.getAuthorities());
 		return commonService.getAlarmList(users);
+	}
+	
+	// 알람 클릭시 지우기
+	@ResponseBody
+	@DeleteMapping("/alarm-delete")
+	public String alarmDelete(@RequestBody AlarmVO alarm) {
+		log.info("알람번호 : " + alarm.getAlarmNo());
+		int cnt = commonService.alarmDelete(alarm.getAlarmNo());
+		if(cnt > 0) {
+			return "success";
+		}else {
+			return "failed";
+		}
 	}
 }
