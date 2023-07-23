@@ -4,7 +4,7 @@
 <style>
 .table-wrap {
     overflow: scroll;
-    height: 600px;
+    height: 410px;
     margin-top: 13px;
 }
 .thead-dark{
@@ -330,7 +330,16 @@ $(function(){
 				var lecBasic = res.lecBasic;
 				var lecProgram = res.lecProgram;
 				var scheduleList = res.scheduleList;
-
+				
+				if (lecBasic == null || lecProgram == null || scheduleList == null || scheduleList.length == 0) {
+					swal({
+						title: "강의계획서가 없습니다.", 
+						icon: "error"
+					});
+					return;
+				}
+				
+				
 				//가져온 데이터 넣어주기
 				$('#subNo').val(lecBasic.subNo);				
 				$('#subNm').val(lecBasic.subNm);				
@@ -425,6 +434,9 @@ $(function(){
 			$.ajax({
 				type:"post",
 				url: "/hku/admin/lecaplylist",
+				beforeSend : function(xhr){
+	               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	            },
 				data: JSON.stringify({lecApNo:lecApNo}),
 				contentType: "application/json;charset=utf-8",
 				dataType: "text",
@@ -531,6 +543,9 @@ $(function(){
 			$.ajax({
 				type:"put",
 				url: "/hku/admin/lecaplylist",
+				beforeSend : function(xhr){
+	               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	            },
 				data: JSON.stringify(sendData),
 				contentType: "application/json;charset=utf-8",
 				dataType: "text",

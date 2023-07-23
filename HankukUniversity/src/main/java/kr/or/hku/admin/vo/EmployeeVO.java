@@ -23,6 +23,7 @@ public class EmployeeVO {
 	private String bankCd           ;
 	private String empActno         ;
 	private String empProfilePath  ;
-	private String emDeptCd       ;
+	private String empDeptCd       ;
 	private String empJbttlCd      ;
+	private String empJbgdCd;
 }

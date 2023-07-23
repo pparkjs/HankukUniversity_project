@@ -5,7 +5,7 @@
 <style>
 .table-wrap {
     overflow: scroll;
-    height: 600px;
+    height: 405px;
     margin-top: 13px;
 }
 .thead-dark{
@@ -430,6 +430,9 @@ $(function(){
 		$.ajax({
 			type: 'post',
 			url: '/hku/admin/sclsAplyProccess',
+			beforeSend : function(xhr){
+               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 			contentType: 'application/json;charset=utf-8',
 			data : JSON.stringify(sendData),
 			dataType : 'text',

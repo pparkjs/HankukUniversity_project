@@ -263,6 +263,9 @@ $(document).ready(function() {
 				$.ajax({
 					type:"delete",
 					url: "/hku/admin/calendar",
+					beforeSend : function(xhr){
+		               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		            },
 					contentType: "application/json;charset=utf-8", // 필수 
 					data: JSON.stringify(deleteData),
 					dataType: "text",
@@ -377,6 +380,9 @@ $(document).ready(function() {
 			$.ajax({
 				type : 'post',
 				url : '/hku/admin/calendar',
+				beforeSend : function(xhr){
+	               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	            },
 				contentType : "application/json;charset=utf-8",
 				data : JSON.stringify(sendData),
 				dataType : 'text',
@@ -414,6 +420,9 @@ $(document).ready(function() {
 			$.ajax({
 				type : 'put',
 				url : '/hku/admin/calendar',
+				beforeSend : function(xhr){
+	               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	            },
 				contentType : "application/json;charset=utf-8",
 				data : JSON.stringify(sendData),
 				dataType : 'text',
@@ -461,6 +470,9 @@ $(document).ready(function() {
 		$.ajax({
 			type : 'put',
 			url : '/hku/admin/calendar',
+			beforeSend : function(xhr){
+               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 			contentType : "application/json;charset=utf-8",
 			data : JSON.stringify(changeData),
 			dataType : 'text',
