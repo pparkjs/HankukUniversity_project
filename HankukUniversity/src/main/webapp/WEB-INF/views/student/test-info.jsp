@@ -66,6 +66,7 @@
 $(function(){
 	testList()
 })
+var childWindow;
 
 function testList(){
 	var cardBody = $(".card-body");
@@ -180,8 +181,9 @@ $(document).on("click", "#testBtn", function(){
 						})
 				}else if(res === "notExist"){
 					console.log(testNo, testFile, testSe, lecapNo, subNm, testTimeLimit);
-					window.open("/hku/open-test?testNo="+testNo+"&testFile="+testFile+"&lecapNo="+lecapNo+"&testSe="+testSe+"&subNm="
-							+subNm+"&testTimeLimit="+testTimeLimit+"&testBgngYmd="+testBgngYmd+"&stdNo="+stdNo, "시험지", windowFeatures);
+					childWindow = window.open("/hku/open-test?testNo="+testNo+"&testFile="+testFile+"&lecapNo="+lecapNo+"&testSe="+testSe+"&subNm="
+								+subNm+"&testTimeLimit="+testTimeLimit+"&testBgngYmd="+testBgngYmd+"&stdNo="+stdNo, "시험지", windowFeatures);
+					console.log("윈도우",childWindow)
 				}
 			}
 		})
@@ -279,5 +281,14 @@ function getCurrentDate() {
 	  const day = String(currentDate.getDate()).padStart(2, '0');
 	  
 	  return `\${year}-\${month}-\${day}`;
+}
+
+if("${msg}" == "exist"){
+	swal({
+		title: "이미 시험에 응시하였습니다.",
+		icon: "warning",
+		button: "닫기"
+	})
+	childWindow.close();
 }
 </script>
