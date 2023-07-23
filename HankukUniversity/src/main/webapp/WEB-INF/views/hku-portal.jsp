@@ -12,7 +12,8 @@
     <link href="https://cdn.jsdelivr.net/npm/gridstack@8.2.1/dist/gridstack.min.css" rel="stylesheet"/>
     <!-- toastr -->
 	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />	
-	
+	<!-- 제이쿼리 -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <!-- toastr -->
 	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>		
     <title>한국대학교 포탈</title>
@@ -283,7 +284,6 @@
         </div>
     </div>
 </body>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
     var grid = GridStack.init({ // 여기에 그리드 스택 옵션 삽입
@@ -342,6 +342,25 @@ $(document).ready(function(){
         console.log("저장배열", myPortletArr);
         // 지금 로컬 스토리지로 저장하는데 이걸 데이터베이스에 저장하면됨
         localStorage.setItem("myGrid", JSON.stringify(myPortletArr));
+        toastr.options = {
+		    "closeButton": false,
+		    "debug": false,
+		    "newestOnTop": false,
+		    "progressBar": true,
+		    "positionClass": "toast-top-center",
+		    "preventDuplicates": false,
+		    "onclick": null,
+		    "showDuration": "100",
+		    "hideDuration": "1000",
+		    "timeOut": "2000",
+		    "extendedTimeOut": "1000",
+		    "showEasing": "swing",
+		    "hideEasing": "linear",
+		    "showMethod": "fadeIn",
+		    "hideMethod": "fadeOut"
+		};
+    			
+		toastr.success('화면 설정이 저장되었습니다.');
     });
 });
 </script>
