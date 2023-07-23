@@ -16,7 +16,7 @@ position: relative;
 	height: 0;
 	border-radius: 50%;
 /* 	background-color: rgba(255, 255, 255, 0.5); */
-	background-color: #adb17d;
+	background-color: #ffdede;
 	transform: translate(-50%, -50%);
 	pointer-events: none;
 	z-index: -1;
@@ -49,16 +49,23 @@ position: relative;
     height: 40px;
     margin-top: 6px;
 }
-.me-2{
-	width: 43px;
-    height: 43px;
+
+.d-block{ 
+ 	font-size: 16px; 
+} 
+.alarm-count{
+  width: 20px;
+  height: 20px;
+  background-color: #e33333;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 20px;
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  font-size: 13px;
 }
-.mb-1{
-	font-size: 16px;
-}
-.d-block{ */
-/* 	font-size: 16px; */
-/* } */
 </style>
 <div class="header">
 	<div class="header-content">
@@ -152,47 +159,17 @@ position: relative;
 						<span id="timer" style=" margin-right:4px; font-size:1.3em; color:white; font-weight: 500; width: 97px;"></span>
 						<i id="refresh" class="fa-solid fa-rotate-right fa-lg" style="color: #ffffff; font-size: 1.5em; cursor:pointer;"></i>
 					</div>
+					
 					<li class="nav-item dropdown notification_dropdown" id="notification-icon">
-						<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"> 
+						<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" style="position:relative;"> 
+							<div class="alarm-count">2</div>
 							<img alt="" src="/images/알람3.svg" width="30" height="27">
 						</a>
 						<div class="dropdown-menu dropdown-menu-end">
 							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3"
 								style="height: 380px;">
 								<ul class="timeline">
-<!-- 									<li> -->
-<!-- 										<a href="#"> -->
-<!-- 											<div class="timeline-panel"> -->
-<!-- 												<div class="media me-2"> -->
-<!-- 													<img alt="image" width="50" src="/images/avatar/1.jpg"> -->
-<!-- 												</div> -->
-<!-- 												<div class="media-body"> -->
-<!-- 													<h6 class="mb-1">Dr sultads Send you Photo</h6> -->
-<!-- 													<small class="d-block">29 July 2020 - 02:26 PM</small> -->
-<!-- 												</div> -->
-<!-- 											</div> -->
-<!-- 										</a> -->
-<!-- 									</li> -->
-<!-- 									<li> -->
-<!-- 										<div class="timeline-panel"> -->
-<!-- 											<div class="media me-2 media-info">KG</div> -->
-<!-- 											<div class="media-body"> -->
-<!-- 												<h6 class="mb-1">Resport created successfully</h6> -->
-<!-- 												<small class="d-block">29 July 2020 - 02:26 PM</small> -->
-<!-- 											</div> -->
-<!-- 										</div> -->
-<!-- 									</li> -->
-<!-- 									<li> -->
-<!-- 										<div class="timeline-panel"> -->
-<!-- 											<div class="media me-2 media-success"> -->
-<!-- 												<i class="fa fa-home"></i> -->
-<!-- 											</div> -->
-<!-- 											<div class="media-body"> -->
-<!-- 												<h6 class="mb-1">Reminder : Treatment Time!</h6> -->
-<!-- 												<small class="d-block">29 July 2020 - 02:26 PM</small> -->
-<!-- 											</div> -->
-<!-- 										</div> -->
-<!-- 									</li> -->
+									<!--알람 동적 추가-->
 								</ul>
 							</div>
 						</div>
@@ -401,54 +378,102 @@ position: relative;
 	    time = 10799; 
 	    x = setInterval(updateTimer, 1000); 
 	});
+	
 	getAlarmList();
+	
+	setInterval(() => {
+		getAlarmList();
+	}, 2000);
 	
 // 	AJAX를 통해 알림이 있는지 확인하는 함수
 	function getAlarmList() {
 		var timeline = $('.timeline');
+   	 	const notificationDiv = document.querySelector('.alarm-count');
 		$.ajax({
 			url: "/hku/getAlarmList",
             type: "GET",
             dataType: "json",
+			beforeSend : function(xhr){
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
             success: function(res) {
-            	console.log(res);
 				var data = ''
                 if(res.length > 0) {
+                	notificationDiv.style.display = "block";
+            	    notificationDiv.innerText = res[0].totalCnt;
 					showNotificationShadow();
 					for(var i = 0; i < res.length; i++) {
-						console.log("체크응",res[i]);
 						if(res[i].alarmType === 'counseling'){ // 학생이 상담 신청했을 경우
 							data += `<li>
-										<a href="/hku/student-counseling" data-alarmno="\${res[i].aramNo}">
+										<a href="/hku/student-counseling" class="link-move" data-alarmno="\${res[i].alarmNo}">
 											<div class="timeline-panel">
-												<div class="media me-2" style="width: 43px; height: 43px;">
-													<img alt="image" width="50" src="\${res[i].sendProfile}">
-												</div>
+												<div class="media me-2" style="width: 50px; height: 50px; border: 1px solid #40404073;">`
+							if(res[i].sendProfile == 'null' || res[i].sendProfile == null || res[i].sendProfile == 'undefined' || res[i].sendProfile == '') {
+								data +=					`<img alt="image" width="50" src="/images/기본프로필.png">`
+							}else{
+								data +=					`<img alt="image" width="50" src="/download\${res[i].sendProfile}">`
+							}
+								data +=		    `</div>
 												<div class="media-body">
 													<h6 class="mb-1" style="font-size: 16px;">\${res[i].alarmTtl}</h6>
-													<small class="d-block">\${res[i].alarmRegDt}</small>
+													<small class="d-block" style="font-size: 14px;">\${res[i].alarmRegDt}</small>
 												</div>
 											</div>
 										</a>
 									</li>`
-							console.log("체킁타입",res[i].alarmType);
+						}else if(res[i].alarmType === 'counseling-std'){ // 교수가 상담 요청 처리 보낸경우
+							data += `<li>
+										<a href="/hku/counseling-record" class="link-move" data-alarmno="\${res[i].alarmNo}">
+											<div class="timeline-panel">
+												<div class="media me-2" style="width: 50px; height: 50px; border: 1px solid #40404073;">`
+							if(res[i].sendProfile == 'null' || res[i].sendProfile == null || res[i].sendProfile == 'undefined' || res[i].sendProfile == '') {
+								data +=				`<img alt="image" width="50" src="/images/기본프로필.png">`
+							}else{
+								data +=				`<img alt="image" width="50" src="/download\${res[i].sendProfile}">`
+							}
+								data +=	    	`</div>
+												<div class="media-body">
+													<h6 class="mb-1" style="font-size: 14px;">\${res[i].alarmTtl}</h6>
+													<small class="d-block" style="font-size: 14px;">\${res[i].alarmRegDt}</small>
+												</div>
+											</div>
+										</a>
+									</li>`
 						}
 					}
 				
                 } else {
+                	notificationDiv.style.display = "none";
 					data += `<div class="media-body">
 								<h6 class="mb-1" style="font-size: 18px; margin-left: 27px; color: #6e6e6e;">알람이 존재하지 않습니다.</h6>
 							</div>`
                     hideNotificationShadow();
                 }
-				console.log("데이터",data)
-				console.log(timeline);
 				timeline.html(data);
             }
 		})
 	}
-
 	
+$(document).on("click",".link-move",function(){
+	var alarmNo = this.dataset.alarmno
+	var obj = {
+		alarmNo:alarmNo
+	}
+	$.ajax({
+		url:"/hku/alarm-delete",
+		type:"delete",
+		data:JSON.stringify(obj),
+		contentType:"application/json; charset=UTF-8",
+		beforeSend : function(xhr){
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
+        success:function(res){
+            console.log(res);
+            getAlarmList();
+        }
+	})
+})
+
 	// 알림이 도착하면 잔상을 표시합니다.
 	function showNotificationShadow() {
 		const notificationShadow = document.querySelector('.notification-shadow');
@@ -460,12 +485,13 @@ position: relative;
 		const notificationShadow = document.querySelector('.notification-shadow');
 	  	notificationShadow.style.display = 'none';
 	}
+	
+	// 알람 개수를 업데이트하는 함수
+	function updateNotificationCount(count) {
+	  const notificationDiv = document.querySelector('.alarm-count');
+	  notificationDiv.innerText = count;
+	}
 
-	// 아래는 테스트를 위해 3초마다 잔상을 표시하는 예시입니다.
-// 	setInterval(() => {
-// 		showNotificationShadow();
-// // 		setTimeout(hideNotificationShadow, 1000);
-// 	},
-// 	3000);
+
 	
 </script>
