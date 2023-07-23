@@ -15,8 +15,8 @@ public class LoginServiceImpl implements ILoginService {
 	@Autowired
 	private LoginMapper loginMapper;
 	@Override
-	public UsersVO loginUser(UsersVO usersVo) {
-		return loginMapper.loginUser(usersVo);
+	public UsersVO loginUser(String username) {
+		return loginMapper.loginUser(username);
 	}
 	@Override
 	public StudentVO studentUser(String userNo) {
