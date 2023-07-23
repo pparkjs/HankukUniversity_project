@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <link rel="stylesheet" href="/css/table.css">
 <link rel="stylesheet" href="/css/test-style.css">
  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
@@ -31,7 +32,7 @@
 			</div>
 			<hr>
 			<div class="card-body" style="padding-top: 0px;">
-				<form method="post" action="/hku/test-insert" enctype="multipart/form-data">
+				<form method="post" action="/hku/test-insert?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 					<div class="noti-wrap">
 						<span style="padding-bottom: 8px;">[출제자 유의사항]</span>
 						<span>▶ 시험지 업로드는 PDF파일만 가능합니다.</span>
@@ -251,7 +252,7 @@ $("#regBtn").on("click", function(){
 	console.log("잘 들어갔나?",$("#timeLimt").val());
 
 	if("${type}" == "update"){
-		$("form").attr("action", "/hku/test-update")
+		$("form").attr("action", "/hku/test-update?${_csrf.parameterName}=${_csrf.token}")
 	}else{
 		if(testFile == "" || testFile == null){
 			swal({

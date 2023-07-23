@@ -69,9 +69,9 @@ public class CounselingController {
 	// 상담 예약하기
 	@ResponseBody
 	@PostMapping("/counseling-rsvt")
-	public ResponseEntity<String> counselingRsvt(@RequestBody CounselingRsvtVO vo){
+	public ResponseEntity<String> counselingRsvt(@RequestBody CounselingRsvtVO vo, HttpSession session){
 		log.info("상담예약 : "  + vo);
-		ServiceResult result = counselingService.counselingRsvt(vo);
+		ServiceResult result = counselingService.counselingRsvt(vo, session);
 		
 		if(result.equals(ServiceResult.OK)) {
 			return new ResponseEntity<String>("success", HttpStatus.OK);

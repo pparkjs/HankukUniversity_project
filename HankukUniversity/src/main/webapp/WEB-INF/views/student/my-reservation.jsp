@@ -167,6 +167,9 @@ useCancleBtn.on("click", function(){
 		type:"delete",
 		data:JSON.stringify(lockerObj),
 		contentType:"application/json; charset=utf-8",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success: function(res){
 			if(res === "success"){
 				swal({
@@ -194,6 +197,9 @@ rsvtCancleBtn.on("click", function(){
 	$.ajax({
 		url: `/hku/flcts-cancle/\${flctsRsvtNo}`,
 		type:"delete",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success: function(res){
 			if(res === "success"){
 				swal({

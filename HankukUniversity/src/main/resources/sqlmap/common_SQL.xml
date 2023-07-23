@@ -65,6 +65,25 @@
  	<insert id="alarmInsert" parameterType="alarmVO">
  	/*kr.or.hku.common.mapper.CommonMapper.alarmInsert*/
  		INSERT INTO alarm
- 		VALUES(seq_alarm.nextval, #{receiveUserNo}, #{alarmType}, #{alarmTtl}, sysdate, null, #{sendUserNo})
+ 		VALUES(seq_alarm.nextval, #{receiveUserNo}, #{alarmType}, #{alarmTtl}, sysdate, #{alarmPathNo},#{sendUserNo}, #{sendProfile})
  	</insert>
+ 	
+ 	<!-- 나의 알람 리스트 가져오기 -->
+ 	<select id="getAlarmList" parameterType="string" resultType="alarmVO">
+ 	/*kr.or.hku.common.mapper.CommonMapper.getAlarmList*/
+	 	SELECT 
+	 		 a.alarm_no
+	 	   , a.receive_user_no
+	 	   , a.alarm_type
+	 	   , a.alarm_ttl
+	 	   , a.alarm_reg_dt
+	 	   , a.alarm_path_no
+	 	   , a.send_user_no
+	 	   , a.send_profile
+		   , COUNT(*) OVER() AS total_cnt
+		FROM alarm a
+		WHERE a.receive_user_no = #{username}
+		ORDER BY a.alarm_no DESC
+ 	</select>
+ 	
  </mapper>

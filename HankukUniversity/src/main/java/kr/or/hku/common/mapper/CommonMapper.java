@@ -15,4 +15,5 @@ public interface CommonMapper {
 	public StudentVO myAllInfo(String stdNo);
 	public List<FacilityVO> floorListFlct(String flctNo);
 	public void alarmInsert(AlarmVO alarm);
+	public List<AlarmVO> getAlarmList(String username);
 }

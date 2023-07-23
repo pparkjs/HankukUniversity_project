@@ -13,6 +13,7 @@
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 <!-- 	<bean id= "customPasswordEncoder" class="kr.or.hku.security.CustomNoOpPasswordEncoder"></bean> -->
 	<bean id="customUserDetailsService" class="kr.or.hku.security.CustomUserDetailsService"></bean>
+	<security:http pattern="/download/**" security="none" />
 	<security:http pattern="/images/**" security="none" />
 	<security:http pattern="/js/**" security="none" />
 	<security:http pattern="/css/**" security="none" />
@@ -26,6 +27,9 @@
 		<security:logout logout-url="/main/logout" invalidate-session="true"/>
 <!-- 		<security:csrf disabled="false" /> -->
 	</security:http>
+	
+	<!-- /download/** 경로 허용 추가 -->
+	
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="customUserDetailsService">
 			<security:password-encoder ref="bcryptPasswordEncoder"/>
