@@ -301,6 +301,9 @@ $(function(){
 				processData : false,
 				contentType : false,
 				cache: false,
+				beforeSend : function(xhr){
+	               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	            },
 				success : function(res) {
 					if(res === "success"){
 						swal({
@@ -379,6 +382,9 @@ $(function(){
 				url : "/hankuk/dept/notice",
 				data : formData,
 				processData : false,
+				beforeSend : function(xhr){
+	               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	            },
 				contentType : false,
 				cache: false,
 				success : function(res) {
@@ -448,6 +454,9 @@ $(function(){
 							type : "delete",
 							url : "/hankuk/dept/notice",
 							data : JSON.stringify(deleteData),
+							beforeSend : function(xhr){
+				               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+				            },
 							contentType : "application/json;charset=utf-8",
 							success : function(res) {
 								if (res === "success") {

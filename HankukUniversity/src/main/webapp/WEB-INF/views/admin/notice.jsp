@@ -165,6 +165,9 @@
 					processData: false, // 필수
 					cache: false,
 					data: formData,
+					beforeSend : function(xhr){
+		               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		            },
 					dataType: "text",
 					success: function(res){
 						if(res === "success"){
@@ -235,6 +238,9 @@
 					processData: false, // 필수
 					cache: false,
 					data: formData,
+					beforeSend : function(xhr){
+		               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		            },
 					dataType: "json",
 					success: function(res){
 						console.log("수정된 파일",res);
@@ -310,6 +316,9 @@
 							type:"delete",
 							url: "/hankuk/admin/deleteNotice",
 							contentType: "application/json;charset=utf-8", // 필수 
+							beforeSend : function(xhr){
+				               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+				            },
 							data: JSON.stringify(deleteData),
 							dataType: "text",
 							success: function(res){

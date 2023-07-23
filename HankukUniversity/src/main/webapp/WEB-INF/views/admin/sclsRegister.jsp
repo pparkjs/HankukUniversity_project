@@ -207,6 +207,9 @@ $(function(){
 		$.ajax({
 			url:"/hku/admin/scholarship-info",
 			type: 'post',
+			beforeSend : function(xhr){
+               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 			contentType: false, // 필수 
 			processData: false,
 			cache : false,
@@ -255,6 +258,9 @@ $(function(){
 						url:"/hku/admin/scholarship-info",
 						type: 'delete',
 						contentType: "application/json;charset=utf-8", // 필수 
+						beforeSend : function(xhr){
+			               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			            },
 						data: JSON.stringify({sclsCd:sclsCd}),
 						dataType: 'text',
 						success: function(res){
@@ -329,6 +335,9 @@ $(function(){
 			$.ajax({
 				url:"/hku/admin/scholarship-info",
 				type: 'put',
+				beforeSend : function(xhr){
+	               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	            },
 				contentType: false, // 필수 
 				processData: false,
 				cache : false,

@@ -20,6 +20,12 @@
 		INNER JOIN subject s ON la.sub_no = s.sub_no
 		INNER JOIN professor p ON la.pro_no = p.pro_no
 		WHERE la.aprv_stts_cd NOT IN 'CANCLE'
+		AND la.lecap_yr IN TO_CHAR(EXTRACT(YEAR FROM SYSDATE))
+        AND la.lecap_sem IN (CASE
+                        WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) BETWEEN 1 AND 6 THEN 1
+                        WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) BETWEEN 7 AND 12 THEN 2
+                    ELSE 0
+                    END)
 		ORDER BY la.lecap_no DESC
  	</select>
  	
