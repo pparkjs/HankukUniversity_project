@@ -1,8 +1,6 @@
 package kr.or.hku.classroom.controller;
 
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,15 +9,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -44,12 +40,14 @@ public class testPresController {
 	@Autowired
 	private TestPresService testPresService;
 	
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')") 
 	@GetMapping("/test-presentation")
 	public String testForm() {
 		return "professor/test-form";
 	}
 	
 	// 시험 출제
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')") 
 	@PostMapping("/test-insert")
 	public String testInsert(TestVO test, Model model, HttpSession session, RedirectAttributes redi) throws IOException {
 		log.info("시험지 vo : " + test);
@@ -107,6 +105,7 @@ public class testPresController {
 	}
 	
 	// 수정하기폼으로 이동
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')") 
 	@GetMapping("/testUpdate")
 	public String testUpdateForm(TestVO test, Model model) {
 		log.info("시험!! : " + test);
@@ -123,6 +122,7 @@ public class testPresController {
 	}
 	
 	// 수정하기 처리
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')") 
 	@PostMapping("/test-update")
 	public String testUpdate(TestVO test, Model model, HttpSession session, RedirectAttributes redi) throws IOException {
 		
@@ -209,6 +209,7 @@ public class testPresController {
 	
 	// 시험 답안 제출
 	@ResponseBody
+	@PreAuthorize("hasRole('ROLE_STUDENT')") 
 	@PostMapping("/studentAnswerInsert")
 	public String studentAnswerInsert(@RequestBody List<StudentAnswerVO> studentAnsList, HttpSession session) {
 		

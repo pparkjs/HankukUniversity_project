@@ -155,9 +155,11 @@ function studentAnswerInsert(obj){
         type: "POST",
         url: "/hku/studentAnswerInsert",
         data: JSON.stringify(obj),
-        contentType : "application/json; charset=utf-8",
-        success: function(res){
-			if(flag){
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
+		contentType: "application/json; charset=utf-8",
+        success:function(res){
 				if(res === "success"){
 					swal({
 						title: "답안을 제출하였습니다.",
@@ -169,7 +171,6 @@ function studentAnswerInsert(obj){
 					}, 1000)
 				}
 			}
-        }
     });
 }
 
@@ -189,7 +190,18 @@ function answerArrPush(){
 function noEvent() {
     if (event.keyCode == 116) {
         event.keyCode= 2;
+        return false
+function noEvent() {
+    if (event.keyCode == 116) {
+        event.keyCode= 2;
         return false;
+    }
+    else if(event.ctrlKey && (event.keyCode==78 || event.keyCode == 82))
+    {
+        return false;
+    }
+}
+document.onkeydown = noEvent;
     }
     else if(event.ctrlKey && (event.keyCode==78 || event.keyCode == 82))
     {

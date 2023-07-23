@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <link rel="stylesheet" href="/css/table.css">
 <link rel="stylesheet" href="/css/counseling-style.css">
 <div class="content-body">
@@ -66,36 +67,34 @@
             </div>
             <div class="modal-body">
 				<div class="modal-wrap">
-					<form action="/hku/flcts-reservation" method="post">
-						<div class="modal-title1">
-							<span style="font-size: 19px;">교수명</span>
-							<span style="margin-right: -87px; font-size: 19px;">상담 구분</span>
-						</div>
-						<div class="modal-content1">
-							<input type="hidden" class="form-control" id="rsvt-proNo" name="">
-							<input type="text" class="form-control" id="rsvt-proNm" name="" readonly>
-							<select class="form-control" id="rsvt-face" name="">
-								<option value="">-----선택-----</option>
-								<option value="nonface">비대면</option>
-								<option value="face">대면</option>
-							</select>
-						</div>
-						<div class="modal-title2">
-							<span style="font-size: 19px;">상담일자</span>
-							<span style=" margin-right: 49px; font-size: 19px;">상담시간</span>
-						</div>
-						<div class="modal-content2">
-							<input type="text" class="form-control" id="rsvt-date" name="" readonly>
-							<input type="text" class="form-control" id="rsvt-hours" name="" readonly>
-							<input type="hidden" class="form-control" id="rsvt-hours-save" name="">
-						</div>
-						<div class="modal-title3">
-							<span style="font-size:19px;">상담사유</span>
-						</div>
-						<div class="modal-content3">
-							<textarea rows="5" cols="10" class="form-control" id="rsvt-prps" name="usePrps" placeholder="상담 사유를 입력하세요."></textarea>
-						</div>
-					</form>
+					<div class="modal-title1">
+						<span style="font-size: 19px;">교수명</span>
+						<span style="margin-right: -87px; font-size: 19px;">상담 구분</span>
+					</div>
+					<div class="modal-content1">
+						<input type="hidden" class="form-control" id="rsvt-proNo" name="">
+						<input type="text" class="form-control" id="rsvt-proNm" name="" readonly>
+						<select class="form-control" id="rsvt-face" name="">
+							<option value="">-----선택-----</option>
+							<option value="nonface">비대면</option>
+							<option value="face">대면</option>
+						</select>
+					</div>
+					<div class="modal-title2">
+						<span style="font-size: 19px;">상담일자</span>
+						<span style=" margin-right: 49px; font-size: 19px;">상담시간</span>
+					</div>
+					<div class="modal-content2">
+						<input type="text" class="form-control" id="rsvt-date" name="" readonly>
+						<input type="text" class="form-control" id="rsvt-hours" name="" readonly>
+						<input type="hidden" class="form-control" id="rsvt-hours-save" name="">
+					</div>
+					<div class="modal-title3">
+						<span style="font-size:19px;">상담사유</span>
+					</div>
+					<div class="modal-content3">
+						<textarea rows="5" cols="10" class="form-control" id="rsvt-prps" name="usePrps" placeholder="상담 사유를 입력하세요."></textarea>
+					</div>
 				</div>
             </div>
             <div class="modal-footer">
@@ -175,6 +174,9 @@ $('#regBtn').on("click", function(){
 		url:"/hku/counseling-rsvt",
 		data:JSON.stringify(regObj),
 		type:"post",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		contentType:"application/json; charset=utf-8",
 		success:function(res){
 			if(res === "success"){
@@ -201,6 +203,9 @@ function getScheduleList(){
 		url:`/hku/getScheduleList/\${proNo}`,
 		dataType:"json",
 		type:"get",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success:function(res){
 			console.log(res);
 			var sTd = $(".schedule td");
@@ -274,6 +279,9 @@ function getProList(){
 		url:"/hku/getProList/${std.deptCd}",
 		type:"get",	
 		dataType:"json",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success:function(res){
 			var scheduleWrap = document.querySelector(".schedule-wrap");
 			var scTitle = document.querySelector("#scTitle");

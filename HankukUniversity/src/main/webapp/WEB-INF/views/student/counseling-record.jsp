@@ -201,29 +201,3 @@
 		</div>
 	</div>
 </div>
-
-
-<script>
-$(function(){
-	
-})
-
-// var aprvSttsCd = 'wait';
-
-// function counselingReqList(){
-// 	var cObj = {
-// 		stdNo:"${std.stdNo}",
-// 		aprvSttsCd: aprvSttsCd
-// 	}
-
-// 	$.ajax({
-// 		url:"/hku/counslingList",
-// 		data:cObj,
-// 		dataType:"json",
-// 		type:"get",
-// 		success:function(res){
-// 			console.log(res);
-// 		}
-// 	})
-// }
-</script>

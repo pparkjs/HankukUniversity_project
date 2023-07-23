@@ -139,6 +139,9 @@ $(document).on("click","#regBtn",function(){
 		data:JSON.stringify(obj),
 		contentType:"application/json; charset=UTF-8",
 		type:"put",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success:function(res){
 			if(res === "success"){
 				swal({
@@ -184,6 +187,9 @@ rejBtn.on("click",function(){
 		data:JSON.stringify(obj),
 		contentType:"application/json; charset=UTF-8",
 		type:"put",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success:function(res){
 			if(res === "success"){
 				swal({
@@ -220,6 +226,9 @@ function counselingReqList(){
 		data:cObj,
 		dataType:"json",
 		type:"get",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success:function(res){
 			console.log(res);
 			

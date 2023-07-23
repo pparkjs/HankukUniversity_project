@@ -120,17 +120,17 @@ public class FaciltyReservationController {
 	}
 	
 	// 예약 신청하기
+	@ResponseBody
 	@PostMapping("/flcts-reservation")
-	public String flctsReservation(FacilitiesVO vo, Model model) {
+	public String flctsReservation(@RequestBody FacilitiesVO vo) {
 		log.info("시설물 예약 : " + vo);
 		
 		ServiceResult result = facilityService.flctsReservation(vo);
 		
 		if(result.equals(ServiceResult.OK)) {
-			return "redirect:/hku/my-reservation";
+			return "success";
 		}else {
-			model.addAttribute("msg", "error	");
-			return "student/facility-rsvt";
+			return "failed";
 		}
 		
 	}

@@ -49,6 +49,16 @@ position: relative;
     height: 40px;
     margin-top: 6px;
 }
+.me-2{
+	width: 43px;
+    height: 43px;
+}
+.mb-1{
+	font-size: 16px;
+}
+.d-block{ */
+/* 	font-size: 16px; */
+/* } */
 </style>
 <div class="header">
 	<div class="header-content">
@@ -150,42 +160,41 @@ position: relative;
 							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3"
 								style="height: 380px;">
 								<ul class="timeline">
-									<li>
-										<div class="timeline-panel">
-											<div class="media me-2">
-												<img alt="image" width="50" src="/images/avatar/1.jpg">
-											</div>
-											<div class="media-body">
-												<h6 class="mb-1">Dr sultads Send you Photo</h6>
-												<small class="d-block">29 July 2020 - 02:26 PM</small>
-											</div>
-										</div>
-									</li>
-									<li>
-										<div class="timeline-panel">
-											<div class="media me-2 media-info">KG</div>
-											<div class="media-body">
-												<h6 class="mb-1">Resport created successfully</h6>
-												<small class="d-block">29 July 2020 - 02:26 PM</small>
-											</div>
-										</div>
-									</li>
-									<li>
-										<div class="timeline-panel">
-											<div class="media me-2 media-success">
-												<i class="fa fa-home"></i>
-											</div>
-											<div class="media-body">
-												<h6 class="mb-1">Reminder : Treatment Time!</h6>
-												<small class="d-block">29 July 2020 - 02:26 PM</small>
-											</div>
-										</div>
-									</li>
+<!-- 									<li> -->
+<!-- 										<a href="#"> -->
+<!-- 											<div class="timeline-panel"> -->
+<!-- 												<div class="media me-2"> -->
+<!-- 													<img alt="image" width="50" src="/images/avatar/1.jpg"> -->
+<!-- 												</div> -->
+<!-- 												<div class="media-body"> -->
+<!-- 													<h6 class="mb-1">Dr sultads Send you Photo</h6> -->
+<!-- 													<small class="d-block">29 July 2020 - 02:26 PM</small> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<!-- 										</a> -->
+<!-- 									</li> -->
+<!-- 									<li> -->
+<!-- 										<div class="timeline-panel"> -->
+<!-- 											<div class="media me-2 media-info">KG</div> -->
+<!-- 											<div class="media-body"> -->
+<!-- 												<h6 class="mb-1">Resport created successfully</h6> -->
+<!-- 												<small class="d-block">29 July 2020 - 02:26 PM</small> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</li> -->
+<!-- 									<li> -->
+<!-- 										<div class="timeline-panel"> -->
+<!-- 											<div class="media me-2 media-success"> -->
+<!-- 												<i class="fa fa-home"></i> -->
+<!-- 											</div> -->
+<!-- 											<div class="media-body"> -->
+<!-- 												<h6 class="mb-1">Reminder : Treatment Time!</h6> -->
+<!-- 												<small class="d-block">29 July 2020 - 02:26 PM</small> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</li> -->
 								</ul>
 							</div>
-							<a class="all-notification" href="javascript:void(0);">See
-								all notifications <i class="ti-arrow-end"></i>
-							</a>
 						</div>
 						 <!-- 알림 아이콘 주변에 잔상을 표시하는 요소 -->
   						<div class="notification-shadow"></div>
@@ -392,23 +401,49 @@ position: relative;
 	    time = 10799; 
 	    x = setInterval(updateTimer, 1000); 
 	});
+	getAlarmList();
 	
 // 	AJAX를 통해 알림이 있는지 확인하는 함수
 	function getAlarmList() {
-// 		var userObj = {
-			
-// 		}
-
+		var timeline = $('.timeline');
 		$.ajax({
-			url: "/main/getAlarmList",
+			url: "/hku/getAlarmList",
             type: "GET",
             dataType: "json",
             success: function(res) {
-                if(res.length == 1) {
-                    showNotificationShadow();
+            	console.log(res);
+				var data = ''
+                if(res.length > 0) {
+					showNotificationShadow();
+					for(var i = 0; i < res.length; i++) {
+						console.log("체크응",res[i]);
+						if(res[i].alarmType === 'counseling'){ // 학생이 상담 신청했을 경우
+							data += `<li>
+										<a href="/hku/student-counseling" data-alarmno="\${res[i].aramNo}">
+											<div class="timeline-panel">
+												<div class="media me-2" style="width: 43px; height: 43px;">
+													<img alt="image" width="50" src="\${res[i].sendProfile}">
+												</div>
+												<div class="media-body">
+													<h6 class="mb-1" style="font-size: 16px;">\${res[i].alarmTtl}</h6>
+													<small class="d-block">\${res[i].alarmRegDt}</small>
+												</div>
+											</div>
+										</a>
+									</li>`
+							console.log("체킁타입",res[i].alarmType);
+						}
+					}
+				
                 } else {
+					data += `<div class="media-body">
+								<h6 class="mb-1" style="font-size: 18px; margin-left: 27px; color: #6e6e6e;">알람이 존재하지 않습니다.</h6>
+							</div>`
                     hideNotificationShadow();
                 }
+				console.log("데이터",data)
+				console.log(timeline);
+				timeline.html(data);
             }
 		})
 	}
@@ -427,10 +462,10 @@ position: relative;
 	}
 
 	// 아래는 테스트를 위해 3초마다 잔상을 표시하는 예시입니다.
-	setInterval(() => {
-		showNotificationShadow();
-// 		setTimeout(hideNotificationShadow, 1000);
-	},
-	3000);
+// 	setInterval(() => {
+// 		showNotificationShadow();
+// // 		setTimeout(hideNotificationShadow, 1000);
+// 	},
+// 	3000);
 	
 </script>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <link rel="stylesheet" href="/css/student/facility-rsvt.css">
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script> -->
 <!-- <link type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" /> -->
@@ -110,37 +111,38 @@
             </div>
             <div class="modal-body">
 				<div class="modal-wrap">
-					<form action="/hku/flcts-reservation" method="post">
-						<div class="modal-title1">
-							<span style="font-size: 19px;">신청자</span>
-							<span style="margin-right: 68px; font-size: 19px;">시설물명</span>
-						</div>
-						<div class="modal-content1">
-							<input type="hidden" class="form-control" id="rsvt-stdNo" name="stdNo">
-							<input type="hidden" class="form-control" id="rsvt-flctsNo" name="flctsNo">
-							<input type="text" class="form-control" id="rsvt-stdNm" name="stdNm" readonly>
-							<input type="text" class="form-control" id="rsvt-flctsNm" name="flctsNm" readonly>
-						</div>
-						<div class="modal-title2">
-							<span style="font-size: 19px;">사용인원</span>
-							<span style=" margin-right: 252px; font-size: 19px;">예약날짜</span>
-						</div>
-						<div class="modal-content2">
-							<input type="text" class="form-control" id="rsvt-cnt" name="useUsers"  placeholder="숫자를 입력하세요.">
-							<input type="text" class="form-control" id="rsvt-date" name="rsvtDate" readonly>
-							<input type="text" class="form-control" id="rsvt-startTime" name="startHours" readonly>
-							 ~
-							<select class="form-control" id="rsvt-endTime" name="endHours">
-								<!-- 동적추가 -->
-							</select>
-						</div>
-						<div class="modal-title3">
-							<span style="font-size:19px;">사용목적</span>
-						</div>
-						<div class="modal-content3">
-							<textarea rows="10" cols="10" class="form-control" id="rsvt-prps" name="usePrps" placeholder="사용 목적을 입력하세요."></textarea>
-						</div>
-					</form>
+<!-- 					<form action="/hku/flcts-reservation" method="post"> -->
+					<div class="modal-title1">
+						<span style="font-size: 19px;">신청자</span>
+						<span style="margin-right: 68px; font-size: 19px;">시설물명</span>
+					</div>
+					<div class="modal-content1">
+						<input type="hidden" class="form-control" id="rsvt-stdNo" name="stdNo">
+						<input type="hidden" class="form-control" id="rsvt-flctsNo" name="flctsNo">
+						<input type="text" class="form-control" id="rsvt-stdNm" name="stdNm" readonly>
+						<input type="text" class="form-control" id="rsvt-flctsNm" name="flctsNm" readonly>
+					</div>
+					<div class="modal-title2">
+						<span style="font-size: 19px;">사용인원</span>
+						<span style=" margin-right: 252px; font-size: 19px;">예약날짜</span>
+					</div>
+					<div class="modal-content2">
+						<input type="text" class="form-control" id="rsvt-cnt" name="useUsers"  placeholder="숫자를 입력하세요.">
+						<input type="text" class="form-control" id="rsvt-date" name="rsvtDate" readonly>
+						<input type="text" class="form-control" id="rsvt-startTime" name="startHours" readonly>
+						 ~
+						<select class="form-control" id="rsvt-endTime" name="endHours">
+							<!-- 동적추가 -->
+						</select>
+					</div>
+					<div class="modal-title3">
+						<span style="font-size:19px;">사용목적</span>
+					</div>
+					<div class="modal-content3">
+						<textarea rows="10" cols="10" class="form-control" id="rsvt-prps" name="usePrps" placeholder="사용 목적을 입력하세요."></textarea>
+					</div>
+<%-- 						<sec:csrfInput/> --%>
+<!-- 					</form> -->
 				</div>
             </div>
             <div class="modal-footer">
@@ -168,7 +170,11 @@ if("${msg}" == "error"){
 $("#regBtn").on("click", function(){
     var useUsers = $("#rsvt-cnt").val();
     var endHours = $("#rsvt-endTime").val();
+	var startHours = $("#rsvt-startTime").val();
     var usePrps = $("#rsvt-prps").val();
+	var rsvtStdNo = $("#rsvt-stdNo").val();
+	var rsvtFlctsNo = $("#rsvt-flctsNo").val();
+	var rsvtDate = $("#rsvt-date").val();
 
 	if(useUsers == ""){
 		swal({
@@ -200,7 +206,44 @@ $("#regBtn").on("click", function(){
 		return false;
 	}
 	
-	$('form').submit();
+	var rsvtData = {
+        'useUsers': useUsers,
+        'endHours': endHours,
+        'usePrps': usePrps,
+		'stdNo': rsvtStdNo,
+        'flctsNo': rsvtFlctsNo,
+        'rsvtDate': rsvtDate,
+		'startHours': startHours
+    }
+	console.log("체킁 : ",rsvtData)
+	$.ajax({
+		url:"/hku/flcts-reservation",
+		type: "post",
+        data: JSON.stringify(rsvtData),
+		contentType: "application/json; charset=utf-8",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
+		success:function(res){
+			if(res === 'success'){
+				swal({
+					title: "예약에 성공하였습니다.",
+                    icon: "success",
+                    button: "닫기"
+				})
+				flctTimeTable();
+				document.querySelector('.btn[data-bs-dismiss="modal"]').click();
+			}else if(res === 'failed'){
+				swal({
+					title: "예약에 실패하였습니다.",
+                    icon: "error",
+                    button: "닫기"
+				})
+			}
+		}
+	})
+
+	// $('form').submit();
 
 })
 
@@ -221,6 +264,9 @@ function flctTable(){
         type: "get",
         data: flctData,
 		contentType: "application/json;utf-8",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
         dataType: "json",
         success: function(res) {
 			
@@ -353,6 +399,9 @@ function flctTimeTable(){
 		url: "/hku/rsvt-list",
 		data: rsvtObj,
 		dataType:"json",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success : function(res){
 			console.log(res);
 			

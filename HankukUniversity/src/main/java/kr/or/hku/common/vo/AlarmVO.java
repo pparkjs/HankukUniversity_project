@@ -15,4 +15,7 @@ public class AlarmVO {
 	private String alarmTtl; //알림 제목
 	private String alarmRegDt; // 알림보낸일자
 	private String alarmPathNo; //알림 접근 번호
+	
+	private int totalCnt; //알람개수
+	private String sendProfile; //프로필이미지경로
 }

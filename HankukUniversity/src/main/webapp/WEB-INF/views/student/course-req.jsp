@@ -189,6 +189,9 @@ $(function(){
 			type:"post",
 			url:"/hku/subject-cart",
 			data:JSON.stringify(cartObj),
+			beforeSend : function(xhr){
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
 			contentType:"application/json; charset=utf-8",
 			success: function(res){
 				console.log(res);
@@ -241,6 +244,9 @@ $(function(){
 			type:"get",
 			data:delData,
 			url : "/hku/cart-cancle",
+			beforeSend : function(xhr){
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
 			success : function(res){
 				if(res === "success"){
 					socketSend();
@@ -277,6 +283,9 @@ $(function(){
 			type:"get",
 			data:regData,
 			url : "/hku/course-regist",
+			beforeSend : function(xhr){
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
 			success : function(res){
 				
 				if(res === "exceed"){
@@ -346,6 +355,9 @@ function cartList(){
 		url : "/hku/cart-list",
 		data:{
 			"stdNo" : "${sessionScope.std.stdNo}"
+		},
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 		},
 		dataType : "json",
 		success : function(res){
@@ -447,6 +459,9 @@ function rectureList(){
 		data:selData,
 		url : "/hku/lecture-list",
 		dataType : "json",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success : function(res){
 			console.log(res)
 			

@@ -119,6 +119,9 @@ function presentCourseList(){
 		data:stdData,
 		url : "/hku/present-list",
 		dataType : "json",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success : function(res){
 			console.log(res)
 			

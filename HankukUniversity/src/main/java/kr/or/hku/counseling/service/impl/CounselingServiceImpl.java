@@ -3,6 +3,8 @@ package kr.or.hku.counseling.service.impl;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,7 @@ import kr.or.hku.counseling.service.CounselingService;
 import kr.or.hku.counseling.vo.CounselingRsvtVO;
 import kr.or.hku.lectureInfo.vo.LectureScheduleVO;
 import kr.or.hku.professor.vo.ProfessorVO;
+import kr.or.hku.student.vo.StudentVO;
 
 @Service
 public class CounselingServiceImpl implements CounselingService {
@@ -43,8 +46,9 @@ public class CounselingServiceImpl implements CounselingService {
 
 	@Transactional(rollbackFor = SQLException.class)
 	@Override
-	public ServiceResult counselingRsvt(CounselingRsvtVO vo) {
+	public ServiceResult counselingRsvt(CounselingRsvtVO vo, HttpSession session) {
 		ServiceResult result = null;
+		StudentVO std = (StudentVO)session.getAttribute("std");
 		
 		AlarmVO alarm = new AlarmVO();
 		
@@ -52,6 +56,8 @@ public class CounselingServiceImpl implements CounselingService {
 		alarm.setAlarmType("counseling");
 		alarm.setSendUserNo(vo.getStdNo());
 		alarm.setReceiveUserNo(vo.getProNo());
+		alarm.setAlarmPathNo("none");
+		alarm.setSendProfile(std.getStdProfilePath());
 		
 		commonMapper.alarmInsert(alarm); // 알람 등록
 		
