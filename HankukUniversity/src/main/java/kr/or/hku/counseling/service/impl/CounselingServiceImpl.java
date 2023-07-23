@@ -19,7 +19,9 @@ import kr.or.hku.counseling.vo.CounselingRsvtVO;
 import kr.or.hku.lectureInfo.vo.LectureScheduleVO;
 import kr.or.hku.professor.vo.ProfessorVO;
 import kr.or.hku.student.vo.StudentVO;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class CounselingServiceImpl implements CounselingService {
 	
@@ -142,12 +144,25 @@ public class CounselingServiceImpl implements CounselingService {
 		return list;
 	}
 
+	@Transactional(rollbackFor = SQLException.class)
 	@Override
-	public ServiceResult studentCounseAppv(int dscsnNo) {
+	public ServiceResult studentCounseAppv(CounselingRsvtVO vo, HttpSession session) {
 		ServiceResult result = null;
+		ProfessorVO pro = (ProfessorVO)session.getAttribute("pro");
 		
-		int cnt = counselingMapper.studentCounseAppv(dscsnNo);
+		AlarmVO alarm = new AlarmVO();
 		
+		alarm.setAlarmTtl(pro.getProNm() + "교수님의 상담승인처리");
+		alarm.setAlarmType("counseling-std");
+		alarm.setSendUserNo(pro.getProNo());
+		alarm.setReceiveUserNo(vo.getStdNo());
+		alarm.setAlarmPathNo("none");
+		alarm.setSendProfile(pro.getProProfilePath());
+		
+		commonMapper.alarmInsert(alarm); // 알람 등록
+		
+		log.info("교수알람: " + alarm);
+		int cnt = counselingMapper.studentCounseAppv(vo.getDscsnNo());
 		if(cnt > 0) {
 			result = ServiceResult.OK;
 		}else {
@@ -156,12 +171,24 @@ public class CounselingServiceImpl implements CounselingService {
 		return result;
 	}
 
+	@Transactional(rollbackFor = SQLException.class)
 	@Override
-	public ServiceResult studentCounseRej(CounselingRsvtVO vo) {
+	public ServiceResult studentCounseRej(CounselingRsvtVO vo, HttpSession session) {
 		ServiceResult result = null;
+		ProfessorVO pro = (ProfessorVO)session.getAttribute("pro");
+		AlarmVO alarm = new AlarmVO();
+		
+		alarm.setAlarmTtl(pro.getProNm() + "교수님의 상담반려처리");
+		alarm.setAlarmType("counseling-std");
+		alarm.setSendUserNo(pro.getProNo());
+		alarm.setReceiveUserNo(vo.getStdNo());
+		alarm.setAlarmPathNo("none");
+		alarm.setSendProfile(pro.getProProfilePath());
+		
+		log.info("교수알람: " + alarm);
+		commonMapper.alarmInsert(alarm); // 알람 등록
 		
 		int cnt = counselingMapper.studentCounseRej(vo);
-		
 		if(cnt > 0) {
 			result = ServiceResult.OK;
 		}else {

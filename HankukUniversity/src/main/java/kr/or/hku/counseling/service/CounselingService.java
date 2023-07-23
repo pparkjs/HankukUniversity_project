@@ -16,6 +16,6 @@ public interface CounselingService {
 	public ServiceResult counselingRsvt(CounselingRsvtVO vo, HttpSession session);
 	public List<CounselingRsvtVO> counselingRecord(String stdNo);
 	public List<CounselingRsvtVO> studentCounseList(String proNo);
-	public ServiceResult studentCounseAppv(int dscsnNo);
-	public ServiceResult studentCounseRej(CounselingRsvtVO vo);
+	public ServiceResult studentCounseAppv(CounselingRsvtVO vo, HttpSession session);
+	public ServiceResult studentCounseRej(CounselingRsvtVO vo, HttpSession session);
 }
