@@ -168,8 +168,8 @@ public class testPresController {
 	// 시험에 응시 했는지 체크
 	@ResponseBody
 	@GetMapping("/preTest-check")
-	public String preTestCheck(@RequestParam Map<String, Object> map) {
-		int cnt = testPresService.preTestCheck(map);
+	public String preTestCheck(TestVO test) {
+		int cnt = testPresService.preTestCheck(test);
 		if(cnt > 0) {
 			return "exist";
 		}else {
@@ -179,24 +179,32 @@ public class testPresController {
 	
 	// 시험응시 시작
 	@GetMapping("/open-test")
-	public String openTest(TestVO test, Model model, HttpSession session) {
+	public String openTest(TestVO test, Model model, HttpSession session, RedirectAttributes redi) {
 		TestVO testVO = testPresService.timeChange(test);
 		
-		// 시험 응시 버튼 클릭 시 시험 응시테이블에 삽입 (응시번호 selectKey로 가져옴)
-		testPresService.testTakeInsert(test);
+		int cnt = testPresService.preTestCheck(test);
+		if(cnt > 0) {
+			redi.addFlashAttribute("msg", "exist");
+			return "redirect:/hku/test-info";
+		}else {
+			// 시험 응시 버튼 클릭 시 시험 응시테이블에 삽입 (응시번호 selectKey로 가져옴)
+			testPresService.testTakeInsert(test);
+			
+			int maxCh = testPresService.getMaxCh(test); // 선지의 최대 수 가져오기
+			
+			// 해당시험 답지 리스트 가져오기
+			List<TestAnswerVO> list = testPresService.getAnswerList(test);
+			
+			log.info("ttNo : " + test.getTtNo());
+			session.setAttribute("testVO", test); // 시험지 정보 세션에 담기
+			session.setAttribute("ttNo", test.getTtNo());
+			
+			model.addAttribute("answerList", list);
+			model.addAttribute("maxCh", maxCh);
+			return "open-test";
+		}
 		
-		int maxCh = testPresService.getMaxCh(test); // 선지의 최대 수 가져오기
 		
-		// 해당시험 답지 리스트 가져오기
-		List<TestAnswerVO> list = testPresService.getAnswerList(test);
-		
-		log.info("ttNo : " + test.getTtNo());
-		session.setAttribute("testVO", test); // 시험지 정보 세션에 담기
-		session.setAttribute("ttNo", test.getTtNo());
-		
-		model.addAttribute("answerList", list);
-		model.addAttribute("maxCh", maxCh);
-		return "open-test";
 	}
 	
 	// 시험 답안 제출

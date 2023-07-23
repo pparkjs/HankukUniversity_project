@@ -150,8 +150,8 @@ public class TestPresServiceImpl implements TestPresService {
 	}
 
 	@Override
-	public int preTestCheck(Map<String, Object> map) {
-		return testPresMapper.preTestCheck(map);
+	public int preTestCheck(TestVO test) {
+		return testPresMapper.preTestCheck(test);
 	}
 
 	@Override

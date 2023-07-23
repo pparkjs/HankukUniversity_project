@@ -3,6 +3,53 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<style>
+.notification_dropdown {
+position: relative;
+}
+
+.notification-shadow {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border-radius: 50%;
+/* 	background-color: rgba(255, 255, 255, 0.5); */
+	background-color: #adb17d;
+	transform: translate(-50%, -50%);
+	pointer-events: none;
+	z-index: -1;
+	animation: shadow-pulse 3s infinite;
+	box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes shadow-pulse {
+	0% {
+		width: 10px;
+		height: 10px;
+		opacity: 1;
+	 }
+	100% {
+	width: 200px;
+	height: 200px;
+	opacity: 0;
+	  }
+}
+ 
+.notification-show .dropdown-menu {
+  display: block;
+}
+.tCon{
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    margin-right: 15px;
+    height: 40px;
+    margin-top: 6px;
+}
+</style>
 <div class="header">
 	<div class="header-content">
 		<nav class="navbar navbar-expand">
@@ -90,21 +137,15 @@
 						</div>
 					</li>
 
-					<li class="nav-item dropdown notification_dropdown"><span
-						id="timer" style="margin-top:14px; margin-right:8px; font-size:1.3em; color:white; font-weight: bold;"></span><i id="refresh" class="fa-solid fa-rotate-right fa-lg"
-						style="color: #ffffff; font-size: 1.5em; margin-top: 25px; margin-right: 10px; cursor:pointer;"></i>
-						<a class="nav-link" href="javascript:void(0);" role="button"
-						data-bs-toggle="dropdown"> <svg width="24" height="24"
-								viewBox="0 0 24 24" fill="none"
-								xmlns="http://www.w3.org/2000/svg">
-											<path
-									d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z"
-									stroke="white" stroke-linecap="round" stroke-linejoin="round"></path>
-											<path
-									d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21"
-									stroke="white" stroke-linecap="round" stroke-linejoin="round"></path>
-							</svg>
-					</a>
+			<!-- 알람  + 로그인 타이머 -->
+					<div class="tCon">
+						<span id="timer" style=" margin-right:4px; font-size:1.3em; color:white; font-weight: 500; width: 97px;"></span>
+						<i id="refresh" class="fa-solid fa-rotate-right fa-lg" style="color: #ffffff; font-size: 1.5em; cursor:pointer;"></i>
+					</div>
+					<li class="nav-item dropdown notification_dropdown" id="notification-icon">
+						<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"> 
+							<img alt="" src="/images/알람3.svg" width="30" height="27">
+						</a>
 						<div class="dropdown-menu dropdown-menu-end">
 							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3"
 								style="height: 380px;">
@@ -140,105 +181,17 @@
 											</div>
 										</div>
 									</li>
-									<!-- 									<li> -->
-									<!-- 										<div class="timeline-panel"> -->
-									<!-- 											<div class="media me-2"> -->
-									<!-- 												<img alt="image" width="50" src="/images/avatar/1.jpg"> -->
-									<!-- 											</div> -->
-									<!-- 											<div class="media-body"> -->
-									<!-- 												<h6 class="mb-1">Dr sultads Send you Photo</h6> -->
-									<!-- 												<small class="d-block">29 July 2020 - 02:26 PM</small> -->
-									<!-- 											</div> -->
-									<!-- 										</div> -->
-									<!-- 									</li> -->
-									<!-- 									<li> -->
-									<!-- 										<div class="timeline-panel"> -->
-									<!-- 											<div class="media me-2 media-danger">KG</div> -->
-									<!-- 											<div class="media-body"> -->
-									<!-- 												<h6 class="mb-1">Resport created successfully</h6> -->
-									<!-- 												<small class="d-block">29 July 2020 - 02:26 PM</small> -->
-									<!-- 											</div> -->
-									<!-- 										</div> -->
-									<!-- 									</li> -->
-									<!-- 									<li> -->
-									<!-- 										<div class="timeline-panel"> -->
-									<!-- 											<div class="media me-2 media-primary"> -->
-									<!-- 												<i class="fa fa-home"></i> -->
-									<!-- 											</div> -->
-									<!-- 											<div class="media-body"> -->
-									<!-- 												<h6 class="mb-1">Reminder : Treatment Time!</h6> -->
-									<!-- 												<small class="d-block">29 July 2020 - 02:26 PM</small> -->
-									<!-- 											</div> -->
-									<!-- 										</div> -->
-									<!-- 									</li> -->
-									<!-- 									<li> -->
-									<!-- 										<div class="timeline-panel"> -->
-									<!-- 											<div class="media me-2"> -->
-									<!-- 												<img alt="image" width="50" src="/images/avatar/1.jpg"> -->
-									<!-- 											</div> -->
-									<!-- 											<div class="media-body"> -->
-									<!-- 												<h6 class="mb-1">Dr sultads Send you Photo</h6> -->
-									<!-- 												<small class="d-block">29 July 2020 - 02:26 PM</small> -->
-									<!-- 											</div> -->
-									<!-- 										</div> -->
-									<!-- 									</li> -->
-									<!-- 									<li> -->
-									<!-- 										<div class="timeline-panel"> -->
-									<!-- 											<div class="media me-2 media-info">KG</div> -->
-									<!-- 											<div class="media-body"> -->
-									<!-- 												<h6 class="mb-1">Resport created successfully</h6> -->
-									<!-- 												<small class="d-block">29 July 2020 - 02:26 PM</small> -->
-									<!-- 											</div> -->
-									<!-- 										</div> -->
-									<!-- 									</li> -->
-									<!-- 									<li> -->
-									<!-- 										<div class="timeline-panel"> -->
-									<!-- 											<div class="media me-2 media-success"> -->
-									<!-- 												<i class="fa fa-home"></i> -->
-									<!-- 											</div> -->
-									<!-- 											<div class="media-body"> -->
-									<!-- 												<h6 class="mb-1">Reminder : Treatment Time!</h6> -->
-									<!-- 												<small class="d-block">29 July 2020 - 02:26 PM</small> -->
-									<!-- 											</div> -->
-									<!-- 										</div> -->
-									<!-- 									</li> -->
-									<!-- 									<li> -->
-									<!-- 										<div class="timeline-panel"> -->
-									<!-- 											<div class="media me-2"> -->
-									<!-- 												<img alt="image" width="50" src="/images/avatar/1.jpg"> -->
-									<!-- 											</div> -->
-									<!-- 											<div class="media-body"> -->
-									<!-- 												<h6 class="mb-1">Dr sultads Send you Photo</h6> -->
-									<!-- 												<small class="d-block">29 July 2020 - 02:26 PM</small> -->
-									<!-- 											</div> -->
-									<!-- 										</div> -->
-									<!-- 									</li> -->
-									<!-- 									<li> -->
-									<!-- 										<div class="timeline-panel"> -->
-									<!-- 											<div class="media me-2 media-danger">KG</div> -->
-									<!-- 											<div class="media-body"> -->
-									<!-- 												<h6 class="mb-1">Resport created successfully</h6> -->
-									<!-- 												<small class="d-block">29 July 2020 - 02:26 PM</small> -->
-									<!-- 											</div> -->
-									<!-- 										</div> -->
-									<!-- 									</li> -->
-									<!-- 									<li> -->
-									<!-- 										<div class="timeline-panel"> -->
-									<!-- 											<div class="media me-2 media-primary"> -->
-									<!-- 												<i class="fa fa-home"></i> -->
-									<!-- 											</div> -->
-									<!-- 											<div class="media-body"> -->
-									<!-- 												<h6 class="mb-1">Reminder : Treatment Time!</h6> -->
-									<!-- 												<small class="d-block">29 July 2020 - 02:26 PM</small> -->
-									<!-- 											</div> -->
-									<!-- 										</div> -->
-									<!-- 									</li> -->
 								</ul>
 							</div>
 							<a class="all-notification" href="javascript:void(0);">See
 								all notifications <i class="ti-arrow-end"></i>
 							</a>
-						</div></li>
+						</div>
+						 <!-- 알림 아이콘 주변에 잔상을 표시하는 요소 -->
+  						<div class="notification-shadow"></div>
+					</li>
+					
+					
 					<!-- message -->
 					<c:if test="${not empty std }">
 						<li class="nav-item dropdown notification_dropdown"><a
@@ -257,7 +210,7 @@
 						</a></li>
 					</c:if>
 					<li class="nav-item align-items-center header-border"><a
-						href="#" class="btn btn-primary btn-sm" onclick="logout()">Logout</a></li>
+						href="/main/logout" class="btn btn-primary btn-sm" onclick="logout()">Logout</a></li>
 					<li class="nav-item ps-3">
 						<div class="dropdown header-profile2">
 							<a class="nav-link" href="javascript:void(0);" role="button"
@@ -439,6 +392,45 @@
 	    time = 10799; 
 	    x = setInterval(updateTimer, 1000); 
 	});
+	
+// 	AJAX를 통해 알림이 있는지 확인하는 함수
+	function getAlarmList() {
+// 		var userObj = {
+			
+// 		}
 
+		$.ajax({
+			url: "/main/getAlarmList",
+            type: "GET",
+            dataType: "json",
+            success: function(res) {
+                if(res.length == 1) {
+                    showNotificationShadow();
+                } else {
+                    hideNotificationShadow();
+                }
+            }
+		})
+	}
+
+	
+	// 알림이 도착하면 잔상을 표시합니다.
+	function showNotificationShadow() {
+		const notificationShadow = document.querySelector('.notification-shadow');
+	  notificationShadow.style.display = 'block';
+	}
+
+	// 알림이 닫힐 때 잔상을 숨깁니다.
+	function hideNotificationShadow() {
+		const notificationShadow = document.querySelector('.notification-shadow');
+	  	notificationShadow.style.display = 'none';
+	}
+
+	// 아래는 테스트를 위해 3초마다 잔상을 표시하는 예시입니다.
+	setInterval(() => {
+		showNotificationShadow();
+// 		setTimeout(hideNotificationShadow, 1000);
+	},
+	3000);
 	
 </script>
