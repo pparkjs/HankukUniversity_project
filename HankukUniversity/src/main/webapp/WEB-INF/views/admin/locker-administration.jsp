@@ -214,20 +214,20 @@ function selectLockerRsvtAll(target){
 }
 function onlyCheck(){
 	event.stopPropagation();
-	console.log("오직 체크만");
+// 	console.log("오직 체크만");
 }
 function btnSwitch(target){
-	console.log("switch!!");
-	console.log("this", target);
-	console.log("1",$(target).parents('tr').children().eq(1).val());
-	console.log("2",$(target).parents('tr').children().eq(2).text());
+// 	console.log("switch!!");
+// 	console.log("this", target);
+// 	console.log("1",$(target).parents('tr').children().eq(1).val());
+// 	console.log("2",$(target).parents('tr').children().eq(2).text());
 
 	let flctNo = $(target).parents('tr').children().eq(1).val();
 	let lockerNo = $(target).parents('tr').children().eq(2).text();
 	let floor = $(target).parents('tr').children().eq(4).text();
 
 	let std = $(target).attr('std');
-	console.log('std',std);
+// 	console.log('std',std);
 
 	let kywData = {
 		"flctNo" : flctNo,
@@ -242,7 +242,7 @@ function btnSwitch(target){
 		kywData.avlCd = "N";
 	}
 
-	console.log("kywData",kywData);
+// 	console.log("kywData",kywData);
 	
 	$.ajax({
 		type: "POST",
@@ -250,6 +250,7 @@ function btnSwitch(target){
 		data: JSON.stringify(kywData),
 		dataType: "text",
 		contentType: 'application/json;charset=UTF-8',
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(){
 			// alert("성공");
 			if(std == 0){
@@ -340,16 +341,16 @@ function ilgualRsvtBtnSwitch(){
 }
 
 function rsvtBtnSwitch(target){
-	console.log("rsvtSwitch!!");
-	console.log("this", target);
-	console.log("시설예약번호",$(target).parents('tr').children().eq(1).text());
+// 	console.log("rsvtSwitch!!");
+// 	console.log("this", target);
+// 	console.log("시설예약번호",$(target).parents('tr').children().eq(1).text());
 	// console.log("2",$(target).parents('tr').children().eq(2).text());
 
 	let lockerRsvtNo = $(target).parents('tr').children().eq(1).text();
 	// let lockerNo = $(target).parents('tr').children().eq(2).text();
 
 	let std = $(target).attr('std');
-	console.log('std',std);
+// 	console.log('std',std);
 
 	let kywkywData = {
 		"lockerRsvtNo" : lockerRsvtNo,
@@ -361,7 +362,7 @@ function rsvtBtnSwitch(target){
 	if(std == 1){
 		kywkywData.avlCd = "N";
 	}
-	console.log("kywkywData",kywkywData);
+// 	console.log("kywkywData",kywkywData);
 
 	$.ajax({
 		type: "POST",
@@ -369,6 +370,7 @@ function rsvtBtnSwitch(target){
 		data: JSON.stringify(kywkywData),
 		dataType: "text",
 		contentType: 'application/json;charset=UTF-8',
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(){
 			// alert("성공");
 			if(std == 0){
@@ -389,7 +391,7 @@ function rsvtBtnSwitch(target){
 }
 
 function lockerList(){
-	console.log("사물함검색 체킁");
+// 	console.log("사물함검색 체킁");
 	var lockerflctNo = $("#lockerflctNo").val();
 	var lockerFloor = $("#lockerFloor").val();
 	var lockerAvlCd = $("#lockerAvlCd").val();
@@ -400,7 +402,7 @@ function lockerList(){
 		"avlCd": lockerAvlCd
 	};
 
-	console.log(searchData);
+// 	console.log(searchData);
 
 	$.ajax({
 		type: "POST",
@@ -408,6 +410,7 @@ function lockerList(){
 		data: JSON.stringify(searchData),
 		dataType: "JSON",
 		contentType: 'application/json;charset=UTF-8',
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		async: false,
 		success: function(res){
 			// alert("사물함리스트 체킁");
@@ -466,7 +469,7 @@ function lockerList(){
 	});
 }
 function lockerRsvtList(){
-	console.log("사물함예약리스트 체킁");
+// 	console.log("사물함예약리스트 체킁");
 	var lockerRsvtflctNo = $("#lockerRsvtflctNo").val();
 	var lockerRsvtFloor = $("#lockerRsvtFloor").val();
 	var lockerRsvtYear = $("#lockerRsvtYear").val();
@@ -483,7 +486,7 @@ function lockerRsvtList(){
 		"stdNo": lockerStdNo
 	};
 
-	console.log(searchData);
+// 	console.log(searchData);
 
 	$.ajax({
 		type: "POST",
@@ -491,6 +494,7 @@ function lockerRsvtList(){
 		data: JSON.stringify(searchData),
 		dataType: "JSON",
 		contentType: 'application/json;charset=UTF-8',
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		// async: false,
 		success: function(res){
 			// alert("사물함예약 리스트 체킁");
@@ -567,8 +571,9 @@ function floorSet(){
 		type: "GET",
 		url: "/hku/admin/floorSet?flctNo=" + flctNo,
 		dataType: "json",
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res){
-			console.log("가져온 층들",res);
+// 			console.log("가져온 층들",res);
 			selectFloorStr = "";
 			selectFloorStr += `<option value="">층 선택</option>`;
 			for(let i=0; i<res.length; i++){
@@ -582,15 +587,16 @@ function floorSet(){
 	});
 }
 function modalFloorSet(){
-	console.log("모달셀렉트 변경ㄷ횜~");
+// 	console.log("모달셀렉트 변경ㄷ횜~");
 	var flctNo = $("#modalLockerFlctNo").val();
 	// console.log("flctNo",flctNo);
 	$.ajax({
 		type: "GET",
 		url: "/hku/admin/floorSet?flctNo=" + flctNo,
 		dataType: "json",
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res){
-			console.log("가져온 층들",res);
+// 			console.log("가져온 층들",res);
 			selectFloorStr = "";
 			selectFloorStr += `<option value="">층 선택</option>`;
 			for(let i=0; i<res.length; i++){
@@ -611,8 +617,9 @@ function RsvtfloorSet(){
 		type: "GET",
 		url: "/hku/admin/floorSet?flctNo=" + flctNo,
 		dataType: "json",
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res){
-			console.log("가져온 층들",res);
+// 			console.log("가져온 층들",res);
 			selectFloorStr = "";
 			selectFloorStr += `<option value="">층 선택</option>`;
 			for(let i=0; i<res.length; i++){
@@ -626,7 +633,7 @@ function RsvtfloorSet(){
 	});
 }
 function lockerInsert(){
-	console.log("체킁");
+// 	console.log("체킁");
 	var modalLockerFlctNo = $("#modalLockerFlctNo").val();
 	var modalLockerFloor = $("#modalLockerFloor").val();
 	var lockerInsertCount = $("#lockerInsertCount").val();
@@ -637,7 +644,7 @@ function lockerInsert(){
 		"lockerInsertCount": lockerInsertCount
 	};
 
-	console.log(insertLockerData);
+// 	console.log(insertLockerData);
 
 	if(modalLockerFlctNo == '') {
 		swal({
@@ -667,6 +674,7 @@ function lockerInsert(){
 		data: JSON.stringify(insertLockerData),
 		dataType: "text",
 		contentType: 'application/json;charset=UTF-8',
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res){
 			if(res === "SUCCESS"){
 				swal({
@@ -692,13 +700,13 @@ function lockerInsert(){
 	});
 }
 function deleteLocker(){
-	console.log("deleteLocker");
+// 	console.log("deleteLocker");
 	var delLockerArr = new Array();
 	
 	let lockers = document.querySelectorAll(".lockerCheck");
 	for(let i=0; i<lockers.length; i++){
 		if(lockers[i].checked == true){
-			// delLockerArr.push(lockers[i].value); // ■■■■■■■■■■■■■■■■■■■■■■■■■■■삭제수정■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+			// delLockerArr.push(lockers[i].value);
 
 			// let flctType = $(flctArr[i]).parents("tr").children().eq(4).val(); 
 			// 시설번호
@@ -724,8 +732,8 @@ function deleteLocker(){
 		});
 		return false;
 	}
-	console.log(delLockerArr);
-	console.log(JSON.stringify(delLockerArr));
+// 	console.log(delLockerArr);
+// 	console.log(JSON.stringify(delLockerArr));
 
 	swal({
 		title: "삭제를 진행하시겠습니까?",
@@ -742,6 +750,7 @@ function deleteLocker(){
 				data: JSON.stringify(delLockerArr),
 				dataType: "text",
 				contentType: 'application/json;charset=UTF-8',
+				beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 				success: function (res) {
 					lockerList();
 					lockerRsvtList();

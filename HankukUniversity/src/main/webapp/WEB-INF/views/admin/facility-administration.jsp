@@ -264,7 +264,7 @@ $(function(){
 	});
 });
 function flctNoSet(){
-	console.log("시설번호 자동생성 체킁");
+// 	console.log("시설번호 자동생성 체킁");
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("GET","/hku/admin/flctNoSet",true);
@@ -279,7 +279,7 @@ function flctNoSet(){
 	xhr.send();
 }
 function flctsNoSet(){
-	console.log("시설물다음번호");
+// 	console.log("시설물다음번호");
 	$.ajax({
 		type: "GET",
 		url: "/hku/admin/flctsNoSet",
@@ -305,7 +305,7 @@ function flctInsert(){
 		"flctNo": nextFlctNo,
 		"flctNm": flctNm
 	};
-	console.log("flctInsertData",flctInsertData);
+// 	console.log("flctInsertData",flctInsertData);
 
 	if(flctClsfCd == '') {
 		swal({
@@ -335,6 +335,7 @@ function flctInsert(){
 		data: JSON.stringify(flctInsertData),
 		dataType: "text",
 		contentType: 'application/json;charset=UTF-8',
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res){
 			if(res === "SUCCESS"){
 				swal({
@@ -393,6 +394,7 @@ function flctsInsert(){
 		data: JSON.stringify(flctsInsertData),
 		dataType: "text",
 		contentType: 'application/json;charset=UTF-8',
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res){
 			if(res === "SUCCESS"){
 				swal({
@@ -444,11 +446,11 @@ function selectFlctsRsvtAll(target){
 
 function onlyCheck(){
 	event.stopPropagation();
-	console.log("오직 체크만");
+// 	console.log("오직 체크만");
 }
 
 function fcltList(){
-	console.log("시설검색 체킁");
+// 	console.log("시설검색 체킁");
 	var searchType = $("#fcltSearchType").val();
 	var searchWord = $("#fcltSearchWord").val().trim().toUpperCase();
 
@@ -464,6 +466,7 @@ function fcltList(){
 		data: JSON.stringify(searchData),
 		dataType: "JSON",
 		contentType: 'application/json;charset=UTF-8',
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		async: false,
 		success: function(res){
 			// alert("시설리스트 체킁");
@@ -526,6 +529,7 @@ function fcltsList(){
 		data: JSON.stringify(searchData),
 		dataType: "JSON",
 		contentType: 'application/json;charset=UTF-8',
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		async: false,
 		success: function(res){
 			// alert("시설리스트 체킁");
@@ -587,6 +591,7 @@ function fcltsRsvtList(){
 		data: JSON.stringify(searchData),
 		dataType: "JSON",
 		contentType: 'application/json;charset=UTF-8',
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res){
 			// alert("시설리스트 체킁");
 			var tblStr = "";
@@ -642,7 +647,7 @@ function fcltsRsvtList(){
 }
 
 function flctDetail(target){
-	console.log("시설 상세 체킁");
+// 	console.log("시설 상세 체킁");
 	var flctModal = $("#flctModal");
 	var flctNo = $(target).children().eq(1).text();
 	console.log("flctNo",flctNo);
@@ -650,12 +655,13 @@ function flctDetail(target){
 	$.ajax({
 		type: "GET",
 		url: "/hku/admin/selectFlct?flctNo=" + flctNo,
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		// data: flctNo,
 		dataType: "JSON",
 		success: function(res){
-			console.log(res);
-			console.log(res.flctClsfCd);
-			console.log(res.floor);
+// 			console.log(res);
+// 			console.log(res.flctClsfCd);
+// 			console.log(res.floor);
 			$("#flctLabel").text("시설 상세");
 			$("#flctClsfCd").val(res.flctClsfCd);
 			$("#nextFlctNo").val(res.flctNo);
@@ -679,18 +685,19 @@ function flctDetail(target){
 	});
 }
 function flctsDetail(target){
-	console.log("시설물 상세 체킁");
+// 	console.log("시설물 상세 체킁");
 	var flctsModal = $("#flctsModal");
 	var flctsNo = $(target).children().eq(1).text();
-	console.log("flctsNo",flctsNo);
+// 	console.log("flctsNo",flctsNo);
 
 	$.ajax({
 		type: "GET",
 		url: "/hku/admin/selectFlcts?flctsNo=" + flctsNo,
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		// data: flctNo,
 		dataType: "JSON",
 		success: function(res){
-			console.log(res);
+// 			console.log(res);
 			$("#flctsLabel").text("시설물 상세");
 			$("#flctNo").val(res.flctNo);
 			$("#flctsNo").val(res.flctsNo);
@@ -706,7 +713,7 @@ function flctsDetail(target){
 	});
 }
 function flctModify(){
-	console.log("시설수정 체킁");
+// 	console.log("시설수정 체킁");
 	var flctClsfCd = $("#flctClsfCd").val();
 	var maxFlctFloor= $("#maxFlctFloor").val();
 	var flctNo = $("#nextFlctNo").val();
@@ -718,7 +725,7 @@ function flctModify(){
 		"flctNo": flctNo,
 		"flctNm": flctNm
 	};
-	console.log("flctModifyData",flctModifyData);
+// 	console.log("flctModifyData",flctModifyData);
 
 	if(flctClsfCd == '') {
 		swal({
@@ -748,6 +755,7 @@ function flctModify(){
 		data: JSON.stringify(flctModifyData),
 		dataType: "text",
 		contentType: 'application/json;charset=UTF-8',
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res){
 			if(res === "SUCCESS"){
 				swal({
@@ -787,7 +795,7 @@ function flctsModify(){
 		"flctsNo": flctsNo,
 		"flctsNm": flctsNm
 	};
-	console.log("flctsModifyData",flctsModifyData);
+// 	console.log("flctsModifyData",flctsModifyData);
 
 	if(flctNo == '') {
 		swal({
@@ -810,6 +818,7 @@ function flctsModify(){
 		data: JSON.stringify(flctsModifyData),
 		dataType: "text",
 		contentType: 'application/json;charset=UTF-8',
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res){
 			if(res === "SUCCESS"){
 				swal({
@@ -856,7 +865,7 @@ function deleteFlct(){
 			delFlctArr.push(delFlct);
 		}
 	}
-	console.log("delFlctArr",delFlctArr);
+// 	console.log("delFlctArr",delFlctArr);
 	if(delFlctArr.length == 0){
 		swal({
 			title: "항목을 선택해주세요!", 
@@ -882,6 +891,7 @@ function deleteFlct(){
 				dataType: "text",
 				// processData: false,
 				contentType: 'application/json;charset=UTF-8',
+				beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 				success: function (res) {
 					fcltList();
 					swal({
@@ -899,7 +909,7 @@ function deleteFlct(){
 	});
 }
 function deleteFlcts(){
-	console.log("delFlcts");
+// 	console.log("delFlcts");
 	var delFlctsArr = new Array();
 	
 	// let data = {};
@@ -918,8 +928,8 @@ function deleteFlcts(){
 		});
 		return false;
 	}
-	console.log(delFlctsArr);
-	console.log(JSON.stringify(delFlctsArr));
+// 	console.log(delFlctsArr);
+// 	console.log(JSON.stringify(delFlctsArr));
 
 	swal({
 		title: "삭제를 진행하시겠습니까?",
@@ -939,6 +949,7 @@ function deleteFlcts(){
 				dataType: "text",
 				// processData: false,
 				contentType: 'application/json;charset=UTF-8',
+				beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 				success: function (res) {
 					fcltsList();
 					swal({
@@ -971,7 +982,7 @@ function deleteFlctsRsvt(){
 		});
 		return false;
 	}
-	console.log(delFlctsRsvtArr);
+// 	console.log(delFlctsRsvtArr);
 
 	swal({
 		title: "삭제를 진행하시겠습니까?",
@@ -982,8 +993,8 @@ function deleteFlctsRsvt(){
 	})
 	.then((willDelete) => {
 		if (willDelete) {
-			console.log(delFlctsRsvtArr);
-			console.log(JSON.stringify(delFlctsRsvtArr));
+// 			console.log(delFlctsRsvtArr);
+// 			console.log(JSON.stringify(delFlctsRsvtArr));
 			$.ajax({
 				type: 'DELETE',
 				url: '/hku/admin/deleteFlctsRsvt',
@@ -991,6 +1002,7 @@ function deleteFlctsRsvt(){
 				dataType: "text",
 				// processData: false,
 				contentType: 'application/json;charset=UTF-8',
+				beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 				success: function (res) {
 					fcltsRsvtList();
 					swal({
@@ -1009,14 +1021,15 @@ function deleteFlctsRsvt(){
 }
 
 function flctsModalSelectBoxSet(){
-	console.log("시설물모달 셀렉트박스 세팅 체킁");
+// 	console.log("시설물모달 셀렉트박스 세팅 체킁");
 	
 	$.ajax({
 		type: "GET",
 		url: "/hku/admin/flctsModalSelectBoxSet",
 		dataType: "json",
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function (res){
-			console.log("res", res);
+// 			console.log("res", res);
 
 			let selStr = "";
 			selStr += `
