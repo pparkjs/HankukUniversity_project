@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.portal.mapper.PortalMapper">
+ 
+ 	<!-- 학사 공지 가져오기 -->
+ 	<select id="getAcadmicNoticeList" resultType="map">
+ 		SELECT *
+		FROM (
+		  	SELECT 
+		  		  notice_no
+		  		, notice_ttl
+		        , TO_CHAR(notice_regdate, 'YY-MM-DD') as regdate
+			FROM notice
+			WHERE notice_clsf = 'uni'
+			ORDER BY notice_no DESC
+		)
+		<![CDATA[
+		WHERE ROWNUM <= 5
+		]]>
+ 	</select>
+ 	
+ 	<!-- 채용 공지 가져오기 -->
+ 	<select id="getEmploymentNoticeList" resultType="map">
+ 		SELECT *
+		FROM (
+		  	SELECT 
+		  		  notice_no
+		  		, notice_ttl
+		        , TO_CHAR(notice_regdate, 'YY-MM-DD') as regdate
+			FROM notice
+			WHERE notice_clsf = 'rcrt'
+			ORDER BY notice_no DESC
+		)
+		<![CDATA[
+		WHERE ROWNUM <= 5
+		]]>
+ 	</select>
+ 	
+ 	<!-- 학과공지 가져오기 -->
+ 	<select id="getDeptNoticeList" parameterType="string" resultType="map">
+ 		SELECT *
+		FROM (
+		  	SELECT 
+		  		  depnt_no
+		  		, depnt_ttl
+		        , TO_CHAR(depnt_regdate, 'YY-MM-DD') as regdate
+			FROM department_notice
+			WHERE dept_cd = #{deptCd}
+			ORDER BY depnt_no DESC
+		)
+		<![CDATA[
+		WHERE ROWNUM <= 5
+		]]>
+ 	</select>
+ 	
+ </mapper>
