@@ -46,12 +46,12 @@
 	</div>
 	<div class="container-fluid subCon">
 		<div class="card" id="card-title-1">
-			<div class="card-header border-0 pb-0 ">
-				<h5 class="card-title" style="color: maroon;  font-weight: 900;">학점이수현황</h5>
+			<div class="card-header border-0 pb-0" style="justify-content: flex-start;">
+				<div class="card-title" style="color: maroon;  font-weight: 900; font-size: 1.2rem;">학점이수현황</div>
+				<div class="exp" style=" margin-bottom:0px; margin-right:0px; margin-left: 39px; font-weight: 400;"></div>
 			</div>
-			<hr>
 			<div class="card-body" style="padding-top: 0px;">
-				<div class="table-wrap">
+				<div class="table-wrap" style="height: 425px;">
 					<table class="table" style="margin-top: -22px;">
 						<thead class="thead-dark">
 							<tr>
@@ -82,28 +82,29 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script>
-$(function(){
-	
-	subList();
-	
-	var searchBtn = $("#searchBtn");
-	
-	// 조회버튼 클릭시 동작
-	searchBtn.on("click", function(){
-		subList();
-	})
-	
-	$(document).on("click","tr", function(){
-		$('tr').css('background', '');
-		$(this).css('background', '#6e6e6e26');
-		var subOtl = $(this).find('.otl');
-		$(".otlContent").html(subOtl.text());
-	})
+
+var searchBtn = $("#searchBtn");
+var more = 0; // 무한스크롤 페이징 위한 더보기 횟수
+var tbody = $("tbody");
+
+subList(0);
+
+$(document).on("click","tr", function(){
+	$('tr').css('background', '');
+	$(this).css('background', '#6e6e6e26');
+	var subOtl = $(this).find('.otl');
+	$(".otlContent").html(subOtl.text());
+})
+
+// 조회버튼 클릭시 동작
+searchBtn.on("click", function(){
+	more = 0;
+	tbody.empty();
+	subList(0);
 })
 
 // 과목 리스트 가져오는 함수
-function subList(){
-	var tbody = $("tbody");
+function subList(moreData){
 	var clsfSel = $(".clsfSel").val();
 	var deptSel = $(".deptSel").val();
 	var gradeSel = $(".gradeSel").val();
@@ -113,7 +114,8 @@ function subList(){
 		"com_cd_nm":clsfSel,
 		"dept_nm":deptSel,
 		"sub_grade":gradeSel,
-		"sub_nm":subNm
+		"sub_nm":subNm,
+		"more":moreData
 	}
 	
 	$.ajax({
@@ -126,8 +128,9 @@ function subList(){
 		},
 		success : function(res){
 			console.log(res)
-
+			
 			data = '';
+			$(".exp").text(`전체 과목 수 : \${res[0].totalCnt}개`)
 			for(var i = 0; i < res.length; i++){
 				data += `<tr>
 							<td id="\${res[i].subNo}">\${res[i].subNo}</th>
@@ -144,8 +147,30 @@ function subList(){
 				}	
 				data +=	`</tr>`;
 			}
-			tbody.html(data);
+			tbody.append(data);
 		}
 	})
+}
+
+// 무한 스크롤을 위한 곳
+const tableWrap = document.querySelector('.table-wrap');
+
+tableWrap.addEventListener("scroll", tableScrollHandler);
+function tableScrollHandler(){
+	var scrollTop = tableWrap.scrollTop; // 얼마큼 올라갔는지?
+	var clientHeight = tableWrap.clientHeight; // 브라우저에서 사용자가 눈으로 보는 크기
+	var scrollHeight = tableWrap.scrollHeight; // 문서 전체 크기(높이)
+	 
+	
+	console.log("scrollTop=" + scrollTop)
+	console.log("clientHeight=" + clientHeight)
+	console.log("scrollHeight=" + scrollHeight)
+	
+	var tunningVal = 50
+	if((scrollTop + clientHeight) >= (scrollHeight - tunningVal)) {
+        more++;
+        console.log(more);
+        subList(more);
+    }
 }
 </script>
