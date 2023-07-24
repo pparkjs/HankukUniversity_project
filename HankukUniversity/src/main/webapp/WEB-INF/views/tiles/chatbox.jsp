@@ -31,7 +31,7 @@
 								<!-- 채팅방 -->
 				<div class="card chat dz-chat-history-box d-none">
 					<div class="card-header chat-list-header text-center">
-						<a href="javascript:void(0);" class="dz-chat-history-back">
+						<a href="javascript:void(0);" class="dz-chat-history-back studyClose">
 							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><polygon points="0 0 24 0 24 24 0 24"/><rect fill="#000000" opacity="0.3" transform="translate(15.000000, 12.000000) scale(-1, 1) rotate(-90.000000) translate(-15.000000, -12.000000) " x="14" y="7" width="2" height="10" rx="1"/><path d="M3.7071045,15.7071045 C3.3165802,16.0976288 2.68341522,16.0976288 2.29289093,15.7071045 C1.90236664,15.3165802 1.90236664,14.6834152 2.29289093,14.2928909 L8.29289093,8.29289093 C8.67146987,7.914312 9.28105631,7.90106637 9.67572234,8.26284357 L15.6757223,13.7628436 C16.0828413,14.136036 16.1103443,14.7686034 15.7371519,15.1757223 C15.3639594,15.5828413 14.7313921,15.6103443 14.3242731,15.2371519 L9.03007346,10.3841355 L3.7071045,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(9.000001, 11.999997) scale(-1, -1) rotate(90.000000) translate(-9.000001, -11.999997) "/></g></svg>
 						</a>
 						<div>
@@ -80,6 +80,7 @@
 		});
 	});
 	
+	// 채팅방 목록 리스트 가져오기
 	function chatList() {
 		$.ajax({
 			type: "get",
@@ -115,7 +116,7 @@
 	var chatSocket = null;
 	connect();
 	
-	// 입장 버튼을 눌렀을 때 호출되는 함수
+	
 	function connect() {
 	    // 웹소켓 주소
 	    var wsUri = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/websocket/studyChat.do";
@@ -128,13 +129,13 @@
 	}
 	
 	//채팅방 이외의 공간에 있을 떄 실시간 채팅 개수 알람 받기.
-	chatSocket.onmessage = function(evt) {
-		console.log("evt.data : ", evt.data)
+// 	chatSocket.onmessage = function(evt) {
+// 		console.log("evt.data : ", evt.data)
 		
-			if(evt.data == "reload"){
-				//getChatCnt();
-			}
-	}
+// 			if(evt.data == "reload"){
+// 				//getChatCnt();
+// 			}
+// 	}
 	
 	//입장 버튼 누를때 onclick(this)으로 해당 함수 호출
 	function enterRoom(obj){
@@ -150,6 +151,8 @@
 			 "stdNo" : stdNo,
 			 "type" : "enter-room"
 		}
+		
+		console.log("roomData : ", roomData)
 		chatSocket.send(JSON.stringify(roomData));
 		
 		roomNm.html(studyName);
@@ -220,6 +223,7 @@
 	        }
 		});
 	}
+	
 	//enter 누르면 메시지 전송
 	$(document).on('keydown', '#msgContent', function(e) {
 	    if (e.keyCode == 13 && !e.shiftKey) { // 엔터키가 눌렸을 때 동작하도록 조건 추가
@@ -238,6 +242,7 @@
 		    return false;
 		    $('#msgContent textarea').focus();
 		}
+		
 		const data = {
 			    "stdNo": stdNo,
 			    "studyNo": studyNo,
@@ -251,56 +256,39 @@
 		chatSocket.send(JSON.stringify(data));
 	}
 	
-	 //2 메세지 수신 (웹소켓 서버로부터 메시지를 수신하는 함수)
-	chatSocket.onmessage = function(evt) {
-		 	console.log("evt.data : ", evt.data)
-		 	
-		    if(evt.data == "reload"){
-		    	msgList();
-		    	chatList();
-		    	//chatMessageList();
-		    }else{
-			 	let receive = evt.data.split(","); // evt.data 서버에서 전송된 메시지 데이터
-		    }
-	 }
+//2 메세지 수신 (웹소켓 서버로부터 메시지를 수신하는 함수)
+chatSocket.onmessage = function(evt) {
+	 	console.log("evt.data : ", evt.data)
+	    if(evt.data == "reload"){
+	    	
+	    }else{
+		 	let receive = evt.data.split(","); // evt.data 서버에서 전송된 메시지 데이터
+	        
+	        const data = {
+	                "studyNo" : receive[0],
+	                "stdNo" : receive[1],
+	             "msgContent" : receive[2],
+	             "msgRegdate" : receive[3],
+	             "unreadMsgCnt" : receive[4],
+	        };
+		 	console.log(data);
+		 	msgList();
+	    }
+ }
+ 
+//채팅방에서 닫기 버튼 누를 시 
+$('.studyClose').on('click', function(){
+	// 방에 입장 시 해당 정보 서버에 전달
+	const roomData = {
+		 "studyNo" : studyNo,
+		 "stdNo" : stdNo,
+		 "type" : "close-room"
+	}
+	console.log("닫기버튼 : ", roomData);
 	
-	// function chatMessageList() {
-	  
-	      
-	//       // studymemberList Ajax 요청 실행
-	//       $.ajax({
-	//         url: "/hku/student/studymemberList",
-	//         data: {
-	//           "studyNo": studyNo
-	//         },
-	//         dataType: "json",
-	//         success: function (res) {
-	//           var cnt = 0;
-	//           var member = "스터디원: ";
-	//           for (var i = 0; i < res.length; i++) {
-	//             console.log("res: ", res);
-	//             if (res[i].studyRole == 'Y') {
-	//               console.log("스터디장: ", res[i].stdNm);
-	//               //$("#leader").html(`스터디장 : ${res[i].stdNm}`);
-	//             } else if (i == res.length - 1) {
-	//               member += `${res[i].stdNm}`;
-	//             } else {
-	//               member += `${res[i].stdNm}, `;
-	//             }
-	//             cnt += 1;
-	//           }
-	//           if (cnt > 1) {
-	//             console.log("멤버: ", member);
-	//             //$("#stMem").html(member);
-	//           } else {
-	//             member += "없음";
-	//             console.log("멤버: ", member);
-	//             //$("#stMem").html(member);
-	//           }
-	//         }
-	//       });
+	chatSocket.send(JSON.stringify(roomData));
 	
-	// }
+})
 	
 	</script>			
 </c:if>			
