@@ -36,20 +36,9 @@
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
-					<table id="example" class="table" style="min-width: 845px">
-						<thead class="thead-dark">
-							<tr>
-								<th>제목</th>
-								<th>작성자</th>
-								<th>스터디명</th>								
-								<th>등록일</th>
-								<th>조회수</th>
-							</tr>
-						</thead>
-						<tbody id="boardBody" class="pagination-content">
-						
-						</tbody>
-					</table>
+					<div class="row" id="boardList" style="width: 98%;">
+										
+					</div>
 				</div>
 			</div>
 			<div class="card-body" id="pageNation">
@@ -62,9 +51,6 @@
 						<li class="page-item active">
 							<a class="page-link" href="javascript:void(0)">1</a>
 						</li>
-						<li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
-						<li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
-						<li class="page-item"><a class="page-link" href="javascript:void(0)">4</a></li>
 						<li class="page-item page-indicator">
 							<a class="page-link" href="javascript:void(0)">
 							<i class="la la-angle-right"></i></a>
@@ -146,29 +132,53 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script type="text/javascript">
-var boardBody = document.querySelector("#boardBody");
+var boardBody = document.querySelector("#boardList");
 $(document).ready(function() {
     boardList();
 });
 
 function boardList() {
-    var body = $("#boardBody");
+    var body = $("#boardList");
     $.ajax({
         type: "get",
         url: "/hku/student/studyBoardList",
         dataType: "json",
+        beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
         success: function(res) {
             console.log("res: ", res);
             
             var data = '';
             for (var i = 0; i < res.length; i++) {
-                data += `<tr>
-                            <td id="\${res[i].stboNo}" onclick="boardDetail(this)" style="padding: 12px;">\${res[i].stboTitle}</td>
-                            <td id="\${res[i].stboNo}" onclick="boardDetail(this)" style="padding: 12px;">\${res[i].stboWriter}</td>
-                            <td id="\${res[i].stboNo}" onclick="boardDetail(this)" style="padding: 12px;">\${res[i].studyName}</td>
-                            <td id="\${res[i].stboNo}" onclick="boardDetail(this)" style="padding: 12px;">\${res[i].stboRegdate}</td>
-                            <td id="\${res[i].stboNo}" onclick="boardDetail(this)" style="padding: 12px;">\${res[i].stboReadCnt}</td>
-                        </tr>`;
+                data += `
+                        <div class="col-xl-3 col-lg-4 col-sm-6">
+						<div class="card" style="background-color: #adb17d1c;">
+							<div class="card-body">
+								<div class="card-use-box">
+									<div class="card__text">
+										<h4 class="mb-0">\${res[i].stboTitle}</h4>
+										<p>\${res[i].studyName}</p>
+									</div>
+									<ul class="card__info">
+										<li><span></span> <span class="card__info__stats">\${res[i].stboRegdate}</span>
+										</li>
+									</ul>
+									<ul class="post-pos">
+										<li><span class="card__info__stats">스터디장: </span> <span>\${res[i].stboWriter}</span>
+										</li>
+											<span>조회수: \${res[i].stboReadCnt}</span>
+										</li>
+									</ul>
+									
+									<div>
+										<a href="#" id="\${res[i].stboNo}" onclick="boardDetail(this)"
+											class="btn btn-outline-primary btn-xs">보기</a>
+										<!-- <a href="javascript:void(0)" class="btn btn-secondary btn-sm ms-2">Following</a> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>      
+                        `;
             }
             body.html(data);
         }
@@ -188,6 +198,7 @@ function boardDetail(element) {
         data: stboNo,
         url: "/hku/student/studyBoardDetail",
         dataType: "json",
+        beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
         success: function(res) {
             console.log("res: ", res);
 
@@ -245,6 +256,7 @@ function insertBoard(){
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST","/hku/student/insertStudyBoard",true);
 	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			if(xhr.responseText === "SUCCESS"){
@@ -372,6 +384,7 @@ function delBoard() {
         type: "POST",
         data: stboNo,
         url: "/hku/student/deleteStudyBoard",
+        beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
         dataType: "json",
         success: function(res) {
             console.log("res: ", res);
@@ -410,6 +423,7 @@ function modifyStudyBoard(){
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST","/hku/student/modifyStudyBoard",true);
 	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			if(xhr.responseText === "SUCCESS"){
@@ -447,6 +461,7 @@ function intoStudy(){
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST","/hku/student/intoStudy",true);
 	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			if(xhr.responseText === "SUCCESS"){

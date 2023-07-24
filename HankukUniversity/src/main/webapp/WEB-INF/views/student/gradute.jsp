@@ -318,6 +318,7 @@ function gradutePostpone(){
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST","/hku/student/gradutePostpone",true);
 	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); 
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			if(xhr.responseText === "SUCCESS"){
@@ -365,6 +366,7 @@ function graduteApply(){
 		let xhr = new XMLHttpRequest();
 		xhr.open("POST","/hku/student/graduteApply",true);
 		xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); 
 		xhr.onreadystatechange = function(){
 			if(xhr.readyState == 4 && xhr.status == 200){
 				if(xhr.responseText === "SUCCESS"){
