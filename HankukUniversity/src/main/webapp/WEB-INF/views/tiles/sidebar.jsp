@@ -145,7 +145,7 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="/hku/tuition-payment-details">등록금 납부내역</a></li>
-					<li><a href="#">등록금 고지서</a></li>
+					<li><a href="/hku/tuition-bill">등록금 고지서</a></li>
 				</ul>
 			</li>
 			

@@ -15,6 +15,8 @@ public class TuitionVO {
 	private String tutAmt;
 	private String tutSclsAmt;
 	private String bankCd;
+	private String bankNm;
+	
 	private String tutPayActno;
 	private String tutPayDt;
 	private String avlCd;
