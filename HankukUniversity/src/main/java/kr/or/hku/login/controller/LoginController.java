@@ -1,19 +1,26 @@
 package kr.or.hku.login.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.annotation.security.PermitAll;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.hku.admin.vo.EmployeeVO;
 import kr.or.hku.login.service.ILoginService;
@@ -28,6 +35,9 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginController {
 	@Autowired
 	private ILoginService loginService;
+	
+	@Inject
+	BCryptPasswordEncoder pe;
 	
 	//로그인페이지 호출 
 	@GetMapping("/login")
@@ -98,5 +108,55 @@ public class LoginController {
 		return "student/main";
 	}
 
-
+	
+//	계정찾기페이지호출
+	@PermitAll
+	@GetMapping("/forget")
+	public String forgetPage() {
+		return "login/forgetPage";
+	}
+	
+//	계정 찾기
+	@PermitAll
+	@ResponseBody
+	@PostMapping("/forgetProcess")
+	public String forgetProcess(String userName, String type, String userBd) {
+		String userNo = loginService.forgetProcess(userName,type,userBd);
+		
+		return userNo;
+	}
+	
+//	임시비밀번호 발급
+	@PermitAll
+	@PostMapping("/sendPassword")
+	@ResponseBody
+	public String sendPassword(String userNo, String userEmail) throws Exception {
+		String result="";
+		int res = loginService.sendPassword(userNo,userEmail);
+		if(res > 0) {
+			result="success";
+		}else {
+			result="failed";
+		}
+		return result;
+	}
+	@PermitAll
+	@ResponseBody
+	@PostMapping("/changePassword")
+	public String changePassword(String temporary, String userNo, String newPw) {
+		System.out.println("확인!!!!!!!!!!"+temporary+userNo+newPw);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("temporary", temporary);
+		map.put("userNo", userNo);
+		map.put("newPw", newPw);
+		int res = loginService.changePassword(map);
+		String result ="";
+		if(res > 0 ) {
+			result="success";
+		}else {
+		result="fail";
+		}
+		return result;
+	}
+	
 }
