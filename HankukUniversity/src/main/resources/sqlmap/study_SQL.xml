@@ -151,13 +151,13 @@
 	</select>
 	
 	<!-- 방안에서 해당 메시지 읽음 카운트 -1 처리 -->
-	<update id="readMessageInRoom" parameterType="studyVo">
-		update chatmessage
-	    set
-	    	unread_mem_cnt = unread_mem_cnt - 1
-	    where study_no = #{studyno}
-	    and msg_no = #{msgno}
-	</update>
+<!-- 	<update id="readMessageInRoom" parameterType="studyVo"> -->
+<!-- 		update chatmessage -->
+<!-- 	    set -->
+<!-- 	    	unread_mem_cnt = unread_mem_cnt - 1 -->
+<!-- 	    where study_no = #{studyno} -->
+<!-- 	    and msg_no = #{msgno} -->
+<!-- 	</update> -->
 	
 	<!-- 채팅들 읽음 처리 -->
  	<update id="readChatMessage" parameterType="studyVo">

@@ -20,6 +20,6 @@ public class SubjectVO {
 	private String subOtl;
 	
 	
-	
+	private int totalCnt; //전체 개수
 	private String lecapNo;
 }
