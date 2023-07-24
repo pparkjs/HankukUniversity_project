@@ -79,6 +79,7 @@
 											</div>
 										</div>
 									</div>
+									
 								</div>
 							</c:forEach>
 							</c:otherwise>
@@ -90,7 +91,7 @@
 				<div class="tab-content">
 					<div id="navpills-2" class="tab-pane">
 						<div class="row">
-							<div class="col-md-12">
+							
 							<c:choose>
 								<c:when test="${empty studyList }">
 									<p>가입승인 대기중인 스터디가 없습니다.</p>
@@ -117,8 +118,7 @@
 													</ul>
 													
 													<div>
-														<a href="/hku/student/studyRoom?studyNo=${waitStudy.studyNo }"
-															class="btn btn-outline-primary btn-xs">취소</a>
+														<a href="/hku/student/studyRoom?studyNo=${waitStudy.studyNo }" class="btn btn-outline-primary btn-xs">취소</a>
 														<!-- <a href="javascript:void(0)" class="btn btn-secondary btn-sm ms-2">Following</a> -->
 													</div>
 												</div>
@@ -132,7 +132,6 @@
 						</div>
 					</div>
 				<!-- end tab -->
-				</div>
 				</div>
 
 				<div class="offcanvas offcanvas-end customeoff" tabindex="-1"
