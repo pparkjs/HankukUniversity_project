@@ -35,7 +35,7 @@
  		<!-- 출석 변경  -->
 		<update id="updateAttendance" parameterType="attendanceVO">
 		/*kr.or.hku.classroom.mapper.AttendanceMapper.updateAttendance */
-			UPDATE attendance 
+			UPDATE attendance  
 	        SET                 
 	        	<if test='atdcYnCd == "Y"'>
 		           atdc_yn_cd = 'N' 
@@ -46,5 +46,75 @@
 	        WHERE atdc_no = #{atdcNo} 
 		</update>
 		
+		<!-- 학생 출석 이의신청위한 출석번호 가져오기  -->
+		<select id="getAtdcNo" resultType="map" parameterType="attendanceVO">
+		/*kr.or.hku.classroom.mapper.AttendanceMapper.getAtdcNo */
+			 SELECT	
+	         TO_CHAR(a.atdc_no) as atdc_no,
+             TO_CHAR(ad.ATDC_DMR_RSN) as ATDC_DMR_RSN,
+             a.atdc_week
+	        FROM attendance a
+	        LEFT OUTER JOIN attendance_dmr ad ON a.atdc_no = ad.atdc_no
+	        WHERE std_no = #{stdNo}
+	        AND atdc_week = #{atdcWeek}
+	        AND lecap_no = #{lecapNo}
+		</select>
+		
+		<!-- 이의신청 submit  -->
+		<insert id="submitAttendDmr" parameterType="attendanceVO">
+		/*kr.or.hku.classroom.mapper.AttendanceMapper.submitAttendDmr */
+			INSERT INTO attendance_dmr(
+				atdc_no,
+				atdc_dmr_rsn,
+				stdc_dmr_stts_cd,
+				atch_file_no 
+			)
+			VALUES(
+				#{atdcNo},
+				#{atdcDmrRsn},
+				'wait',
+				#{atchFileNo}
+			)	
+				
+		</insert>
+		
+		<!-- 이의신청 현황 리스트 -->
+		<select id="attenDmrList" parameterType="attendanceVO" resultType="attendanceVO">
+		/*kr.or.hku.classroom.mapper.AttendanceMapper.attenDmrList */
+			 SELECT 
+				a.ATDC_NO,
+				a.ATDC_DMR_RSN,
+				b.ATDC_WEEK,
+				a.STDC_DMR_STTS_CD
+			FROM attendance_dmr a
+            join attendance b on a.atdc_no = b.atdc_no
+            where b.std_no = #{stdNo}
+            and b.lecap_no = #{lecapNo}
+		</select>
+		
+		<!-- 이미 이의신청했으면 1 아니면 0 -->
+		<select id="dmrCheck" parameterType="int" resultType="int">
+		/*kr.or.hku.classroom.mapper.AttendanceMapper.dmrCheck */
+			SELECT COUNT(*) 
+			FROM attendance_dmr 
+			WHERE atdc_no = #{atdcNo}
+		</select>
+		
+		<!-- 이의신청 상세 -->
+		<select id="dmrDetail" resultType="attendanceVO" parameterType="int">
+			 SELECT 
+                A.ATDC_WEEK,
+                AD.ATDC_DMR_RSN,
+                AD.ATDC_NO
+            FROM ATTENDANCE A
+            JOIN ATTENDANCE_DMR AD ON AD.ATDC_NO = A.ATDC_NO
+            WHERE A.ATDC_NO = #{atdcNo}
+		</select>
+		
+		<!-- 이의신청 내역 삭제  -->
+		<delete id="deleteAttendDmr" parameterType="int">
+			DELETE FROM attendance_dmr
+			WHERE atdc_no = #{atdcNo}
+		</delete>
 		
  </mapper>

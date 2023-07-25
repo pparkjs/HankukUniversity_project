@@ -127,10 +127,10 @@ function subList(moreData){
 			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 		},
 		success : function(res){
-			console.log(res)
-			
 			data = '';
-			$(".exp").text(`전체 과목 수 : \${res[0].totalCnt}개`)
+			if(res.length > 0){
+				$(".exp").text(`전체 과목 수 : \${res[0].totalCnt}개`)
+			}
 			for(var i = 0; i < res.length; i++){
 				data += `<tr>
 							<td id="\${res[i].subNo}">\${res[i].subNo}</th>
@@ -161,15 +161,9 @@ function tableScrollHandler(){
 	var clientHeight = tableWrap.clientHeight; // 브라우저에서 사용자가 눈으로 보는 크기
 	var scrollHeight = tableWrap.scrollHeight; // 문서 전체 크기(높이)
 	 
-	
-	console.log("scrollTop=" + scrollTop)
-	console.log("clientHeight=" + clientHeight)
-	console.log("scrollHeight=" + scrollHeight)
-	
 	var tunningVal = 50
 	if((scrollTop + clientHeight) >= (scrollHeight - tunningVal)) {
         more++;
-        console.log(more);
         subList(more);
     }
 }

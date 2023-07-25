@@ -168,7 +168,7 @@ position: relative;
 						<div class="dropdown-menu dropdown-menu-end">
 							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3"
 								style="height: 380px;">
-								<ul class="timeline">
+								<ul class="timeline" id="alarmLine">
 									<!--알람 동적 추가-->
 								</ul>
 							</div>
@@ -387,7 +387,7 @@ position: relative;
 	
 // 	AJAX를 통해 알림이 있는지 확인하는 함수
 	function getAlarmList() {
-		var timeline = $('.timeline');
+		var timeline = $('#alarmLine');
    	 	const notificationDiv = document.querySelector('.alarm-count');
 		$.ajax({
 			url: "/hku/getAlarmList",

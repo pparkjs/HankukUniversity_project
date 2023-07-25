@@ -81,6 +81,9 @@ $('#searchBtn').click(function(){
 		data : {
 			searchWord : searchWord
 		},
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success: function(res){
 			console.log(res);
 			searchStr = '';

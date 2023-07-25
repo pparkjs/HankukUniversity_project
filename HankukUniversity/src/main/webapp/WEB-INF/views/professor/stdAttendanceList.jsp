@@ -211,6 +211,7 @@ $(function(){
 			success : function(res){
 				if(res == "success"){
 					getStdAttend();
+					
 					swal("", "출결 상태가 변경되었습니다!", "success");
 				}
 			}

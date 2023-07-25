@@ -330,4 +330,12 @@
 		            	END
  	
  	</select>
+ 	
+ 	<!-- 개설년도와 개설학기 가져오기 -->
+ 	<select id="getLecAplyInfo" parameterType="string" resultType="lectureAplyVO">
+ 	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.getPresentList*/
+ 		SELECT lecap_yr, lecap_sem
+ 		FROM lecture_aply
+ 		WHERE lecap_no = #{lecapNo}
+ 	</select>
  </mapper>

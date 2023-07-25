@@ -21,6 +21,11 @@ public interface AssignmentMapper {
 	public List<String> getStdList(String lecapNo); 
 	public int giveAssignToStd(Map<String, Object> map);
 	
+	// 학생 과제 상세
+	public AssignmentVO stdAssignDetail(AssignmentVO vo);
+	
+	// 학생 과제 제출 
+	public int assignmentSubmit(AssignmentVO vo);
 	//과제 상세페이지 학생 리스트
 	public List<AssignmentVO> getStdListByAssign(String asmNo);
 	//과제 상세페이지 성적 부여 

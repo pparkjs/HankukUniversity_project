@@ -99,5 +99,17 @@ public class AssignmentServiceImpl implements AssignmentService {
 	public int giveScore(AssignmentVO assignmentVO) {
 		return mapper.giveScore(assignmentVO);
 	}
+	
+	// 학생 과제 상세
+	@Override
+	public AssignmentVO stdAssignDetail(AssignmentVO vo) {
+		return mapper.stdAssignDetail(vo);
 
+	}
+	
+	// 학생 과제 제출
+	@Override
+	public int assignmentSubmit(AssignmentVO vo) {
+		return mapper.assignmentSubmit(vo);
+	}
 }
