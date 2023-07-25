@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.hku.admin.vo.EmployeeVO;
 import kr.or.hku.login.service.ILoginService;
@@ -48,12 +49,16 @@ public class LoginController {
 	//로그인 처리 로직
 	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_PROFESSOR','ROLE_ADMIN')")
 	@GetMapping("/loginProcess")
-	public String loginProcess(HttpServletRequest request) {
+	public String loginProcess(HttpServletRequest request,RedirectAttributes re) {
 		String goPage = "";
 		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		HttpSession session = request.getSession();
 		UsersVO userVo = loginService.loginUser(users.getUsername());
 		
+		System.out.println("첫번째로긴"+userVo.getUserFirstLogin());
+		if(userVo.getUserFirstLogin().equals("0")) {
+			re.addFlashAttribute("first",'0');
+		}
 		//사용자식별코드가 학생일경우
 		if(userVo.getUserClsCd().equals("student")) {
 			StudentVO stdVo = loginService.studentUser(userVo.getUserNo());
@@ -114,6 +119,12 @@ public class LoginController {
 	@GetMapping("/forget")
 	public String forgetPage() {
 		return "login/forgetPage";
+	}
+//	계정찾기페이지호출
+	@PermitAll
+	@GetMapping("/changePopup")
+	public String changePopup() {
+		return "login/changePopup";
 	}
 	
 //	계정 찾기

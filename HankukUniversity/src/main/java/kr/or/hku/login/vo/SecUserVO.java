@@ -18,6 +18,7 @@ public class SecUserVO {
 		private String userPw;
 		private String userClsCd;
 		private String enabled;
+		private String userFirstLogin;
 		private String userClsNm;	// 사용자 구분 이름
 		
 		// 공통

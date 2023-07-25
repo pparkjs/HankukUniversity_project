@@ -10,6 +10,7 @@
  		<result property="userPw" column="user_pw"/>
  		<result property="userClsCd" column="user_cls_cd"/>
  		<result property="enabled" column="enabled"/>
+ 		<result property="userFirstLogin" column="user_first_login"/>
  		
 		<association property="studentVO" javaType="studentVO">
 			<result property="stdNo" column="std_no"/>
@@ -220,7 +221,10 @@
  	
  	<update id="changePassword" parameterType="map">
  		UPDATE USERS
- 		SET USER_PW = #{newPw}
+ 		SET USER_PW = #{newPw},
+ 			USER_FIRST_LOGIN = USER_FIRST_LOGIN + 1
  		WHERE USER_NO = #{userNo}
  	</update>
+ 	
+ 	
  </mapper>

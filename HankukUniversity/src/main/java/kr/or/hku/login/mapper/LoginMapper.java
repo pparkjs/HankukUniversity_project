@@ -39,6 +39,7 @@ public interface LoginMapper {
 	public int changePassword(Map<String, String> map);
 
 	public String selectUserPw(String userNo);
+
 	
 	
 }
