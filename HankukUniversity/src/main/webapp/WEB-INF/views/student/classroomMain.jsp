@@ -216,7 +216,7 @@ $(function(){
 	
 	var attendDmr = document.querySelector("#attendDmr");
 	attendDmr.addEventListener("click", function(){
-		location.href = `/hku/student/attendanceDmr/${lecapNo}`;
+		location.href = `/hku/student/attendanceDmr`;
 	})
 	
 })
