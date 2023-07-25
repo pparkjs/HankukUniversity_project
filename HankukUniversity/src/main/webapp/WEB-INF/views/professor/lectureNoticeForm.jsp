@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <div class="content-body">
 	<div class="container-fluid">
 		<!-- row -->
@@ -75,6 +76,7 @@
 				</div>
 				<input type="hidden" name="lecntWriter" value="${pro.proNm}">
 				<input type="hidden" name="lecapNo" value="${lecapNo}">
+				<sec:csrfInput/>
 			</form>
 		</div>
 	</div>
