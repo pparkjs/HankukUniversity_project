@@ -53,6 +53,7 @@
     <typeAlias type="kr.or.hku.student.vo.DepartmentCrtrVO" alias="crtrVO"/>
     <typeAlias type="kr.or.hku.admin.vo.userAuthVO" alias="userAuthVO"/>
      <typeAlias type="kr.or.hku.login.vo.SecUserVO" alias="secUserVO"/>
+     <typeAlias type="kr.or.hku.login.vo.ApiVO" alias="apiVO"/>
   	
     <!-- 재균칸 밑에서만 작성 -->  
     <typeAlias type="kr.or.hku.common.vo.AttachFileVO" alias="attachFileVO"/>
@@ -68,6 +69,7 @@
     <typeAlias type="kr.or.hku.admin.vo.SubjectCancelVO" alias="subCancelVO"/>
     <typeAlias type="kr.or.hku.admin.vo.StudentVO" alias="lecInStdVO"/>
     <typeAlias type="kr.or.hku.student.vo.StdCalendarVO" alias="stdCalVO"/>
+    <typeAlias type="kr.or.hku.portal.vo.DetailNoticeVO" alias="detailNoticeVO"/>
     
     <!-- 영우칸 밑에서만 작성-->
     <typeAlias type="kr.or.hku.admin.vo.UserVO" alias="userVO"/>

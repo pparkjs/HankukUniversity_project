@@ -1,7 +1,10 @@
 package kr.or.hku.classroom.vo;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.hku.common.vo.AttachFileVO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -33,6 +36,8 @@ public class AssignmentVO {
 //	과제를 제출 했을때 받는 필드
 	private MultipartFile assignFile;
 	
+	// 파일 정보들
+	private List<AttachFileVO> fileList;
 	
 //	// 알람테이블 조인
 //	private int alarmNo			;	// 알람번호

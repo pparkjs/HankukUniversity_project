@@ -25,5 +25,5 @@ public class EmployeeVO {
 	private String empProfilePath  ;
 	private String empDeptCd       ;
 	private String empJbttlCd      ;
-	private String empJbgdCd;
+	private String empJbgdCd      ;
 }

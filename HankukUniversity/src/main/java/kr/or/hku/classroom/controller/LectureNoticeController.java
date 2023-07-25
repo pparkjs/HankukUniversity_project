@@ -37,6 +37,7 @@ public class LectureNoticeController {
 	@Autowired
 	private CommonFileService fileService;
 
+	//교수클래스룸 공지리스트 출력
 	@GetMapping("/noticeList")
 	public String noticeList(HttpSession session, Model model) {
 		String lecapNo = session.getAttribute("lecapNo").toString();
@@ -44,7 +45,7 @@ public class LectureNoticeController {
 		model.addAttribute("noticeList", noticeList);
 		return "professor/lectureNoticeList";
 	}
-
+	//교수클래스룸 공지상세 페이지
 	@GetMapping("/detailNotice/{lecntNo}")
 	public String detailNotice(@PathVariable int lecntNo,Model model) {
 		LectureNoticeVO noticeVO = noticeService.getNotcieDetail(lecntNo);
@@ -54,12 +55,13 @@ public class LectureNoticeController {
 		model.addAttribute("noticeVO",noticeVO);
 		return "professor/lectureNoticeDetail";
 	}
-
+	//교수클래스룸 공지등록 페이지
 	@GetMapping("/noticeform")
 	public String noticeRegForom(HttpSession session, LectureNoticeVO noticeVO) {
 		log.info("lecapNo +> " + session.getAttribute("lecapNo").toString());
 		return "professor/lectureNoticeForm";
 	}
+	//교수클래스룸 공지 수정 페이지
 	@GetMapping("/noticemodForm/{lecntNo}")
 	public String noticeModForm(Model model,@PathVariable int lecntNo) {
 		LectureNoticeVO noticeVO = noticeService.getNotcieDetail(lecntNo);
@@ -68,7 +70,7 @@ public class LectureNoticeController {
 		model.addAttribute("notice",noticeVO);
 		return "professor/lectureNoticeForm";
 	}
-
+	//교수클래스룸 공지등록 메소드
 	@PostMapping("/insertNotice")
 	public String insertNotice(HttpSession session, LectureNoticeVO noticeVO,RedirectAttributes re) {
 
@@ -98,7 +100,7 @@ public class LectureNoticeController {
 		return goPage;
 
 	}
-	
+	//교수클래스룸 공지수정 메소드
 	@PostMapping("/updateNotice")
 	public String updateNotice(HttpSession session, LectureNoticeVO noticeVO,RedirectAttributes re) {
 

@@ -152,7 +152,7 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="/hku/tuition-payment-details">등록금 납부내역</a></li>
-					<li><a href="#">등록금 고지서</a></li>
+					<li><a href="/hku/tuition-bill">등록금 고지서</a></li>
 				</ul>
 			</li>
 			
@@ -284,7 +284,7 @@
 			</li>
 			
 			<li>
-				<a href="#" class="" aria-expanded="false">
+				<a href="/hku/admin/totalChart" class="" aria-expanded="false">
 					<div class="menu-icon">
 						<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path fill-rule="evenodd" clip-rule="evenodd" d="M14.8381 11.7317C15.4566 11.7317 15.9757 12.2422 15.8811 12.853C15.3263 16.4463 12.2502 19.1143 8.54009 19.1143C4.43536 19.1143 1.10834 15.7873 1.10834 11.6835C1.10834 8.30245 3.67693 5.15297 6.56878 4.44087C7.19018 4.28745 7.82702 4.72455 7.82702 5.36429C7.82702 9.69868 7.97272 10.8199 8.79579 11.4297C9.61886 12.0396 10.5867 11.7317 14.8381 11.7317Z" stroke="#888888" stroke-linecap="round" stroke-linejoin="round"></path>

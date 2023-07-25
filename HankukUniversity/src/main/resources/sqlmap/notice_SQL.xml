@@ -125,7 +125,7 @@
 					  notice_no
 					, notice_ttl
 					, notice_wrtr_nm
-					, notice_regdate
+					, to_char(notice_regdate, 'yyyy-mm-dd') as notice_regdate
 					, notice_read_cnt
 				FROM notice
 				WHERE 1=1

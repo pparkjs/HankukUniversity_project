@@ -274,6 +274,11 @@ $(function(){
 		location.href = `/hku/professor/manageAttendance?lecapNo=\${lecapNo}`;
 	})
 
+	var attendDmrBtn = document.querySelector("#attendDmrBtn");
+	attendDmrBtn.addEventListener("click", function(){
+		location.href=`/hku/professor/attendanceDmrManage/` + lecapNo;
+	})
+
 })
 
 

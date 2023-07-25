@@ -46,10 +46,9 @@
 								action="/hku/professor/regiAssignment" method="post"
 								id="regiForm" enctype="multipart/form-data">
 								<input type="hidden" name="lecapNo" id="lecapNo"
-									value="${sessionScope.lecapNo }" />
+									value="${sessionScope.lecapNo }"/>
 								<c:if test="${status eq 'u' }">
-									<input type="hidden" name="asmNo" id="asmNo"
-										value="${vo.asmNo }" />
+									<input type="hidden" name="asmNo" id="asmNo" value="${vo.asmNo }" />
 								</c:if>
 								<div class="row">
 									<div class="col-xl-12">

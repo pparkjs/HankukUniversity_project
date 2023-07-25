@@ -148,6 +148,45 @@
 						<h4 class="card-title"
 							style="font-weight: bold; font-size: 1.2em; color: #800000;">
 							공지사항</h4>
+							<button type="button" id="noticeMore" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="false">
+								<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1">
+								<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+								<rect x="0" y="0" width="24" height="24"></rect>
+								<circle fill="#000000" cx="5" cy="12" r="2"></circle>
+								<circle fill="#000000" cx="12" cy="12" r="2"></circle>
+								<circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+							</button>
+					</div>
+						<div class="card-body ccc" style="padding-top: 0;">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>제목</th>
+									<th>작성일시</th>
+								</tr>
+							</thead>
+							<tbody id="tbtb">
+								<c:choose>
+									<c:when test="${not empty noticeList}">
+										<c:forEach items="${noticeList}" var="notice" varStatus="status">
+											<tr class="tbtr">
+												<td class="">${status.index + 1}</td>
+												<td class="">	
+													<a href="/hku/student/detailNotice/${notice.lecntNo}">${notice.lecntTtl}</a>
+												</td>
+												<td class="">${notice.lecntRegdate }</td>
+											</tr>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<tr>
+											<td colspan="5">등록된 게시글이 없습니다</td>
+										</tr>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -209,14 +248,17 @@
 $(function(){
 	
 	var assignMore = document.querySelector("#assignMore");
-	
 	assignMore.addEventListener("click", function(){
 		location.href = `/hku/student/stdAssignmentList/${lecapNo}`;
 	})
 	
 	var attendDmr = document.querySelector("#attendDmr");
 	attendDmr.addEventListener("click", function(){
-		location.href = `/hku/student/attendanceDmr/${lecapNo}`;
+		location.href = `/hku/student/attendanceDmr`;
+	})
+	var noticeMore = document.querySelector("#noticeMore");
+	noticeMore.addEventListener("click",function(){
+		location.href = `/hku/student/noticeList`;
 	})
 	
 })
