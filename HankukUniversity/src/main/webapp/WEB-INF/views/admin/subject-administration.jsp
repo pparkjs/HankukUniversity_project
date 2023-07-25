@@ -251,6 +251,9 @@
 	</div>
 </div> <!-- 모달 END -->
 <script>
+function beforesend(xhr){
+	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+}
 
 var subjectBody = document.querySelector("#subject-body");
 
@@ -271,6 +274,7 @@ function subjectList(){
 	console.log("searchData=" + JSON.stringify(searchData));
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST","/hku/admin/subject-list",true);
+	beforesend(xhr);
 	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
@@ -340,6 +344,7 @@ function subNoSet(){
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("GET","/hku/admin/subNoSet",true);
+	beforesend(xhr);
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			var nextCode = xhr.responseText;
@@ -427,6 +432,7 @@ function subjectInsert(){
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST","/hku/admin/subject-administration",true);
+	beforesend(xhr);
 	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
@@ -478,28 +484,42 @@ function deleteSubject(){
 		});
 		return false;
 	}
-
-	let xhr = new XMLHttpRequest();
-	xhr.open("DELETE","/hku/admin/subject-administration",true);
-	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-	xhr.onreadystatechange = function(){
-		if(xhr.readyState == 4 && xhr.status == 200){
-			console.log("삭제 잘 갔다옴");
-			if(xhr.responseText === "SUCCESS"){
-				subjectList();
-				swal({
-					title: "삭제가 완료되었습니다!", 
-					icon: "success"
-				});
-			} else if(xhr.responseText === "FAILED"){
-				swal({
-					title: "삭제가 실패하였습니다!", 
-					icon: "error"
-				});
+	
+	swal({
+		title: "삭제를 진행하시겠습니까?",
+		text: "삭제 후 복구가 불가능합니다",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+	.then((willDelete) => {
+		if (willDelete) {
+			let xhr = new XMLHttpRequest();
+			xhr.open("DELETE","/hku/admin/subject-administration",true);
+			beforesend(xhr);
+			xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == 4 && xhr.status == 200){
+					console.log("삭제 잘 갔다옴");
+					if(xhr.responseText === "SUCCESS"){
+						subjectList();
+						swal({
+							title: "삭제가 완료되었습니다!", 
+							icon: "success"
+						});
+					} else if(xhr.responseText === "FAILED"){
+						swal({
+							title: "삭제가 실패하였습니다!", 
+							icon: "error"
+						});
+					}
+				}
 			}
+			xhr.send(JSON.stringify(delsubjectArr));
+		} else {
+			return false;
 		}
-	}
-	xhr.send(JSON.stringify(delsubjectArr));
+	});
 }
 
 function subjectDetail(target){
@@ -520,6 +540,7 @@ function subjectDetail(target){
 	console.log("selectsubNo",selectsubNo);
 	let xhr = new XMLHttpRequest();
 	xhr.open("GET", "/hku/admin/subject-select?subNo="+selectsubNo,true);
+	beforesend(xhr);
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			// console.log("학과상세 성공");
@@ -567,6 +588,7 @@ function subjectModify(){
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST","/hku/admin/subject-update",true);
+	beforesend(xhr);
 	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200) {

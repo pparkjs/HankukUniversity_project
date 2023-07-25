@@ -123,6 +123,9 @@ function craditList(){
 		data:stdData,
 		url : "/hku/cradit-history",
 		dataType : "json",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success : function(res){
 			console.log("res:",res)
 
@@ -162,6 +165,9 @@ function subRecordList(obj){
 		data:JSON.stringify(obj),
 		url:"/hku/sub-history",
 		dataType:"json",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		contentType:"application/json; charset=utf-8",
 		success:function(res){
 			console.log(res);

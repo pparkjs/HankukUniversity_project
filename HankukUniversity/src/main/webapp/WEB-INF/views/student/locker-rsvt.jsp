@@ -159,6 +159,7 @@ function lockerReservation(){
 	var xhr = new XMLHttpRequest();
 	xhr.open("post", "/hku/locker-reservation", true)
 	xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+	xhr.setRequestHeader("X-CSRF-TOKEN", "${_csrf.token}");
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			let	res = xhr.responseText;
@@ -209,7 +210,8 @@ function lockerList(){
 	var lockerContent = document.querySelector(".lockerLeft-content");
 	console.log("floor", floor);
 	var xhr = new XMLHttpRequest();
-	xhr.open("get", `/hku/locker-list?fcltNo=\${fcltNo}&floor=\${floor}`, true)
+	xhr.open("get", `/hku/locker-list?fcltNo=\${fcltNo}&floor=\${floor}`, true);
+	xhr.setRequestHeader("X-CSRF-TOKEN", "${_csrf.token}");
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			let res = JSON.parse(xhr.responseText);

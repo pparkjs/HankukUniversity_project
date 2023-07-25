@@ -26,7 +26,7 @@ public interface TestPresMapper {
 	public int testTakeInsert(TestVO test);
 	public void studentTestAnswerInsert(StudentAnswerVO sAnsVO);
 	public int scoreUpdate(Map<String, Object> map);
-	public int preTestCheck(Map<String, Object> map);
+	public int preTestCheck(TestVO test);
 	public TestVO getTtNo(TestVO test);
 	public List<StudentAnswerVO> getStuAnsList(int ttNo);
 }

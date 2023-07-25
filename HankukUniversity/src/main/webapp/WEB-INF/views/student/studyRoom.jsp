@@ -397,6 +397,7 @@ function sList(element) {
     $.ajax({
         type: "get",
         url: "/hku/student/scheduleList",
+        beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
         data: {
             "stdNo": stdNo
         },
@@ -491,6 +492,7 @@ function assignStudy() {
         type: "POST",
         data: joinNo,
         url: "/hku/student/assignStudy",
+        beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
         dataType: "json",
         success: function(res) {
             console.log("res: ", res);
@@ -524,6 +526,7 @@ function rejStudy() {
         type: "POST",
         data: joinNo,
         url: "/hku/student/rejStudy",
+        beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
         dataType: "json",
         success: function(res) {
             console.log("res: ", res);
@@ -833,7 +836,7 @@ $(document).on('DOMContentLoaded', function() {
 							// 여기 이제 구현하면 됨
 							var eventToDelete = calendar.getEventById(pCalNo);
 							eventToDelete.remove();
-							getCalendarInfoList(moment(calendar.getDate()).format("YYYY-MM-DD"));
+// 							getCalendarInfoList(moment(calendar.getDate()).format("YYYY-MM-DD"));
 						}
 					},
 					err: function(err){

@@ -4,9 +4,89 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="kr.or.hku.login.mapper.LoginMapper">
- 	<select id="loginUser" parameterType="usersVO" resultType="usersVO">
+ 	<resultMap type="secUserVO" id="userVOmap">
+ 		<id property="userNo" column="user_no"/>
+ 		<result property="userNo" column="user_no"/>
+ 		<result property="userPw" column="user_pw"/>
+ 		<result property="userClsCd" column="user_cls_cd"/>
+ 		<result property="enabled" column="enabled"/>
+ 		<result property="userFirstLogin" column="user_first_login"/>
+ 		
+		<association property="studentVO" javaType="studentVO">
+			<result property="stdNo" column="std_no"/>
+	 		<result property="deptCd" column="dept_cd"/>
+	 		<result property="stdNm" column="STD_NM"/>
+	 		<result property="stdMjrCrd" column="STD_MJR_CRD"/>
+	 		<result property="stdCtrlCrd" column="STD_CTRL_CRD"/>
+	 		<result property="stdMtcltnYr" column="STD_MTCLTN_YR"/>
+	 		<result property="stdSttsCd" column="STD_STTS_CD"/>
+	 		<result property="stdTelno" column="STD_TELNO"/>
+	 		<result property="stdSexCd" column="STD_SEX_CD"/>
+	 		<result property="stdZip" column="STD_ZIP"/>
+	 		<result property="stdAddr" column="STD_ADDR"/>
+	 		<result property="stdDaddr" column="STD_DADDR"/>
+	 		<result property="stdMail" column="STD_MAIL"/>
+	 		<result property="stdBrdt" column="STD_BRDT"/>
+	 		<result property="stdRrno" column="STD_RRNO"/>
+	 		<result property="bankCd" column="BANK_CD"/>
+	 		<result property="stdActno" column="STD_ACTNO"/>
+	 		<result property="stdProfilePath" column="STD_PROFILE_PATH"/>
+		</association>
+		
+		<association property="professorVO" javaType="professorVO">
+			<result property="deptCd" column="DEPT_CD"/>
+		    <result property="proJbttlCd" column="PRO_JBTTL_CD"/>
+		    <result property="proJncmpYmd" column="PRO_JNCMP_YMD"/>
+		    <result property="proRsgntnYmd" column="PRO_RSGNTN_YMD"/>
+		    <result property="proLab" column="PRO_LAB"/>
+		    <result property="proLabTelno" column="PRO_LAB_TELNO"/>
+		    <result property="proNm" column="PRO_NM"/>
+		    <result property="proTelno" column="PRO_TELNO"/>
+		    <result property="sexCd" column="SEX_CD"/>
+		    <result property="proZip" column="PRO_ZIP"/>
+		    <result property="proAddr" column="PRO_ADDR"/>
+		    <result property="proDaddr" column="PRO_DADDR"/>
+		    <result property="proMail" column="PRO_MAIL"/>
+		    <result property="proBrdt" column="PRO_BRDT"/>
+		    <result property="proRrno" column="PRO_RRNO"/>
+		    <result property="bankCd" column="BANK_CD"/>
+		    <result property="proActno" column="PRO_ACTNO"/>
+		    <result property="proProfilePath" column="PRO_PROFILE_PATH"/>
+		</association>
+		
+		<association property="employeeVO" javaType="employeeVO">
+	 		<result property="empName" column="EMP_NAME"/>
+		    <result property="empMail" column="EMP_MAIL"/>
+		    <result property="empBrdt" column="EMP_BRDT"/>
+		    <result property="empJncmpYmd" column="EMP_JNCMP_YMD"/>
+		    <result property="empRsgntnYmd" column="EMP_RSGNTN_YMD"/>
+		    <result property="empTelno" column="EMP_TELNO"/>
+		    <result property="sexCd" column="SEX_CD"/>
+		    <result property="empZip" column="EMP_ZIP"/>
+		    <result property="empAddr" column="EMP_ADDR"/>
+		    <result property="empDaddr" column="EMP_DADDR"/>
+		    <result property="empRrno" column="EMP_RRNO"/>
+		    <result property="bankCd" column="BANK_CD"/>
+		    <result property="empActno" column="EMP_ACTNO"/>
+		    <result property="empProfilePath" column="EMP_PROFILE_PATH"/>
+		    <result property="empDeptCd" column="EMP_DEPT_CD"/>
+		    <result property="empJbttlCd" column="EMP_JBTTL_CD"/>
+		    <result property="empJbgdCd" column="EMP_JBGD_CD"/>
+		</association>
+		
+		<collection property="userAuthList" resultMap="authMap"/>
+	</resultMap>
+	
+  	<resultMap type="userAuthVO" id="authMap">
+<!--   		<result property="userNo" column="user_no"/> -->
+ 		<result property="userAuth" column="user_auth"/>
+  	</resultMap>
+		 
+ 
+ 
+ 	<select id="loginUser" parameterType="String" resultType="usersVO">
  		select * from users
- 		where user_no = #{userNo} and user_pw = #{userPw} and user_cls_cd = #{userClsCd}
+ 		where user_no = #{userNo} 
  	</select>
  
  	<select id="studentUser" parameterType="String" resultType="studentVO">
@@ -43,5 +123,108 @@
  		select * from employee
  		where emp_no = #{empNo}
  	</select>
+ 	
+ 	<select id="selectUserClsCd" parameterType="string" resultType="string">
+ 		select
+ 			user_cls_cd
+ 		from users
+ 		where user_no = #{userNo} 
+ 	</select>
+ 	
+ 	<select id="readByUserNo" parameterType="usersVO" resultMap="userVOmap">
+ 		select 
+		    u.user_no, user_pw, user_cls_cd, enabled,
+		    <if test="userClsCd != null and userClsCd == 'student'">
+		    STD_NO, s.DEPT_CD, STD_NM, STD_MJR_CRD, STD_CTRL_CRD, STD_MTCLTN_YR, STD_STTS_CD, STD_SEX_CD, STD_ZIP, STD_ADDR, STD_DADDR, STD_MAIL, STD_BRDT,
+    		STD_RRNO, s.BANK_CD, STD_ACTNO, STD_PROFILE_PATH
+		    </if>
+		    <if test="userClsCd != null and userClsCd == 'professor'">
+		    PRO_NO, p.DEPT_CD, PRO_JBTTL_CD, PRO_JNCMP_YMD, PRO_RSGNTN_YMD, PRO_LAB, PRO_LAB_TELNO, PRO_NM, PRO_TELNO, p.SEX_CD, PRO_ZIP, PRO_ADDR, PRO_DADDR, PRO_MAIL,
+	    	PRO_BRDT, PRO_RRNO, p.BANK_CD, PRO_ACTNO, PRO_PROFILE_PATH 
+		    </if>
+		    <if test="userClsCd != null and userClsCd == 'admin'">
+		    EMP_NO, EMP_NAME, EMP_MAIL, EMP_BRDT, EMP_JNCMP_YMD, EMP_RSGNTN_YMD, EMP_TELNO, a.SEX_CD, EMP_ZIP, EMP_ADDR, EMP_DADDR, EMP_RRNO, a.BANK_CD, EMP_ACTNO,
+    		EMP_PROFILE_PATH, EMP_DEPT_CD, EMP_JBTTL_CD, EMP_JBGD_CD
+		    </if>
+		    , user_auth
+		from users u 
+			<if test="userClsCd != null and userClsCd == 'student'">
+			    left outer join student s on(u.user_no = s.std_no)
+			</if>
+			<if test="userClsCd != null and userClsCd == 'professor'">
+			    left outer join professor p on(u.user_no = p.pro_no)
+			</if>
+			<if test="userClsCd != null and userClsCd == 'admin'">
+			    left outer join employee a on(u.user_no = a.emp_no)
+			</if>
+		    left outer join user_auth ua on(u.user_no = ua.user_no)
+		where u.user_no = #{userNo}
+ 	</select>
+ 	<!-- 아이디찾기 -->
+ 	<select id="forgetProcess" parameterType="map" resultType="String">
+ 		select 
+ 		<if test="type != null and type=='student'">
+ 			std_no
+ 			From student 
+ 			where std_nm = #{userName}
+ 			and std_brdt = #{userBd}
+ 		</if>
+ 		<if test="type != null and type=='professor'">
+ 			pro_no
+ 			From professor 
+ 			where pro_nm = #{userName}
+ 			and pro_brdt = #{userBd}
+ 		</if>
+ 		<if test="type != null and type=='employee'">
+ 			emp_no
+ 			From employee 
+ 			where emp_name = #{userName}
+ 			and emp_brdt = #{userBd}
+ 		</if>
+ 	</select>
+ 	
+ 	<!-- 계정찾기 이메일 존재하는지 일치여부확인쿼리 -->
+ 	<select id="getIsEmail" parameterType="map" resultType="int">
+ 		Select 
+		<if test="clscd != null and clscd =='student'">
+ 			Count(std_mail)
+ 			From student 
+ 			where std_no = #{userNo}
+ 			and std_mail = #{userEmail}
+ 		</if>
+ 		<if test="clscd != null and clscd =='professor'">
+ 			Count(pro_mail)
+ 			From professor 
+ 			where pro_no = #{userNo}
+ 			and pro_mail = #{userEmail}
+ 		</if>
+ 		<if test="clscd != null and clscd =='employee'">
+ 			Count(emp_mail)
+ 			From employee 
+ 			where emp_no = #{userNo}
+ 			and emp_mail = #{userEmail}
+ 		</if>
+ 	</select>
+ 	
+ 	<!-- API계정정보가져오는 쿼리 -->
+ 	<select id="getAuthInfo" parameterType="String" resultType="apiVO">
+ 		SELECT API_ID,
+ 				API_PW
+ 		FROM API
+ 		WHERE API_TYPE = #{apiType}		
+ 	</select>
+ 	<update id="updatePw" parameterType="usersVO">
+ 		UPDATE USERS
+ 		SET USER_PW = #{userPw}
+ 		WHERE USER_NO = #{userNo}
+ 	</update>
+ 	
+ 	<update id="changePassword" parameterType="map">
+ 		UPDATE USERS
+ 		SET USER_PW = #{newPw},
+ 			USER_FIRST_LOGIN = USER_FIRST_LOGIN + 1
+ 		WHERE USER_NO = #{userNo}
+ 	</update>
+ 	
  	
  </mapper>

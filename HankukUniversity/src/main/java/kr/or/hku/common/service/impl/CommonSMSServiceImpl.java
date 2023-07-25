@@ -8,11 +8,8 @@ import org.springframework.stereotype.Service;
 import kr.or.hku.ServiceResult;
 import kr.or.hku.common.service.CommonSMSService;
 import lombok.extern.slf4j.Slf4j;
-import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
-import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
-import net.nurigo.sdk.message.service.DefaultMessageService;
 
 @Slf4j
 @Service

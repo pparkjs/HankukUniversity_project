@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.hku.student.service.StudyService;
-import kr.or.hku.student.vo.RecordVO;
 import kr.or.hku.student.vo.StdCalendarVO;
 import kr.or.hku.student.vo.StudentVO;
 import kr.or.hku.student.vo.StudyVO;
@@ -32,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping(value = "/hku")
-@Transactional
+//@Transactional
 public class StudyController {
 	
 	@Inject
@@ -59,14 +57,14 @@ public class StudyController {
 	                       HttpServletRequest request) {
 
 	    StudyVO vo = new StudyVO();
-	    log.info(vo.getStudyName());
-	    log.info("" + vo.getStudyCpcy());
-	    log.info(vo.getStudyIntro());
+//	    log.info(vo.getStudyName());
+//	    log.info("" + vo.getStudyCpcy());
+//	    log.info(vo.getStudyIntro());
 	   
 	    HttpSession session = request.getSession();
 	    StudentVO stdVo = (StudentVO) session.getAttribute("std");
 //	    log.info("현재 로그인 정보: " + stdVo.getStdNo());
-	    log.info("현재 로그인 정보: " + stdVo.getStdNo());
+//	    log.info("현재 로그인 정보: " + stdVo.getStdNo());
 
 	    vo.setStudyName(studyName);
 	    vo.setStudyCpcy(studyCpcy);
@@ -88,7 +86,7 @@ public class StudyController {
 		List<StudyVO> studyMem = service.studyMem(studyNo);
 		for (StudyVO vo : studyMem) {
 			String role = vo.getStudyRole();
-			log.info("role check: " + role);
+//			log.info("role check: " + role);
 		}
 		// 가입신청 대기중인 멤버목록
 		List<StudyVO> appli = service.applicationsList(studyNo);
@@ -109,7 +107,7 @@ public class StudyController {
 	@ResponseBody
 	@GetMapping("/student/scheduleList")
 	public ResponseEntity<List<StudyVO>> scheduleList(@RequestParam("stdNo") String stdNo) {
-		log.info("stdNo: " + stdNo);
+//		log.info("stdNo: " + stdNo);
 		// 시간표 리스트 출력
 		StudyVO vo = new StudyVO();
 		vo.setStdNo(stdNo);
@@ -170,8 +168,12 @@ public class StudyController {
 	@ResponseBody
 	@GetMapping(value="/student/messageList")
 	public ResponseEntity<List<StudyVO>> messageList(@RequestParam("studyNo") int studyNo, @RequestParam("stdNo") String stdNo) {
-	    // 해당 방의 메시지 리스트 가져오기
+//	    log.info("msgList실행!");
+		// 해당 방의 메시지 리스트 가져오기
 	    List<StudyVO> list = service.messageList(studyNo); 
+	    for(int i = 0; i< list.size(); i++) {
+//	    	log.info("msgList: " + list);
+	    }
 	    // userId 는 안읽은 메시지 처리 위해서 받아온건데 1:1이 아니라 멀티 채팅방일때 생각중
 	    return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
 	}
@@ -187,14 +189,14 @@ public class StudyController {
 	@ResponseBody
 	@GetMapping("/student/study-calendar")
 	public List<StdCalendarVO> getStdCalList(@RequestParam Map<String, String> map){
-		log.info("캘리더 정보 가져오기" + map.toString());
+//		log.info("캘리더 정보 가져오기" + map.toString());
 		return service.getStdCalList(map);
 	}
 	
 	@ResponseBody
 	@PutMapping("/student/study-calendar")
 	public int updateStdCalList(@RequestBody StdCalendarVO stdCalendarVO){
-		log.info("캘리더 수정" + stdCalendarVO.toString());
+//		log.info("캘리더 수정" + stdCalendarVO.toString());
 		return service.updateStdCalList(stdCalendarVO);
 	}
 	
@@ -202,7 +204,7 @@ public class StudyController {
 	@ResponseBody
 	@PostMapping("/student/study-calendar")
 	public StdCalendarVO addStdCalList(@RequestBody StdCalendarVO stdCalendarVO){
-		log.info("캘리더 저장" + stdCalendarVO.toString());
+//		log.info("캘리더 저장" + stdCalendarVO.toString());
 		int res = service.addStdCalList(stdCalendarVO);
 		return stdCalendarVO;
 	}
@@ -210,7 +212,7 @@ public class StudyController {
 	@ResponseBody
 	@DeleteMapping("/student/study-calendar")
 	public int deleteCalendar(@RequestBody Map<String, String> map) {
-		log.info("삭제 할떄 하는 데이터 " + map.toString());
+//		log.info("삭제 할떄 하는 데이터 " + map.toString());
 		
 		int res = service.deleteStdCalendar(map);
 		

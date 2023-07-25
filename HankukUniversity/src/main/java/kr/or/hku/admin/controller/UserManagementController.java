@@ -346,6 +346,7 @@ public class UserManagementController {
 		if(status > 0) {
 			redirectAttribute.addFlashAttribute("ilgualStatus", "1");
 		}
+		session.removeAttribute("excelInsList");
 		
 		return "redirect:/hku/admin/user-management";
 	}

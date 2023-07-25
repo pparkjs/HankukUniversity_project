@@ -15,16 +15,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.service.AssignmentService;
 import kr.or.hku.classroom.service.AttendanceService;
 import kr.or.hku.classroom.service.ClassroomService;
+import kr.or.hku.classroom.service.LectureNoticeService;
 import kr.or.hku.classroom.vo.AssignmentVO;
 import kr.or.hku.classroom.vo.AttendanceVO;
 import kr.or.hku.classroom.vo.ClassroomVO;
+import kr.or.hku.classroom.vo.LectureNoticeVO;
 import kr.or.hku.common.service.CommonFileService;
 import kr.or.hku.common.vo.AttachFileVO;
 import kr.or.hku.student.vo.StudentVO;
@@ -47,12 +48,13 @@ public class StdClassroomController {
 	@Autowired
 	private CommonFileService fileService;
 	
+	@Autowired
+	private LectureNoticeService noticeService;
 	
 	// 클래스룸 리스트 
 	@GetMapping("/stdClassroomList")
 	public String classroomList(Model model, HttpServletRequest request) {
 		log.info("classroomList 실행 !");
-		
 		HttpSession session = request.getSession();
 		StudentVO stdVo = (StudentVO) session.getAttribute("std");
 		List<ClassroomVO> list = classService.stdSelectList(stdVo.getStdNo());
@@ -80,9 +82,11 @@ public class StdClassroomController {
 		// 공지사항, 과제, 출석 정보를 맵에 담은 변수를 통해 가져옴 
 		List<AssignmentVO> list = classService.stdMainAssignList(map);
 		List<AttendanceVO> attendList = classService.getMyAttendance(map);
+		List<LectureNoticeVO> noticeList = noticeService.getNoticeList(lecapNo);
 		log.info("list!!!!!!!=>" + list.toString());
 		model.addAttribute("list", list);
 		model.addAttribute("attendList", attendList);
+		model.addAttribute("noticeList", noticeList);
 		return "student/classroomMain";
 	}
 	
@@ -218,5 +222,23 @@ public class StdClassroomController {
 		return null;
 	}
 	
+	@GetMapping("/noticeList")
+	public String noticeList(HttpSession session, Model model) {
+		String lecapNo = session.getAttribute("lecapNo").toString();
+		List<LectureNoticeVO> noticeList = noticeService.getNoticeList(lecapNo);
+		model.addAttribute("noticeList", noticeList);
+		return "student/lectureNoticeList";
+	}
+	
+	//학생클래스룸 공지상세 페이지
+		@GetMapping("/detailNotice/{lecntNo}")
+		public String detailNotice(@PathVariable int lecntNo,Model model) {
+			LectureNoticeVO noticeVO = noticeService.getNotcieDetail(lecntNo);
+			List<AttachFileVO> fileList = fileService.getFileList(noticeVO.getAtchFileNo());
+			noticeVO.setFileList(fileList);
+			log.info("디테일가져왔냐!!!!!"+noticeVO.toString());
+			model.addAttribute("noticeVO",noticeVO);
+			return "student/lectureNoticeDetail";
+		}
 	
 }
