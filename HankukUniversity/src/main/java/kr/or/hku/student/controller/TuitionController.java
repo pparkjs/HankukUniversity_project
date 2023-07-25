@@ -78,15 +78,15 @@ public class TuitionController {
         ResponseEntity<byte[]> entity = null;
         log.info("preload() 실행...!");
         log.info("preload : " + URLEncoder.encode(preload, "UTF-8").toString());
-        try { 
+        try {
         	in = new FileInputStream(preload);
         	headers.setContentType(MediaType.APPLICATION_PDF); 
         	entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
-        } catch (Exception e) { 
+        } catch (Exception e) {
         	e.printStackTrace(); 
         	entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST); 
         }
-        return entity; 
+        return entity;
 	}
 	
 	@GetMapping("/tuition-bill")

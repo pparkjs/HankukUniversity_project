@@ -1,0 +1,117 @@
+@charset "UTF-8";
+
+.card {
+    margin-bottom: 0px;
+}
+.card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #800000;
+}
+.card-header {
+	padding: 0.5rem 1.25rem 1.25rem;
+}
+.content-body .cc {
+    padding-top: 0.5rem;
+}
+.card-body {
+    padding: 0.5rem 1.25rem;
+}
+
+.myInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 18px;
+}
+.deptText, .noText, .yearText, .nameText, .semText {
+    width: 100px;
+    height: 35px;
+    margin-right: 60px;
+    background: whitesmoke;
+    color: #6e6e6e;
+    font-size: 16px;
+    border-radius: 0.375rem;
+}
+.deptText {
+    padding-left: 15px;
+    width: 200px;
+}
+.noText {
+    padding-left: 15px;
+    width: 160px;
+}
+.nameText {
+    padding-left: 15px;
+    width: 150px;
+}
+.yearText {
+    padding-left: 15px;
+    width: 95px;
+}
+.semText {
+    padding-left: 15px;
+    width: 80px;
+}
+
+.tb-wrap {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+/* #tutTable td {
+    border: 1px solid white;
+    height: 20px;
+} */
+#certifiTable {
+    width: 100%;
+}
+#certifiTable thead th {
+    background: #800000;
+    border: 1px solid white;
+    color: white;
+    height: 45px;
+}
+#certifiTable tbody td, #certifiTable thead td {
+    background: #e1e2e3;
+    border: 1px solid white;
+    color: black;
+    height: 45px;
+}
+#certifiTable .tt {
+    background: #800000;
+    border: 1px solid white;
+    color: white;
+    height: 45px;
+}
+
+#certifiIssuTable {
+    width: 100%;
+    margin: 0 auto;
+}
+#certifiIssuTable thead th {
+    background: #800000;
+    border: 1px solid white;
+    color: white;
+    height: 45px;
+}
+#certifiIssuTable tbody td, #certifiIssuTable thead td {
+    background: #e1e2e3;
+    border: 1px solid white;
+    color: black;
+    height: 45px;
+}
+.cerIssu-wrap {
+    /* height: 300px;
+    overflow: scroll; */
+    text-align: center;
+}
+
+.uu {
+    margin-left: 20px;
+    font-weight: 600;
+    color: #000;
+}
+h5 {
+    font-weight: 700;
+}

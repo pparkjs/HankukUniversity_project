@@ -176,7 +176,8 @@
 					<span class="nav-text">증명서</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">증명서 발급</a></li>
+					<li><a href="/hku/certificate">증명서 발급</a></li>
+					<li><a href="/hku/certificate-list">증명서 발급 내역</a></li>
 				</ul>
 			</li>
 	</sec:authorize>
