@@ -123,6 +123,36 @@
 	<!-- DELETE FROM assignment -->
 	<!-- WHERE asm_pro_nm = #{proNo} -->
 	<!-- </delete> -->
-
+	
+	
+	<!-- 학생 과제 상세보기  -->
+	<select id="stdAssignDetail" parameterType="assignmentVO" resultType="assignmentVO">
+		 SELECT
+			  a.asm_no as asm_no
+			, a.lecap_no as lecap_no
+			, a.asm_week as asm_week
+			, a.asm_ttl as asm_ttl
+			, a.asm_cn as asm_cn
+			, a.asm_pro_nm as asm_pro_nm
+			, a.asm_regdate as asm_regdate
+			, a.atch_file_no as atch_file_no	
+			, d.dept_nm as dept_nm
+            , s.std_nm as std_nm
+		FROM assignment a  
+        JOIN assignment_submit b ON b.asm_no = a.asm_no
+        JOIN student s ON s.std_no = b.std_no
+        JOIN department d ON d.dept_cd = s.dept_cd
+		WHERE a.asm_no  = #{asmNo}
+        AND s.std_no = #{stdNo}
+	</select>
+	
+	<update id="assignmentSubmit" parameterType="assignmentVO">
+		UPDATE assignment_submit 
+		SET avl_code = 'Y'
+			, atch_file_no = #{atchFileNo}
+			, asmsb_dt = sysdate
+		WHERE std_no = #{stdNo}
+		AND asm_no = #{asmNo}
+	</update>
 
 </mapper>
