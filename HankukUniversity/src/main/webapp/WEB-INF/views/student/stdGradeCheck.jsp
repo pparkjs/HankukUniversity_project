@@ -34,7 +34,7 @@
             
             </div>
         </div>
-        <div  style="width:100%; margin-bottom: 0.563rem;">
+        <div  style="width:100%; margin-bottom: 0.563rem; height:300px; background: white;">
         	<table id="gradeTable" style="width:100%">
 		        <thead>
 				    <tr>
@@ -404,6 +404,9 @@ $('#submitBtn').on("click",function(){
 			            grdDmrCn : grdDmrCn,
 			            lecapNo : lecapNo
 			        },
+			        beforeSend : function(xhr){
+			        	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); 
+			        	},
 			        success: function (res) {
 			        	  swal("신청이 정상적으로 완료되었습니다.", {
 			    		      icon: "success"
@@ -511,7 +514,9 @@ $(document).ready(function() {
 		            lecevAns4 : lecevAns4,
 		            lecevAns5 : lecevAns5,
 		            lecevOverallOpinion : lecevOverallOpinion
-		        },
+		        },beforeSend : function(xhr){
+		        	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); 
+	        	},
 		        success: function (res) {
 		        	  swal("강의평가 완료", {
 		    		      icon: "success"

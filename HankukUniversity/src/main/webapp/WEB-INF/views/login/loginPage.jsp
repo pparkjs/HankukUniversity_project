@@ -5,6 +5,8 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.1.18/jquery.backstretch.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <meta charset="UTF-8">
     <title>Insert title here</title>
     <style>
@@ -235,13 +237,14 @@
         </tr>
         <tr id="trthree">
             <td colspan="2">
-                <a href="#">계정이 기억나지않으시나요?</a>
+                <a href="" onclick="forget()" >계정이 기억나지않으시나요?</a>
             </td>
         </tr>
     </table>
      <sec:csrfInput/>
   </form>
 </body>
+
 <script type="text/javascript">
     $.backstretch(['/images/login/imgSub135000_01.jpg',
         '/images/login/imgSub340000_01.jpg',
@@ -273,7 +276,15 @@
             //     			logo.classList.remove("show");
         }
     })
+    
+    function forget(){
+    	event.preventDefault();
+    	window.open("/main/forget","_blank","width=400,height=450,left=600,top=350");
+    }
 
+    if(location.href.includes("?error")){
+        swal("올바르지않은 접근입니다.");
+    }
 </script>
 
 </html>

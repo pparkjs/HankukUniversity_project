@@ -56,8 +56,6 @@
                   <div class="card-footer" style="height:85px;" >
                  	<div style="float:right;">
                      <button type="button" id="canBtn" class="btn btn-primary">목록</button>
-                     <button type="button" id="modifyBtn" class="btn btn-info">수정</button>
-                     <button type="button" id="deleteBtn" class="btn btn-danger">삭제</button>
                   	</div>
                   </div>
                   <sec:csrfInput/>
@@ -82,17 +80,9 @@
 // }
 	var lecntNo = $('#lecntNo').val();
 
-$('#modifyBtn').click(function(){
-	
-	location.href="/hku/professor/noticemodForm/"+lecntNo;
-	
-})
 
 $('#canBtn').click(function(){
-	location.href="/hku/professor/noticeList";
-})
-$('#deleteBtn').click(function(){
-	location.href="/hku/professor/deleteNotice/"+lecntNo;
+	location.href="/hku/student/noticeList";
 })
 
 </script>
