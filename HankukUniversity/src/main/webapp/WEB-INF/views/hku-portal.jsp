@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,8 +30,12 @@
   text-align: center;
   background-color: #18bc9c;
 }
-
 </style>
+<c:if test="${not empty first}">
+	<script type="text/javascript">
+	myWindow = window.open("/main/changePopup","_blank","width=400,height=450,left=650,top=350");
+	</script>
+</c:if>
 <body>
     <div class="main_wrap">
         <div class="main_inner">
@@ -285,6 +290,7 @@
     </div>
 </body>
 <script>
+var myWindow;
 $(document).ready(function(){
     var grid = GridStack.init({ // 여기에 그리드 스택 옵션 삽입
         disableOneColumnMode: true, // jfidle 작은 창 크기용
@@ -362,5 +368,10 @@ $(document).ready(function(){
     			
 		toastr.success('화면 설정이 저장되었습니다.');
     });
+    
+    myWindow.onbeforeunload = function() {
+    	location.href="/main/logout";
+    };
+    
 });
 </script>
