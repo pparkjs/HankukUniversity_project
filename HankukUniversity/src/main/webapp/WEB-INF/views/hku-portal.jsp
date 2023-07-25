@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,6 +82,11 @@
 /*  	background: black;  */
 }
 </style>
+<c:if test="${not empty first}">
+	<script type="text/javascript">
+	myWindow = window.open("/main/changePopup","_blank","width=400,height=450,left=650,top=350");
+	</script>
+</c:if>
 <body>
     <div class="main_wrap">
         <div class="main_inner">
@@ -240,5 +246,11 @@ refresh.addEventListener("click", function() {
     clearInterval(x); 
     time = 10799; 
     x = setInterval(updateTimer, 1000); 
+});
+var myWindow;
+$(document).ready(function(){
+    myWindow.onbeforeunload = function() {
+    	location.href="/main/logout";
+    };
 });
 </script>

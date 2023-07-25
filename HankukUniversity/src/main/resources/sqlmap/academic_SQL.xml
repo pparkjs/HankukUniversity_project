@@ -43,6 +43,7 @@
 		FROM department
 		WHERE 1=1
 		<include refid="deptSearch"></include>
+		ORDER BY 1
  	</select>
  	
  	<select id="selectDept" parameterType="String" resultType="departmentVO">

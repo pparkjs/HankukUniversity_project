@@ -12,4 +12,6 @@ public interface TuitionMapper {
 
 	public List<TuitionVO> selectTuitionList(StudentVO vo);
 
+	public TuitionVO selectTuition(String stdNo);
+
 }

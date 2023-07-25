@@ -20,9 +20,6 @@
 					<h4 class="card-title" 
 						style="font-weight: bold; font-size: 1.2em; color: #800000;">
 						${subNm} 공지사항</h4>
-						<button type="button" id="regBtn"
-						style="padding: 0.5rem 1.0rem; width: 80px; "
-						class="btn btn-primary">글쓰기</button>
 				</div>
 				<div class="card-body ccc" style="padding-top: 0; height:40%;">
 					<div class="table-wrap" style="margin-top: 10px;">
@@ -65,12 +62,6 @@
 </body>
 <script type="text/javascript">
 
-
-	
-$('#regBtn').click(function(){
-	location.href = "/hku/professor/noticeform";
-})
-	
 $('#searchBtn').click(function(){
 	var searchWord = $('#searchWord').val();
 	console.log(searchWord);
@@ -110,7 +101,7 @@ $('#searchBtn').click(function(){
 $('#noticeTb').on('click','tr',function(){
 	var lecntNo = $(this).find('#lecntNo').val();
 	console.log(lecntNo);
-	location.href= "/hku/professor/detailNotice/"+lecntNo;
+	location.href= "/hku/student/detailNotice/"+lecntNo;
 })
 
 

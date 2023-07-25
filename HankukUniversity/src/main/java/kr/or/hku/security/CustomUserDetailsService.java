@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.hku.login.mapper.LoginMapper;
 import kr.or.hku.login.vo.CustomUser;
@@ -24,13 +26,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		String password = "1234";
-		System.out.println("### 인코딩한 비밀번호를 확인합니다. ### : " + pe.encode(password));
-		log.debug("### 인코딩한 비밀번호를 확인합니다. ### : " + pe.encode(password));
-		log.debug("### 인코딩한 비밀번호를 확인합니다. ### : " + pe.encode(password));
-		log.debug("### 인코딩한 비밀번호를 확인합니다. ### : " + pe.encode(password));
-		log.debug("### 인코딩한 비밀번호를 확인합니다. ### : " + pe.encode(password));
-		log.debug("### 인코딩한 비밀번호를 확인합니다. ### : " + pe.encode(password));
 		log.info("load User by username : " + username);
 		
 		// userName은 사용자명이 아니라 사용자 아이디를 의미한다.
@@ -42,6 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 			uVO.setUserNo(username);
 			uVO.setUserClsCd(clsCd);
 			user = loginMapper.readByUserNo(uVO);
+			
 			log.info("query by member mapper : " + user);
 			return user == null ? null : new CustomUser(user);
 		} catch (Exception e) {

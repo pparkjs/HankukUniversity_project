@@ -156,6 +156,8 @@ $(document).ready(function() {
         method: 'get',
         data: {
             proNo: ${pro.proNo}
+        },beforeSend : function(xhr){
+            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
         },
         success: function (res) {
         	console.log(res);
@@ -232,6 +234,9 @@ $('.myTd').click(function(){
 		url: '/hku/professor/setRestTable',
         type: 'post',
         async:false,
+        beforeSend : function(xhr){
+            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
         contentType : "application/json;charset=utf-8",
         data:JSON.stringify(data),
         success: function (res) {
@@ -269,6 +274,9 @@ $('.myTd').click(function(){
         type: 'post',
         contentType : "application/json;charset=utf-8",
         async:false,
+        beforeSend : function(xhr){
+            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
         data:JSON.stringify(data2),
         success: function (res) {
         	console.log(res);
@@ -310,6 +318,9 @@ $('#submitBtn').click(function(){
 			        type: 'post',
 			        contentType : "application/json;charset=utf-8",
 			        data:JSON.stringify(data),
+			        beforeSend : function(xhr){
+                        xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                    },
 			        success: function (res) {
 			          swal("휴강 신청이 완료되었습니다.");
 			          $('#inDay').val('');
@@ -353,7 +364,9 @@ $('#submitBtn').click(function(){
 // 				        contentType : "application/json;charset=utf-8",
 				        data:{
 				        	subclNo : subclNo
-				        	},
+				        	},beforeSend : function(xhr){
+                                xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                            },
 				        success: function (res) {
 				        
 				          swal("휴강 신청이 취소되었습니다.");

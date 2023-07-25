@@ -175,6 +175,7 @@
 <form action="/hku/portal/notice-detail" method="get" id="detailFrm">
 	<input type="hidden" name="noticeNo" id="dNoticeNo">
 	<input type="hidden" name="noticeDiv" id="dNoticeDiv">
+	<sec:csrfInput/>
 </form>
 <script>
 $(function(){

@@ -5,8 +5,28 @@
  <mapper namespace="kr.or.hku.student.mapper.TuitionMapper">
  	<select id="selectTuitionList" parameterType="studentVO" resultType="tuitionVO">
  		SELECT
+		    a.tut_no
+		    ,a.std_no
+		    ,a.tut_yr
+		    ,a.tut_sem
+		    ,a.tut_amt
+		    ,a.tut_scls_amt
+		    ,a.bank_cd
+		    ,b.com_cd_nm as bank_nm
+		    ,a.tut_pay_actno
+		    ,NVL(a.tut_pay_dt,'-') as tut_pay_dt
+		    ,a.avl_cd
+		FROM
+		    tuition a inner join com_code b on(a.bank_cd=b.com_cd)
+		WHERE
+		    std_no = #{stdNo}
+<!-- 		AND  -->
+<!-- 			a.avl_cd = 'Y' -->
+ 	</select>
+ 	
+ 	<select id="selectTuition" parameterType="string" resultType="tuitionVO">
+ 		SELECT 
 		    tut_no
-		    ,std_no
 		    ,tut_yr
 		    ,tut_sem
 		    ,tut_amt
@@ -14,10 +34,10 @@
 		    ,bank_cd
 		    ,tut_pay_actno
 		    ,tut_pay_dt
-		    ,avl_cd
-		FROM 
+		FROM
 		    tuition
 		WHERE 
 		    std_no = #{stdNo}
+		AND avl_cd = 'N'
  	</select>
  </mapper>

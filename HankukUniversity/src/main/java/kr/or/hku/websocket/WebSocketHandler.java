@@ -58,8 +58,18 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		// 해당 유저가 속해있는 채팅방이 있는 경우만 실행
 		if(list != null) {
 			for (StudyVO study : list) {
-				ArrayList<WebSocketSession> userList = new ArrayList<>();
-				roomList.put(study.getStudyNo(), userList);
+				log.info("룸리스트!!"+roomList);
+				if(roomList.isEmpty()) {
+					log.info("룸리스트 체킁"+roomList);
+					ArrayList<WebSocketSession> userList = new ArrayList<>();
+					roomList.put(study.getStudyNo(), userList);
+				}else {
+					if(roomList.get(study.getStudyNo()) == null) {
+						log.info("룸리스트 체킁2"+roomList);
+						ArrayList<WebSocketSession> userList = new ArrayList<>();
+						roomList.put(study.getStudyNo(), userList);
+					}
+				}
 			}
 		}
 		
@@ -147,16 +157,20 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		// userName=박정수, userId=a123, unReadCount=0, type=msg]
 		StudyVO studyVo = objectMapper.readValue(msg, StudyVO.class);
 		
+		log.info("스터디브이오 : " + studyVo);
+		
 		// 해당 채팅방 인원수 가져오기
 		int memCnt = service.getMemberCount(studyVo.getStudyNo());
 		studyVo.setUnreadMsgCnt(memCnt);
 		
+		log.info("채팅방에 총 몇명? : " + memCnt);
 		int studyNo = studyVo.getStudyNo(); // study 방번호
 		String userId = getUserId(session); // userId
 		
 		// 해당 유저가 속해있는 채팅방 가져오기
 		List<StudyVO> list = getRoomListById(userId);
-				
+		
+		log.info("유저가 속해있는 방! : " + list);
 		// 방에 입장 시 해당 방에 세션 추가
 		if(studyVo.getType().equals("enter-room")) {
 			
@@ -164,18 +178,19 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
 			// 해당 유저가 속해있는 방이 존재하는 경우만 실행
 			if(list != null) {
-				for (StudyVO study : list) {
-						// roomList에 내가 속해있는 모든방에 나의 session 삭제
-						log.info(""+study.getStdNo());
-						roomList.get(study.getStudyNo()).remove(session);
-				}
+				log.info("안녕");
+//				for (StudyVO study : list) {
+//						// roomList에 내가 속해있는 모든방에 나의 session 삭제
+////						log.info(""+study.getStdNo());
+//						roomList.get(study.getStudyNo()).remove(session);
+//				}
 				roomList.get(studyNo).add(session); // 방에 들어온 유저 세션리스트에 세션 추가
 			}
 			//------------------------------------------------------------------------------
 			
 			System.out.println();
 			System.out.println("방 접속 후 roomList 상태 : " + roomList);
-			for(int i = 14; i <= 17; i++) {
+			for(int i = 28; i <= 28; i++) {
 				if(roomList.get(i) != null) {
 					for(int j = 0; j < roomList.get(i).size(); j++) {
 						System.out.println(i + "번방에 들어있는 유저(접속 후 상태) session["+j+"] : " + roomList.get(i).get(j));
@@ -183,28 +198,28 @@ public class WebSocketHandler extends TextWebSocketHandler {
 				}
 			}
 			
-			// 해당 RoomList에 들어온 사람이 2명이면 sessionCount = 2;
-			for (WebSocketSession sess : roomList.get(studyNo)) {
-				String stdNo = userSessionMap.get(sess);
-				studyVo.setStdNo(stdNo);
-				
-				// 해당 방에 채팅 메시지 안읽은 개수 가져오기
-				List<Integer> msgIdList = service.getUnreadCntByUser(studyVo);
-				for (Integer msgId : msgIdList) {
-					studyVo.setMsgNo(msgId);
-					// 방안에서 해당 messageId에대한  메시지 읽음 카운트 -1 처리 
-					service.readMessageInRoom(studyVo);
-				}
-			}
-			
-			// 채팅방에 들어오면 읽음 처리 하기
-			service.readChatMessage(studyVo);
-			
-			// 현재 들어와 있는 모든 세션에게 reload 메시지 전송 (메시지 채팅방목록 ajax 다시 뿌리기 위함)
-			TextMessage tMsg = new TextMessage("reload");
-			for(WebSocketSession sess : sessionList) {
-				sess.sendMessage(tMsg);
-			}
+//			// 해당 RoomList에 들어온 사람이 2명이면 sessionCount = 2;
+//			for (WebSocketSession sess : roomList.get(studyNo)) {
+//				String stdNo = userSessionMap.get(sess);
+//				studyVo.setStdNo(stdNo);
+//				
+//				// 해당 방에 채팅 메시지 안읽은 개수 가져오기
+//				List<Integer> msgIdList = service.getUnreadCntByUser(studyVo);
+//				for (Integer msgId : msgIdList) {
+//					studyVo.setMsgNo(msgId);
+//					// 방안에서 해당 messageId에대한  메시지 읽음 카운트 -1 처리 
+//					service.readMessageInRoom(studyVo);
+//				}
+//			}
+//			
+//			// 채팅방에 들어오면 읽음 처리 하기
+//			service.readChatMessage(studyVo);
+//			
+//			// 현재 들어와 있는 모든 세션에게 reload 메시지 전송 (메시지 채팅방목록 ajax 다시 뿌리기 위함)
+//			TextMessage tMsg = new TextMessage("reload");
+//			for(WebSocketSession sess : sessionList) {
+//				sess.sendMessage(tMsg);
+//			}
 			
 		}
 		// 채팅 메세지 입력 시
@@ -221,6 +236,18 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
 			for (WebSocketSession sess : roomList.get(studyNo)) {
 				sessionCount++;
+			}
+			log.info("현재 세션수: "+sessionCount);
+			log.info("읽음 계산도 해보자 : " +  (studyVo.getUnreadMemCnt()-memCnt));
+			
+			System.out.println();
+			System.out.println("방 접속 후 roomList 상태 : " + roomList);
+			for(int i = 28; i <= 28; i++) {
+				if(roomList.get(i) != null) {
+					for(int j = 0; j < roomList.get(i).size(); j++) {
+						System.out.println(i + "번방에 들어있는 유저(접속 후 상태) session["+j+"] : " + roomList.get(i).get(j));
+					}
+				}
 			}
 			
 //			// 메세지에 이름, 아이디, 내용을 담는다.
@@ -250,16 +277,17 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			System.out.println(studyNo + "방에 들어온 세션 수" + sessionCount);
 	
 			// 메시지 전송 시 마다 현재 들어와 있는 모든 세션에게 reload 메시지 전송 (메시지 채팅방목록 ajax 다시 뿌리기 위함)
-			TextMessage tMsg = new TextMessage("reload");
-			for(WebSocketSession sess : sessionList) {
-				sess.sendMessage(tMsg);
-			}
+//			TextMessage tMsg = new TextMessage("reload");
+//			for(WebSocketSession sess : sessionList) {
+//				sess.sendMessage(tMsg);
+//			}
 
 		}
 		// 닫기 버튼 눌를 시
 		else if(studyVo.getType().equals("close-room")) {
 			// roomList에 내가 속해있던 방에 나의 session 삭제
 			roomList.get(studyNo).remove(session);
+			log.info("채팅방 나갔어요!", roomList.get(studyNo));
 		} 
 	}
 

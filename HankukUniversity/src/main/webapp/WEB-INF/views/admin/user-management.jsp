@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 	<link rel="stylesheet" href="/css/admin/userManage.css">
 	<link rel="stylesheet" type="text/css" href="/icons/flaticon/flaticon.css">
 	<link rel="stylesheet" href="/css/table.css">
@@ -74,7 +75,7 @@
 									</select>
 								</div>
 								<div class="col-md-4 ilgualdngrok">
-									<form action="/hku/admin/insertUserExcel" class="input-group" id="excelForm" method="POST" enctype="multipart/form-data">
+									<form action="/hku/admin/insertUserExcel?${_csrf.parameterName}=${_csrf.token}" class="input-group" id="excelForm" method="POST" enctype="multipart/form-data">
 										<input class="form-control" type="file" id="formFile" name="formFile">
 										<span class="input-group-append">
 											<button type="button" onclick="poiInsert()" class="btn btn-primary btn-flat">일괄등록</button>
@@ -91,110 +92,7 @@
 						<form class="profile-form">
 							<div class="card-body user-insert-form">
 								<div class="row" id="insertFormDisp">
-									<!-- <div class="col-sm-4 mbKYW">
-										<label class="form-label lmbKYW">교번</label>
-										<input type="text" class="form-control" id="userNo" placeholder="학번을 입력해주세요">
-									</div>
-									<div class="col-sm-4 mbKYW">
-										<label class="form-label lmbKYW">이름</label>
-										<input type="text" class="form-control" id="userNm" placeholder="이름을 입력해주세요">
-									</div>
-									<div class="col-sm-4 mbKYW">
-										<label class="form-label lmbKYW">부서</label>
-										<select class="default-select form-control" id="empDeptCd">
-											<option value="">Please select</option>
-											<c:forEach items="${commonList}" var="common">
-												<c:if test="${common.comCdGrp eq 'EMP_DEPT' }">
-													<option value="${common.comCd }">${common.comCdNm }</option>
-												</c:if>
-											</c:forEach>
-										</select>
-									</div>
-									<div class="col-sm-3 mbKYW">
-										<label class="form-label lmbKYW">생년월일</label>
-										<input type="text" class="form-control" id="userBrdt" placeholder="생년월일을 입력해주세요(8자리)">
-									</div>
-									<div class="col-sm-3 mbKYW">
-										<label class="form-label lmbKYW">주민등록번호</label>
-										<input type="text" class="form-control" id="userRrno" placeholder="주민등록번호를 입력해주세요">
-									</div>
-									<div class="col-sm-2 mbKYW">
-										<label class="form-label lmbKYW">성별</label>
-										<select class="default-select form-control" id="sexCd">
-											<option value="">Please select</option>
-											<c:forEach items="${commonList}" var="common">
-												<c:if test="${common.comCdGrp eq 'SEX' }">
-													<option value="${common.comCd }">${common.comCdNm }</option>
-												</c:if>
-											</c:forEach>
-										</select>
-									</div>
-									<div class="col-sm-4 mbKYW">
-										<label class="form-label lmbKYW">연락처</label>
-										<input type="text" class="form-control" id="userTelno" placeholder="'-'빼고 입력해주세요">
-									</div>
-									<div class="col-sm-4 mbKYW">
-										<label class="form-label lmbKYW">입사일</label>
-										<input type="date" class="form-control" id="empJncmpYmd" placeholder="입사일을 입력해주세요">
-									</div>
-									<div class="col-sm-4 mbKYW">
-										<label class="form-label lmbKYW">직급</label>
-										<select class="default-select form-control" id="empJbttlCd">
-											<option value="">Please select</option>
-											<c:forEach items="${commonList}" var="common">
-												<c:if test="${common.comCdGrp eq 'EMP_POSITION' }">
-													<option value="${common.comCd }">${common.comCdNm }</option>
-												</c:if>
-											</c:forEach>
-										</select>
-									</div>
-									<div class="col-sm-4 mbKYW">
-										<label class="form-label lmbKYW">직책</label>
-										<select class="default-select form-control" id="empJbgdCd">
-											<option value="">Please select</option>
-											<c:forEach items="${commonList}" var="common">
-												<c:if test="${common.comCdGrp eq 'EMP_TITLE' }">
-													<option value="${common.comCd }">${common.comCdNm }</option>
-												</c:if>
-											</c:forEach>
-										</select>
-									</div>
-									<div class="col-sm-4 mbKYW">
-										<label class="form-label lmbKYW">이메일</label>
-										<input type="text" class="form-control" id="userMail" placeholder="이메일을 입력해주세요">
-									</div>
-									<div class="col-sm-4 mbKYW">
-										<label class="form-label lmbKYW">은행</label>
-										<select class="default-select form-control" id="bankCd">
-											<option value="">Please select</option>
-											<c:forEach items="${commonList}" var="common">
-												<c:if test="${common.comCdGrp eq 'BANK' }">
-													<option value="${common.comCd }">${common.comCdNm }</option>
-												</c:if>
-											</c:forEach>
-										</select>
-									</div>
-									<div class="col-sm-4 mbKYW">
-										<label class="form-label lmbKYW">계좌번호</label>
-										<input type="text" class="form-control" id="userActno" placeholder="계좌번호를 입력해주세요">
-									</div>
-									<div class="col-sm-4 mbKYW">
-										<label class="form-label lmbKYW">우편번호</label>
-										<div class="input-group">
-											<input type="text" class="form-control" id="userZip" placeholder="우편변호를 입력해주세요" readonly>
-											<span class="input-group-append">
-												<button type="button" onclick="DaumPostcode()" class="btn btn-primary btn-flat">우편번호 찾기</button>
-											</span>
-										</div>
-									</div>
-									<div class="col-sm-4 mbKYW">
-										<label class="form-label lmbKYW">기본주소</label>
-										<input type="text" class="form-control" id="userAddr" placeholder="기본주소를 입력해주세요" readonly>
-									</div>
-									<div class="col-sm-4 mbKYW">
-										<label class="form-label lmbKYW">상세주소</label>
-										<input type="text" class="form-control" id="userDaddr" placeholder="상세주소를 입력해주세요">
-									</div> -->
+									
 								</div>
 							</div>
 						</form>
@@ -940,6 +838,7 @@ function userModify(param){
 			dataType: "text",
 			processData: false,
 			contentType: false,
+			beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 			success: function(res){
 // 				alert("수정 잘 갔다옴");
 				studentsSet();
@@ -994,6 +893,7 @@ function userModify(param){
 			dataType: "text",
 			processData: false,
 			contentType: false,
+			beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 			success: function(res){
 				professorsSet();
 				swal({
@@ -1046,6 +946,7 @@ function userModify(param){
 			dataType: "text",
 			processData: false,
 			contentType: false,
+			beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 			success: function(res){
 				adminsSet();
 				swal({
@@ -1080,6 +981,7 @@ function userDetail(target){
 		data: JSON.stringify(userData),
 		dataType: "JSON",
 		contentType: 'application/json;charset=UTF-8',
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res) {
 			// alert("상세 성공")
 			// console.log(res);
@@ -1291,6 +1193,7 @@ function usersSet(){
 		dataType: "JSON",
 		// processData: false,
 		contentType: "application/json;charset=UTF-8",
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res) {
 			var users = $("#users");
 			var tblStr = "";
@@ -1360,6 +1263,7 @@ function adminsSet(){
 		dataType: "JSON",
 		// processData: false,
 		contentType: "application/json;charset=UTF-8",
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res) {
 			console.log("res",res);
 			var admins = $("#admins");
@@ -1436,6 +1340,7 @@ function professorsSet(){
 		dataType: "JSON",
 		// processData: false,
 		contentType: "application/json;charset=UTF-8",
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res) {
 			var professors = $("#professors");
 			var tblStr = "";
@@ -1510,6 +1415,7 @@ function studentsSet(){
 		dataType: "JSON",
 		// processData: false,
 		contentType: "application/json;charset=UTF-8",
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res) {
 			// console.log("또체킁 : ",res);
 			var students = $("#students");
@@ -1653,6 +1559,7 @@ function deleteUser(){
 				dataType: "text",
 				// processData: false,
 				contentType: 'application/json;charset=UTF-8',
+				beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 				success: function (res) {
 					usersSet();
 					adminsSet();
@@ -2218,6 +2125,7 @@ function userInsert(event){
 		dataType: "text",
 		processData: false,
 		contentType: false,
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function (res) {
 			if(userClsCd == "student"){
 				studentsSet();

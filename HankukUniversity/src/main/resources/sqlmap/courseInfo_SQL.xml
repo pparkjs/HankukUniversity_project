@@ -20,52 +20,54 @@
 		</if>
  	</sql>
  	
-<!--  	<resultMap type="lectureAplyVO" id="lectureMap"> -->
-<!--  		<id property="lecapNo" column="lecap_no"/> -->
-<!--  		<result property="lecapNo" column="lecap_no"/> -->
-<!--  		<result property="subNo" column="sub_no"/> -->
-<!--  		<result property="subNm" column="sub_nm"/> -->
-<!--  		<result property="subCrd" column="sub_crd"/> -->
-<!--  		<result property="comCdNm" column="com_cd_nm"/> -->
-<!--  		<result property="proNm" column="pro_nm"/> -->
-<!--  		<result property="deptNm" column="dept_nm"/> -->
-<!--  		<result property="flctsNo" column="flcts_no"/> -->
-<!--  		<result property="lecapYr" column="lecap_yr"/> -->
-<!--  		<result property="lecapTgGrade" column="lecap_tg_grade"/> -->
-<!--  		<result property="lecapDt" column="lecap_dt"/> -->
-<!--  		<result property="lecapCpct" column="lecap_cpct"/> -->
-<!--  		<result property="lecapSem" column="lecap_sem"/> -->
-<!--  		<result property="aprvSttsCd" column="aprv_stts_cd"/> -->
-<!--  		<result property="lecapRjctRsn" column="lecap_rjct_rsn"/> -->
-<!--  		<result property="avlCd" column="avl_cd"/> -->
-<!--  		<collection property="scheduleList" resultMap="scheduleMap"/> -->
-<!--  	</resultMap> -->
- 	
-<!--  	<resultMap type="lectureScheduleVO" id="scheduleMap"> -->
-<!--  		<result property="lecapNo" column="lecap_no"/> -->
-<!--  		<result property="lecscDay" column="lecsc_day"/> -->
-<!--  		<result property="periodCd" column="period_cd"/> -->
-<!--  		<result property="lecscHour" column="lecsc_hour"/> -->
-<!--  	</resultMap> -->
  	
  <!-- 교과목 가져오기 -->
  	<select id="getList" resultType="subjectVO" parameterType="map">
  	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.getList*/
- 		SELECT 
- 			  a.sub_no
- 			, c.dept_nm AS dept_cd
- 			, a.sub_nm
- 			, a.sub_grade
- 			, a.sub_hour
- 			, a.sub_crd
- 			, b.com_cd_nm AS crs_classf_cd
- 			, a.sub_otl
-		FROM subject a, com_code b, department C
-		WHERE 1=1
-		AND b.com_cd = a.crs_classf_cd
-		AND a.dept_cd = c.dept_cd
-		<include refid="subSearch"/>
+		SELECT
+		     b.*   
+		FROM (SELECT 
+		        ROW_NUMBER() OVER (ORDER BY a.dept_cd DESC) rnum, a.*
+		     FROM (SELECT 
+		                 COUNT(*) OVER() AS total_cnt
+		                , a.sub_no
+		                , c.dept_nm AS dept_cd
+		                , a.sub_nm
+		                , a.sub_grade
+		                , a.sub_hour
+		                , a.sub_crd
+		                , b.com_cd_nm AS crs_classf_cd
+		                , a.sub_otl
+		            FROM subject a, com_code b, department C
+		            WHERE 1=1
+		            AND b.com_cd = a.crs_classf_cd
+		            AND a.dept_cd = c.dept_cd
+					<include refid="subSearch"/>
+		            ORDER BY dept_cd DESC
+		          )a
+		     )b
+		<![CDATA[ 
+			WHERE b.rnum >= 1+(10*#{more}) AND b.rnum <= 10+(10*#{more})
+		]]> 
  	</select>
+<!-- 교과목 가져오기 -->
+<!--  	<select id="getList" resultType="subjectVO" parameterType="map"> -->
+<!--  	/*kr.or.hku.lectureInfo.mapper.CourseInfoMapper.getList*/ -->
+<!--  		SELECT  -->
+<!--  			  a.sub_no -->
+<!--  			, c.dept_nm AS dept_cd -->
+<!--  			, a.sub_nm -->
+<!--  			, a.sub_grade -->
+<!--  			, a.sub_hour -->
+<!--  			, a.sub_crd -->
+<!--  			, b.com_cd_nm AS crs_classf_cd -->
+<!--  			, a.sub_otl -->
+<!-- 		FROM subject a, com_code b, department C -->
+<!-- 		WHERE 1=1 -->
+<!-- 		AND b.com_cd = a.crs_classf_cd -->
+<!-- 		AND a.dept_cd = c.dept_cd -->
+<!-- 		<include refid="subSearch"/> -->
+<!--  	</select> -->
  	
  	<!-- 학과가져오기 -->
  	<select id="getAllDept" resultType="departmentVO">

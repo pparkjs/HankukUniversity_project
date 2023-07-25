@@ -11,5 +11,6 @@ public class UsersVO {
 	private String userNo; //사용자식별번호
 	private String userPw; //사용자비밀번호
 	private String userClsCd; //사용자구분코드
+	private String userFirstLogin; //최초로그인 구분
 	private int enabled; //스프링시큐리티
 }
