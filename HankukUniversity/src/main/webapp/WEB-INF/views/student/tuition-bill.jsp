@@ -55,46 +55,89 @@
 					<span class="aa">
 						등록기한:&nbsp;&nbsp;&nbsp;
 					</span>
-					<input type="text" class="tutText" value="${std.stdNm }" disabled>
+					<input type="text" class="tutText" value="2023/08/31" disabled>
 				</div>
 				<div class="tutInfo" style="margin-top: 13px;">
 					<span class="aa">
 						수업료:&nbsp;&nbsp;&nbsp;
 					</span>
-					<input type="text" class="tutText" value="${std.currentYear }년" disabled>
+					<fmt:formatNumber value="${tuition.tutAmt}" pattern="#,###" var="tutAmt"/>
+					<input type="text" class="tutText" value="${tutAmt}" disabled>
 					<span class="aa">
 						감면금액:&nbsp;&nbsp;&nbsp;
 					</span>
-					<input type="text" class="tutText" value="${std.currentSem }학기" disabled>
+					<fmt:formatNumber value="${tuition.tutSclsAmt}" pattern="#,###" var="tutSclsAmt"/>
+					<input type="text" class="tutText" value="${tutSclsAmt}" disabled>
 					<span class="aa">
 						납부금액:&nbsp;&nbsp;&nbsp;
 					</span>
-					<input type="text" class="tutText" value="${std.currentSem }학기" disabled>
+					<fmt:formatNumber value="${tuition.tutAmt - tuition.tutSclsAmt}" pattern="#,###" var="tutTotal"/>
+					<input type="text" class="tutText" value="${tutTotal}" disabled>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="container-fluid">
 		<div class="card" id="card-title-1">
-			<div class="card-header border-0 pb-0 ">
+			<div class="card-header border-0 pb-0 " style="display: flex; justify-content: space-between;">
 				<h5 class="card-title">등록금 고지서</h5>
+				<button type="button" class="btn btn-sm btn-primary" style="margin-bottom: 8px;" onclick="tutBillPrint()">고지서 출력</button>
 			</div>
 			<hr style="margin: 0rem;"/>
 			<div class="card-body">
 				<div class="tut-bill-wrap">
 					<div class="tb-wrap">
-						<table class="table" border="1">
+						<table id="tutTable" border="1">
 							<tr>
-								<td style="width: 22%;">학과</td>
+								<td class="tt" style="width: 22%;">학과</td>
 								<td style="width: 28%;">${std.deptNm }</td>
-								<td style="width: 22%;">학번</td>
+								<td class="tt" style="width: 22%;">학번</td>
 								<td style="width: 28%;">${std.stdNo }</td>
 							</tr>
 							<tr>
-								<td>학년/학기</td>
+								<td class="tt">학년/학기</td>
 								<td>${std.currentYear }년 ${std.currentSem }학기</td>
-								<td>성명</td>
+								<td class="tt">성명</td>
 								<td>${std.stdNm }</td>
+							</tr>
+						</table>
+					</div>
+					<div class="tb-wrap" style="margin-top: 20px;">
+						<table id="tutTable1" border="1" style="width: 39%; margin-right: 32px;">
+							<tr>
+								<td colspan="4" class="tt">등록금 내역</td>
+							</tr>
+							<tr>
+								<td class="tt">수업료</td>
+								<td><c:out value="${tutAmt}"/></td>
+								<!-- <td class="tt">성명</td>
+								<td>${std.stdNm }</td> -->
+							</tr>
+							<tr>
+								<td class="tt" style="width: 45%;">장학금</td>
+								<td style="width: 55%;"><c:out value="${tutSclsAmt}"/></td>
+								<!-- <td class="tt" style="width: 22%;">학번</td>
+								<td style="width: 28%;">${std.stdNo }</td> -->
+							</tr>
+							<tr>
+								<td class="tt">계</td>
+								<td><c:out value="${tutTotal}"/></td>
+								<!-- <td class="tt">성명</td>
+								<td>${std.stdNm }</td> -->
+							</tr>
+						</table>
+						<table id="tutTable2" border="1" style="width: 39%;">
+							<tr>
+								<td class="tt" style="width: 21%;">등록기한</td>
+								<td style="width: 28%;">2023/08/31</td>
+								<!-- <td class="tt" style="width: 22%;">학번</td>
+								<td style="width: 28%;">${std.stdNo }</td> -->
+							</tr>
+							<tr>
+								<td class="tt">입금전용계좌(신한은행)</td>
+								<td>${tuition.tutPayActno}</td>
+								<!-- <td class="tt">성명</td>
+								<td>${std.stdNm }</td> -->
 							</tr>
 						</table>
 					</div>
@@ -103,3 +146,47 @@
 		</div>
 	</div>
 </div>
+<script>
+function tutBillPrint(){
+	var stdNo = "${std.stdNo }";
+	var stdNm = "${std.stdNm }";
+	var deptNm = "${std.deptNm }";
+	var currentYear = "${std.currentYear }";
+	var currentSem = "${std.currentSem }";
+	var tutAmt = "${tuition.tutAmt}";
+	var tutSclsAmt = "${tuition.tutSclsAmt}";
+	var deadLine = "2023/08/31";
+	var tutPayActno = "${tuition.tutPayActno}"
+
+	let tutBillData = {
+		"stdNo": stdNo,
+		"stdNm": stdNm,
+		"deptNm": deptNm,
+		"currentYear": currentYear,
+		"currentSem": currentSem,
+		"tutAmt": tutAmt,
+		"tutSclsAmt": tutSclsAmt,
+		"deadLine": deadLine,
+		"tutPayActno": tutPayActno
+	};
+
+	// console.log("tutBillData",tutBillData);
+
+	$.ajax({
+		type:"POST",
+		url:"/hku/tuiBillPrint",
+		data: JSON.stringify(tutBillData),
+		dataType:"text",
+		contentType: 'application/json;charset=UTF-8',
+		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
+		success: function(res){
+			// alert("등록금고지서 잘 갔다옴");
+			// console.log("res",res);
+			window.open("/hku/preload?preload="+res, '등록금고지서', 'width=900px,height=900px,scrollbars=yes');
+		},
+		error: function(){
+			alert("등록금고지서 실패");
+		}
+	});
+}
+</script>

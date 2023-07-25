@@ -23,4 +23,21 @@
 <!-- 		AND  -->
 <!-- 			a.avl_cd = 'Y' -->
  	</select>
+ 	
+ 	<select id="selectTuition" parameterType="string" resultType="tuitionVO">
+ 		SELECT 
+		    tut_no
+		    ,tut_yr
+		    ,tut_sem
+		    ,tut_amt
+		    ,tut_scls_amt
+		    ,bank_cd
+		    ,tut_pay_actno
+		    ,tut_pay_dt
+		FROM
+		    tuition
+		WHERE 
+		    std_no = #{stdNo}
+		AND avl_cd = 'N'
+ 	</select>
  </mapper>
