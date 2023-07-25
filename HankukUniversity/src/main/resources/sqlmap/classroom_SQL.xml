@@ -32,7 +32,7 @@
 	
 	
 	<!-- 학생 클래스룸 메인  / 과제 리스트 -->
-	<select id="stdMainAssignList" parameterType="assignmentVO" resultType="assignmentVO">
+	<select id="stdMainAssignList" parameterType="map" resultType="assignmentVO">
         SELECT
 		    a.asm_no,
 		    a.lecap_no,
@@ -50,6 +50,7 @@
 		ORDER BY asm_regdate desc
 	</select>
 
+	<!-- 학생 클래스룸 메인  / 출결현황 -->
 	<select id="getMyAttendance" resultType="attendanceVO" parameterType="map">
 		SELECT 
 			atdc_yn_cd 
