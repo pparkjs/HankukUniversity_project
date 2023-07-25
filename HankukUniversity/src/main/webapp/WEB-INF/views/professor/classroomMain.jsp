@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="/css/table.css">
 <link rel="stylesheet" href="/css/pro-jh.css">
+<link rel="stylesheet" href="/css/pro-js.css">
 <style>
 .light.btn-primary {
     background-color: rgb(128 0 0 / 0%);
@@ -48,17 +49,20 @@
 <div class="content-body" style="min-height: 975px;">
 	<div class="page-titles">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a style="font-size:25px; color:black;" href="javascript:void(0)">${subNm }</a></li>
+			<li class="breadcrumb-item"><a href="javascript:void(0)">클래스룸</a></li>
 			<li class="breadcrumb-item active"><a href="javascript:void(0)">
-				클래스룸 메인</a></li>
+				${subNm }</a></li>
 		</ol>		
 	</div>
 	
 	<div class="container-fluid" style="padding-top: 1rem;">
-	<div class="buttons" style="padding-left:85%; padding-bottom:10px;">
-		<button type="button" id="attendBtn" style="padding: 0.6rem 1.0rem;" class="btn btn-primary">출석관리</button>
-		<button type="button" id="attendDmrBtn" style="padding: 0.6rem 1.2rem;" class="btn btn-primary">이의신청관리</button>
-	</div>
+		<div style="display: flex;">
+			<h2 style="font-weight: 600; color: #404040;">${subNm }</h2>
+			<div class="buttons" style="padding-left:68%; padding-bottom:10px;">
+				<button type="button" id="attendBtn" style="padding: 0.6rem 1.0rem;" class="btn btn-primary">출석관리</button>
+				<button type="button" id="attendDmrBtn" style="padding: 0.6rem 1.2rem;" class="btn btn-primary">이의신청관리</button>
+			</div>
+		</div>
 		<div class="row">
 		<input type="hidden" name="lecapNo" id="lecapNo" value="${lecapNo }">	
 			<div class="col-xl-6 col-lg-6 bbb" style="width: 45%; height:350px;" >
@@ -66,19 +70,75 @@
 				
 
 			<!------------- 시험관리 --------------->
-					<div class="card-header aaa">
+					<div class="card-header aaa" style="justify-content: flex-start;">
+						<img alt="" src="/images/시험지아이콘.png" style="margin-left: 10px; width:28px; height: 28px;">
 						<h4 class="card-title"
-							style="font-weight: bold; font-size: 1.2em; color: #800000;">
-							온라인시험</h4>
-							<a href="/hku/test-presentation" class="btn btn-primary" id="testBtn">출제하기</a>
+							style="font-weight: bold; font-size: 1.2em; color: #800000; margin-left: 10px;">
+							온라인시험
+						</h4>
+						<a href="/hku/test-presentation" class="btn btn-primary" id="testBtn" style="margin-left: 66%; padding: 7px 15px;
+                           margin-bottom: 3px;">출제하기
+                        </a>
 					</div>
-					<div class="container" style="padding-top: 0; margin-top: 1.8rem; width: 95%;">
-						<div class="section" >
-							<button type="button" class="btn btn-primary" id="middleBtn">상세보기</button>
-						</div>
-						<div class="section" >
-							<button type="button" class="btn btn-primary" id="finalBtn">상세보기</button>
-						</div>
+					<div class="container" style="justify-content: space-between; padding-top: 0; margin-top: 5px; width: 92%;">
+					<!-- 중간고사 -->
+						<div class="info-wrap">
+								<div class="testInfo-con">
+									<div class="test-middle">
+										<div class="middle-content">
+											<div class="content-left">
+												<img alt="" src="/images/중간문서.png" style="width:100px; height: 107px;">
+											</div>
+											<div class="content-right">
+												<div class="middle-title">중간고사</div>
+											</div>
+										</div>
+									</div>
+									<div class="test-bottom">
+										<div class="bottom-year">개설연도 : <c:out value="${lecVO.lecapYr }"/>년</div>
+										<div class="bottom-sem">개설학기 : <c:out value="${lecVO.lecapSem }"/>학기</div>
+									</div>
+									<div class="test-button">
+										<button class="btn btn-primary" id="middleBtn" style="background: #adb17d; border-color: #adb17d; 
+										height: 37px; padding: 0px 28px; font-size: 17px; font-weight: 600;">
+										상세보기
+										</button>
+									</div>
+								</div>
+							</div>
+							
+							<!-- 기말고사 -->
+							<div class="info-wrap">
+								<div class="testInfo-con">
+									<div class="test-middle">
+										<div class="middle-content">
+											<div class="content-left">
+												<img alt="" src="/images/기말문서.png" style="width:100px; height: 107px;">
+											</div>
+											<div class="content-right">
+												<div class="middle-title" style="color:#e46c0a;">기말고사</div>
+											</div>
+										</div>
+									</div>
+									<div class="test-bottom">
+										<div class="bottom-year">개설연도 : <c:out value="${lecVO.lecapYr }"/>년</div>
+										<div class="bottom-sem">개설학기 : <c:out value="${lecVO.lecapSem }"/>학기</div>
+									</div>
+									<div class="test-button">
+										<button class="btn btn-primary" id="finalBtn" style="background: #adb17d; border-color: #adb17d; 
+										height: 37px;
+  										  padding: 0px 28px; font-size: 17px; font-weight: 600;">
+										상세보기
+										</button>
+									</div>
+								</div>
+							</div>
+<!-- 						<div class="section" > -->
+<!-- 							<button type="button" class="btn btn-primary" id="middleBtn">상세보기</button> -->
+<!-- 						</div> -->
+<!-- 						<div class="section" > -->
+<!-- 							<button type="button" class="btn btn-primary" id="finalBtn">상세보기</button> -->
+<!-- 						</div> -->
 					</div>
 				</div>
 			</div>
@@ -86,11 +146,13 @@
 			<!------------- 과제관리 --------------->
 			<div class="col-xl-6 col-lg-6 bbb" style="width: 55%; height:350px;">
 				<div class="card">
-					<div class="card-header aaa">
+					<div class="card-header aaa" style="justify-content: start;">
+						<img alt="" src="/images/과제.png" style="margin-left: 10px; width:28px; height: 28px;">
 						<h4 class="card-title"
-							style="font-weight: bold; font-size: 1.2em; color: #800000;">
-							과제관리</h4>
-							<button type="button" id="assignMore" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="false">
+							style="font-weight: bold; font-size: 1.2em; color: #800000; margin-left: 10px;">
+							과제관리
+						</h4>
+							<button type="button" id="assignMore" class="btn btn-primary light sharp"  style="margin-left: 81%;" data-bs-toggle="dropdown" aria-expanded="false">
 								<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1">
 								<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 								<rect x="0" y="0" width="24" height="24"></rect>
@@ -139,11 +201,13 @@
 			<div class="col-xl-5 col-lg-5 bbb"
 				style="width: 100%; height: 350px;">
 				<div class="card">
-					<div class="card-header aaa">
+					<div class="card-header aaa" style="justify-content: start;">
+						<img alt="" src="/images/공지.png" style="margin-left: 10px; width:28px; height: 28px;">
 						<h4 class="card-title"
-							style="font-weight: bold; font-size: 1.2em; color: #800000;">
-							공지사항</h4>
-							<button type="button" id="noticeMore" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="false">
+							style="font-weight: bold; font-size: 1.2em; color: #800000; margin-left: 10px;">
+							공지사항
+						</h4>
+							<button type="button" id="noticeMore" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="false" style="margin-left: 90%;">
 								<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1">
 								<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 								<rect x="0" y="0" width="24" height="24"></rect>
