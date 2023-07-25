@@ -79,7 +79,7 @@ public class LoginController {
 		System.out.println("유저네임!!!!!"+users.getUsername());
 		log.info("user.password : "+users.getPassword());
 		
-		return "hku-portal";
+		return "portal/home";
 	}
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/emp")
