@@ -288,6 +288,14 @@
 		    <version>4.1.2</version>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/com.itextpdf/itext7-core -->
+		<dependency>
+		    <groupId>com.itextpdf</groupId>
+		    <artifactId>itext7-core</artifactId>
+		    <version>8.0.0</version>
+		    <type>pom</type>
+		</dependency>
+		
 		<!-- Test -->
 		<!-- Junit5 다른 것도 끌어옴 -->
 		<dependency>
