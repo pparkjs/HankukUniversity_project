@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.hku.portal.mapper.PortalMapper;
 import kr.or.hku.portal.service.PortalService;
+import kr.or.hku.portal.vo.DetailNoticeVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -30,5 +31,11 @@ public class PortalServiceImpl implements PortalService {
 	@Override
 	public List<Map<String, String>> getEmploymentNoticeList() {
 		return portalMapper.getEmploymentNoticeList();
+	}
+	
+	@Override
+	public DetailNoticeVO getNoticeDetail(Map<String, String> paramMap) {
+		portalMapper.incrementReadCnt(paramMap);
+		return portalMapper.getNoticeDetail(paramMap);
 	}
 }
