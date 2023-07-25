@@ -90,7 +90,7 @@
 											<td>
 												<c:choose>
 													<c:when test="${tuition.avlCd eq 'Y'}">
-														<button type="button" class="btn btn-sm btn-danger" stat="1" style="background: #0070c0; border-color: #0070c0;" onclick="tuitionCertifi(this)">보기</button>
+														<button type="button" class="btn btn-sm btn-danger" stat="1" style="background: #0070c0; border-color: #0070c0;" onclick="tuitionCertifi(this)">확인서 출력</button>
 													</c:when>
 													<c:otherwise>
 														<button type="button" class="btn btn-sm btn-danger" stat="0" style="background: #ff4343; border-color: #ff4343;" onclick="tuitionCertifi(this)">미납</button>
@@ -120,16 +120,12 @@ $(function(){
 
 function tuitionCertifi(target){
 	if($(target).attr('stat') == '0'){
-		// alert("납부한 확인서만 출력 가능합니다!");
 		swal({
 			title: "등록이 완료된 확인서만 확인 가능합니다!",
 			icon: "error"
 		})
 		return false;
 	}
-
-
-	console.log("확인서 체크", target);
 
 	var tutNo = $(target).parents("tr").children().eq(0).val();
 	var tutYr = $(target).parents("tr").children().eq(8).text();
@@ -150,7 +146,7 @@ function tuitionCertifi(target){
 		"bankNm": bankNm,
 		"tutPayActno": tutPayActno
 	};
-	console.log(certifiData);
+	// console.log(certifiData);
 
 	$.ajax({
 		type:"POST",
@@ -161,10 +157,7 @@ function tuitionCertifi(target){
 		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res){
 // 			alert("등록확인서 잘 갔다옴");
-			console.log("res",res);
-			// console.log("res",decodeURI(res));
-
-			// location.href = "/hku/preload?preload="+res;
+			// console.log("res",res);
 			window.open("/hku/preload?preload="+res, '등록확인서', 'width=900px,height=900px,scrollbars=yes');
 		},
 		error: function(){
