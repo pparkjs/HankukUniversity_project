@@ -19,6 +19,7 @@
 	 </bean>
 	 
 	 <!-- 서버에 파일 저장할  upload폴더 설정 -->
+	 <!-- 바꾸지 말라 -조성희- -->
 	 <bean id="uploadPath" class="java.lang.String">
 	 	<constructor-arg value="C:/uploadfiles"/>
 	 </bean>

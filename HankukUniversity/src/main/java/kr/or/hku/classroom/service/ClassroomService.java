@@ -19,7 +19,7 @@ public interface ClassroomService {
 	
 	
 	//---------------------학생 ---------------------//
-	// 교수 클래스룸 목록
+	// 학생 클래스룸 목록
 	public List<ClassroomVO> stdSelectList(String stdNo); 
 	// 학생 클래스룸 메인 과제 리스트 
 	public List<AssignmentVO> stdMainAssignList(Map<String, String> map);
