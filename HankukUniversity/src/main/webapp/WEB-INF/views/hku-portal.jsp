@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/portal/webfonts.css">
+    <link href="/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/portal/default.css">
     <link href="https://cdn.jsdelivr.net/npm/gridstack@8.2.1/dist/gridstack.min.css" rel="stylesheet"/>
     <!-- toastr -->
@@ -18,17 +21,65 @@
     <!-- toastr -->
 	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>		
     <title>한국대학교 포탈</title>
+	<link rel="stylesheet" href="/css/table.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gridstack@8.2.1/dist/gridstack-all.js"></script>
 <style>
 .grid-stack {
-  background: lightgoldenrodyellow;
+/*   background: lightgoldenrodyellow; */
 }
 
 .grid-stack-item-content {
-  color: #2c3e50;
+/*   color: #2c3e50; */
   text-align: center;
-  background-color: #18bc9c;
+/*   background-color: #18bc9c; */
+}
+.table-wrap {
+    height: 405px;
+}
+.thead-dark{
+	position: sticky;
+	top: 0px;
+}
+.table-info-td{
+	font-size: 1.2em;
+	font-weight: bold;
+	text-align: center;
+	color: whitesmoke;
+	background-color: #800000;
+}
+.table-wrap table td{
+	height: 0px;
+}
+.table tbody td{
+    padding: 3px;
+}
+.table tbody td:first-child{
+	text-align: left;
+}
+.nav-link{
+	color:#800000;
+}
+.tCon{
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    margin-right: 15px;
+    height: 40px;
+}
+.main_cont_header{
+	background-color: #800000;
+}
+.hWrap{
+	display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-top: 4px;
+}
+.toast-success{
+/*  	background: black;  */
 }
 </style>
 <c:if test="${not empty first}">
@@ -42,7 +93,7 @@
             <div class="main_cont_wrap">
                 <div class="main_cont my_info">
                     <div class="logo_wrap">
-                        <a href="#" onclick="javascript:window.location.reload(true);">
+                        <a href="/main/portal" onclick="javascript:window.location.reload(true);">
                             <!-- <span class="sr-only">한국포탈서비스</span> -->
                         </a>
                     </div>
@@ -61,7 +112,7 @@
                             <p class="en title">주지훈 님</p>
                             <ul>
                                 <li>
-                                    <a class="LK046_A bb" href="#none">로그아웃</a>
+                                    <a class="LK046_A bb" href="/main/logout">로그아웃</a>
                                 </li>
                                 <li>
                                     <a class="LK047_A bb" href="#none" style="width: 90px;">비밀번호변경</a>
@@ -106,7 +157,7 @@
                             <a href="/hku/student/studyBoard">스터디게시판</a>
                         </div>
                         <div class="sidemenu_btn" style="cursor:pointer;">
-                            <a href="/main/student">공지사항</a>
+                            <a href="/hku/portal/all-notice-list">공지사항</a>
                         </div>
                         <div class="sidemenu_btn" style="cursor:pointer;">
                             <a href="/main/student">마이페이지</a>
@@ -121,166 +172,26 @@
 
                 </div>
                 <div class="main_cont" id="jjgDiv" style="height:auto; overflow: auto;">
+                    <!-- 헤더========================================================================= -->
                     <div class="main_cont_header" style="height: 50px; border: 1px solid black;">
-                        <!-- <form class="search-container">
-                            <input type="text" id="search-bar" placeholder="검색어를 입력해주세요">
-                            <a href="#"><img class="search-icon" src="/images/portal/search.png" style="width: 30px; height: 30px;"></a>
-                        </form> -->
-                        <button class="btn btn-primary" id="savePortletBtn">포틀릿저장</button>
-                    </div>
-                    <!-- tiles 했을 때 content 부분 -->
-                    <div class="container-fluid mt-3">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="grid-stack">
-                                    <div class="grid-stack-item portlet1" gs-w="6" gs-h="4">
-                                        <div class="grid-stack-item-content">
-                                            <div class="card portlet-item">
-                                                <div class="card-body">
-                                                    <div style="display: flex; justify-content: space-between;">
-                                                        <div>
-                                                            <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
-                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;1일정</h4>
-                                                        </div>
-                                                        <div>
-                                                            <a href='/calendar/main' class="ti-plus"></a>&nbsp;&nbsp;
-                                                        </div>
-                                                    </div>
-                                                    <h3 class="title-h3 col" style="font-family: '양진체'!important; text-align: center;">2023년 2월 학사일정</h3>
-                                                    <div class="hnu_schedule" id="calendar">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>   
-                                    </div>
-                                    <div class="grid-stack-item portlet2" gs-w="12" gs-h="4">
-                                        <div class="grid-stack-item-content">
-                                            <div class="card portlet-item">
-                                                <div class="card-body">
-                                                    <div style="display: flex; justify-content: space-between;">
-                                                        <div>
-                                                            <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
-                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;2공지</h4>
-                                                        </div>
-                                                        <div>
-                                                            <a href='/calendar/main' class="ti-plus"></a>&nbsp;&nbsp;
-                                                        </div>
-                                                    </div>
-                                                    <h3 class="title-h3 col" style="font-family: '양진체'!important; text-align: center;">2023년 2월 학사일정</h3>
-                                                    <div class="hnu_schedule" id="calendar">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>   
-                                    </div>
-                                    <div class="grid-stack-item portlet3" gs-w="6" gs-h="4">
-                                        <div class="grid-stack-item-content">
-                                            <div class="card portlet-item">
-                                                <div class="card-body">
-                                                    <div style="display: flex; justify-content: space-between;">
-                                                        <div>
-                                                            <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
-                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;3날씨</h4>
-                                                        </div>
-                                                        <div>
-                                                            <a href='/calendar/main' class="ti-plus"></a>&nbsp;&nbsp;
-                                                        </div>
-                                                    </div>
-                                                    <h3 class="title-h3 col" style="font-family: '양진체'!important; text-align: center;">2023년 2월 학사일정</h3>
-                                                    <div class="hnu_schedule" id="calendar">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>   
-                                    </div>
-                                    <div class="grid-stack-item portlet4" gs-w="6" gs-h="4">
-                                        <div class="grid-stack-item-content">
-                                            <div class="card portlet-item">
-                                                <div class="card-body">
-                                                    <div style="display: flex; justify-content: space-between;">
-                                                        <div>
-                                                            <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
-                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;4시간표</h4>
-                                                        </div>
-                                                        <div>
-                                                            <a href='/calendar/main' class="ti-plus"></a>&nbsp;&nbsp;
-                                                        </div>
-                                                    </div>
-                                                    <h3 class="title-h3 col" style="font-family: '양진체'!important; text-align: center;">2023년 2월 학사일정</h3>
-                                                    <div class="hnu_schedule" id="calendar">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>   
-                                    </div>
-                                    <div class="grid-stack-item portlet5" gs-w="6" gs-h="4">
-                                        <div class="grid-stack-item-content">
-                                            <div class="card portlet-item">
-                                                <div class="card-body">
-                                                    <div style="display: flex; justify-content: space-between;">
-                                                        <div>
-                                                            <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
-                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;5이수정보</h4>
-                                                        </div>
-                                                        <div>
-                                                            <a href='/calendar/main' class="ti-plus"></a>&nbsp;&nbsp;
-                                                        </div>
-                                                    </div>
-                                                    <h3 class="title-h3 col" style="font-family: '양진체'!important; text-align: center;">2023년 2월 학사일정</h3>
-                                                    <div class="hnu_schedule" id="calendar">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>   
-                                    </div>
-                                    <div class="grid-stack-item portlet6" gs-w="6" gs-h="4">
-                                        <div class="grid-stack-item-content">
-                                            <div class="card portlet-item">
-                                                <div class="card-body">
-                                                    <div style="display: flex; justify-content: space-between;">
-                                                        <div>
-                                                            <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
-                                                            <h4 class="card-title mb-5" style="display: inline-block;">&nbsp;6식단표</h4>
-                                                        </div>
-                                                        <div>
-                                                            <a href='/calendar/main' class="ti-plus"></a>&nbsp;&nbsp;
-                                                        </div>
-                                                    </div>
-                                                    <h3 class="title-h3 col" style="font-family: '양진체'!important; text-align: center;">2023년 2월 학사일정</h3>
-                                                    <div class="hnu_schedule" id="calendar">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>   
-                                    </div>
-                                </div>
+                        <div class="">
+                            <h5 class="mb-0"></h5>
+                            <div class="hWrap">
+<!--                                 <div class="icon-box  icon-box-sm task-tab me-2" style="display: flex;"> -->
+                                   <button class="btn btn-primary" id="savePortletBtn" style="background-color: #dc3545de; border-color: #dc3545de; padding: 3px 10px;">화면 저장</button>
+                                   <div class="tCon">
+                                       <span id="timer" style=" margin-right:4px; font-size:1.3em; color:white; font-weight: 500; width: 97px;"></span>
+                                       <i id="refresh" class="fa-solid fa-rotate-right fa-lg" style="color: #ffffff; font-size: 1.5em; cursor:pointer;"></i>
+                                   </div>
+<!--                                 </div> -->
                             </div>
-                            <!-- <div class="col-lg-6" style="border: 1px solid black;">
-                                <div class="card m-3" id="card-title-1">
-                                    <div class="card-header border-0 pb-0 ">
-                                        <h5 class="card-title">메인 대쉬보드</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="card-text">
-                                            메인대쉬보드 입니다!!
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6" style="border: 1px solid black;">
-                                <div class="card m-3" id="card-title-1">
-                                    <div class="card-header border-0 pb-0 ">
-                                        <h5 class="card-title">메인 대쉬보드</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="card-text">
-                                            메인대쉬보드 입니다!!
-                                        </p>
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
+                    <!-- 헤더========================================================================= -->
+                    <!-- tiles 했을 때 content 부분 -->
+                   	<tiles:insertAttribute name="portalContent"/>  
+                    
+                    <!-- tiles 했을 때 content 부분 -->
                 </div>
             </div>
         </div>
@@ -290,88 +201,56 @@
     </div>
 </body>
 <script>
+var timer = document.getElementById("timer");
+var time = 10799;
+var hour ="";
+var min = ""; 
+var sec = ""; 
+function formatTwoDigits(number) {
+    return number.toString().padStart(2, '0');
+}
+function updateTimer() {
+    hour =formatTwoDigits( parseInt(time / 3600)); 
+    min = formatTwoDigits(parseInt((time % 3600) / 60)); 
+    sec = formatTwoDigits(time % 60); 
+    timer.innerHTML = hour + " : " + min + " : " + sec;
+    time--;
+    
+    if(time <= 0){
+        clearInterval(x); 
+		swal({
+			  title: "로그인을 연장하시겠습니까?",
+			  text: "취소버튼을 누를 경우 보안을 위해 로그아웃 처리됩니다.",
+			  icon: "warning",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {
+			    swal("시간이 연장되었습니다.", {
+			      icon: "success",
+			    }).then(() => {
+                    time = 10799; // 연장 후 시간을 다시 5로 설정
+                    x = setInterval(updateTimer, 1000); // 타이머 다시 시작
+                });
+			  } else {
+			    swal("로그아웃되었습니다.");
+			    location.replace("/main/logout");
+			  }
+			});
+	};
+};
+var x = setInterval(updateTimer, 1000);
+var refresh = document.getElementById("refresh");
+refresh.addEventListener("click", function() {
+    clearInterval(x); 
+    time = 10799; 
+    x = setInterval(updateTimer, 1000); 
+});
 var myWindow;
 $(document).ready(function(){
-    var grid = GridStack.init({ // 여기에 그리드 스택 옵션 삽입
-        disableOneColumnMode: true, // jfidle 작은 창 크기용
-        float: false,
-        removable: "#trash", // drag-out delete class
-        removeTimeout: 100
-    });
-
-    var savePortletBtn = $('#savePortletBtn'); // 포틀렛 저장버튼
-    
-    const regex = /[^0-9]/g;
-
-    const portletSeq = [
-        {pX : "0", pY : "0"},
-        {pX : "6", pY : "0"},
-        {pX : "0", pY : "4"},
-        {pX : "6", pY : "4"},
-        {pX : "0", pY : "8"},
-        {pX : "6", pY : "8"}
-    ];
-    
-
-    // 내가 설정한 포틀릿순서대로 보여주는 함수실행
-    sortPortlet();
-
-    // 내가 설정한 포틀릿순서대로 보여주는 함수
-    function sortPortlet(){
-    	// 지금 로컬 스토리지 쓰는데 이거를 데이터 베이스 에서 끌고 오면 됨
-    	let myGrid = JSON.parse(localStorage.getItem("myGrid"));
-//     	myGrid ="";
-		console.log("myGrid, ", myGrid);
-        var gridItem = document.querySelectorAll(".grid-stack-item");
-        if(myGrid != null && myGrid.length > 0){
-            for(let i=0; i<myGrid.length; i++){
-                let ptl = document.querySelector('.'+myGrid[i].id);
-                console.log("포틀릿 섞기 ", ptl);
-                grid.update(ptl, {x:parseInt(myGrid[i].x) , y:parseInt(myGrid[i].y)});
-            }
-        }
-    }
-
-    
-    // 포틀릿 저장 버튼 눌럿을떄
-    savePortletBtn.on('click', function(){
-    	var myPortletArr = [];
-        var gridItem = document.querySelectorAll(".grid-stack-item");
-        for(let i=0; i<gridItem.length; i++){
-            let saveData = {};
-            let item = gridItem[i];
-            saveData.id = $(item).attr('class').split(" ")[1].trim();
-            saveData.x = item.getAttribute("gs-x");
-            saveData.y = item.getAttribute("gs-y");
-            myPortletArr.push(saveData);
-        }
-        console.log("저장배열", myPortletArr);
-        // 지금 로컬 스토리지로 저장하는데 이걸 데이터베이스에 저장하면됨
-        localStorage.setItem("myGrid", JSON.stringify(myPortletArr));
-        toastr.options = {
-		    "closeButton": false,
-		    "debug": false,
-		    "newestOnTop": false,
-		    "progressBar": true,
-		    "positionClass": "toast-top-center",
-		    "preventDuplicates": false,
-		    "onclick": null,
-		    "showDuration": "100",
-		    "hideDuration": "1000",
-		    "timeOut": "2000",
-		    "extendedTimeOut": "1000",
-		    "showEasing": "swing",
-		    "hideEasing": "linear",
-		    "showMethod": "fadeIn",
-		    "hideMethod": "fadeOut"
-		};
-    			
-		toastr.success('화면 설정이 저장되었습니다.');
-    });
-    
     myWindow.onbeforeunload = function() {
     	location.href="/main/logout";
     };
-    
 });
 </script>

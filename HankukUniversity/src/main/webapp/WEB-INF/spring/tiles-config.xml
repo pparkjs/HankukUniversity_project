@@ -22,13 +22,17 @@
 		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp"/>
 	</definition>
 	
+	<definition name="portal-page" template="/WEB-INF/views/hku-portal.jsp">
+	
+	</definition>
+	
 <!--  	직원통합시스템 대한 동적 content tiles  -->
 	<definition name="admin/*" extends="system-page">
 		<put-attribute name="adminContent" value="/WEB-INF/views/admin/{1}.jsp"/>
 	</definition>
 	
 <!--  	포털사이트에 대한 동적 content tiles  -->
-	<definition name="portal/*" extends="system-page">
+	<definition name="portal/*" extends="portal-page">
 		<put-attribute name="portalContent" value="/WEB-INF/views/portal/{1}.jsp"/>
 	</definition>
 	

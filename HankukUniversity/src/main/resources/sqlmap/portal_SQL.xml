@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.portal.mapper.PortalMapper">
+ 
+ 	<!-- 학사 공지 가져오기 -->
+ 	<select id="getAcadmicNoticeList" resultType="map">
+ 		SELECT *
+		FROM (
+		  	SELECT 
+		  		  notice_no
+		  		, notice_ttl
+		        , TO_CHAR(notice_regdate, 'YY-MM-DD') as regdate
+			FROM notice
+			WHERE notice_clsf = 'uni'
+			ORDER BY notice_no DESC
+		)
+		<![CDATA[
+		WHERE ROWNUM <= 5
+		]]>
+ 	</select>
+ 	
+ 	<!-- 채용 공지 가져오기 -->
+ 	<select id="getEmploymentNoticeList" resultType="map">
+ 		SELECT *
+		FROM (
+		  	SELECT 
+		  		  notice_no
+		  		, notice_ttl
+		        , TO_CHAR(notice_regdate, 'YY-MM-DD') as regdate
+			FROM notice
+			WHERE notice_clsf = 'rcrt'
+			ORDER BY notice_no DESC
+		)
+		<![CDATA[
+		WHERE ROWNUM <= 5
+		]]>
+ 	</select>
+ 	
+ 	<!-- 학과공지 가져오기 -->
+ 	<select id="getDeptNoticeList" parameterType="string" resultType="map">
+ 		SELECT *
+		FROM (
+		  	SELECT 
+		  		  depnt_no
+		  		, depnt_ttl
+		        , TO_CHAR(depnt_regdate, 'YY-MM-DD') as regdate
+			FROM department_notice
+			WHERE dept_cd = #{deptCd}
+			ORDER BY depnt_no DESC
+		)
+		<![CDATA[
+		WHERE ROWNUM <= 5
+		]]>
+ 	</select>
+ 	
+ 	<!-- 조회수 증가 -->
+ 	<update id="incrementReadCnt" parameterType="map">
+ 		<choose>
+ 			<when test="noticeDiv == 'uni' or noticeDiv == 'rcrt'">
+ 				UPDATE notice
+	 			SET
+	 				notice_read_cnt = notice_read_cnt + 1
+	 			WHERE notice_no = #{noticeNo}
+ 			</when>
+ 			<otherwise>
+ 				UPDATE department_notice
+	 			SET
+	 				depnt_read_cnt = depnt_read_cnt + 1
+	 			WHERE depnt_no = #{noticeNo}
+ 			</otherwise>
+ 		</choose>
+ 	</update>
+ 	
+ 	<select id="getNoticeDetail" parameterType="map" resultType="detailNoticeVO">
+ 		<choose>
+ 			<when test="noticeDiv == 'uni' or noticeDiv == 'rcrt'">
+ 				SELECT
+ 					  notice_no as notice_no
+					, notice_ttl as notice_ttl
+					, notice_cn as notice_cn
+					, notice_wrtr_nm as notice_wrtr_nm
+					, TO_CHAR(notice_regdate, 'yyyy-mm-dd') as notice_regdate
+					, notice_read_cnt as notice_read_cnt
+					, notice_clsf as notice_clsf
+					, atch_file_no as atch_file_no
+				FROM notice
+				WHERE notice_no = #{noticeNo}
+ 			</when>
+ 			<otherwise>
+ 				SELECT
+	 				  depnt_no as notice_no
+					, dept_cd as dept_cd
+					, depnt_ttl as notice_ttl
+					, depnt_cn as notice_cn
+					, depnt_wrtr_nm as notice_wrtr_nm
+					, TO_CHAR(depnt_regdate, 'yyyy-mm-dd') as notice_regdate
+					, depnt_read_cnt as notice_read_cnt
+					, atch_file_no as atch_file_no
+				FROM department_notice 
+				WHERE depnt_no = #{noticeNo}
+ 			</otherwise>
+ 		</choose>
+ 	</select>
+ 	
+ </mapper>
