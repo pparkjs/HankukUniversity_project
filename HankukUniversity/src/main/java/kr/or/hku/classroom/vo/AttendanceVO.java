@@ -1,5 +1,10 @@
 package kr.or.hku.classroom.vo;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import kr.or.hku.common.vo.AttachFileVO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,12 +25,7 @@ public class AttendanceVO {
 	private String deptNm;			// 힉과명
 	
 	// 이의신청 파일첨부
-	private String atchFileNo;		// 파일첨부번호
-	private String atchFileSeq;		// 파일첨부순서
-	private String bizType;			// 업무구분 
-	private String filePath;		// 파일경로
-	private String fileOrgnlFileNm ;// 원본파일이름
-	private String fileSize;		// 파일크기
-	private String fileContType;	// 파일유형
-	private String fileDownCnt;		// 파일다운로드횟수
+	private int atchFileNo;		// 파일첨부번호
+	private MultipartFile attendanceFile; // 등록할 때 필요 
+	private List<AttachFileVO> fileList;  // 교수가 파일 확인할 때 필요 
 }
