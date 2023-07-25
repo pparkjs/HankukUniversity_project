@@ -27,6 +27,7 @@ import kr.or.hku.classroom.vo.AssignmentVO;
 import kr.or.hku.classroom.vo.AttendanceVO;
 import kr.or.hku.common.service.CommonFileService;
 import kr.or.hku.common.vo.AttachFileVO;
+import kr.or.hku.lectureInfo.service.CourseInfoService;
 import kr.or.hku.lectureInfo.vo.LectureAplyVO;
 import kr.or.hku.professor.vo.ProfessorVO;
 import lombok.extern.slf4j.Slf4j; 
@@ -35,6 +36,9 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/hku/professor")
 public class ProClassroomController {
+	
+	@Autowired
+	private CourseInfoService courseService;
 	
 	@Autowired
 	private ClassroomService classService;
@@ -67,6 +71,9 @@ public class ProClassroomController {
 							Model model,
 							HttpSession session) {
 		session.setAttribute("lecapNo", lecapNo);
+		
+		LectureAplyVO lecVO = courseService.getLecAplyInfo(lecapNo);
+		
 		String subNm =  classService.getSubNm(lecapNo);
 		session.setAttribute("subNm", subNm);
 		
@@ -78,6 +85,7 @@ public class ProClassroomController {
 		// 지현이누나의 몫 여기다 작성하시오
 		
 		log.info(""+asgList);
+		model.addAttribute("lecVO", lecVO);
 		model.addAttribute("lecapNo", lecapNo);
 		model.addAttribute("subNm", subNm);
 		model.addAttribute("asgList", asgList);
