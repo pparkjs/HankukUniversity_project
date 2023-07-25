@@ -9442,50 +9442,135 @@ label {
     margin-bottom: 1.5rem !important; } }
 
 /* Editable */
+/* #preloader { */
+/*   background-color: #fff; */
+/*   padding: 0; */
+/*   margin: 0; */
+/*   height: 100%; */
+/*   position: fixed; */
+/*   z-index: 99999; */
+/*   width: 100%; */
+/*   display: flex; */
+/*   align-items: center; */
+/*   justify-content: center; */
+/* } */
+
+/* #preloader-wrapper { */
+/*   position: relative; Add a wrapper for both logo and circle animation */
+/* } */
+
+/* .university-mark { */
+/*   position: absolute; */
+/*   Adjust the position of the logo mark within the wrapper as desired */
+/*   top: 50%; */
+/*   left: 50%; */
+/*   transform: translate(-50%, -50%); */
+/* } */
+
+/* #preloader .lds-ripple { */
+/*   position: absolute; Make the circle animation absolute relative to the wrapper */
+/*   width: 80px; */
+/*   height: 80px; */
+/* } */
+
+/* #preloader .lds-ripple div { */
+/*   position: absolute; */
+/*   border: 4px solid var(--primary); */
+/*   opacity: 1; */
+/*   border-radius: 50%; */
+/*   animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite; */
+/* } */
+
+/* #preloader .lds-ripple div:nth-child(2) { */
+/*   animation-delay: -0.5s; */
+/* } */
+
+/* @keyframes lds-ripple { */
+/*   0% { */
+/*     top: 36px; */
+/*     left: 36px; */
+/*     width: 0; */
+/*     height: 0; */
+/*     opacity: 1; */
+/*   } */
+/*   100% { */
+/*     top: 0px; */
+/*     left: 0px; */
+/*     width: 72px; */
+/*     height: 72px; */
+/*     opacity: 0; */
+/*   } */
+/* } */
+
+/* [data-theme-version="dark"] #preloader { */
+/*   background-color: #1E1E1E; */
+/* } */
 #preloader {
-  background-color: #fff;
-  padding: 0;
-  margin: 0;
   height: 100%;
   position: fixed;
-  z-index: 99999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999999999;
+  background: #fff; }
+
+.loader {
+  position: absolute;
+  width: 11rem;
+  height: 16rem;
+  top: 50%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%); }
+
+.circular {
+  animation: rotate 2s linear infinite;
+  height: 100%;
+  transform-origin: center center;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-/*   background: url('/resources/FlatPreloaders/128x128/Preloader_3/Preloader_3.gif') no-repeat center center; */
-  }
-  #preloader .lds-ripple {
-    display: inline-block;
-    position: relative;
-    width: 80px;
-    height: 80px; }
-  #preloader .lds-ripple div {
-    position: absolute;
-    border: 4px solid var(--primary);
-    opacity: 1;
-    border-radius: 50%;
-    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite; }
-  #preloader .lds-ripple div:nth-child(2) {
-    animation-delay: -0.5s; }
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto; }
 
-@keyframes lds-ripple {
-  0% {
-    top: 36px;
-    left: 36px;
-    width: 0;
-    height: 0;
-    opacity: 1; }
+.path {
+  stroke-dasharray: 1, 200;
+  stroke-dashoffset: 0;
+  animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+  stroke-linecap: round; }
+
+@keyframes rotate {
   100% {
-    top: 0px;
-    left: 0px;
-    width: 72px;
-    height: 72px;
-    opacity: 0; } }
+    transform: rotate(360deg); } }
 
-[data-theme-version="dark"] #preloader {
-  background-color: #1E1E1E; }
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0; }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -3.5rem; }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -12.4rem; } }
 
+@keyframes color {
+  100%,
+  0% {
+    stroke: #800000; }
+  40% {
+    stroke: #800000; }
+  66% {
+    stroke: #800000; }
+  80%,
+  90% {
+    stroke: #800000; } 
+  }
+ 
 .footer {
   padding-left: 6rem;
   font-size: 0.813rem;
