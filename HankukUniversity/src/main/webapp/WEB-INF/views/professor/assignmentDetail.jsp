@@ -258,17 +258,24 @@ function assignList(){
 			data = '';
 			for(var i = 0; i < res.length; i++){
 				data += `<tr>
-							<td class="sorting_1"><a href="javascript:void(0)"
+							<td class="sorting_1"><a href=""
 								class="text-primary">\${i+1}</a></td>
 							<td><span>\${res[i].stdNm }</span></td>
 							<td><span>\${res[i].stdNo }</span></td>
 							<td><span>\${res[i].deptNm }</span></td>`
 				if(res[i].asmsbDt == null || res[i].asmsbDt == ''){
 					data += `<td> </td>
-							  <td> </td>` 
+							 <td> </td>` 
 				} else {
-					data += `<td><span class="text-secondary">\${res[i].asmsbDt }</span></td>`
-							 `<td><span class="text-secondary">다운로드</span></td>`
+					data += `<td><span>\${res[i].asmsbDt }</span></td>
+						if(res[i].fileList != null && res[i].fileList != '' ){
+							for(let j = 0; j < res[i].fileList.length; j++){
+								 <td>
+								 	<a href="/download${res[i].fileList[j].filePath}" download="${res[i].fileList[j].fileOrgnlFileNm}"
+								 		class="btn btn-primary btn-sm">파일다운로드</a>
+								 </td>`
+							}
+						}
 					}
 				if(res[i].asmsbScr == '' || res[i].asmsbScr == null ){
 					data += `<td>
@@ -286,7 +293,7 @@ function assignList(){
 							</td>`		 
 				}else{
 					data += `<td>\${res[i].asmsbScr}</td>
-							 <td>완료</td>`;
+							 <td style="color:red;">완료</td>`;
 				}
 				data +=	`</tr>`;
 			}
