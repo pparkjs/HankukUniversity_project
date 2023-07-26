@@ -660,7 +660,7 @@
 							<label>● 조회수 : <span id="detailCnt">3</span></label>
 						</div>	
 					</div>
-					<div class="mb-3" id="detailCn">
+					<div class="mb-3" id="detailCn" style="height: 447px; overflow-y: scroll;">
 						내용
 					</div>
 					<!-- 파일들 -->
