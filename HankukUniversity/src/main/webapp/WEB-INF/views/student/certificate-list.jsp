@@ -134,7 +134,7 @@ function certificate(target){
 		"ctfctNo": ctfctNo,
 		"stdNo": stdNo
 	};
-	console.log("certifiData",certifiData);
+	// console.log("certifiData",certifiData);
 
 	$.ajax({
 		type: "POST",
@@ -144,13 +144,12 @@ function certificate(target){
 		contentType: 'application/json;charset=UTF-8',
 		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res){
-			alert("print~~");
+			// alert("print~~");
 			window.open("/hku/preload?preload="+res, '증명서 출력', 'width=900px,height=900px,scrollbars=yes');
 		},
 		error : function(){
 
 		}
-		
 	});
 
 
