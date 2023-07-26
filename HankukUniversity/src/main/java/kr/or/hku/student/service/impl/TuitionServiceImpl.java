@@ -74,6 +74,9 @@ public class TuitionServiceImpl implements TuitionService {
 		String tutSclsAmt = tutCertifiMap.get("tutSclsAmt");
 		String tutPayDt = tutCertifiMap.get("tutPayDt");
 		
+		String stdMtcltnYr = vo.getStdMtcltnYr();
+		int fGrade = gradeFormat(tutYr, stdMtcltnYr);
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
 //        String formattedBirth = sdf.format(loginStd.getStd_birth());
         String formattedDate = sdf.format(new Date());
@@ -118,7 +121,7 @@ public class TuitionServiceImpl implements TuitionService {
 			Paragraph paragraphDept = new Paragraph(vo.getDeptNm())
 					.setFont(font).setFixedPosition(140, 614, 300)
 					.setFontSize(12);
-			Paragraph paragraphGrade = new Paragraph("4")
+			Paragraph paragraphGrade = new Paragraph(""+fGrade)
 					.setFont(font).setFixedPosition(260, 614, 300)
 					.setFontSize(12);
 			Paragraph paragraphStdNo = new Paragraph(vo.getStdNo())
@@ -185,7 +188,7 @@ public class TuitionServiceImpl implements TuitionService {
 		String stdNo = tutBillMap.get("stdNo");
 		String stdNm = tutBillMap.get("stdNm");
 		String deptNm = tutBillMap.get("deptNm");
-		String grade = "4";
+		String grade = tutBillMap.get("grade");
 		
 		String tutAmt = String.format("%,d", Integer.parseInt(tutBillMap.get("tutAmt")));
 		String tutSclsAmt = String.format("%,d", Integer.parseInt(tutBillMap.get("tutSclsAmt")));
@@ -264,8 +267,6 @@ public class TuitionServiceImpl implements TuitionService {
 					.setFont(font).setFixedPosition(426, 507, 300)
 					.setFontSize(12);
 			
-			
-			
             document.add(paragraphDept);
             document.add(paragraphGrade);
             document.add(paragraphStdNo);
@@ -289,5 +290,17 @@ public class TuitionServiceImpl implements TuitionService {
 		
 		return modifiedPdfPath;
 	}
-
+	
+	private int gradeFormat(String tutYr, String stdMtcltnYr) {
+		int tutYr_ = Integer.parseInt(tutYr);
+		int stdMtcltnYr_ = Integer.parseInt(stdMtcltnYr);
+		
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+//        String formattedDate = sdf.format(new Date());
+//        int todayYear = Integer.parseInt(formattedDate);
+        
+        int fGrade = tutYr_ - stdMtcltnYr_ + 1;
+        return fGrade;
+		
+	}
 }

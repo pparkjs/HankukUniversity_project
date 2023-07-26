@@ -25,6 +25,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gridstack@8.2.1/dist/gridstack-all.js"></script>
+<script src="/js/custom.js"></script>
 <style>
 .grid-stack {
 /*   background: lightgoldenrodyellow; */
@@ -81,7 +82,82 @@
 .toast-success{
 /*  	background: black;  */
 }
+<<<<<<< HEAD
+#preloader {
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999999999;
+  background: #fff; }
+
+.loader {
+  position: absolute;
+  width: 11rem;
+  height: 16rem;
+  top: 50%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%); }
+
+.circular {
+  animation: rotate 2s linear infinite;
+  height: 100%;
+  transform-origin: center center;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto; }
+
+.path {
+  stroke-dasharray: 1, 200;
+  stroke-dashoffset: 0;
+  animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+  stroke-linecap: round; }
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg); } }
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0; }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -3.5rem; }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -12.4rem; } }
+
+@keyframes color {
+  100%,
+  0% {
+    stroke: #800000; }
+  40% {
+    stroke: #800000; }
+  66% {
+    stroke: #800000; }
+  80%,
+  90% {
+    stroke: #800000; } 
+  }
 </style>
+
+<div id="preloader">
+	<div class="loader">
+		<img src="/images/로딩로고.png" width="205px;" height="205px;" style="margin-top: 26px; margin-left: -16px;">
+		<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+        </svg>
+	</div>
+</div>
 <c:if test="${not empty first}">
 	<script type="text/javascript">
 	myWindow = window.open("/main/changePopup","_blank","width=400,height=450,left=650,top=350");

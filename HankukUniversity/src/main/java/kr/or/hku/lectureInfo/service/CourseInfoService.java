@@ -21,4 +21,5 @@ public interface CourseInfoService {
 	public List<CourseRegistVO> craditHistory(String stdNo);
 	public List<CourseRegistVO> getSubRecord(CourseRegistVO vo);
 	public List<LectureAplyVO> getPresentList(Map<String, Object> map);
+	public LectureAplyVO getLecAplyInfo(String lecapNo);
 }

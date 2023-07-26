@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.student.mapper.CertificateMapper">
+ 	<select id="selectCertifiList" resultType="certificateVO">
+ 		SELECT
+	 		ctfct_no
+			,ctfct_nm
+			,ctfct_amt
+		FROM
+			certificate
+ 	</select>
+ 	
+ 	<select id="selectCertifiIssuList" resultType="certificateIssuVO">
+ 		SELECT
+	 		ctfctis_no
+			,std_no
+			,ctfct_no
+			,ctfctis_ctfct_nm
+			,ctfctis_issu_dt
+			,ctfctis_expry_ymd
+			,ctfctis_all_amt
+			,avl_cd
+ 		FROM
+ 			certificate_issu
+ 		ORDER BY 1 DESC
+ 	</select>
+ </mapper>
