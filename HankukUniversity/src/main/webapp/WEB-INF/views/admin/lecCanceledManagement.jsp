@@ -240,8 +240,9 @@ $(function(){
 						icon: "error"
 					});
 				}
-				location.reload();
-				// 구현
+				setTimeout(() => {
+					location.reload();
+				}, 2000);
 			}
 		});
 	});
