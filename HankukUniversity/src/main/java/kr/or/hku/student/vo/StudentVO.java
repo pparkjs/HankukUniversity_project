@@ -14,6 +14,7 @@ public class StudentVO {
 	private String stdNm          ; //학생이름
 	private int stdMjrCrd    	  ; //전공학점
 	private int stdCtrlCrd   	  ; //교양학점
+	private int crdSum			  ; //이수학점 합
 	private String stdMtcltnYr    ; //입학년도
 	private String stdSttsCd      ; //학적상태코드
 	private String stdTelno       ; //학생연락처

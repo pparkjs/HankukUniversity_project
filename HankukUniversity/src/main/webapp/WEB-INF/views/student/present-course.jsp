@@ -34,7 +34,7 @@
 				<div class="tLeft">
 					<h5 class="card-title" style="color: maroon;  font-weight: 900;}">수강중인강의</h5>
 					<div class="totalCdt">
-						<span>수강학점&nbsp;:&nbsp;&nbsp;</span><div class="totalRight">5과목</div>
+						<span>수강학점&nbsp;:&nbsp;&nbsp;</span><div class="totalRight">0과목</div>
 					</div>
 					<button type="button" class="btn btn-primary" id="scheduleBtn" data-bs-toggle="modal" data-bs-target="#scheduleModal">시간표보기</button>
 				</div>
@@ -126,69 +126,89 @@ function presentCourseList(){
 			console.log(res)
 			
 			var h1 = document.querySelector(".modal-body h1");
-
-			h1.innerHTML = `\${res[0].lecapYr}학년도 \${res[0].lecapSem}학기 강의시간표`;;
-						
-			var schedule = []; 
-			for(var i = 0; i < res.length; i++){
-				var period = []
-				for(var j = 0; j < `\${res[i].lecscHour}`; j++){
-					period.push(`\${res[i].periodCd + j}`)
+			
+			if(res.length > 0){
+				h1.innerHTML = `\${res[0].lecapYr}학년도 \${res[0].lecapSem}학기 강의시간표`;;
+							
+				var schedule = []; 
+				for(var i = 0; i < res.length; i++){
+					var period = []
+					for(var j = 0; j < `\${res[i].lecscHour}`; j++){
+						period.push(`\${res[i].periodCd + j}`)
+					}
+					schedule.push(period)
 				}
-				schedule.push(period)
-			}
-			console.log(schedule);
-			
-			var timeTable = ''
-			for(var i = 1; i <= 9; i++){
-				timeTable += `  <tr class="\${i}" style="font-size: 13px; font-weight: 900; height: 61px;">
-									<td style="font-size:16px; font-weight:400;">\${i} 교시</td>
-									<td class="mon"></td>
-									<td class="tue"></td>
-									<td class="wed"></td>
-									<td class="thu"></td>
-									<td class="fri"></td>
-								</tr>`;
-			}
-			$("#timeBody").html(timeTable);
-			
-			var data = '';
-			var sum = 0;
-			for(var i = 0; i < res.length; i++){
-				sum += parseInt(`\${res[i].subCrd}`);
+				console.log(schedule);
+				
+				var timeTable = ''
+				for(var i = 1; i <= 9; i++){
+					timeTable += `  <tr class="\${i}" style="font-size: 13px; font-weight: 900; height: 61px;">
+										<td style="font-size:16px; font-weight:400;">\${i} 교시</td>
+										<td class="mon"></td>
+										<td class="tue"></td>
+										<td class="wed"></td>
+										<td class="thu"></td>
+										<td class="fri"></td>
+									</tr>`;
+				}
+				$("#timeBody").html(timeTable);
+				
+				var data = '';
+				var sum = 0;
+				
+					for(var i = 0; i < res.length; i++){
+						sum += parseInt(`\${res[i].subCrd}`);
+						data += `<tr>
+									<td id="\${res[i].crsClassfCd}">\${res[i].lecapYr}</th>
+									<td id="\${res[i].crsClassfCd}">\${res[i].lecapSem}</td>
+									<td id="\${res[i].crsClassfCd}">\${res[i].subNm}</td>
+									<td id="\${res[i].crsClassfCd}">\${res[i].comCdNm}</td>
+									<td id="\${res[i].crsClassfCd}">\${res[i].subCrd}</td>
+									<td id="\${res[i].crsClassfCd}">\${res[i].proNm}</td>
+									<td id="\${res[i].crsClassfCd}">\${res[i].lecscDay} \${schedule[i]}</td>
+									<td id="\${res[i].crsClassfCd}">\${res[i].flctNm}(\${res[i].flctsNm})</td>`
+						data +=	`</tr>`;
+						
+						var day = dayChange(`\${res[i].lecscDay}`);
+						var cnt = 0; // 시간표에 교과목명과 담당교수 이름 넣기위함
+						
+						// 시간표 채우기
+						for(var j = 0; j < schedule[i].length; j++ ){
+							var scheduleObj = $(`.\${schedule[i][j]} .\${day}`);
+							cnt++;
+							console.log("스케줄 : ", schedule[i][j]);
+							scheduleObj.css("background", "#ff5e5e3d");
+							scheduleObj.css("color", "black");
+							scheduleObj.css("font-size", "17px");
+							scheduleObj.css("font-weight", "500");
+							if(cnt == 1){
+								scheduleObj.text(`\${res[i].subNm}(\${res[i].proNm})`)
+							}
+							if(cnt == 2){
+								scheduleObj.text(`\${res[i].flctNm}(\${res[i].flctsNm})`)
+							}
+							
+						}
+					}
+				$('.totalRight').html(`\${sum}학점`)
+			}else{
 				data += `<tr>
-							<td id="\${res[i].crsClassfCd}">\${res[i].lecapYr}</th>
-							<td id="\${res[i].crsClassfCd}">\${res[i].lecapSem}</td>
-							<td id="\${res[i].crsClassfCd}">\${res[i].subNm}</td>
-							<td id="\${res[i].crsClassfCd}">\${res[i].comCdNm}</td>
-							<td id="\${res[i].crsClassfCd}">\${res[i].subCrd}</td>
-							<td id="\${res[i].crsClassfCd}">\${res[i].proNm}</td>
-							<td id="\${res[i].crsClassfCd}">\${res[i].lecscDay} \${schedule[i]}</td>
-							<td id="\${res[i].crsClassfCd}">\${res[i].flctNm}(\${res[i].flctsNm})</td>`
+							<td colspan="8">수강중인 강의가 존재하지 않습니다.</th>`
 				data +=	`</tr>`;
 				
-				var day = dayChange(`\${res[i].lecscDay}`);
-				var cnt = 0; // 시간표에 교과목명과 담당교수 이름 넣기위함
-				
-				// 시간표 채우기
-				for(var j = 0; j < schedule[i].length; j++ ){
-					var scheduleObj = $(`.\${schedule[i][j]} .\${day}`);
-					cnt++;
-					console.log("스케줄 : ", schedule[i][j]);
-					scheduleObj.css("background", "#ff5e5e3d");
-					scheduleObj.css("color", "black");
-					scheduleObj.css("font-size", "17px");
-					scheduleObj.css("font-weight", "500");
-					if(cnt == 1){
-						scheduleObj.text(`\${res[i].subNm}(\${res[i].proNm})`)
+				var timeTable = ''
+					for(var i = 1; i <= 9; i++){
+						timeTable += `  <tr class="\${i}" style="font-size: 13px; font-weight: 900; height: 61px;">
+											<td style="font-size:16px; font-weight:400;">\${i} 교시</td>
+											<td class="mon"></td>
+											<td class="tue"></td>
+											<td class="wed"></td>
+											<td class="thu"></td>
+											<td class="fri"></td>
+										</tr>`;
 					}
-					if(cnt == 2){
-						scheduleObj.text(`\${res[i].flctNm}(\${res[i].flctsNm})`)
-					}
-					
-				}
+					$("#timeBody").html(timeTable);
 			}
-			$('.totalRight').html(`\${sum}학점`)
 			presentBody.html(data);
 		}
 	})
