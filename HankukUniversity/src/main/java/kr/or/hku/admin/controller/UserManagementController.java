@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -51,6 +52,45 @@ public class UserManagementController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@GetMapping("/send-text-msg")
+	public String showSendTextMsgPage(Model model) {
+		List<Map<String, String>> depList = userService.getDeptList();
+		List<Map<String, String>> empDeptList = userService.getEmpDeptList();
+		model.addAttribute("depList", depList);
+		model.addAttribute("empDeptList", empDeptList);
+		return "admin/sendTextMsg";
+	}
+	
+	@ResponseBody
+	@GetMapping("/getAllUsers-list")
+	public Map<String, Object> getAllUsersList(@RequestParam Map<String, String> paramMap) {
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		
+		String userClassification = paramMap.get("who"); 
+		
+		List<Map<String, String>> stdList = null;
+		List<Map<String, String>> proList = null;
+		List<Map<String, String>> empList = null;
+		
+		if (userClassification.equals("all")) {
+			stdList = userService.getStdList(paramMap);
+			proList = userService.getProList(paramMap);
+			empList = userService.getEmpList(paramMap);
+		}else if (userClassification.equals("std")) {
+			stdList = userService.getStdList(paramMap);
+		}else if (userClassification.equals("pro")) {
+			proList = userService.getProList(paramMap);
+		}else if (userClassification.equals("emp")) {
+			empList = userService.getEmpList(paramMap);
+		}
+		
+		resMap.put("stdList", stdList);
+		resMap.put("proList", proList);
+		resMap.put("empList", empList);
+		
+		return resMap;
+	}
 	
 	@GetMapping("/user-management")
 	public String userManagement(Model model) {

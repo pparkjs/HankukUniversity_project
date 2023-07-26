@@ -1,6 +1,7 @@
 package kr.or.hku.admin.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -49,5 +50,15 @@ public interface UserMapper {
 	public int updateProfessor(UserVO userVO);
 
 	public int updateEmployee(UserVO userVO);
+
+	public List<Map<String, String>> getDeptList();
+
+	public List<Map<String, String>> getEmpDeptList();
+
+	public List<Map<String, String>> getStdList(Map<String, String> paramMap);
+
+	public List<Map<String, String>> getProList(Map<String, String> paramMap);
+
+	public List<Map<String, String>> getEmpList(Map<String, String> paramMap);
 
 }

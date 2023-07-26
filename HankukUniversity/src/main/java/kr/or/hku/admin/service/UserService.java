@@ -1,6 +1,7 @@
 package kr.or.hku.admin.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.hku.admin.vo.UserVO;
 import kr.or.hku.common.vo.SearchInfoVO;
@@ -46,6 +47,16 @@ public interface UserService {
 	public int updateProfessor(UserVO userVO);
 
 	public int updateEmployee(UserVO userVO);
+
+	public List<Map<String, String>> getDeptList();
+
+	public List<Map<String, String>> getEmpDeptList();
+
+	public List<Map<String, String>> getStdList(Map<String, String> paramMap);
+
+	public List<Map<String, String>> getProList(Map<String, String> paramMap);
+
+	public List<Map<String, String>> getEmpList(Map<String, String> paramMap);
 
 
 }

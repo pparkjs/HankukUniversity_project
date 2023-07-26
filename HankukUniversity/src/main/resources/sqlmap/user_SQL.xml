@@ -34,6 +34,66 @@
 			and (emp_name like '%'||#{searchWord}||'%')
 		</if>
  	</sql>
+ 	
+ 	<select id="getStdList" parameterType="map" resultType="map">
+ 		SELECT
+	        std_no,
+	        std_nm,
+	        a.dept_cd,
+	        b.dept_nm,
+	        std_telno
+	    FROM STUDENT A
+	    INNER JOIN department b on a.dept_cd = b.dept_cd
+	    where 1=1
+	    <if test='whatDept != null and whatDept != ""'>
+	    	and a.dept_cd = #{whatDept}
+	    </if>
+ 	</select>
+ 	
+ 	<select id="getProList" parameterType="map" resultType="map">
+ 		SELECT
+	        pro_no,
+	        pro_nm,
+	        a.dept_cd,
+	        b.dept_nm,
+	        pro_telno
+	    FROM PROFESSOR A
+	    INNER JOIN department b on a.dept_cd = b.dept_cd
+	    where 1=1
+	    <if test='whatDept != null and whatDept != ""'>
+	    	and a.dept_cd = #{whatDept}
+	    </if>
+ 	</select>
+ 	
+ 	<select id="getEmpList" parameterType="map" resultType="map">
+	    SELECT
+	        emp_no,
+	        emp_name,
+	        a.emp_dept_cd,
+	        b.com_cd_nm,
+	        emp_telno
+	    FROM EMPLOYEE A
+	    INNER JOIN com_code b on a.emp_dept_cd = b.com_cd
+	    where 1=1
+	    <if test='whatDept != null and whatDept != ""'>
+	    	and a.emp_dept_cd = #{whatDept}
+	    </if>
+	    
+ 	</select>
+ 	
+ 	<select id="getDeptList" resultType="map">
+ 		select
+ 			DEPT_CD, DEPT_NM
+ 		from DEPARTMENT
+ 	</select>
+ 	
+ 	<select id="getEmpDeptList" resultType="map">
+ 		select
+ 			COM_CD,
+ 			COM_CD_NM
+ 		from COM_CODE
+ 		where COM_CD_GRP = 'EMP_DEPT'
+ 	</select>
  
  	<insert id="insertUser" parameterType="userVO">
  		INSERT INTO users(

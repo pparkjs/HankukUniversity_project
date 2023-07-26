@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -33,6 +34,31 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int insertUser(UserVO userVO) {
 		return mapper.insertUser(userVO);
+	}
+	
+	@Override
+	public List<Map<String, String>> getEmpList(Map<String, String> paramMap) {
+		return mapper.getEmpList(paramMap);
+	}
+
+	@Override
+	public List<Map<String, String>> getProList(Map<String, String> paramMap) {
+		return mapper.getProList(paramMap);
+	}
+
+	@Override
+	public List<Map<String, String>> getStdList(Map<String, String> paramMap) {
+		return mapper.getStdList(paramMap);
+	}
+	
+	@Override
+	public List<Map<String, String>> getDeptList() {
+		return mapper.getDeptList();
+	}
+	
+	@Override
+	public List<Map<String, String>> getEmpDeptList() {
+		return mapper.getEmpDeptList();
 	}
 
 	@Override
