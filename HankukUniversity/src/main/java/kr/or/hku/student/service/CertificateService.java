@@ -18,4 +18,8 @@ public interface CertificateService {
 
 	public String jolupCertifiPrint(HashMap<String, String> certifiMap);
 
+	public String nextCtfctisNo();
+
+	public int payInfoInsert(HashMap<String, String> payInfoMap);
+
 }

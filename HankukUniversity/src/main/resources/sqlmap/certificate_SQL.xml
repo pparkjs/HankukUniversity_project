@@ -26,4 +26,60 @@
  			certificate_issu
  		ORDER BY 1 DESC
  	</select>
+ 	
+ 	<select id="nextCtfctisNo" resultType="string">
+ 		select 'CTFCTIS'||LPAD(seq_kyw.nextval + 1,3,'0') from dual
+ 	</select>
+ 	
+ 	<insert id="payInfoInsert" parameterType="map">
+ 		INSERT INTO certificate_issu(
+ 			ctfctis_no
+			,std_no
+			,ctfct_no
+			,ctfctis_ctfct_nm
+			,ctfctis_issu_dt
+			,ctfctis_expry_ymd
+			,ctfctis_all_amt
+			,avl_cd
+ 		) VALUES(
+ 			#{merchant_uid}
+ 			,#{stdNo}
+ 			,#{ctfctNo}
+ 			,#{name}
+ 			,sysdate
+ 			,sysdate+30
+ 			,#{amount}
+ 			,'Y'
+ 		)
+ 	</insert>
+ 	
+ 	<select id="getCompleteSemesters" parameterType="string" resultType="string">
+ 		SELECT
+		    DISTINCT(b.lecap_yr||'_'||b.lecap_sem)
+		FROM
+		    course_regist a INNER JOIN lecture_aply b ON(a.lecap_no=b.lecap_no)
+		WHERE
+		    a.std_no = #{stdNo}
+		AND
+			b.lecap_yr||'_'||b.lecap_sem != '2023_2'
+		ORDER BY 1
+ 	</select>
+ 	
+ 	<select id="getScoreInfo" parameterType="string" resultType="scoreInfoVO">
+ 		SELECT
+		    a.std_no
+		    ,b.lecap_yr||'_'||b.lecap_sem as lecap_yrsem
+		    ,b.sub_no
+		    ,c.sub_nm
+		    ,c.crs_classf_cd as course_clsf
+		    ,a.lecap_no
+		    ,a.crs_earned_crd
+		    ,a.crs_scr
+		FROM
+		    course_regist a INNER JOIN lecture_aply b ON(a.lecap_no=b.lecap_no)
+		    INNER JOIN subject c ON(b.sub_no=c.sub_no)
+		WHERE
+		    a.std_no = #{stdNo}
+		ORDER BY 2,5
+ 	</select>
  </mapper>
