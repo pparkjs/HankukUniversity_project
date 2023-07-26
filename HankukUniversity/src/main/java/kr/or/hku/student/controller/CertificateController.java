@@ -55,7 +55,7 @@ public class CertificateController {
 		StudentVO std = (StudentVO)session.getAttribute("std");
 		StudentVO vo = commonService.myAllInfo(std.getStdNo());
 		
-		List<CertificateIssuVO> certifiIssuList = certificateService.selectCertifiIssuList();
+		List<CertificateIssuVO> certifiIssuList = certificateService.selectCertifiIssuList(vo.getStdNo());
 		
 		model.addAttribute("std", vo);
 		model.addAttribute("certifiIssuList", certifiIssuList);
@@ -81,5 +81,26 @@ public class CertificateController {
 		}
 		
 		return certifiPrint;
+	}
+	
+	@GetMapping("/nextCtfctisNo")
+	@ResponseBody
+	public String nextCtfctisNo() {
+		String nextCtfctisNo = certificateService.nextCtfctisNo();
+		return nextCtfctisNo;
+	}
+	
+	@PostMapping("/payInfoInsert")
+	@ResponseBody
+	public String payInfoInsert(@RequestBody HashMap<String, String> payInfoMap) {
+		log.info("payInfoInsert() 실행...!");
+		log.info("payInfoMap : " + payInfoMap);
+		int status = certificateService.payInfoInsert(payInfoMap);
+		
+		if(status > 0) {
+			return "SUCCESS";
+		} else {
+			return "FAILED";
+		}
 	}
 }

@@ -26,7 +26,7 @@
 					이름:&nbsp;&nbsp;&nbsp;
 					<input type="text" class="nameText" value="${std.stdNm }" disabled>
 					학년:&nbsp;&nbsp;&nbsp;
-					<input type="text" class="yearText" value="4" disabled>
+					<input type="text" class="yearText" value="${std.grade}" disabled>
 					상태:&nbsp;&nbsp;&nbsp;
 					<c:set value="${std.stdSttsCd}" var="sttsCd"/>
 					<input type="text" class="semText" value="${std.stdSttsNm}" disabled>
@@ -114,20 +114,90 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script>
+var IMP = window.IMP;
+IMP.init('imp08611603');
+
+function kakaoPay(param) {
+    IMP.request_pay(
+    	{
+		    pg: "kakaopay",
+		    pay_method: "card",
+		    merchant_uid: param.merchant_uid,
+		    // merchant_uid: "00003",
+		    name: "[한국대학교]"+param.name,
+		    amount: param.amount,
+		    buyer_email: "hankukUni@hankuk.com",
+		    buyer_name: "한국대학교 학생지원팀",
+		    buyer_tel: "010-1234-5678",
+		    buyer_addr: "대전광역시 강남구 삼성동",
+		    buyer_postcode: "123-456",
+    	},
+		function (rsp) {
+			// callback
+			//rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+			// console.log("rsp",rsp);
+			// console.log("rsp.imp_uid",rsp.imp_uid);
+			if(rsp.success) {
+				// console.log("param",param);
+				$.ajax({
+					type: "POST",
+					url: "/hku/payInfoInsert",
+					data: JSON.stringify(param),
+					dataType: "text",
+					contentType: 'application/json;charset=UTF-8',
+					beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
+					success: function(res){
+						swal({
+							title: "결제 완료!",
+							text: "증명서 보관함으로 이동합니다",
+							icon: "success",
+							buttons: true,
+							dangerMode: true,
+						})
+						.then((willDelete) => {
+							if (willDelete) {
+								location.href = "/hku/certificate-list";
+							} else {
+								return false;
+							}
+						});
+					},
+					error: function(){
+						alert("실패");
+					}
+				});
+			}
+		}
+    );
+}
+
 function certificate(target){
-	// console.log("증명서 체킁");
 	var ctfctNo = $(target).parents('tr').children().eq(0).val();
 	// console.log("ctfctNo",ctfctNo);
-	var sttsCd = "${sttsCd}";	// 학생 상태코드
 
+	let payData = {
+		"merchant_uid": nextCtfctisNo(),
+		"name": "",
+		"ctfctNo": ctfctNo,
+		"amount": 0,
+		"stdNo": "${std.stdNo }"
+	};
+	
+	var sttsCd = "${sttsCd}";	// 학생 상태코드
 	if(ctfctNo == "CTFCT001"){
-		console.log("재학증명서 클릭");
+		// console.log("재학증명서 클릭");
+		payData.name = "재학증명서";
+		payData.amount = 1000;
+		
 	} else if(ctfctNo == "CTFCT002"){
-		console.log("성적증명서 클릭");
+		// console.log("성적증명서 클릭");
+		payData.name = "성적증명서";
+		payData.amount = 2000;
 		
 	} else if(ctfctNo == "CTFCT003"){
-		console.log("졸업증명서 클릭");
+		// console.log("졸업증명서 클릭");
 		if(sttsCd != "stts04"){
 			swal({
 				title: "졸업자만 츨력가능합니다!",
@@ -135,25 +205,29 @@ function certificate(target){
 			});
 			return false;
 		}
+		payData.name = "졸업증명서";
+		payData.amount = 1000;
 	}
+	// console.log("payData",payData);
+	kakaoPay(payData);
 }
 
+function nextCtfctisNo(){
+	let nextCtfctisNo = "";
+	$.ajax({
+		type: "GET",
+		url: "/hku/nextCtfctisNo",
+		dataType: "text",
+		async: false,
+		success: function(res){
+			console.log("res",res);
+			nextCtfctisNo = res;
+		},
+		error: function(){
 
-
-function scoreCertifi(){
-	console.log("성적증명서 체킁");
+		}
+	});
+	return nextCtfctisNo;
 }
-function graduCertifi(){
-	console.log("졸업증명서 체킁");
-	var sttsCd = "${sttsCd}";
-	console.log(sttsCd);
 
-	if(sttsCd != "stts04"){
-		swal({
-			title: "졸업자만 츨력가능합니다!",
-			icon: "error"
-		});
-		return false;
-	}
-}
 </script>
