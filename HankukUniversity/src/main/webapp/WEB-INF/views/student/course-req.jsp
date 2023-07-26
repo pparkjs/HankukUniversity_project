@@ -57,15 +57,15 @@
 					<table class="table" style="margin-top: -22px;">
 						<thead class="thead-dark">
 							<tr>
-								<th style="width: 130px;">과목코드</th>
-								<th style="width: 330px;">교과목명</th>
-								<th style="width: 40px;">이수구분</th>
-								<th style="width: 130px">담당교수</th>
-								<th style="width: 15px;">학년</th>
-								<th style="width: 15px;">학점</th>
-								<th style="width: 15px;">시수</th>
-								<th style="width: 40px;">강의시간</th>
-								<th style="width: 250px;">학과</th>
+								<th style="width: 200px;">과목코드</th>
+								<th style="width: 300px;">교과목명</th>
+								<th style="width: 60px;">이수구분</th>
+								<th style="width: 200px">담당교수</th>
+								<th style="width: 30px;">학년</th>
+								<th style="width: 30px;">학점</th>
+								<th style="width: 30px;">시수</th>
+								<th style="width: 80px;">강의시간</th>
+								<th style="width: 300px;">학과</th>
 								<th style="width: 20px;">정원</th>
 								<th style="width: 20px;">잔여</th>
 							</tr>
@@ -394,7 +394,7 @@ function cartList(){
 				craditSum += parseInt(`\${res[i].subCrd}`);
 				data += `<tr>
 							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].subNo}</th>
-							<td class="\${res[i].lecapNo} subNm" style="padding:8px;">
+							<td class="\${res[i].lecapNo} subNm" style="padding:8px; text-align:left;">
 								<div style="background:\${res[i].backColor}; font-weight: 900; width:30px; height:30px;">
 								</div>
 								<div class="nm">\${res[i].subNm}</div>
@@ -480,13 +480,13 @@ function rectureList(){
 			for(var i = 0; i < res.length; i++){
 				data += `<tr>
 							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].subNo}</th>
-							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].subNm}</td>
+							<td class="\${res[i].lecapNo}" style="padding:8px; text-align: left;">\${res[i].subNm}</td>
 							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].comCdNm}</td>
 							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].proNm}</td>
 							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].lecapTgGrade}</td>
 							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].subCrd}</td>
 							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].lecscHour}</td>
-							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].lecscDay} \${schedule[i]}</td>
+							<td class="\${res[i].lecapNo}" style="padding:8px; text-align: left;">\${res[i].lecscDay} \${schedule[i]}</td>
 							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].deptNm}</td>
 							<td class="\${res[i].lecapNo}" style="padding:8px;">\${res[i].lecapCpct}</td>`
 				if(`\${res[i].remainder}` > 0){
