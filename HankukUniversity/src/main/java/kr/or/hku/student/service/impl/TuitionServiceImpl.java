@@ -66,8 +66,8 @@ public class TuitionServiceImpl implements TuitionService {
 		StudentVO std = (StudentVO)session.getAttribute("std");
 		StudentVO vo = commonService.myAllInfo(std.getStdNo());
 		
-		log.info("stdVO : " + vo);
-		log.info("tutCertifiMap : " + tutCertifiMap.toString());
+//		log.info("stdVO : " + vo);
+//		log.info("tutCertifiMap : " + tutCertifiMap.toString());
 		String tutYr = tutCertifiMap.get("tutYr");
 		String tutSem = tutCertifiMap.get("tutSem");
 		String tutAmt = tutCertifiMap.get("tutAmt");
@@ -86,16 +86,16 @@ public class TuitionServiceImpl implements TuitionService {
         String uploadPath = resourcePath;
         
         String pdfName = stdName+"_등록확인서.pdf";
-		String existingPdfPath = uploadPath + "/tut_certificate.pdf";
-		log.info("existingPdfPath : " + existingPdfPath);
-        String modifiedPdfPath = uploadPath + "/";
-        log.info("modifiedPdfPath1 : " + modifiedPdfPath);
+		String existingPdfPath = uploadPath + "/itext/tut_certificate.pdf";
+//		log.info("existingPdfPath : " + existingPdfPath);
+        String modifiedPdfPath = uploadPath + "/itext/certificate/";
+//        log.info("modifiedPdfPath1 : " + modifiedPdfPath);
         File file = new File(modifiedPdfPath);
         if(!file.exists()) {
         	file.mkdirs();
         }
         modifiedPdfPath += pdfName;
-        log.info("modifiedPdfPath2 : " + modifiedPdfPath);
+//        log.info("modifiedPdfPath2 : " + modifiedPdfPath);
         
         try {
         	// 기존의 PDF파일 읽기
@@ -107,11 +107,11 @@ public class TuitionServiceImpl implements TuitionService {
 			PdfFont font = PdfFontFactory.createFont("C:/Windows/Fonts/batang.ttc,0", EmbeddingStrategy.FORCE_EMBEDDED);
 
 			// 학교 로고 이미지 워터마크
-			String imgPath = "C:\\uploadfiles\\logo_water.png";
+			String imgPath = "C:\\uploadfiles\\itext\\logo_water.png";
 			ImageData imageData = ImageDataFactory.create(imgPath);
 			Image waterImage = new Image(imageData);
-			log.info("width : "+waterImage.getImageWidth());
-			log.info("height : "+waterImage.getImageHeight());
+//			log.info("width : "+waterImage.getImageWidth());
+//			log.info("height : "+waterImage.getImageHeight());
 			waterImage.setWidth(350f);
 			waterImage.setHeight(350f);
 			waterImage.setFixedPosition(131, 230);
@@ -202,9 +202,9 @@ public class TuitionServiceImpl implements TuitionService {
 		String uploadPath = resourcePath;
         
         String pdfName = stdNm+"_등록금고지서.pdf";
-		String existingPdfPath = uploadPath + "/tut_bill_certificate.pdf";
+		String existingPdfPath = uploadPath + "/itext/tut_bill_certificate.pdf";
 		log.info("existingPdfPath : " + existingPdfPath);
-        String modifiedPdfPath = uploadPath + "/";
+        String modifiedPdfPath = uploadPath + "/itext/certificate/";
         log.info("modifiedPdfPath1 : " + modifiedPdfPath);
         File file = new File(modifiedPdfPath);
         if(!file.exists()) {
@@ -223,7 +223,7 @@ public class TuitionServiceImpl implements TuitionService {
 			PdfFont font = PdfFontFactory.createFont("C:/Windows/Fonts/batang.ttc,0", EmbeddingStrategy.FORCE_EMBEDDED);
 
 			// 학교 로고 이미지 워터마크
-			String imgPath = "C:\\uploadfiles\\logo_water.png";
+			String imgPath = "C:\\uploadfiles\\itext\\logo_water.png";
 			ImageData imageData = ImageDataFactory.create(imgPath);
 			Image waterImage = new Image(imageData);
 			log.info("width : "+waterImage.getImageWidth());
@@ -295,10 +295,6 @@ public class TuitionServiceImpl implements TuitionService {
 		int tutYr_ = Integer.parseInt(tutYr);
 		int stdMtcltnYr_ = Integer.parseInt(stdMtcltnYr);
 		
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-//        String formattedDate = sdf.format(new Date());
-//        int todayYear = Integer.parseInt(formattedDate);
-        
         int fGrade = tutYr_ - stdMtcltnYr_ + 1;
         return fGrade;
 		
