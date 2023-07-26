@@ -1067,7 +1067,7 @@ footer .footer_w .sns a.youtube{background-image:url(../../images/work/footer_sn
     width:70%;
     padding:30px 50px;
     background:#fff}
-.main_wrap .main_cont + .main_cont{border-left:1px solid #E4E8F5;}
+/* .main_wrap .main_cont + .main_cont{border-left:1px solid #E4E8F5;} */
 .main_wrap .main_cont.my_info{
     padding-bottom:110px;
     background: #800000 url(/images/portal/main_my_info_bg.png) 50% 100% no-repeat;

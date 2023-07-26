@@ -253,9 +253,9 @@
 <!--                     </div> -->
 
                 </div>
-                <div class="main_cont" id="jjgDiv" style="height:auto; overflow: auto;">
+                <div class="main_cont" id="jjgDiv" style="height:auto; overflow: auto; background-color: rgba( 0, 0, 0, 0.6 );">
                     <!-- 헤더========================================================================= -->
-                    <div class="main_cont_header" style="height: 50px; border: 1px solid black;">
+                    <div class="main_cont_header" style="height: 50px; border: 1px solid #6e6e6e; margin-left: -49px; width: 1008px; background-color: #6e6e6e8f">
                         <div class="">
                             <h5 class="mb-0"></h5>
                             <div class="hWrap">

@@ -16,6 +16,9 @@
     position: relative;
     z-index: 999;
 }
+.table-wrap2 td{
+	cursor: pointer;
+}
 .table thead th {
     border: none;
     padding: 7px;
@@ -34,6 +37,9 @@
     height: 2rem;
     border-radius: 0.375rem;
     border-color: #CCCCCC;
+}
+.grid-stack-item-content{
+	height: 440px;
 }
 </style>
 <div class="container-fluid mt-3">
@@ -61,7 +67,7 @@
                     </div>   
                 </div>
                 <div class="grid-stack-item portlet2" gs-w="12" gs-h="6" gs-no-resize="true">
-                    <div class="grid-stack-item-content">
+                    <div class="grid-stack-item-content" >
                         <div class="card portlet-item" style="margin-bottom: -31px; height: 394px;">
                             <div class="card-body" style="padding: 0.25rem; padding-top: 10px;">
                                 <div style="display: flex; margin-left: 11px;">
@@ -85,7 +91,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid-stack-item-content">
+                        <div class="grid-stack-item-content" style="height: 360px;">
                         	<div class="tab-content">
                                 <div class="tab-pane fade show active" id="profile1">
                                     <div class="table-wrap2">
