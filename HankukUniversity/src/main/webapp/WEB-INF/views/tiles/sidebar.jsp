@@ -228,7 +228,7 @@
 				</a>
 				<ul aria-expanded="false">
 					<li><a href="/hku/admin/user-management">사용자관리</a></li>
-					<li><a href="#">문자 발송</a></li>
+					<li><a href="/hku/admin/send-text-msg">문자 발송</a></li>
 				</ul>
 			</li>
 			
