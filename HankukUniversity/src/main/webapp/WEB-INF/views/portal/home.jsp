@@ -350,5 +350,28 @@ $(document).ready(function () {
             }
         });
     }
+    
+    $('#acTbody').on('click','tr',function(){
+        let noticeNo = $(this).find('input[type="hidden"]').val();
+        let noticeClsf = "uni";
+        geDetail(noticeNo,noticeClsf);
+    });
+    
+    $('#epTbody').on('click','tr',function(){
+        let noticeNo = $(this).find('input[type="hidden"]').val();
+        let noticeClsf = "rcrt";
+        geDetail(noticeNo,noticeClsf);
+    });
+    
+    $('#dpTbody').on('click','tr',function(){
+        let noticeNo = $(this).find('input[type="hidden"]').val();
+        let noticeClsf = "${std.deptCd}";
+        geDetail(noticeNo,noticeClsf);
+    });
+    
+    // detail전송 frm
+    function geDetail(pObjVal, pClsf){
+    	location.href = `/hku/portal/notice-detail?noticeNo=\${pObjVal}&noticeDiv=\${pClsf}`;
+    }
 });
 </script>
