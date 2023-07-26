@@ -14,7 +14,7 @@ public interface CertificateMapper {
 
 	public List<CertificateVO> selectCertifiList();
 
-	public List<CertificateIssuVO> selectCertifiIssuList();
+	public List<CertificateIssuVO> selectCertifiIssuList(String stdNo);
 
 	public String nextCtfctisNo();
 

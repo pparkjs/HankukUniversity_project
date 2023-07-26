@@ -26,7 +26,7 @@
 					이름:&nbsp;&nbsp;&nbsp;
 					<input type="text" class="nameText" id="stdNm" value="${std.stdNm }" disabled>
 					학년:&nbsp;&nbsp;&nbsp;
-					<input type="text" class="yearText" id="stdGrade" value="4" disabled>
+					<input type="text" class="yearText" id="stdGrade" value="${std.grade}" disabled>
 					상태:&nbsp;&nbsp;&nbsp;
 					<c:set value="${std.stdSttsCd}" var="sttsCd"/>
 					<input type="text" class="semText" value="${std.stdSttsNm}" disabled>
@@ -83,34 +83,43 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${certifiIssuList}" var="certifiIssu">
-								<tr>
-									<input type="hidden" value="${certifiIssu.ctfctisNo}"/>
-									<input type="hidden" value="${certifiIssu.ctfctNo}"/>
-									<td>PDF</td>
-									<td>${certifiIssu.ctfctisCtfctNm}</td>
-									<td>
-										<fmt:parseDate value="${certifiIssu.ctfctisIssuDt}" var="ctfctisIssuDt" pattern="yyyy-MM-dd HH:mm:ss"/>
- 										<fmt:formatDate value="${ctfctisIssuDt}" var="ctfctisIssuDt" pattern="yyyy-MM-dd"/>
-										${ctfctisIssuDt}
-									</td>
-									<td>
-										<fmt:parseDate value="${certifiIssu.ctfctisExpryYmd}" var="ctfctisExpryYmd" pattern="yyyy-MM-dd HH:mm:ss"/>
- 										<fmt:formatDate value="${ctfctisExpryYmd}" var="ctfctisExpryYmd" pattern="yyyy-MM-dd"/>
-										${ctfctisExpryYmd}
-									</td>
-									<td>
-										<c:choose>
-											<c:when test="${certifiIssu.avlCd eq 'Y'}">
-												<button type="button" class="btn btn-sm btn-danger" style="background: #0070c0; border-color: #0070c0;" onclick="certificate(this)">확인서 출력</button>
-											</c:when>
-											<c:otherwise>
-												<button type="button" class="btn btn-sm btn-danger" disabled="disabled" style="background: #ff4343; border-color: #ff4343;" onclick="certificate(this)">기간 만료</button>
-											</c:otherwise>
-										</c:choose>
-									</td>
-								</tr>
-							</c:forEach>
+							<c:choose>
+								<c:when test="${not empty certifiIssuList}">
+									<c:forEach items="${certifiIssuList}" var="certifiIssu">
+										<tr>
+											<input type="hidden" value="${certifiIssu.ctfctisNo}"/>
+											<input type="hidden" value="${certifiIssu.ctfctNo}"/>
+											<td>PDF</td>
+											<td>${certifiIssu.ctfctisCtfctNm}</td>
+											<td>
+												<fmt:parseDate value="${certifiIssu.ctfctisIssuDt}" var="ctfctisIssuDt" pattern="yyyy-MM-dd HH:mm:ss"/>
+												<fmt:formatDate value="${ctfctisIssuDt}" var="ctfctisIssuDt" pattern="yyyy-MM-dd"/>
+												${ctfctisIssuDt}
+											</td>
+											<td>
+												<fmt:parseDate value="${certifiIssu.ctfctisExpryYmd}" var="ctfctisExpryYmd" pattern="yyyy-MM-dd HH:mm:ss"/>
+												<fmt:formatDate value="${ctfctisExpryYmd}" var="ctfctisExpryYmd" pattern="yyyy-MM-dd"/>
+												${ctfctisExpryYmd}
+											</td>
+											<td>
+												<c:choose>
+													<c:when test="${certifiIssu.avlCd eq 'Y'}">
+														<button type="button" class="btn btn-sm btn-danger" style="background: #0070c0; border-color: #0070c0;" onclick="certificate(this)">확인서 출력</button>
+													</c:when>
+													<c:otherwise>
+														<button type="button" class="btn btn-sm btn-danger" disabled="disabled" style="background: #ff4343; border-color: #ff4343;" onclick="certificate(this)">기간 만료</button>
+													</c:otherwise>
+												</c:choose>
+											</td>
+										</tr>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr>
+										<td colspan="5">발급한 증명서가 없습니다.</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
 						</tbody>
 					</table>
 				</div>

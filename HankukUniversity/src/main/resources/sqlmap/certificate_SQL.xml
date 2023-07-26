@@ -12,7 +12,7 @@
 			certificate
  	</select>
  	
- 	<select id="selectCertifiIssuList" resultType="certificateIssuVO">
+ 	<select id="selectCertifiIssuList" parameterType="string" resultType="certificateIssuVO">
  		SELECT
 	 		ctfctis_no
 			,std_no
@@ -24,6 +24,8 @@
 			,avl_cd
  		FROM
  			certificate_issu
+ 		WHERE 
+ 			std_no = #{stdNo}
  		ORDER BY 1 DESC
  	</select>
  	
