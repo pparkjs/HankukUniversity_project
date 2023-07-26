@@ -57,8 +57,8 @@ public class CertificateServiceImpl implements CertificateService {
 	}
 
 	@Override
-	public List<CertificateIssuVO> selectCertifiIssuList() {
-		return mapper.selectCertifiIssuList();
+	public List<CertificateIssuVO> selectCertifiIssuList(String stdNo) {
+		return mapper.selectCertifiIssuList(stdNo);
 	}
 
 	@Override
@@ -81,8 +81,8 @@ public class CertificateServiceImpl implements CertificateService {
         String formattedDate = sdf.format(new Date());
         
         String pdfName = stdNm+"_재학증명서.pdf";
-		String existingPdfPath = uploadPath + "/basic_certifi.pdf";
-        String modifiedPdfPath = uploadPath + "/";
+		String existingPdfPath = uploadPath + "\\itext\\basic_certifi.pdf";
+        String modifiedPdfPath = uploadPath + "/itext/certificate/";
         File file = new File(modifiedPdfPath);
         if(!file.exists()) {
         	file.mkdirs();
@@ -100,7 +100,7 @@ public class CertificateServiceImpl implements CertificateService {
 			PdfFont font = PdfFontFactory.createFont("C:/Windows/Fonts/batang.ttc,0", EmbeddingStrategy.FORCE_EMBEDDED);
 			
 			// 학교 로고 이미지 워터마크
-			String imgPath = "C:\\uploadfiles\\logo_water.png";
+			String imgPath = "C:\\uploadfiles\\itext\\logo_water.png";
 			ImageData imageData = ImageDataFactory.create(imgPath);
 			Image waterImage = new Image(imageData);
 			log.info("width : "+waterImage.getImageWidth());
@@ -422,14 +422,12 @@ public class CertificateServiceImpl implements CertificateService {
     		    		.setBorder(Border.NO_BORDER);
             	semesterTable.addCell(semesterCell);
             	
-            	
             	for(int j=0; j<scoreInfoList.size(); j++) {
             		String complete_ys = scoreInfoList.get(j).getLecapYrsem();
             		if(completeSemesterList.get(i).equals(complete_ys)) {
             			// 테이블 만들어서 셀에 삽입
             			
             			// 해당 학기성적에 과목구분 넣기
-            			log.info("courseClsfFormat(scoreInfoList.get(j).getCourseClsf()) : " + courseClsfFormat(scoreInfoList.get(j).getCourseClsf()));
             			scoreCell = new Cell();
             			scoreCell.add(new Paragraph(courseClsfFormat(scoreInfoList.get(j).getCourseClsf())).setFont(font).setFontSize(6))
 			    		            .setTextAlignment(TextAlignment.CENTER)
@@ -445,7 +443,6 @@ public class CertificateServiceImpl implements CertificateService {
             			scoreTable.addCell(scoreCell);
             			
             			// 해당 학기성적에 이수학점 넣기
-            			log.info("scoreInfoList.get(j).getCrsEarnedCrd() : " + scoreInfoList.get(j).getCrsEarnedCrd());
             			scoreCell = new Cell();
             			scoreCell.add(new Paragraph(scoreInfoList.get(j).getCrsEarnedCrd()).setFont(font).setFontSize(6))
             			.setTextAlignment(TextAlignment.CENTER)
@@ -465,9 +462,7 @@ public class CertificateServiceImpl implements CertificateService {
             	cellList.get(i).add(semesterTable);
             	cellList.get(i).add(scoreTable);
             }
-            
-            
-            
+
             
             Table sub_divi = new Table(2);
             

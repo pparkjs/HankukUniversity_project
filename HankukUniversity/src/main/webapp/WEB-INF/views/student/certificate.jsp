@@ -26,7 +26,7 @@
 					이름:&nbsp;&nbsp;&nbsp;
 					<input type="text" class="nameText" value="${std.stdNm }" disabled>
 					학년:&nbsp;&nbsp;&nbsp;
-					<input type="text" class="yearText" value="4" disabled>
+					<input type="text" class="yearText" value="${std.grade}" disabled>
 					상태:&nbsp;&nbsp;&nbsp;
 					<c:set value="${std.stdSttsCd}" var="sttsCd"/>
 					<input type="text" class="semText" value="${std.stdSttsNm}" disabled>

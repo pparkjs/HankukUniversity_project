@@ -55,7 +55,7 @@ public class CertificateController {
 		StudentVO std = (StudentVO)session.getAttribute("std");
 		StudentVO vo = commonService.myAllInfo(std.getStdNo());
 		
-		List<CertificateIssuVO> certifiIssuList = certificateService.selectCertifiIssuList();
+		List<CertificateIssuVO> certifiIssuList = certificateService.selectCertifiIssuList(vo.getStdNo());
 		
 		model.addAttribute("std", vo);
 		model.addAttribute("certifiIssuList", certifiIssuList);
