@@ -172,11 +172,6 @@
     </div>
 </div>
 <%-- ?${_csrf.parameterName}=${_csrf.token} --%>
-<form action="/hku/portal/notice-detail" method="get" id="detailFrm">
-	<input type="hidden" name="noticeNo" id="dNoticeNo">
-	<input type="hidden" name="noticeDiv" id="dNoticeDiv">
-	<sec:csrfInput/>
-</form>
 <script>
 $(function(){
     var profile1 = document.querySelector("#profile1");
@@ -379,27 +374,24 @@ $(function(){
     $('#acTbody').on('click','tr',function(){
         let noticeNo = $(this).find('input[type="hidden"]').val();
         let noticeClsf = "uni";
-        settingFrm(noticeNo,noticeClsf);
+        geDetail(noticeNo,noticeClsf);
     });
     
     $('#epTbody').on('click','tr',function(){
         let noticeNo = $(this).find('input[type="hidden"]').val();
         let noticeClsf = "rcrt";
-        settingFrm(noticeNo,noticeClsf);
+        geDetail(noticeNo,noticeClsf);
     });
     
     $('#dpTbody').on('click','tr',function(){
         let noticeNo = $(this).find('input[type="hidden"]').val();
         let noticeClsf = sendData.deptCd;
-        settingFrm(noticeNo,noticeClsf);
+        geDetail(noticeNo,noticeClsf);
     });
     
     // detail전송 frm
-    function settingFrm(pObjVal, pClsf){
-        $('#dNoticeNo').val(pObjVal);
-        $('#dNoticeDiv').val(pClsf);
-        console.log($('#dNoticeNo').val() + "  " + $('#dNoticeDiv').val());
-        $('#detailFrm').submit();
+    function geDetail(pObjVal, pClsf){
+    	location.href = `/hku/portal/notice-detail?noticeNo=\${pObjVal}&noticeDiv=\${pClsf}`;
     }
 });
 </script>
