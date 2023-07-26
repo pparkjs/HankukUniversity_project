@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="true"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,17 +27,17 @@
 	<h1 id="temp" style="color:white; z-index: 1000;"></h1>
 		
 </div>
+<%-- <p>${key}</p> --%>
 </body>
 <script>
 //오픈웨더 날씨API키 입력해야됨
-const api_key = '';
 
 function onGeoOk(position) {
   const lat = position.coords.latitude;
   console.log("내용1:",lat);
   const lon = position.coords.longitude;
   console.log("내용2:",lon)
-  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}&lang=kr&units=metric`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=\${lat}&lon=\${lon}&appid=${key}&lang=kr&units=metric`;
 
   fetch(url)
     .then(response => response.json())
@@ -46,7 +46,7 @@ function onGeoOk(position) {
       console.log(data.name);
       $('#city')[0].innerText = data.name;
   
-//       cod = 802;
+//       cod = 800;
       cod = parseInt(data.cod);
       if(cod >= 200 && cod < 300 ){
     	  $('#box').css('background-image','url(/images/weather/stormclouds.jpg)');
