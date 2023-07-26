@@ -1,7 +1,9 @@
 package kr.or.hku.classroom.service;
 
 import java.util.List;
+import java.util.Map;
 
+import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.vo.AttendanceVO;
 
 public interface AttendanceService {
@@ -22,15 +24,21 @@ public interface AttendanceService {
 	
 	
 // ------------------------ 학생 ----------------------------//  
+	// 출석번호 가져오기
+	public Map<String, Object> getAtdcNo(AttendanceVO attend);
 	
-
-//	public List<AttendanceVO> dmrList();
-//	
-//	public AttendanceVO dmrDetail(String stdNo);
-//	
-//	public int writeDmr(AttendanceVO attendanceVO);
-//	
-//	public int updateDmr(AttendanceVO attendanceVO);
-//	
-//	public int deleteDmr(String stdNo);
+	// 이의신청하기 
+	public ServiceResult submitAttendDmr(AttendanceVO attend);
+	
+	// 이의신청현황 리스트 
+	public List<AttendanceVO> attenDmrList(AttendanceVO vo);
+	
+	// 이의신청 주차 중복 확인 
+	public int dmrCheck(int atdcNo);
+	
+	// 이의신청 상세
+	public AttendanceVO dmrDetail(int atdcNo);
+	
+	// 이의신청 삭제 
+	public ServiceResult deleteAttendDmr(int atdcNo);
 }

@@ -40,13 +40,15 @@
 	<script type="text/javascript" src="/resources/vendor/toastr/js/toastr.min.js"></script>
 </head>
 <body>
-	<!-- Preloader start(사이트 이동할 때 로딩되는 것 같은 부분) -->
-    <div id="preloader">
-		<div class="lds-ripple">
-			<div></div>
-			<div></div>
+	<!-- Preloader start -->
+	<div id="preloader">
+		<div class="loader">
+			<img src="/images/로딩로고.png" width="205px;" height="205px;" style="margin-top: 26px; margin-left: -16px;">
+			<svg class="circular" viewBox="25 25 50 50">
+	                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+	        </svg>
 		</div>
-    </div>
+	</div>
     
     <!--***** Main wrapper start *****-->
     <div id="main-wrapper">

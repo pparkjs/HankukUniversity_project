@@ -4,7 +4,7 @@
 <style>
 .table-wrap {
     overflow: scroll;
-    height: 410px;
+    height: 570px;
     margin-top: 13px;
 }
 .thead-dark{
@@ -42,7 +42,7 @@
 			<div class="card-header border-0 pb-0 ">
 				<h5 class="card-title">개설 신청 관리</h5>
 			</div>
-			<div class="card-body">
+			<div class="card-body" style="height: 600px">
 				<div class="tab-content" id="pills-tabContent">
 					<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 						<div class="table-wrap">

@@ -1,10 +1,12 @@
 package kr.or.hku.classroom.serviceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.mapper.AttendanceMapper;
 import kr.or.hku.classroom.service.AttendanceService;
 import kr.or.hku.classroom.vo.AttendanceVO;
@@ -38,32 +40,66 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public int updateAttendance(AttendanceVO vo) {
 		return attendanceMapper.updateAttendance(vo);
 	}
+
 		
 	
 // ------------------------ 학생 출석 이의신청 ----------------------------// 
-//	@Override
-//	public List<AttendanceVO> dmrList() {
-//		return attendanceMapper.dmrList();
-//	}
-//
-//	@Override
-//	public AttendanceVO dmrDetail(String stdNo) {
-//		return attendanceMapper.dmrDetail(stdNo);
-//	}
-//
-//	@Override
-//	public int writeDmr(AttendanceVO attendanceVO) {
-//		return attendanceMapper.writeDmr(attendanceVO);
-//	}
-//
-//	@Override
-//	public int updateDmr(AttendanceVO attendanceVO) {
-//		return attendanceMapper.updateDmr(attendanceVO);
-//	}
-//
-//	@Override
-//	public int deleteDmr(String stdNo) {
-//		return attendanceMapper.deleteDmr(stdNo);
-//	}
+	@Override
+	public Map<String, Object> getAtdcNo(AttendanceVO attend) {
+		return attendanceMapper.getAtdcNo(attend);
+	}
+
+	@Override
+	public ServiceResult submitAttendDmr(AttendanceVO vo) {
+		ServiceResult result = null;
+		int check = attendanceMapper.dmrCheck(vo.getAtdcNo());
+		
+		if(check > 0) {
+			result = ServiceResult.EXIST;
+		}else {
+			int cnt = attendanceMapper.submitAttendDmr(vo);
+			
+			if(cnt > 0) {
+				result = ServiceResult.OK;
+			}else {
+				result = ServiceResult.FAILED;
+			}
+		}
+		return result;
+	}
+	
+	// 이의신청 현황 리스트
+	@Override
+	public List<AttendanceVO> attenDmrList(AttendanceVO vo) {
+		return attendanceMapper.attenDmrList(vo);
+	}
+	
+	// 이의신청 중복 확인
+	@Override
+	public int dmrCheck(int atdcNo) {
+		return attendanceMapper.dmrCheck(atdcNo);
+	}
+	
+	
+	
+	// 이의신청 삭제 
+	@Override
+	public ServiceResult deleteAttendDmr(int atdcNo) {
+		ServiceResult result = null;
+		int check = attendanceMapper.deleteAttendDmr(atdcNo);
+		
+		if(check > 0) {      
+			result = ServiceResult.OK;
+		} else {
+			result = ServiceResult.FAILED;
+		}
+		return result;
+	}
+
+	@Override
+	public AttendanceVO dmrDetail(int atdcNo) {
+		return attendanceMapper.dmrDetail(atdcNo);
+	}
+
 	
 }

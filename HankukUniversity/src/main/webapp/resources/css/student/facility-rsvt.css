@@ -222,6 +222,14 @@
 	background: none;
     border: none;
 }
+.map-wrap button img{
+	transition: transform 1.5s ease-in-out
+}
+.map-wrap button img:hover{
+/* 	transform:translateY(-15px); */
+	transform: rotateY(360deg);
+}
+
 .marker1, .marker2, .marker3{
 	width: 76px;
     height: 80px;

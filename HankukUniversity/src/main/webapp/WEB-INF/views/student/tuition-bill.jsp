@@ -151,6 +151,7 @@ function tutBillPrint(){
 	var stdNo = "${std.stdNo }";
 	var stdNm = "${std.stdNm }";
 	var deptNm = "${std.deptNm }";
+	var grade = "${std.grade }";
 	var currentYear = "${std.currentYear }";
 	var currentSem = "${std.currentSem }";
 	var tutAmt = "${tuition.tutAmt}";
@@ -162,6 +163,7 @@ function tutBillPrint(){
 		"stdNo": stdNo,
 		"stdNm": stdNm,
 		"deptNm": deptNm,
+		"grade": grade,
 		"currentYear": currentYear,
 		"currentSem": currentSem,
 		"tutAmt": tutAmt,
