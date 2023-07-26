@@ -184,8 +184,8 @@
                         </div>
                         <div class="text_wrap">
                             <p class="balloon">환영합니다!</p>
-                            <p><span style="margin-right: 10px;">컴퓨터공학과</span><span style="font-size: 25px;">2014161007</span></p>
-                            <p class="en title">주지훈 님</p>
+                            <p><span style="margin-right: 10px;">컴퓨터공학과</span><span style="font-size: 25px;"><c:out value="${std.stdNo }"/></span></p>
+                            <p class="en title"><c:out value="${std.stdNm }"/> 님</p>
                             <ul>
                                 <li>
                                     <a class="LK046_A bb" href="/main/logout">로그아웃</a>
@@ -325,8 +325,10 @@ refresh.addEventListener("click", function() {
 });
 var myWindow;
 $(document).ready(function(){
-    myWindow.onbeforeunload = function() {
-    	location.href="/main/logout";
-    };
+	if (myWindow) {
+		myWindow.onbeforeunload = function() {
+	    	location.href="/main/logout";
+	    };
+	}
 });
 </script>
