@@ -67,6 +67,7 @@
 							<td>${subject.subNm}</td>
 							<td>${subject.subNo}</td>
 							<c:choose>
+							<c:when test="${subject.crsScr ne null}">
 								<c:when test="${subject.evalYnCd eq 'Y'}">
 									<td>${subject.subCrd}</td>
 									<td>생략</td>
@@ -93,6 +94,20 @@
 									<button type="button" class="btn btn-primary pro1 testBtn" style="border:none;">강의평가</button>
 									</td>
 								</c:otherwise>
+								</c:when>
+								<c:when test="${subject.crsScr eq null}">
+									<td> - </td>
+									<td> - </td>
+									<td> - </td>
+									<td> - </td>
+									<td> - </td>
+									<td> - </td>
+									<td> - </td>
+									<td>
+									<input type="hidden" value="${subject.lecapNo}" class="hlecapNo">
+									<button type="button" class="btn btn-primary pro1 testBtn" style="background-color: gray; color: whiter; border:none; cursor:default;">열람불가</button>
+									</td>
+								</c:when>
 							</c:choose>
 						</tr>
 					</c:forEach>
@@ -332,16 +347,16 @@ let one;
 </script>
 <c:forEach items="${map.stdInfo}" var="stdVO">
 <script>
-	 one = {
-		stdNo:'${stdVO.stdNo}' ,
-		stdNm:'${stdVO.stdNm}',
-		stdMjrCrd:'${stdVO.stdMjrCrd}',
-		stdCtrlCrd:'${stdVO.stdCtrlCrd}',
-		subCrd:'${stdVO.subCrd}',
-		deptNm:'${stdVO.deptNm}',
-		colNm:'${stdVO.colNm}',
-		stdSttsNm:'${stdVO.stdSttsNm}',
-		crsClassfNm:'${stdVO.crsClassfNm}'
+ one = {
+	stdNo:'${stdVO.stdNo}' ,
+	stdNm:'${stdVO.stdNm}',
+	stdMjrCrd:'${stdVO.stdMjrCrd}',
+	stdCtrlCrd:'${stdVO.stdCtrlCrd}',
+	subCrd:'${stdVO.subCrd}',
+	deptNm:'${stdVO.deptNm}',
+	colNm:'${stdVO.colNm}',
+	stdSttsNm:'${stdVO.stdSttsNm}',
+	crsClassfNm:'${stdVO.crsClassfNm}'
 	}
 	stdInfo.push(one);
 </script>	

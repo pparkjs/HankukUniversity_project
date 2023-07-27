@@ -101,4 +101,14 @@
  		DELETE FROM alarm
  		WHERE alarm_no = #{alarmNo}
  	</delete>
+ 	
+ 	<!-- 교수 대쉬보드 정보가져오기 -->
+ 	<select id="myProInfo" parameterType="string" resultType="professorVO">
+ 	/*kr.or.hku.common.mapper.CommonMapper.myProInfo*/
+ 		SELECT a.pro_no, a.dept_cd, a.pro_nm, b.dept_nm, c.col_nm
+		FROM professor a, department b, college c
+		WHERE a.dept_cd = b.dept_cd
+		AND c.col_cd = b.col_cd
+		AND a.pro_no = #{proNo}
+ 	</select>
  </mapper>

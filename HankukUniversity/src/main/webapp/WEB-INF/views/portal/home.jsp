@@ -435,7 +435,7 @@ $(document).ready(function () {
 });
 
 var calClsf = $('#calClsf');
-
+var clickDate;
 presentCourseList();
 //수강중인강의가져오기
 function presentCourseList(){
@@ -453,7 +453,7 @@ function presentCourseList(){
 			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 		},
 		success : function(res){
-			
+			console.log("가져옴", res)
 			var schedule = []; 
 			for(var i = 0; i < res.length; i++){
 				var period = []
@@ -462,6 +462,7 @@ function presentCourseList(){
 				}
 				schedule.push(period)
 			}
+			console.log("스케쥴", schedule);
 			
 			var timeTable = ''
 			for(var i = 1; i <= 9; i++){
@@ -558,11 +559,16 @@ $("#datepicker-container").datepicker({
 		    console.log(`\${year}-\${monthCh}`)
 
             getCalendarInfoList(`\${year}-\${monthCh}`)
+            clickDate = `\${year}-\${monthCh}`;
 		}
 });	
 
 $("#calClsf").on("change", function(){
-	getCalendarInfoList(getCurrentYearMonth());
+	if(clickDate){
+		getCalendarInfoList(clickDate);
+	}else{
+		getCalendarInfoList(getCurrentYearMonth());
+	}
 })
 
 // 학사 일정 가져오기

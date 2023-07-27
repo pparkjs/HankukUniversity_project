@@ -28,6 +28,10 @@ public interface StudyService {
 	public List<StudyVO> messageList(int studyNo);
 	
 	public void readChatMessage(StudyVO studyVo);
+	
+	// 안읽은 멤버들 등록
+	public int addUnreadMem(StudyVO studyVo);
+	
 	// 메세지 등록
 	public int insertMessage(StudyVO studyVo);
 	// 스터디원 시간표 조회
@@ -35,7 +39,9 @@ public interface StudyService {
 	// 가입신청 상세보기
 	public StudyVO applDetail(StudyVO studyVo);
 	// 스터디 생성
-	public void addStudy(StudyVO studyVo);
+	public int addStudy(StudyVO studyVo);
+	//스터디장인지 확인
+	public String selectRole(StudyVO studyVo);
 	// 스터디 삭제
 	public void delStudy(int studyNo);
 	public int delStudyMem(int studyNo);
@@ -44,12 +50,16 @@ public interface StudyService {
 	// 스터디 가입신청 승인/반려
 	public int assignStudy(int joinNo);
 	public int rejStudy(int joinNo);
+	// 가입신청 승인시 스터디멤버로 추가
+	public int insertStudyMem(StudyVO studyVo);
 	// 스터디 탈퇴
 	public int exitStudy(StudyVO studyVo);
 	// 스터디 게시판 리스트
 	public List<StudyVO> studyBoardList();
 	// 총 게시글 개수
-	public int boardCount(PaginationInfoVO<StudyVO> pagingVO);
+	public int boardCount(PaginationInfoVO<StudyVO> pagingVO);	
+	
+	public StudyVO getFilePath(String stdNo);
 	// 검색된 게시글
 	public List<StudyVO> boardSelect(PaginationInfoVO<StudyVO> pagingVO);
 	// 본인이 스터디장으로 있는 스터디 목록

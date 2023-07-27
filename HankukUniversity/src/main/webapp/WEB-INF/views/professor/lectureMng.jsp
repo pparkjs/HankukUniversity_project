@@ -100,8 +100,8 @@
 					</div>
 					<div class="card-body ccc"
 						style="padding-top: 0; overflow: scroll;">
-						<table class="table" style="border-spacing: 1px;">
-							<thead>
+						<table class="table" style="border-spacing: 0px;">
+							<thead >
 								<tr>
 									<th>과목코드</th>
 									<th>학과</th>
@@ -338,9 +338,7 @@
         var year = new Date().getFullYear();
         var month = new Date().getMonth();
         /*■■■■■■■■■■■■전역변수 설정 영역■■■■■■■■■■■ */
-            var planJson = {
-
-            }
+            var planJson = {}
             var lecapNo = ''; //과목신청시퀀스번호
             var flag = false; // 강의계획서 작성여부 플래그
             var approval = ''; //대면수업여부
@@ -491,19 +489,16 @@
 	                                      // swal("출력실패");
 	                                  }
 	                          })
-	                		   
 	                		  } 
 	                		});
                 	}else{
                 		swal("취소가 불가능한 상태입니다.", "교무처에 문의해주세요.", "warning");
                 	}
-
                 });
             });
             
            $('#statusBtn').on("click",function(){
         	   statusList();
-           	
            });
            
            $('#statusAll').on("click",function(){
@@ -672,10 +667,8 @@
             /* ■■■■■■ 단과대학 선택시 학과와 교과목 출력해주는 펑션  ■■■■■■ *///
             $(function () {
                 /* ■■■■■■ 단과대학선택을 바꿀때마다 발생event  ■■■■■■ *///
-                $('#selSub')
-                    .change(
-                        function () {
-                            // 					$('#selDept').chil dren().eq(0).("selected");
+                $('#selSub').change(function () {
+                            //$('#selDept').chil dren().eq(0).("selected");
                             $('#tbtb').html("");
                             var data = $(this).val();
                             // 					console.log(data);
