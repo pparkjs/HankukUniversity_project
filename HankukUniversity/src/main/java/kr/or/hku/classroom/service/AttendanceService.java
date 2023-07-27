@@ -19,8 +19,15 @@ public interface AttendanceService {
 	
 	// 출석 변경 
 	public int updateAttendance(AttendanceVO vo);
-
 	
+	// 출석 이의신청 리스트
+	public List<AttendanceVO> attendanceDmrList(String lecapNo);
+	
+	// 출석 이의신청 승인
+	public ServiceResult attendanceAppv(String atdcNo);
+	
+	// 출석 이의신청 반려
+	public ServiceResult attendanceRej(String atdcNo);
 	
 	
 // ------------------------ 학생 ----------------------------//  
@@ -41,4 +48,10 @@ public interface AttendanceService {
 	
 	// 이의신청 삭제 
 	public ServiceResult deleteAttendDmr(int atdcNo);
+
+	
+	
+	
+	
+	
 }
