@@ -80,6 +80,7 @@ public class StudyVO {
 	private String stdNo2;
 	private String studyNo1;
 	private String studyNo2;
+	private String stdProfilePath; //프로필 이미지 경로
 
 	// 시간표리스트
 	private String lecapNo; // 과목신청번호

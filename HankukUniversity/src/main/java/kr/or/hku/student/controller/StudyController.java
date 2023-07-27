@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,50 +49,67 @@ public class StudyController {
 		return "student/study";
 	}
 	
+	@ResponseBody
+	@GetMapping("/student/getStudyList")
+	public ResponseEntity<List<StudyVO>> getStudyList(String stdNo) {
+		log.info("stdNo: " + stdNo);
+		List<StudyVO> list = service.studyList(stdNo);
+		for (StudyVO studyVo : list) {
+		}
+	    
+		return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
+	}
+	
+	@ResponseBody
 	@PostMapping(value = "/student/study")
-	public String addStudy(@RequestParam("studyName") String studyName,
-	                       @RequestParam("studyCpcy") int studyCpcy,
-	                       @RequestParam("studyIntro") String studyIntro,
+	public ResponseEntity<String> addStudy(@RequestBody StudyVO vo,
 	                       HttpServletRequest request) {
-
-	    StudyVO vo = new StudyVO();
-//	    log.info(vo.getStudyName());
-//	    log.info("" + vo.getStudyCpcy());
-//	    log.info(vo.getStudyIntro());
+		ResponseEntity<String> entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+	    log.info(vo.getStudyName());
+	    log.info("" + vo.getStudyCpcy());
+	    log.info(vo.getStudyIntro());
 	   
 	    HttpSession session = request.getSession();
 	    StudentVO stdVo = (StudentVO) session.getAttribute("std");
 //	    log.info("현재 로그인 정보: " + stdVo.getStdNo());
-//	    log.info("현재 로그인 정보: " + stdVo.getStdNo());
+	    log.info("현재 로그인 정보: " + stdVo.getStdNo());
 
-	    vo.setStudyName(studyName);
-	    vo.setStudyCpcy(studyCpcy);
-	    vo.setStudyIntro(studyIntro);
 	    if (stdVo != null) {
 	    	vo.setStdNo(stdVo.getStdNo());
 	    }
 
-	    service.addStudy(vo);
+	    int res = service.addStudy(vo);
 	    
-	    return "student/study";
+	    if(res > 0) {
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} else {
+			entity = new ResponseEntity<String>("FAILED", HttpStatus.OK);
+		}
+	    
+	    return entity;
 	}
 
 	@GetMapping(value = "/student/studyRoom")
-	public String studyRoom(int studyNo, Model model){
+	public String studyRoom(int studyNo, Model model, HttpServletRequest request){
 		// 스터디룸에 대한정보
 		StudyVO study = service.studyRoom(studyNo);
+		
+		HttpSession session = request.getSession();
+		StudentVO stdVo = (StudentVO) session.getAttribute("std");
+		study.setStudyNo(studyNo);
+		study.setStdNo(stdVo.getStdNo());
+		String role = service.selectRole(study);
 		// 해당 스터디룸에 속한 스터디 멤버
 		List<StudyVO> studyMem = service.studyMem(studyNo);
-		for (StudyVO vo : studyMem) {
-			String role = vo.getStudyRole();
-//			log.info("role check: " + role);
-		}
+		
 		// 가입신청 대기중인 멤버목록
 		List<StudyVO> appli = service.applicationsList(studyNo);
 		
 		model.addAttribute("study", study);
 		model.addAttribute("studyMem", studyMem);
 		model.addAttribute("appli", appli);
+		model.addAttribute("role", role);
+		
 		return "student/studyRoom";
 	}
 	
@@ -172,7 +188,8 @@ public class StudyController {
 		// 해당 방의 메시지 리스트 가져오기
 	    List<StudyVO> list = service.messageList(studyNo); 
 	    for(int i = 0; i< list.size(); i++) {
-//	    	log.info("msgList: " + list);
+	    	//log.info("msgList: " + list);
+	    	
 	    }
 	    // userId 는 안읽은 메시지 처리 위해서 받아온건데 1:1이 아니라 멀티 채팅방일때 생각중
 	    return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
