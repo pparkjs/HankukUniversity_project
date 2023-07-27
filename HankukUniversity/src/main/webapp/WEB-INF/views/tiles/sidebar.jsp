@@ -169,8 +169,8 @@
 					<span class="nav-text">장학금</span>
 				</a>
 				<ul aria-expanded="false">
-					<li><a href="#">장학금 신청</a></li>
-					<li><a href="#">장학금 수혜 내역 확인</a></li>
+					<li><a href="/hku/scholarship-apply">장학금 신청</a></li>
+					<li><a href="/hku/scholarship-list">장학금 수혜 내역 확인</a></li>
 				</ul>
 			</li>
 			
