@@ -31,23 +31,23 @@ label {
 .bootstrap-select .btn {
 	width: 400px;
 }
-#rsvt-stdNm{
+#stdNm{
 	width: 31%;
     height: 33px;
     font-size: 16px;
 }
-#rsvt-flctsNm{
+#stdNo{
     width: 41%;
     height: 33px;
     font-size: 16px;
 }
-#rsvt-cnt{
+#atdcWeek{
 	height: 33px;
     width: 20%;
     color :gray;
     font-size: 16px;
 }
-#rsvt-prps{
+#atdcDmrRsn{
 	color :gray;
 }
 .sModal{
@@ -106,7 +106,7 @@ label {
 									<label class="form-label">주차</label>
 									<div
 										class="dropdown bootstrap-select default-select form-control wide">
-										<select id="inputState"
+										<select id="inputState"                 
 											class="default-select form-control wide"
 											style="width: 300px;">
 											<c:forEach begin="1" end="15" var="i" step="1">
@@ -135,7 +135,7 @@ label {
 					<div class="card-header aaa">
 						<h4 class="card-title"
 							style="font-weight: bold; font-size: 1.2em; color: #800000;">
-							이의신청현황</h4>
+							이의신청 현황</h4>
 					</div>
 					<div class="card-body ccc" style="padding-top: 0;">
 						<table class="table">
@@ -147,7 +147,7 @@ label {
 									<th style="font-size: 17px;">이의신청주차</th>
 									<th style="font-size: 17px;">이의신청내용</th>
 									<th style="font-size: 17px;">신청상태</th>
-									<th style="font-size: 17px;">상세</th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody id="tbtb">
@@ -164,12 +164,12 @@ label {
 														width:70px; height:30px; font-size:15px;">대기</span></td>
 											</c:when>
 											<c:when test="${list.stdcDmrSttsCd eq 'appv'}">
-												<td><span class="badge badge-rounded badge-primary" style=" 
-														width:70px; height:30px; font-size:15px;">승인</span><td>
+												<td><span class="badge badge-rounded badge-primary" style="background-color:#0a74c1; 
+														width:70px; height:30px; font-size:15px;">승인</span></td>
 											</c:when>										
 											<c:otherwise>
-												<td><span class="badge badge-rounded badge-danger" style="; 
-														width:70px; height:30px; font-size:15px;">반려</span><td>
+												<td><span class="badge badge-rounded badge-danger" style="background-color:#9b2c2c; 
+														width:70px; height:30px; font-size:15px;">반려</span></td>
 											</c:otherwise>										
 										</c:choose>
 										<td>
@@ -205,22 +205,22 @@ label {
 						<span style="margin-right: 59px; font-size: 19px;">주차</span>
 					</div>
 					<div class="modal-content1">
-						<input type="text" class="form-control" id="rsvt-stdNm" value="${std.stdNm }" readonly >
-						<input type="text" class="form-control" id="rsvt-flctsNm" value="${std.stdNo }" readonly>
-						<input type="text" class="form-control" id="rsvt-cnt" readonly>
+						<input type="text" class="form-control" id="stdNm" value="${std.stdNm }" readonly >
+						<input type="text" class="form-control" id="stdNo" value="${std.stdNo }" readonly>
+						<input type="text" class="form-control" id="atdcWeek" readonly>
 					</div>
 					<div class="modal-title3">
 						<span style="font-size:19px;">신청 내용</span>
 					</div>
 					<div class="modal-content3">
-						<textarea rows="10" cols="10" class="form-control" id="rsvt-prps" style="width: 466px;" readonly>
+						<textarea rows="10" cols="10" class="form-control" id="atdcDmrRsn" style="width: 466px;" readonly>
 							
 						</textarea>
 					</div>
 				</div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary delBtn" >삭제</button>
+                <button type="button" class="btn btn-primary deleteBtn" >삭제</button>
                 <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
             </div>
         </div>
@@ -253,6 +253,9 @@ $(function(){
 		console.log(data)
 		$.ajax({
 			url : "/hku/student/getAtdcNo",
+			beforeSend : function(xhr){
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
 			contentType : "application/json;charset=utf-8",
 			type : 'post',
 			data : JSON.stringify(data),
@@ -278,6 +281,9 @@ $(function(){
 		$.ajax({
 			async : false,
 			url : "/hku/student/submitAttendDmr",
+			beforeSend : function(xhr){
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
 			type : 'post',
 			contentType : false,
 			processData : false,
@@ -288,7 +294,7 @@ $(function(){
 				if (res === "exist") {
 					swal("", "이미 이의신청한 주차입니다.", "error");
 				} else if (res === "success") {
-					swal("", "이의신청을 완료하였습니다.", "success");
+					swal("", "이의신청이 완료되었습니다.", "success");
 					location.reload();
 				} else {
 					swal("", "이의신청에 실패하였습니다. 다시 시도하세요.", "error");
@@ -301,7 +307,7 @@ $(function(){
 	detailBtn.on("click", function(){
 	 atdcNo = $(this).parent().find('#atdcNo').val();
 		$("#MatdcNo").val(atdcNo);
-		console.log("이거거거ㅓㄱ"+atdcNo);
+		console.log("이거거"+atdcNo);
 		
 		let jshData = {
 			"atdcNo" : atdcNo	
@@ -312,12 +318,15 @@ $(function(){
 			type : "post",
 			data : JSON.stringify(jshData),
 			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr){
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
 			success : function(res){
 				console.log(res)
 				console.log(res.atdcWeek) 
 				console.log(res.atdcDmrRsn) 
-				$("#rsvt-cnt").val(res.atdcWeek);
-				$("#rsvt-prps").val(res.atdcDmrRsn);
+				$("#atdcWeek").val(res.atdcWeek);
+				$("#atdcDmrRsn").val(res.atdcDmrRsn);
 			},
 			error :function(){
 				alert("에러")
@@ -325,8 +334,8 @@ $(function(){
 		})
 	})
 	
-	var delBtn = $(".delBtn");
-	delBtn.on("click", function(){
+	var deleteBtn = $(".deleteBtn");
+	deleteBtn.on("click", function(){
 		var atdcNo = $("#MatdcNo").val();
 		
 		let jshData = {
@@ -338,46 +347,34 @@ $(function(){
 			type : "post",
 			data : JSON.stringify(jshData),
 			contentType:"application/json;charset=utf-8",
-			dataType : "json",
+			dataType : "text",
+			beforeSend : function(xhr){
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
 			success : function(res){
 				console.log("성공이면 ===>", res)
+			     swal({
+                     title: "이의신청 내역을 삭제하시겠습니까 ? ",
+                     text: "삭제 후 복구 불가합니다",
+                     icon: "warning",
+                     buttons: true,
+                     dangerMode: true,
+                 })
+                     .then((willDelete) => {
+                         if (willDelete) {
+                           location.reload();  
+							swal("", "삭제가 완료되었습니다", "success");
+                          };
+                     });
+				
 			},
 			error :function(){
 				alert("에러")
 			}
 		})
-	});
-	
+	});	
 	
 });	
 	
-// 이의신청 삭제 
-// // var delBtn = document.querySelector(".delBtn");
-// delBtn.addEventListener("click",function(){
-// 	var atdcNo = document.querySelector("#MatdcNo");
-// 	myData = {
-// 		atdcNo : atdcNo.defaultValue
-// 	}
-	
-// 	$.ajax({
-// 		url :"/hku/student/deleteAttendDmr",
-// 		type : "post",
-// 		data : JSON.stringify(myData),
-// 		contentType: "application/json;charset=utf-8",
-// 		dataType : "json",
-// 		success : function(res){
-// 			console.log("성공이면 ===>", res)
-// 		}
-// 	})
-		
-// 		swal("", "해당 주차의 이의신청 내역이 삭제되었습니다.", "success")
-// 		deleteForm.submit();
-// 		swal("해당 이의신청 내역을 삭제하시겠습니까 ?", {
-// 			  buttons: {
-// 			    cancel: "취소",
-// 			    confirm: "확인",
-// 			  }
-// 			});
-		
-// })
+
 </script>
