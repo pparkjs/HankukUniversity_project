@@ -102,4 +102,14 @@ public class ScholarshipController {
 		
 		return sclsAplyDetail;
 	}
+	
+	@PostMapping("/sclsAplyModify")
+	@ResponseBody
+	public String sclsAplyModify(StdScholarshipVO sclsAplyModiVO) {
+		log.info("delFileInfoList : " + sclsAplyModiVO.getDelFileInfoList().toString());
+		log.info("aplyFiles : " + sclsAplyModiVO.getAplyFiles().toString());
+		
+		
+		return null;
+	}
 }

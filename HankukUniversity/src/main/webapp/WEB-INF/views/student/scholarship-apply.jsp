@@ -273,7 +273,6 @@
 <script>
 $(function(){
 	$("#sclsAplyBtn").on('click', function(){
-
 		var sclsCd = $("#sclsCd").val();
 		var stdNo = "${std.stdNo}";
 		var aplyFiles = $("#sclsFiles")[0].files;
@@ -327,14 +326,15 @@ $(function(){
 		var id = $(this).prop("id");
 		console.log("fileId", id);
 		// var idx = id.indexOf("_");
-		console.log(id.split('_')[0]);
-		console.log(id.split('_')[1]);
-		console.log(id.split('_')[2]);
+		// console.log(id.split('_')[0]);
+		// console.log(id.split('_')[1]);
+		// console.log(id.split('_')[2]);
 
 		let atchFileNo = id.split('_')[1];
 		let atchFileSeq = id.split('_')[2];
 
 		let delFileNo = atchFileNo + "_" + atchFileSeq;
+		console.log("delFileNo",delFileNo);
 		// var noticeFileNo = id.substring(idx + 1);	// fileNo 얻어오기
 		var ptrn = "<input type='hidden' name='delFileNo' value='%V'/>";
 		$("#aplyDetailFiles").append(ptrn.replace("%V", delFileNo));
@@ -342,9 +342,56 @@ $(function(){
 	});
 
 	$("#sclsAplyModifyBtn").on('click',function(){
-		console.log("수정체킁");
-		console.log("gg",$("input[name=delFileNo]").val());
-	})
+		// 삭제할 파일 정보들
+		var delInputFileArr = $("input[name=delFileNo]");
+
+		let delFileInfoArr = new Array();
+		for(let i=0; i<delInputFileArr.length; i++){
+			console.log(i+'번째 : ', delInputFileArr[i].value);
+
+			let delFileInfo = delInputFileArr[i].value;
+			let atchFileNo = delFileInfo.split('_')[0];
+			let atchFileSeq = delFileInfo.split('_')[1];
+
+			let delFileInfo_ = {
+				"atchFileNo": atchFileNo,
+				"atchFileSeq": atchFileSeq
+			}
+			delFileInfoArr.push(JSON.stringify(delFileInfo_));
+		}
+
+		console.log("KYW",delFileInfoArr);
+
+		// 추가할 파일 정보들
+		let aplyFiles = $("#sclsFiles2")[0].files;
+
+		// 총 파일 4개 이하 검증
+
+		let formData = new FormData();
+		formData.append("delFileInfoList", delFileInfoArr);	// 삭제 정보 append
+
+		for(let i=0; i<aplyFiles.length; i++){
+			formData.append("aplyFiles",aplyFiles[i]);		// 추가 정보 append
+		}
+
+		console.log("formData", formData);
+
+		$.ajax({
+			type: "POST",
+			url: "/hku/sclsAplyModify",
+			data: formData,
+			dataType: "text",
+			processData: false,
+			contentType: false,
+			beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
+			success: function(res){
+				alert("파일 수정 체킁");
+			},
+			error: function(res){
+	
+			}
+		});
+	});
 });
 
 function sclsAplyDetail(target){
