@@ -12,6 +12,7 @@ import kr.or.hku.common.mapper.CommonMapper;
 import kr.or.hku.common.service.CommonService;
 import kr.or.hku.common.vo.AlarmVO;
 import kr.or.hku.common.vo.CommonVO;
+import kr.or.hku.professor.vo.ProfessorVO;
 import kr.or.hku.student.vo.StudentVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,6 +46,11 @@ public class CommonServiceImpl implements CommonService{
 	@Override
 	public int alarmDelete(int alarmNo) {
 		return commonMapper.alarmDelete(alarmNo);
+	}
+
+	@Override
+	public ProfessorVO myProInfo(String proNo) {
+		return commonMapper.myProInfo(proNo);
 	}
 
 

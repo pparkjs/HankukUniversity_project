@@ -18,10 +18,14 @@
 	<security:http pattern="/js/**" security="none" />
 	<security:http pattern="/css/**" security="none" />
 	
+	
 <!-- 	<security:http pattern="/main/login" security="none" />
 	<security:http pattern="/main/logout" security="none" />
  -->	
  	<security:http>
+		<security:intercept-url pattern="/hku/**" 
+			access="hasAuthority('ROLE_STUDENT') or hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_PROFESSOR')"/>
+			
 		<security:form-login login-page="/main/login" authentication-success-handler-ref="customLoginSuccess"/>
 		<security:access-denied-handler ref="customAccessDenied"/>
 		<security:logout logout-url="/main/logout" invalidate-session="true"/>

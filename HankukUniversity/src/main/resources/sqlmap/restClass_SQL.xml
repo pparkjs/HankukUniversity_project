@@ -17,7 +17,7 @@
 		JOIN SUBJECT c ON b.SUB_NO = c.SUB_NO
 		JOIN professor d ON b.PRO_NO = d.PRO_NO
 		WHERE d.pro_no = #{proNo}
-		AND b.APRV_STTS_CD !='rej'
+		AND b.APRV_STTS_CD like 'appv'
 		AND b.LECAP_YR like TO_CHAR(sysdate, 'YYYY')
 		AND b.LECAP_SEM  = CASE
                           WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 1 AND 6 THEN 1
