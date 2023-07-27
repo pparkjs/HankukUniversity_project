@@ -6,11 +6,11 @@
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script> -->
 <!-- <link type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" /> -->
 <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- jQuery UI 라이브러리 -->
-  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
-  <!-- jQuery UI 스타일시트 -->
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <!-- jQuery UI 라이브러리 -->
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+<!-- jQuery UI 스타일시트 -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/css/datepicker-style.css">
 
 <div class="content-body">

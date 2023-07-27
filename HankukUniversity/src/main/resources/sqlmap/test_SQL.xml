@@ -191,5 +191,6 @@
  		SELECT tt_no, test_no, lecap_no, sta_no, sta_ans
  		FROM student_test_answer
  		WHERE tt_no = #{ttNo}
+ 		ORDER BY sta_no
  	</select>
  </mapper>
