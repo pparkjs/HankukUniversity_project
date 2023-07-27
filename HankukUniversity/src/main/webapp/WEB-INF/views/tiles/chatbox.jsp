@@ -1,15 +1,57 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:if test="${not empty std}">
+<style>
+.unreadCnt{
+    margin-left: 52px;
+    margin-top: 30px;
+    color: #800000;
+    font-size: 1.1em;
+}
+.unreadCnt2{
+    margin-top: 35px;
+    margin-right: 50px;
+    color: #800000;
+    font-size: 1.1em;
+}
+.chatbox .img_cont_msg img {
+    width: 180%;
+    height: 180%;
+}
+.chatbox .img_cont_msg2 img {
+    width: 100%;
+    height: 100%;
+}
 
-</c:if>
+.img_cont_msg2{
+    position: absolute;
+    right: 0px;
+    height: 48px;
+    width: 48px;
+}
+
+.chatbox{
+	width: 550px;
+	right: -550px;
+}
+.chatbox.active .chatbox-close {
+    right: 550px;
+}
+.msg_cotainer{
+	font-size: 1.5em;
+	left: 30px;
+}
+.msg_cotainer_send{
+	font-size: 1.5em;
+	right: 40px;
+}
+</style>
 <div class="chatbox">
 	<div class="chatbox-close"></div>
 	<div class="custom-tab-1">
 		<ul class="nav nav-tabs">
 			<li class="nav-item">
-				<a class="nav-link active" data-bs-toggle="tab" href="#chat">Chat</a>
+				<a class="nav-link active" data-bs-toggle="tab" href="#chat" style="font-size: 1.5em;">채팅</a>
 			</li>
 		</ul>
 		<!-- 채팅방 리스트 -->
@@ -17,8 +59,8 @@
 			<div class="tab-pane fade active show" id="chat">
 				<div class="card mb-sm-3 mb-md-0 contacts_card dz-chat-user-box">
 					<div class="card-header chat-list-header text-center">
-						<h6 class="mb-1">Chat List</h6>
-						<p class="mb-0">Show All</p>
+						<h6 class="mb-1"  style="font-size: 1.5em;">스터디 채팅방 목록</h6>
+						
 					</div>
 					
 					<div class="card-body contacts_body p-0 dz-scroll  " id="DZ_W_Contacts_Body">
@@ -35,7 +77,7 @@
 							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><polygon points="0 0 24 0 24 24 0 24"/><rect fill="#000000" opacity="0.3" transform="translate(15.000000, 12.000000) scale(-1, 1) rotate(-90.000000) translate(-15.000000, -12.000000) " x="14" y="7" width="2" height="10" rx="1"/><path d="M3.7071045,15.7071045 C3.3165802,16.0976288 2.68341522,16.0976288 2.29289093,15.7071045 C1.90236664,15.3165802 1.90236664,14.6834152 2.29289093,14.2928909 L8.29289093,8.29289093 C8.67146987,7.914312 9.28105631,7.90106637 9.67572234,8.26284357 L15.6757223,13.7628436 C16.0828413,14.136036 16.1103443,14.7686034 15.7371519,15.1757223 C15.3639594,15.5828413 14.7313921,15.6103443 14.3242731,15.2371519 L9.03007346,10.3841355 L3.7071045,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(9.000001, 11.999997) scale(-1, -1) rotate(90.000000) translate(-9.000001, -11.999997) "/></g></svg>
 						</a>
 						<div>
-							<h6 class="mb-1" id="roomNm">Chat with Khelesh</h6>
+							<h6 class="mb-1" id="roomNm" style="font-size: 1.5em;">채팅</h6>
 						</div>							
 						<div class="dropdown">
 							<a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg></a>
@@ -89,7 +131,11 @@
 			success: function(res) {
 			  var cBody = $("#cBody");
 			  var chatList = '';
+			  var unCnt = 0;
+			  var unMsgCnt = $('.unMsgCnt');
 			  for (var i = 0; i < res.length; i++) {
+				unCnt += res[i].unreadMsgCnt;
+				console.log("unreadCnt: ", unCnt);	
 			    chatList += `
 						      <li class="active dz-chat-user" id ="\${res[i].studyNo}" value="\${res[i].stdNo}" onclick="enterRoom(this)">
 						        <div class="d-flex bd-highlight">
@@ -98,16 +144,22 @@
 						            <span class="online_icon"></span>
 						          </div>
 						          <div class="user_info">
-						            <span>\${res[i].studyName}</span>
-						            <p>\${res[i].count}</p>
-						          </div>
+						            <span style='font-size: 1.3em;'>\${res[i].studyName}</span>`;
+					if(res[i].unreadMsgCnt > 0){
+						chatList += `<p style='color: red'>\${res[i].unreadMsgCnt}</p>`;
+					}else{
+						chatList += `<p style='color: red'></p>`;						
+					}
+					chatList += `	</div>
 						        </div>
-						      </li>`;
+						      	</li>`;
 			  }
 			  cBody.html(chatList);
+			  unMsgCnt.text(unCnt);
 			},
 			error: function(err) {
 			  console.log(err);
+			  
 			}
 		});
 	}
@@ -127,15 +179,6 @@
 	        console.log('info: connection opened.');
 	    }
 	}
-	
-	//채팅방 이외의 공간에 있을 떄 실시간 채팅 개수 알람 받기.
-// 	chatSocket.onmessage = function(evt) {
-// 		console.log("evt.data : ", evt.data)
-		
-// 			if(evt.data == "reload"){
-// 				//getChatCnt();
-// 			}
-// 	}
 	
 	//입장 버튼 누를때 onclick(this)으로 해당 함수 호출
 	function enterRoom(obj){
@@ -182,32 +225,43 @@
 		  	  //console.log("chatMsg",data);
 		  	  var stdNo2 = data[i].stdNo
 			  //console.log("stdNo2: ", stdNo2);
+		    	console.log("이새기 갑자기 안뜸: ", data[i].unreadMemCnt);
 		      if (stdNo2 == stdNo) {
 		        msgList += `
-				          <div class="d-flex justify-content-end mb-4">
-							<div class="msg_cotainer_send">
+				          <div class='d-flex justify-content-end mb-4'>
+		        			<p class='unreadCnt2'>`;
+					if(data[i].unreadMemCnt > 0){
+						msgList += `\${data[i].unreadMemCnt} </p>`
+					}else{
+						msgList += `</p>`
+					}
+		        msgList +=	`<div class='msg_cotainer_send'>
 							 \${data[i].msgContent}
-								<span class="msg_time_send">\${data[i].msgRegdate}
+								<span class='msg_time_send'>\${data[i].msgRegdate}</span>
 							</div>
-							<div class="img_cont_msg">
-								<img src="/images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+							<div class='img_cont_msg2'>
+								<img src='/download\${data[i].stdProfilePath}' class='rounded-circle user_img_msg' alt=''>		
 								\${data[i].stdNm}
-							</div>
+							</div> 
 						</div>
 		        `;
 		      } else {
 		        msgList += `
-				          <div class="d-flex justify-content-start mb-4">
-				            <div class="img_cont_msg">
-				              <img src="/images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
-				              \${data[i].stdNm}
+				          <div class='d-flex justify-content-start mb-4'>
+				            <div class='img_cont_msg'>
+				            	<img src='/download\${data[i].stdProfilePath}' class='rounded-circle user_img_msg' alt=''>
+				            	<p style='width: 52px; left:10px;'>\${data[i].stdNm}</p>
 				            </div>
-				            <div class="msg_cotainer">
+				            <div class='msg_cotainer'>
 				              \${data[i].msgContent}
-				              <span class="msg_time">\${data[i].msgRegdate}
-				            </div>
-				          </div>
-		        `;
+				              <span class='msg_time'>\${data[i].msgRegdate} </span>
+				            </div> <p class='unreadCnt'>`;
+				  if(data[i].unreadMemCnt > 0){
+					  msgList +=` \${data[i].unreadMemCnt}</p>
+				          </div>`;
+				  }else{
+					  msgList += `</div>`;
+				  }
 		      }
 		    }
 		    // for 루프 완료 후에 msgList를 msgBody에 추가
@@ -254,25 +308,94 @@
 		
 		// websocket 서버에 해당 data 전송
 		chatSocket.send(JSON.stringify(data));
+// 		msgList();
 	}
 	
 //2 메세지 수신 (웹소켓 서버로부터 메시지를 수신하는 함수)
 chatSocket.onmessage = function(evt) {
 	 	console.log("evt.data : ", evt.data)
-	    if(evt.data == "reload"){
-	    	
-	    }else{
-		 	let receive = evt.data.split(","); // evt.data 서버에서 전송된 메시지 데이터
-	        
+	 	
+	 	// 채팅방에서 채팅 메시지 보내고 누군가 후에 들어왔을 경우 읽음처리 ajax로 다시 표현
+	    if(evt.data.split(",")[0] == "chat-reload"){
+// 	    	msgList();
+			var studyNo = evt.data.split(",")[1];
+			
+			// 현재 뿌려져 있는 안읽은메시지개수 리스트
+			var unreadCnt = $(".unreadCnt").text();
+			var unreadCnt2 = $(".unreadCnt2").text();
+			
+			console.log("안읽은메시지개수 리스트",unreadCnt2)
+// 			//
+// 			$.ajax({
+// 				url:""
+// 				...
+// 				success: function(res){
+// 					//res (db에서 가져온 안읽은 메시지 개수 리스트)
+					
+// 					for(var i = 0; res.length; i++){
+// 						if(unreadCnt.eq(i) != res[i]){
+// 							unreadCnt.eq(i).text(res[i]);
+// 						}
+// 					}
+// 				}
+// 			})
+			
+	    }else if (evt.data == "list-reload") {
+	        chatList(); // 채팅방 리스트 다시 뿌려주기
+	    } else {
+	        let receive = evt.data.split(","); // evt.data 서버에서 전송된 메시지 데이터
 	        const data = {
-	                "studyNo" : receive[0],
-	                "stdNo" : receive[1],
-	             "msgContent" : receive[2],
-	             "msgRegdate" : receive[3],
-	             "unreadMsgCnt" : receive[4],
+	            "studyNo": receive[0],
+	            "stdNo": receive[1],
+	            "msgContent": receive[2],
+	            "msgRegdate": receive[3],
+	            "unreadMsgCnt": receive[4],
+	            "stdProfilePath": receive[5]
 	        };
-		 	console.log(data);
-		 	msgList();
+	        console.log("받은데이터:",data);
+	        console.log("받은stdNo:",data.stdNo);
+	        console.log("받은stdNo:",data.msgContent);
+			
+	        var msgList2 = "";
+	        if ("${sessionScope.std.stdNo}" == data.stdNo) {
+		        msgList2 += `
+				          <div class="d-flex justify-content-end mb-4">
+		        			<p class="unreadCnt2">`;
+		    	if(data.unreadMsgCnt > 0){
+		    		msgList2 += `\${data.unreadMsgCnt}</p>`;
+		    	}else{
+		    		msgList2 += `</p>`;
+		    	}
+		    	msgList2 += `
+							<div class="msg_cotainer_send">
+								\${data.msgContent}
+								<span class="msg_time_send">\${data.msgRegdate}</span>
+							</div>
+							<div class="img_cont_msg">
+								<img src='/download\${data.stdProfilePath}' class='rounded-circle user_img_msg' alt=''>
+							</div> 
+						</div>`;
+		      } else {
+		        msgList2 += `
+				          <div class="d-flex justify-content-start mb-4">
+				            <div class="img_cont_msg">
+				            	<img src='/download\${data.stdProfilePath}' class='rounded-circle user_img_msg' alt=''>
+				            </div>
+				            <div class="msg_cotainer">
+				            \${data.msgContent}
+				              <span class="msg_time">\${data.msgRegdate} </span>
+				            </div> <p class="unreadCnt">`;
+					if(data.unreadMsgCnt > 0){
+						 msgList2 += `\${data.unreadMsgCnt}</p>`;
+					}else{
+						msgList2 += `</p>`;
+					}
+				msgList2 += `</div>`;
+		      }       
+	        $("#msgBody").append(msgList2);
+	    	var chatBody = document.getElementById("DZ_W_Contacts_Body3");
+			chatBody.scrollTop = chatBody.scrollHeight;
+
 	    }
  }
  
@@ -289,7 +412,11 @@ $('.studyClose').on('click', function(){
 	chatSocket.send(JSON.stringify(roomData));
 	
 })
+function getUnreadCntList(studyNo){
+
 	
+	
+}
 	</script>			
 </c:if>			
 				

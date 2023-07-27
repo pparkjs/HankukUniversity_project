@@ -17,9 +17,23 @@
 	font-size: 16px;
 	color:black;
 }
-
+.author-profile .author-media img {
+    width: 180px;
+    height: 180px;
+    border: 2px solid #800000;
+    border-radius: 50%;
+}
+.profile-form .form-control{
+	font-size: 18px;
+}
 .tbl tbody td {
 	font-size: 17px;
+}
+.profile-form .form-label{
+	font-size: 18px;
+}
+.title{
+	font-size: 1.3em;
 }
 </style>
 <div class="content-body">
@@ -34,30 +48,33 @@
 									
 			<div class="card-body">
 				<div class="row">
-					<div class="col-xl-3 col-lg-4" style="height: 1000px;">
-						<div class="card card-bx profile-card author-profile m-b30" style="height: 300px;">
-							<div class="card-header">
+					<div class="col-xl-3 col-lg-4" style="height: 800px;">
+						<div class="card card-bx profile-card author-profile m-b30" style="height: 350px;">
+							<div class="card-header" style="margin-bottom: -10px;">
 								<h6 class="title">Profile</h6>
 							</div>
 							<div class="card-body">
-								<div class="p-5">
-									<div class="author-profile">
-										<div class="author-media">
-											<div class="new-arrivals-img-contnent">
-		                                        <img class="img-fluid" src="images/product/1.jpg" alt="">
-		                                    </div>
-										</div>
-										<div class="author-info">
-											<h6 class="title">asd</h6>
-											<span>컴퓨터공학</span>
-										</div>
+								<div class="author-profile" >
+									<div class="author-media" style="margin-top: 25px;">
+									<c:choose>
+										<c:when test="${student.stdProfilePath eq null}">
+											<img id="stdProfileImg" src="/images/user(2).png" alt="">
+										</c:when>
+										<c:otherwise>
+											<img id="stdProfileImg" src="/download${student.stdProfilePath }" alt="">
+											<!-- 										<span class="basicProfileImg flaticon-381-user-4"></span> -->										
+										</c:otherwise>
+									</c:choose>
+									</div>
+									<div class="author-info">
+										<h5 class="title">프로필 이미지</h5>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="clearfix" style="height: 600px;">
+						<div class="clearfix" style="height: 428px;">
 							<div class="card card-bx profile-card author-profile m-b30">
-								<div class="card profile-card card-bx m-b30" style="max-width: 100%;">
+								<div class="card profile-card card-bx m-b30" style="max-width: 100%; height: 398px;">
 								    <div class="card-header">
 								        <h6 class="title">Records changed</h6>
 								    </div>
