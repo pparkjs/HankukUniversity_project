@@ -158,6 +158,7 @@ public class ProClassroomController {
 		return "redirect:/hku/professor/assignmentList/"+vo.getLecapNo();
 	}
 	
+	
 	// 과제 수정폼
 	@GetMapping("/updateForm/{asmNo}")
 	public String updateForm(@PathVariable("asmNo") String asmNo, Model model) {
@@ -172,6 +173,7 @@ public class ProClassroomController {
 	public String update(AssignmentVO vo, Model model) {
 		String goPage = "";
 		ServiceResult result = assignService.update(vo);
+		
 		if(result.equals(ServiceResult.OK)) {
 			goPage = "redirect:/hku/professor/assignmentDetail/" + vo.getAsmNo();
 		}
@@ -182,6 +184,7 @@ public class ProClassroomController {
 		}
 		return goPage;
 	}
+	
 	
 	// 과제삭제 
 	@PostMapping("/deleteAssignment")
@@ -254,9 +257,42 @@ public class ProClassroomController {
 		return "professor/gradeTable";
 	}
 	
-	// 출석 이의신청 승인/반려 
+	// 출석 이의신청 페이지 
 	@GetMapping("/attendanceDmrManage")
-	public String attendDmrStatus() {
+	public String attendDmrStatus(HttpSession session, Model model) {
+		String lecapNo = (String) session.getAttribute("lecapNo");
+		List<AttendanceVO> attendList = attendService.attendanceDmrList(lecapNo);
+		
+		log.info("attendList" + attendList.toString());
+		
+		model.addAttribute("attendList", attendList);
 		return "professor/attendanceDmrManage";
 	}
+	
+	@ResponseBody
+	@PostMapping("/attendanceDmr-Appv")
+	public String attendanceDmrAppv(String atdcNo) {
+		log.info("vo !! : " + atdcNo);
+		ServiceResult result =attendService.attendanceAppv(atdcNo);
+		String msg = null;
+			if(result == ServiceResult.OK) {
+			 msg = "success";
+			}
+			return msg;
+	}
+	
+	@ResponseBody
+	@PostMapping("/attendanceDmr-rej")
+	public String attendanceDmrRej(String atdcNo) {
+		log.info("vo !! : " + atdcNo);
+		ServiceResult result =attendService.attendanceRej(atdcNo);
+		String msg = null;
+		if(result == ServiceResult.OK) {
+			msg = "success";
+		}
+		return msg;
+	}
+	
+	
+		
 }
