@@ -82,7 +82,7 @@
 .toast-success{
 /*  	background: black;  */
 }
-<<<<<<< HEAD
+
 #preloader {
   height: 100%;
   position: fixed;

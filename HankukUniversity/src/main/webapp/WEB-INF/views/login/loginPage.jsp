@@ -25,7 +25,7 @@
         }
 
         table {
-        	color : white;
+           color : white;
             width: 1000px;
             position: absolute;
             top: 35%;
@@ -60,23 +60,23 @@
         }
 
         #trtwo td:first-child {
-        	padding-left : 50px;
+           padding-left : 50px;
             padding-right: 30px;
             text-align: left;
         }
         
          #trtwo span{
-         	display : inline-block;
-         	margin-top : 30px;
+            display : inline-block;
+            margin-top : 30px;
          }
-		input[type="text"],input[type="password"]{
-			border-radius: 10px;
-			border : 1px solid black;
-			background-color: rgba(0,0,0,0.5);
-			color : white;
-			margin-top : 10px;
-			padding : 5px;
-		}
+      input[type="text"],input[type="password"]{
+         border-radius: 10px;
+         border : 1px solid black;
+         background-color: rgba(0,0,0,0.5);
+         color : white;
+         margin-top : 10px;
+         padding : 5px;
+      }
 
         #trthree {
             text-align: center;
@@ -178,10 +178,10 @@
             }
         }
 
-/*         	     span{  */
+/*                 span{  */
 /*                  display : inline-block;  */
 /*                   height : 30px;  */
-/*         		text-align:  right;  */
+/*               text-align:  right;  */
 /*                 }  */
         form {
             margin: 0px;
@@ -195,8 +195,8 @@
 
         }
         img{
-        	width : 500px;
-        	height: auto;
+           width : 500px;
+           height: auto;
         }
     </style>
 </head>
@@ -210,20 +210,14 @@
   <form action="/login" method="post">
     <table >
         <tr id="trone">
-        	<td rowspan="3" style="width : 300px">
-        		<img src="/images/logo2.png">
-        	</td>
-            <td colspan="2">
-                <input type="radio" name="userClsCd" id="idtStd" value='student' checked="checked" />
-                <label for='idtStd'>&nbsp;학생&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                <input type="radio" name="userClsCd" id="idtPro" value='professor' />
-                <label for='idtPro'>&nbsp;교수&nbsp;&nbsp;&nbsp;&nbsp; </label>
-                <input type="radio" name="userClsCd" id="idtEmp" value='admin' />
-                <label for='idtEmp'>&nbsp;직원</label>
+           <td rowspan="3" style="width:500px;">
+           </td>
+            <td colspan="2" >
+                 <img src="/images/logo2.png">
             </td>
         </tr>
         <tr id="trtwo">
-            <td>
+            <td style="width:500px;">
            
                     <span>학번</span><br>
                     <input type="text" id="username" name="username" style="width:100%; height:30px; " placeholder="학번/교번/사번을 입력해주세요"><br>
@@ -258,7 +252,7 @@
 
     let mainName = document.querySelector("h1");
     let loginFrm = document.querySelector("table");
-    //     	let logo = document.querySelector("#logo");
+    //        let logo = document.querySelector("#logo");
     console.log("내용", mainName.value);
     window.addEventListener("scroll", function () {
         let value = window.scrollY;
@@ -267,19 +261,19 @@
         if (value > 80) {
             mainName.style.animation = 'downslide 1s ease-out forwards';
             loginFrm.classList.add("show");
-            //     			logo.classList.add("show");
+            //              logo.classList.add("show");
 
         } else {
 
             mainName.style.animation = 'upslide 1s ease-out';
             loginFrm.classList.remove("show");
-            //     			logo.classList.remove("show");
+            //              logo.classList.remove("show");
         }
     })
     
     function forget(){
-    	event.preventDefault();
-    	window.open("/main/forget","_blank","width=400,height=450,left=600,top=350");
+       event.preventDefault();
+       window.open("/main/forget","_blank","width=400,height=450,left=600,top=350");
     }
 
     if(location.href.includes("?error")){
