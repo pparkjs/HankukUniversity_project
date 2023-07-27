@@ -181,9 +181,7 @@ position: relative;
 					<!-- message -->
 					<c:if test="${not empty std }">
 						<li class="nav-item dropdown notification_dropdown"><a
-							class="nav-link bell-link" href="javascript:void(0);"> <svg
-									width="20" height="22" viewBox="0 0 22 20" fill="none"
-									xmlns="http://www.w3.org/2000/svg">
+							class="nav-link bell-link" href="javascript:void(0);" style="margin-top: -4px;"> <svg width="30" height="34" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<path
 										d="M16.9026 6.85114L12.4593 10.4642C11.6198 11.1302 10.4387 11.1302 9.59922 10.4642L5.11844 6.85114"
 										stroke="white" stroke-width="1.5" stroke-linecap="round"
@@ -193,6 +191,7 @@ position: relative;
 										stroke="white" stroke-width="1.5" stroke-linecap="round"
 										stroke-linejoin="round" />
 									</svg>
+									<p style="color: white; font-size: 1.1em; margin-left: 32px; margin-top: -19px;" class="unMsgCnt"></p>
 						</a></li>
 					</c:if>
 					<li class="nav-item align-items-center header-border"><a

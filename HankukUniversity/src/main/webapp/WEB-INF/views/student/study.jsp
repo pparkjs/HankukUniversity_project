@@ -45,7 +45,7 @@
 
 						<br>
 						<br>
-						<div class="row">
+						<div class="row" id="studyListDiv">
 						<c:choose>
 							<c:when test="${empty studyList }">
 								<p>현재 가입되어있는 스터디가 없습니다.</p>
@@ -128,6 +128,7 @@
 								</c:forEach>
 								</c:otherwise>
 							</c:choose>
+							
 							</div>
 						</div>
 					</div>
@@ -145,7 +146,7 @@
 					</div>
 					<div class="offcanvas-body">
 						<div class="container-fluid">
-							<form action="#" method="post" >
+							<form name="addStudyForm" >
 								<div>
 									<div class="col-xl-6 mb-3">
 										<label for="exampleFormControlInput1" class="form-label">
@@ -180,20 +181,92 @@
 	</div>
 </div>
 <script>
-	function addStudy(){
-		const myForm = document.forms[0];
-			let data = {
-				studyName: myForm.studyName.value,
-				studyCpcy: myForm.studyCpcy.value,
-				studyIntro: myForm.studyIntro.value
+
+function studyList(){
+	var stdNo = {
+			"stdNo":"\${sessionScope.std.stdNo}"
+	};
+	console.log("보낸 stdNo: ", stdNo);
+	var body = $("#studyListDiv");
+	$.ajax({
+		type:"get",
+		data:stdNo,
+		url:"/hku/student/getStudyList",
+		dataType:"json",
+		success:function(res){
+			console.log("res: ",res);
+			
+			var data = '';
+			for(var i = 0; i < res.length; i++){
+				data += `<div class="col-xl-3 col-lg-4 col-sm-6">
+							<div class="card" style="background-color: #adb17d1c;">
+							<div class="card-body">
+								<div class="card-use-box">
+									<div class="card__text">
+										<h4 class="mb-0">\${res[i].studyName }</h4>
+										<p>${res[i].studyIntro }</p>
+									</div>
+									<ul class="card__info">
+										<li><span>인원수</span> <span class="card__info__stats">\${res[i].count} / \${res[i].studyCpcy }</span>
+										</li>
+									</ul>
+									<ul class="post-pos">
+										<li><span class="card__info__stats">스터디장: </span> 
+										<span>\${res[i].stdNm }</span>
+										</li>
+											<span>\${res[i].studyRegdate }</span>
+										</li>
+									</ul>
+									
+									<div>
+										<a href="/hku/student/studyRoom?studyNo=\${res[i].studyNo }"
+											class="btn btn-outline-primary btn-xs">Enter</a>
+									</div>
+								</div>
+							</div>
+						</div>	
+					</div>`;
 			}
-			let xhr = new XMLHttpRequest();
-			xhr.open("POST","/hku/student/study", true);
-			xhr.setRequestHeader("Content-Type","application/json;charset=utf-8");
-			xhr.onreadystatechange = function(){
-					location.reload(true);
-			}
-			xhr.send(JSON.stringify(data));
+			body.html(data);
 		}
+	})
+}
+
+
+function addStudy(){
+	var addStudyForm = document.forms.addStudyForm;
+	
+	var studyName = addStudyForm.studyName.value;
+	var studyCpcy = addStudyForm.studyCpcy.value;
+	var studyIntro = addStudyForm.studyIntro.value;
+	
+	let data = {
+		"studyName" : studyName,
+		"studyCpcy" : studyCpcy,
+		"studyIntro" : studyIntro
+	}
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST","/hku/student/study", true);
+	xhr.setRequestHeader("Content-Type","application/json; charset=utf-8");
+	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			if(xhr.responseText === "SUCCESS"){
+				console.log("성공");
+				location.reload(true);
+				studyList();
+				
+				
+			} else if(xhr.responseText === "FAILED"){
+				console.log(" 실패");
+				location.reload(true);
+			}
+		}
+			
+	}
+	xhr.send(JSON.stringify(data));
+	studyList();
+	location.reload(true);
+}
 </script>
 
