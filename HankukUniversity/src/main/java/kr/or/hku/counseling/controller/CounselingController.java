@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,7 @@ public class CounselingController {
 	@Autowired
 	private CounselingService counselingService;
 	
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/counseling-req")
 	public String counselingForm() {
 		return "student/counseling-req";
@@ -81,6 +83,7 @@ public class CounselingController {
 	}
 	
 	// 상담신청 내역조회로 이동
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/counseling-record")
 	public String counselingRecord(HttpSession session, Model model) {
 		
@@ -95,6 +98,7 @@ public class CounselingController {
 	}
 	
 	// 교수의 학생상담신청조회로 이동
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/student-counseling")
 	public String stdCounselingRecord() {
 		return "professor/student-counseling-record";
