@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +31,7 @@ public class LectureController {//강의관리 컨트롤러
 	
 	@Autowired
 	private ILectureService lectureService;
+	
 	
 	// 강의개설신청페이지
 	@GetMapping("/open")
@@ -117,6 +120,13 @@ public class LectureController {//강의관리 컨트롤러
 	@GetMapping("/returnLecture.do")
 	public void returnLecture (String lecapNo) {
 		lectureService.returnLecture(lecapNo);
+	}
+	
+	@ResponseBody
+	@GetMapping("/getMyLectire")
+	public List<LectureAplyVO> getMyLectire(){
+		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return lectureService.getMyLectire(users.getUsername());
 	}
 	
 }

@@ -179,6 +179,11 @@
 					</tr>
 					</c:if>
 				</c:forEach>
+				<c:if test="${subject.crsScr eq null}">
+					<tr>
+						<td colspan="13">조회할 수 있는 성적이 없습니다.</td>
+					</tr>
+					</c:if>
 			</tbody>
 		</table>
 	</div>

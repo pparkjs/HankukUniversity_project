@@ -24,7 +24,7 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 		log.info("로그인 정보===>: "+ custormUser.toString());
 		log.info("username : " + custormUser.getUsername());
 		log.info("password : " + custormUser.getPassword());
-		  response.sendRedirect("/main/loginProcess");
+//		  response.sendRedirect("/main/loginProcess");
 		  super.onAuthenticationSuccess(request, response, authentication);
 	}
 	
