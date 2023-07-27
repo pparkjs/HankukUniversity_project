@@ -161,6 +161,7 @@
 			</thead>
 			<tbody id="allGradeTb">
 				<c:forEach items="${map.subject}" var="subject">
+				<c:if test="${subject.crsScr ne null}">
 					<tr>
 						<td>${subject.lecapYr}</td>
 						<td>${subject.lecapSem}</td>
@@ -168,7 +169,7 @@
 						<td>${subject.crsClassfCd}</td>
 						<td style="width: 300px;">${subject.subNm}</td>
 						<td>${subject.subNo}</td>
-						<td>${subject.subCrd}</td>
+						<td>${subject.crsEarnedCrd}</td>
 						<td>생략</td>
 						<td>생략</td>
 						<td>생략</td>
@@ -176,7 +177,13 @@
 						<td>생략</td>
 						<td>${subject.crsScr}</td>
 					</tr>
+					</c:if>
 				</c:forEach>
+				<c:if test="${subject.crsScr eq null}">
+					<tr>
+						<td colspan="13">조회할 수 있는 성적이 없습니다.</td>
+					</tr>
+					</c:if>
 			</tbody>
 		</table>
 	</div>
@@ -212,31 +219,39 @@ let two;
 	 two = {
 			 subNo:'${subject.subNo}' ,
 			 subNm:'${subject.subNm}',
-			 subCrd:'${subject.subCrd}',
+			 crsEarnedCrd:'${subject.crsEarnedCrd}',
 			 crsClassfCd:'${subject.crsClassfCd}',
 			 crsScr:'${subject.crsScr}',
 			 lecapYr:'${subject.lecapYr}',
 			 lecapSem:'${subject.lecapSem}',
-			 deptNm:'${subject.deptNm}'
+			 deptNm:'${subject.deptNm}',
+			 evalYnCd :'${subject.evalYnCd}'
 	}
 	subject.push(two);
 </script>
 </c:forEach>
 
 <script>
+
 let mjrCrd = 0 ;
 let ctrlCrd  = 0 ;
-let semCrd  = 0;
 var stdNo = ${std.stdNo};
 console.log(stdInfo);
 console.log(subject);
 for (let i = 0; i < subject.length; i++) {
 	if (subject[i].crsClassfCd === '전필'|| subject[i].crsClassfCd === '전선') {
-		mjrCrd += parseInt(subject[i].subCrd);
+		if(subject[i].crsEarnedCrd == null || subject[i].crsEarnedCrd == ''){
+			mjrCrd += 0;
+		}else{
+		mjrCrd += parseInt(subject[i].crsEarnedCrd);
+		}
 	}else{
-		ctrlCrd += parseInt(subject[i].subCrd);
+		if(subject[i].crsEarnedCrd == null || subject[i].crsEarnedCrd == ''){
+			ctrlCrd += 0;
+		}else{
+			ctrlCrd += parseInt(subject[i].crsEarnedCrd);
+		}
 	}
-	semCrd += parseInt(subject[i].subCrd);
 }
 $('#getMjr').text(mjrCrd);
 $('#getCtrl').text(ctrlCrd);
@@ -268,7 +283,8 @@ function getAllGrade(){
 	
 	data = {
 			lecapYr : lecapYr,
-			lecapSem :lecapSem
+			lecapSem :lecapSem,
+			stdNo : stdNo,
 	}
 	console.log("data",data);
 	$.ajax({
@@ -280,55 +296,60 @@ function getAllGrade(){
         	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
         success: function (res) {
         	console.log(res);
-         gradeStr = '';
-        	for(let i=0; i <res.length; i++){
-        		gradeStr += '<tr>'
-        		gradeStr += '<td>'+res[i].lecapYr+'</td>';
-        		gradeStr += '<td>' + res[i].lecapSem+'</td>';
-      			gradeStr += '<td  style="width:200px;">' + res[i].deptNm+'</td>';
-      			gradeStr += '<td>' + res[i].crsClassfCd+'</td>';
-      			gradeStr += '<td style="width:300px;">' + res[i].subNm+'</td>';
-      			gradeStr += '<td>' + res[i].subNo+'</td>';
-      			gradeStr += '<td>' + res[i].subCrd+'</td>';
-      			gradeStr += '<td>' + '생략' +'</td>';
-      			gradeStr += '<td>' + '생략' +'</td>';
-      			gradeStr += '<td>' + '생략' +'</td>';
-      			gradeStr += '<td>' + '생략' +'</td>';
-      			gradeStr += '<td>' + '생략' +'</td>';
-      			gradeStr += '<td>' + res[i].crsScr+'</td>';
-      			gradeStr += '</tr>'
-        	}
-        	
-        	$('#allGradeTb').html(gradeStr);
-        	
-        	let mjr= 0;
-        	let ctrl = 0;
-        	for(let i=0; i <res.length; i++){
-        		if (res[i].crsClassfCd === '전필'|| res[i].crsClassfCd === '전선') {
-        			mjr += parseInt(res[i].subCrd);
-        		}else{
-        			ctrl += parseInt(res[i].subCrd);
-        		}
-        	}
-		let all = mjr + ctrl ;
-		console.log(all);
-        	
-        	$('#semMjr').text(mjr);
-        	$('#semCtrl').text(ctrl);
-        	$('#semAll').text(all);
-        	if(lecapYr == '' && lecapSem != ''){
-        		console.log("1");
-        		$('#selectedSem').text('전체연도'+" "+lecapSem+'학기 이수학점');
-        	}else if(lecapSem  == '' && lecapYr != '' ){
-        		console.log("2");
-        		$('#selectedSem').text(lecapYr+"년 "+'전체학기 이수학점');
-        	}else if(lecapYr == ''&& lecapSem  == ''){
-        		console.log("3");
-        		$('#selectedSem').text('전체연도 전체학기 이수학점');
+            gradeStr = '';
+        	if(res.length == 0){
+        		gradeStr = '<tr><td colspan="13">조회 할 수 있는 성적이 없습니다.</td></tr>';
         	}else{
-        		console.log("4");
-        	$('#selectedSem').text(lecapYr+'년 '+lecapSem+'학기 이수학점');
-        	}
+	        	for(let i=0; i <res.length; i++){
+		        		gradeStr += '<tr>'
+		        		gradeStr += '<td>'+res[i].lecapYr+'</td>';
+		        		gradeStr += '<td>' + res[i].lecapSem+'</td>';
+		      			gradeStr += '<td  style="width:200px;">' + res[i].deptNm+'</td>';
+		      			gradeStr += '<td>' + res[i].crsClassfCd+'</td>';
+		      			gradeStr += '<td style="width:300px;">' + res[i].subNm+'</td>';
+		      			gradeStr += '<td>' + res[i].subNo+'</td>';
+		      			gradeStr += '<td>' + res[i].subCrd+'</td>';
+		      			gradeStr += '<td>' + '생략' +'</td>';
+		      			gradeStr += '<td>' + '생략' +'</td>';
+		      			gradeStr += '<td>' + '생략' +'</td>';
+		      			gradeStr += '<td>' + '생략' +'</td>';
+		      			gradeStr += '<td>' + '생략' +'</td>';
+		      			gradeStr += '<td>' + res[i].crsScr+'</td>';
+		      			gradeStr += '</tr>'
+	        		}
+	        	}
+        		$('#allGradeTb').html(gradeStr);
+	        	
+	        	let mjr= 0;
+	        	let ctrl = 0;
+	        	for(let i=0; i <res.length; i++){
+		        		if (res[i].crsClassfCd === '전필'|| res[i].crsClassfCd === '전선') {
+		        			mjr += parseInt(res[i].subCrd);
+		        		}else{
+		        			ctrl += parseInt(res[i].subCrd);
+		        		}
+	        	}
+        	
+			let all = mjr + ctrl ;
+			console.log(all);
+	        	
+	        	$('#semMjr').text(mjr);
+	        	$('#semCtrl').text(ctrl);
+	        	$('#semAll').text(all);
+	        	if(lecapYr == '' && lecapSem != ''){
+	        		console.log("1");
+	        		$('#selectedSem').text('전체연도'+" "+lecapSem+'학기 이수학점');
+	        	}else if(lecapSem  == '' && lecapYr != '' ){
+	        		console.log("2");
+	        		$('#selectedSem').text(lecapYr+"년 "+'전체학기 이수학점');
+	        	}else if(lecapYr == ''&& lecapSem  == ''){
+	        		console.log("3");
+	        		$('#selectedSem').text('전체연도 전체학기 이수학점');
+	        	}else{
+	        		console.log("4");
+	        	$('#selectedSem').text(lecapYr+'년 '+lecapSem+'학기 이수학점');
+	        	}
+        	
         },
         error: function (xhr, status, error) {
             swal("출력실패");

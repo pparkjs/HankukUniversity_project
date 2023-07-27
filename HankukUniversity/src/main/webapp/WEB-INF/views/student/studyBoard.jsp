@@ -187,6 +187,7 @@ function boardList() {
 
 function boardDetail(element) {
     var tdId = $(element).attr("id");
+    var sessStdNo = ${sessionScope.std.stdNo};
     var stboNo = {
         "stboNo": tdId
     };
@@ -201,12 +202,25 @@ function boardDetail(element) {
         beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
         success: function(res) {
             console.log("res: ", res);
+            console.log("res.stdNo: ", res.stdNo);
+            console.log("sessStdNo", sessStdNo);
 
             $("#stboNo2").val(res.stboNo);
             $("#stboWriter2").val(res.stboWriter);
             $("#stboTitle2").val(res.stboTitle);
             $("#stboContent2").val(res.stboContent);
             $("#studyNo3").val(res.studyNo);
+            
+            let btnData = "";
+            if(res.stdNo == sessStdNo){
+            	btnData = `<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
+		    				<button type="button" class="btn btn-primary" onclick="delBoard()" id="btn3">삭제</button>
+		    				<button type="button" class="btn btn-primary" onclick="modifyStudyBoard()" id="btn2">수정</button>`;
+            }else{
+            	btnData = `<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
+		    				<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#basicModal">가입신청</button>`;
+            }
+            $("#btnDiv").html(btnData);
 		    boardList();
         }
     });
@@ -328,7 +342,7 @@ function closeModal() {
 					</div>
 				</div>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer" id="btnDiv">
 				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
 				<button type="button" class="btn btn-primary" onclick="modifyStudyBoard()" id="btn2">수정</button>
 				<button type="button" class="btn btn-primary" onclick="delBoard()" id="btn3">삭제</button>
