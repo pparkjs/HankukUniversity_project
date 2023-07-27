@@ -43,5 +43,7 @@ public interface ILectureService {
 	public List<LectureAplyVO> getLectureStatus(String proNo);
 
 	public void returnLecture(String lecapNo);
+
+	public List<LectureAplyVO> getMyLectire(String username);
 	
 }
