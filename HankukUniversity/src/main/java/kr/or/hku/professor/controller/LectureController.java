@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,7 @@ public class LectureController {//강의관리 컨트롤러
 	private ILectureService lectureService;
 	
 	// 강의개설신청페이지
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/open")
 	public String lectureOpen(Model model) {
 		//교과목 목록 조회
