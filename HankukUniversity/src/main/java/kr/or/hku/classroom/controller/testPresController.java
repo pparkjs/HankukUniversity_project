@@ -153,6 +153,7 @@ public class testPresController {
 	}
 	
 	// 응시과목 정보폼 이동
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/test-info")
 	public String testInfoForm() {
 		return "student/test-info";
@@ -178,6 +179,7 @@ public class testPresController {
 	}
 	
 	// 시험응시 시작
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/open-test")
 	public String openTest(TestVO test, Model model, HttpSession session, RedirectAttributes redi) {
 		TestVO testVO = testPresService.timeChange(test);
