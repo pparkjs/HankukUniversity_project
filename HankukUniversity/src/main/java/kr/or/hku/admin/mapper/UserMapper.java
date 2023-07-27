@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.or.hku.admin.vo.SmsTemplateVO;
+import kr.or.hku.admin.vo.SmsVO;
 import kr.or.hku.admin.vo.UserVO;
 import kr.or.hku.common.vo.SearchInfoVO;
 
@@ -60,5 +62,15 @@ public interface UserMapper {
 	public List<Map<String, String>> getProList(Map<String, String> paramMap);
 
 	public List<Map<String, String>> getEmpList(Map<String, String> paramMap);
+
+	public List<SmsTemplateVO> getSmsTemplateList();
+
+	public SmsTemplateVO settingMsg(SmsTemplateVO paramVO);
+
+	public int sendMsgStatus(String empName);
+
+	public String getMyName(String username);
+
+	public List<SmsVO> getSmsDetailList();
 
 }

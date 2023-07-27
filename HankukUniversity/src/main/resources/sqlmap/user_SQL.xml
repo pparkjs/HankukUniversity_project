@@ -78,7 +78,20 @@
 	    <if test='whatDept != null and whatDept != ""'>
 	    	and a.emp_dept_cd = #{whatDept}
 	    </if>
-	    
+ 	</select>
+ 	
+ 	<select id="settingMsg" parameterType="smsTemplateVO" resultType="smsTemplateVO">
+ 		select
+ 			SMS_TEMP_NO, SMS_TEMP_TYPE, SMS_TEMP_CN
+ 		from sms_template
+ 		where 1=1
+ 		and SMS_TEMP_NO = #{smsTempNo}
+ 	</select>
+ 	
+ 	<select id="getSmsTemplateList" resultType="smsTemplateVO">
+ 		SELECT 
+        	sms_temp_no, sms_temp_type
+        FROM sms_template
  	</select>
  	
  	<select id="getDeptList" resultType="map">
@@ -599,4 +612,31 @@
 		WHERE
 			emp_no = #{userNo}
  	</update>
+ 	
+ 	<insert id="sendMsgStatus" parameterType="string">
+ 		insert into sms(
+ 			SMS_NO, SMS_SENDER, SMS_RECEIVER,SMS_SEND_DT
+ 		)values(
+ 			seq_sms.nextval,
+ 			#{empName},
+ 			'컴퓨터공학과 전체',
+ 			sysdate
+ 		)
+ 	</insert>
+ 	
+ 	<select id="getSmsDetailList" resultType="smsVO">
+ 		select
+ 			SMS_NO,
+ 			SMS_RECEIVER,
+ 			SMS_SEND_DT
+ 		from sms
+ 		order by SMS_NO desc
+ 	</select>
+ 	
+ 	<select id="getMyName" parameterType="string" resultType="string">
+ 		select
+ 			EMP_NAME
+ 		from EMPLOYEE
+ 		where EMP_NO = #{userName}
+ 	</select>
  </mapper>

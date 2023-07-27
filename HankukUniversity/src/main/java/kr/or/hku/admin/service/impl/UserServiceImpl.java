@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.hku.admin.mapper.UserMapper;
 import kr.or.hku.admin.service.UserService;
+import kr.or.hku.admin.vo.SmsTemplateVO;
+import kr.or.hku.admin.vo.SmsVO;
 import kr.or.hku.admin.vo.UserVO;
 import kr.or.hku.common.vo.SearchInfoVO;
 import lombok.extern.slf4j.Slf4j;
@@ -32,8 +34,33 @@ public class UserServiceImpl implements UserService {
 	private String resourcePath;
 	
 	@Override
+	public List<SmsVO> getSmsDetailList() {
+		return mapper.getSmsDetailList();
+	}
+	
+	@Override
 	public int insertUser(UserVO userVO) {
 		return mapper.insertUser(userVO);
+	}
+	
+	@Override
+	public List<SmsTemplateVO> getSmsTemplateList() {
+		return mapper.getSmsTemplateList();
+	}
+	
+	@Override
+	public int sendMsgStatus(String empName) {
+		return mapper.sendMsgStatus(empName);
+	}
+	
+	@Override
+	public String getMyName(String username) {
+		return mapper.getMyName(username);
+	}
+	
+	@Override
+	public SmsTemplateVO settingMsg(SmsTemplateVO paramVO) {
+		return mapper.settingMsg(paramVO);
 	}
 	
 	@Override

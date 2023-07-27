@@ -1,5 +1,6 @@
 package kr.or.hku.common.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +15,10 @@ import kr.or.hku.common.service.CommonSMSService;
 import kr.or.hku.common.vo.ApiVO;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.sdk.NurigoApp;
+import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
+import net.nurigo.sdk.message.response.MultipleDetailMessageSentResponse;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
 
@@ -96,5 +99,57 @@ public class CommonSMSServiceImpl implements CommonSMSService {
 			}
 		}
 		return res;
+	}
+
+	@Override
+	public ServiceResult sendShMsg(List<Map<String, String>> userList, String msg) {
+        String apiType = "MSG_API_FROM";
+		List<ApiVO> apiId = apiService.getApiId(apiType);
+		String sendFrom = apiId.get(0).getApiId().trim();
+		ServiceResult result = null;
+		
+//        for (int i = 0; i < userList.size(); i++) {
+//        	Map<String, String> map = userList.get(i);
+//        	String userTelno = map.get("userTelno");
+//        	userTelno = userTelno.replaceAll("-", "");
+//        	if(userTelno.length() == 11) {
+//        		Message message = new Message();
+//        		message.setFrom(sendFrom);
+//        		message.setTo(userTelno);
+//        		message.setText(msg);
+//        		
+//				SingleMessageSentResponse response = this.messageService
+//						.sendOne(new SingleMessageSendingRequest(message));
+//				System.out.println(response);
+//				if (!(response.getStatusCode().equals("2000"))) {
+//					result = ServiceResult.FAILED;
+//				}else {
+//					result = ServiceResult.OK;
+//				}
+//        	}
+//        }
+		SingleMessageSentResponse response = null;
+		String[] tels = {"010-5398-1821"}; // 정재균 핸드폰 번호 입력해야함
+		// 여기 진짜 핸드폰 번호 넣어야함 =======================================================================================
+		for (int i = 0; i < tels.length; i++) {
+			Message message = new Message();
+			String telNo = tels[i].replaceAll("-", "");
+			if (telNo.length() == 11) {
+				// 문자 전송하는사람 빠졋음 다시 너야합니다.
+				message.setFrom(sendFrom);
+				// 여기 사이에
+				message.setTo(telNo);
+				message.setText(msg);
+				response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
+				log.info("문자 메시지 response값 => " + response.getStatusCode());
+				if (!response.getStatusCode().equals("2000")) {
+					result = ServiceResult.FAILED;
+					break;
+				}else {
+					result = ServiceResult.OK;
+				}
+			}
+		}
+        return result;
 	}
 }

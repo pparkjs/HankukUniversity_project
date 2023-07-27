@@ -18,6 +18,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,9 +32,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.or.hku.ServiceResult;
 import kr.or.hku.admin.service.UserService;
 import kr.or.hku.admin.vo.DepartmentVO;
+import kr.or.hku.admin.vo.EmployeeVO;
+import kr.or.hku.admin.vo.SmsTemplateVO;
+import kr.or.hku.admin.vo.SmsVO;
 import kr.or.hku.admin.vo.UserVO;
+import kr.or.hku.common.service.CommonSMSService;
 import kr.or.hku.common.service.CommonService;
 import kr.or.hku.common.vo.CommonVO;
 import kr.or.hku.common.vo.SearchInfoVO;
@@ -53,13 +60,51 @@ public class UserManagementController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private CommonSMSService smsService;
+	 
+	// 성히꺼 // 
+	@ResponseBody
+	@PostMapping("/send-text-msg")
+	public int sendTextMsg(@RequestBody Map<String, Object> map, HttpSession session) {
+		log.info("전달 받은 파라미터 ! " + map.toString());
+		List<Map<String, String>> userList = (List<Map<String, String>>) map.get("userList");
+		String msg = (String) map.get("msg");
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String empName = userService.getMyName(user.getUsername());
+		
+		ServiceResult res = null;
+		int sendMsgStatus = 0;
+		if( userList.size() > 0) {
+			res = smsService.sendShMsg(userList, msg);
+		}
+		if(res != null && res.equals(ServiceResult.OK)) {
+			sendMsgStatus = userService.sendMsgStatus(empName);
+		}
+		
+		return sendMsgStatus;
+	}
+	
+	
+	
+	
 	@GetMapping("/send-text-msg")
 	public String showSendTextMsgPage(Model model) {
 		List<Map<String, String>> depList = userService.getDeptList();
 		List<Map<String, String>> empDeptList = userService.getEmpDeptList();
+		List<SmsTemplateVO> smsTemplateList = userService.getSmsTemplateList();
+		List<SmsVO> smsDetailList = userService.getSmsDetailList();
+		model.addAttribute("smsTemplateList", smsTemplateList);
 		model.addAttribute("depList", depList);
 		model.addAttribute("empDeptList", empDeptList);
+		model.addAttribute("smsDetailList", smsDetailList);
 		return "admin/sendTextMsg";
+	}
+	
+	@ResponseBody
+	@GetMapping("/setting-msg")
+	public SmsTemplateVO settingMsg(SmsTemplateVO paramVO) {
+		return userService.settingMsg(paramVO);
 	}
 	
 	@ResponseBody
