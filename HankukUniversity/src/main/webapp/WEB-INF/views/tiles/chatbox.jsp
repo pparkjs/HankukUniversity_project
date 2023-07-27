@@ -14,6 +14,19 @@
     color: #800000;
     font-size: 1.1em;
 }
+.unMsgCnt{
+  width: 20px;
+  height: 20px;
+  background-color: #e33333;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 20px;
+  position: absolute;
+  top: 50px;
+  right: -1px;
+  font-size: 13px;
+}
 .chatbox .img_cont_msg img {
     width: 180%;
     height: 180%;
@@ -144,7 +157,7 @@
 						            <span class="online_icon"></span>
 						          </div>
 						          <div class="user_info">
-						            <span style='font-size: 1.3em;'>\${res[i].studyName}</span>`;
+						            <span style='font-size: 1em;'>\${res[i].studyName}</span>`;
 					if(res[i].unreadMsgCnt > 0){
 						chatList += `<p style='color: red'>\${res[i].unreadMsgCnt}</p>`;
 					}else{

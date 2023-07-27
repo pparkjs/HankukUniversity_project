@@ -47,7 +47,7 @@ public class StudyBoardController {
 	    model.addAttribute("list", list);
 	    model.addAttribute("myStudy", myStudy);
 	    model.addAttribute("stdNm", stdNm);
-	    return "student/studyBoard";
+	    return "portal/studyBoard";
 	}
 	
 	@ResponseBody
