@@ -95,11 +95,14 @@ public class LoginServiceImpl implements ILoginService {
 			mail.setSSL(true);
 			mail.setFrom(vo.getApiId(),"한국대학교");
 			mail.setSubject("[한국대학교] 임시비밀번호 안내입니다.");
-			mail.setHtmlMsg("<html><div style='width:100%; height:50px; background:#800000;'><h1 style='color:white'> 임시비밀번호 발급 </h1></div>"
-					+ "<br><div style='text-align:center;'>"
-					+"<h4>안녕하세요,한국대학교에서 요청하신 임시비밀번호를 전달드립니다.<br>고객님의 개인정보 보호를 위해 로그인 즉시 비밀번호를 재설정바랍니다." 
-					+ "<h2>임시비밀번호는"+ rs +"입니다.</h2></div>"
-							+ "<div style='width:100%; height:30px; background:#800000;'></div></html>");
+			mail.setHtmlMsg("<div style='height:50px; width:100%; background-color: #800000;'>"
+					+ "<h1 style='color:white; margin-left:20px ;'>한국대학교</h1></div><br>"
+					+ " <div style='text-align: center;'>"
+					+"<p>안녕하세요, 한국대학교 입학관리처입니다.</p><p>요청하신 임시비밀번호 안내드리니,</p><p>보안을 위해 로그인 즉시 비밀번호를 변경해주세요.</p><br>" 
+					+"<div style='display: flex; justify-content:center; align-items: center; background-color: rgb(218, 218, 218); width:400px; height:150px; margin: 0 auto; border-radius: 10px; flex-direction: column;'>" 
+					+ "<p style='color:black; font-size: 1.5em; font-weight: bold;'>임시비밀번호</p>"
+					+ "<p style='color:#800000; font-size: 1.5em; font-weight: bold;'>" + rs +"</p></div>"
+							+ " </div><br><div style='height:50px; width:100%; background-color: #800000;'></div>");
 			mail.addTo(userEmail);
 			mail.send();
 		}else {

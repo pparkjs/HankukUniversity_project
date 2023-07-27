@@ -40,9 +40,10 @@
 						<div class="locker-wrap" style="margin-top: 10px;">
 							<div class="lockerLeft-top">
 								<span>건물:&nbsp;&nbsp;&nbsp;</span>
-								<select class="flctSel">
-									<option value="${std.flctNo}">${std.flctNm }</option>
-								</select>
+								<input type="text" class="flctSel" style="background: whitesmoke;" value="${std.flctNm }" data-flctno="${std.flctNo}" readonly="readonly">
+<!-- 								<select > -->
+<%-- 									<option value="${std.flctNo}">${std.flctNm }</option> --%>
+<!-- 								</select> -->
 								<span>층수:&nbsp;&nbsp;&nbsp;</span>
 								<select class="floorSel">
 									<c:forEach items="${flctList}" var="flct">

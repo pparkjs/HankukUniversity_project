@@ -50,6 +50,26 @@
 								</thead>
 								<tbody id="craditBody">
 									<!-- 동적추가 -->
+									<tr>
+										<td class="crs aa" style="padding:11px;">전필</th>
+										<td class="aa" style="padding:11px;">0</td>
+										<td class="aa" style="padding:11px;">0</td>
+									</tr>
+									<tr>
+										<td class="crs aa" style="padding:11px;">전선</th>
+										<td class="aa" style="padding:11px;">0</td>
+										<td class="aa" style="padding:11px;">0</td>
+									</tr>
+									<tr>
+										<td class="crs aa" style="padding:11px;">교필</th>
+										<td class="aa" style="padding:11px;">0</td>
+										<td class="aa" style="padding:11px;">0</td>
+									</tr>
+									<tr>
+										<td class="crs aa" style="padding:11px;">교선</th>
+										<td class="aa" style="padding:11px;">0</td>
+										<td class="aa" style="padding:11px;">0</td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -77,6 +97,9 @@
 								</thead>
 								<tbody id="subBody">
 									<!-- 동적추가 -->
+									<tr>
+										<td colspan="5" style="padding:11px; text-align: center">이수구분을 선택하세요.</th>
+									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -133,26 +156,30 @@ function craditList(){
 			var sum = 0;
 			var mSum = 0;
 			var sSum = 0;
-			for(var i = 0; i < res.length; i++){
-				
-				if(`\${res[i].crsClassfCd}` == 'MR' || `\${res[i].crsClassfCd}` == 'MS'){
-					mSum += parseInt(`\${res[i].crdSum}`);
-				}else{
-					sSum += parseInt(`\${res[i].crdSum}`);
+			
+			if(res.length > 0){
+				for(var i = 0; i < res.length; i++){
+					
+					if(`\${res[i].crsClassfCd}` == 'MR' || `\${res[i].crsClassfCd}` == 'MS'){
+						mSum += parseInt(`\${res[i].crdSum}`);
+					}else{
+						sSum += parseInt(`\${res[i].crdSum}`);
+					}
+					
+					sum += parseInt(`\${res[i].crdSum}`);
+					
+					data += `<tr>
+								<td id="\${res[i].crsClassfCd}" class="crs aa" style="padding:11px;">\${res[i].crsClassfNm}</th>
+								<td id="\${res[i].crsClassfCd}" class="aa" style="padding:11px;">\${res[i].reqCrdSum}</td>
+								<td id="\${res[i].crsClassfCd}" class="aa" style="padding:11px;">\${res[i].crdSum}</td>`
+					data +=	`</tr>`;
 				}
-				
-				sum += parseInt(`\${res[i].crdSum}`);
-				
-				data += `<tr>
-							<td id="\${res[i].crsClassfCd}" class="crs aa" style="padding:11px;">\${res[i].crsClassfNm}</th>
-							<td id="\${res[i].crsClassfCd}" class="aa" style="padding:11px;">\${res[i].reqCrdSum}</td>
-							<td id="\${res[i].crsClassfCd}" class="aa" style="padding:11px;">\${res[i].crdSum}</td>`
-				data +=	`</tr>`;
+				craditBody.html(data);
+				$('.totalLeft').text(sum+"학점")
+				initSubList();
+				dataSetAdd(mSum, sSum)
 			}
-			craditBody.html(data);
-			$('.totalLeft').text(sum+"학점")
-			initSubList();
-			dataSetAdd(mSum, sSum)
+			
 		}
 	})
 }
@@ -173,15 +200,21 @@ function subRecordList(obj){
 			console.log(res);
 			
 			var data = '';
-			for(var i = 0; i < res.length; i++){
-				let score = scoreChange(`\${res[i].crsScr}`)
+			if(res.length > 0){
+				for(var i = 0; i < res.length; i++){
+					let score = scoreChange(`\${res[i].crsScr}`)
+					data += `<tr>
+								<td style="padding:11px;">\${res[i].subNm}</th>
+								<td style="padding:11px;">\${res[i].crsClassfNm}</td>
+								<td style="padding:11px;">\${res[i].crsScr}</td>
+								<td style="padding:11px;">\${score}</td>
+								<td style="padding:11px;">\${res[i].lecapYr}년 &nbsp; \${res[i].lecapSem}학기</td>`
+					data +=	`</tr>`;
+				}
+			}else{
 				data += `<tr>
-							<td style="padding:11px;">\${res[i].subNm}</th>
-							<td style="padding:11px;">\${res[i].crsClassfNm}</td>
-							<td style="padding:11px;">\${res[i].crsScr}</td>
-							<td style="padding:11px;">\${score}</td>
-							<td style="padding:11px;">\${res[i].lecapYr}년 &nbsp; \${res[i].lecapSem}학기</td>`
-				data +=	`</tr>`;
+							<td colspan="5" style="padding:11px; text-align:center">과목이수현황이 존재하지 않습니다.</th>
+						</tr>`
 			}
 			subBody.html(data);
 		}

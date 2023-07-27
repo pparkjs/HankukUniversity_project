@@ -14,7 +14,7 @@ var W3Crm = function(){
 		setTimeout(function() {
 			jQuery('#preloader').remove();
 			$('#main-wrapper').addClass('show');
-		},800);	
+		},400);	
 		
 	}
 

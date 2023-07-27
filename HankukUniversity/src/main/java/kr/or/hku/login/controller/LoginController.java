@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.hku.admin.vo.EmployeeVO;
+import kr.or.hku.common.service.CommonService;
 import kr.or.hku.login.service.ILoginService;
 import kr.or.hku.login.vo.UsersVO;
 import kr.or.hku.professor.vo.ProfessorVO;
@@ -36,6 +37,9 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginController {
 	@Autowired
 	private ILoginService loginService;
+	
+	@Autowired
+	private CommonService commonService;
 	
 	@Inject
 	BCryptPasswordEncoder pe;
@@ -62,8 +66,10 @@ public class LoginController {
 		//사용자식별코드가 학생일경우
 		if(userVo.getUserClsCd().equals("student")) {
 			StudentVO stdVo = loginService.studentUser(userVo.getUserNo());
+			StudentVO stuInfo = commonService.myAllInfo(stdVo.getStdNo()); // student테이블 뿐만 아니라 나의 관련 모든 정보 가져오기
 			session.setAttribute("std", stdVo);
-	
+			session.setAttribute("stdInfo", stuInfo); 
+			
 			goPage = "redirect:/main/portal";
 		}else if(userVo.getUserClsCd().equals("professor")) {//사용자식별코드가 교수일경우
 			ProfessorVO proVo = loginService.professorUser(userVo.getUserNo());
@@ -92,15 +98,18 @@ public class LoginController {
 		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		ProfessorVO proVo = loginService.professorUser(users.getUsername());
 		System.out.println("유저네임!!!!!"+users.getUsername());
+		
 		log.info("user.password : "+users.getPassword());
 		
 		return "portal/home";
 	}
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/emp")
 	public String adminMain(Principal principal) {
 		return "admin/main";
 	}
+	
 	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/pro")
 	public String professorMain() {
