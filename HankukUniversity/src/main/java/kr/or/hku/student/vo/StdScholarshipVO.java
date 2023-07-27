@@ -1,5 +1,6 @@
 package kr.or.hku.student.vo;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -30,6 +31,7 @@ public class StdScholarshipVO {
 	private String sclsapYr;
 	private int sclsapSem;
 	
+	private List<HashMap<Object, Object>> delFileInfoList;
 	private List<MultipartFile> aplyFiles;
 	private List<AttachFileVO> aplyDetailFiles;
 }
