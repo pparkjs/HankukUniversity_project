@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <div class="content-body">
 	<div class="container-fluid">
 		<!-- row -->
 		<div class="row">
-			<form id="insertFrm" method="post" action="/hku/professor/insertNotice" enctype="multipart/form-data" class="col-xl-12 col-xxl-12">
+			<form id="insertFrm" method="post" action="/hku/professor/insertNotice?${_csrf.parameterName}=${_csrf.token" enctype="multipart/form-data" class="col-xl-12 col-xxl-12">
 				<c:if test="${not empty notice }">
 					<input type="hidden" value="${notice.lecntNo}" name="lecntNo">
 				</c:if>
@@ -75,6 +76,7 @@
 				</div>
 				<input type="hidden" name="lecntWriter" value="${pro.proNm}">
 				<input type="hidden" name="lecapNo" value="${lecapNo}">
+				<sec:csrfInput/>
 			</form>
 		</div>
 	</div>

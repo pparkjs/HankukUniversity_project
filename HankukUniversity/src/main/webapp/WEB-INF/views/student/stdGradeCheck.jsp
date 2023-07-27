@@ -34,7 +34,7 @@
             
             </div>
         </div>
-        <div  style="width:100%; margin-bottom: 0.563rem;">
+        <div  style="width:100%; margin-bottom: 0.563rem; height:300px; background: white;">
         	<table id="gradeTable" style="width:100%">
 		        <thead>
 				    <tr>
@@ -67,6 +67,7 @@
 							<td>${subject.subNm}</td>
 							<td>${subject.subNo}</td>
 							<c:choose>
+							<c:when test="${subject.crsScr ne null}">
 								<c:when test="${subject.evalYnCd eq 'Y'}">
 									<td>${subject.subCrd}</td>
 									<td>생략</td>
@@ -93,6 +94,20 @@
 									<button type="button" class="btn btn-primary pro1 testBtn" style="border:none;">강의평가</button>
 									</td>
 								</c:otherwise>
+								</c:when>
+								<c:when test="${subject.crsScr eq null}">
+									<td> - </td>
+									<td> - </td>
+									<td> - </td>
+									<td> - </td>
+									<td> - </td>
+									<td> - </td>
+									<td> - </td>
+									<td>
+									<input type="hidden" value="${subject.lecapNo}" class="hlecapNo">
+									<button type="button" class="btn btn-primary pro1 testBtn" style="background-color: gray; color: whiter; border:none; cursor:default;">열람불가</button>
+									</td>
+								</c:when>
 							</c:choose>
 						</tr>
 					</c:forEach>
@@ -332,16 +347,16 @@ let one;
 </script>
 <c:forEach items="${map.stdInfo}" var="stdVO">
 <script>
-	 one = {
-		stdNo:'${stdVO.stdNo}' ,
-		stdNm:'${stdVO.stdNm}',
-		stdMjrCrd:'${stdVO.stdMjrCrd}',
-		stdCtrlCrd:'${stdVO.stdCtrlCrd}',
-		subCrd:'${stdVO.subCrd}',
-		deptNm:'${stdVO.deptNm}',
-		colNm:'${stdVO.colNm}',
-		stdSttsNm:'${stdVO.stdSttsNm}',
-		crsClassfNm:'${stdVO.crsClassfNm}'
+ one = {
+	stdNo:'${stdVO.stdNo}' ,
+	stdNm:'${stdVO.stdNm}',
+	stdMjrCrd:'${stdVO.stdMjrCrd}',
+	stdCtrlCrd:'${stdVO.stdCtrlCrd}',
+	subCrd:'${stdVO.subCrd}',
+	deptNm:'${stdVO.deptNm}',
+	colNm:'${stdVO.colNm}',
+	stdSttsNm:'${stdVO.stdSttsNm}',
+	crsClassfNm:'${stdVO.crsClassfNm}'
 	}
 	stdInfo.push(one);
 </script>	
@@ -404,6 +419,9 @@ $('#submitBtn').on("click",function(){
 			            grdDmrCn : grdDmrCn,
 			            lecapNo : lecapNo
 			        },
+			        beforeSend : function(xhr){
+			        	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); 
+			        	},
 			        success: function (res) {
 			        	  swal("신청이 정상적으로 완료되었습니다.", {
 			    		      icon: "success"
@@ -511,7 +529,9 @@ $(document).ready(function() {
 		            lecevAns4 : lecevAns4,
 		            lecevAns5 : lecevAns5,
 		            lecevOverallOpinion : lecevOverallOpinion
-		        },
+		        },beforeSend : function(xhr){
+		        	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); 
+	        	},
 		        success: function (res) {
 		        	  swal("강의평가 완료", {
 		    		      icon: "success"

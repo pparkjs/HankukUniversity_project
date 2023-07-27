@@ -13,7 +13,7 @@ public class PaginationInfoVO<T> {
 	
 	private int currentPage;        // 현재 페이지
 	
-	private int screenSize = 10;    // 페이지 당 게시글 수
+	private int screenSize = 7;    // 페이지 당 게시글 수
 	
 	private int blockSize = 5;      // 페이지 블록수 한번에 몇개의 페이지 번호를 보여줄거냐
 	

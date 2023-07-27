@@ -6,7 +6,7 @@
  <mapper namespace="kr.or.hku.student.mapper.StdGradeCheckMapper">
  	<select id="getStudentInfo" parameterType="String" resultType="stdInfoVO">
  		<![CDATA[
-	 		SELECT 
+			SELECT 
 	        A.STD_NO
 	        ,STD_NM
 	        ,D.SUB_CRD
@@ -23,11 +23,12 @@
 	        JOIN COM_CODE G ON D.CRS_CLASSF_CD = G.COM_CD
 	        JOIN COM_CODE H ON A.STD_STTS_CD = H.COM_CD
 	        WHERE A.STD_NO = #{stdNo}
-	        AND C.LECAP_YR = EXTRACT(YEAR FROM SYSDATE)
-			AND C.LECAP_SEM = CASE
-			    WHEN EXTRACT(MONTH FROM SYSDATE) <= 6 THEN '1'
-			    ELSE '2'
-	        END
+	        AND C.LECAP_YR LIKE TO_CHAR(SYSDATE, 'YYYY')
+    		AND C.LECAP_SEM = CASE
+                WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) BETWEEN 2 AND 6 THEN 1
+                WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) BETWEEN 7 AND 12 THEN 2
+                ELSE 0
+            END
 	    ]]>
  	</select>
  	
@@ -56,12 +57,12 @@
 	                JOIN DEPARTMENT E ON C.DEPT_CD = E.DEPT_CD
 				WHERE
 				    STD_NO = #{stdno}
-				    AND   B.LECAP_YR = EXTRACT(YEAR FROM SYSDATE)
-				    AND   B.LECAP_SEM =
-				        CASE
-				            WHEN EXTRACT(MONTH FROM SYSDATE) <= 6 THEN '2'
-				            ELSE '1'
-	        			END
+				AND B.LECAP_YR LIKE TO_CHAR(SYSDATE, 'YYYY')
+    		    AND B.LECAP_SEM = CASE
+                WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) BETWEEN 2 AND 6 THEN 1
+                WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) BETWEEN 7 AND 12 THEN 2
+                ELSE 0
+            END
 	       ]]> 			
  	</select>
  	
@@ -108,7 +109,7 @@
 	 		 SELECT
 				    B.SUB_NO,
 				    C.SUB_NM,
-				    C.SUB_CRD,
+				    A.CRS_EARNED_CRD,
 				    D.COM_CD_NM AS CRS_CLASSF_CD,
 				    B.LECAP_NO,
 	                A.CRS_SCR,
@@ -141,10 +142,10 @@
 	WHERE DEPT_CD = #{deptCd}
 	AND DEPCR_YR like TO_CHAR(sysdate, 'YYYY')
     AND DEPCR_SEM = CASE
-                       WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 7 THEN 1
-                       WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 8 AND 12 THEN 2
+                       WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 6 THEN 1
+                       WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 12 THEN 2
                     ELSE 0
-                      END
+                  END
  	</select>
  	
  	<select id="getSubjectYear" parameterType="String" resultType="String">
@@ -173,18 +174,20 @@
 	                B.LECAP_YR,
 	                B.LECAP_SEM,
 	                E.DEPT_NM
+	                A.EVAL_YN_CD
 				FROM
 				    COURSE_REGIST A
 				    JOIN LECTURE_APLY B ON A.LECAP_NO = B.LECAP_NO
 				    JOIN SUBJECT C ON B.SUB_NO = C.SUB_NO
 				    JOIN COM_CODE D ON C.CRS_CLASSF_CD = D.COM_CD
 	                JOIN DEPARTMENT E ON C.DEPT_CD = E.DEPT_CD
-				WHERE 1=1
+				WHERE A.STD_NO = #{stdNo}
 					<if test="lecapYr != null and lecapYr != '' ">				
 				    	AND B.LECAP_YR = #{lecapYr}
 				    </if>
 				    <if test="lecapSem != null and lecapSem != ''">
 						AND	B.LECAP_SEM = #{lecapSem}
 				    </if>
+				    and  A.EVAL_YN_CD IS NOT NULL
  	</select>
  </mapper>

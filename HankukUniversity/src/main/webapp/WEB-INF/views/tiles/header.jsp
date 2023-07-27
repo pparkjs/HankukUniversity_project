@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="/resources/js/voice.js"></script>
 <style>
 .notification_dropdown {
 position: relative;
@@ -168,7 +169,7 @@ position: relative;
 						<div class="dropdown-menu dropdown-menu-end">
 							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3"
 								style="height: 380px;">
-								<ul class="timeline">
+								<ul class="timeline" id="alarmLine">
 									<!--알람 동적 추가-->
 								</ul>
 							</div>
@@ -324,8 +325,12 @@ position: relative;
 		</nav>
 	</div>
 </div>
+<div id="micIcon" style="cursor:pointer; display: flex; justify-content: center;  align-items: center; position: fixed;bottom: 50px; right: 50px; z-index: 9999;width:70px; height:70px; background: #800000; border-radius: 50px; border:3px solid white; box-shadow: 1px 1px 3px 1px #dadce0;">
+	<i class="fa-solid fa-microphone" style="color: #ffffff; font-size:2em;"></i>
+	<p id="stop"></p>	
+</div>
 <script>
-
+const speech = new webkitSpeechRecognition();
 	var timer = document.getElementById("timer")
 	function logout(){
 		location.replace("/main/logout");
@@ -386,7 +391,7 @@ position: relative;
 	
 // 	AJAX를 통해 알림이 있는지 확인하는 함수
 	function getAlarmList() {
-		var timeline = $('.timeline');
+		var timeline = $('#alarmLine');
    	 	const notificationDiv = document.querySelector('.alarm-count');
 		$.ajax({
 			url: "/hku/getAlarmList",
@@ -490,7 +495,7 @@ $(document).on("click",".link-move",function(){
 	  const notificationDiv = document.querySelector('.alarm-count');
 	  notificationDiv.innerText = count;
 	}
-
-
 	
+ 
+   
 </script>

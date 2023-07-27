@@ -1,4 +1,4 @@
-package kr.or.hku.portal.serviceImpl;
+package kr.or.hku.portal.service.impl;
 
 public interface blankServiceImpl3 {
 

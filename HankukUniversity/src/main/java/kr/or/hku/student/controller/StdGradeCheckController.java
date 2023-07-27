@@ -33,6 +33,7 @@ public class StdGradeCheckController {
 	@Autowired
 	private StdGradeCheckService gradeCheckService;
 
+	//당학기 성적조회 최초 진입
 	@GetMapping("/subject-grade")
 	public String goCheckPage(HttpSession session, Model model) {
 		StudentVO stdVO = (StudentVO) session.getAttribute("std");
@@ -69,6 +70,8 @@ public class StdGradeCheckController {
 		return result;
 	}
 
+	
+	//전체학기 성적조회
 	@GetMapping("/all-grade")
 	public String goAllGradePage(HttpSession session, Model model) {
 		StudentVO stdVO = (StudentVO) session.getAttribute("std");

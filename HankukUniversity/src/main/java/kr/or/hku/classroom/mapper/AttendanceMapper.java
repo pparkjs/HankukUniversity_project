@@ -1,9 +1,11 @@
 package kr.or.hku.classroom.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.or.hku.classroom.vo.AssignmentVO;
 import kr.or.hku.classroom.vo.AttendanceVO;
 
 @Mapper
@@ -23,10 +25,21 @@ public interface AttendanceMapper {
 
 	
 // ------------------------ 학생 출석 이의신청 ----------------------------// 	
-//	public List<AttendanceVO> dmrList();
-//	public AttendanceVO dmrDetail(String stdNo);
-//	public int writeDmr(AttendanceVO attendanceVO);
-//	public int updateDmr(AttendanceVO attendanceVO);
-//	public int deleteDmr(String stdNo);
-
+	// 출석번호 가져오기
+	public Map<String, Object> getAtdcNo(AttendanceVO attend);
+	
+	// 이의신청하기 
+	public int submitAttendDmr(AttendanceVO attend);
+	
+	// 이의신청현황 리스트 
+	public List<AttendanceVO> attenDmrList(AttendanceVO vo);
+	
+	// 이의신청 주차 중복 확인 
+	public int dmrCheck(int atdcNo);
+	
+	// 이의신청 상세
+	public AttendanceVO dmrDetail(int atdcNo);
+	
+	// 이의신청 삭제 
+	public int deleteAttendDmr(int atdcNo);
 }

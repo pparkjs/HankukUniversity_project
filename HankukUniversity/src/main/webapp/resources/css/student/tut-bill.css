@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+.tb-wrap {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+/* #tutTable td {
+    border: 1px solid white;
+    height: 20px;
+} */
+#tutTable {
+    width: 80%;
+}
+#tutTable td {
+    background: #e1e2e3;
+    border: 1px solid white;
+    color: black;
+}
+#tutTable .tt {
+    background: #800000;
+    border: 1px solid white;
+    color: white;
+    height: 45px;
+}
+
+#tutTable1 td {
+    background: #e1e2e3;
+    border: 1px solid white;
+    color: black;
+}
+#tutTable1 .tt {
+    background: #800000;
+    border: 1px solid white;
+    color: white;
+    height: 45px;
+}
+
+#tutTable2 {
+    height: 50%;
+}
+#tutTable2 td {
+    background: #e1e2e3;
+    border: 1px solid white;
+    color: black;
+}
+#tutTable2 .tt {
+    background: #800000;
+    border: 1px solid white;
+    color: white;
+    height: 45px;
+}

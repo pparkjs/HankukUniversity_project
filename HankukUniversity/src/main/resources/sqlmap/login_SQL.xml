@@ -10,6 +10,7 @@
  		<result property="userPw" column="user_pw"/>
  		<result property="userClsCd" column="user_cls_cd"/>
  		<result property="enabled" column="enabled"/>
+ 		<result property="userFirstLogin" column="user_first_login"/>
  		
 		<association property="studentVO" javaType="studentVO">
 			<result property="stdNo" column="std_no"/>
@@ -159,5 +160,71 @@
 		    left outer join user_auth ua on(u.user_no = ua.user_no)
 		where u.user_no = #{userNo}
  	</select>
+ 	<!-- 아이디찾기 -->
+ 	<select id="forgetProcess" parameterType="map" resultType="String">
+ 		select 
+ 		<if test="type != null and type=='student'">
+ 			std_no
+ 			From student 
+ 			where std_nm = #{userName}
+ 			and std_brdt = #{userBd}
+ 		</if>
+ 		<if test="type != null and type=='professor'">
+ 			pro_no
+ 			From professor 
+ 			where pro_nm = #{userName}
+ 			and pro_brdt = #{userBd}
+ 		</if>
+ 		<if test="type != null and type=='employee'">
+ 			emp_no
+ 			From employee 
+ 			where emp_name = #{userName}
+ 			and emp_brdt = #{userBd}
+ 		</if>
+ 	</select>
+ 	
+ 	<!-- 계정찾기 이메일 존재하는지 일치여부확인쿼리 -->
+ 	<select id="getIsEmail" parameterType="map" resultType="int">
+ 		Select 
+		<if test="clscd != null and clscd =='student'">
+ 			Count(std_mail)
+ 			From student 
+ 			where std_no = #{userNo}
+ 			and std_mail = #{userEmail}
+ 		</if>
+ 		<if test="clscd != null and clscd =='professor'">
+ 			Count(pro_mail)
+ 			From professor 
+ 			where pro_no = #{userNo}
+ 			and pro_mail = #{userEmail}
+ 		</if>
+ 		<if test="clscd != null and clscd =='employee'">
+ 			Count(emp_mail)
+ 			From employee 
+ 			where emp_no = #{userNo}
+ 			and emp_mail = #{userEmail}
+ 		</if>
+ 	</select>
+ 	
+ 	<!-- API계정정보가져오는 쿼리 -->
+ 	<select id="getAuthInfo" parameterType="String" resultType="apiVO">
+ 		SELECT API_ID,
+ 				API_PW
+ 		FROM API
+ 		WHERE API_TYPE = #{apiType}		
+ 	</select>
+ 	<update id="updatePw" parameterType="usersVO">
+ 		UPDATE USERS
+ 		SET USER_PW = #{userPw}
+ 		WHERE USER_NO = #{userNo}
+ 	</update>
+ 	
+ 	<update id="changePassword" parameterType="map">
+ 		UPDATE USERS
+ 		SET USER_PW = #{newPw},
+ 			USER_FIRST_LOGIN = USER_FIRST_LOGIN + 1
+ 		WHERE USER_NO = #{userNo}
+ 	</update>
+ 	
  	
  </mapper>
