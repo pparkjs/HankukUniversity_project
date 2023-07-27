@@ -284,14 +284,30 @@ var userNo ;
 	})
 	
 	$(document).on('click','#changePw',function(){
+		
+		
+		
 		console.log("바껴?");
 		var temporary =  $('#temporary').val();
 		var newPw =  $('#newPw').val();
 		var renewpw =$('#renewpw').val();
-		
+		function validatePass(newPw) {
+			  // 정규식 패턴을 사용하여 비밀번호 검증
+			  const reg = /^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+			  return reg.test(newPw);
+			}
+			document.addEventListener('keyup', function(event) {
+				  if (event.target.matches('#newPw, #renewpw')) {
+				    handleKeyUp(event);
+				  }
+				});
 		console.log("temporary"+temporary);
 		console.log("newPw"+newPw);
 		console.log("renewpw"+renewpw);
+		if(!validatePass(newPw) && !(newPw.length >= 8)){
+			swal("","비밀번호는 영소문자,숫자,특수문자가 포함된 8글자이상이어야합니다.","warning");
+			return;
+		}
 		if(newPw === renewpw){
 			$.ajax({
 				url: '/main/changePassword',
