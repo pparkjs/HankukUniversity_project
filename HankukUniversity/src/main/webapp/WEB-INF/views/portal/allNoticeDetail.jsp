@@ -28,7 +28,8 @@
             ${notice.noticeCn}
         </div>
         <hr>
-    	<div class="col-xl-12 mb-3">
+    	<div class="row">
+    		<div class="col-xl-6 mb-3">
     		<c:forEach items="${notice.fileList }" var="file">
     			<div class="mailbox-attachment-info">
 					<a href="/download${file.filePath}" download="${file.fileOrgnlFileNm}" class="mailbox-attachment-name fileDown">
@@ -36,15 +37,16 @@
 					</a>
 				</div>
     		</c:forEach>
-        </div>
-        <div class="col-xl-12 mb-3">
-            <div class="row">
-                <div class="col-xl-10 mb-1"></div>
-                <div class="col-xl-2 mb-1">
-                    <button class="btn btn-primary" id="noticeListBtn">목록</button>
-                </div>
-            </div>
-        </div>
+	        </div>
+	        <div class="col-xl-6 mb-3">
+	            <div class="row">
+	            	<div class="col-xl-9 mb-1"></div>
+	                <div class="col-xl-3 mb-1">
+	                    <button class="btn btn-primary" id="noticeListBtn">목록</button>
+	                </div>
+	            </div>
+	        </div>
+    	</div>
     </div>
 </div>
 <script>

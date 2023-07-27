@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="/css/admin/notice.css">
+<style>
+#pageNation ul{
+	justify-content: center;
+}
+</style>
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
@@ -50,7 +55,7 @@
 					 </form>
 				</div>
 			</div>
-			<div class="card-body">
+			<div class="card-body" style="height: 500px;">
 				<div class="table-responsive">
 					<table id="example" class="display table" style="min-width: 845px">
 						<thead>

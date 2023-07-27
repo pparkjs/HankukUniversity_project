@@ -44,6 +44,11 @@
 .table tbody tr td:nth-child(5) {
     text-align: left;
 }
+.custom-tab-1 .nav-link {
+    font-weight: 800;
+    color: #444444;
+    font-size: 17px;
+}
 </style>
 
 <div class="content-body">
@@ -55,7 +60,7 @@
     </div>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-lg-8">
+			<div class="col-lg-8" style="margin-top: -15px;">
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="custom-tab-1" style="display: flex; align-items: center;">
@@ -96,7 +101,7 @@
 												<thead class="thead-dark">
 													<tr>
 														<th style="width:10px;">
-															<input type="checkbox" class="form-check-input" id="checkAll">
+															<input type="checkbox" class="form-check-input" id="userCheckAll">
 														</th>
 														<th style="width:100px;">이름</th>
 														<th style="width:100px;">직책</th>
@@ -116,7 +121,7 @@
 												<thead class="thead-dark">
 													<tr>
 														<th style="width:10px;">
-															<input type="checkbox" class="form-check-input" id="checkAll">
+															<input type="checkbox" class="form-check-input" id="stdCheckAll">
 														</th>
 														<th style="width:100px;">이름</th>
 														<th style="width:100px;">직책</th>
@@ -136,7 +141,7 @@
 												<thead class="thead-dark">
 													<tr>
 														<th style="width:10px;">
-															<input type="checkbox" class="form-check-input" id="checkAll">
+															<input type="checkbox" class="form-check-input" id="proCheckAll">
 														</th>
 														<th style="width:100px;">이름</th>
 														<th style="width:100px;">직책</th>
@@ -156,7 +161,7 @@
 												<thead class="thead-dark">
 													<tr>
 														<th style="width:10px;">
-															<input type="checkbox" class="form-check-input" id="checkAll">
+															<input type="checkbox" class="form-check-input" id="empCheckAll">
 														</th>
 														<th style="width:100px;">이름</th>
 														<th style="width:100px;">직책</th>
@@ -175,7 +180,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-4" style="height: 672px; margin-top: 40px">
+			<div class="col-lg-4" style="height: 672px; margin-top: 29px">
 				<div class="row">
 					<div class="col-lg-12 mb-2">
 						<div class="card" id="card-title-1">
@@ -183,20 +188,20 @@
 								<h5 class="card-title">메세지 보내기</h5>
 								<select class="selectCustom" id="whatMsg" style="width: 35%;">
 									<option value="">==선택==</option>
-									<option value="">==선택==</option>
-									<option value="">==선택==</option>
-									<option value="">==선택==</option>
+									<c:forEach items="${smsTemplateList }" var="smsTemplate">
+										<option value="${smsTemplate.smsTempNo }">${smsTemplate.smsTempType }</option>
+									</c:forEach>
 								</select>
 							</div>
-							<div class="card-body" style="height: 519px; overflow: visible">
+							<div class="card-body" style="height: 525px; overflow: visible">
 								<div class="row" style="height: 512px;">
-									<div class="col-lg-12 mb-3">
+									<div class="col-lg-12">
 										<label class="text-label form-label" style="font-size: 1.5em; font-weight: bold;">수신자</label>
 										<textarea rows="3" cols="30" class="form-control" id="receiver" name="receiver" readonly></textarea>
 									</div>
-									<div class="col-lg-12 mb-2">
+									<div class="col-lg-12" style="margin-top: -45px">
 										<label class="text-label form-label" style="font-size: 1.5em; font-weight: bold;">내용</label>
-										<textarea rows="5" cols="30" class="form-control" id="msg" name="msg"></textarea>
+										<textarea rows="10" cols="30" class="form-control" id="msg" name="msg"></textarea>
 									</div>
 									<div class="col-lg-12" style="text-align: right;">
 										<button type="button" class="btn btn-danger light" id="cancelBtn">취소</button>
@@ -215,7 +220,7 @@
 						<input type="hidden" id="hsubclNo">
 					</div>
 					<div class="card-body" style="height: 439px; overflow: visible">
-						<div class="table-wrap">
+						<div class="table-wrap" style="height: 223px;">
 							<table class="table" style="margin-top: -22px;">
 								<thead class="thead-dark">
 									<tr>
@@ -225,11 +230,11 @@
 									</tr>
 								</thead>
 								<tbody id="msgTbody">
-									<c:forEach items="${msgMap }" var="msg">
+									<c:forEach items="${smsDetailList }" var="msg">
 										<tr>
-											<td>${msg.SMS_NO }</td>
-											<td>${msg.SMS_RECEIVER }</td>
-											<td>${msg.SMS_SEND_DT }</td>
+											<td>${msg.smsNo }</td>
+											<td>${msg.smsReceiver }</td>
+											<td>${msg.smsSendDt }</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -248,6 +253,18 @@ $(function(){
 	var contact1 = $('#contact1'); // 학생
 	var message1 = $('#message1'); // 교수
 	var message2 = $('#message2'); // 직원
+	var whatMsg = $('#whatMsg');
+	var cancelBtn = $('#cancelBtn');
+	
+	var msgSendBtn = $('#msgSendBtn');
+	
+	var stdCheckAll = $('#stdCheckAll');
+	var proCheckAll = $('#proCheckAll');
+	var empCheckAll = $('#empCheckAll');
+	var stdCheckAll = $('#stdCheckAll');
+	var userCheckAll = $('#userCheckAll');
+	
+	var receiver = $('#receiver');
 	
 	let sendData = {};
 	sendData.who = "all";
@@ -326,27 +343,32 @@ $(function(){
 
 	whatDept.on('change', function(){
 		getAllUsers();
+		uncheckAll();
 	});
 
 	$('#allBtn').on('click', function(){
+		uncheckAll();
 		$(whatDept).find("option").eq(0).prop("selected", true);
 		sendData.who = "all";
 		getAllUsers();
 	});
 	
 	$('#stdBtn').on('click', function(){
+		uncheckAll();
 		$(whatDept).find("option").eq(0).prop("selected", true);
 		sendData.who = "std";
 		getAllUsers();
 	});
 	
 	$('#proBtn').on('click', function(){
+		uncheckAll();
 		$(whatDept).find("option").eq(0).prop("selected", true);
 		sendData.who = "pro";
 		getAllUsers();
 	});
 	
 	$('#empBtn').on('click', function(){
+		uncheckAll();
 		$(whatDept).find("option").eq(0).prop("selected", true);
 		sendData.who = "emp";
 		getAllUsers();
@@ -362,5 +384,238 @@ $(function(){
 		}
 		return returnObject;
 	}
+
+	whatMsg.on('change', function(){
+		let selectedMsg = $(this).val();
+
+		if(selectedMsg ==""){
+			$('#msg').val("");
+			return;
+		}
+		$.ajax({
+			type: 'get',
+			url: '/hku/admin/setting-msg',
+			contentType: 'application/json;charset=utf-8',
+			dataType: 'json',
+			data: {smsTempNo:selectedMsg},
+			success: function(res){
+				$('#msg').val(res.smsTempCn);
+			}
+		});
+	});
+	// 하나하나 선택 했을떄!!================================================================
+	$(profile1).find('#userTbody').on('click', 'input[type="checkbox"]', function(){
+		if ($(userCheckAll).prop("checked")) {
+			$(userCheckAll).prop("checked",false);
+		}
+		let nameStr = "";
+		$(profile1).find('#userTbody').find('input[type="checkbox"]').each(function(i,v){
+			if($(this).prop("checked")){
+				let name = $(this).parents('tr').find('td').eq(1).text().trim();
+				nameStr += name + " ";
+			}
+		});
+		receiver.val(nameStr);
+	});
+	
+	$(contact1).find('#userTbody').on('click', 'input[type="checkbox"]', function(){
+		if ($(stdCheckAll).prop("checked")) {
+			$(stdCheckAll).prop("checked",false);
+		}
+		let nameStr = "";
+		$(contact1).find('#userTbody').find('input[type="checkbox"]').each(function(i,v){
+			if($(this).prop("checked")){
+				let name = $(this).parents('tr').find('td').eq(1).text().trim();
+				nameStr += name + " ";
+			}
+		});
+		receiver.val(nameStr);
+	});
+	
+	$(message1).find('#userTbody').on('click', 'input[type="checkbox"]', function(){
+		if ($(proCheckAll).prop("checked")) {
+			$(proCheckAll).prop("checked",false);
+		}
+		let nameStr = "";
+		$(message1).find('#userTbody').find('input[type="checkbox"]').each(function(i,v){
+			if($(this).prop("checked")){
+				let name = $(this).parents('tr').find('td').eq(1).text().trim();
+				nameStr += name + " ";
+			}
+		});
+		receiver.val(nameStr);
+	});
+	
+	$(message2).find('#userTbody').on('click', 'input[type="checkbox"]', function(){
+		if ($(empCheckAll).prop("checked")) {
+			$(empCheckAll).prop("checked",false);
+		}
+		let nameStr = "";
+		$(message2).find('#userTbody').find('input[type="checkbox"]').each(function(i,v){
+			if($(this).prop("checked")){
+				let name = $(this).parents('tr').find('td').eq(1).text().trim();
+				nameStr += name + " ";
+			}
+		});
+		receiver.val(nameStr);
+	});
+	// 하나하나 선택 했을떄!!================================================================  끝!
+	
+	
+	/*
+		전체			학생			교수			직원
+		profile1	contact1	message1	message2   <= tab div 아이디 사실 이름 귀찮아서 안바꿧음..
+	*/
+
+	
+	// 전체 체크 버튼 눌럿을떄 ===============================================================================
+	$(stdCheckAll).on('click',function(){
+		let stdUserCheck = $(contact1).find('#userTbody').find('input[type="checkbox"]');
+		if ($(this).prop("checked")) { // 트루이면 전체 체크 된거
+			stdUserCheck.prop("checked",true);
+			let nameStr = "";
+			$(stdUserCheck).each(function(i, e) {
+				let name = $(this).parents('tr').find('td').eq(1).text().trim();
+				nameStr += name + " ";
+			});
+			receiver.val(nameStr);
+		}else{
+			stdUserCheck.prop("checked",false);
+			receiver.val("");
+		}
+	});
+
+	$(proCheckAll).on('click',function(){
+		let proUserCheck = $(message1).find('#userTbody').find('input[type="checkbox"]');
+		if ($(this).prop("checked")) { // 트루이면 전체 체크 된거
+			proUserCheck.prop("checked",true);
+			let nameStr = "";
+			$(proUserCheck).each(function(i, e) {
+				let name = $(this).parents('tr').find('td').eq(1).text().trim();
+				nameStr += name + " ";
+			});
+			receiver.val(nameStr);
+		}else{
+			proUserCheck.prop("checked",false);
+			receiver.val("");
+		}
+	});
+	
+	$(empCheckAll).on('click',function(){
+		let empUserCheck = $(message2).find('#userTbody').find('input[type="checkbox"]');
+		if ($(this).prop("checked")) { // 트루이면 전체 체크 된거
+			empUserCheck.prop("checked",true);
+			let nameStr = "";
+			$(empUserCheck).each(function(i, e) {
+				let name = $(this).parents('tr').find('td').eq(1).text().trim();
+				nameStr += name + " ";
+			});
+			receiver.val(nameStr);
+		}else{
+			empUserCheck.prop("checked",false);
+			receiver.val("");
+		}
+	});
+
+	$(userCheckAll).on('click',function(){
+		let allUserCheck = $(profile1).find('#userTbody').find('input[type="checkbox"]');
+		if ($(this).prop("checked")) { // 트루이면 전체 체크 된거
+			allUserCheck.prop("checked",true);
+			
+			let nameStr = "";
+			$(allUserCheck).each(function(i, e) {
+				let name = $(this).parents('tr').find('td').eq(1).text().trim();
+				nameStr += name + " ";
+			});
+			receiver.val(nameStr);
+		}else{
+			allUserCheck.prop("checked",false);
+			receiver.val("");
+		}
+	});
+	// 전체 체크 버튼 눌럿을떄 =============================================================================== 끝!
+	
+	function uncheckAll(){
+		receiver.val("");
+		$(stdCheckAll).prop("checked",false);
+		$(proCheckAll).prop("checked",false);
+		$(empCheckAll).prop("checked",false);
+		$(userCheckAll).prop("checked",false);
+	}
+	
+	
+	msgSendBtn.on('click',function(){
+		if (receiver.val() == "") {
+			swal({
+				title: "수신자를 선택해주세요!", 
+				icon: "error"
+			});
+			return;
+		}
+		if ($('#msg').val().trim() == "") {
+			swal({
+				title: "전송할 내용을 입력해주세요.", 
+				icon: "error"
+			});
+			return;
+		}
+		
+		var whoToReceive = {};
+		let userList = [];
+		let selectObj = whoSelect(sendData.who);
+		$(selectObj).find('#userTbody').find('input[type="checkbox"]').each(function(){
+			if ($(this).prop("checked")) {
+				let userInfo = {};
+				userInfo.userNo = $(this).val();
+				userInfo.userTelno = $(this).parents('tr').find('td').eq(3).text().trim();
+				userList.push(userInfo);
+			}			
+		});
+		whoToReceive.userList = userList;
+		whoToReceive.msg = $('#msg').val();
+		console.log("누구 한테 보낼꺼야?", whoToReceive);
+		
+		/*
+			여기서 아작스 처리 타입은 post
+			url은 성희누나가 하고싶은데로 
+			contentType : 'application/json;charset=utf-8'
+			dataType : 'text'
+			res 1 이면 전송 완료
+			전송 완료ㅕ 되면
+			swal success 띄어 주고 
+			셋 타임 아웃 1초 정도 걸어서 로케이션 리로드 치면 끝
+			전송 데이터 JSON.stringify(whoToReceive)
+		*/
+		
+		$.ajax({
+			url : "/hku/admin/send-text-msg",
+			type : "post",
+			data : JSON.stringify(whoToReceive),
+			dataType : "text",
+			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr){
+               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
+			success : function(res){
+				console.log(res)
+				if (res == "1") {
+					swal({
+						title: "정상적으로 문자가 전송 되었습니다.", 
+						icon: "success"
+					});
+					setTimeout(() => {
+						location.reload();
+					}, 1000);
+				}
+			}
+			
+		})
+		
+	});
+	
+	cancelBtn.on('click',function(){
+		receiver.val("");
+		$('#msg').val("");
+	});
 });
 </script>

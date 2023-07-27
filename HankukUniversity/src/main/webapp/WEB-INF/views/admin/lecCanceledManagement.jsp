@@ -101,13 +101,13 @@
 									<table class="table" style="margin-top: -22px;">
 										<thead class="thead-dark">
 											<tr>
-												<th style="width:100px;">학번</th>
-												<th style="width:100px;">이름</th>
-												<th style="width:100px;">전화번호</th>
-												<th style="width:100px;">학과</th>
 												<th style="width:10px;">
 													<input type="checkbox" class="form-check-input" id="checkAll">
 												</th>
+												<th style="width:100px;">이름</th>
+												<th style="width:100px;">학번</th>
+												<th style="width:100px;">전화번호</th>
+												<th style="width:100px;">학과</th>
 											</tr>
 										</thead>
 										<tbody id="stdTBody">
@@ -289,13 +289,13 @@ $(function(){
 				for(let i=0; i<res.length; i++){
 					let stdData = res[i];
 					stdStr +=`<tr>
-								<td>\${stdData.stdNo}</td>
-								<td>\${stdData.stdNm}</td>
-								<td>\${stdData.stdTelno}</td>
-								<td>\${stdData.deptNm}</td>
 								<td>
 									<input type="checkbox" name="stdCk" class="form-check-input stdCk" id="checkbox\${i}" value="\${stdData.stdNm}">
 								</td>
+								<td>\${stdData.stdNm}</td>
+								<td>\${stdData.stdNo}</td>
+								<td>\${stdData.stdTelno}</td>
+								<td>\${stdData.deptNm}</td>
 							  </tr>`;
 				}
 				stdTBody.html(stdStr);
@@ -336,8 +336,8 @@ $(function(){
 		let saveData = [];
 	 	selectedCheckboxes.each(function() {
 	 		let savaInfo = {
-	 			stdNo:$(this).parents('tr').find('td').eq(0).text().trim(),
-	 			stdTelNo:$(this).parents('tr').find('td').eq(2).text().trim()
+	 			stdNo:$(this).parents('tr').find('td').eq(2).text().trim(),
+	 			stdTelNo:$(this).parents('tr').find('td').eq(3).text().trim()
 	 		};
 	 		saveData.push(savaInfo);
 	      	var value = $(this).val();
