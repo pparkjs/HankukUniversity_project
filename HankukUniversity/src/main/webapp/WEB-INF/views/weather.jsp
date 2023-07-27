@@ -1,3 +1,4 @@
+<%@ page import="kr.or.hku.portal.controller.WeatherData" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,7 +16,6 @@
  left: 7px; 
  width: 13.1%; 
  height: 84%; 
-
  } 
 </style>
 </head>
@@ -27,7 +27,6 @@
 	<h1 id="temp" style="color:white; z-index: 1000;"></h1>
 		
 </div>
-<%-- <p>${key}</p> --%>
 </body>
 <script>
 //오픈웨더 날씨API키 입력해야됨
@@ -46,22 +45,22 @@ function onGeoOk(position) {
       console.log(data.name);
       $('#city')[0].innerText = data.name;
   
-//       cod = 800;
-      cod = parseInt(data.cod);
+      cod = 802;
+//       cod = parseInt(data.cod);
       if(cod >= 200 && cod < 300 ){
     	  $('#box').css('background-image','url(/images/weather/stormclouds.jpg)');
-    	 $('#weather')[0].innerText = wDescEngToKor(data.cod);
+    	 $('#weather')[0].innerText = wDescEngToKor(cod);
       }else if(cod >= 300 && cod <600){
     	  
     	  $('#box').css('background-image','url(/images/weather/rain.jpg)');
-    	 $('#weather')[0].innerText = wDescEngToKor(data.cod);
+    	 $('#weather')[0].innerText = wDescEngToKor(cod);
       }else if(cod == 800 || cod == 801){
     	  $('#box').css('background-image','url(/images/weather/sunny.jpg)');
-    	 $('#weather')[0].innerText = wDescEngToKor(data.cod);
+    	 $('#weather')[0].innerText = wDescEngToKor(cod);
     	  
       }else if(cod == 802){
     	  $('#box').css('background-image','url(/images/weather/cloudsky.jpg)');
-     	 $('#weather')[0].innerText = wDescEngToKor(data.cod);
+     	 $('#weather')[0].innerText = wDescEngToKor(cod);
        }
       
       $('#temp')[0].innerText = Math.round(data.main.temp*10)/10 + '°C';
