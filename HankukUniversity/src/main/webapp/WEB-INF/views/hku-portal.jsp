@@ -329,12 +329,4 @@ refresh.addEventListener("click", function() {
     time = 10799; 
     x = setInterval(updateTimer, 1000); 
 });
-var myWindow;
-$(document).ready(function(){
-	if (myWindow) {
-		myWindow.onbeforeunload = function() {
-	    	location.href="/main/logout";
-	    };
-	}
-});
 </script>
