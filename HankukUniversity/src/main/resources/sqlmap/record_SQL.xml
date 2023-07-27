@@ -7,18 +7,49 @@
  	<!-- 현재 로그인한 학생의 정보 조회 -->
  	<select id="recordInfo" parameterType="String" resultType="studentVO">
  	<!--kr.or.hku.mapper.student.RecordMapper.recordInfo -->
- 		select 
-		    a.std_no, a.dept_cd, d.dept_nm, a.std_mjr_crd, 
-		    a.std_nm, a.std_ctrl_crd, a.std_stts_cd,
-		    b.com_cd_nm as comcdnm1, a.std_mtcltn_yr, a.std_telno, 
-		    a.std_zip, a.std_sex_cd, c.com_cd_nm as comcdnm2, a.std_addr, 
-		    a.std_mail, a.std_daddr, a.std_brdt, a.std_rrno, a.bank_cd, a.std_actno,
-		    a.std_profile_path
-		from student a
-			join com_code b on a.std_stts_cd = b.com_cd 
-			join com_code c on a.std_sex_cd = c.com_cd
-			join department d on a.dept_cd = d.dept_cd
-		where a.std_no = #{stdNo}
+		SELECT 
+		      a.std_no
+		    , a.dept_cd
+		    , b.dept_nm
+		    , a.std_nm
+		    , (select sum(crs_earned_crd)from course_regist z, lecture_aply x, subject y 
+		        where z.std_no = '20220004' 
+		        and z.lecap_no = x.lecap_no 
+		        and y.sub_no = x.sub_no
+		        and (y.crs_classf_cd like 'MR' or y.crs_classf_cd like 'MS')) as std_mjr_crd
+		    , (select sum(crs_earned_crd) from course_regist z, lecture_aply x, subject y
+		        where std_no = '20220004' 
+		        and z.lecap_no = x.lecap_no 
+		        and y.sub_no = x.sub_no
+		        and (y.crs_classf_cd like 'ER' or y.crs_classf_cd like 'ES')) as std_ctrl_crd
+		    , (select sum(crs_earned_crd) from course_regist where std_no = #{stdNo}) as crd_sum
+		    , a.std_mtcltn_yr
+		    , a.std_stts_cd
+		    , c.com_cd_nm AS std_stts_nm
+		    , a.std_telno
+		    , a.std_sex_cd
+		    , a.std_zip
+		    , a.std_addr
+		    , a.std_daddr
+		    , a.std_mail
+		    , a.std_brdt
+		    , a.std_rrno
+		    , a.bank_cd
+		    , a. std_profile_path
+		    ,(to_number(to_char(sysdate, 'YYYY')) - to_number(to_char(a.std_mtcltn_yr)) + 1) AS grade
+		    , d.flct_no
+		    , d.flct_nm
+		    , TO_CHAR(sysdate, 'YYYY') AS current_year
+		    , CASE
+		          WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 6 THEN 1
+		          WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 12 THEN 2
+		          ELSE 0
+		      END AS current_sem
+		FROM student a, department b, com_code c, facility d
+		WHERE a.dept_cd = b.dept_cd
+		AND c.com_cd = a.std_stts_cd
+		AND d.flct_no = b.flct_no
+		AND a.std_no = #{stdNo}
  	</select>
  	
  	<!--휴학/복학/자퇴 신청 -->

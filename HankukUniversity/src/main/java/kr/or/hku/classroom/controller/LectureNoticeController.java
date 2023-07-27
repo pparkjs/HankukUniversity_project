@@ -19,11 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.or.hku.admin.vo.EmployeeVO;
 import kr.or.hku.classroom.service.LectureNoticeService;
 import kr.or.hku.classroom.vo.LectureNoticeVO;
 import kr.or.hku.common.service.CommonFileService;
 import kr.or.hku.common.vo.AttachFileVO;
 import kr.or.hku.notice.vo.NoticeVO;
+import kr.or.hku.professor.vo.ProfessorVO;
+import kr.or.hku.student.vo.StudentVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -156,6 +159,19 @@ public class LectureNoticeController {
 		List<NoticeVO> searchList = noticeService.getSearchList(map);
 		
 		return searchList;
+	}
+	
+	@GetMapping("/voiceClassroom")
+	public String voiceClassroom(HttpSession session) {
+		String goPage = "";
+		StudentVO std = (StudentVO) session.getAttribute("std");
+		ProfessorVO pro = (ProfessorVO) session.getAttribute("pro");
+		if(std != null) {
+			goPage = "redirect:/hku/student/stdClassroomList";
+		}if(pro != null) {
+			goPage = "redirect:/hku/professor/proClassroomList";
+		}
+		return goPage;
 	}
 	
 }

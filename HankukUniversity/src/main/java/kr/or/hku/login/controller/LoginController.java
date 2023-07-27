@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.hku.admin.vo.EmployeeVO;
+import kr.or.hku.common.service.CommonService;
 import kr.or.hku.login.service.ILoginService;
 import kr.or.hku.login.vo.UsersVO;
 import kr.or.hku.professor.vo.ProfessorVO;
@@ -37,8 +38,13 @@ public class LoginController {
 	@Autowired
 	private ILoginService loginService;
 	
+	@Autowired
+	private CommonService commonService;
+	
 	@Inject
 	BCryptPasswordEncoder pe;
+	
+	boolean firstFlag = false;
 	
 	//로그인페이지 호출 
 	@GetMapping("/login")
@@ -48,33 +54,45 @@ public class LoginController {
 	
 	//로그인 처리 로직
 	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_PROFESSOR','ROLE_ADMIN')")
-	@GetMapping("/loginProcess")
-	public String loginProcess(HttpServletRequest request,RedirectAttributes re) {
+	@GetMapping("/")
+	public String loginProcess(
+			HttpSession session,
+			HttpServletRequest request,Model model) {
+		return sessionProcess(session, model);
+	}
+	
+	public String sessionProcess(HttpSession session, Model model) {
 		String goPage = "";
+		
 		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		HttpSession session = request.getSession();
 		UsersVO userVo = loginService.loginUser(users.getUsername());
 		
 		System.out.println("첫번째로긴"+userVo.getUserFirstLogin());
-		if(userVo.getUserFirstLogin().equals("0")) {
-			re.addFlashAttribute("first",'0');
+		if(userVo.getUserFirstLogin().equals("0") && !firstFlag) {
+			model.addAttribute("first", "0");
+			firstFlag = true;
 		}
+		
 		//사용자식별코드가 학생일경우
 		if(userVo.getUserClsCd().equals("student")) {
 			StudentVO stdVo = loginService.studentUser(userVo.getUserNo());
+			StudentVO stuInfo = commonService.myAllInfo(stdVo.getStdNo()); // student테이블 뿐만 아니라 나의 관련 모든 정보 가져오기
 			session.setAttribute("std", stdVo);
-	
-			goPage = "redirect:/main/portal";
+			session.setAttribute("stdInfo", stuInfo); 
+			
+			goPage = "portal/home";
 		}else if(userVo.getUserClsCd().equals("professor")) {//사용자식별코드가 교수일경우
 			ProfessorVO proVo = loginService.professorUser(userVo.getUserNo());
+			ProfessorVO proInfo = commonService.myProInfo(proVo.getProNo());
 			session.setAttribute("pro", proVo);
-			goPage = "redirect:/main/pro";
+			session.setAttribute("proInfo", proInfo);
+			
+			goPage = "professor/main";
 		}else{//사용자식별코드가 직원일경우
 			EmployeeVO empVo = loginService.employeeUser(userVo.getUserNo());
 			session.setAttribute("emp", empVo);
-			goPage = "redirect:/main/emp";
+			goPage = "admin/main";
 		}
-		
 		return goPage;
 	}
 	
@@ -86,25 +104,34 @@ public class LoginController {
 	}
 	
 	//포탈페이지 호출 
-	@PreAuthorize("hasRole('ROLE_STUDENT')")
+	@PreAuthorize("hasRole('ROLE_STUDENT')")	
 	@GetMapping("/portal")
-	public String goPortal() {
+	public String goPortal(
+			HttpSession session, Model model
+			) {
 		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		ProfessorVO proVo = loginService.professorUser(users.getUsername());
 		System.out.println("유저네임!!!!!"+users.getUsername());
+		
+		String goPage = sessionProcess(session, model);
+		
 		log.info("user.password : "+users.getPassword());
 		
-		return "portal/home";
+		return goPage;
 	}
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/emp")
-	public String adminMain(Principal principal) {
-		return "admin/main";
+	public String adminMain(Principal principal,
+			HttpSession session, Model model) {
+		return sessionProcess(session, model);
 	}
+	
 	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/pro")
-	public String professorMain() {
-		return "professor/main";
+	public String professorMain(
+			HttpSession session, Model model) {
+		return sessionProcess(session, model);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_STUDENT')")

@@ -1,5 +1,6 @@
 package kr.or.hku.student.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,11 +41,6 @@ public class StudyServiceImpl implements StudyService{
 	}
 
 	@Override
-	public void addStudy(StudyVO studyVo) {
-		mapper.addStudy(studyVo);
-	}
-
-	@Override
 	public void delStudy(int studyNo) {
 		mapper.delStudyMem(studyNo);
 		mapper.delStudy(studyNo);
@@ -72,7 +68,14 @@ public class StudyServiceImpl implements StudyService{
 
 	@Override
 	public int assignStudy(int joinNo) {
-		return mapper.assignStudy(joinNo);
+		// 가입신청 승인
+		int res = mapper.assignStudy(joinNo);
+		// 가입신청 승인당한놈 찾아
+		StudyVO studyVo  = mapper.selectAssignMem(joinNo);
+		System.out.println("가입신청 당한놈 학번확인: "+studyVo.getStdNo()); 
+		// 찾아서 스터디멤버로 쳐넣어
+		mapper.insertStudyMem(studyVo);
+		return res;
 	}
 
 	@Override
@@ -161,8 +164,8 @@ public class StudyServiceImpl implements StudyService{
 
 	@Override
 	public void readMessageInRoom(StudyVO studyVo) {
+		mapper.deleteUnreadMsg(studyVo);
 		mapper.readMessageInRoom(studyVo);
-		
 	}
 
 	@Override
@@ -173,8 +176,44 @@ public class StudyServiceImpl implements StudyService{
 
 	@Override
 	public int insertMessage(StudyVO studyVo) {
-		// TODO Auto-generated method stub
-		return mapper.insertMessage(studyVo);
+		// 메시지 삽입
+		int result = mapper.insertMessage(studyVo);
+		
+		// 나를 제외한 해당 방 사람들에게 안읽은 메시지 카운트
+		mapper.updateMessageCountExceptMe(studyVo);
+		
+		int studyNo = studyVo.getStudyNo();
+		List<StudyVO> memberList = mapper.getStudyMember(studyNo);
+		for (int i = 0; i < memberList.size(); i++) {
+			System.out.println("memberList: "+ memberList);
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		for (StudyVO member : memberList) {
+			map.put("msgNo", studyVo.getMsgNo());
+			System.out.println("msgNo: "+ studyVo.getMsgNo());
+			map.put("stdNo", member.getStdNo());
+			System.out.println("stdNo: " + member.getStdNo());
+			map.put("studyNo", studyVo.getStudyNo());
+			// 메시지 등록 시마다 해당 방에 속한 유저들 대상으로 안읽은 유저 테이블에 추가
+			mapper.insertUnreadMember(map);
+		}
+		return result;
+	}
+	
+
+	@Override
+	public int addStudy(StudyVO studyVo) {
+		int res = mapper.addStudy(studyVo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("stdNo", studyVo.getStdNo());
+		map.put("studyNo", studyVo.getStudyNo());	
+		System.out.println("getStudyNo: " + studyVo.getStudyNo());
+		
+		mapper.insertStudyLeader(map);
+		
+		return res;
 	}
 	
 	@Override
@@ -203,4 +242,29 @@ public class StudyServiceImpl implements StudyService{
 	public int deleteStdCalendar(Map<String, String> map) {
 		return mapper.deleteStdCalendar(map);
 	}
+
+	@Override
+	public int addUnreadMem(StudyVO studyVo) {
+		// TODO Auto-generated method stub
+		return mapper.addUnreadMem(studyVo);
+	}
+
+	@Override
+	public StudyVO getFilePath(String stdNo) {
+		// TODO Auto-generated method stub
+		return mapper.getFilePath(stdNo);
+	}
+
+	@Override
+	public String selectRole(StudyVO studyVo) {
+		// TODO Auto-generated method stub
+		return mapper.selectRole(studyVo);
+	}
+
+	@Override
+	public int insertStudyMem(StudyVO studyVo) {
+		// TODO Auto-generated method stub
+		return mapper.insertStudyMem(studyVo);
+	}
+
 }

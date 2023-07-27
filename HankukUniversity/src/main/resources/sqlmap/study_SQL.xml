@@ -58,12 +58,6 @@
 		FROM STUDYCALENDAR
 		WHERE STUDY_NO = #{studyNo}
  	</select>
- 
-	<!-- 스터디 생성 -->
-	<insert id="addStudy" parameterType="studyVo">
-		insert into studygroup (study_no, std_no, study_name, study_regdate, study_cpcy, study_intro)
-			values(seq_study_no.nextval , #{stdNo}, #{studyName}, sysdate , #{studyCpcy}, #{studyIntro})
-	</insert>
 
 	<!-- 스터디 가입신청 -->
 	<insert id="intoStudy" parameterType="studyVo">
@@ -115,8 +109,12 @@
 	</select>
 	
 	<!-- 스터디 역할 조회 -->
-<!-- 	<select id=""> -->
-<!-- 	</select> -->
+	<select id="selectRole" parameterType="studyVo" resultType="String">
+		select study_role
+	    	from studymember
+	    where study_no = #{studyNo}
+	    and std_no = #{stdNo}
+	</select>
 
 	<!--가입중인 스터디리스트 -->
 	<select id="studyList" resultType="studyVo" parameterType="String">
@@ -124,6 +122,7 @@
 	        a.study_no,
 	        a.std_no,
 	        a.study_role,
+	        a.unread_msg_cnt,
 	        b.std_no,
 	        c.std_nm,
 	        b.study_no,
@@ -147,17 +146,24 @@
 	<select id="getUnreadCntByUser" parameterType="studyVo" resultType="int">
 		select msg_no from unreadmessage
 			where study_no = #{studyNo} 
-			and unread_mem = #{unreadMem}
+			and unread_mem = #{stdNo}
 	</select>
 	
 	<!-- 방안에서 해당 메시지 읽음 카운트 -1 처리 -->
-<!-- 	<update id="readMessageInRoom" parameterType="studyVo"> -->
-<!-- 		update chatmessage -->
-<!-- 	    set -->
-<!-- 	    	unread_mem_cnt = unread_mem_cnt - 1 -->
-<!-- 	    where study_no = #{studyno} -->
-<!-- 	    and msg_no = #{msgno} -->
-<!-- 	</update> -->
+	<update id="readMessageInRoom" parameterType="studyVo">
+		update chatmessage
+	    set
+	    	unread_mem_cnt = unread_mem_cnt -1
+	    where study_no = #{studyNo}
+	    and msg_no = #{msgNo}
+	</update>
+	
+	<!-- 안읽은 메시지 테이블에서 해당 방에 대한 유저의 행 삭제 -->
+	<delete id="deleteUnreadMsg" parameterType="studyVo">
+		delete from unreadmessage
+		where study_no = #{studyNo}
+		and unread_mem = #{stdNo}
+	</delete>
 	
 	<!-- 채팅들 읽음 처리 -->
  	<update id="readChatMessage" parameterType="studyVo">
@@ -167,11 +173,55 @@
  		where STD_NO = #{stdNo}
  		and study_no = #{studyNo}
  	</update>
- 	 	<!-- 메시지 등록하기 -->
- 	<insert id="insertMessage" parameterType="studyVo">
+ 	
+ 	<!-- 나를 제외한 해당 방에 속한 사람들 안읽은 메시지 개수 업데이트 -->
+ 	<update id="updateMessageCountExceptMe" parameterType="studyVo">
+	 	update studymember 
+	 	set
+	 	   UNREAD_MSG_CNT = UNREAD_MSG_CNT + 1
+	 	where std_no != #{stdNo}
+	 	and study_no = #{studyNo}
+ 	</update>
+ 	
+ 	<!-- study인원 목록 가져오기 -->
+ 	<select id="getStudyMember" parameterType="int" resultType="studyVo">
+ 		select * from studymember
+ 		where study_no = #{studyNo}
+ 	</select>
+ 	
+ 	<!-- 메시지 등록하기 -->
+ 	<insert id="insertMessage" parameterType="studyVo" useGeneratedKeys="true">
+ 		<selectKey keyProperty="msgNo" resultType="int" order="BEFORE">
+ 			select SEQ_CHATMESSAGE.nextval from dual
+ 		</selectKey>
  		insert into CHATMESSAGE(MSG_NO, STUDY_NO, STD_NO, MSG_CONTENT, MSG_REGDATE, UNREAD_MEM_CNT)
-		values(SEQ_CHATMESSAGE.nextval, #{studyNo}, #{stdNo}, #{msgContent}, sysdate, #{unreadMemCnt})  
+		values(#{msgNo}, #{studyNo}, #{stdNo}, #{msgContent}, sysdate, #{unreadMemCnt})  
  	</insert>
+ 	
+ 	<!-- 메시지 안읽은 유저 테이블에 삽입 -->
+ 	<insert id="insertUnreadMember" parameterType="hashMap">
+ 		insert into unreadmessage (
+ 			MSG_NO, UNREAD_MEM, STUDY_NO
+ 		) values(
+ 			#{msgNo}, #{stdNo}, #{studyNo}
+ 		)
+ 	</insert>
+ 	
+ 	 
+	<!-- 스터디 생성 -->
+	<insert id="addStudy" parameterType="studyVo" useGeneratedKeys="true">
+		<selectKey keyProperty="studyNo" resultType="int" order="BEFORE">
+ 			select seq_study_no.nextval from dual
+ 		</selectKey>
+		insert into studygroup (study_no, std_no, study_name, study_regdate, study_cpcy, study_intro)
+			values(#{studyNo} , #{stdNo}, #{studyName}, sysdate , #{studyCpcy}, #{studyIntro})
+	</insert>
+	
+	<!-- 스터디멤버 테이블에 스터디장 넣기 -->
+	<insert id="insertStudyLeader" parameterType="hashMap">
+		insert into studymember (study_no, std_no, study_role, unread_msg_cnt)
+  		values (#{studyNo}, #{stdNo}, 'Y', 0)
+	</insert>
 	
 	<!-- 본인의 가입신청 대기중인 스터디 리스트 -->
 	<select id="waitStudy" resultType="studyVo" parameterType="String">
@@ -238,6 +288,18 @@
 		where join_no = #{joinNo}
  	</update>
  	
+ 	<!-- 가입신청 눌린놈 찾기 -->
+ 	<select id="selectAssignMem" parameterType="int" resultType="studyVo">
+		select * from joinstatus 
+			where join_no = #{joinNo}
+ 	</select>
+ 	
+ 	<!-- 가입신청 승인시 스터디멤버로 추가 -->
+ 	<insert id="insertStudyMem" parameterType="studyVo">
+ 		insert into studymember(study_no, std_no, study_role, unread_msg_cnt)
+			values(#{studyNo},#{stdNo},'N', 0)
+ 	</insert> 
+ 	
  	<!-- 가입신청 거절-->
  	<update id="rejStudy" parameterType="int">
  		update joinstatus
@@ -278,14 +340,16 @@
  	<!-- 스터디 게시글 상세보기 -->
  	<select id="studyBoardDetail" resultType="studyVo" parameterType="int">
  		select
-		    stbo_no,
-		    study_no,
-		    stbo_title,
-		    stbo_content,
-		    stbo_writer,
-		    stbo_regdate,
-		    stbo_read_cnt
-		from studyboard
+		    a.stbo_no,
+		    a.study_no,
+		    b.std_no,
+		    a.stbo_title,
+		    a.stbo_content,
+		    a.stbo_writer,
+		    a.stbo_regdate,
+		    a.stbo_read_cnt
+		from studyboard a
+		join studygroup b on a.study_no = b. study_no
 		where stbo_no = #{stboNo}
  	</select>
  	
@@ -380,17 +444,27 @@
 		where stbo_no = #{stboNo}
 	</update>
 	
+	<!--안 읽은 멤버들을 등록 -->
+	<insert id="addUnreadMem" parameterType="studyVo">
+		insert into unreadmessage (msg_no, unread_mem, study_no)
+	  	values (#{msgNo}, #{unreadMem}, #{studyNo})
+	</insert>
+	
 	<!-- 스터디룸 인원수 카운트 -->
 	<select id="studyMemCnt" parameterType="int">
 		select study_no, count(*) as count from studymember group by study_no
 	</select>
 	
 	<select id="messageList" parameterType="int" resultType="studyVo">
-		SELECT msg_no, study_no, a.std_no, std_nm, msg_content, msg_regdate, unread_mem_cnt
+		SELECT msg_no, study_no, a.std_no, std_nm, msg_content, msg_regdate, unread_mem_cnt, b.std_profile_path
 			FROM chatmessage a
 			JOIN STUDENT b ON a.std_no = b.std_no
 			WHERE study_no = #{studyNo}
 		ORDER BY msg_no
+	</select>
+	
+	<select id="getFilePath" parameterType="String" resultType="studyVo">
+		select std_profile_path from student where std_no = #{stdNo}
 	</select>
 	
  </mapper>

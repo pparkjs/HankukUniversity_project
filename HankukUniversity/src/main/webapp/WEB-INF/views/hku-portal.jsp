@@ -82,7 +82,6 @@
 .toast-success{
 /*  	background: black;  */
 }
-<<<<<<< HEAD
 #preloader {
   height: 100%;
   position: fixed;
@@ -159,8 +158,10 @@
 	</div>
 </div>
 <c:if test="${not empty first}">
+	<c:remove var="first" scope="request"/>
+	<c:remove var="first" scope="session"/>
 	<script type="text/javascript">
-	myWindow = window.open("/main/changePopup","_blank","width=400,height=450,left=650,top=350");
+		window.open("/main/changePopup","_blank","width=400,height=450,left=650,top=350");
 	</script>
 </c:if>
 <body>
@@ -178,13 +179,19 @@
                         <div class="profile_box" style="text-align: center;">
                             <div class="profile_div" style="margin-top: 10px;">
                                 <hr style="margin: 0.5rem 0rem 1rem 0rem; color: white;"/>
-                                <img src="/download/주지훈1.jpg" id="profileImg" style="width:200px; height:200px; border-radius: 20%; border: 3px solid white;">
-
+                                <c:choose >
+                                	<c:when test="${sessionScope.stdInfo.stdProfilePath == null || sessionScope.stdInfo.stdProfilePath == ''}">
+                                		<img src="/images/기본프로필.png" id="profileImg" style="width:200px; height:200px; border-radius: 50%; border: 3px solid white;">
+                                	</c:when>
+                                	<c:otherwise>
+                                		<img src="/download${sessionScope.stdInfo.stdProfilePath }" id="profileImg" style="width:200px; height:200px; border-radius: 50%; border: 3px solid white;">
+                                	</c:otherwise>
+								</c:choose>
                             </div>
                         </div>
                         <div class="text_wrap">
                             <p class="balloon">환영합니다!</p>
-                            <p><span style="margin-right: 10px;">컴퓨터공학과</span><span style="font-size: 25px;"><c:out value="${std.stdNo }"/></span></p>
+                            <p><span style="margin-right: 10px;"><c:out value="${sessionScope.stdInfo.deptNm }"/></span><span style="font-size: 25px;"><c:out value="${std.stdNo }"/></span></p>
                             <p class="en title"><c:out value="${std.stdNm }"/> 님</p>
                             <ul>
                                 <li>
@@ -209,7 +216,7 @@
                                         <span style="font-size: 20px; color: white;">이수/졸업학점</span>
                                     </div>
                                     <div>
-                                        <span style="font-size: 18px; color: #FFC933;">124/130</span>
+                                        <span style="font-size: 18px; color: #FFC933;"><c:out value="${sessionScope.stdInfo.crdSum }"/>/130</span>
                                     </div>
                                 </div>
                                 <div style="padding-left: 20px;">
@@ -217,7 +224,7 @@
                                         <span style="font-size: 20px; color: white;">학적상태</span>
                                     </div>
                                     <div>
-                                        <span style="font-size: 18px; color: #FFC933;">재학</span>
+                                        <span style="font-size: 18px; color: #FFC933;"><c:out value="${sessionScope.stdInfo.stdSttsNm }"/></span>
                                     </div>
                                 </div>
                             </div>
@@ -240,16 +247,16 @@
                         </div>
                         <hr style="margin: 1rem 0rem 0rem 0rem; color: white;"/>
                     </div>
-                    <div class="footer_txt pers_terms">
-                        <a href="#" class="LK052_S pers_terms_s">개인정보처리방침(대덕·국제)</a> <!-- 개인정보처리방침(신촌·국제) -->
-                        &nbsp;<span>|</span>&nbsp;
-                        <a href="#" class="LK052_F pers_terms_f">개인정보처리방침(미래)</a> <!-- 개인정보처리방침(미래) -->
-                    </div>
+<!--                     <div class="footer_txt pers_terms"> -->
+<!--                         <a href="#" class="LK052_S pers_terms_s">개인정보처리방침(대덕·국제)</a> 개인정보처리방침(신촌·국제) -->
+<!--                         &nbsp;<span>|</span>&nbsp; -->
+<!--                         <a href="#" class="LK052_F pers_terms_f">개인정보처리방침(미래)</a> 개인정보처리방침(미래) -->
+<!--                     </div> -->
 
                 </div>
-                <div class="main_cont" id="jjgDiv" style="height:auto; overflow: auto;">
+                <div class="main_cont" id="jjgDiv" style="height:auto; overflow: auto; background-color: rgba( 0, 0, 0, 0.6 );">
                     <!-- 헤더========================================================================= -->
-                    <div class="main_cont_header" style="height: 50px; border: 1px solid black;">
+                    <div class="main_cont_header" style="height: 50px; border: 1px solid #6e6e6e; margin-left: -49px; width: 1008px; background-color: #6e6e6e8f">
                         <div class="">
                             <h5 class="mb-0"></h5>
                             <div class="hWrap">
@@ -322,13 +329,5 @@ refresh.addEventListener("click", function() {
     clearInterval(x); 
     time = 10799; 
     x = setInterval(updateTimer, 1000); 
-});
-var myWindow;
-$(document).ready(function(){
-	if (myWindow) {
-		myWindow.onbeforeunload = function() {
-	    	location.href="/main/logout";
-	    };
-	}
 });
 </script>

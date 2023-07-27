@@ -6,7 +6,7 @@
  <mapper namespace="kr.or.hku.student.mapper.StdGradeCheckMapper">
  	<select id="getStudentInfo" parameterType="String" resultType="stdInfoVO">
  		<![CDATA[
-	 		SELECT 
+			SELECT 
 	        A.STD_NO
 	        ,STD_NM
 	        ,D.SUB_CRD
@@ -109,7 +109,7 @@
 	 		 SELECT
 				    B.SUB_NO,
 				    C.SUB_NM,
-				    C.SUB_CRD,
+				    A.CRS_EARNED_CRD,
 				    D.COM_CD_NM AS CRS_CLASSF_CD,
 				    B.LECAP_NO,
 	                A.CRS_SCR,
@@ -174,18 +174,20 @@
 	                B.LECAP_YR,
 	                B.LECAP_SEM,
 	                E.DEPT_NM
+	                A.EVAL_YN_CD
 				FROM
 				    COURSE_REGIST A
 				    JOIN LECTURE_APLY B ON A.LECAP_NO = B.LECAP_NO
 				    JOIN SUBJECT C ON B.SUB_NO = C.SUB_NO
 				    JOIN COM_CODE D ON C.CRS_CLASSF_CD = D.COM_CD
 	                JOIN DEPARTMENT E ON C.DEPT_CD = E.DEPT_CD
-				WHERE 1=1
+				WHERE A.STD_NO = #{stdNo}
 					<if test="lecapYr != null and lecapYr != '' ">				
 				    	AND B.LECAP_YR = #{lecapYr}
 				    </if>
 				    <if test="lecapSem != null and lecapSem != ''">
 						AND	B.LECAP_SEM = #{lecapSem}
 				    </if>
+				    and  A.EVAL_YN_CD IS NOT NULL
  	</select>
  </mapper>

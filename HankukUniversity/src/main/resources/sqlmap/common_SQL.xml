@@ -13,35 +13,44 @@
  	<!-- 학과이름 포함한 나의 정보 가져오기 -->
  	<select id="myAllInfo" parameterType="String" resultType="studentVO">
  	/*kr.or.hku.common.mapper.CommonMapper.myAllInfo*/
- 		SELECT 
- 			  a.std_no
- 			, a.dept_cd
- 			, b.dept_nm
- 			, a.std_nm
- 			, a.std_mjr_crd
- 			, a.std_ctrl_crd
- 			, a.std_mtcltn_yr
- 			, a.std_stts_cd
- 			, c.com_cd_nm AS std_stts_nm
- 			, a.std_telno
- 			, a.std_sex_cd
- 			, a.std_zip
- 			, a.std_addr
- 			, a.std_daddr
- 			, a.std_mail
- 			, a.std_brdt
- 			, a.std_rrno
- 			, a.bank_cd
- 			, a. std_profile_path
- 			,(to_number(to_char(sysdate, 'YYYY')) - to_number(to_char(a.std_mtcltn_yr)) + 1) AS grade
- 			, d.flct_no
- 			, d.flct_nm
- 			, TO_CHAR(sysdate, 'YYYY') AS current_year
- 			, CASE
-                  WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 6 THEN 1
-                  WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 12 THEN 2
-                  ELSE 0
-              END AS current_sem
+		SELECT 
+		      a.std_no
+		    , a.dept_cd
+		    , b.dept_nm
+		    , a.std_nm
+		    , (select sum(crs_earned_crd)from course_regist z, lecture_aply x, subject y 
+		        where z.std_no = #{stdNo}
+		        and z.lecap_no = x.lecap_no 
+		        and y.sub_no = x.sub_no
+		        and (y.crs_classf_cd like 'MR' or y.crs_classf_cd like 'MS')) as std_mjr_crd
+		    , (select sum(crs_earned_crd) from course_regist z, lecture_aply x, subject y
+		        where std_no = #{stdNo} 
+		        and z.lecap_no = x.lecap_no 
+		        and y.sub_no = x.sub_no
+		        and (y.crs_classf_cd like 'ER' or y.crs_classf_cd like 'ES')) as std_ctrl_crd
+		    , (select sum(crs_earned_crd) from course_regist where std_no = #{stdNo}) as crd_sum
+		    , a.std_mtcltn_yr
+		    , a.std_stts_cd
+		    , c.com_cd_nm AS std_stts_nm
+		    , a.std_telno
+		    , a.std_sex_cd
+		    , a.std_zip
+		    , a.std_addr
+		    , a.std_daddr
+		    , a.std_mail
+		    , a.std_brdt
+		    , a.std_rrno
+		    , a.bank_cd
+		    , a. std_profile_path
+		    ,(to_number(to_char(sysdate, 'YYYY')) - to_number(to_char(a.std_mtcltn_yr)) + 1) AS grade
+		    , d.flct_no
+		    , d.flct_nm
+		    , TO_CHAR(sysdate, 'YYYY') AS current_year
+		    , CASE
+		          WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 6 THEN 1
+		          WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 12 THEN 2
+		          ELSE 0
+		      END AS current_sem
 		FROM student a, department b, com_code c, facility d
 		WHERE a.dept_cd = b.dept_cd
 		AND c.com_cd = a.std_stts_cd
@@ -92,4 +101,14 @@
  		DELETE FROM alarm
  		WHERE alarm_no = #{alarmNo}
  	</delete>
+ 	
+ 	<!-- 교수 대쉬보드 정보가져오기 -->
+ 	<select id="myProInfo" parameterType="string" resultType="professorVO">
+ 	/*kr.or.hku.common.mapper.CommonMapper.myProInfo*/
+ 		SELECT a.pro_no, a.dept_cd, a.pro_nm, b.dept_nm, c.col_nm
+		FROM professor a, department b, college c
+		WHERE a.dept_cd = b.dept_cd
+		AND c.col_cd = b.col_cd
+		AND a.pro_no = #{proNo}
+ 	</select>
  </mapper>

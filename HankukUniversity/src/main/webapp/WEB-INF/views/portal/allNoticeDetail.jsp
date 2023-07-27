@@ -4,7 +4,7 @@
 <style>
 </style>
 <div class="container-fluid mt-3">
-    <div class="row">
+    <div class="row" style="background: white; padding: 10px; height: 847px;">
     	<div class="col-xl-12 mb-3">
             <h2><c:out value="${notice.noticeTtl}"/></h2>
             <input type="hidden" value="<c:out value="${notice.noticeNo}"/>">

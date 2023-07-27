@@ -49,8 +49,8 @@ $(function() {
    	      location.href = "/hku/test-info";
    	    }
    	  // ────── 클래스룸 ───────
-   	  	if (transcript.includes('학생클래스룸')||transcript.includes('학생 클래스룸')) {
-   	      location.href = "/hku/student/stdClassroomList";
+   	  	if (transcript.includes('클래스룸')) {
+   	      location.href = "/hku/professor/voiceClassroom";
    	    }
    	  // ────── 상담  ───────
    	  	if (transcript.includes('상담 신청')||transcript.includes('상담신청')) {
@@ -103,8 +103,8 @@ $(function() {
    	    }
    	  // ────── 클래스룸  ───────
    	  
-   	   if (transcript.includes('교수 클래스룸')||transcript.includes('교수클래스룸')) {
-   	      location.href = "/hku/professor/proClassroomList";
+   	   if (transcript.includes('클래스룸')||transcript.includes('클래스룸')) {
+   	      location.href ="/hku/professor/voiceClassroom";
    	    }
    	  // ────── 상담관리  ───────
    	  if (transcript.includes('학생 상담 신청 내역')||transcript.includes('학생상담 신청 내역')||transcript.includes('학생 상담')) {
