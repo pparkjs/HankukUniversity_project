@@ -46,6 +46,8 @@ public class ScholarshipAdminController {
 	@PutMapping(value = "/scholarship-info")
 	public int modifyScls(ScholarshipVO sclsVO) {
 		log.info(sclsVO.toString());
+		String replaceAll = sclsVO.getSclsAmt().replaceAll(",", "");
+		sclsVO.setSclsAmt(replaceAll);
 		int res = scholarshipService.modifyScls(sclsVO);
 		return res;
 	}
@@ -54,6 +56,8 @@ public class ScholarshipAdminController {
 	@PostMapping(value = "/scholarship-info")
 	public int insertScls(ScholarshipVO sclsVO) {
 		log.info(sclsVO.toString());
+		String replaceAll = sclsVO.getSclsAmt().replaceAll(",", "");
+		sclsVO.setSclsAmt(replaceAll);
 		int res = scholarshipService.insertScls(sclsVO);
 		return res;
 	}
