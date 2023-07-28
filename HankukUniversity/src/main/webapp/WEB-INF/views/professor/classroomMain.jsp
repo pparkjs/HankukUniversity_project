@@ -227,21 +227,14 @@
 								</tr>
 							</thead>
 							<tbody id="tbtb">
+							<c:forEach items="${noticeList}" var="notice" varStatus="status">
 								<tr class="tbtr">
-									<td class="">1</td>
-									<td class="">6주차 휴강안내</td>
-									<td class="">2023-07-12</td>
+									<td class="">${status.index + 1}</td>
+									<td class=""><a href="/hku/professor/detailNotice/${notice.lecntNo}">${notice.lecntTtl}</a></td>
+									<td class="">${notice.lecntRegdate}</td>
+									<td class="">${notice.lecntReadCnt}</td>
 								</tr>
-								<tr class="tbtr">
-									<td class="">2</td>
-									<td class="">공결신청 관련 안내</td>
-									<td class="">2023-07-10</td>
-								</tr> 
-								<tr class="tbtr">
-									<td class="">3</td>
-									<td class="">중간고사 시험 안내</td>
-									<td class="">2023-07-21</td>
-								</tr>
+							</c:forEach>
 							</tbody>
 						</table>
 					</div>

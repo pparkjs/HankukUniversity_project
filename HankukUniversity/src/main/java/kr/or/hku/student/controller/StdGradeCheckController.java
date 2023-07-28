@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,7 @@ public class StdGradeCheckController {
 	private StdGradeCheckService gradeCheckService;
 
 	//당학기 성적조회 최초 진입
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/subject-grade")
 	public String goCheckPage(HttpSession session, Model model) {
 		StudentVO stdVO = (StudentVO) session.getAttribute("std");
@@ -72,6 +74,7 @@ public class StdGradeCheckController {
 
 	
 	//전체학기 성적조회
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/all-grade")
 	public String goAllGradePage(HttpSession session, Model model) {
 		StudentVO stdVO = (StudentVO) session.getAttribute("std");
