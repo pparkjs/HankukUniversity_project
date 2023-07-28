@@ -23,8 +23,10 @@ import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.service.AssignmentService;
 import kr.or.hku.classroom.service.AttendanceService;
 import kr.or.hku.classroom.service.ClassroomService;
+import kr.or.hku.classroom.service.GradeManageService;
 import kr.or.hku.classroom.vo.AssignmentVO;
 import kr.or.hku.classroom.vo.AttendanceVO;
+import kr.or.hku.classroom.vo.GradeVO;
 import kr.or.hku.common.service.CommonFileService;
 import kr.or.hku.common.vo.AttachFileVO;
 import kr.or.hku.lectureInfo.vo.LectureAplyVO;
@@ -47,6 +49,9 @@ public class ProClassroomController {
 	
 	@Autowired
 	private AttendanceService attendService;
+	
+	@Autowired
+	private GradeManageService gradeService;
 	
 	// 클래스룸 목록
 	@GetMapping("/proClassroomList")
@@ -251,12 +256,7 @@ public class ProClassroomController {
 		return msg;
 	}
 		
-	// 학생 성적 관리
-	@GetMapping("/stdGradeList")
-	public String stdGradeList() {
-		return "professor/gradeTable";
-	}
-	
+
 	// 출석 이의신청 페이지 
 	@GetMapping("/attendanceDmrManage")
 	public String attendDmrStatus(HttpSession session, Model model) {
@@ -269,6 +269,8 @@ public class ProClassroomController {
 		return "professor/attendanceDmrManage";
 	}
 	
+
+	// 출석 이의신청 승인
 	@ResponseBody
 	@PostMapping("/attendanceDmr-Appv")
 	public String attendanceDmrAppv(String atdcNo) {
@@ -281,11 +283,12 @@ public class ProClassroomController {
 			return msg;
 	}
 	
+	// 출석 이의신청 반려 
 	@ResponseBody
 	@PostMapping("/attendanceDmr-rej")
 	public String attendanceDmrRej(String atdcNo) {
 		log.info("vo !! : " + atdcNo);
-		ServiceResult result =attendService.attendanceRej(atdcNo);
+		ServiceResult result = attendService.attendanceRej(atdcNo);
 		String msg = null;
 		if(result == ServiceResult.OK) {
 			msg = "success";
@@ -293,6 +296,15 @@ public class ProClassroomController {
 		return msg;
 	}
 	
+	// 학생 성적 관리
+	@GetMapping("/gradeManageTable/{lecapNo}")
+	public String gradeManage(@PathVariable String lecapNo, Model model) {
+		List<GradeVO> getStdList = gradeService.getStdList(lecapNo);
+		log.info("getStdList???" + getStdList.toString());
+		model.addAttribute("getStdList", getStdList);
+		return "professor/gradeTable";
+	}	
 	
-		
+	
+	
 }
