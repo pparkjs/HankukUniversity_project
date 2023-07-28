@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="/css/table.css">
 <link rel="stylesheet" href="/css/student/std-jh.css">
-<div class="content-body">
+<div class="content-body" style="min-height:900px;">
 	<div class="page-titles">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="javascript:void(0)">성적</a></li>
@@ -183,7 +183,7 @@
 					<tr>
 						<td colspan="13">조회할 수 있는 성적이 없습니다.</td>
 					</tr>
-					</c:if>
+				</c:if>
 			</tbody>
 		</table>
 	</div>
