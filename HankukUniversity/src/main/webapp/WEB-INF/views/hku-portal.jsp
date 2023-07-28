@@ -23,6 +23,7 @@
     <title>한국대학교 포탈</title>
 	<link rel="stylesheet" href="/css/table.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<script src="/resources/js/voice.js"></script>
 </head>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gridstack@8.2.1/dist/gridstack-all.js"></script>
 <script src="/js/custom.js"></script>
@@ -147,6 +148,23 @@
   90% {
     stroke: #800000; } 
   }
+  
+  .recording {
+  color: red;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+     transform: scale(1.2); 
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 </style>
 
 <div id="preloader">
