@@ -36,6 +36,9 @@ const speech = new webkitSpeechRecognition();
    	  	if (transcript.includes('졸업')) {
    	      location.href = "/hku/student/gradute";
    	    }
+   	    if (transcript.includes('스터디게시판')||transcript.includes('스터디 게시판')) {
+   	     location.href = "/hku/student/studyBoard"
+     	    }
    	  // ────── 수강정보 ───────
    	    if (transcript.includes('교과목 조회')||transcript.includes('교과목조회')) {
    	      location.href = "/hku/search-subject";

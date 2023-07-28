@@ -79,7 +79,6 @@ position: relative;
   }
   50% {
      transform: scale(1.2); 
-/*      color: red; */
   }
   100% {
     transform: scale(1);
