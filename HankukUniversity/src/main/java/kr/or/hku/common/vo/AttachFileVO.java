@@ -15,5 +15,5 @@ public class AttachFileVO {
 	private String fileOrgnlFileNm;
 	private String fileSize;
 	private String fileContType;
-	private int fileDownCnt; 
+	private int fileDownCnt;
 }

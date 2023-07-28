@@ -1,0 +1,82 @@
+@charset "UTF-8";
+.profile-card .card-header {
+    border-color: #CCCCCC;
+    padding: 10px;
+    padding-left: 18px;
+}
+.profile-card .card-header .title:after {
+    content: "";
+    height: 3px;
+    width: 100%;
+    background-color: var(--primary);
+    position: absolute;
+    bottom: -11px;
+    left: 0;
+}
+.profile-card .card-header .title {
+    position: relative;
+    margin-bottom: 0;
+    color: #6e6e6e;
+    font-weight: 700;
+}
+.profile-card .card-body {
+    padding: 19px 27px 10px;
+}
+.profile-con{
+	display: flex;
+	align-items: center;
+	width: 33%;
+	margin-bottom: 10px;
+}
+.profile-form .profile-span {
+	font-size: 18px;
+    width: 181%;
+    text-align: right;
+    margin-right: 10px;
+}
+.profile-form .form-control {
+    font-size: 18px;
+    width: 354%;
+}
+.profile-wrap{
+	display: flex;
+	flex-wrap: wrap;
+}
+.pro-card{
+	padding: 18px 2px 10px;
+	display: flex;
+	 flex-wrap: wrap;	
+}
+.author-profile .author-media img {
+    width: 235px;
+    height: 235px;
+    border: 2px solid #800000;
+    border-radius: 50%;
+}
+#stdProfileImg{
+    width: 267px;
+    height: 267px;
+    border: 2px solid maroon;
+    border-radius: 50%;
+}
+.table thead th {
+    border: none;
+    padding: 5px;
+    font-size: 20px;
+    color: #fff;
+}
+.table tbody th, .table tbody td {
+    border: none;
+    padding: 5px;
+    font-size: 18px;
+    color: black;
+}
+.table-wrap{
+	overflow: scroll;
+    height: 407px;
+    margin-top: 13px;
+}
+.thead-dark{
+      position: sticky;
+      top: 0px;
+}
