@@ -547,7 +547,7 @@ function lockerRsvtList(){
 										tblStr += `<td><button type="button"class="btn btn-sm btn-danger" id="regBtn" style="width:51px; margin-bottom: 0px; 
 													margin-left: 5px; padding: 3px 5px; background: #ff4343; border-color: #ff4343;" std='0' onclick="rsvtBtnSwitch(this)">
 													미불출
-													</a></td>`;
+													</button></td>`;
 									}
 								tblStr += `</tr>`;
 							}
