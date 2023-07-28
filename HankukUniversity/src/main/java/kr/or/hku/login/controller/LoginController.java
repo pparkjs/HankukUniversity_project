@@ -143,7 +143,7 @@ public class LoginController {
 	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/student")
 	public String studentMain() {
-		return "student/main";
+		return "redirect:/hku/student/record";
 	}
 
 	
