@@ -131,3 +131,16 @@ h5 {
     margin-bottom: 10px;
     /* padding-left: 10px; */
 }
+.content-body .sclsCF {
+    padding-top: 0.475rem;
+    /* padding-right: 0.875rem;
+    padding-left: 0.875rem; */
+}
+.sclsListBtn {
+	line-height: 27px;
+    width: 80px;
+}
+.custom-form {
+	display: flex;
+    justify-content: flex-end;
+}
