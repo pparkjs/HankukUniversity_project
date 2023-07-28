@@ -18,6 +18,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import kr.or.hku.ServiceResult;
 import kr.or.hku.admin.service.UserService;
 import kr.or.hku.admin.vo.DepartmentVO;
-import kr.or.hku.admin.vo.EmployeeVO;
 import kr.or.hku.admin.vo.SmsTemplateVO;
 import kr.or.hku.admin.vo.SmsVO;
 import kr.or.hku.admin.vo.UserVO;
@@ -87,7 +87,7 @@ public class UserManagementController {
 	
 	
 	
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/send-text-msg")
 	public String showSendTextMsgPage(Model model) {
 		List<Map<String, String>> depList = userService.getDeptList();
@@ -137,6 +137,7 @@ public class UserManagementController {
 		return resMap;
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/user-management")
 	public String userManagement(Model model) {
 		log.info("userManagement() 실행...!");
@@ -412,6 +413,7 @@ public class UserManagementController {
 		return "admin/excelUserInsert";
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/excel-insert")
 	public String excelInsert(HttpServletRequest request, RedirectAttributes redirectAttribute){
 		log.info("excel-insert() 실행...!");

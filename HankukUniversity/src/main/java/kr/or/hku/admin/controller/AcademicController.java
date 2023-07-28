@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -311,6 +312,7 @@ public class AcademicController {
 	}
 	
 	// 학적관리
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/academic/fluctuation-list")
 	public String showAcademicFluctuation(Model model) {
 		List<CommonVO> commonData = commonService.getAllCommonData();

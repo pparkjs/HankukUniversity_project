@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,7 @@ public class LecAplyAdminController {
 	@Autowired
 	private CommonService commonService;
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/lecaplylist")
 	public String showLectAplyList(Model model) {
 		List<Map<String, Object>> lecApList = lecApAdminService.getLecApList();
