@@ -1,5 +1,6 @@
 package kr.or.hku.student.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import kr.or.hku.admin.vo.ScholarshipVO;
@@ -14,5 +15,9 @@ public interface StdScholarshipService {
 	public int sclsAplyInsert(StdScholarshipVO sclsAplyVO);
 
 	public StdScholarshipVO sclsAplyDetail(String sclsapNo);
+
+	public int sclsAplyModify(StdScholarshipVO sclsAplyModiVO);
+
+	public int deleteSclsAply(HashMap<String, String> delData);
 
 }

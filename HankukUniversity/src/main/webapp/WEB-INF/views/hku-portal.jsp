@@ -23,6 +23,7 @@
     <title>한국대학교 포탈</title>
 	<link rel="stylesheet" href="/css/table.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<script src="/resources/js/voice.js"></script>
 </head>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gridstack@8.2.1/dist/gridstack-all.js"></script>
 <script src="/js/custom.js"></script>
@@ -148,6 +149,23 @@
   90% {
     stroke: #800000; } 
   }
+  
+  .recording {
+  color: red;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+     transform: scale(1.2); 
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 </style>
 
 <div id="preloader">
@@ -277,9 +295,10 @@
                 </div>
             </div>
         </div>
-        <div class="chatbot chatbot_pulse" onclick="if(0 > 'win16|win32|win64|mac'.indexOf(navigator.platform.toLowerCase())){location.href = 'https://chat.cau.ac.kr/v2/index.html'}else{window.open('https://chat.cau.ac.kr/v2/index.html', '_blank', 'width = 450, height = 720, top = 100, left = 200, location = no, resizable = yes');}">
-            <!-- <img src="/images/portal/mic.png"> -->
-        </div>
+       <div id="micIcon" style="cursor:pointer; display: flex; justify-content: center;  align-items: center; position: fixed;bottom: 50px; right: 50px; z-index: 9999;width:70px; height:70px; background: #800000; border-radius: 50px; border:3px solid white; box-shadow: 1px 1px 3px 1px #dadce0;">
+			<i class="fa-solid fa-microphone" id="realMic" style="color: #ffffff; font-size:2em;"></i>
+			<p id="stop"></p>	
+		</div>
     </div>
 </body>
 <script>
@@ -337,4 +356,6 @@ $(document).ready(function(){
 	    };
 	}
 });
+
+
 </script>

@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +42,7 @@ public class LectureNoticeController {
 	private CommonFileService fileService;
 
 	//교수클래스룸 공지리스트 출력
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/noticeList")
 	public String noticeList(HttpSession session, Model model) {
 		String lecapNo = session.getAttribute("lecapNo").toString();
@@ -49,6 +51,7 @@ public class LectureNoticeController {
 		return "professor/lectureNoticeList";
 	}
 	//교수클래스룸 공지상세 페이지
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/detailNotice/{lecntNo}")
 	public String detailNotice(@PathVariable int lecntNo,Model model) {
 		LectureNoticeVO noticeVO = noticeService.getNotcieDetail(lecntNo);
@@ -59,12 +62,14 @@ public class LectureNoticeController {
 		return "professor/lectureNoticeDetail";
 	}
 	//교수클래스룸 공지등록 페이지
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/noticeform")
 	public String noticeRegForom(HttpSession session, LectureNoticeVO noticeVO) {
 		log.info("lecapNo +> " + session.getAttribute("lecapNo").toString());
 		return "professor/lectureNoticeForm";
 	}
 	//교수클래스룸 공지 수정 페이지
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/noticemodForm/{lecntNo}")
 	public String noticeModForm(Model model,@PathVariable int lecntNo) {
 		LectureNoticeVO noticeVO = noticeService.getNotcieDetail(lecntNo);
@@ -160,7 +165,7 @@ public class LectureNoticeController {
 		
 		return searchList;
 	}
-	
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR','ROLE_STUDENT')")
 	@GetMapping("/voiceClassroom")
 	public String voiceClassroom(HttpSession session) {
 		String goPage = "";

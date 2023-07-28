@@ -5,8 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/css/table.css">
 <link rel="stylesheet" href="/css/classroom-jh.css">
+<link rel="stylesheet" href="/css/table.css">
 <title>Insert title here</title>
 </head>
 <body>
@@ -33,8 +33,8 @@
 					<button type="button" id="searchBtn" class="btn btn-primary btn-flat">검색</button>
 				</span>
 			</div>
-						<table id="noticeTable">
-							<thead>
+						<table class="table" id="noticeTable">
+							<thead class="thead-dark">
 								<tr>
 									<td>NO</td>
 									<td>제목</td>
