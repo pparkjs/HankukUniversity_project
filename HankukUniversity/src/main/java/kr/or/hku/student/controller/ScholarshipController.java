@@ -1,5 +1,6 @@
 package kr.or.hku.student.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -7,12 +8,16 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.hku.admin.vo.ScholarshipVO;
 import kr.or.hku.common.service.CommonFileService;
@@ -64,8 +69,12 @@ public class ScholarshipController {
 	}
 	
 	@GetMapping("/scholarship-list")
-	public String scholarshipList() {
+	public String scholarshipList(HttpSession session, Model model) {
 		log.info("scholarshipList() 실행...!");
+		StudentVO std = (StudentVO)session.getAttribute("std");
+		StudentVO vo = commonService.myAllInfo(std.getStdNo());
+		
+		model.addAttribute("std", vo);
 		return "student/scholarship-list";
 	}
 	
@@ -103,13 +112,46 @@ public class ScholarshipController {
 		return sclsAplyDetail;
 	}
 	
-	@PostMapping("/sclsAplyModify")
+	@PostMapping(value = "/sclsAplyModify")
 	@ResponseBody
-	public String sclsAplyModify(StdScholarshipVO sclsAplyModiVO) {
-		log.info("delFileInfoList : " + sclsAplyModiVO.getDelFileInfoList().toString());
-		log.info("aplyFiles : " + sclsAplyModiVO.getAplyFiles().toString());
+	public String sclsAplyModify(
+			@RequestPart(value = "delFileInfoList", required = false) List<HashMap<String, String>> delFileInfoList,
+			@RequestPart(value = "atchFileNo") HashMap<String, String> atchFileNoMap,
+//			@RequestPart(value = "key") List<StdScholarshipVO> delFileInfoList,
+			@RequestPart(value = "aplyFiles", required = false) List<MultipartFile> aplyFiles
+			) {
+		// StdScholarshipVO sclsAplyModiVO
+//		log.info("delFileInfoList : " + sclsAplyModiVO.getDelFileInfoList().toString());
+//		log.info("aplyFiles : " + sclsAplyModiVO.getAplyFiles().toString());
 		
+//		log.info("delFileInfoList : " + delFileInfoList.toString());
+		log.info("atchFileNoMap : " + atchFileNoMap.toString());
+//		log.info("aplyFiles : " + aplyFiles.toString());
 		
-		return null;
+		StdScholarshipVO sclsAplyModiVO = new StdScholarshipVO();
+		sclsAplyModiVO.setDelFileInfoList(delFileInfoList);
+		sclsAplyModiVO.setAplyFiles(aplyFiles);
+		sclsAplyModiVO.setAtchFileNo(atchFileNoMap.get("atchFileNo"));
+		
+		int status = scholarshipService.sclsAplyModify(sclsAplyModiVO);
+		if(status > 0) {
+			return "SUCCESS";
+		} else {
+			return "FAILED";
+		}
+	}
+	
+	@DeleteMapping("/deleteSclsAply")
+	@ResponseBody
+	public String deleteSclsAply(@RequestBody HashMap<String, String> delData) {
+		log.info("deleteSclsAply 실행...!");
+		log.info("delData : " + delData.toString());
+		
+		int status = scholarshipService.deleteSclsAply(delData);
+		if(status > 0) {
+			return "SUCCESS";
+		} else {
+			return "FAILED";
+		}
 	}
 }

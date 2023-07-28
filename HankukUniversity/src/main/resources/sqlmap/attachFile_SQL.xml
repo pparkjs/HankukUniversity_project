@@ -42,6 +42,7 @@
 		    , file_down_cnt
 		FROM attach_file
 		WHERE atch_file_no = #{atchFileNo}
+		ORDER BY atch_file_seq
  	</select>
  	
  	
@@ -50,5 +51,14 @@
  		DELETE FROM attach_file
  		WHERE atch_file_no = #{atchFileNo}
  	</delete>
+ 	
+ 	<select id="getNextSeq" parameterType="string" resultType="int">
+ 		SELECT
+		    NVL(MAX(atch_file_seq)+1,0)
+		FROM 
+		    attach_file
+		WHERE 
+		    atch_file_no = #{atchFileNo}
+ 	</select>
  	
  </mapper>
