@@ -146,8 +146,11 @@
 			  var chatList = '';
 			  var unCnt = 0;
 			  var unMsgCnt = $('.unMsgCnt');
+			  
 			  for (var i = 0; i < res.length; i++) {
+				
 				unCnt += res[i].unreadMsgCnt;
+				
 				console.log("unreadCnt: ", unCnt);	
 			    chatList += `
 						      <li class="active dz-chat-user" id ="\${res[i].studyNo}" value="\${res[i].stdNo}" onclick="enterRoom(this)">
@@ -166,9 +169,14 @@
 					chatList += `	</div>
 						        </div>
 						      	</li>`;
-			  }
-			  cBody.html(chatList);
-			  unMsgCnt.text(unCnt);
+			 	 }
+				  if(unCnt > 0){
+				 	document.getElementById('unMsgCnt').style.display = '';
+				 	unMsgCnt.text(unCnt);	
+				  }else{
+					  document.getElementById('unMsgCnt').style.display = 'none';
+				  }
+			 	cBody.html(chatList);
 			},
 			error: function(err) {
 			  console.log(err);
@@ -216,6 +224,7 @@
 		$('.msgDiv').html("");
 	
 		msgList();
+		chatList();
 	}
 	
 	function msgList(){
@@ -338,6 +347,7 @@ chatSocket.onmessage = function(evt) {
 			var unreadCnt2 = $(".unreadCnt2").text();
 			
 			console.log("안읽은메시지개수 리스트",unreadCnt2)
+			chatList();
 // 			//
 // 			$.ajax({
 // 				url:""

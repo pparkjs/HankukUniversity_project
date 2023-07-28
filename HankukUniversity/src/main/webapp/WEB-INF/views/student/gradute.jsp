@@ -21,8 +21,8 @@
 				<h5 class="card-title">이수학점 계</h5>
 			</div>
 			<div style="margin-top: 10px;">
-				<div class="col-xl-12">
-						<table class="table" style="margin-top: 0px; margin-bottom: 0px; width: 95%;"">
+				<div class="col-xl-12" style="margin-left: 40px;">
+						<table class="table" style="margin-top: 0px; margin-bottom: 0px; width: 95%;">
 							<thead class="thead-dark">
 								<tr>
 									<th style="width: 120px;">과정</th>

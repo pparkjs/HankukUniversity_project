@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="/css/student/study-pjs.css">
 <style>
 @media only screen and (min-width: 1199px) and (max-width: 1920px) {
 	.customeoff {
@@ -24,72 +25,79 @@
 	<div class="container-fluid">
 		<div class="card" id="card-title-1">
 			<div class="card-body">
-				<div class="title-wrap" style="display:flex; justify-content: space-between; margin-bottom: -18px;">
-					<ul class="nav nav-pills mb-4 light">
-						<li class=" nav-item">
-							<a href="#navpills-1" class="nav-link active" data-bs-toggle="tab" aria-expanded="true">가입중인스터디</a>
-						</li>
-						<li class="nav-item">
-							<a href="#navpills-2" class="nav-link" data-bs-toggle="tab" aria-expanded="false">승인 대기목록</a>
-						</li>
-					</ul>
-					<div style="display: flex; justify-content: end; margin-right: 80px;">
-						<a class="btn btn-primary" data-bs-toggle="offcanvas"
-							href="#offcanvasExample" role="button"
-							aria-controls="offcanvasExample" style="padding: 9px 20px; height: 37px;">스터디 개설</a>
-					</div>
-				</div>
-				<hr>
+					<div class="custom-tab-1">
+						<ul class="nav nav-tabs">
+							<li class="nav-item">
+								<a class="nav-link active" data-bs-toggle="tab" href="#home1">가입중인스터디</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" data-bs-toggle="tab" href="#profile1">승인 대기목록</a>
+							</li>
+						</ul>
+						
+						<div style="display: flex; justify-content: end; margin-right: 80px; position: relative;" >
+							<a class="btn btn-primary" data-bs-toggle="offcanvas"
+								href="#offcanvasExample" role="button"
+								aria-controls="offcanvasExample" style="position:absolute; top: -44px; padding: 9px 20px; height: 37px;">스터디 개설</a>
+						</div>
+					</div>					
+				
 				<div class="tab-content">
-					<div id="navpills-1" class="tab-pane active" style="margin-top: -37px;">
-
-						<br>
-						<br>
-						<div class="row" id="studyListDiv">
-						<c:choose>
-							<c:when test="${empty studyList }">
-								<p>현재 가입되어있는 스터디가 없습니다.</p>
-							</c:when>
-							<c:otherwise>
-								<c:forEach items="${studyList }" var="study">
-								<div class="col-xl-3 col-lg-4 col-sm-6">
-									<div class="card" style="background-color: #adb17d1c;">
-										<div class="card-body">
-											<div class="card-use-box">
-												<div class="card__text">
-													<h4 class="mb-0">${study.studyName }</h4>
-													<p>${study.studyIntro }</p>
+					<div class="tab-pane fade show active" id="home1" role="tabpanel">
+						
+							<div class="row" id="studyListDiv" style="margin-top: 23px; padding-top: 14px; margin-left: 15px; height:640px; overflow:scroll; width: 100%;">
+								<c:choose>
+									<c:when test="${empty studyList }">
+										<p>현재 가입되어있는 스터디가 없습니다.</p>
+									</c:when>
+									<c:otherwise>
+										<c:forEach items="${studyList }" var="study">
+									
+											
+											<div class="studycard-wrap" style="width: 24%;">
+												<div class="study-top">
+													<span class="study-text">[ 스터디명 : </span>
+													<div class="study-name">${study.studyName } ]</div>
 												</div>
-												<ul class="card__info">
-													<li><span>인원수</span> <span class="card__info__stats">${study.count} / ${study.studyCpcy }</span>
-													</li>
-												</ul>
-												<ul class="post-pos">
-													<li><span class="card__info__stats">스터디장: </span> <span>${study.stdNm }</span>
-													</li>
-														<span>${study.studyRegdate }</span>
-													</li>
-												</ul>
-												
-												<div>
-													<a href="/hku/student/studyRoom?studyNo=${study.studyNo }"
-														class="btn btn-outline-primary btn-xs">Enter</a>
-													<!-- <a href="javascript:void(0)" class="btn btn-secondary btn-sm ms-2">Following</a> -->
+												<hr>
+												<div class="study-title">${study.studyIntro }</div>
+												<hr>
+												<div class="study-bottom">
+													<div class="bottom1">
+														<span class="date-text">생성일 :</span>
+														<div class="reg-date">												
+															<fmt:parseDate value="${study.studyRegdate }" var="regDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+	                             							<fmt:formatDate value="${regDate }" pattern="yyyy-MM-dd"/>
+														</div>
+														<div style="margin-left: 55px;">
+															<a href="/hku/student/studyRoom?studyNo=${study.studyNo }">
+																<button class="end-button">입장</button>
+															</a>
+														</div>
+													</div>
+													<div class="bottom2">
+														<img alt="" src="/images/왕관.png" class="crownImg">
+														<div class="master-name">박정수</div>
+														<div class="hit-con">
+															<img alt="" src="/images/조회수.png" class="hitImg">
+															
+															<div class="cnt-text">인원:${study.stdNm }</div>
+															<div class="study-cnt">${study.count} / ${study.studyCpcy }</div>
+														</div>
+													</div>
 												</div>
 											</div>
-										</div>
-									</div>
-									
-								</div>
-							</c:forEach>
-							</c:otherwise>
-						</c:choose>
-						</div>
+											
+									</c:forEach>
+									</c:otherwise>
+								</c:choose>
+								</div>		
 					</div>
+				</div>
 				
 				<!-- 승인대기중인 스터디 목록 -->
-				<div class="tab-content">
-					<div id="navpills-2" class="tab-pane">
+				<div class="tab-pane fade" id="contact1">
+					<div class="table-wrap">
 						<div class="row">
 							
 							<c:choose>

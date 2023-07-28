@@ -168,14 +168,14 @@
 									<select class="default-select form-control" name=studyNo>
 									<option value="" >스터디 선택</option>
 									 <c:choose>
-									 		<c:when test="${empty myStudy}">
-												<option value="" >보유중인 스터디가 없습니다.</option>
-											</c:when>
-											<c:otherwise>
-												<c:forEach items="${myStudy }" var="study">
-													<option value="${study.studyNo }" >${study.studyName }</option>
-												</c:forEach>
-											</c:otherwise>
+								 		<c:when test="${empty myStudy}">
+											<option value="" >보유중인 스터디가 없습니다.</option>
+										</c:when>
+										<c:otherwise>
+											<c:forEach items="${myStudy }" var="study">
+												<option value="${study.studyNo }" >${study.studyName }</option>
+											</c:forEach>
+										</c:otherwise>
 									 </c:choose>
 						           </select>
 								</div>
