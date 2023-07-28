@@ -15,6 +15,7 @@
 				,ATCH_FILE_NO
 		FROM LECTURE_NOTICE
 		WHERE LECAP_NO = #{lecapNo}
+		ORDER BY LECNT_NO DESC
 	</select>
 		
 	<insert id="insertNotice" parameterType="lectureNoticeVO">
