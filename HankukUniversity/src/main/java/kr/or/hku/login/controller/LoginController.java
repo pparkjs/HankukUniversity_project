@@ -27,6 +27,7 @@ import kr.or.hku.admin.vo.EmployeeVO;
 import kr.or.hku.common.service.CommonService;
 import kr.or.hku.login.service.ILoginService;
 import kr.or.hku.login.vo.UsersVO;
+import kr.or.hku.portal.service.WeatherService;
 import kr.or.hku.professor.vo.ProfessorVO;
 import kr.or.hku.student.vo.StudentVO;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,9 @@ public class LoginController {
 	
 	@Autowired
 	private CommonService commonService;
+	
+	@Autowired
+	WeatherService weatherService;
 	
 	@Inject
 	BCryptPasswordEncoder pe;
@@ -77,6 +81,8 @@ public class LoginController {
 		if(userVo.getUserClsCd().equals("student")) {
 			StudentVO stdVo = loginService.studentUser(userVo.getUserNo());
 			StudentVO stuInfo = commonService.myAllInfo(stdVo.getStdNo()); // student테이블 뿐만 아니라 나의 관련 모든 정보 가져오기
+			String key = weatherService.getApiKey();
+			model.addAttribute("weatherkey", key);
 			session.setAttribute("std", stdVo);
 			session.setAttribute("stdInfo", stuInfo); 
 			
