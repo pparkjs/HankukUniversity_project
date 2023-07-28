@@ -209,7 +209,7 @@ position: relative;
 										stroke="white" stroke-width="1.5" stroke-linecap="round"
 										stroke-linejoin="round" />
 									</svg>
-									<p style="color: white; font-size: 1.1em; margin-left: 32px; margin-top: -19px;" class="unMsgCnt"></p>
+									<p id="unMsgCnt" style="color: white; font-size: 1.1em; margin-left: 32px; margin-top: -19px; display: none;" class="unMsgCnt"></p>
 						</a></li>
 					</c:if>
 					<li class="nav-item align-items-center header-border"><a

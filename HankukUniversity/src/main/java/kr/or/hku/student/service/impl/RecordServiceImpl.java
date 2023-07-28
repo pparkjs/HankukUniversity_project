@@ -59,5 +59,11 @@ public class RecordServiceImpl implements RecordService{
 		return mapper.graduteApply(recordVo);
 	}
 
+	@Override
+	public StudentVO getBankNm(String comCd) {
+		// TODO Auto-generated method stub
+		return mapper.getBankNm(comCd);
+	}
+
 
 }

@@ -14,6 +14,19 @@
     color: #800000;
     font-size: 1.1em;
 }
+.unMsgCnt{
+  width: 20px;
+  height: 20px;
+  background-color: #e33333;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 20px;
+  position: absolute;
+  top: 50px;
+  right: -1px;
+  font-size: 13px;
+}
 .chatbox .img_cont_msg img {
     width: 180%;
     height: 180%;
@@ -133,8 +146,11 @@
 			  var chatList = '';
 			  var unCnt = 0;
 			  var unMsgCnt = $('.unMsgCnt');
+			  
 			  for (var i = 0; i < res.length; i++) {
+				
 				unCnt += res[i].unreadMsgCnt;
+				
 				console.log("unreadCnt: ", unCnt);	
 			    chatList += `
 						      <li class="active dz-chat-user" id ="\${res[i].studyNo}" value="\${res[i].stdNo}" onclick="enterRoom(this)">
@@ -144,7 +160,7 @@
 						            <span class="online_icon"></span>
 						          </div>
 						          <div class="user_info">
-						            <span style='font-size: 1.3em;'>\${res[i].studyName}</span>`;
+						            <span style='font-size: 1em;'>\${res[i].studyName}</span>`;
 					if(res[i].unreadMsgCnt > 0){
 						chatList += `<p style='color: red'>\${res[i].unreadMsgCnt}</p>`;
 					}else{
@@ -153,9 +169,14 @@
 					chatList += `	</div>
 						        </div>
 						      	</li>`;
-			  }
-			  cBody.html(chatList);
-			  unMsgCnt.text(unCnt);
+			 	 }
+				  if(unCnt > 0){
+				 	document.getElementById('unMsgCnt').style.display = '';
+				 	unMsgCnt.text(unCnt);	
+				  }else{
+					  document.getElementById('unMsgCnt').style.display = 'none';
+				  }
+			 	cBody.html(chatList);
 			},
 			error: function(err) {
 			  console.log(err);
@@ -203,6 +224,7 @@
 		$('.msgDiv').html("");
 	
 		msgList();
+		chatList();
 	}
 	
 	function msgList(){
@@ -325,6 +347,7 @@ chatSocket.onmessage = function(evt) {
 			var unreadCnt2 = $(".unreadCnt2").text();
 			
 			console.log("안읽은메시지개수 리스트",unreadCnt2)
+			chatList();
 // 			//
 // 			$.ajax({
 // 				url:""

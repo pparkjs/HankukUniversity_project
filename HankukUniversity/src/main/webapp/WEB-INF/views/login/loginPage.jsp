@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -204,25 +203,12 @@
         }
     </style>
 </head>
-<body>
-<%!
-	int cnt=0;
-%>
-<%
-	String err = (String) request.getAttribute("error");
-	System.out.println(err);
-	if(err != null){
-		cnt++;
-	}else{
-		cnt = 0;
-	}
 
-%>
-	<c:set value="<%=cnt %>" var="cnt"/>
-	
+<body>
     <div id='backstretch'>
+
     </div>
-    <h1 id="mainName"> Hankuk${cnt} <br>University</h1>
+    <h1 id="mainName"> Hankuk <br>University</h1>
 <!--   <form action="/main/login" method="post"> -->
   <form action="/login" method="post">
     <table id="loginTable">
@@ -306,7 +292,7 @@
     console.log("내용", mainName.value);
     window.addEventListener("scroll", function () {
         let value = window.scrollY;
-//         console.log(value);
+        console.log(value);
 
         if (value > 80) {
             mainName.style.animation = 'downslide 1s ease-out forwards';
@@ -325,10 +311,10 @@
        event.preventDefault();
        window.open("/main/forget","_blank","width=400,height=450,left=600,top=350");
     }
-// 	var cnt = 0;
+
     if(location.href.includes("?error")){
-    	swal("올바르지않은 접근입니다.");
-        
+        swal("올바르지않은 접근입니다.");
+        //127.0.0.1(localhost)
     }
 </script>
 
