@@ -94,16 +94,33 @@
 											<td>
 												<c:out value="${academicAply.stdNo}"/>
 												<input type="hidden" id="changeTypeCd" value="${academicAply.changeTypeCd }">
+												<input type="hidden" id="changeTypeNm" value="${academicAply.changeTypeNm }">
 												<input type="hidden" id="changeRsn" value="${academicAply.changeRsn }">
 											</td>
 											<td>
 												<c:out value="${academicAply.stdNm}"/>
 											</td>
 											<td>
-												<c:out value="${academicAply.changeStartYr}"/>년도 <c:out value="${academicAply.changeStartSem}"/>학기
+												<c:set value="${academicAply.changeStartYr}년도" var="csty"/>
+												<c:set value="${academicAply.changeStartSem}학기" var="csts"/>
+												<c:if test="${empty academicAply.changeStartYr}">
+													<c:set value="-" var="csty"/>
+												</c:if>
+												<c:if test="${empty academicAply.changeStartSem}">
+													<c:set value="-" var="csts"/>
+												</c:if>
+												<c:out value="${csty}"/> <c:out value="${csts}"/>
 											</td>
 											<td>
-												<c:out value="${academicAply.changeEndYr}"/>년도 <c:out value="${academicAply.changeEndSem}"/>학기
+												<c:set value="${academicAply.changeEndYr}년도" var="cety"/>
+												<c:set value="${academicAply.changeEndSem}학기" var="cets"/>
+												<c:if test="${empty academicAply.changeEndYr}">
+													<c:set value="-" var="cety"/>
+												</c:if>
+												<c:if test="${empty academicAply.changeEndSem}">
+													<c:set value="-" var="cets"/>
+												</c:if>
+												<c:out value="${cety}"/> <c:out value="${cets}"/>
 											</td>
 											<td>
 												<fmt:parseDate var="aplyDt" value="${academicAply.changeAplyDt }" pattern="yyyy-MM-dd"/>
@@ -169,16 +186,33 @@
 												<td>
 													<c:out value="${academicAply.stdNo}"/>
 													<input type="hidden" id="changeTypeCd" value="${academicAply.changeTypeCd }">
+													<input type="hidden" id="changeTypeNm" value="${academicAply.changeTypeNm }">
 													<input type="hidden" id="changeRsn" value="${academicAply.changeRsn }">
 												</td>
 												<td>
 													<c:out value="${academicAply.stdNm}"/>
 												</td>
 												<td>
-													<c:out value="${academicAply.changeStartYr}"/>년도 <c:out value="${academicAply.changeStartSem}"/>학기
+													<c:set value="${academicAply.changeStartYr}년도" var="csty"/>
+													<c:set value="${academicAply.changeStartSem}학기" var="csts"/>
+													<c:if test="${empty academicAply.changeStartYr}">
+														<c:set value="-" var="csty"/>
+													</c:if>
+													<c:if test="${empty academicAply.changeStartSem}">
+														<c:set value="-" var="csts"/>
+													</c:if>
+													<c:out value="${csty}"/> <c:out value="${csts}"/>
 												</td>
 												<td>
-													<c:out value="${academicAply.changeEndYr}"/>년도 <c:out value="${academicAply.changeEndSem}"/>학기
+													<c:set value="${academicAply.changeEndYr}년도" var="cety"/>
+													<c:set value="${academicAply.changeEndSem}학기" var="cets"/>
+													<c:if test="${empty academicAply.changeEndYr}">
+														<c:set value="-" var="cety"/>
+													</c:if>
+													<c:if test="${empty academicAply.changeEndSem}">
+														<c:set value="-" var="cets"/>
+													</c:if>
+													<c:out value="${cety}"/> <c:out value="${cets}"/>
 												</td>
 												<td>
 													<fmt:parseDate var="aplyDt" value="${academicAply.changeAplyDt }" pattern="yyyy-MM-dd"/>
@@ -231,16 +265,33 @@
 												<td>
 													<c:out value="${academicAply.stdNo}"/>
 													<input type="hidden" id="changeTypeCd" value="${academicAply.changeTypeCd }">
+													<input type="hidden" id="changeTypeNm" value="${academicAply.changeTypeNm }">
 													<input type="hidden" id="changeRsn" value="${academicAply.changeRsn }">
 												</td>
 												<td>
 													<c:out value="${academicAply.stdNm}"/>
 												</td>
 												<td>
-													<c:out value="${academicAply.changeStartYr}"/>년도 <c:out value="${academicAply.changeStartSem}"/>학기
+													<c:set value="${academicAply.changeStartYr}년도" var="csty"/>
+													<c:set value="${academicAply.changeStartSem}학기" var="csts"/>
+													<c:if test="${empty academicAply.changeStartYr}">
+														<c:set value="-" var="csty"/>
+													</c:if>
+													<c:if test="${empty academicAply.changeStartSem}">
+														<c:set value="-" var="csts"/>
+													</c:if>
+													<c:out value="${csty}"/> <c:out value="${csts}"/>
 												</td>
 												<td>
-													<c:out value="${academicAply.changeEndYr}"/>년도 <c:out value="${academicAply.changeEndSem}"/>학기
+													<c:set value="${academicAply.changeEndYr}년도" var="cety"/>
+													<c:set value="${academicAply.changeEndSem}학기" var="cets"/>
+													<c:if test="${empty academicAply.changeEndYr}">
+														<c:set value="-" var="cety"/>
+													</c:if>
+													<c:if test="${empty academicAply.changeEndSem}">
+														<c:set value="-" var="cets"/>
+													</c:if>
+													<c:out value="${cety}"/> <c:out value="${cets}"/>
 												</td>
 												<td>
 													<fmt:parseDate var="aplyDt" value="${academicAply.changeAplyDt }" pattern="yyyy-MM-dd"/>
@@ -293,16 +344,33 @@
 												<td>
 													<c:out value="${academicAply.stdNo}"/>
 													<input type="hidden" id="changeTypeCd" value="${academicAply.changeTypeCd }">
+													<input type="hidden" id="changeTypeNm" value="${academicAply.changeTypeNm }">
 													<input type="hidden" id="changeRsn" value="${academicAply.changeRsn }">
 												</td>
 												<td>
 													<c:out value="${academicAply.stdNm}"/>
 												</td>
 												<td>
-													<c:out value="${academicAply.changeStartYr}"/>년도 <c:out value="${academicAply.changeStartSem}"/>학기
+													<c:set value="${academicAply.changeStartYr}년도" var="csty"/>
+													<c:set value="${academicAply.changeStartSem}학기" var="csts"/>
+													<c:if test="${empty academicAply.changeStartYr}">
+														<c:set value="-" var="csty"/>
+													</c:if>
+													<c:if test="${empty academicAply.changeStartSem}">
+														<c:set value="-" var="csts"/>
+													</c:if>
+													<c:out value="${csty}"/> <c:out value="${csts}"/>
 												</td>
 												<td>
-													<c:out value="${academicAply.changeEndYr}"/>년도 <c:out value="${academicAply.changeEndSem}"/>학기
+													<c:set value="${academicAply.changeEndYr}년도" var="cety"/>
+													<c:set value="${academicAply.changeEndSem}학기" var="cets"/>
+													<c:if test="${empty academicAply.changeEndYr}">
+														<c:set value="-" var="cety"/>
+													</c:if>
+													<c:if test="${empty academicAply.changeEndSem}">
+														<c:set value="-" var="cets"/>
+													</c:if>
+													<c:out value="${cety}"/> <c:out value="${cets}"/>
 												</td>
 												<td>
 													<fmt:parseDate var="aplyDt" value="${academicAply.changeAplyDt }" pattern="yyyy-MM-dd"/>
@@ -348,7 +416,7 @@
 								<input type="hidden" id="changeNo" name="changeNo">
 								<input type="hidden" id="aprvSttsCd" name="aprvSttsCd">
 								<label class="text-label form-label">학번</label>
-								<input type="text" name="place" class="form-control" disabled id="stdNo">
+								<input type="text" name="stdNo" class="form-control" readonly id="stdNo">
 							</div>
 							<div class="col-lg-4 mb-1">
 								<label class="text-label form-label">성명</label>
@@ -356,7 +424,8 @@
 							</div>
 							<div class="col-lg-4 mb-1">
 								<label class="text-label form-label">학적변동</label>
-								<input type="text" name="place" class="form-control" disabled id="changeTypeCd">
+								<input type="text" name="place" class="form-control" disabled id="changeTypeNm">
+								<input type="hidden" name="changeTypeCd" class="form-control" id="changeTypeCd">
 							</div>
 							<div class="col-lg-4 mb-1">
 								<label class="text-label form-label">시작학기</label>
@@ -439,6 +508,7 @@ $(function(){
 		detail.find('#changeEnd').val(end);
 		detail.find('#changeAplyDt').val(clickTr.find('td').eq(4).text().trim());
 		detail.find('#changeTypeCd').val(clickTr.find('#changeTypeCd').val());
+		detail.find('#changeTypeNm').val(clickTr.find('#changeTypeNm').val());
 		detail.find('#changeRsn').val(clickTr.find('#changeRsn').val());
 		
 		$('#aprvSttsCd').val(clickTr.find('td').eq(5).text().trim())

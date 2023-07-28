@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.hku.admin.mapper.AcademicMapper;
 import kr.or.hku.admin.service.AcademicAdm;
@@ -96,9 +97,14 @@ public class AcademicAdmImpl implements AcademicAdm {
 		return mapper.getAcademicAplyList();
 	}
 
+	@Transactional
 	@Override
 	public int academicProccess(AcademicChangeVO academicChangeVO) {
-		return mapper.academicProccess(academicChangeVO);
+		int res = mapper.academicProccess(academicChangeVO);
+		if (res > 0 && academicChangeVO.getAprvSttsCd().equals("appv")) {
+			res = mapper.academicStatus(academicChangeVO);
+		}
+		return res;
 	}
 
 }

@@ -317,7 +317,7 @@ public class AcademicController {
 	public String showAcademicFluctuation(Model model) {
 		List<CommonVO> commonData = commonService.getAllCommonData();
 		List<AcademicChangeVO> academicAplyList = academicAdmService.getAcademicAplyList();
-		log.info("academicAplyList => ", academicAplyList.toString());
+		log.info("academicAplyList => " + academicAplyList.toString());
 		model.addAttribute("commonData", commonData);
 		model.addAttribute("academicAplyList", academicAplyList);
 		return "admin/academicFluctuation";
