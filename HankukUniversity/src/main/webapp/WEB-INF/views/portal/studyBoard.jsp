@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="/css/table.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="/css/student/study-pjs.css">
 <style>
 .row{
     margin-right: calc(-36.5 * var(--bs-gutter-x));
@@ -15,8 +16,8 @@
 }
 </style>
 	<div class="container-fluid" id="mainDiv">
-		<div class="card" id="card-title-1">
-			<div class="card-body">
+		<div class="card" id="card-title-1" style="height: 850px;">
+			<div style="margin-top: 20px; margin-left: 30px;">
 				<div class="basic-form">
 					<form class="row g-3 custom-form" action="">
 						<div class="col-md-2">
@@ -40,13 +41,74 @@
 				</div>
 			</div>
 			<div class="card-body">
-				<div class="table-responsive" style="height: 800px;">
+				<div class="table-responsive" style="height: 683px;">
 					<div class="row" id="boardList" style="width: 100%; margin: 10px; margin-right: -10px;">
-										
+					
+					<!--  여기다가 동적 바인딩 해요 성일이형!!!!! -->
+					
+						<div class="studycard-wrap">
+							<div class="study-top">
+								<span class="study-text">[ 스터디명 : </span>
+								<div class="study-name">정처기스터디 ]</div>
+							</div>
+							<hr>
+							<div class="study-title">정처기 스터디 같이 하실 분??</div>
+							<hr>
+							<div class="study-bottom">
+								<div class="bottom1">
+									<span class="date-text">작성일 :</span>
+									<div class="reg-date">2023-05-10</div>
+									<div>
+										<button class="end-button">모집완료</button>
+									</div>
+								</div>
+								<div class="bottom2">
+									<img alt="" src="/images/왕관.png" class="crownImg">
+									<div class="master-name">박정수</div>
+									<div class="hit-con">
+										<img alt="" src="/images/조회수.png" class="hitImg">
+										<div class="study-hit">0</div>
+										<div class="cnt-text">정원 :</div>
+										<div class="study-cnt">6 / 6</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="studycard-wrap">
+							<div class="study-top">
+								<span class="study-text">[ 스터디이름 : </span>
+								<div class="study-name">정처기스터디 ]</div>
+							</div>
+							<hr>
+							<div class="study-title">정처기 스터디 같이 하실 분??</div>
+							<hr>
+							<div class="study-bottom">
+								<div class="bottom1">
+									<span class="date-text">작성일 :</span>
+									<div class="reg-date">2023-05-10</div>
+									<div>
+										<button class="ing-button">모집중</button>
+									</div>
+								</div>
+								<div class="bottom2">
+									<img alt="" src="/images/왕관.png" class="crownImg">
+									<div class="master-name">박정수</div>
+									<div class="hit-con">
+										<img alt="" src="/images/조회수.png" class="hitImg">
+										<div class="study-hit">0</div>
+										<div class="cnt-text">정원 :</div>
+										<div class="study-cnt">2 / 6</div>
+									</div>
+								</div>
+							</div>
+						</div>
+				
+						
 					</div>
 				</div>
 			</div>
-			<div class="card-body" id="pageNation">
+			<div class="card-body" id="pageNation" style="margin-top: -12px;">
 				<nav>
 					<ul class="pagination pagination-xs">
 						<li class="page-item page-indicator">
@@ -65,7 +127,6 @@
 			</div>
 		</div>
 	</div>
-</div>
 
 <!-- modal -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" style="display: none;" aria-hidden="true" id="addModal">
@@ -154,83 +215,48 @@ function boardList() {
             
             var data = '';
             for (var i = 0; i < res.length; i++) {
+            	const regDate = `\${res[i].stboRegdate}`;
+            	const splitDate = regDate.split(" ")[0];
+            	console.log("splitDate", splitDate);
                 data += `
-                        <div class="col-xl-3 col-lg-4 col-sm-6" style="margin: -12px; margin-left:3px; margin-top:3px; width:235px;">
-						<div class="card" style="background-color: #adb17d1c;">
-							<div class="card-body">
-								<div class="card-use-box">
-									<div class="card__text">
-										<h4 class="mb-0">\${res[i].stboTitle}</h4>
-										<p>\${res[i].studyName}</p>
-									</div>
-									<ul class="card__info">
-										<li><span></span> <span class="card__info__stats" style="font-size: 13px;">\${res[i].stboRegdate}</span>
-										</li>
-									</ul>
-									<ul class="post-pos">
-										<li><span class="card__info__stats">스터디장: </span> <span>\${res[i].stboWriter}</span>
-										</li>
-											<span>조회수: \${res[i].stboReadCnt}</span>
-										</li>
-									</ul>
-									
-									<div>
-										<a href="#" id="\${res[i].stboNo}" onclick="boardDetail(this)"
-											class="btn btn-outline-primary btn-xs">보기</a>
-										<!-- <a href="javascript:void(0)" class="btn btn-secondary btn-sm ms-2">Following</a> -->
+	                	<div class="studycard-wrap" id="\${res[i].stboNo}" onclick="boardDetail(this)">
+							<div class="study-top">
+								<span class="study-text">[ 스터디이름 : </span>
+								<div class="study-name">\${res[i].studyName} ]</div>
+							</div>
+							<hr>
+							<div class="study-title">정처기 스터디 같이 하실 분??</div>
+							<hr>
+							<div class="study-bottom">
+								<div class="bottom1">
+									<span class="date-text">작성일 :</span>
+									<div class="reg-date"> \${splitDate} </div>
+									<div>`;
+				if(res[i].count < res[i].studyCpcy){
+					data +=	`<button class="ing-button">모집중</button>`		
+				}else{
+					data +=	`<button class="end-button">모집완료</button>`							
+				}					
+				data +=		`</div>
+								</div>
+								<div class="bottom2">
+									<img alt="" src="/images/왕관.png" class="crownImg">
+									<div class="master-name">\${res[i].stboWriter}</div>
+									<div class="hit-con">
+										<img alt="" src="/images/조회수.png" class="hitImg">
+										<div class="study-hit">\${res[i].stboReadCnt}</div>
+										<div class="cnt-text">정원 :</div>
+										<div class="study-cnt">\${res[i].count}/\${res[i].studyCpcy}</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>      
                         `;
             }
             body.html(data);
         }
     });
 }
-
-function boardDetail(element) {
-    var tdId = $(element).attr("id");
-    var sessStdNo = ${sessionScope.std.stdNo};
-    var stboNo = {
-        "stboNo": tdId
-    };
-    console.log("id:", tdId);
-    openModal();
-
-    $.ajax({
-        type: "get",
-        data: stboNo,
-        url: "/hku/student/studyBoardDetail",
-        dataType: "json",
-        beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
-        success: function(res) {
-            console.log("res: ", res);
-            console.log("res.stdNo: ", res.stdNo);
-            console.log("sessStdNo", sessStdNo);
-
-            $("#stboNo2").val(res.stboNo);
-            $("#stboWriter2").val(res.stboWriter);
-            $("#stboTitle2").val(res.stboTitle);
-            $("#stboContent2").val(res.stboContent);
-            $("#studyNo3").val(res.studyNo);
-            
-            let btnData = "";
-            if(res.stdNo == sessStdNo){
-            	btnData = `<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
-		    				<button type="button" class="btn btn-primary" onclick="delBoard()" id="btn3">삭제</button>
-		    				<button type="button" class="btn btn-primary" onclick="modifyStudyBoard()" id="btn2">수정</button>`;
-            }else{
-            	btnData = `<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
-		    				<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#basicModal">가입신청</button>`;
-            }
-            $("#btnDiv").html(btnData);
-		    boardList();
-        }
-    });
-}
-
 
 function insertBoard(){
 	var addModal = $("#addModal");
@@ -297,210 +323,12 @@ function insertBoard(){
 	xhr.send(JSON.stringify(data));
 }
 
-function openModal() {
-    $('#detailModal').modal('show');
-}
-function closeModal() {
-    $('#detailModal').modal('hide');
-}
 
-
-</script>
-
-<div class="modal fade bd-example-modal-lg" tabindex="-1" style="display: none;" aria-hidden="true" id="detailModal">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" style="font-weight: bold;">스터디 모집 게시판</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal">
-				</button>
-			</div>
-			<div class="modal-body">
-				<input type="hidden" id="" name="">
-				<div class="basic-form" id="regDiv">
-					<div class="form-validation">
-						<form class="needs-validation" id="frm2" name="frm2" enctype="multipart/form-data" method="post">
-							<input type="hidden" name="stboNo" id="stboNo2" >
-							<div class="mb-3">
-								<label class="col-lg-4 col-form-label" for="validationCustom01">
-									제목 <span class="text-danger"></span>
-								</label>
-								<input type="text" name="stboTitle" id="stboTitle2" class="form-control" id="validationCustom01" required>
-							</div>
-							<div class="mb-3">
-								<label class="col-lg-4 col-form-label" for="validationCustom04">
-									작성자 <span class="text-danger"></span>
-								</label>
-								<input  name="stboWriter" id="stboWriter2" class="form-control" id="validationCustom01" value="" readonly="readonly" required>
-							</div>
-							<div class="mb-3">
-								<label class="col-lg-4 col-form-label" for="validationCustom04">
-									내용 <span class="text-danger"></span>
-								</label>
-								<textarea name="stboContent" id="stboContent2" class="form-control h-50" id="validationCustom04" rows="6"required></textarea>
-								<div class="invalid-feedback">
-								</div>
-							</div>
-							<!-- 파일 이미지  -->
-							<div class="row previewFile"></div>
-						</form>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer" id="btnDiv">
-				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
-				<button type="button" class="btn btn-primary" onclick="modifyStudyBoard()" id="btn2">수정</button>
-				<button type="button" class="btn btn-primary" onclick="delBoard()" id="btn3">삭제</button>
-				<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#basicModal">가입신청</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-
-<div class="modal fade" id="basicModal" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">스터디 가입신청</h5> 
-                <button type="button" class="btn-close" data-bs-dismiss="modal">
-                </button>
-            </div>
-            <div class="modal-body">
-            	<form action="" name="frm3">
-            		<input type="hidden" name="studyNo" id="studyNo3">
-            		<div class="mb-3">
-						<label class="col-lg-4 col-form-label" for="validationCustom04">
-							자기소개 <span class="text-danger"></span>
-						</label>
-						<textarea name="joinReason" id="joinReason" class="form-control h-50" id="validationCustom04" rows="3"required></textarea>
-						<div class="invalid-feedback">
-						</div>
-					</div>
-            	</form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="intoStudy()">가입신청</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-function delBoard() {
-    var dModal = $("#detailModal");
-
-    var mForm = document.forms.frm2;
-    var no = mForm.stboNo2.value;
-    var stboWriter = mForm.stboWriter2.value;
-
-    var stboNo = {
-        "stboNo": no
-    };
-
-    $.ajax({
-        type: "POST",
-        data: stboNo,
-        url: "/hku/student/deleteStudyBoard",
-        beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
-        dataType: "json",
-        success: function(res) {
-            console.log("res: ", res);
-	            if(res>0){
-	            	swal({
-						title: "삭제되었습니다.", 
-						icon: "success"
-					});
-	            }else{
-	            	swal({
-	        			title: "삭제실패!", 
-	        			icon: "error"
-	        		});
-	            }
-	   		boardList();
-	   		closeModal();
-	       	}
-    });
-}
-
-function modifyStudyBoard(){
-	var dModal = $("#detailModal");
-	
-	var modalForm = document.forms.frm2;
-	
-	var stboTitle = modalForm.stboTitle2.value;
-	var stboContent = modalForm.stboContent2.value;
-	var stboNo = modalForm.stboNo2.value;
-
-	var data = {
-		"stboTitle": stboTitle,
-		"stboContent": stboContent,
-		"stboNo": stboNo
-		}
-
-	let xhr = new XMLHttpRequest();
-	xhr.open("POST","/hku/student/modifyStudyBoard",true);
-	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-	xhr.onreadystatechange = function(){
-		if(xhr.readyState == 4 && xhr.status == 200){
-			if(xhr.responseText === "SUCCESS"){
-				console.log("");
-				 swal({
-						title: "게시글 수정이 완료되었습니다.", 
-						icon: "success"
-					});
-			} else if(xhr.responseText === "FAILED"){
-				swal({
-        			title: "게시글 수정에 실패하였습니다!", 
-        			icon: "error"
-        		});
-			}
-			boardList();
-	   		closeModal();
-		}
-	}
-	xhr.send(JSON.stringify(data));
-}
-
-function intoStudy(){
-	var aModal = $("#basicModal");
-	
-	var modalForm = document.forms.frm3;
-	
-	var studyNo = modalForm.studyNo3.value;
-	var joinReason = modalForm.joinReason.value;
-
-	var data = {
-		"studyNo": studyNo,
-		"joinReason": joinReason
-		}
-
-	let xhr = new XMLHttpRequest();
-	xhr.open("POST","/hku/student/intoStudy",true);
-	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-	xhr.onreadystatechange = function(){
-		if(xhr.readyState == 4 && xhr.status == 200){
-			if(xhr.responseText === "SUCCESS"){
-				console.log("");
-				 swal({
-						title: "가입신청이 완료되었습니다.", 
-						icon: "success"
-					});
-			} else if(xhr.responseText === "FAILED"){
-				swal({
-        			title: "가입신청에 실패하였습니다!", 
-        			icon: "error"
-        		});
-			}
-			boardList();
-			$('#basicModal').modal('hide');
-		}
-	}
-	xhr.send(JSON.stringify(data));
+function boardDetail(element) {
+    var stboNo = $(element).attr("id");
+    var sessStdNo = ${sessionScope.std.stdNo};
+    console.log("id:", stboNo);
+	location.href = `/hku/student/studyBoardDetail?stboNo=\${stboNo}`
 }
 
 </script>
