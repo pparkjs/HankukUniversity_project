@@ -7,7 +7,7 @@
 
  .table thead{
  
- 	background-color: #6e6e6e;
+ 	background-color: #800000;
  	 position: sticky;
  	 top: 0;
  
@@ -75,7 +75,7 @@
    margin-top: -10px;
 }
 .table thead tr th {
-   padding: 15px;
+   padding: 8px;
 }
 
 .time{
@@ -196,7 +196,7 @@
   }
   
   .tabletime thead{
-  	background-color: #6e6e6e;
+  	background-color: #800000;
   	color : white;
   	height : 40px;
 
@@ -211,7 +211,7 @@
 	background-color: #b0b0b0;
 }
 	.timeTd.selected{
-	background-color: #c8feff;
+	background-color: #ffdede;
 	
 	}
 
