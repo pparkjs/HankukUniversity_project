@@ -397,6 +397,24 @@ position: relative;
 											</div>
 										</a>
 									</li>`
+						}else if(res[i].alarmType === 'assign-reg'){
+							data += `<li>
+										<a href="/hku/student/assignmentDetail/\${res[i].alarmPathNo}" class="link-move" data-alarmno="\${res[i].alarmNo}">
+											<div class="timeline-panel">
+												<div class="media me-2" style="width: 50px; height: 50px; border: 1px solid #40404073;">`
+							if(res[i].sendProfile == 'null' || res[i].sendProfile == null || res[i].sendProfile == 'undefined' || res[i].sendProfile == '') {
+								data +=				`<img alt="image" width="50" src="/images/기본프로필.png">`
+							}else{
+								data +=				`<img alt="image" width="50" src="/download\${res[i].sendProfile}">`
+							}
+								data +=	    	`</div>
+												<div class="media-body">
+													<h6 class="mb-1" style="font-size: 14px;">\${res[i].alarmTtl}</h6>
+													<small class="d-block" style="font-size: 14px;">\${res[i].alarmRegDt}</small>
+												</div>
+											</div>
+										</a>
+									</li>`
 						}
 					}
 				
