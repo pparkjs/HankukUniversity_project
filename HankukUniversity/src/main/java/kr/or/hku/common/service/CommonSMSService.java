@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.hku.ServiceResult;
+import kr.or.hku.admin.vo.SmsTemplateVO;
 
 public interface CommonSMSService {
 	/**
@@ -15,4 +16,8 @@ public interface CommonSMSService {
 	public ServiceResult sendMsgToStudents(List<Map<String, String>> stdList, String msg);
 
 	public ServiceResult sendShMsg(List<Map<String, String>> userList, String msg);
+
+	public int updateSmsTemplate(SmsTemplateVO smsTemplateVO);
+
+	public int addSmsTemplate(SmsTemplateVO smsTemplateVO);
 }
