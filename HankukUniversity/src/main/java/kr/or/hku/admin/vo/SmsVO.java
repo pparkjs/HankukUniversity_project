@@ -13,4 +13,10 @@ public class SmsVO {
 	private String smsReceiver;
 	private String smsCn;
 	private String smsSendDt;
+	
+	public SmsVO(String userNo, String empName, String msg) {
+		this.smsSender = empName;
+		this.smsReceiver = userNo;
+		this.smsCn = msg;
+	}
 }

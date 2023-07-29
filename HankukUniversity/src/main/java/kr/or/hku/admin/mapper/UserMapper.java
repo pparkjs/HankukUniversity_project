@@ -67,7 +67,7 @@ public interface UserMapper {
 
 	public SmsTemplateVO settingMsg(SmsTemplateVO paramVO);
 
-	public int sendMsgStatus(String empName);
+	public int sendMsgStatus(SmsVO smsVO);
 
 	public String getMyName(String username);
 

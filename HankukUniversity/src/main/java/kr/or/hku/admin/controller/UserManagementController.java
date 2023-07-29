@@ -22,6 +22,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,6 +65,7 @@ public class UserManagementController {
 	private CommonSMSService smsService;
 	 
 	// 성히꺼 // 
+	@Transactional
 	@ResponseBody
 	@PostMapping("/send-text-msg")
 	public int sendTextMsg(@RequestBody Map<String, Object> map, HttpSession session) {
@@ -75,11 +77,12 @@ public class UserManagementController {
 		
 		ServiceResult res = null;
 		int sendMsgStatus = 0;
+		map.put("empName", empName);
 		if( userList.size() > 0) {
 			res = smsService.sendShMsg(userList, msg);
 		}
 		if(res != null && res.equals(ServiceResult.OK)) {
-			sendMsgStatus = userService.sendMsgStatus(empName);
+			sendMsgStatus = userService.sendMsgStatus(map);
 		}
 		
 		return sendMsgStatus;

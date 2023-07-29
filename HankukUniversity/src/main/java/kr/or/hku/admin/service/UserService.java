@@ -64,7 +64,7 @@ public interface UserService {
 
 	public SmsTemplateVO settingMsg(SmsTemplateVO paramVO);
 
-	public int sendMsgStatus(String empName);
+	public int sendMsgStatus(Map<String, Object> map);
 
 	public String getMyName(String username);
 

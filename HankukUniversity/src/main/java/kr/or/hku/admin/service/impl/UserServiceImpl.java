@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.hku.admin.mapper.UserMapper;
@@ -48,9 +49,23 @@ public class UserServiceImpl implements UserService {
 		return mapper.getSmsTemplateList();
 	}
 	
+	@Transactional
 	@Override
-	public int sendMsgStatus(String empName) {
-		return mapper.sendMsgStatus(empName);
+	public int sendMsgStatus(Map<String, Object> map) {
+		List<Map<String, String>> userList = (List<Map<String, String>>) map.get("userList");
+		String msg = (String) map.get("msg");
+		String empName = (String) map.get("empName");
+		
+		int res = 0;
+		for (Map<String, String> userMap : userList) { // 문자 추가 한만큼 반복
+			String userNo = userMap.get("userNo");
+			SmsVO smsVO = new SmsVO(userNo, empName, msg);
+			res = mapper.sendMsgStatus(smsVO);
+			if (res == 0) {
+				break;
+			}
+		}
+		return res;
 	}
 	
 	@Override

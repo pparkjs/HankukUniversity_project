@@ -613,13 +613,18 @@
 			emp_no = #{userNo}
  	</update>
  	
- 	<insert id="sendMsgStatus" parameterType="string">
- 		insert into sms(
- 			SMS_NO, SMS_SENDER, SMS_RECEIVER,SMS_SEND_DT
- 		)values(
+ 	<insert id="sendMsgStatus" parameterType="smsVO">
+ 		INSERT INTO sms(
+ 			  sms_no
+			, sms_sender
+			, sms_receiver
+			, sms_cn
+			, sms_send_dt
+ 		)VALUES(
  			seq_sms.nextval,
- 			#{empName},
- 			'컴퓨터공학과 전체',
+ 			#{smsSender},
+ 			#{smsReceiver},
+ 			#{smsCn},
  			sysdate
  		)
  	</insert>
