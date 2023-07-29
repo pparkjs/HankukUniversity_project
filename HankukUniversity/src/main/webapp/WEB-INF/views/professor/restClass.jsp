@@ -4,7 +4,21 @@
 <link rel="stylesheet" href="/css/table.css">
 <link rel="stylesheet" href="/css/pro-jh.css">	
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script> 
-
+<style>
+.fc .fc-daygrid-day-number {
+    padding: 4px;
+    position: relative;
+    z-index: 4;
+    color: black;
+    font-weight: 500;
+}
+.fc .fc-col-header-cell-cushion {
+    display: inline-block;
+    padding: 2px 4px;
+    color: black;
+    font-weight: 500;
+}
+</style>
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
@@ -18,6 +32,7 @@
         <div class="card" style="width:48%; margin-bottom: 0;">
             <div class="card-header  cardTitle">
                 <h4 class="card-title" style="font-weight: bold; font-size: 1.2em; color: #800000;">날짜 선택</h4>
+                <div class="exp" style="margin-right: 296px;"> * 휴강하고 싶은 주차에 해당하는 일을 선택해주세요.</div>
             </div>
             <div class="card-body" style="padding:0; "> 
             	<div id="calendar"></div>
@@ -28,6 +43,7 @@
         <div class="card" style="width:48%; margin-bottom: 0;">
             <div class="card-header  cardTitle">
                 <h4 class="card-title" style="font-weight: bold; font-size: 1.2em; color: #800000;">나의 시간표</h4>
+                <div class="exp" style="margin-right: 296px;"> * 휴강신청을 진행할 본인의 강의를 선택해주세요.</div>
             </div>
 
             <table class="tabletime" border="1" style="margin: auto auto;">
