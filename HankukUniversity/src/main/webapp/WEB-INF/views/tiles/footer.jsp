@@ -4,7 +4,7 @@
 	<div class="copyright">
 		<p>
 			Copyright © Developed by <a href="https://dexignzone.com/"
-				target="_blank">영우가 변경한 footer~</a> 2023
+				target="_blank">HANKUK UNIVERSITY All Rights Reserved.</a> 2023
 		</p>
 	</div>
 </div>

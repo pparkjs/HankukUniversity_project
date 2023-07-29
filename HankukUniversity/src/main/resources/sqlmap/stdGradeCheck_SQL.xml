@@ -173,7 +173,7 @@
 	                A.CRS_SCR,
 	                B.LECAP_YR,
 	                B.LECAP_SEM,
-	                E.DEPT_NM
+	                E.DEPT_NM,
 	                A.EVAL_YN_CD
 				FROM
 				    COURSE_REGIST A

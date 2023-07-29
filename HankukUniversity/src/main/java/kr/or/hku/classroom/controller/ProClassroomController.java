@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +24,12 @@ import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.service.AssignmentService;
 import kr.or.hku.classroom.service.AttendanceService;
 import kr.or.hku.classroom.service.ClassroomService;
+import kr.or.hku.classroom.service.GradeManageService;
+import kr.or.hku.classroom.service.LectureNoticeService;
 import kr.or.hku.classroom.vo.AssignmentVO;
 import kr.or.hku.classroom.vo.AttendanceVO;
+import kr.or.hku.classroom.vo.GradeVO;
+import kr.or.hku.classroom.vo.LectureNoticeVO;
 import kr.or.hku.common.service.CommonFileService;
 import kr.or.hku.common.vo.AttachFileVO;
 import kr.or.hku.lectureInfo.service.CourseInfoService;
@@ -52,7 +57,15 @@ public class ProClassroomController {
 	@Autowired
 	private AttendanceService attendService;
 	
+	@Autowired
+	private GradeManageService gradeService;
+	
+	
+	@Autowired
+	private LectureNoticeService noticeService;
+	
 	// 클래스룸 목록
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/proClassroomList")
 	public String classroom(Model model, HttpServletRequest request) {
 		log.info("classroomList 실행 !");
@@ -66,6 +79,7 @@ public class ProClassroomController {
 	}
 	
 	// 클래스룸 메인
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/classroomMain/{lecapNo}")
 	public String enterClass(@PathVariable String lecapNo,
 							Model model,
@@ -83,17 +97,19 @@ public class ProClassroomController {
 		
 		// 해당 과목에 해당 년도 학기에 대한공지사항 리스트 가져와야함
 		// 지현이누나의 몫 여기다 작성하시오
-		
+		List<LectureNoticeVO> noticeList = noticeService.getNoticeList(lecapNo);
 		log.info(""+asgList);
 		model.addAttribute("lecVO", lecVO);
 		model.addAttribute("lecapNo", lecapNo);
 		model.addAttribute("subNm", subNm);
 		model.addAttribute("asgList", asgList);
+		model.addAttribute("noticeList", noticeList);
 		return "professor/classroomMain";
 	}
 	
 	
 	// 과제 목록
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/assignmentList/{lecapNo}")
 	public String assignList(@PathVariable String lecapNo,
 							Model model) {
@@ -105,6 +121,7 @@ public class ProClassroomController {
 	}
 	
 	// 과제 상세 
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/assignmentDetail/{asmNo}")
 	public String assignOne(@PathVariable String asmNo,
 							Model model) {
@@ -123,12 +140,14 @@ public class ProClassroomController {
 	}
 	
 	// 과제 등록폼
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/regiForm")
 	public String regiForm() {
 		return "professor/regiForm";
 	}
 	
 	// 과제 등록
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@PostMapping(value = "/regiAssignment")
 	public String regi(AssignmentVO vo) {
 		// -1 이면 파일없음   -1 이 아니면 파일이 있음
@@ -163,10 +182,12 @@ public class ProClassroomController {
 		
 		
 		// ----------------------------------//
-		return "redirect:/hku/professor/assignmentList/"+vo.getLecapNo();
+		return "redirect:/hku/professor/assignmentDetail/"+vo.getAsmNo();
 	}
 	
+	
 	// 과제 수정폼
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/updateForm/{asmNo}")
 	public String updateForm(@PathVariable("asmNo") String asmNo, Model model) {
 		AssignmentVO vo = assignService.assignOne(asmNo);
@@ -180,6 +201,7 @@ public class ProClassroomController {
 	public String update(AssignmentVO vo, Model model) {
 		String goPage = "";
 		ServiceResult result = assignService.update(vo);
+		
 		if(result.equals(ServiceResult.OK)) {
 			goPage = "redirect:/hku/professor/assignmentDetail/" + vo.getAsmNo();
 		}
@@ -191,7 +213,9 @@ public class ProClassroomController {
 		return goPage;
 	}
 	
+	
 	// 과제삭제 
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@PostMapping("/deleteAssignment")
 	public String delete(String asmNo) {
 		return "professor/assignmentList";
@@ -220,6 +244,7 @@ public class ProClassroomController {
 	} 
 	
 	// 출석관리
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/manageAttendance")
 	public String getStdList(String lecapNo, Model model) {
 		model.addAttribute("lecapNo", lecapNo);
@@ -256,15 +281,58 @@ public class ProClassroomController {
 		return msg;
 	}
 		
-	// 학생 성적 관리
-	@GetMapping("/stdGradeList")
-	public String stdGradeList() {
-		return "professor/gradeTable";
-	}
-	
-	// 출석 이의신청 승인/반려 
+
+	// 출석 이의신청 페이지 
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/attendanceDmrManage")
-	public String attendDmrStatus() {
+	public String attendDmrStatus(HttpSession session, Model model) {
+		String lecapNo = (String) session.getAttribute("lecapNo");
+		List<AttendanceVO> attendList = attendService.attendanceDmrList(lecapNo);
+		
+		log.info("attendList" + attendList.toString());
+		
+		model.addAttribute("attendList", attendList);
 		return "professor/attendanceDmrManage";
 	}
+	
+
+	// 출석 이의신청 승인
+	@ResponseBody
+	@PostMapping("/attendanceDmr-Appv")
+	public String attendanceDmrAppv(String atdcNo) {
+		log.info("vo !! : " + atdcNo);
+		ServiceResult result =attendService.attendanceAppv(atdcNo);
+		String msg = null;
+			if(result == ServiceResult.OK) {
+			 msg = "success";
+			}
+			return msg;
+	}
+	
+	// 출석 이의신청 반려 
+	@ResponseBody
+	@PostMapping("/attendanceDmr-rej")
+	public String attendanceDmrRej(String atdcNo) {
+		log.info("vo !! : " + atdcNo);
+		ServiceResult result = attendService.attendanceRej(atdcNo);
+		String msg = null;
+		if(result == ServiceResult.OK) {
+			msg = "success";
+		}
+		return msg;
+	}
+	
+	// 학생 성적 관리
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
+	@GetMapping("/gradeManageTable/{lecapNo}")
+	public String gradeManage(@PathVariable String lecapNo, Model model) {
+		List<GradeVO> getStdList = gradeService.getStdList(lecapNo);
+		log.info("getStdList???" + getStdList.toString());
+		model.addAttribute("getStdList", getStdList);
+		return "professor/gradeTable";
+	}	
+	
+	
+	
+	
 }

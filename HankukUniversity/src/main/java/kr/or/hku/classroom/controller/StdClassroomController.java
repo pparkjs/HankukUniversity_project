@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +53,7 @@ public class StdClassroomController {
 	private LectureNoticeService noticeService;
 	
 	// 클래스룸 리스트 
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/stdClassroomList")
 	public String classroomList(Model model, HttpServletRequest request) {
 		log.info("classroomList 실행 !");
@@ -63,6 +65,7 @@ public class StdClassroomController {
 	}
 	
 	// 클래스룸 메인
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/stdClassroomMain/{lecapNo}")
 	public String classroomMain(@PathVariable String lecapNo
 								, HttpSession session
@@ -91,6 +94,7 @@ public class StdClassroomController {
 	}
 	
 	// 과제 목록
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("stdAssignmentList/{lecapNo}")
 	public String stdAssignmentList(@PathVariable String lecapNo,
 									HttpSession session,
@@ -107,13 +111,13 @@ public class StdClassroomController {
 	}
 	
 	// 과제 상세보기 
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/assignmentDetail/{asmNo}")
 	public String stdAssignDetail(@PathVariable String asmNo,
 										Model model,
 										HttpSession session) {
 		log.info("asmNo : " + asmNo);
 		StudentVO std = (StudentVO)session.getAttribute("std");
-		
 		AssignmentVO vo = new AssignmentVO();
 		
 		vo.setAsmNo(asmNo);
@@ -130,8 +134,9 @@ public class StdClassroomController {
 	}
 	
 	// 학생 과제 제출
-	@PostMapping("/assignmentDetail/{asmNo}")
-	public String assignmentSubmit(HttpSession session, AssignmentVO vo, Model model) {
+	@ResponseBody
+	@PostMapping(value = "/assignmentDetail", produces = "application/json;charset=utf-8")
+	public String assignmentSubmit(HttpSession session, AssignmentVO vo) {
 		int attachFileNo = fileService.getAttachFileNo();
 		System.out.println("여기야여기"+vo.toString());
 		StudentVO std = (StudentVO) session.getAttribute("std");   
@@ -140,15 +145,34 @@ public class StdClassroomController {
 		vo.setAtchFileNo(attachFileNo);
 		
 		int res = assignService.assignmentSubmit(vo);
-		if(res > 0) {
-			return "redirect:/hku/student/stdAssignmentList/" + vo.getLecapNo();
-		} else {
-			model.addAttribute("assignVo", vo);
-			return "student/assignmentDetail" ;
+		String msg = "success";
+		if(res == 0) {
+			msg = "fail";
 		}
+		return msg;
 	}
 	
-	// 출석 이의신청 
+	// 학생 과제 수정 
+	@ResponseBody
+	@PostMapping("/modifyAssignment")
+	public AssignmentVO modifyAssignment(AssignmentVO vo) {
+		ServiceResult result = assignService.modifyAssignment(vo);
+		return vo;
+	}
+	
+	// 학생 과제 삭제 
+	@ResponseBody
+	@PostMapping(value="/deleteAssignment", produces = "text/plain;charset=utf-8")
+	public String deleteAssignment(@RequestBody HashMap<String, String> asmNoMap) {
+		int asmNo = Integer.parseInt(asmNoMap.get("asmNo"));
+		log.info("넘겨받은 asmNo !! " + asmNoMap.toString());
+		ServiceResult result = assignService.deleteAssignment(asmNo);
+		return result.toString();
+	}
+	
+	
+	// 출석 이의신청
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/attendanceDmr")
 	public String attendanceDmr(Model model, HttpSession session) {
 		// 이의신청 리스트 가져오기
@@ -207,19 +231,14 @@ public class StdClassroomController {
 	
 	// 이의신청 삭제 
 	@ResponseBody
-	@PostMapping(value="/deleteAttendDmr")
+	@PostMapping(value="/deleteAttendDmr", produces = "text/plain;charset=utf-8")
 	public String deleteAttendDmr(@RequestBody HashMap<String, String> atdcNoMap) {
-		log.info("atdcNo?????? : " + atdcNoMap.get("atdcNo").toString());
-//		ServiceResult result = attendanceService.deleteAttendDmr(atdcNo);
-//		log.info("atdcNo?????? : " + atdcNo);
-		String msg = null;
+		int atdcNo = Integer.parseInt(atdcNoMap.get("atdcNo"));
 		
-//		if(result.equals(ServiceResult.OK)) {
-//			msg =  "success";
-//		} else {
-//			msg = "failed";
-//		}
-		return null;
+		log.info("넘겨받은 no 값 : " + atdcNo);
+		
+		ServiceResult result = attendanceService.deleteAttendDmr(atdcNo);
+		return result.toString();
 	}
 	
 	@GetMapping("/noticeList")

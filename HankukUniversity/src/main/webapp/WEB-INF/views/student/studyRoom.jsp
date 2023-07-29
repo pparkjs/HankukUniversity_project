@@ -125,7 +125,7 @@ input[name=color]:checked + label{
 								<a class="nav-link" data-bs-toggle="tab" href="#message1" id="calRender"><i class="ti-calendar me-2"></i> 일정</a>
 							</li>
 						</ul>
-						<a class="btn btn-primary" href="#" role="button" id="btn1" style="margin-left: 733px; margin-bottom: 10px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
+						<a class="btn btn-primary" href="https://4276-1-212-157-150.ngrok-free.app/study?room=${study.studyNo }" role="button" id="btn1" style="margin-left: 733px; margin-bottom: 10px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
 					
 						<form action="/hku/student/delStudy" method="post" id="delForm">
 							<input type="hidden" name="studyNo" value="${study.studyNo}" id="studyNo">
@@ -380,7 +380,6 @@ input[name=color]:checked + label{
 		</div>
 	</div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
 <script>
 $(document).ready(function() {
 	sTbl();
@@ -500,7 +499,9 @@ function assignStudy() {
         type: "POST",
         data: joinNo,
         url: "/hku/student/assignStudy",
-        beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
+        beforeSend : function(xhr){
+           xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
         dataType: "json",
         success: function(res) {
             console.log("res: ", res);
@@ -683,6 +684,9 @@ $(document).on('DOMContentLoaded', function() {
 			type : 'put',
 			url : '/hku/student/study-calendar',
 			contentType : "application/json;charset=utf-8",
+			beforeSend : function(xhr){
+               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 			data : JSON.stringify(changeData),
 			dataType : 'text',
 			success: function(res){
@@ -719,6 +723,9 @@ $(document).on('DOMContentLoaded', function() {
 				url : '/hku/student/study-calendar',
 				contentType : "application/json;charset=utf-8",
 				data : JSON.stringify(sendData),
+				beforeSend : function(xhr){
+	               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	            },
 				dataType : 'text',
 				success: function(res){
 					console.log(res);
@@ -757,6 +764,9 @@ $(document).on('DOMContentLoaded', function() {
 				contentType : "application/json;charset=utf-8",
 				data : JSON.stringify(sendData),
 				dataType : 'text',
+				beforeSend : function(xhr){
+	               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	            },
 				success: function(res){
 					if(res == "1"){
 						swal({
@@ -835,6 +845,9 @@ $(document).on('DOMContentLoaded', function() {
 					contentType: "application/json;charset=utf-8", // 필수 
 					data: JSON.stringify(deleteData),
 					dataType: "text",
+					beforeSend : function(xhr){
+		               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		            },
 					success: function(res){
 						if (res == "1") {
 							swal({

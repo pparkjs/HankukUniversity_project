@@ -11,7 +11,7 @@ import kr.or.hku.classroom.vo.AssignmentVO;
 
 @Mapper
 public interface AssignmentMapper {
-	// 과제테이블
+	
 	public List<AssignmentVO> assignList(String lecapNo);
 	public AssignmentVO assignOne(String asmNo);
 	public int regi(AssignmentVO vo);
@@ -21,17 +21,26 @@ public interface AssignmentMapper {
 	public List<String> getStdList(String lecapNo); 
 	public int giveAssignToStd(Map<String, Object> map);
 	
+	//과제 상세페이지 학생 리스트
+	public List<AssignmentVO> getStdListByAssign(String asmNo);
+	
+	//과제 상세페이지 성적 부여 
+	public int giveScore(AssignmentVO assignmentVO);
+	
 	// 학생 과제 상세
 	public AssignmentVO stdAssignDetail(AssignmentVO vo);
 	
 	// 학생 과제 제출 
 	public int assignmentSubmit(AssignmentVO vo);
-	//과제 상세페이지 학생 리스트
-	public List<AssignmentVO> getStdListByAssign(String asmNo);
-	//과제 상세페이지 성적 부여 
-	public int giveScore(AssignmentVO assignmentVO);
 	
-	// 알람테이블
-//	public int insertAlarm();
+	// 과제 제출 현황
+	public List<AssignmentVO> submitList(AssignmentVO vo);
+	
+	// 과제 수정 
+	public int modifyAssignment(AssignmentVO vo);
+	
+	// 과제 삭제
+	public int deleteAssignment(int asmNo);
+
 	
 }

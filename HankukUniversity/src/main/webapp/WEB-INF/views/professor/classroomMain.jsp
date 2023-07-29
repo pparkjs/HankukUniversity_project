@@ -59,8 +59,8 @@
 		<div style="display: flex;">
 			<h2 style="font-weight: 600; color: #404040;">${subNm }</h2>
 			<div class="buttons" style="padding-left:68%; padding-bottom:10px;">
-				<button type="button" id="attendBtn" style="padding: 0.6rem 1.0rem;" class="btn btn-primary">출석관리</button>
-				<button type="button" id="attendDmrBtn" style="padding: 0.6rem 1.2rem;" class="btn btn-primary">이의신청관리</button>
+				<button type="button" id="attendBtn" style="padding: 0.6rem 1.0rem; background: #0070c0; border-color: #0070c0;" class="btn btn-primary">출석관리</button>
+				<button type="button" id="attendDmrBtn" style="padding: 0.6rem 1.2rem; background: #ff4343; border-color: #ff4343;" class="btn btn-primary">이의신청관리</button>
 			</div>
 		</div>
 		<div class="row">
@@ -227,21 +227,14 @@
 								</tr>
 							</thead>
 							<tbody id="tbtb">
+							<c:forEach items="${noticeList}" var="notice" varStatus="status">
 								<tr class="tbtr">
-									<td class="">1</td>
-									<td class="">6주차 휴강안내</td>
-									<td class="">2023-07-12</td>
+									<td class="">${status.index + 1}</td>
+									<td class=""><a href="/hku/professor/detailNotice/${notice.lecntNo}">${notice.lecntTtl}</a></td>
+									<td class="">${notice.lecntRegdate}</td>
+									<td class="">${notice.lecntReadCnt}</td>
 								</tr>
-								<tr class="tbtr">
-									<td class="">2</td>
-									<td class="">공결신청 관련 안내</td>
-									<td class="">2023-07-10</td>
-								</tr> 
-								<tr class="tbtr">
-									<td class="">3</td>
-									<td class="">중간고사 시험 안내</td>
-									<td class="">2023-07-21</td>
-								</tr>
+							</c:forEach>
 							</tbody>
 						</table>
 					</div>
@@ -276,14 +269,10 @@ $(function(){
 
 	var attendDmrBtn = document.querySelector("#attendDmrBtn");
 	attendDmrBtn.addEventListener("click", function(){
-		location.href=`/hku/professor/attendanceDmrManage/` + lecapNo;
+		location.href=`/hku/professor/attendanceDmrManage`;
 	})
 
 })
-
-
-
-
 
 
 
@@ -300,6 +289,9 @@ middleBtn.on("click", function(){
 
 	$.ajax({
 		url:"/hku/testCheck",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		type:"get",
 		data:obj,
 		success:function(res){

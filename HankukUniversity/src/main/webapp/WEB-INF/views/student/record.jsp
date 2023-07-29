@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <link rel="stylesheet" href="/css/table.css">
 <link rel="stylesheet" href="/css/student/record-style.css">
 <style>
@@ -37,6 +38,15 @@
 	font-size: 1.3em;
 }
 </style>
+<script>
+
+$(document).ready(function() {
+	var Rrno = "${student.stdRrno }";
+	var stdRrno = Rrno.slice(0, 8) + '*****';
+	console.log("rrno: ", stdRrno);
+	document.getElementById('rrno').value = stdRrno;
+});
+</script>
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
@@ -55,7 +65,7 @@
 							</div>
 							<div class="card-body" style="display: flex; justify-content: center; align-items: center;">
 								<c:choose>
-									<c:when test="${student.stdProfilePath eq null}">
+									<c:when test="${student.stdProfilePath == null || student.stdProfilePath == ''}">
 										<img id="stdProfileImg" src="/images/기본프로필.png" alt="">
 									</c:when>
 									<c:otherwise>
@@ -79,7 +89,14 @@
 											</div>
 											<div class="profile-con">
 	 											<span class="profile-span">성별</span>
-												<input type="text" class="form-control" value="남" readonly>
+	 											<c:choose>
+	 												<c:when test="${student.stdSexCd eq 'M'}">
+														<input type="text" class="form-control" value="남" readonly> 												
+	 												</c:when>	 												
+	 												<c:otherwise>
+														<input type="text" class="form-control" value="여" readonly> 													 												
+	 												</c:otherwise>
+	 											</c:choose>											 												
 											</div>
 											<div class="profile-con">
 												<span class="profile-span">학번</span>
@@ -95,15 +112,15 @@
 											</div>
 											<div class="profile-con">
 												<span class="profile-span">전공이수학점</span>
-												<input type="text" class="form-control" value="10" readonly>
+												<input type="text" class="form-control" value="${student.stdMjrCrd }" readonly>
 											</div>
 											<div class="profile-con">
 												<span class="profile-span">교양이수학점</span>
-												<input type="text" class="form-control" value="10" readonly>
+												<input type="text" class="form-control" value="${student.stdCtrlCrd }" readonly>
 											</div>
 											<div class="profile-con">
 												<span class="profile-span">학적상태</span>
-												<input type="text" class="form-control" value="재학" readonly>
+												<input type="text" class="form-control" value="${student.stdSttsNm }" readonly>
 											</div>
 								
 											<div class="profile-con">
@@ -116,28 +133,28 @@
 											</div>
 											<div class="profile-con">
 												<span class="profile-span">주민등록번호</span>
-												<input type="text" class="form-control" value="980915-1******" readonly>
+												<input type="text" class="form-control" id="rrno" value="${student.stdRrno }" readonly>
 											</div>
 											<div class="profile-con">
 												<span class="profile-span">은행명</span>
-												<input type="text" class="form-control" value="KB국민" readonly>
+												<input type="text" class="form-control" value="${bankNm.comCdNm }" readonly>
 											</div>
 											<div class="profile-con">
 												<span class="profile-span">계좌번호</span>
-												<input type="text" class="form-control" value="123-456-789012" readonly>
+												<input type="text" class="form-control" value="${student.stdActno }" readonly>
 											</div>
 										
 											<div class="profile-con">
 												<span class="profile-span">우편번호</span>
-												<input type="text" class="form-control" value="23456" readonly>
+												<input type="text" class="form-control" value="${student.stdZip }" readonly>
 											</div>
 											<div class="profile-con" style="width: 44%;">
 												<span class="profile-span" style="width: 116%;">주소</span>
-												<input type="text" class="form-control" value="${student.stdAddr }${student.stdDaddr }" readonly>
+												<input type="text" class="form-control" value="${student.stdAddr }" readonly>
 											</div>
 											<div class="profile-con" style="margin-left: 4px; width: 636px;">
 	<!-- 											<span class="profile-span"></span> -->
-												<input type="text" class="form-control" value="${student.stdAddr }${student.stdDaddr }" style="width: 151%;" readonly>
+												<input type="text" class="form-control" value="${student.stdDaddr }" style="width: 151%;" readonly>
 											</div>
 										</div>
 									</div>
@@ -156,113 +173,64 @@
 									<thead class="thead-dark">
 										<tr>
 											<th style="width:80px;">순번</th> <!-- 이거는 그냥 1, 2, 3으로 넣으면 되요 -->
-											<th style="width:150px;">변동사항</th>
+											<th style="width:130px;">변동사항</th>
 											<th style="width:150px;">변동신청일</th>
-											<th style="width:150px;">시작년도/시작학기</th> <!-- 이거는 2023년도 2학기 -->
-											<th style="width:150px;">종료년도/종료학기</th>
-											<th style="width:400px;">변동사유</th>
-											<th style="width:140px;">승인여부</th>  <!-- 해당 변동사항부분은 승인된 것만 들어와야함 결제상태코드가 appv인 것만 -->
+											<th style="width:170px;">시작년도/시작학기</th> <!-- 이거는 2023년도 2학기 -->
+											<th style="width:170px;">종료년도/종료학기</th>
+											<th style="width:400px;">사유</th>
+											<th style="width:100px;">승인여부</th>  <!-- 해당 변동사항부분은 승인된 것만 들어와야함 결제상태코드가 appv인 것만 -->
 										</tr>
 									</thead>
 									<tbody id="recordBody">
-									
-<!-- 										<tr> -->
-<!-- 											<td colspan="7" style="text-align: center">학적변동내역이 존재하지 않습니다.</td> -->
-<!-- 										</tr> -->
-
-<!-- 										동적추가 -->
-<!-- 										<tr> -->
-<!-- 											<td>1</td> -->
-<!-- 											<td>군휴학</td> -->
-<!-- 											<td>2022-03-12</td> -->
-<!-- 											<td>2022년도 1학기</td> -->
-<!-- 											<td>2023년도 2학기</td> -->
-<!-- 											<td>군대 입대합니다.</td> -->
-<!-- 											<td><button class="btn btn-primary" style="background: #0070c0; margin-top: -11px; padding: 5px 21px; border-color:#0070c0;">승인</button></td> -->
-<!-- 										</tr> -->
-<!-- 										동적추가 -->
-<!-- 										<tr> -->
-<!-- 											<td>1</td> -->
-<!-- 											<td>군휴학</td> -->
-<!-- 											<td>2022-03-12</td> -->
-<!-- 											<td>2022년도 1학기</td> -->
-<!-- 											<td>2023년도 2학기</td> -->
-<!-- 											<td>군대 입대합니다.</td> -->
-<!-- 											<td><button class="btn btn-primary" style="background: #0070c0; margin-top: -11px; padding: 5px 21px; border-color:#0070c0;">승인</button></td> -->
-<!-- 										</tr> -->
-<!-- 										동적추가 -->
-<!-- 										<tr> -->
-<!-- 											<td>1</td> -->
-<!-- 											<td>군휴학</td> -->
-<!-- 											<td>2022-03-12</td> -->
-<!-- 											<td>2022년도 1학기</td> -->
-<!-- 											<td>2023년도 2학기</td> -->
-<!-- 											<td>군대 입대합니다.</td> -->
-<!-- 											<td><button class="btn btn-primary" style="background: #0070c0; margin-top: -11px; padding: 5px 21px; border-color:#0070c0;">승인</button></td> -->
-<!-- 										</tr> -->
-<!-- 										동적추가 -->
-<!-- 										<tr> -->
-<!-- 											<td>1</td> -->
-<!-- 											<td>군휴학</td> -->
-<!-- 											<td>2022-03-12</td> -->
-<!-- 											<td>2022년도 1학기</td> -->
-<!-- 											<td>2023년도 2학기</td> -->
-<!-- 											<td>군대 입대합니다.</td> -->
-<!-- 											<td><button class="btn btn-primary" style="background: #0070c0; margin-top: -11px; padding: 5px 21px; border-color:#0070c0;">승인</button></td> -->
-<!-- 										</tr> -->
-<!-- 										동적추가 -->
-<!-- 										<tr> -->
-<!-- 											<td>1</td> -->
-<!-- 											<td>군휴학</td> -->
-<!-- 											<td>2022-03-12</td> -->
-<!-- 											<td>2022년도 1학기</td> -->
-<!-- 											<td>2023년도 2학기</td> -->
-<!-- 											<td>군대 입대합니다.</td> -->
-<!-- 											<td><button class="btn btn-primary" style="background: #0070c0; margin-top: -11px; padding: 5px 21px; border-color:#0070c0;">승인</button></td> -->
-<!-- 										</tr> -->
-<!-- 										동적추가 -->
-<!-- 										<tr> -->
-<!-- 											<td>1</td> -->
-<!-- 											<td>군휴학</td> -->
-<!-- 											<td>2022-03-12</td> -->
-<!-- 											<td>2022년도 1학기</td> -->
-<!-- 											<td>2023년도 2학기</td> -->
-<!-- 											<td>군대 입대합니다.</td> -->
-<!-- 											<td><button class="btn btn-primary" style="background: #0070c0; margin-top: -11px; padding: 5px 21px; border-color:#0070c0;">승인</button></td> -->
-<!-- 										</tr> -->
-										
+										 <c:choose> 
+ 								            	<c:when test="${empty recordList }"> 
+ 								            		<tr>
+ 								            			<td colspan="7" style="text-align: center">학적변동내역이 존재하지 않습니다.</td>
+ 								            		</tr>
+ 								            	</c:when>
+ 								            	<c:otherwise>
+								            		<c:forEach items="${recordList }" var="list">
+							            			 <tr>
+									                    <td>${list.no }</td>
+									                    <td>${list.comCdNm1 }</td>
+									                    <td>
+										                    <fmt:parseDate value="${list.changeAplyDt }" var="aplyDt" pattern="yyyy-MM-dd HH:mm:ss"/>
+	                             							<fmt:formatDate value="${aplyDt }" pattern="yyyy-MM-dd"/>
+									                    </td>
+									                    <c:choose>
+										                    <c:when test="${empty list.changeStartYr }">
+										                    	<td> - </td>
+										                    </c:when>
+										                    <c:otherwise>
+											                    <td>${list.changeStartYr }년 ${list.changeStartSem }학기</td>
+										                    </c:otherwise>
+									                    </c:choose>
+									                    <c:choose>
+										                    <c:when test="${empty list.changeEndYr }">
+										                    	<td> - </td>
+										                    </c:when>
+										                    <c:otherwise>
+									                   			<td>${list.changeEndYr }년 ${list.changeEndSem }학기</td>											                    
+										                    </c:otherwise>
+									                    </c:choose>
+									                    <td>${list.changeRsn }</td>
+									                    <td>
+									                    	<c:choose>
+									                    		<c:when test="${list.comCdNm2 eq '승인'}">
+											                    	<button class="btn btn-primary" style="background: #0070c0; margin-top: -11px; padding: 5px 21px; border-color:#0070c0;">${list.comCdNm2 }</button>       	
+									                    		</c:when>
+									                    		<c:otherwise>
+											                    	<button class="btn btn-primary" style="background: #ff4343; margin-top: -11px; padding: 5px 21px; border-color:#ff4343;">${list.comCdNm2 }</button>       	
+									                    		</c:otherwise>
+									                    	</c:choose>
+									                    </td>
+									               	 </tr>
+								            		</c:forEach>
+ 								            	</c:otherwise>
+ 							            	</c:choose>			
 									</tbody>
 								</table>
 							</div>
-							    
-							    
-<!-- 							        <table class="tbl"> -->
-<!-- 							            <thead>             -->
-<!-- 							                <tr> -->
-<!-- 							                    <th style="width: 30%">날짜</th> -->
-<!-- 							                    <th style="width: 35%">변동사항</th> -->
-<!-- 							                    <th style="width: 35%">승인여부</th> -->
-<!-- 							                </tr> -->
-<!-- 							            </thead> -->
-<!-- 							            <tbody> -->
-<%-- 							                <c:choose> --%>
-<%-- 								            	<c:when test="${empty recordList }"> --%>
-<!-- 								            		<tr> -->
-<!-- 								            			<td colspan="3" style="color: red;">학적변동 기록이 없습니다</td> -->
-<!-- 								            		</tr> -->
-<%-- 								            	</c:when> --%>
-<%-- 								            	<c:otherwise> --%>
-<%-- 								            		<c:forEach items="${recordList }" var="list"> --%>
-<!-- 								            			 <tr> -->
-<%-- 										                    <td>${list.changeAplyDt }</td> --%>
-<%-- 										                    <td>${list.comCdNm1 }</td> --%>
-<%-- 										                    <td>${list.comCdNm2 }</td> --%>
-<!-- 										               	 </tr> -->
-<%-- 								            		</c:forEach> --%>
-<%-- 								            	</c:otherwise> --%>
-<%-- 							            	</c:choose>						               --%>
-<!-- 							            </tbody> -->
-<!-- 							        </table> -->
 						</div>
 					</div>
 			</div>				

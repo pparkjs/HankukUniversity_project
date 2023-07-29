@@ -33,9 +33,12 @@
 					<h4 class="card-title" 
 						style="font-weight: bold; font-size: 1.2em; color: #800000;">
 						과제관리</h4>
-					<button type="button" id="regBtn"
-						style="padding: 0.5rem 1.0rem; width: 80px; "
-						class="btn btn-primary">등록</button>
+					<div>
+						<button type="button" style="padding: 0.5rem 1.0rem; width: 80px;"
+							id="goMainBtn" class="btn btn-danger light">메인</button>
+						<button type="button" id="regBtn"
+							style="padding: 0.5rem 1.0rem; width: 80px;"class="btn btn-primary">등록</button>
+					</div>
 				</div>
 				<div class="card-body ccc" style="padding-top: 0; height:40%;">
 					<div class="table-wrap" style="margin-top: 10px;">
@@ -80,9 +83,14 @@
 <script>
 $(function(){
 	var regBtn = document.querySelector("#regBtn");
+	var goMainBtn = document.querySelector("#goMainBtn");
 	
 	regBtn.addEventListener("click", function(){
 		location.href = "/hku/professor/regiForm";
+	})
+	goMainBtn.addEventListener("click", function(){
+		var lecapNo = ${lecapNo };
+		location.href = "/hku/professor/classroomMain/" + lecapNo;
 	})
 	
 })

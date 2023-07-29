@@ -56,6 +56,30 @@ input[name=color]:checked + label{
 #calClsf{
 	width: 8%;
 }
+.fc .fc-toolbar.fc-header-toolbar {
+    margin-bottom: -0.9em;
+}
+.fc-toolbar {
+    margin-top: -0.0625rem;
+}
+.fc .fc-daygrid-body td {
+	height:65px;
+}
+.fc .fc-daygrid-day-number {
+    padding: 4px;
+    position: relative;
+    z-index: 4;
+    color: black;
+    font-size: 17px;
+    font-weight: 600;
+}
+.fc .fc-col-header-cell-cushion {
+    display: inline-block;
+    padding: 2px 4px;
+    color: black;
+    font-size: 16px;
+    font-weight: 600;
+}
 </style>
 <div class="content-body">
 	<div class="page-titles">
@@ -64,10 +88,10 @@ input[name=color]:checked + label{
 			<li class="breadcrumb-item active"><a href="javascript:void(0)">학사 일정 관리</a></li>
 		</ol>
     </div>
-	<div class="container-fluid">
+	<div class="container-fluid" style="margin-top: -12px;">
 		<div class="row">
 			<div class="mb-1">
-				<select class="form-control" id="calClsf">
+				<select class="form-control" id="calClsf" style="height: 32px;">
 					<option value="uni" selected>학사</option>						
 					<c:forEach items="${deptList }" var="dept">
 						<option value="${dept.DEPT_CD }">${dept.DEPT_NM }</option>
