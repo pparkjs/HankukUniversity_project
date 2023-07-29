@@ -160,7 +160,7 @@ public class ProClassroomController {
 		
 		
 		// ----------------------------------//
-		return "redirect:/hku/professor/assignmentList/"+vo.getLecapNo();
+		return "redirect:/hku/professor/assignmentDetail/"+vo.getAsmNo();
 	}
 	
 	
@@ -304,6 +304,7 @@ public class ProClassroomController {
 		model.addAttribute("getStdList", getStdList);
 		return "professor/gradeTable";
 	}	
+	
 	
 	
 	
