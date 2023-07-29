@@ -146,7 +146,7 @@ $(function(){
 	 tBody.on("click", '.enterGrade', function(){
 		 console.log("this!!!", $(this).parents('tr').find('svg').attr('id'));
 		 var lecapNo = $(this).parents('tr').find('svg').attr('id');
-		 location.href = `/hku/professor/stdGradeList/\${lecapNo}`;
+		 location.href = `/hku/professor/gradeManageTable/\${lecapNo}`;
 	 })
 
 }) 
