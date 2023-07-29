@@ -75,9 +75,10 @@ public class PortalController {
 	
 	
 	// 혀니 네이버 날씽 가져오깅
-	@GetMapping(value="/naver", produces = "application/json;chaset=utf-8")
 	@ResponseBody
+	@GetMapping(value="/naver", produces = "application/json;chaset=utf-8")
 	public String getWeatherInfo() throws Exception {
+		log.info("혀니 네이버 날씨 가져왔응");
 		return Request.get("https://weather.naver.com").execute().returnContent().asString();
 	}
 }

@@ -23,7 +23,7 @@
 						<div class="col-md-2">
 						   <select class="default-select form-control" id="stype">
 							  <option value="">선택</option>
-							  <option value="title">제목</option>
+							  <option value="title">스터디명</option>
 							  <option value="writer">작성자</option>
 						   </select>
 						</div>
@@ -32,7 +32,7 @@
 						</div>
 						<input type="hidden" name="page" id="page">
 						<div class="col-auto">
-							<button type="button" class="btn btn-primary" id="searchBtn" onclick="">검색</button>
+							<button type="button" class="btn btn-primary" id="searchBtn">검색</button>
 						</div>
 						<div class="col-auto">
 							<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">글쓰기</button>
@@ -197,54 +197,61 @@
 		</div>
 	</div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script type="text/javascript">
-var boardBody = document.querySelector("#boardList");
-$(document).ready(function() {
-    boardList();
-});
+var sendData = {};
+function boardDetail(element) {
+    var stboNo = $(element).attr("id");
+    var sessStdNo = ${sessionScope.std.stdNo};
+    console.log("id:", stboNo);
+	location.href = `/hku/student/studyBoardDetail?stboNo=\${stboNo}`
+}
+
 
 function boardList() {
-	let stype = $('#stype').val();
-    let sword = $('#sword').val();
-    let page = $('#page').val();
+	
+// 	let stype = $('#stype').val();
+//     let sword = $('#sword').val();
+//     let page = $('#page').val();
     
-    console.log("?",stype + sword + page);
+    sendData.stype = $('#stype').val();
+	sendData.sword = $('#sword').val();
+	sendData.page = $('#page').val();
     
+	console.log(sendData);
     
-    var queryStr = "?stype=" + stype + "&sword=" + sword + "&page=" + page
-    		
-    console.log("queryStr", queryStr);
     
     var body = $("#boardList");
     $.ajax({
         type: "get",
-        url: `/hku/student/studyBoardList` + queryStr,
+        url: "/hku/student/studyBoardList",
         dataType: "json",
-        beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
+        contentType: 'application/json;charset=utf-8',
+        data: sendData,
         success: function(res) {
             console.log("res: ", res);
+            var stdBoardList = res.dataList;
             
             var data = '';
-            for (var i = 0; i < res.length; i++) {
-            	const regDate = `\${res[i].stboRegdate}`;
+            for (var i = 0; i < stdBoardList.length; i++) {
+            	const regDate = `\${stdBoardList[i].stboRegdate}`;
             	const splitDate = regDate.split(" ")[0];
             	console.log("splitDate", splitDate);
+            	console.log("stdBoardList",stdBoardList);
                 data += `
-	                	<div class="studycard-wrap" id="\${res[i].stboNo}" onclick="boardDetail(this)">
+	                	<div class="studycard-wrap" id="\${stdBoardList[i].stboNo}" onclick="boardDetail(this)">
 							<div class="study-top">
 								<span class="study-text">[ 스터디이름 : </span>
-								<div class="study-name">\${res[i].studyName} ]</div>
+								<div class="study-name">\${stdBoardList[i].studyName} ]</div>
 							</div>
 							<hr>
-							<div class="study-title">\${res[i].stboContent}</div>
+							<div class="study-title">\${stdBoardList[i].stboContent}</div>
 							<hr>
 							<div class="study-bottom">
 								<div class="bottom1">
 									<span class="date-text">작성일 :</span>
 									<div class="reg-date"> \${splitDate} </div>
 									<div>`;
-				if(res[i].count < res[i].studyCpcy){
+				if(stdBoardList[i].count < stdBoardList[i].studyCpcy){
 					data +=	`<button class="ing-button">모집중</button>`		
 				}else{
 					data +=	`<button class="end-button">모집완료</button>`							
@@ -253,12 +260,12 @@ function boardList() {
 								</div>
 								<div class="bottom2">
 									<img alt="" src="/images/왕관.png" class="crownImg">
-									<div class="master-name">\${res[i].stboWriter}</div>
+									<div class="master-name">\${stdBoardList[i].stboWriter}</div>
 									<div class="hit-con">
 										<img alt="" src="/images/조회수.png" class="hitImg">
-										<div class="study-hit">\${res[i].stboReadCnt}</div>
+										<div class="study-hit">\${stdBoardList[i].stboReadCnt}</div>
 										<div class="cnt-text">정원 :</div>
-										<div class="study-cnt">\${res[i].count}/\${res[i].studyCpcy}</div>
+										<div class="study-cnt">\${stdBoardList[i].count}/\${stdBoardList[i].studyCpcy}</div>
 									</div>
 								</div>
 							</div>
@@ -266,9 +273,11 @@ function boardList() {
                         `;
             }
             body.html(data);
-        }
-    });
-}
+			pageNation.html(res.pagingHTML);
+			
+	        }
+	    });
+	}
 
 function insertBoard(){
 	var addModal = $("#addModal");
@@ -336,11 +345,25 @@ function insertBoard(){
 }
 
 
-function boardDetail(element) {
-    var stboNo = $(element).attr("id");
-    var sessStdNo = ${sessionScope.std.stdNo};
-    console.log("id:", stboNo);
-	location.href = `/hku/student/studyBoardDetail?stboNo=\${stboNo}`
-}
-
+$(document).ready(function() {
+	var boardBody = document.querySelector("#boardList");
+	var pageNation = $('#pageNation');
+    
+   
+	boardList();
+		
+	$('#searchBtn').on('click',function(){
+		boardList();
+	});
+	
+	// 페이징
+	pageNation.on('click','a',function(event){
+		event.preventDefault();
+		pageNo = $(this).data('page'); // 페이지 번호 날라옴
+		$('#page').val(pageNo);
+		console.log("페이지번호 클릭", $('#page').val());
+		boardList();
+	});
+	
+});
 </script>

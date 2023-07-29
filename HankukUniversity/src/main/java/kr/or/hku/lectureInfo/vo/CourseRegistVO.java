@@ -28,4 +28,9 @@ public class CourseRegistVO {
 	private String deptNm; //수강과목의 학과
 	private String subNo; //수강과목번호
 	private String subCrd; //수강과목번호
+	
+	private String assignScr;//과제점수
+	private String middleScr;//중간점수
+	private String finalScr;//기말점수
+	private String attendScr; //출석점수
 }

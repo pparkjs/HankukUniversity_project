@@ -3,7 +3,7 @@ package kr.or.hku.student.service;
 import java.util.List;
 import java.util.Map;
 
-import kr.or.hku.notice.vo.PaginationInfoVO;
+import kr.or.hku.student.vo.PaginationInfoVO;
 import kr.or.hku.student.vo.StdCalendarVO;
 import kr.or.hku.student.vo.StudyVO;
 
@@ -54,14 +54,18 @@ public interface StudyService {
 	public int insertStudyMem(StudyVO studyVo);
 	// 스터디 탈퇴
 	public int exitStudy(StudyVO studyVo);
+	
+	// 스터디 게시판
 	// 스터디 게시판 리스트
-	public List<StudyVO> studyBoardList();
+	public List<StudyVO> studyBoardList();	
+	public List<StudyVO> studyBoardList2(Map<String, String> map);
+	// 검색된 게시글 
+	public List<StudyVO> boardSelect(PaginationInfoVO<StudyVO> pagingVO);
 	// 총 게시글 개수
 	public int boardCount(PaginationInfoVO<StudyVO> pagingVO);	
 	
+	
 	public StudyVO getFilePath(String stdNo);
-	// 검색된 게시글
-	public List<StudyVO> boardSelect(PaginationInfoVO<StudyVO> pagingVO);
 	// 본인이 스터디장으로 있는 스터디 목록
 	public List<StudyVO> myStudy(String stdNo);
 	// 스터디 게시판 글작성

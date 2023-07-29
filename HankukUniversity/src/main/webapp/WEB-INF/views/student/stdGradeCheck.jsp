@@ -68,12 +68,13 @@
 							<td>${subject.subNo}</td>
 							<c:choose>
 							<c:when test="${subject.crsScr ne null}">
+								<c:choose>
 								<c:when test="${subject.evalYnCd eq 'Y'}">
 									<td>${subject.subCrd}</td>
-									<td>생략</td>
-									<td>생략</td>
-									<td>생략</td>
-									<td>생략</td>
+									<td>${subject.assignScr}</td>
+									<td>${subject.attendScr}</td>
+									<td>${subject.middleScr}</td>
+									<td>${subject.finalScr}</td>
 									<td>생략</td>
 									<td>${subject.crsScr}</td>
 									<td>
@@ -94,6 +95,7 @@
 									<button type="button" class="btn btn-primary pro1 testBtn" style="border:none;">강의평가</button>
 									</td>
 								</c:otherwise>
+								</c:choose>
 								</c:when>
 								<c:when test="${subject.crsScr eq null}">
 									<td> - </td>
@@ -166,33 +168,38 @@
 				    </tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${map.subject}" var="subject">
-						<c:if test="${not empty subject.grdDmrSttsCd}">
+					<c:if test="${not empty map.dmr}">
+					<c:forEach items="${map.dmr}" var="dmr">
 							<tr>
-								<td>${subject.lecapYr}</td>
-								<td>${subject.lecapSem}</td>
-								<td>${subject.crsClassfCd}</td>
-								<td>${subject.subNo}</td>
-								<td>${subject.subNm}</td>
+								<td>${dmr.lecapYr}</td>
+								<td>${dmr.lecapSem}</td>
+								<td>${dmr.crsClassfCd}</td>
+								<td>${dmr.subNo}</td>
+								<td>${dmr.subNm}</td>
 								<td>
 									생략
-									<input type="hidden" class="grdDmrAns" value="${subject.grdDmrAns}">
-									<input type="hidden" class="grdDmrCn" value="${subject.grdDmrCn}">
+									<input type="hidden" class="grdDmrAns" value="${dmr.grdDmrAns}">
+									<input type="hidden" class="grdDmrCn" value="${dmr.grdDmrCn}">
 								</td>
 								<c:choose>
-									<c:when test="${subject.grdDmrSttsCd eq 'wait'}">
+									<c:when test="${dmr.grdDmrSttsCd eq 'wait'}">
 										 <td style="color:green; font-weight:bold;"><c:out value="대기"/></td>
 									</c:when>
-									<c:when test="${subject.grdDmrSttsCd eq 'rej'}">
+									<c:when test="${dmr.grdDmrSttsCd eq 'rej'}">
 										 <td style="color:red; font-weight:bold;"><c:out value="반려"/></td>
 									</c:when>
-									<c:when test="${subject.grdDmrSttsCd eq 'appv'}">
+									<c:when test="${dmr.grdDmrSttsCd eq 'appv'}">
 										 <td style="color:blue; font-weight:bold;"><c:out value="승인"/></td>
 									</c:when>
 								</c:choose>
 							</tr>
-						</c:if>
 					</c:forEach>
+					</c:if>
+					<c:if test="${empty map.dmr}">
+							<tr>
+								<td colspan="7">이의신청 내역이 없습니다.</td>
+								</tr>
+						</c:if>
 				</tbody>
         	</table>
 	            
@@ -426,6 +433,7 @@ $('#submitBtn').on("click",function(){
 			        	  swal("신청이 정상적으로 완료되었습니다.", {
 			    		      icon: "success"
 			    		    });
+			        	  location.reload();
 			        },
 			        error:function(xhr){
 			        	  swal("신청에실패하였습니다.", {

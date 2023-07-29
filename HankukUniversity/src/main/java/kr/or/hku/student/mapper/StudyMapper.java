@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import kr.or.hku.notice.vo.PaginationInfoVO;
+import kr.or.hku.student.vo.PaginationInfoVO;
 import kr.or.hku.student.vo.StdCalendarVO;
 import kr.or.hku.student.vo.StudyVO;
 @Mapper
@@ -66,17 +66,20 @@ public interface StudyMapper {
 	public void deleteUnreadMsg(StudyVO studyVo);
 	//해당 채팅방의 메세지 리스트
 	public List<StudyVO> messageList(int studyNo);
+	// 본인이 스터디장으로 있는 스터디 목록
+	public List<StudyVO> myStudy(String stdNo);
 	
 	
 	// 스터디 게시판	
+	
 	// 스터디 게시판 리스트
 	public List<StudyVO> studyBoardList();
-	// 총 게시글 개수
-	public int boardCount(PaginationInfoVO<StudyVO> pagingVO);
-	// 검색된 게시글
+	
+	public List<StudyVO> studyBoardList2(Map<String, String> map);
+	// 검색된 게시글 
 	public List<StudyVO> boardSelect(PaginationInfoVO<StudyVO> pagingVO);
-	// 본인이 스터디장으로 있는 스터디 목록
-	public List<StudyVO> myStudy(String stdNo);
+	// 총 게시글 개수
+	public int boardCount(PaginationInfoVO<StudyVO> pagingVO);	
 	// 스터디 게시판 글작성
 	public int insertStudyBoard(StudyVO studyVo);
 	// 스터디 게시글 상세보기
@@ -87,9 +90,10 @@ public interface StudyMapper {
 	public int modifyStudyBoard(StudyVO studyVo);
 	// 스터디 게시글 조회수
 	public int studyBoHit(int stboNo);
-	// 스터디 인원수
-	public int getMemberCount(int studyNo);
 	
+		
+	// 스터디 인원수
+	public int getMemberCount(int studyNo);	
 	// 캘린더 가져오기
 	public List<StdCalendarVO> getStdCalList(Map<String, String> map);
 	public int updateStdCalList(StdCalendarVO stdCalendarVO);

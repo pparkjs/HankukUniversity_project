@@ -202,7 +202,7 @@ input[name=color]:checked + label{
 										<table style="width: 100%; border: none;" class="table" id="tbl1">
 											<thead class="thead-dark">
 												<tr>
-													<th>이름 </th><th>학과 </th><th>학번 </th><th>신청일</th><th style="width: 300px;">comment</th><th> </th>
+													<th>이름 </th><th>학과 </th><th>학번 </th><th>신청일</th><th style="width: 300px;">자기소개</th><th> </th>
 												</tr>
 											</thead>
 											<tbody>
