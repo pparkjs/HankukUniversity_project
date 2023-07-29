@@ -125,7 +125,7 @@ input[name=color]:checked + label{
 								<a class="nav-link" data-bs-toggle="tab" href="#message1" id="calRender"><i class="ti-calendar me-2"></i> 일정</a>
 							</li>
 						</ul>
-						<a class="btn btn-primary" href="#" role="button" id="btn1" style="margin-left: 733px; margin-bottom: 10px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
+						<a class="btn btn-primary" href="https://4276-1-212-157-150.ngrok-free.app/study?room=${study.studyNo }" role="button" id="btn1" style="margin-left: 733px; margin-bottom: 10px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
 					
 						<form action="/hku/student/delStudy" method="post" id="delForm">
 							<input type="hidden" name="studyNo" value="${study.studyNo}" id="studyNo">
