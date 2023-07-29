@@ -61,11 +61,19 @@ public class StudyBoardController {
 	
 	@PreAuthorize("hasAnyRole('ROLE_STUDENT')")
 	@GetMapping("/studyBoardDetail")
-	public String studyBoardDetail(@RequestParam int stboNo, Model model) {
+	public String studyBoardDetail(@RequestParam int stboNo, Model model, HttpServletRequest request) {
 		
 		log.info("stboNo: "+ stboNo);
+		HttpSession session = request.getSession();
+	    StudentVO stdVo = (StudentVO) session.getAttribute("std");
+	    
+	    String stdNo = stdVo.getStdNo();
+	    log.info("myStdNo: "+ stdNo);
+	    
+		
 		StudyVO studyBoard = service.studyBoardDetail(stboNo);
 	    model.addAttribute("studyBoard", studyBoard);
+	    model.addAttribute("stdNo", stdNo);
 		return "portal/studyBoardDetail";
 	}
 	
