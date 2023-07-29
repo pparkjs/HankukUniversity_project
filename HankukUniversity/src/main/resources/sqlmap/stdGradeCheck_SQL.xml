@@ -35,34 +35,38 @@
  	<select id="getSubjectInfo" parameterType="String" resultType="courseRegistVO">
  		<![CDATA[
 	 		 SELECT
-				    B.SUB_NO,
-				    C.SUB_NM,
-				    C.SUB_CRD,
-				    D.COM_CD_NM AS CRS_CLASSF_CD,
-				    B.LECAP_NO,
-	                A.CRS_SCR,
-	                B.LECAP_YR,
-	                B.LECAP_SEM,
-	                E.DEPT_NM,
-	                C.SUB_NO,
-	                A.GRD_DMR_CN,
-	                A.GRD_DMR_ANS,
-	                A.GRD_DMR_STTS_CD,
-	                A.EVAL_YN_CD
-				FROM
-				    COURSE_REGIST A
-				    JOIN LECTURE_APLY B ON A.LECAP_NO = B.LECAP_NO
-				    JOIN SUBJECT C ON B.SUB_NO = C.SUB_NO
-				    JOIN COM_CODE D ON C.CRS_CLASSF_CD = D.COM_CD
-	                JOIN DEPARTMENT E ON C.DEPT_CD = E.DEPT_CD
-				WHERE
-				    STD_NO = #{stdno}
-				AND B.LECAP_YR LIKE TO_CHAR(SYSDATE, 'YYYY')
-    		    AND B.LECAP_SEM = CASE
-                WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) BETWEEN 2 AND 6 THEN 1
-                WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) BETWEEN 7 AND 12 THEN 2
-                ELSE 0
-            END
+		        B.SUB_NO,
+		        C.SUB_NM,
+		        C.SUB_CRD,
+		        D.COM_CD_NM AS CRS_CLASSF_CD,
+		        B.LECAP_NO,
+		        A.CRS_SCR,
+		       (select count(a.atdc_yn_cd)*10 from attendance a where B.lecap_no = a.lecap_no and a.std_no = '20220004' and atdc_yn_cd like 'Y') as attend_scr,
+		       (select round(sum(a.asmsb_scr) / 15, 2) from assignment_submit a, assignment q where a.std_no = '20220004' and q.asm_no = a.asm_no and B.lecap_no = q.lecap_no) as assign_scr,
+		       (select a.tt_scr from test_take a, test t where t.test_no = a.test_no and B.lecap_no = t.lecap_no and a.std_no = '20220004' and t.test_se like 'middle') as middle_scr,
+		       (select a.tt_scr from test_take a, test t where t.test_no = a.test_no and B.lecap_no = t.lecap_no and a.std_no = '20220004' and t.test_se like 'final') as final_scr,
+		        B.LECAP_YR,
+		        B.LECAP_SEM,
+		        E.DEPT_NM,
+		        C.SUB_NO,
+		        A.GRD_DMR_CN,
+		        A.GRD_DMR_ANS,
+		        A.GRD_DMR_STTS_CD,
+		        A.EVAL_YN_CD
+		FROM
+		    COURSE_REGIST A
+		    JOIN LECTURE_APLY B ON A.LECAP_NO = B.LECAP_NO
+		    JOIN SUBJECT C ON B.SUB_NO = C.SUB_NO
+		    JOIN COM_CODE D ON C.CRS_CLASSF_CD = D.COM_CD
+		       JOIN DEPARTMENT E ON C.DEPT_CD = E.DEPT_CD
+		WHERE
+		    STD_NO = #{stdNo}
+		AND B.LECAP_YR LIKE TO_CHAR(SYSDATE, 'YYYY')
+		  AND B.LECAP_SEM = CASE
+		    WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) BETWEEN 2 AND 6 THEN 1
+		    WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) BETWEEN 7 AND 12 THEN 2
+		    ELSE 0
+		END
 	       ]]> 			
  	</select>
  	
@@ -189,5 +193,39 @@
 						AND	B.LECAP_SEM = #{lecapSem}
 				    </if>
 				    and  A.EVAL_YN_CD IS NOT NULL
+ 	</select>
+ 	
+ 	
+ 	<select id="getDmrList" parameterType="String" resultType="courseRegistVO">
+ 		 	 SELECT
+		        B.SUB_NO,
+		        C.SUB_NM,
+		        C.SUB_CRD,
+		        D.COM_CD_NM AS CRS_CLASSF_CD,
+		        B.LECAP_NO,
+		        A.CRS_SCR,
+    	        B.LECAP_YR,
+		        B.LECAP_SEM,
+		        E.DEPT_NM,
+		        C.SUB_NO,
+		        A.GRD_DMR_CN,
+		        A.GRD_DMR_ANS,
+		        A.GRD_DMR_STTS_CD,
+		        A.EVAL_YN_CD
+		FROM
+		    COURSE_REGIST A
+		    JOIN LECTURE_APLY B ON A.LECAP_NO = B.LECAP_NO
+		    JOIN SUBJECT C ON B.SUB_NO = C.SUB_NO
+		    JOIN COM_CODE D ON C.CRS_CLASSF_CD = D.COM_CD
+		       JOIN DEPARTMENT E ON C.DEPT_CD = E.DEPT_CD
+		WHERE
+		    STD_NO =#{stdNo}
+		AND B.LECAP_YR LIKE TO_CHAR(SYSDATE, 'YYYY')
+		  AND B.LECAP_SEM = CASE
+		    WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) BETWEEN 2 AND 6 THEN 1
+		    WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) BETWEEN 7 AND 12 THEN 2
+		    ELSE 0
+		END
+		AND  A.GRD_DMR_CN is Not null
  	</select>
  </mapper>
