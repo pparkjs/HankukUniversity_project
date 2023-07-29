@@ -13,11 +13,11 @@
 		</ol>
 	</div>
 	<div class="container-fluid" style="padding-top: 0.875rem;">
-		<button type="button" class="btn btn-primary pro1"
-			data-bs-toggle="modal" data-bs-target=".bd-example-modal-md"
-			id="statusBtn"
-			style="margin-left: 1519px; margin-bottom: 10px; padding: 0;">나의
-			신청현황</button>
+<!-- 		<button type="button" class="btn btn-primary pro1" -->
+<!-- 			data-bs-toggle="modal" data-bs-target=".bd-example-modal-md" -->
+<!-- 			id="statusBtn" -->
+<!-- 			style="margin-left: 1519px; margin-bottom: 10px; padding: 0;">나의 -->
+<!-- 			신청현황</button> -->
 		<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 나의신청현황 버튼 모달 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 		<div class="modal fade bd-example-modal-md" tabindex="-1"
 			style="display: none;" aria-hidden="true" id="statusModal">
@@ -100,8 +100,8 @@
 					</div>
 					<div class="card-body ccc"
 						style="padding-top: 0; overflow: scroll;">
-						<table class="table" style="border-spacing: 1px;">
-							<thead>
+						<table class="table" style="border-spacing: 0px;">
+							<thead >
 								<tr>
 									<th>과목코드</th>
 									<th>학과</th>
@@ -177,7 +177,7 @@
 			<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 개 설 신 청 폼 섹 션  ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 			<div class="col-xl-6 col-lg-6 bbb"
 				style="width: 100%; margin-top: 10px; height: 350px;">
-				<div class="card">
+				<div class="card" style="height: 295px;">
 					<div class="card-header aaa">
 						<h4 class="card-title"
 							style="font-weight: bold; font-size: 1.2em; color: #800000;">개설신청
@@ -185,7 +185,11 @@
 						<div>
 							<!-- ■■■■■■■■■■■■■■■■■■■ 강의 계획서 첨부 버튼 ■■■■■■■■■■■■■■■■■■■ -->
 							<button type="button" class="btn btn-primary pro1"
-								style="padding: 0;" data-bs-toggle="modal"
+							data-bs-toggle="modal" data-bs-target=".bd-example-modal-md"
+							id="statusBtn"
+							style="padding: 0;  margin-right: 20px; background: #0070c0; border-color: #0070c0;">나의	신청현황</button>
+							<button type="button" class="btn btn-primary pro1"
+								style="padding: 0; margin-right: 15px; background: #ff4343;  background-color: #ff4343;" data-bs-toggle="modal"
 								data-bs-target=".bd-example-modal-lg" id="lecturePBtn">강의계획서</button>
 							<input type="button" value="신청" class="btn btn-primary pro2"
 								id="applyBtn" style="padding: 0;">
@@ -338,9 +342,7 @@
         var year = new Date().getFullYear();
         var month = new Date().getMonth();
         /*■■■■■■■■■■■■전역변수 설정 영역■■■■■■■■■■■ */
-            var planJson = {
-
-            }
+            var planJson = {}
             var lecapNo = ''; //과목신청시퀀스번호
             var flag = false; // 강의계획서 작성여부 플래그
             var approval = ''; //대면수업여부
@@ -491,19 +493,16 @@
 	                                      // swal("출력실패");
 	                                  }
 	                          })
-	                		   
 	                		  } 
 	                		});
                 	}else{
                 		swal("취소가 불가능한 상태입니다.", "교무처에 문의해주세요.", "warning");
                 	}
-
                 });
             });
             
            $('#statusBtn').on("click",function(){
         	   statusList();
-           	
            });
            
            $('#statusAll').on("click",function(){
@@ -672,10 +671,8 @@
             /* ■■■■■■ 단과대학 선택시 학과와 교과목 출력해주는 펑션  ■■■■■■ *///
             $(function () {
                 /* ■■■■■■ 단과대학선택을 바꿀때마다 발생event  ■■■■■■ *///
-                $('#selSub')
-                    .change(
-                        function () {
-                            // 					$('#selDept').chil dren().eq(0).("selected");
+                $('#selSub').change(function () {
+                            //$('#selDept').chil dren().eq(0).("selected");
                             $('#tbtb').html("");
                             var data = $(this).val();
                             // 					console.log(data);
@@ -886,7 +883,7 @@
                         startTime = $(this).parent().children().first().text();
                         start = parseInt(startTime.split('')[0])
 						end = parseInt($('#inTime').val());
-                         if(start + end > 9){
+                         if(start + end - 1 > 9){
                         	 swal("수업종료시간이 9교시를 초과합니다.");
                          }
                         $("#inStart").val(startTime);

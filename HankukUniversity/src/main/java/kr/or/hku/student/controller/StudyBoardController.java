@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,7 +48,7 @@ public class StudyBoardController {
 	    model.addAttribute("list", list);
 	    model.addAttribute("myStudy", myStudy);
 	    model.addAttribute("stdNm", stdNm);
-	    return "student/studyBoard";
+	    return "portal/studyBoard";
 	}
 	
 	@ResponseBody
@@ -58,12 +59,22 @@ public class StudyBoardController {
 		return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
 	}
 	
-	@ResponseBody
+	@PreAuthorize("hasAnyRole('ROLE_STUDENT')")
 	@GetMapping("/studyBoardDetail")
-	public ResponseEntity<StudyVO> studyBoardDetail(@RequestParam("stboNo") int stboNo) {
-		StudyVO stbo = service.studyBoardDetail(stboNo);
+	public String studyBoardDetail(@RequestParam int stboNo, Model model, HttpServletRequest request) {
+		
+		log.info("stboNo: "+ stboNo);
+		HttpSession session = request.getSession();
+	    StudentVO stdVo = (StudentVO) session.getAttribute("std");
 	    
-		return new ResponseEntity<StudyVO>(stbo,HttpStatus.OK);
+	    String stdNo = stdVo.getStdNo();
+	    log.info("myStdNo: "+ stdNo);
+	    
+		
+		StudyVO studyBoard = service.studyBoardDetail(stboNo);
+	    model.addAttribute("studyBoard", studyBoard);
+	    model.addAttribute("stdNo", stdNo);
+		return "portal/studyBoardDetail";
 	}
 	
 	@ResponseBody

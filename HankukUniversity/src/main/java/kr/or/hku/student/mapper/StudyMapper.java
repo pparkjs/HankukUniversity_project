@@ -25,8 +25,14 @@ public interface StudyMapper {
 	public List<StudyVO> scheduleList(StudyVO studyVo);
 	// 가입신청 상세보기
 	public StudyVO applDetail(StudyVO studyVo);
+	
+	public StudyVO getFilePath(String stdNo);
 	// 스터디 생성
-	public void addStudy(StudyVO studyVo);
+	public int addStudy(StudyVO studyVo);
+	// 스터디생성될때 스터디장 등록
+	public void insertStudyLeader(Map<String, Object> map);
+	//스터디장인지 확인
+	public String selectRole(StudyVO studyVo);
 	// 스터디 삭제
 	public int delStudy(int studyNo);
 	public int delStudyMem(int studyNo);
@@ -35,18 +41,34 @@ public interface StudyMapper {
 	// 스터디 가입신청 승인/반려
 	public int assignStudy(int joinNo);
 	public int rejStudy(int joinNo);
+	// 가입신청 당한놈 찾기
+	public StudyVO selectAssignMem(int joinNo);
+	// 가입신청 승인시 스터디멤버로 추가
+	public int insertStudyMem(StudyVO studyVo);
 	// 스터디 탈퇴
 	public int exitStudy(StudyVO studyVo);
 	// 안읽은 메세지 개수
 	public List<Integer> getUnreadCntByUser(StudyVO studyVo);
 	// 메세지 등록
 	public int insertMessage(StudyVO studyVo);
+	// 안읽은 멤버들 등록
+	public void insertUnreadMember(Map<String, Object> map);
+	//나를 제외한 해당 방에 속한 사람들 안읽은 메시지 개수 업데이트
+	public void updateMessageCountExceptMe(StudyVO studyVo);
+	public List<StudyVO> getStudyMember(int studyNo);
+	
+	public int addUnreadMem(StudyVO studyVo);
 	
 	public void readChatMessage(StudyVO studyVo);
 	//방안에서 해당 메시지 읽음 카운트 -1 처리
 	public void readMessageInRoom(StudyVO studyVo);
+	// 안읽은 메세지 테이블에서 읽은놈 삭제
+	public void deleteUnreadMsg(StudyVO studyVo);
 	//해당 채팅방의 메세지 리스트
 	public List<StudyVO> messageList(int studyNo);
+	
+	
+	// 스터디 게시판	
 	// 스터디 게시판 리스트
 	public List<StudyVO> studyBoardList();
 	// 총 게시글 개수

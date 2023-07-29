@@ -108,6 +108,7 @@ var userNo ;
 		        	console.log("Res"+res);
 		        	if(res == 'success'){
 		        		swal("비밀번호변경완료!","보안을 위해 다시 로그인해주세요.","success").then((value) => {
+		        			window.opener.location.href = '/main/logout';
 			        		window.close();
 			        	});
 		        	}

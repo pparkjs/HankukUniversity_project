@@ -39,7 +39,6 @@
 		JOIN department b ON a.dept_cd = b.dept_cd
         join com_code c on a.crs_classf_cd = c.com_cd
         where a.dept_cd = #{deptCd}
-	
 	</select>
 	
 	<select id="getcolSubject" parameterType="String" resultType="subjectVO">
@@ -88,6 +87,23 @@
       	 ELSE 0
 		END
 		]]>
+	</select>
+	
+	<!-- 나의 강의목록 가져오는 쿼리 -->
+	<select id="getMyLectire" parameterType="string" resultType="lectureAplyVO">
+		SELECT a.pro_no, a.lecap_yr, a.lecap_sem, b.flcts_nm, c.flct_nm, d.sub_nm
+		FROM lecture_aply a, facilities b, facility c, subject d
+		WHERE a.flcts_no = b.flcts_no 
+		AND c.flct_no = b.flct_no
+		AND d.sub_no = a.sub_no
+		AND a.pro_no = #{proNo}
+		AND a.aprv_stts_cd like 'appv'
+		AND a.lecap_yr like TO_CHAR(sysdate, 'YYYY')
+		AND a.lecap_sem = CASE
+		                        WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 2 AND 6 THEN 1
+		                        WHEN TO_NUMBER(TO_CHAR(sysdate, 'MM')) BETWEEN 7 AND 12 THEN 2
+		                        ELSE 0
+		                    END
 	</select>
 	
 	<insert id="applyLecture" parameterType="lectureAplyVO" useGeneratedKeys="true">

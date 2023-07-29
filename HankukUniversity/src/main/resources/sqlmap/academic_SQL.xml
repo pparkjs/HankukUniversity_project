@@ -209,7 +209,8 @@
 		      change_no AS change_no
 		    , ac.std_no AS std_no 
 		    , s.std_nm AS std_nm
-		    , c1.com_cd_nm AS change_type_cd
+		    , ac.change_type_cd as change_type_cd
+		    , c1.com_cd_nm AS change_type_nm
 		    , change_rsn AS change_rsn
 		    , change_aply_dt AS change_aply_dt
 		    , change_start_yr AS change_start_yr
@@ -234,6 +235,25 @@
  				, change_rjct_rsn = #{changeRjctRsn}
  			</if>
  		WHERE change_no = #{changeNo}
+ 	</update>
+ 	
+ 	<update id="academicStatus" parameterType="academicChangeVO">
+ 		/* kr.or.hku.admin.mapper.AcademicMapper.academicStatus */
+ 		UPDATE student
+ 		SET
+ 			<choose>
+ 				<when test="changeTypeCd != 'change06'">
+ 					std_stts_cd = ( SELECT 
+	                                com_cd
+	                            FROM com_code
+	                            WHERE com_cd_nm in (SELECT com_cd_nm FROM com_code WHERE com_cd = #{changeTypeCd})
+	                            AND com_cd_grp = 'STD_STTS')
+ 				</when>
+ 				<otherwise>
+ 					std_stts_cd = 'stts01'
+ 				</otherwise>
+ 			</choose>
+ 		WHERE std_no = #{stdNo} 
  	</update>
  	
  </mapper>

@@ -9,7 +9,6 @@ import lombok.ToString;
 @ToString
 public class LectureTimeTableVO {
 	
-	
     private String lecapNo    ;
     private String lecscDay   ;
     private String periodCd   ;

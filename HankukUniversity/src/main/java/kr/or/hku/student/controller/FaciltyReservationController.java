@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,6 +41,7 @@ public class FaciltyReservationController {
 	@Autowired
 	private FacilityService facilityService;
 	
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/locker-rsvt")
 	public String lockerRsvt(HttpSession session, Model model) {
 		StudentVO std = (StudentVO)session.getAttribute("std");
@@ -81,6 +83,7 @@ public class FaciltyReservationController {
 	}
 	
 	// 시설물예약으로 이동
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/facility-rsvt")
 	public String facilityRsvtForm(Model model){
 		return "student/facility-rsvt";
@@ -96,6 +99,7 @@ public class FaciltyReservationController {
 	}
 	
 	// 나의 예약현황으로 이동
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/my-reservation")
 	public String myReservation(HttpSession session, Model model) {
 		StudentVO std = (StudentVO)session.getAttribute("std");

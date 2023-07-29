@@ -30,137 +30,144 @@
 			<li class="breadcrumb-item active"><a href="javascript:void(0)">메인대쉬보드</a></li>
 		</ol>
     </div>
-<div class="container-fluid">
-		<div class="title-wrap" style="display:flex; justify-content: space-between; margin-bottom: 10px;">
-			<div class="card-header border-0 pb-0 ">
-				<h5 class="card-title">신청 내역</h5>
-			</div>
-			<ul class="nav nav-pills mb-4 light" style="margin-bottom:0px;">
-			</ul>
-			<div style="display: flex; justify-content: end; margin-right: 80px;">
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertModal">신청하기</button>
-			</div>
-		</div>
-		<div class="row">
-			<div class="card-body">
-			<input type="hidden" class="noText" value="${student.stdNo }" disabled>
-				<div class="record-wrap2" style="margin-top: 0px;">
-					<table class="table" style="margin-top: -22px;">
-						<thead class="thead-dark">
-							<tr>
-								<th style="width: 140px;">신청일</th>
-								<th style="width: 140px;">구분</th>
-								<th style="width: 400px">사유</th>
-								<th style="width: 140px;">승인상태</th>
-								<th style="width: 140px;">신청취소</th>
-							</tr>
-						</thead>
-						<tbody id="tBody">
-							
-						</tbody>
-					</table>
+	<div class="container-fluid">
+		<div class="card" id="card-title-1" style="margin-top: -12px;">							
+			
+			<div class="title-wrap" style="display:flex; justify-content: space-between; margin-bottom: 10px;">
+				<div class="card-header border-0 pb-0 ">
+					<h5 class="card-title">신청 내역</h5>
+				</div>
+				<ul class="nav nav-pills mb-4 light" style="margin-bottom:0px;">
+				</ul>
+				<div style="display: flex; justify-content: end; margin-right: 80px;">
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertModal" style="margin-top: 15px;">신청하기</button>
 				</div>
 			</div>
-		</div>
-		
-		<div class="modal fade" id="insertModal" tabindex="-1" aria-labelledby="deptLabel" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-center">
-			    <div class="modal-content">
-					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="deptLabel">학적변동 신청</h1>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			<div class="container-fluid" style="margin: 0px;">
+				<div class="card" id="card-title-1" style="margin-top: -12px;">
+					<div class="card-body" style="margin: 7px;">
+					<input type="hidden" class="noText" value="${student.stdNo }" disabled>
+						<div class="record-wrap2" style="margin-top: 0px;">
+							<table class="table" style="margin-top: -22px;">
+								<thead class="thead-dark" id="tHead">
+									<tr>
+										<th style="width: 140px;">신청일</th>
+										<th style="width: 140px;">구분</th>
+										<th style="width: 400px">사유</th>
+										<th style="width: 140px;">승인상태</th>
+										<th style="width: 140px;">신청취소</th>
+									</tr>
+								</thead>
+								<tbody id="tBody">
+									
+								</tbody>
+							</table>
+						</div>
 					</div>
-						<div class="modal-body">
-							<div class="row">
-								<div class="col-xl-12">
-									<form name="insertModalForm">
-										<div class="row">
-											<div class="col-xl-6">
-												<label class="form-label mt-3">신청자</label>
-												<input type="text" class="form-control" value="${student.stdNm }" readonly>
-											</div>
-											<div class="col-xl-6">
-												<label class="form-label mt-3">신청종류<span class="text-danger">*</span></label>
-												<div class="input-group">
-													<!-- <input type="text" class="form-control" name="colCd"> -->
-													<select class="default-select form-control" name="changeTypeCd">
-														<option value="">신청종류 선택</option>
-															<option value="change01">군휴학</option>
-													        <option value="change02">일반휴학</option>
-													        <option value="change04">자퇴</option>
-													        <option value="change06">복학</option>
-													</select>
-												</div>
-											</div>
-											<div class="col-xl-6">
-												<label class="form-label mt-3">시작년도<span class="text-danger">*</span></label>
-												<div class="input-group">
-													<select class="default-select form-control" name="changeStartYr">
-														<option value="">년도 선택</option>
-															<option value="2023">2023</option>
-													        <option value="2024">2024</option>
-													        <option value="2025">2025</option>
-													        <option value="2026">2026</option>
-													        <option value="2027">2027</option>
-													        <option value="2028">2028</option>
-													        <option value="2029">2029</option>
-													        <option value="2030">2030</option>
-													</select>
-												</div>
-											</div>
-											<div class="col-xl-6 mb-3">
-												<label class="form-label mt-3">시작학기<span class="text-danger">*</span></label>
-												<div class="input-group">
-													<select class="default-select form-control" name="changeStartSem">
-										               <option value="" >학기선택</option>
-										               <option value="1">1 학기</option>
-										               <option value="2">2 학기</option>
-										           </select>
-												</div>
-											</div>
-											<div class="col-xl-6">
-												<label class="form-label mt-3">끝년도<span class="text-danger">*</span></label>
-												<div class="input-group">
-													<select class="default-select form-control" name="changeEndYr">
-														<option value="">년도 선택</option>
-															<option value="2023">2023</option>
-													        <option value="2024">2024</option>
-													        <option value="2025">2025</option>
-													        <option value="2026">2026</option>
-													        <option value="2027">2027</option>
-													        <option value="2028">2028</option>
-													        <option value="2029">2029</option>
-													        <option value="2030">2030</option>
-													</select>
-												</div>
-											</div>
-											<div class="col-xl-6 mb-3">
-												<label class="form-label mt-3">끝학기<span class="text-danger">*</span></label>
-												<div class="input-group">
-													<select class="default-select form-control" name="changeEndSem">
-										               <option value="" >학기선택</option>
-										               <option value="1">1 학기</option>
-										               <option value="2">2 학기</option>
-										           </select>
-												</div>
-											</div>
-											<div class="col-xl-12 mb-3">
-												<label class="form-label">사유<span class="text-danger">*</span></label>
-												<textarea rows="3" class="form-control" name="changeRsn"></textarea>
-											</div>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">취소</button>
-							<button type="button" class="btn btn-primary" onclick="reqRecord()">신청</button>
-						</div>
-				  	</div>
 				</div>
-			</div>
-           </div>
+				
+				<div class="modal fade" id="insertModal" tabindex="-1" aria-labelledby="deptLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-center">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1 class="modal-title fs-5" id="deptLabel">학적변동 신청</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+								<div class="modal-body">
+									<div class="row">
+										<div class="col-xl-12">
+											<form name="insertModalForm">
+												<div class="row">
+													<div class="col-xl-6">
+														<label class="form-label mt-3">신청자</label>
+														<input type="text" class="form-control" value="${student.stdNm }" readonly>
+													</div>
+													<div class="col-xl-6">
+														<label class="form-label mt-3">신청종류<span class="text-danger">*</span></label>
+														<div class="input-group">
+															<!-- <input type="text" class="form-control" name="colCd"> -->
+															<select class="default-select form-control" name="changeTypeCd">
+																<option value="">신청종류 선택</option>
+																	<option value="change01">군휴학</option>
+																	<option value="change02">일반휴학</option>
+																	<option value="change04">자퇴</option>
+																	<option value="change06">복학</option>
+															</select>
+														</div>
+													</div>
+													<div class="col-xl-6">
+														<label class="form-label mt-3">시작년도<span class="text-danger">*</span></label>
+														<div class="input-group">
+															<select class="default-select form-control" name="changeStartYr">
+																<option value="">년도 선택</option>
+																	<option value="2023">2023</option>
+																	<option value="2024">2024</option>
+																	<option value="2025">2025</option>
+																	<option value="2026">2026</option>
+																	<option value="2027">2027</option>
+																	<option value="2028">2028</option>
+																	<option value="2029">2029</option>
+																	<option value="2030">2030</option>
+															</select>
+														</div>
+													</div>
+													<div class="col-xl-6 mb-3">
+														<label class="form-label mt-3">시작학기<span class="text-danger">*</span></label>
+														<div class="input-group">
+															<select class="default-select form-control" name="changeStartSem">
+															<option value="" >학기선택</option>
+															<option value="1">1 학기</option>
+															<option value="2">2 학기</option>
+														</select>
+														</div>
+													</div>
+													<div class="col-xl-6">
+														<label class="form-label mt-3">끝년도<span class="text-danger">*</span></label>
+														<div class="input-group">
+															<select class="default-select form-control" name="changeEndYr">
+																<option value="">년도 선택</option>
+																	<option value="2023">2023</option>
+																	<option value="2024">2024</option>
+																	<option value="2025">2025</option>
+																	<option value="2026">2026</option>
+																	<option value="2027">2027</option>
+																	<option value="2028">2028</option>
+																	<option value="2029">2029</option>
+																	<option value="2030">2030</option>
+															</select>
+														</div>
+													</div>
+													<div class="col-xl-6 mb-3">
+														<label class="form-label mt-3">끝학기<span class="text-danger">*</span></label>
+														<div class="input-group">
+															<select class="default-select form-control" name="changeEndSem">
+															<option value="" >학기선택</option>
+															<option value="1">1 학기</option>
+															<option value="2">2 학기</option>
+														</select>
+														</div>
+													</div>
+													<div class="col-xl-12 mb-3">
+														<label class="form-label">사유<span class="text-danger">*</span></label>
+														<textarea rows="3" class="form-control" name="changeRsn"></textarea>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">취소</button>
+									<button type="button" class="btn btn-primary" onclick="reqRecord()">신청</button>
+								</div>
+						  </div>
+					</div>
+				</div>
+			   </div>
+			<div class="card-body" style="padding-bottom: 0px;">
+					
+			</div>				
+		</div>
 	</div>
 </div>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
@@ -195,6 +202,7 @@ function recordList(){
 			"stdNo":"${student.stdNo}"
 	};
 	var body = $("#tBody");
+	var head = $("#tHead");
 	$.ajax({
 		type:"get",
 		data:stdNo,
@@ -204,17 +212,25 @@ function recordList(){
 			console.log("res: ",res);
 			
 			var data = '';
-			for(var i = 0; i < res.length; i++){
-				data += `<tr>
-							<td style="padding:12px;">\${res[i].changeAplyDt}</th>
-							<td style="padding:12px;">\${res[i].comCdNm1}</th>
-							<td style="padding:12px;">\${res[i].changeRsn}</td>
-							<td style="padding:12px;">\${res[i].comCdNm2}</td>
-							<td style="padding:12px;"><button type="button" id="btn" class="btn btn-primary btn-sm" value="\${res[i].changeNo}">취소</button></td>`
-				data +=	`</tr>`;
+			
+			if(res.length != 0){
+				for(var i = 0; i < res.length; i++){
+						data += `<tr>
+									<td style="padding:12px;">\${res[i].changeAplyDt}</th>
+									<td style="padding:12px;">\${res[i].comCdNm1}</th>
+									<td style="padding:12px;">\${res[i].changeRsn}</td>
+									<td style="padding:12px;">\${res[i].comCdNm2}</td>
+									<td style="padding:12px;"><button type="button" id="btn" class="btn btn-primary btn-sm" value="\${res[i].changeNo}">취소</button></td>`
+						data +=	`</tr>`;					
+					}	
+			}else{
+				data +=	`<tr>
+					<td colspan="5" style="text-align: center">신청 내역이 없습니다.</td>
+				</tr>`;		
 			}
 			body.html(data);
 		}
+			
 	})
 }
 

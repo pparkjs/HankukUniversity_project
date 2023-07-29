@@ -55,13 +55,13 @@
 					<table class="table" style="margin-top: -22px;">
 						<thead class="thead-dark">
 							<tr>
-								<th style="width:200px;">과목코드</th>
-								<th style="width:550px;">교과목명</th>
-								<th style="width:200px;">이수구분</th>
-								<th style="width:80px;">학년</th>
-								<th style="width:80px;">학점</th>
-								<th style="width:80px;">시수</th>
-								<th style="width:300px;">학과</th>
+								<th style="width:260px;">과목코드</th>
+								<th style="width:400px;">교과목명</th>
+								<th style="width:230px;">이수구분</th>
+								<th style="width:130px;">학년</th>
+								<th style="width:130px;">학점</th>
+								<th style="width:130px;">시수</th>
+								<th style="width:400px;">학과</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -127,14 +127,14 @@ function subList(moreData){
 			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 		},
 		success : function(res){
-			console.log(res)
-			
 			data = '';
-			$(".exp").text(`전체 과목 수 : \${res[0].totalCnt}개`)
+			if(res.length > 0){
+				$(".exp").text(`전체 과목 수 : \${res[0].totalCnt}개`)
+			}
 			for(var i = 0; i < res.length; i++){
 				data += `<tr>
 							<td id="\${res[i].subNo}">\${res[i].subNo}</th>
-							<td id="\${res[i].subNo}">\${res[i].subNm}</td>
+							<td id="\${res[i].subNo}" style="text-align:left">\${res[i].subNm}</td>
 							<td id="\${res[i].subNo}">\${res[i].crsClassfCd}</td>
 							<td id="\${res[i].subNo}">\${res[i].subGrade}</td>
 							<td id="\${res[i].subNo}">\${res[i].subCrd}</td>
@@ -161,15 +161,9 @@ function tableScrollHandler(){
 	var clientHeight = tableWrap.clientHeight; // 브라우저에서 사용자가 눈으로 보는 크기
 	var scrollHeight = tableWrap.scrollHeight; // 문서 전체 크기(높이)
 	 
-	
-	console.log("scrollTop=" + scrollTop)
-	console.log("clientHeight=" + clientHeight)
-	console.log("scrollHeight=" + scrollHeight)
-	
 	var tunningVal = 50
 	if((scrollTop + clientHeight) >= (scrollHeight - tunningVal)) {
         more++;
-        console.log(more);
         subList(more);
     }
 }

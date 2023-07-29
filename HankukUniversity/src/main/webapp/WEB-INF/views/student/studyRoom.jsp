@@ -125,16 +125,22 @@ input[name=color]:checked + label{
 								<a class="nav-link" data-bs-toggle="tab" href="#message1" id="calRender"><i class="ti-calendar me-2"></i> 일정</a>
 							</li>
 						</ul>
-						<a class="btn btn-primary" href="#" role="button" id="btn1" style="margin-left: 733px; margin-bottom: 10px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
+						<a class="btn btn-primary" href="https://4276-1-212-157-150.ngrok-free.app/study?room=${study.studyNo }" role="button" id="btn1" style="margin-left: 733px; margin-bottom: 10px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
 					
 						<form action="/hku/student/delStudy" method="post" id="delForm">
 							<input type="hidden" name="studyNo" value="${study.studyNo}" id="studyNo">
 						</form>
 						<!-- 스터디장은 스터디 해체 버튼 보여주기 -->
-						<button type="button" class="btn btn-primary" style="margin-left: 14px; margin-bottom: 10px; background: #ff4343; border-color: #ff4343;" id="delBtn">
-							<i class="fa-solid fa-circle-exclamation me-2"></i>스터디 삭제
-						</button>									
-						<button type="button" class="btn btn-primary" style="margin-left: 14px; margin-bottom: 10px;" id="exitBtn"> 스터디 탈퇴</button>																							
+						<c:choose>
+						    <c:when test="${role eq 'Y'}">
+						        <button type="button" class="btn btn-primary" style="margin-left: 14px; margin-bottom: 10px; background: #ff4343; border-color: #ff4343;" id="delBtn">
+						            <i class="fa-solid fa-circle-exclamation me-2"></i>스터디 삭제
+						        </button>
+						    </c:when>
+						    <c:otherwise>
+						        <button type="button" class="btn btn-primary" style="margin-left: 14px; margin-bottom: 10px;" id="exitBtn"> 스터디 탈퇴</button>
+						    </c:otherwise>
+						</c:choose>									
 					</div>
 					<div class="card" id="card-title-1">
 						<div class="card-body" style="padding-top: 0px;">
@@ -195,40 +201,50 @@ input[name=color]:checked + label{
 											</thead>
 											<tbody>
 											<c:choose>
-												<c:when test="${empty appli}">
-													<tr><td colspan="5">가입신청 인원이 존재하지 않습니다.</td></tr>
-												</c:when>
-												<c:otherwise>
-													<c:forEach items="${appli }" var="appli">
-														<tr id="link">
-															<td>${appli.stdNm } </td>
-															<td>${appli.deptNm } </td>
-															<td id="td">${appli.stdNo }</td>
-															<td>${appli.joinRegdate }</td>
-															<td style="width: 300px;">${appli.joinReason }</td>
-															<td>
-																<div class="action-button">
-																	<form action="" method="post" id="applFrm" name="applFrm">
-																		<input type="hidden" name="joinNo" id="joinNo" value="${appli.joinNo}">																	
-																		<a href="#" class="applBtn1" onclick="assignStudy()">
-																			<span class="badge badge-success badge-sm">승인<span class="ms-1 fa fa-check"></span></span>																	
-																		</a>
-																		<a href="#" class="applBtn2" onclick="rejStudy()">
-																			<span class="badge badge-secondary  badge-sm">반려<span class="ms-1 fa fa-ban"></span></span>
-																		</a>
-																	</form>
-																</div>
-															</td>
-														</tr>
-													</c:forEach>
-												</c:otherwise>
-											</c:choose>											
-											</tbody>
-										</table>
-									</div>
+											    <c:when test="${role eq 'Y'}">
+													<c:choose>
+														<c:when test="${empty appli}">
+															<tr><td colspan="5">가입신청 인원이 존재하지 않습니다.</td></tr>
+														</c:when>
+														<c:otherwise>
+															<c:forEach items="${appli }" var="appli">
+																<tr id="link">
+																	<td>${appli.stdNm } </td>
+																	<td>${appli.deptNm } </td>
+																	<td id="td">${appli.stdNo }</td>
+																	<td>${appli.joinRegdate }</td>
+																	<td style="width: 300px;">${appli.joinReason }</td>
+																	<td>
+																		<div class="action-button">
+																			<form action="" method="post" id="applFrm" name="applFrm">
+																				<input type="hidden" name="joinNo" id="joinNo" value="${appli.joinNo}">																	
+																				<a href="#" class="applBtn1" onclick="assignStudy()">
+																					<span class="badge badge-success badge-sm">승인<span class="ms-1 fa fa-check"></span></span>																	
+																				</a>
+																				<a href="#" class="applBtn2" onclick="rejStudy()">
+																					<span class="badge badge-secondary  badge-sm">반려<span class="ms-1 fa fa-ban"></span></span>
+																				</a>
+																			</form>
+																		</div>
+																	</td>
+																</tr>
+															</c:forEach>
+														</c:otherwise>
+													</c:choose>											
+									    </c:when>
+									    <c:otherwise>
+									       <tr>
+									       <td colspan="5"> 스터디장만 확인 가능합니다.</td>
+									       </tr>
+									    </c:otherwise>
+									</c:choose>	
+											</div>
+										</tbody>
+									</table>
 									</div>
 								</div>
 							</div>
+						</div>
 
 							<div class="tab-pane fade" id="contact1">
 								<div style="display: flex;">
@@ -446,14 +462,9 @@ $(function(){
 	var tbody = $('#tbody');
 	  
 	delBtn.on('click', function(){
-	    Swal.fire({
+		swal.fire({
 	      title: '정말로 삭제하시겠습니까??',
-	      text: '삭제된 스터디룸은 되돌릴 수 없습니다!',
-	      icon: 'warning',
-	      showCancelButton: true,
-	      confirmButtonColor: '#3085d6',
-	      cancelButtonColor: '#d33',
-	      confirmButtonText: '삭제합니다!'
+	      icon: 'warning'
 	    }).then((result) => {
 	      if (result.isConfirmed) {
 	        delForm.submit();
@@ -463,13 +474,9 @@ $(function(){
 
 	exitBtn.on('click', function(){
 		delForm.attr("action", "/hku/student/exitStudy");
-		Swal.fire({
+		swal.fire({
 	      title: '정말로 탈퇴하시겠습니까??',
-	      icon: 'warning',
-	      showCancelButton: true,
-	      confirmButtonColor: '#3085d6',
-	      cancelButtonColor: '#d33',
-	      confirmButtonText: '탈퇴합니다!'
+	      icon: 'warning'
 	    }).then((result) => {
 	      if (result.isConfirmed) {
 	        delForm.submit();
@@ -492,7 +499,9 @@ function assignStudy() {
         type: "POST",
         data: joinNo,
         url: "/hku/student/assignStudy",
-        beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
+        beforeSend : function(xhr){
+           xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
         dataType: "json",
         success: function(res) {
             console.log("res: ", res);
@@ -675,6 +684,9 @@ $(document).on('DOMContentLoaded', function() {
 			type : 'put',
 			url : '/hku/student/study-calendar',
 			contentType : "application/json;charset=utf-8",
+			beforeSend : function(xhr){
+               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 			data : JSON.stringify(changeData),
 			dataType : 'text',
 			success: function(res){
@@ -711,6 +723,9 @@ $(document).on('DOMContentLoaded', function() {
 				url : '/hku/student/study-calendar',
 				contentType : "application/json;charset=utf-8",
 				data : JSON.stringify(sendData),
+				beforeSend : function(xhr){
+	               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	            },
 				dataType : 'text',
 				success: function(res){
 					console.log(res);
@@ -749,6 +764,9 @@ $(document).on('DOMContentLoaded', function() {
 				contentType : "application/json;charset=utf-8",
 				data : JSON.stringify(sendData),
 				dataType : 'text',
+				beforeSend : function(xhr){
+	               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	            },
 				success: function(res){
 					if(res == "1"){
 						swal({
@@ -827,6 +845,9 @@ $(document).on('DOMContentLoaded', function() {
 					contentType: "application/json;charset=utf-8", // 필수 
 					data: JSON.stringify(deleteData),
 					dataType: "text",
+					beforeSend : function(xhr){
+		               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		            },
 					success: function(res){
 						if (res == "1") {
 							swal({

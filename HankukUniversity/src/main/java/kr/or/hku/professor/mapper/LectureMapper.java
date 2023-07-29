@@ -42,4 +42,6 @@ public interface LectureMapper {
 
 	public void returnLecture(String lecapNo);
 
+	public List<LectureAplyVO> getMyLectire(String username);
+
 }

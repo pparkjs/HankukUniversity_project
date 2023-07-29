@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<link rel="stylesheet" href="/css/table.css">
 <style>
 .table-wrap {
 	overflow: scroll;
-	height: 494px;
+	height: 525px;
 	margin-top: 13px;
 }
 .thead-dark{
@@ -18,8 +19,12 @@
 	color: whitesmoke;
 	background-color: #800000;
 }
+.form-label {
+    color: maroon;
+    font-weight: bold;
+    font-size: 1.2em;
+}
 </style>
-<link rel="stylesheet" href="/css/table.css">
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
@@ -75,63 +80,51 @@
 							<div class="card-body">
 								<form class="row" id="sclsFrm">
 									<div class="col-lg-6 mb-2">
-										<div class="mb-2">
-											<!-- 장학코드 -->
-											<table border="1" style="width: 100%;">
-												<tr>
-													<td class="table-info-td">장학코드</td>
-													<td><input type="text" name="sclsCd" class="form-control" id="dsclsCd" value="" disabled></td>
-												</tr>
-											</table>
+										<div class="row">
+											<div class="col-lg-12">
+												<!-- 장학코드 -->
+												<label class="text-label form-label">장학코드</label>
+												<input type="text" name="sclsCd" class="form-control" id="dsclsCd" value="" disabled>
+											</div>
 										</div>
 									</div>
 									<div class="col-lg-6 mb-2">
-										<div class="mb-2">
+										<div class="row">
 											<!-- 장학명 -->
-											<table border="1" style="width: 100%;">
-												<td class="table-info-td">장학명</td>
-												<td><input type="text" name="sclsNm" class="form-control" id="dsclsNm" value="" disabled></td>
-											</table>
+											<div class="col-lg-12">
+												<label class="text-label form-label">장학명</label>
+												<input type="text" name="sclsNm" class="form-control" id="dsclsNm" value="" disabled>
+											</div>
 										</div>
 									</div>
 									<div class="col-lg-12 mb-2">
-										<div class="mb-2">
-											<table border="1" style="width: 100%;">
-												<tr>
-													<td class="table-info-td">장학금</td>
-													<td><input type="text" name="sclsAmt" class="form-control" id="dsclsAmt" value="" disabled></td>
-												</tr>
-											</table>
+										<div class="row">
+											<div class="col-lg-12">
+												<label class="text-label form-label">장학금</label>
+												<input type="text" name="sclsAmt" class="form-control" id="dsclsAmt" value="" disabled>
+											</div>
 										</div>
 									</div>
 									<div class="col-lg-12 mb-2">
-										<div class="mb-2">
+										<div class="row">
 											<!-- 신청가능일 신청 마감일 -->
-											<table border="1" style="width: 100%;">
-												<tr>
-													<td class="table-info-td"></td>
-													<td class="table-info-td">신청 가능일</td>
-													<td class="table-info-td">신청 마감일</td>
-												</tr>
-												<tr>
-													<td class="table-info-td">날짜</td>
-													<td><input type="date" name="sclsAplyBgngDt" disabled class="form-control" id="dsclsAplyBgngDt"></td>
-													<td><input type="date" name="sclsAplyEndDt" disabled class="form-control" id="dsclsAplyEndDt"></td>
-												</tr>
-											</table>
+											<div class="col-lg-6">
+												<label class="text-label form-label">신청 시작일</label>
+												<input type="date" name="sclsAplyBgngDt" disabled class="form-control" id="dsclsAplyBgngDt">
+											</div>
+											<div class="col-lg-6">
+												<label class="text-label form-label">신청 마감일</label>
+												<input type="date" name="sclsAplyEndDt" disabled class="form-control" id="dsclsAplyEndDt">
+											</div>
 										</div>
 									</div>
 									<div class="col-lg-12 mb-2">
-										<div class="mb-2">
+										<div class="row">
 											<!-- 장학 조건 -->
-											<table border="1" style="width: 100%;">
-												<tr>
-													<td class="table-info-td">장학조건</td>
-													<td>
-														<textarea style="width: 100%; height: auto;" disabled name="sclsTerms" id="dsclsTerms" cols="30" rows="10"></textarea>
-													</td>
-												</tr>
-											</table>
+											<div class="col-lg-12">
+												<label class="text-label form-label">장학 조건</label>
+												<textarea class="form-control" style="width: 100%; height: auto;" disabled name="sclsTerms" id="dsclsTerms" cols="30" rows="10"></textarea>
+											</div>
 										</div>
 									</div>
 								</form>
@@ -190,11 +183,10 @@ $(function(){
 		if(isEmpty){
 			return false;
 		}
-		let amt = $('#addSclsFrm').find('#dsclsAmt').val();
+		let amt = $('#addSclsFrm').find('#dsclsAmt').val().replaceAll(',', '');
 		if (isNaN(amt) || parseInt(amt) > 3500001) {
 			swal({
-				title : "장학금을 숫자로만 입력해주세요.",
-				text : "350만원 이하로만 입력해주세요.",
+				title : "350만원 이하로만 입력해주세요.",
 				icon : "error"
 			});
 			return false;
@@ -221,7 +213,9 @@ $(function(){
 						title : "장학이 추가되었습니다.",
 						icon : "success"
 					});
-					location.reload();
+					setTimeout(() => {
+						location.reload();
+					}, 1000);
 				}
 			}
 		});
@@ -270,7 +264,9 @@ $(function(){
 									title : "해당 장학 정보가 삭제 되었습니다.",
 									icon : "success"
 								});
-								location.reload();
+								setTimeout(() => {
+									location.reload();
+								}, 1000);
 							}
 						}
 					});
@@ -318,11 +314,10 @@ $(function(){
 				return false;
 			}
 
-			let amt = $('#sclsFrm').find('#dsclsAmt').val();
+			let amt = $('#sclsFrm').find('#dsclsAmt').val().replaceAll(',', '');
 			if (isNaN(amt) || parseInt(amt) > 3500001) {
 				swal({
-					title : "장학금을 숫자로만 입력해주세요.",
-					text : "350만원 이하로만 입력해주세요.",
+					title : "350만원 이하로만 입력해주세요.",
 					icon : "error"
 				});
 				return false;
@@ -350,12 +345,39 @@ $(function(){
 							title : "장학정보가 변경 되었습니다.",
 							icon : "success"
 						});
-						location.reload();
+						setTimeout(() => {
+							location.reload();
+						}, 1000);
 					}
 				}
 			});
 		}
 	});
+	
+	$('#dsclsAmt').on('keyup', function(e){
+		var input = this;
+		let value = e.target.value;
+	  	value = Number(value.replaceAll(',', ''));
+	  	if(isNaN(value)) {
+	    	input.value = 0;
+	  	}else {
+	    	const formatValue = value.toLocaleString('ko-KR');
+	    	input.value = formatValue;
+	  	}
+	});
+	
+	$('#addModal').on('keyup', '#dsclsAmt', function(e){
+		var input = this;
+		let value = e.target.value;
+	  	value = Number(value.replaceAll(',', ''));
+	  	if(isNaN(value)) {
+	    	input.value = 0;
+	  	}else {
+	    	const formatValue = value.toLocaleString('ko-KR');
+	    	input.value = formatValue;
+	  	}
+	});
+	
 });
 </script>
 <div class="modal fade bd-example-modal-lg" tabindex="-1" style="display: none;" aria-hidden="true" id="addModal">
@@ -369,53 +391,28 @@ $(function(){
 			<div class="modal-body">
 				<form class="row" id="addSclsFrm">
 					<div class="col-lg-6 mb-2">
-						<div class="mb-2">
-							<!-- 장학명 -->
-							<table border="1" style="width: 100%;">
-								<td class="table-info-td">장학명</td>
-								<td><input type="text" name="sclsNm" class="form-control" id="dsclsNm" value=""></td>
-							</table>
+						<label class="text-label form-label">장학명</label>
+						<input type="text" name="sclsNm" class="form-control" id="dsclsNm" value="">
+					</div>
+					<div class="col-lg-12 mb-2">
+						<label class="text-label form-label">장학금</label>
+						<input type="text" name="sclsAmt" class="form-control" id="dsclsAmt">
+					</div>
+					<div class="col-lg-12 mb-2">
+						<div class="row">
+							<div class="col-lg-6">
+								<label class="text-label form-label">신청 시작일</label>
+								<input type="date" name="sclsAplyBgngDt" class="form-control" id="dsclsAplyBgngDt">
+							</div>
+							<div class="col-lg-6">
+								<label class="text-label form-label">신청 마감일</label>
+								<input type="date" name="sclsAplyEndDt" class="form-control" id="dsclsAplyEndDt">
+							</div>
 						</div>
 					</div>
 					<div class="col-lg-12 mb-2">
-						<div class="mb-2">
-							<table border="1" style="width: 100%;">
-								<tr>
-									<td class="table-info-td">장학금</td>
-									<td><input type="text" name="sclsAmt" class="form-control" id="dsclsAmt"></td>
-								</tr>
-							</table>
-						</div>
-					</div>
-					<div class="col-lg-12 mb-2">
-						<div class="mb-2">
-							<!-- 신청가능일 신청 마감일 -->
-							<table border="1" style="width: 100%;">
-								<tr>
-									<td class="table-info-td"></td>
-									<td class="table-info-td">신청 가능일</td>
-									<td class="table-info-td">신청 마감일</td>
-								</tr>
-								<tr>
-									<td class="table-info-td">날짜</td>
-									<td><input type="date" name="sclsAplyBgngDt" class="form-control" id="dsclsAplyBgngDt"></td>
-									<td><input type="date" name="sclsAplyEndDt" class="form-control" id="dsclsAplyEndDt"></td>
-								</tr>
-							</table>
-						</div>
-					</div>
-					<div class="col-lg-12 mb-2">
-						<div class="mb-2">
-							<!-- 장학 조건 -->
-							<table border="1" style="width: 100%;">
-								<tr>
-									<td class="table-info-td">장학조건</td>
-									<td>
-										<textarea style="width: 100%; height: auto;" name="sclsTerms" id="dsclsTerms" cols="30" rows="10"></textarea>
-									</td>
-								</tr>
-							</table>
-						</div>
+						<label class="text-label form-label">장학조건</label>
+						<textarea class="form-control" style="width: 100%; height: auto;" name="sclsTerms" id="dsclsTerms" cols="30" rows="10"></textarea>
 					</div>
 				</form>
 			</div>

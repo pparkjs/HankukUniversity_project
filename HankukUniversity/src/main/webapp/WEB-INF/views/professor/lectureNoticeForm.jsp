@@ -6,7 +6,7 @@
 	<div class="container-fluid">
 		<!-- row -->
 		<div class="row">
-			<form id="insertFrm" method="post" action="/hku/professor/insertNotice?${_csrf.parameterName}=${_csrf.token" enctype="multipart/form-data" class="col-xl-12 col-xxl-12">
+			<form id="insertFrm" method="post" action="/hku/professor/insertNotice?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data" class="col-xl-12 col-xxl-12">
 				<c:if test="${not empty notice }">
 					<input type="hidden" value="${notice.lecntNo}" name="lecntNo">
 				</c:if>
@@ -82,18 +82,17 @@
 	</div>
 </div>
 <script>
-// $(function(){
-// 	CKEDITOR.replace("noticeCn",{
-// 		footnotesPrefix : "a"
-// 	});
-// }
+CKEDITOR.replace("lecntCn",{
+    footnotesPrefix : "a",
+    height : 400
+//     filebrowserUploadUrl : '/imageUpload.do?${_csrf.parameterName }=${_csrf.token}'
+ });
 
 $('.regBtn').click(function(){
 	var insertFrm = $('#insertFrm');
 	var lecntTtl = $('#lecntTtl').val();
 	console.log(lecntTtl);
-	var lecntCn = $('#lecntCn').val();
-	
+	let lecntCn = CKEDITOR.instances.lecntCn.getData();
 	if(lecntTtl == '' || lecntTtl == null){
 		 swal("확인요청!", "제목이 입력되지않았습니다.", "warning");
 		 lecntTtl.focus();

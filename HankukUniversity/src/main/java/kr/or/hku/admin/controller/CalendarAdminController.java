@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,6 +33,7 @@ public class CalendarAdminController {
 	@Autowired
 	private CalendarService calendarService;
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/calendar")
 	public String adminCalendar(Model model) {
 		List<CommonVO> commonData = commonService.getAllCommonData();
@@ -43,6 +45,7 @@ public class CalendarAdminController {
 		model.addAttribute("curCalendarList", curCalendarList);
 		return "admin/calendar";
 	}
+	
 	
 	@ResponseBody
 	@GetMapping("/calendar-list")

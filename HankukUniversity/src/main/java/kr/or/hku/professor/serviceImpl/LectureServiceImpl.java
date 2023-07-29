@@ -100,4 +100,8 @@ public class LectureServiceImpl implements ILectureService {
 	public void returnLecture(String lecapNo) {
 		lectureMapper.returnLecture(lecapNo);
 	}
+	@Override
+	public List<LectureAplyVO> getMyLectire(String username) {
+		return lectureMapper.getMyLectire(username);
+	}
 }

@@ -2,14 +2,19 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" href="/css/table.css">
-<div class="content-body">
-	<div class="page-titles">
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-			<li class="breadcrumb-item active"><a href="javascript:void(0)">스터디 게시판</a></li>
-		</ol>
-    </div>
-	<div class="container-fluid">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<style>
+.row{
+    margin-right: calc(-36.5 * var(--bs-gutter-x));
+}
+#mainDiv{
+    width: 995px;
+    margin-left: -40px;
+    margin-top: 15px;
+}
+</style>
+	<div class="container-fluid" id="mainDiv">
 		<div class="card" id="card-title-1">
 			<div class="card-body">
 				<div class="basic-form">
@@ -35,8 +40,8 @@
 				</div>
 			</div>
 			<div class="card-body">
-				<div class="table-responsive">
-					<div class="row" id="boardList" style="width: 98%;">
+				<div class="table-responsive" style="height: 800px;">
+					<div class="row" id="boardList" style="width: 100%; margin: 10px; margin-right: -10px;">
 										
 					</div>
 				</div>
@@ -150,7 +155,7 @@ function boardList() {
             var data = '';
             for (var i = 0; i < res.length; i++) {
                 data += `
-                        <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="col-xl-3 col-lg-4 col-sm-6" style="margin: -12px; margin-left:3px; margin-top:3px; width:235px;">
 						<div class="card" style="background-color: #adb17d1c;">
 							<div class="card-body">
 								<div class="card-use-box">
@@ -159,7 +164,7 @@ function boardList() {
 										<p>\${res[i].studyName}</p>
 									</div>
 									<ul class="card__info">
-										<li><span></span> <span class="card__info__stats">\${res[i].stboRegdate}</span>
+										<li><span></span> <span class="card__info__stats" style="font-size: 13px;">\${res[i].stboRegdate}</span>
 										</li>
 									</ul>
 									<ul class="post-pos">
@@ -187,6 +192,7 @@ function boardList() {
 
 function boardDetail(element) {
     var tdId = $(element).attr("id");
+    var sessStdNo = ${sessionScope.std.stdNo};
     var stboNo = {
         "stboNo": tdId
     };
@@ -201,12 +207,25 @@ function boardDetail(element) {
         beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
         success: function(res) {
             console.log("res: ", res);
+            console.log("res.stdNo: ", res.stdNo);
+            console.log("sessStdNo", sessStdNo);
 
             $("#stboNo2").val(res.stboNo);
             $("#stboWriter2").val(res.stboWriter);
             $("#stboTitle2").val(res.stboTitle);
             $("#stboContent2").val(res.stboContent);
             $("#studyNo3").val(res.studyNo);
+            
+            let btnData = "";
+            if(res.stdNo == sessStdNo){
+            	btnData = `<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
+		    				<button type="button" class="btn btn-primary" onclick="delBoard()" id="btn3">삭제</button>
+		    				<button type="button" class="btn btn-primary" onclick="modifyStudyBoard()" id="btn2">수정</button>`;
+            }else{
+            	btnData = `<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
+		    				<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#basicModal">가입신청</button>`;
+            }
+            $("#btnDiv").html(btnData);
 		    boardList();
         }
     });
@@ -328,7 +347,7 @@ function closeModal() {
 					</div>
 				</div>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer" id="btnDiv">
 				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
 				<button type="button" class="btn btn-primary" onclick="modifyStudyBoard()" id="btn2">수정</button>
 				<button type="button" class="btn btn-primary" onclick="delBoard()" id="btn3">삭제</button>
@@ -368,6 +387,7 @@ function closeModal() {
         </div>
     </div>
 </div>
+
 <script>
 function delBoard() {
     var dModal = $("#detailModal");

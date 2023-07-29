@@ -55,7 +55,7 @@
 					, dept_cd
 					, depnt_ttl
 					, depnt_wrtr_nm
-					, depnt_regdate
+					, to_char(depnt_regdate, 'yyyy-mm-dd') as depnt_regdate
 					, depnt_read_cnt
 				FROM department_notice
 				WHERE 1=1

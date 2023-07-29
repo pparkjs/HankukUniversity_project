@@ -2,11 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<link rel="stylesheet" href="/css/table.css">
+<link rel="stylesheet" href="/css/pro-jh.css">
 <style>
 .table-wrap {
     overflow: scroll;
-    height: 600px;
-    margin-top: 13px;
+    height: 307px;
+    margin-top: -12px;
 }
 .thead-dark{
 	position: sticky;
@@ -22,9 +25,24 @@
 .form-label{
 	color: #800000;
 }
+.custom-tab-1 .nav-link {
+    font-weight: 800;
+    color: #444444;
+    font-size: 17px;
+}
+.badge-light{
+	background-color: #e6b9b8;
+}
+.badge-success{
+	background-color: #0070c0;
+}
+.table .thead-dark th {
+    padding: 7px;
+}
+.table tbody tr td {
+    padding: 0px;
+}
 </style>
-<link rel="stylesheet" href="/css/table.css">
-<link rel="stylesheet" href="/css/pro-jh.css">
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
@@ -32,30 +50,30 @@
 			<li class="breadcrumb-item active"><a href="javascript:void(0)">학적 관리</a></li>
 		</ol>
     </div>
-	<div class="container-fluid">
-		<div class="row mb-1">
-			<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-				<li class="nav-item" role="presentation">
-					<button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">전체</button>
+	<div class="container-fluid" style="margin-top: -16px;">
+		<div class="custom-tab-1" style="display: flex; align-items: center;">
+			<ul class="nav nav-tabs ">
+				<li class="nav-item">
+					<a class="nav-link active" data-bs-toggle="tab" href="#profile1" id="allBtn">전체</a>
 				</li>
-				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">대기</button>
+				<li class="nav-item">
+					<a class="nav-link" data-bs-toggle="tab" href="#contact1" id="stdBtn">대기</a>
 				</li>
-				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">승인</button>
+				<li class="nav-item">
+					<a class="nav-link" data-bs-toggle="tab" href="#message1" id="proBtn">승인</a>
 				</li>
-				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="pills-contact-tab2" data-bs-toggle="pill" data-bs-target="#pills-contact2" type="button" role="tab" aria-controls="pills-contact2" aria-selected="false">반려</button>
+				<li class="nav-item">
+					<a class="nav-link" data-bs-toggle="tab" href="#message2" id="empBtn">반려</a>
 				</li>
 			</ul>
 		</div>
-		<div class="card" id="card-title-1">
+		<div class="card" id="card-title-1" style="height: 355px;">
 			<div class="card-header border-0 pb-0 ">
 				<h5 class="card-title">휴학, 복학 신청관리</h5>
 			</div>
 			<div class="card-body">
-				<div class="tab-content" id="pills-tabContent">
-					<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+				<div class="tab-content">
+					<div class="tab-pane fade show active" id="profile1">
 						<div class="table-wrap">
 							<table class="table" style="margin-top: -22px;">
 								<thead class="thead-dark">
@@ -76,16 +94,33 @@
 											<td>
 												<c:out value="${academicAply.stdNo}"/>
 												<input type="hidden" id="changeTypeCd" value="${academicAply.changeTypeCd }">
+												<input type="hidden" id="changeTypeNm" value="${academicAply.changeTypeNm }">
 												<input type="hidden" id="changeRsn" value="${academicAply.changeRsn }">
 											</td>
 											<td>
 												<c:out value="${academicAply.stdNm}"/>
 											</td>
 											<td>
-												<c:out value="${academicAply.changeStartYr}"/>년도 <c:out value="${academicAply.changeStartSem}"/>학기
+												<c:set value="${academicAply.changeStartYr}년도" var="csty"/>
+												<c:set value="${academicAply.changeStartSem}학기" var="csts"/>
+												<c:if test="${empty academicAply.changeStartYr}">
+													<c:set value="-" var="csty"/>
+												</c:if>
+												<c:if test="${empty academicAply.changeStartSem}">
+													<c:set value="-" var="csts"/>
+												</c:if>
+												<c:out value="${csty}"/> <c:out value="${csts}"/>
 											</td>
 											<td>
-												<c:out value="${academicAply.changeEndYr}"/>년도 <c:out value="${academicAply.changeEndSem}"/>학기
+												<c:set value="${academicAply.changeEndYr}년도" var="cety"/>
+												<c:set value="${academicAply.changeEndSem}학기" var="cets"/>
+												<c:if test="${empty academicAply.changeEndYr}">
+													<c:set value="-" var="cety"/>
+												</c:if>
+												<c:if test="${empty academicAply.changeEndSem}">
+													<c:set value="-" var="cets"/>
+												</c:if>
+												<c:out value="${cety}"/> <c:out value="${cets}"/>
 											</td>
 											<td>
 												<fmt:parseDate var="aplyDt" value="${academicAply.changeAplyDt }" pattern="yyyy-MM-dd"/>
@@ -129,7 +164,7 @@
 							</table>
 						</div>
 					</div>
-					<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+					<div class="tab-pane fade" id="contact1">
 						<div class="table-wrap">
 							<table class="table" style="margin-top: -22px;">
 								<thead class="thead-dark">
@@ -151,16 +186,33 @@
 												<td>
 													<c:out value="${academicAply.stdNo}"/>
 													<input type="hidden" id="changeTypeCd" value="${academicAply.changeTypeCd }">
+													<input type="hidden" id="changeTypeNm" value="${academicAply.changeTypeNm }">
 													<input type="hidden" id="changeRsn" value="${academicAply.changeRsn }">
 												</td>
 												<td>
 													<c:out value="${academicAply.stdNm}"/>
 												</td>
 												<td>
-													<c:out value="${academicAply.changeStartYr}"/>년도 <c:out value="${academicAply.changeStartSem}"/>학기
+													<c:set value="${academicAply.changeStartYr}년도" var="csty"/>
+													<c:set value="${academicAply.changeStartSem}학기" var="csts"/>
+													<c:if test="${empty academicAply.changeStartYr}">
+														<c:set value="-" var="csty"/>
+													</c:if>
+													<c:if test="${empty academicAply.changeStartSem}">
+														<c:set value="-" var="csts"/>
+													</c:if>
+													<c:out value="${csty}"/> <c:out value="${csts}"/>
 												</td>
 												<td>
-													<c:out value="${academicAply.changeEndYr}"/>년도 <c:out value="${academicAply.changeEndSem}"/>학기
+													<c:set value="${academicAply.changeEndYr}년도" var="cety"/>
+													<c:set value="${academicAply.changeEndSem}학기" var="cets"/>
+													<c:if test="${empty academicAply.changeEndYr}">
+														<c:set value="-" var="cety"/>
+													</c:if>
+													<c:if test="${empty academicAply.changeEndSem}">
+														<c:set value="-" var="cets"/>
+													</c:if>
+													<c:out value="${cety}"/> <c:out value="${cets}"/>
 												</td>
 												<td>
 													<fmt:parseDate var="aplyDt" value="${academicAply.changeAplyDt }" pattern="yyyy-MM-dd"/>
@@ -191,7 +243,7 @@
 							</table>
 						</div>
 					</div>
-					<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+					<div class="tab-pane fade" id="message1">
 						<div class="table-wrap">
 							<table class="table" style="margin-top: -22px;">
 								<thead class="thead-dark">
@@ -213,16 +265,33 @@
 												<td>
 													<c:out value="${academicAply.stdNo}"/>
 													<input type="hidden" id="changeTypeCd" value="${academicAply.changeTypeCd }">
+													<input type="hidden" id="changeTypeNm" value="${academicAply.changeTypeNm }">
 													<input type="hidden" id="changeRsn" value="${academicAply.changeRsn }">
 												</td>
 												<td>
 													<c:out value="${academicAply.stdNm}"/>
 												</td>
 												<td>
-													<c:out value="${academicAply.changeStartYr}"/>년도 <c:out value="${academicAply.changeStartSem}"/>학기
+													<c:set value="${academicAply.changeStartYr}년도" var="csty"/>
+													<c:set value="${academicAply.changeStartSem}학기" var="csts"/>
+													<c:if test="${empty academicAply.changeStartYr}">
+														<c:set value="-" var="csty"/>
+													</c:if>
+													<c:if test="${empty academicAply.changeStartSem}">
+														<c:set value="-" var="csts"/>
+													</c:if>
+													<c:out value="${csty}"/> <c:out value="${csts}"/>
 												</td>
 												<td>
-													<c:out value="${academicAply.changeEndYr}"/>년도 <c:out value="${academicAply.changeEndSem}"/>학기
+													<c:set value="${academicAply.changeEndYr}년도" var="cety"/>
+													<c:set value="${academicAply.changeEndSem}학기" var="cets"/>
+													<c:if test="${empty academicAply.changeEndYr}">
+														<c:set value="-" var="cety"/>
+													</c:if>
+													<c:if test="${empty academicAply.changeEndSem}">
+														<c:set value="-" var="cets"/>
+													</c:if>
+													<c:out value="${cety}"/> <c:out value="${cets}"/>
 												</td>
 												<td>
 													<fmt:parseDate var="aplyDt" value="${academicAply.changeAplyDt }" pattern="yyyy-MM-dd"/>
@@ -253,7 +322,7 @@
 							</table>
 						</div>
 					</div>
-					<div class="tab-pane fade" id="pills-contact2" role="tabpanel" aria-labelledby="pills-contact-tab">
+					<div class="tab-pane fade" id="message2">
 						<div class="table-wrap">
 							<table class="table" style="margin-top: -22px;">
 								<thead class="thead-dark">
@@ -275,16 +344,33 @@
 												<td>
 													<c:out value="${academicAply.stdNo}"/>
 													<input type="hidden" id="changeTypeCd" value="${academicAply.changeTypeCd }">
+													<input type="hidden" id="changeTypeNm" value="${academicAply.changeTypeNm }">
 													<input type="hidden" id="changeRsn" value="${academicAply.changeRsn }">
 												</td>
 												<td>
 													<c:out value="${academicAply.stdNm}"/>
 												</td>
 												<td>
-													<c:out value="${academicAply.changeStartYr}"/>년도 <c:out value="${academicAply.changeStartSem}"/>학기
+													<c:set value="${academicAply.changeStartYr}년도" var="csty"/>
+													<c:set value="${academicAply.changeStartSem}학기" var="csts"/>
+													<c:if test="${empty academicAply.changeStartYr}">
+														<c:set value="-" var="csty"/>
+													</c:if>
+													<c:if test="${empty academicAply.changeStartSem}">
+														<c:set value="-" var="csts"/>
+													</c:if>
+													<c:out value="${csty}"/> <c:out value="${csts}"/>
 												</td>
 												<td>
-													<c:out value="${academicAply.changeEndYr}"/>년도 <c:out value="${academicAply.changeEndSem}"/>학기
+													<c:set value="${academicAply.changeEndYr}년도" var="cety"/>
+													<c:set value="${academicAply.changeEndSem}학기" var="cets"/>
+													<c:if test="${empty academicAply.changeEndYr}">
+														<c:set value="-" var="cety"/>
+													</c:if>
+													<c:if test="${empty academicAply.changeEndSem}">
+														<c:set value="-" var="cets"/>
+													</c:if>
+													<c:out value="${cety}"/> <c:out value="${cets}"/>
 												</td>
 												<td>
 													<fmt:parseDate var="aplyDt" value="${academicAply.changeAplyDt }" pattern="yyyy-MM-dd"/>
@@ -322,7 +408,7 @@
 			<div class="card-header border-0 pb-0 ">
 				<h5 class="card-title">신청 상세</h5>
 			</div>
-			<div class="card-body" style="height: 350px; overflow: visible">
+			<div class="card-body" style="height: 333px; overflow: visible">
 				<form class="row" method="post" action="/hku/admin/academic/fluctuation-list" id="detailFrm">
 					<div class="col-lg-6">
 						<div class="row detail">
@@ -330,7 +416,7 @@
 								<input type="hidden" id="changeNo" name="changeNo">
 								<input type="hidden" id="aprvSttsCd" name="aprvSttsCd">
 								<label class="text-label form-label">학번</label>
-								<input type="text" name="place" class="form-control" disabled id="stdNo">
+								<input type="text" name="stdNo" class="form-control" readonly id="stdNo">
 							</div>
 							<div class="col-lg-4 mb-1">
 								<label class="text-label form-label">성명</label>
@@ -338,7 +424,8 @@
 							</div>
 							<div class="col-lg-4 mb-1">
 								<label class="text-label form-label">학적변동</label>
-								<input type="text" name="place" class="form-control" disabled id="changeTypeCd">
+								<input type="text" name="place" class="form-control" disabled id="changeTypeNm">
+								<input type="hidden" name="changeTypeCd" class="form-control" id="changeTypeCd">
 							</div>
 							<div class="col-lg-4 mb-1">
 								<label class="text-label form-label">시작학기</label>
@@ -368,6 +455,7 @@
 							<button type="button" class="btn btn-primary" id="appvBtn">승인</button>
 						</div>
 					</div>
+					<sec:csrfInput/>
 				</form>
 			</div>
 		</div>
@@ -420,6 +508,7 @@ $(function(){
 		detail.find('#changeEnd').val(end);
 		detail.find('#changeAplyDt').val(clickTr.find('td').eq(4).text().trim());
 		detail.find('#changeTypeCd').val(clickTr.find('#changeTypeCd').val());
+		detail.find('#changeTypeNm').val(clickTr.find('#changeTypeNm').val());
 		detail.find('#changeRsn').val(clickTr.find('#changeRsn').val());
 		
 		$('#aprvSttsCd').val(clickTr.find('td').eq(5).text().trim())

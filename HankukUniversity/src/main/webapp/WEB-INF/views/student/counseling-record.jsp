@@ -120,7 +120,7 @@
 														<td><c:out value="${counse.attendModeCd }"></c:out></td>
 														<c:if test="${counse.attendModeCd == '비대면'}">
 															<td>
-																<button type="button" value="${counse.dscsnNo }" class="btn btn-primary" id="regBtn" style="background: #0070c0; border-color:#0070c0;">입장</button>
+																<a href="https://9bee-1-212-157-150.ngrok-free.app/rtc?dscsnNo=${counse.dscsnNo }" class="btn btn-primary" id="regBtn" style="background: #0070c0; border-color:#0070c0;">입장</a>
 															</td>
 														</c:if>
 														<c:if test="${counse.attendModeCd == '대면'}">

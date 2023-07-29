@@ -153,6 +153,7 @@ public class testPresController {
 	}
 	
 	// 응시과목 정보폼 이동
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/test-info")
 	public String testInfoForm() {
 		return "student/test-info";
@@ -178,6 +179,7 @@ public class testPresController {
 	}
 	
 	// 시험응시 시작
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/open-test")
 	public String openTest(TestVO test, Model model, HttpSession session, RedirectAttributes redi) {
 		TestVO testVO = testPresService.timeChange(test);
@@ -213,6 +215,7 @@ public class testPresController {
 	@PostMapping("/studentAnswerInsert")
 	public String studentAnswerInsert(@RequestBody List<StudentAnswerVO> studentAnsList, HttpSession session) {
 		
+		String result = "";
 		TestVO test = (TestVO)session.getAttribute("testVO");
 		int ttNo = (int)session.getAttribute("ttNo");
 		
@@ -227,6 +230,7 @@ public class testPresController {
 		for(int i = 0; i < answerList.size(); i++) {
 			
 			if(studentAnsList.size() <= i && studentAnsList.size() != answerList.size()) {
+				result = "over";
 				break;
 			}
 			
@@ -251,10 +255,14 @@ public class testPresController {
 		map.put("ttNo", ttNo);
 		int cnt = testPresService.scoreUpdate(map);
 		
-		if(cnt > 0) {
-			return "success";
+		if(result.equals("over")) {
+			return result;
 		}else {
-			return "failed";
+			if(cnt > 0) {
+				return "success";
+			}else {
+				return "failed";
+			}
 		}
 		
 	}
@@ -282,7 +290,9 @@ public class testPresController {
 			for(int i = 0; i < ansList.size(); i++) {
 				
 				if(stuAnsList.size() <= i && stuAnsList.size() != ansList.size()) {
+					log.info("틀린 개수 전 : " + wrongCnt);
 					wrongCnt = ansList.size() - answerCnt ; // 만약 제한시간에 풀지 못한 답안일경우
+					log.info("틀린 개수 후 : " + wrongCnt);
 					break;
 				}
 				

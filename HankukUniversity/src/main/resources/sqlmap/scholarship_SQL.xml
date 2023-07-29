@@ -81,7 +81,8 @@
  		/* kr.or.hku.admin.mapper.ScholarshipMapper.handleScholarshipApplicationOutcome */
  		UPDATE scholarship_aply
  		SET
- 			  aprv_stts_cd = #{aprvSttsCd}
+ 			    aprv_stts_cd = #{aprvSttsCd}
+ 			  , sclsap_pay_dt = sysdate
 		  	<if test="sclsapRjctRsn != null and sclsapRjctRsn != ''">
  				, SCLSAP_RJCT_RSN = #{sclsapRjctRsn}
  			</if>

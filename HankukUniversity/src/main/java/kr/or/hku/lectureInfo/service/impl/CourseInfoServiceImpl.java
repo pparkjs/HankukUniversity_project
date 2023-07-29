@@ -144,6 +144,11 @@ public class CourseInfoServiceImpl implements CourseInfoService {
 		return courseMapper.getPresentList(map);
 	}
 
+	@Override
+	public LectureAplyVO getLecAplyInfo(String lecapNo) {
+		return courseMapper.getLecAplyInfo(lecapNo);
+	}
+
 	
 
 }

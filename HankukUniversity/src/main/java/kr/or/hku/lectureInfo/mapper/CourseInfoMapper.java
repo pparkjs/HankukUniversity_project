@@ -29,4 +29,5 @@ public interface CourseInfoMapper {
 	public List<CourseRegistVO> getSubRecord(CourseRegistVO vo);
 	public List<LectureAplyVO> getPresentList(Map<String, Object> map);
 	public void attendInsert(Map<String, Object> map);
+	public LectureAplyVO getLecAplyInfo(String lecapNo);
 }

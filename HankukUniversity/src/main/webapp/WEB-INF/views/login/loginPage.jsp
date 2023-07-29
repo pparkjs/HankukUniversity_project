@@ -24,12 +24,12 @@
             z-index: -1;
         }
 
-        table {
-        	color : white;
+        #loginTable{
+           color : white;
             width: 1000px;
             position: absolute;
             top: 35%;
-            right: 20%;
+            right: 22%;
             opacity: 0;
             /* 초기에는 투명하게 설정 */
             transition: opacity 0.5s;
@@ -40,7 +40,7 @@
 
         }
 
-        table.show {
+        #loginTable.show {
             opacity: 1;
             /* 스크롤 80 이상일 때 투명도를 1로 설정하여 서서히 나타나도록 함 */
             animation: loginslide 2.5s ease-out forwards;
@@ -54,45 +54,47 @@
         }
 
         #trtwo {
-            height: 200px;
+            height: 280px;
             text-align: center;
             font-size : 1.5em;
         }
 
         #trtwo td:first-child {
-        	padding-left : 50px;
-            padding-right: 30px;
+           padding-left : 15px;
+            padding-right: 0px;
             text-align: left;
+            padding-bottom: 60px;
         }
         
          #trtwo span{
-         	display : inline-block;
-         	margin-top : 30px;
+            display : inline-block;
+            margin-top : 30px;
          }
-		input[type="text"],input[type="password"]{
-			border-radius: 10px;
-			border : 1px solid black;
-			background-color: rgba(0,0,0,0.5);
-			color : white;
-			margin-top : 10px;
-			padding : 5px;
-		}
+      input[type="text"],input[type="password"]{
+         border-radius: 10px;
+         border : 1px solid black;
+         background-color: rgba(0,0,0,0.5);
+         color : white;
+         margin-top : 10px;
+         padding : 5px;
+      }
 
         #trthree {
             text-align: center;
             font-size: 0.7em;
             color: white;
             height:70px;
+            padding-bottom: 18px;
         }
 
         #loginBtn {
-            height: 130px;
+            height: 155px;
             background-color: rgba(0,0,0,0.4);
             cursor: pointer;
             border-radius: 20px;
             color : white;
             font-weight: bold;
-            
+            width:90px;
         }
 
         #pwdDiv {
@@ -122,25 +124,6 @@
             text-shadow: 5px 5px 5px black;
         }
 
-/*         #loginForm { */
-/*             display: flex; */
-/*             align-items: center; */
-/*             background-color: rgba(0, 0, 0, 0.5); */
-/*             border-radius: 30px; */
-/*             width: 500px; */
-/*             height: 400px; */
-/*             color: white; */
-/*             text-align: center; */
-
-
-/*         } */
-
-/*         #loginForm.show { */
-/*             opacity: 1; */
-/*             /* 스크롤 80 이상일 때 투명도를 1로 설정하여 서서히 나타나도록 함 */ */
-/*             animation: loginslide 2s ease-out forwards; */
-/*             /* 서서히 나타나는 애니메이션 추가 */ */
-/*         } */
 
         .container label {
             display: inline-block;
@@ -178,11 +161,6 @@
             }
         }
 
-/*         	     span{  */
-/*                  display : inline-block;  */
-/*                   height : 30px;  */
-/*         		text-align:  right;  */
-/*                 }  */
         form {
             margin: 0px;
 
@@ -195,8 +173,33 @@
 
         }
         img{
-        	width : 500px;
-        	height: auto;
+        padding-top:20px;
+           width : 300px;
+           height: auto;
+        }
+        #newsTable{
+        color:white;
+         width:480px;
+         font-size:12px;
+         height :460px;
+         padding-bottom:20px;
+        }
+        #newsTable th{
+        	height:20px;
+        	font-size: 16px;
+        }
+        
+        #newsTable td:first-child{
+        	height:20px;
+        	text-align: left;
+        	padding-left: 10px;
+        }
+        #newsTable td:first-child:hover{
+        	cursor: pointer;
+        	text-decoration: underline;
+        }
+        .line{
+         border-bottom: 1px solid white;
         }
     </style>
 </head>
@@ -208,31 +211,58 @@
     <h1 id="mainName"> Hankuk <br>University</h1>
 <!--   <form action="/main/login" method="post"> -->
   <form action="/login" method="post">
-    <table >
+    <table id="loginTable">
         <tr id="trone">
-        	<td rowspan="3" style="width : 300px">
-        		<img src="/images/logo2.png">
-        	</td>
+           <td rowspan="3" style="width : 500px; padding-left: 10px;">
+              	<table id="newsTable" style="color:white; width:480px;">
+              	<tr class="line">
+              		<th colspan="2" style="text-align: left; font-size: 25px; height:30px;">HKU NEWS</th>
+              		</tr>
+              	<tr >
+              		<th class="line">제목</th><th class="line" style="width:90px;">등록일</th>
+              		</tr>
+              		<tr >
+              		<td class="line">한국대학교,소프트엔지니어 육성위해 나서</td><td class="line">23.07.12</td>
+              		</tr>
+              		<tr >
+              		<td class="line">한국대학교,에너지융합 대학원 사업선정..</td><td class="line">23.07.05</td>
+              		</tr>
+              		<tr >
+              		<td class="line">한국대학교,AI영상데이터 분석 기술개발</td><td class="line">23.06.22</td>
+              		</tr>
+              		<tr >
+              		<td class="line">한국대학교,'대학ICT연구센터 사업'차세대 컴퓨팅 분야선정</td><td class="line">23.06.15</td>
+              		</tr>
+              		<tr >
+              		<td class="line">한국대학교 컴퓨터공학과 교수진, 비전기반 딥러닝 모델 개발..</td><td class="line">23.06.07</td>
+              		</tr>
+              		<tr>
+              		<td class="line">'한국'에서 마음껏 배우고, 마음껏 꿈꾸다.</td><td class="line">23.06.02</td>
+              		</tr>
+              		<tr>
+              		<td class="line">한국대학교 컴퓨터공학부 학생들, 제28회 휴먼테크..</td><td class="line">23.06.02</td>
+              		</tr>
+              		<tr>
+              		<td class="line">한국대학교 메타버스 교육 플랫폼 구축...</td><td class="line">23.06.02</td>
+              		</tr>
+              	</table>
+           </td>
+           <td rowspan="3" style="border-left:1px solid white; width:0.5px; padding-top:5px; padding-bottom: 5px;">
             <td colspan="2">
-                <input type="radio" name="userClsCd" id="idtStd" value='student' checked="checked" />
-                <label for='idtStd'>&nbsp;학생&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                <input type="radio" name="userClsCd" id="idtPro" value='professor' />
-                <label for='idtPro'>&nbsp;교수&nbsp;&nbsp;&nbsp;&nbsp; </label>
-                <input type="radio" name="userClsCd" id="idtEmp" value='admin' />
-                <label for='idtEmp'>&nbsp;직원</label>
+               <img src="/images/흰색로고lg.png">
             </td>
         </tr>
         <tr id="trtwo">
             <td>
            
-                    <span>학번</span><br>
-                    <input type="text" id="username" name="username" style="width:100%; height:30px; " placeholder="학번/교번/사번을 입력해주세요"><br>
-                    <span>비밀번호</span><br>
-                    <input type="password" id="password" name="password" style="width:100%; height:30px; "><br>
+                    <span>ID</span><br>
+                    <input type="text" id="username" name="username" style="width:100%; height:30px; " placeholder="학번/교번/사번을 입력하세요"><br>
+                    <span>Password</span><br>
+                    <input type="password" id="password" name="password" style="width:100%; height:30px; " placeholder="비밀번호를 입력하세요"><br>
                
             </td>
             <td>
-                <input type="submit" id="loginBtn" value="포털입장하기">
+                <input type="submit" id="loginBtn" value="L&nbsp;O&nbsp;G&nbsp;I&nbsp;N">
             </td>
         </tr>
         <tr id="trthree">
@@ -258,7 +288,7 @@
 
     let mainName = document.querySelector("h1");
     let loginFrm = document.querySelector("table");
-    //     	let logo = document.querySelector("#logo");
+    //        let logo = document.querySelector("#logo");
     console.log("내용", mainName.value);
     window.addEventListener("scroll", function () {
         let value = window.scrollY;
@@ -267,23 +297,24 @@
         if (value > 80) {
             mainName.style.animation = 'downslide 1s ease-out forwards';
             loginFrm.classList.add("show");
-            //     			logo.classList.add("show");
+            //              logo.classList.add("show");
 
         } else {
 
             mainName.style.animation = 'upslide 1s ease-out';
             loginFrm.classList.remove("show");
-            //     			logo.classList.remove("show");
+            //              logo.classList.remove("show");
         }
     })
     
     function forget(){
-    	event.preventDefault();
-    	window.open("/main/forget","_blank","width=400,height=450,left=600,top=350");
+       event.preventDefault();
+       window.open("/main/forget","_blank","width=400,height=450,left=600,top=350");
     }
 
     if(location.href.includes("?error")){
         swal("올바르지않은 접근입니다.");
+        //127.0.0.1(localhost)
     }
 </script>
 

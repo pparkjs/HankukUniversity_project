@@ -14,6 +14,29 @@ import org.springframework.util.FileCopyUtils;
 
 public class UploadFileUtils {
 	
+	public static String uploadFileVer3(String uploadPath ,String originalName, byte[] fileData) {
+		System.out.println("resourcesPath : " + uploadPath);
+		UUID uuid = UUID.randomUUID(); // UUID 파일명 생성 준비
+		String createdFileName = uuid.toString() + "_" + originalName; //UUID + "_" + 원본파일명
+		
+		File file = new File(uploadPath);
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		
+		try {
+			File target = new File(uploadPath, createdFileName);
+			FileCopyUtils.copy(fileData, target); // 파일 복사
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String savedFileName = "/" + createdFileName;
+		
+		return savedFileName;
+	}
+	
 	public static String uploadFileVer2(String uploadPath ,String originalName, byte[] fileData) throws IOException {
 		System.out.println("resourcesPath : " + uploadPath);
 		UUID uuid = UUID.randomUUID(); // UUID 파일명 생성 준비

@@ -4,12 +4,23 @@
 <style>
 .table-wrap {
     overflow: scroll;
-    height: 410px;
+    height: 619px;
     margin-top: 13px;
 }
 .thead-dark{
 	position: sticky;
 	top: 0px;
+}
+.custom-tab-1 .nav-link {
+    font-weight: 800;
+    color: #444444;
+    font-size: 17px;
+}
+.badge-light{
+	background-color: #e6b9b8;
+}
+.badge-success{
+	background-color: #0070c0;
 }
 </style>
 <link rel="stylesheet" href="/css/table.css">
@@ -22,19 +33,19 @@
 		</ol>
     </div>
 	<div class="container-fluid">
-		<div class="row mb-1">
-			<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-				<li class="nav-item" role="presentation">
-					<button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">전체</button>
+		<div class="custom-tab-1" style="display: flex; align-items: center;">
+			<ul class="nav nav-tabs ">
+				<li class="nav-item">
+					<a class="nav-link active" data-bs-toggle="tab" href="#profile1" id="allBtn">전체</a>
 				</li>
-				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">대기</button>
+				<li class="nav-item">
+					<a class="nav-link" data-bs-toggle="tab" href="#contact1" id="stdBtn">대기</a>
 				</li>
-				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">승인</button>
+				<li class="nav-item">
+					<a class="nav-link" data-bs-toggle="tab" href="#message1" id="proBtn">승인</a>
 				</li>
-				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="pills-contact-tab2" data-bs-toggle="pill" data-bs-target="#pills-contact2" type="button" role="tab" aria-controls="pills-contact2" aria-selected="false">반려</button>
+				<li class="nav-item">
+					<a class="nav-link" data-bs-toggle="tab" href="#message2" id="empBtn">반려</a>
 				</li>
 			</ul>
 		</div>
@@ -42,9 +53,9 @@
 			<div class="card-header border-0 pb-0 ">
 				<h5 class="card-title">개설 신청 관리</h5>
 			</div>
-			<div class="card-body">
-				<div class="tab-content" id="pills-tabContent">
-					<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+			<div class="card-body" style="height: 656px">
+				<div class="tab-content">
+					<div class="tab-pane fade show active" id="profile1">
 						<div class="table-wrap">
 							<table class="table" style="margin-top: -22px;">
 								<thead class="thead-dark">
@@ -111,7 +122,7 @@
 							</table>
 						</div>
 					</div>
-					<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+					<div class="tab-pane fade" id="contact1">
 						<div class="table-wrap">
 							<table class="table" style="margin-top: -22px;">
 								<thead class="thead-dark">
@@ -170,7 +181,7 @@
 							</table>
 						</div>
 					</div>
-					<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+					<div class="tab-pane fade" id="message1">
 						<div class="table-wrap">
 							<table class="table" style="margin-top: -22px;">
 								<thead class="thead-dark">
@@ -229,7 +240,7 @@
 							</table>
 						</div>
 					</div>
-					<div class="tab-pane fade" id="pills-contact2" role="tabpanel" aria-labelledby="pills-contact-tab">
+					<div class="tab-pane fade" id="message2">
 						<div class="table-wrap">
 							<table class="table" style="margin-top: -22px;">
 								<thead class="thead-dark">

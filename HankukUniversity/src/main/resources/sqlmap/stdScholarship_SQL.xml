@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.student.mapper.StdScholarshipMapper">
+ 	<select id="selectScholarList" resultType="scholarshipVO">
+ 		SELECT 
+ 		     scls_cd
+			,scls_nm
+			,scls_amt
+			,scls_aply_bgng_dt
+			,scls_aply_end_dt
+			,scls_terms
+ 		FROM scholarship
+ 		WHERE 1=1
+ 		AND scls_del_yn = 'N'
+ 		ORDER BY scls_cd DESC
+ 	</select>
+ 	
+ 	<select id="selectSclsAplyList" parameterType="string" resultType="stdScholarshipVO">
+ 		SELECT 
+		    a.sclsap_no
+		    ,a.scls_cd
+		    ,b.scls_nm
+		    ,a.std_no
+		    ,a.sclsap_dt
+		    ,a.sclsap_rjct_rsn
+		    ,a.aprv_stts_cd
+		    ,a.atch_file_no
+		    ,a.sclsap_yr
+		    ,a.sclsap_sem
+		FROM 
+		    scholarship_aply a INNER JOIN scholarship b ON(a.scls_cd=b.scls_cd)
+		WHERE 
+		    a.std_no = #{stdNo}
+		ORDER BY 
+		   a.sclsap_dt DESC
+ 	</select>
+ 	
+ 	<insert id="sclsAplyInsert" parameterType="stdScholarshipVO">
+ 		INSERT INTO scholarship_aply(
+ 			sclsap_no
+			,scls_cd
+			,std_no
+			,sclsap_dt
+			,aprv_stts_cd
+			,atch_file_no
+			,sclsap_yr
+			,sclsap_sem
+ 		) VALUES(
+ 			seq_sclsAply.nextval
+ 			,#{sclsCd}
+ 			,#{stdNo}
+ 			,sysdate
+ 			,'wait'
+ 			,#{atchFileNo}
+ 			,'2023'
+ 			,1
+ 		)
+ 	</insert>
+ 	
+ 	<select id="sclsAplyDetail" parameterType="string" resultType="stdScholarshipVO">
+ 		SELECT
+		    a.sclsap_no
+		    ,a.scls_cd
+		    ,b.scls_nm
+		    ,b.scls_amt
+		    ,a.std_no
+		    ,a.sclsap_dt
+		    ,a.sclsap_rjct_rsn
+		    ,a.aprv_stts_cd
+		    ,c.com_cd_nm as aprv_stts_nm
+		    ,a.atch_file_no
+		    ,a.sclsap_yr
+		    ,a.sclsap_sem
+		FROM 
+		    scholarship_aply a INNER JOIN scholarship b ON(a.scls_cd=b.scls_cd)
+		    INNER JOIN com_code c ON(a.aprv_stts_cd=c.com_cd)
+		WHERE
+		    sclsap_no = #{sclsapNo}
+ 	</select>
+ 	
+ 	<select id="getAtchFileInfo" parameterType="map" resultType="attachFileVO">
+ 		SELECT 
+ 			atch_file_no
+			,atch_file_seq
+			,biz_type
+			,file_path
+			,file_orgnl_file_nm
+			,file_size
+			,file_cont_type
+			,file_down_cnt
+ 		FROM 
+ 			attach_file
+ 		WHERE
+ 			atch_file_no = #{atchFileNo} AND atch_file_seq = #{atchFileSeq}
+ 	</select>
+ 	
+ 	<delete id="deleteSclsAplyFile" parameterType="map">
+ 		DELETE FROM 
+ 			attach_file
+ 		WHERE atch_file_no = #{atchFileNo} AND atch_file_seq = #{atchFileSeq}
+ 	</delete>
+ 	
+ 	<select id="getAtchFileInfoList" parameterType="string" resultType="attachFileVO">
+ 		SELECT 
+ 			atch_file_no
+			,atch_file_seq
+			,biz_type
+			,file_path
+			,file_orgnl_file_nm
+			,file_size
+			,file_cont_type
+			,file_down_cnt
+ 		FROM 
+ 			attach_file
+ 		WHERE
+ 			atch_file_no = #{atchFileNo}
+ 	</select>
+ 	
+ 	<delete id="deleteSclsAplyFile2" parameterType="string">
+ 		DELETE FROM 
+ 			attach_file
+ 		WHERE atch_file_no = #{atchFileNo}
+ 	</delete>
+ 	
+ 	<delete id="deleteSclsAply" parameterType="string">
+ 		DELETE FROM 
+ 			scholarship_aply
+ 		WHERE sclsap_no = #{sclsapNo}
+ 	</delete>
+ </mapper>
