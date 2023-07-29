@@ -3,6 +3,8 @@ package kr.or.hku.classroom.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.http.ResponseEntity;
 
 import kr.or.hku.ServiceResult;
@@ -12,7 +14,7 @@ public interface AssignmentService {
 	
 	public AssignmentVO assignOne(String asmNo);
 	
-	public int regi(AssignmentVO assignVO);
+	public int regi(AssignmentVO assignVO, HttpSession session);
 	
 	public ServiceResult update(AssignmentVO vo);
 	
