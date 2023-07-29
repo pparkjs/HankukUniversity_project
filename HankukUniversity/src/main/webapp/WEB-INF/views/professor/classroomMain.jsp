@@ -269,14 +269,10 @@ $(function(){
 
 	var attendDmrBtn = document.querySelector("#attendDmrBtn");
 	attendDmrBtn.addEventListener("click", function(){
-		location.href=`/hku/professor/attendanceDmrManage/` + lecapNo;
+		location.href=`/hku/professor/attendanceDmrManage`;
 	})
 
 })
-
-
-
-
 
 
 
@@ -293,6 +289,9 @@ middleBtn.on("click", function(){
 
 	$.ajax({
 		url:"/hku/testCheck",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		type:"get",
 		data:obj,
 		success:function(res){

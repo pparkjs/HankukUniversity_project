@@ -8,7 +8,7 @@
 <style>
 .table-wrap {
     overflow: scroll;
-    height: 433px;
+    height: 307px;
     margin-top: -12px;
 }
 .thead-dark{
@@ -67,7 +67,7 @@
 				</li>
 			</ul>
 		</div>
-		<div class="card" id="card-title-1">
+		<div class="card" id="card-title-1" style="height: 355px;">
 			<div class="card-header border-0 pb-0 ">
 				<h5 class="card-title">휴학, 복학 신청관리</h5>
 			</div>

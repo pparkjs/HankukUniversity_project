@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.hku.admin.vo.ScholarshipVO;
 import kr.or.hku.common.vo.AttachFileVO;
+import kr.or.hku.student.vo.SclsApPayVO;
 import kr.or.hku.student.vo.StdScholarshipVO;
 
 @Mapper
@@ -29,5 +30,7 @@ public interface StdScholarshipMapper {
 	public int deleteSclsAplyFile2(String atchFileNo);
 
 	public int deleteSclsAply(String sclsapNo);
+
+	public List<SclsApPayVO> selectSclsapPayList(HashMap<String, String> sclsapPaySearchData);
 
 }

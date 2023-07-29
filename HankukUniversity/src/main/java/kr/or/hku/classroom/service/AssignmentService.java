@@ -30,14 +30,19 @@ public interface AssignmentService {
 	//과제 상세페이지 성적 부여 
 	public int giveScore(AssignmentVO assignmentVO);
 	
-	// 과제 등록 시 알람테이블에 정보 insert
-	//	public int insertAlarm();
-	
 	// 학생 과제 상세페이지 
 	public AssignmentVO stdAssignDetail(AssignmentVO vo);
 	
 	// 학생 과제 제출 
 	public int assignmentSubmit(AssignmentVO vo);
+	
+	// 과제 제출 현황
+	public List<AssignmentVO> submitList(AssignmentVO vo);
+
+	public ServiceResult deleteAssignment(int asmNo);
+	
+	// 과제 수정 
+	public ServiceResult modifyAssignment(AssignmentVO vo);
 
 
 

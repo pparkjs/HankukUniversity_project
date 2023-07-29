@@ -59,8 +59,8 @@
 			<div class="col-xl-9">
 				<div class="card profile-card card-bx m-b30">
 					<div class="card-header">
-						<div>
-							<h4 class="title">
+						<div style="width: 100px;">
+							<h4 class="card-title">
 								사용자 등록
 							</h4>
 						</div>
@@ -83,6 +83,9 @@
 									</form>
 								</div>
 								<div class="col-auto">
+									<button type="button" class="btn btn-primary" onclick="poiDownload()">양식 다운로드</button>
+								</div>
+								<div class="col-auto">
 									<button type="button" class="btn btn-primary" onclick="userInsert()">등록</button>
 								</div>
 							</div>
@@ -102,14 +105,53 @@
 		</div>
 	</div>
 	<div class="container-fluid dd">
+		<div class="custom-tab-1" style="display: flex; align-items: center;">
+			<ul class="nav nav-tabs" role="tablist">
+				<li class="nav-item" role="presentation">
+					<a class="nav-link active" data-bs-toggle="tab" href="#users" id="users-tab" aria-selected="true" role="tab">전체</a>
+				</li>
+				<li class="nav-item" role="presentation">
+					<a class="nav-link" data-bs-toggle="tab" href="#admins" id="admins-tab" aria-selected="false" role="tab" tabindex="-1">교직원</a>
+				</li>
+				<li class="nav-item" role="presentation">
+					<a class="nav-link" data-bs-toggle="tab" href="#professors" id="professors-tab" aria-selected="false" role="tab" tabindex="-1">교수</a>
+				</li>
+				<li class="nav-item" role="presentation">
+					<a class="nav-link" data-bs-toggle="tab" href="#students" id="students-tab" aria-selected="false" role="tab" tabindex="-1">학생</a>
+				</li>
+			</ul>
+		</div>
 		<div class="card" id="card-title-1">
-			<div class="card-header border-0 pb-0 ">
+			<div class="card-header border-0 pb-0 " id="userListDiv" style="display: flex; justify-content: space-between; padding: 0.5rem;">
 				<h5 class="card-title">전체 사용자</h5>
+				<div class="col-md-8" style="margin-bottom: 7px;">
+					<form class="row g-3 custom-form" action="" id="searchForm">
+						<div class="col-md-2">
+							<select class="default-select form-control form-control-sm" id="searchType">
+								<option value="userNo">학번/교번</option>
+								<option value="userNm">이름</option>
+								<option value="deptNm">학과명</option>
+							</select>
+						</div>
+						<div class="col-md-3">
+							<input type="text" class="form-control form-control-sm input-default" id="searchWord" value="${searchWord }" placeholder="검색어를 입력해주세요">
+						</div>
+						<div class="col-auto">
+							<button type="button" class="btn btn-sm btn-primary listBtn" id="userSearchBtn">검색</button>
+						</div>
+						<!-- <div class="col-auto">
+							<button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#deptModal" onclick="deptCdSet()">학과개설</button>
+						</div> -->
+						<div class="col-auto">
+							<button type="button" class="btn btn-sm btn-primary listBtn" onclick="deleteUser()">삭제</button>
+						</div>
+					</form>
+				</div>
 			</div>
+			<hr style="margin: 0rem;"/>
 			<div class="card-body">
 				<div class="row spaceBetween">
-					<div class="col-auto">
-						<!-- Nav tabs -->
+					<!-- <div class="col-auto">
 						<ul class="nav nav-tabs" id="myTab" role="tablist">
 							<li class="nav-item" role="presentation">
 								<button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-controls="users" aria-selected="true">전체</button>
@@ -124,30 +166,8 @@
 								<button class="nav-link" id="students-tab" data-bs-toggle="tab" data-bs-target="#students" type="button" role="tab" aria-controls="students" aria-selected="false">학생</button>
 							</li>
 						</ul>
-					</div>
-					<div class="col-md-8">
-						<form class="row g-3 custom-form" action="" id="searchForm">
-							<div class="col-md-2">
-								<select class="default-select form-control form-control-sm" id="searchType">
-									<option value="userNo">학번/교번</option>
-									<option value="userNm">이름</option>
-									<option value="deptNm">학과명</option>
-								</select>
-							</div>
-							<div class="col-md-3">
-								<input type="text" class="form-control form-control-sm input-default" id="searchWord" value="${searchWord }" placeholder="검색어를 입력해주세요">
-							</div>
-							<div class="col-auto">
-								<button type="button" class="btn btn-sm btn-primary listBtn" id="userSearchBtn">검색</button>
-							</div>
-							<!-- <div class="col-auto">
-								<button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#deptModal" onclick="deptCdSet()">학과개설</button>
-							</div> -->
-							<div class="col-auto">
-								<button type="button" class="btn btn-sm btn-primary listBtn" onclick="deleteUser()">삭제</button>
-							</div>
-						</form>
-					</div>
+					</div> -->
+					
 				</div>
 				<!-- <button type="button" onclick="tabChange()">탭변경</button> -->
 				<!-- Tab panes -->
@@ -795,6 +815,22 @@ $(function(){
 		}
 	})
 })
+
+function poiDownload(){
+	// console.log("11");
+	// $.ajax({
+	// 	type: "GET",
+	// 	url: "/hku/admin/poiDownload",
+	// 	//dataType: "bytes",
+	// 	success: function(){
+	// 		alert("양식다운로드 성공");
+	// 	},
+	// 	error: function(){
+
+	// 	}
+	// });
+	location.href = "/hku/admin/poiDownload";
+}
 
 function userModify(param){
 	var formdata = new FormData();

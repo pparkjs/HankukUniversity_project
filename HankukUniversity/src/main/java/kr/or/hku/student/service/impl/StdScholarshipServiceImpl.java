@@ -18,6 +18,7 @@ import kr.or.hku.common.mapper.CommonFileMapper;
 import kr.or.hku.common.vo.AttachFileVO;
 import kr.or.hku.student.mapper.StdScholarshipMapper;
 import kr.or.hku.student.service.StdScholarshipService;
+import kr.or.hku.student.vo.SclsApPayVO;
 import kr.or.hku.student.vo.StdScholarshipVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -178,5 +179,10 @@ public class StdScholarshipServiceImpl implements StdScholarshipService {
 		}
 		
 		return status;
+	}
+
+	@Override
+	public List<SclsApPayVO> selectSclsapPayList(HashMap<String, String> sclsapPaySearchData) {
+		return mapper.selectSclsapPayList(sclsapPaySearchData);
 	}
 }

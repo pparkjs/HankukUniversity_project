@@ -8,9 +8,9 @@
 	--bs-gutter-x: 10px;
 }
 .table-wrap {
-	overflow: scroll;
-	height: 440px;
-	margin-top: 13px;
+    overflow: scroll;
+    height: 402px;
+    margin-top: 13px;
 }
 .thead-dark{
 	position: sticky;
@@ -79,7 +79,7 @@
 								</li>
 							</ul>
 						</div>
-						<div class="card" id="card-title-1">
+						<div class="card" id="card-title-1" style="height: 467px;">
 							<div class="card-header border-0 pb-0 ">
 								<h5 class="card-title">사용자 목록</h5>
 								<select class="selectCustom" id="whatDept">
@@ -183,7 +183,7 @@
 			<div class="col-lg-4" style="height: 672px; margin-top: 29px">
 				<div class="row">
 					<div class="col-lg-12 mb-2">
-						<div class="card" id="card-title-1">
+						<div class="card" id="card-title-1" style="height: 467px;">
 							<div class="card-header border-0 pb-0 ">
 								<h5 class="card-title">메세지 보내기</h5>
 								<select class="selectCustom" id="whatMsg" style="width: 35%;">
@@ -199,11 +199,11 @@
 										<label class="text-label form-label" style="font-size: 1.5em; font-weight: bold;">수신자</label>
 										<textarea rows="3" cols="30" class="form-control" id="receiver" name="receiver" readonly></textarea>
 									</div>
-									<div class="col-lg-12" style="margin-top: -45px">
+									<div class="col-lg-12" style="margin-top: -138px;">
 										<label class="text-label form-label" style="font-size: 1.5em; font-weight: bold;">내용</label>
 										<textarea rows="10" cols="30" class="form-control" id="msg" name="msg"></textarea>
 									</div>
-									<div class="col-lg-12" style="text-align: right;">
+									<div class="col-lg-12" style="text-align: right; position: absolute; top: 414px; right: 23px;">
 										<button type="button" class="btn btn-danger light" id="cancelBtn">취소</button>
 										<button type="button" class="btn btn-primary" id="msgSendBtn">전송</button>
 									</div>
@@ -214,7 +214,7 @@
 				</div>
 			</div>
 			<div class="col-lg-12">
-				<div class="card" id="card-title-1" style=" margin-top: -146px">
+				<div class="card" id="card-title-1" style="margin-top: -196px; height: 284px;">
 					<div class="card-header border-0 pb-0 ">
 						<h5 class="card-title">발송내역</h5>
 						<input type="hidden" id="hsubclNo">

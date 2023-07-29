@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 
 <style>
 .form-control:disabled, .form-control[readonly] {
@@ -43,8 +44,7 @@
 					<div class="card-body">
 						<div class="form-validation">
 							<form class="needs-validation"
-								action="/hku/professor/regiAssignment" method="post"
-								id="regiForm" enctype="multipart/form-data">
+								action="/hku/professor/regiAssignment" method="post" enctype="multipart/form-data" id="regiForm" >
 								<input type="hidden" name="lecapNo" id="lecapNo"
 									value="${sessionScope.lecapNo }"/>
 								<c:if test="${status eq 'u' }">
@@ -146,6 +146,7 @@
 										</div>
 									</div>
 								</div>
+								<sec:csrfInput/>
 							</form>
 						</div>
 					</div>
@@ -192,6 +193,7 @@ regBtn.on("click", function(){
 		regiForm.attr("action", "/hku/professor/updateAssignment");
 	} 
 	regiForm.submit();
+	swal("", "과제가 등록되었습니다", "success")
 	
   })
 })

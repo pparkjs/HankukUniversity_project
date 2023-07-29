@@ -33,7 +33,7 @@ public class AssignmentVO {
 	private String stdNm		;	// 학생이름
 	private String deptNm		;	// 학과이름
 	
-//	과제를 제출 했을때 받는 필드
+	//	과제를 제출 했을때 받는 필드
 	private MultipartFile assignFile;
 	
 	// 파일 정보들
