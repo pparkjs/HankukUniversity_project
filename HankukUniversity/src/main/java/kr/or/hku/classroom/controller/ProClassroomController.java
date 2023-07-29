@@ -149,7 +149,7 @@ public class ProClassroomController {
 	// 과제 등록
 	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@PostMapping(value = "/regiAssignment")
-	public String regi(AssignmentVO vo) {
+	public String regi(AssignmentVO vo, HttpSession session) {
 		// -1 이면 파일없음   -1 이 아니면 파일이 있음
 		log.info("과제 등록 vo : " + vo.toString());
 		MultipartFile file = vo.getAssignFile();
@@ -165,7 +165,7 @@ public class ProClassroomController {
 		// 파일이 없으면 위 if문 실행 안되서 -1 들어감 파일 있으면 attachFileNo = fileService.getAttachFileNo(); 여기서 생긴 번호가 들어감
 		vo.setAtchFileNo(attachFileNo);
 		
-		int regiCnt = assignService.regi(vo);
+		int regiCnt = assignService.regi(vo, session);
 		
 		log.info("인서트한 vo" + vo.toString());
 		
