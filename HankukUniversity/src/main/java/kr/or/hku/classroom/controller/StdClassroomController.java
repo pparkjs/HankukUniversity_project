@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.service.AssignmentService;
@@ -53,6 +53,7 @@ public class StdClassroomController {
 	private LectureNoticeService noticeService;
 	
 	// 클래스룸 리스트 
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/stdClassroomList")
 	public String classroomList(Model model, HttpServletRequest request) {
 		log.info("classroomList 실행 !");
@@ -64,6 +65,7 @@ public class StdClassroomController {
 	}
 	
 	// 클래스룸 메인
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/stdClassroomMain/{lecapNo}")
 	public String classroomMain(@PathVariable String lecapNo
 								, HttpSession session
@@ -92,6 +94,7 @@ public class StdClassroomController {
 	}
 	
 	// 과제 목록
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("stdAssignmentList/{lecapNo}")
 	public String stdAssignmentList(@PathVariable String lecapNo,
 									HttpSession session,
@@ -108,6 +111,7 @@ public class StdClassroomController {
 	}
 	
 	// 과제 상세보기 
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/assignmentDetail/{asmNo}")
 	public String stdAssignDetail(@PathVariable String asmNo,
 										Model model,
@@ -128,25 +132,6 @@ public class StdClassroomController {
 		log.info("proNm!!!" + assignVo.toString());
 		return "student/assignmentDetail";
 	}
-	
-//	// 학생 과제 제출 - form submit 방식
-//	@PostMapping("/assignmentDetail/{asmNo}")
-//	public String assignmentSubmit(HttpSession session, AssignmentVO vo, Model model) {
-//		int attachFileNo = fileService.getAttachFileNo();
-//		System.out.println("여기야여기"+vo.toString());
-//		StudentVO std = (StudentVO) session.getAttribute("std");   
-//		vo.setStdNo(std.getStdNo());
-//		fileService.insertFile(vo.getAssignFile(), attachFileNo, 0);
-//		vo.setAtchFileNo(attachFileNo);
-//		
-//		int res = assignService.assignmentSubmit(vo);
-//		if(res > 0) {
-//			return "redirect:/hku/student/stdAssignmentList/" + vo.getLecapNo();
-//		} else {
-//			model.addAttribute("assignVo", vo);
-//			return "student/assignmentDetail" ;
-//		}
-//	}
 	
 	// 학생 과제 제출
 	@ResponseBody
@@ -172,7 +157,6 @@ public class StdClassroomController {
 	@PostMapping("/modifyAssignment")
 	public AssignmentVO modifyAssignment(AssignmentVO vo) {
 		ServiceResult result = assignService.modifyAssignment(vo);
-		
 		return vo;
 	}
 	
@@ -187,7 +171,8 @@ public class StdClassroomController {
 	}
 	
 	
-	// 출석 이의신청 
+	// 출석 이의신청
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/attendanceDmr")
 	public String attendanceDmr(Model model, HttpSession session) {
 		// 이의신청 리스트 가져오기
