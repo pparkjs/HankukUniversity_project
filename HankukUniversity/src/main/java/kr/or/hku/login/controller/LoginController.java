@@ -72,7 +72,7 @@ public class LoginController {
 		UsersVO userVo = loginService.loginUser(users.getUsername());
 		
 		System.out.println("첫번째로긴"+userVo.getUserFirstLogin());
-		if(userVo.getUserFirstLogin().equals("0") && !firstFlag) {
+		if(userVo.getUserFirstLogin().equals("0")) {
 			model.addAttribute("first", "0");
 			firstFlag = true;
 		}
