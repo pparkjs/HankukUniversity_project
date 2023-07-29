@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.hku.classroom.mapper.GradeManageMapper">
+ 	
+ 	<select id="getStdList" resultType="gradeVO" parameterType="string">
+ 	/*kr.or.hku.classroom.mapper.GradeManageMapper.getStdList */
+ 			SELECT
+			  s.std_no
+			 , s.std_nm
+			 , d.dept_nm
+          ,(select count(a.atdc_yn_cd)*10 from attendance a where s.std_no = a.std_no and atdc_yn_cd like 'Y' and a.lecap_no = #{lecapNo}) as attend_scr
+          ,(select round(sum(asmsb_scr) / 15, 2) from assignment_submit a, assignment b where s.std_no = a.std_no and b.asm_no = a.asm_no and b.lecap_no = #{lecapNo}) as assign_scr
+          ,(select a.tt_scr from test_take a, test b where s.std_no = a.std_no and b.test_no = a.test_no and b.lecap_no = #{lecapNo} and b.test_se like 'middle') as middle_scr
+		  ,(select a.tt_scr from test_take a, test b where s.std_no = a.std_no and b.test_no = a.test_no and b.lecap_no = #{lecapNo} and b.test_se like 'final') as final_scr
+          ,(select nvl2(crs_scr, 'Y' ,'N') from course_regist a where s.std_no = a.std_no and a.lecap_no = #{lecapNo}) as confirm_yn
+        FROM
+		  course_regist cr
+		  JOIN student s ON cr.STD_NO = s.STD_NO
+		  JOIN lecture_aply l ON cr.LECAP_NO = l.LECAP_NO
+		  JOIN department d ON d.dept_cd = s.dept_cd
+		WHERE  l.lecap_no = #{lecapNo}         
+ 	</select>
+ 	
+ 	<update id="confirmScore" parameterType="gradeVO">
+ 	/*kr.or.hku.classroom.mapper.GradeManageMapper.confirmScore */	
+ 		UPDATE course_regist
+ 		SET 
+ 			crs_scr = #{crsScr},
+ 			crs_earned_crd = #{crsEarnedCrd}
+ 		WHERE lecap_no = #{lecapNo}
+ 		AND std_no = #{stdNo}
+ 	</update>
+ 	
+ 
+ 
+ </mapper>

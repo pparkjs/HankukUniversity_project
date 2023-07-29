@@ -88,6 +88,7 @@
      <typeAlias type="kr.or.hku.classroom.vo.ClassroomVO" alias="classroomVO"/>
      <typeAlias type="kr.or.hku.classroom.vo.AttendanceVO" alias="attendanceVO"/>
      <typeAlias type="kr.or.hku.classroom.vo.AssignmentVO" alias="assignmentVO"/>
+     <typeAlias type="kr.or.hku.classroom.vo.GradeVO" alias="gradeVO"/>
      
     <!-- 성일칸 밑에서만 작성 -->
     

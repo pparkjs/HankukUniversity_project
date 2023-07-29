@@ -85,6 +85,7 @@
 
 	<!-- 교수 클래스룸 메인 / 과제관리 리스트-->
 	<select id="getAssignList" parameterType="String" resultType="assignmentVO">
+	/*kr.or.hku.classroom.mapper.ClassroomMapper.getAssignList */
 		SELECT
 		    a.asm_no,
 		    a.lecap_no,
@@ -109,6 +110,7 @@
 	
 	
 	<select id="getSubNm" parameterType="string" resultType="string">
+	/*kr.or.hku.classroom.mapper.ClassroomMapper.getSubNm */
 		select 
 			s.sub_nm
 		from subject s

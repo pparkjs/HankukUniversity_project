@@ -1,9 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<link rel="stylesheet" href="/css/table.css">
 <style>
+.active-projects thead tr th {
+    font-size: 16px;
+    background-color: #800000;
+}
+span{
+	font-size: 14px;
+}
+.active-projects.manage-client tbody tr td:last-child {
+    text-align: center;
+}
 </style>
 
+<input type="hidden" id="lecapNo" value="${lecapNo}" name="lecapNo">
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
@@ -15,209 +27,73 @@
 		<div class="row">
 			<div class="col-xl-12">
 				<div class="card">
-					<div class="card-body p-0">
+						<div class="card-header aaa">
+							<h4 class="card-title"
+								style="font-weight: bold; font-size: 1.2em; color: #800000;">
+								성적관리</h4>
+						</div>
+					<div class="card-body">
 						<div class="table-responsive active-projects manage-client">
-							<div class="tbl-caption">
-								<h4 class="heading mb-0">성적관리</h4>
-							</div>
 							<div id="reports-tbl_wrapper"
 								class="dataTables_wrapper no-footer">
 								<div class="dt-buttons">
 								</div>
-								<table id="reports-tbl" class="table dataTable no-footer"
-									role="grid" aria-describedby="reports-tbl_info">
-									<thead>
-										<tr role="row">
-											<th class="sorting_asc" tabindex="0"
-												aria-controls="reports-tbl" rowspan="1" colspan="1"
-												aria-sort="ascending"
-												aria-label="Invoice #: activate to sort column descending"
-												style="width: 91.425px;">No</th>
-											<th class="sorting" tabindex="0" aria-controls="reports-tbl"
-												rowspan="1" colspan="1"
-												aria-label="Customer: activate to sort column ascending"
-												style="width: 90.725px;">이름</th>
-											<th class="sorting" tabindex="0" aria-controls="reports-tbl"
-												rowspan="1" colspan="1"
-												aria-label="Date: activate to sort column ascending"
-												style="width: 85.15px;">학과</th>
-											<th class="sorting" tabindex="0" aria-controls="reports-tbl"
-												rowspan="1" colspan="1"
-												aria-label="Due Date: activate to sort column ascending"
-												style="width: 85.75px;">학번</th>
-											<th class="sorting" tabindex="0" aria-controls="reports-tbl"
-												rowspan="1" colspan="1"
-												aria-label="Amount: activate to sort column ascending"
-												style="width: 70.025px;">중간고사</th>
-											<th class="sorting" tabindex="0" aria-controls="reports-tbl"
-												rowspan="1" colspan="1"
-												aria-label="Discount: activate to sort column ascending"
-												style="width: 74.9125px;">기말고사</th>
-											<th class="sorting" tabindex="0" aria-controls="reports-tbl"
-												rowspan="1" colspan="1"
-												aria-label="Amount Open: activate to sort column ascending"
-												style="width: 109.363px;">과제점수</th>
-											<th class="sorting" tabindex="0" aria-controls="reports-tbl"
-												rowspan="1" colspan="1"
-												aria-label="Adjustment: activate to sort column ascending"
-												style="width: 94.075px;">출석점수</th>
-											<th class="sorting" tabindex="0" aria-controls="reports-tbl"
-												rowspan="1" colspan="1"
-												aria-label="Status: activate to sort column ascending"
-												style="width: 82.075px;">평점</th>
+								<table class="table">
+									<thead class="">
+										<tr> 
+											<th>No</th>
+											<th>성명</th>
+											<th>학과</th>
+											<th>학번</th>
+											<th>출석점수</th>
+											<th>과제점수</th>
+											<th>중간고사</th>
+											<th>기말고사</th>
+											<th>총점</th>
+											<th>학점</th>
+											<th style="text-align: center;">성적부여</th>
+											<th></th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr role="row" class="odd">
-											<td class="sorting_1"><a href="javascript:void(0)"
-												class="text-primary">No</a></td>
-											<td><span>Ricky Antony</span></td>
-											<td><span>14 Jan 2023</span></td>
-											<td><span>20 Jan 2023</span></td>
-											<td><span class="text-secondary">105 $</span></td>
-											<td><span class="text-secondary">5 $</span></td>
-											<td><span class="text-secondary">120 $</span></td>
-											<td><span class="text-secondary">0.00</span></td>
-											<td><span class="badge badge-success light border-0">Active</span>
+									<tbody id="tBody">
+									<c:forEach items="${getStdList }" var="list" varStatus="status">
+										<tr>
+											<td>${status.index+1 }</td>
+											<td><span id="stdNm">${list.stdNm }</span></td>
+											<td><span id="stdNo">${list.stdNo }</span></td>
+											<td><span id="deptNm">${list.deptNm }</span></td>
+											<td>
+												<input type="text" style="width:45px; border:1px solid #afaeae; text-align: center;" 
+													 id="attendScr" name="attendScr" value="${list.attendScr }"/>
 											</td>
-										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1"><a href="javascript:void(0)"
-												class="text-primary">INV-00001</a></td>
-											<td><span>Ricky Antony</span></td>
-											<td><span>14 Jan 2023</span></td>
-											<td><span>20 Jan 2023</span></td>
-											<td><span class="text-secondary">105 $</span></td>
-											<td><span class="text-secondary">5 $</span></td>
-											<td><span class="text-secondary">120 $</span></td>
-											<td><span class="text-secondary">0.00</span></td>
-											<td><span class="badge badge-success light border-0">Active</span>
+											<td>
+												<input type="text" style="width:45px; border:1px solid #afaeae; text-align: center;"
+													id="assignScr" name="assignScr" value="${list.assignScr }"/>
 											</td>
-										</tr>
-										<tr role="row" class="odd">
-											<td class="sorting_1"><a href="javascript:void(0)"
-												class="text-primary">INV-00001</a></td>
-											<td><span>Ricky Antony</span></td>
-											<td><span>14 Jan 2023</span></td>
-											<td><span>20 Jan 2023</span></td>
-											<td><span class="text-secondary">105 $</span></td>
-											<td><span class="text-secondary">5 $</span></td>
-											<td><span class="text-secondary">120 $</span></td>
-											<td><span class="text-secondary">0.00</span></td>
-											<td><span class="badge badge-success light border-0">Active</span>
+											<td>
+												<input type="text" style="width:45px; border:1px solid #afaeae; text-align: center;"
+													id="middleScr" name="middleScr" value="${list.middleScr }"/>
 											</td>
-										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1"><a href="javascript:void(0)"
-												class="text-primary">INV-00001</a></td>
-											<td><span>Ricky Antony</span></td>
-											<td><span>14 Jan 2023</span></td>
-											<td><span>20 Jan 2023</span></td>
-											<td><span class="text-secondary">105 $</span></td>
-											<td><span class="text-secondary">5 $</span></td>
-											<td><span class="text-secondary">120 $</span></td>
-											<td><span class="text-secondary">0.00</span></td>
-											<td><span class="badge badge-success light border-0">Active</span>
+											<td>
+												<input type="text" style="width:45px; border:1px solid #afaeae; text-align: center;"
+													id="finalScr" name="finalScr" value="${list.finalScr }"/>
 											</td>
-										</tr>
-										<tr role="row" class="odd">
-											<td class="sorting_1"><a href="javascript:void(0)"
-												class="text-primary">INV-00001</a></td>
-											<td><span>Ricky Antony</span></td>
-											<td><span>14 Jan 2023</span></td>
-											<td><span>20 Jan 2023</span></td>
-											<td><span class="text-secondary">105 $</span></td>
-											<td><span class="text-secondary">5 $</span></td>
-											<td><span class="text-secondary">120 $</span></td>
-											<td><span class="text-secondary">0.00</span></td>
-											<td><span class="badge badge-success light border-0">Active</span>
+											<td><span></span></td>
+											<td><span></span></td>
+											<td>
+												<button type="button" id="conFirmBtn" class="btn btn-primary" 
+													style="">성적확정</button>			
 											</td>
+											<c:if test="${list.confirmYn eq 'Y'}">
+												<td>
+													<button type="button" id="modifyBtn" class="btn btn-primary" 
+														style="">수정</button>			
+												</td>
+											</c:if>
 										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1"><a href="javascript:void(0)"
-												class="text-primary">INV-00001</a></td>
-											<td><span>Ricky Antony</span></td>
-											<td><span>14 Jan 2023</span></td>
-											<td><span>20 Jan 2023</span></td>
-											<td><span class="text-secondary">105 $</span></td>
-											<td><span class="text-secondary">5 $</span></td>
-											<td><span class="text-secondary">120 $</span></td>
-											<td><span class="text-secondary">0.00</span></td>
-											<td><span class="badge badge-success light border-0">Active</span>
-											</td>
-										</tr>
-										<tr role="row" class="odd">
-											<td class="sorting_1"><a href="javascript:void(0)"
-												class="text-primary">INV-00001</a></td>
-											<td><span>Ricky Antony</span></td>
-											<td><span>14 Jan 2023</span></td>
-											<td><span>20 Jan 2023</span></td>
-											<td><span class="text-secondary">105 $</span></td>
-											<td><span class="text-secondary">5 $</span></td>
-											<td><span class="text-secondary">120 $</span></td>
-											<td><span class="text-secondary">0.00</span></td>
-											<td><span class="badge badge-success light border-0">Active</span>
-											</td>
-										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1"><a href="javascript:void(0)"
-												class="text-primary">INV-00001</a></td>
-											<td><span>Ricky Antony</span></td>
-											<td><span>14 Jan 2023</span></td>
-											<td><span>20 Jan 2023</span></td>
-											<td><span class="text-secondary">105 $</span></td>
-											<td><span class="text-secondary">5 $</span></td>
-											<td><span class="text-secondary">120 $</span></td>
-											<td><span class="text-secondary">0.00</span></td>
-											<td><span class="badge badge-danger light border-0">Pending</span>
-											</td>
-										</tr>
-										<tr role="row" class="odd">
-											<td class="sorting_1"><a href="javascript:void(0)"
-												class="text-primary">INV-00002</a></td>
-											<td><span>Jack John</span></td>
-											<td><span>17 Jan 2023</span></td>
-											<td><span>20 Feb 2023</span></td>
-											<td><span class="text-secondary">105 $</span></td>
-											<td><span class="text-secondary">5 $</span></td>
-											<td><span class="text-secondary">120 $</span></td>
-											<td><span class="text-secondary">0.00</span></td>
-											<td><span class="badge badge-danger light border-0">Pending</span>
-											</td>
-										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1"><a href="javascript:void(0)"
-												class="text-primary">INV-00002</a></td>
-											<td><span>Jack John</span></td>
-											<td><span>14 Jan 2023</span></td>
-											<td><span>20 Jan 2023</span></td>
-											<td><span class="text-secondary">105 $</span></td>
-											<td><span class="text-secondary">5 $</span></td>
-											<td><span class="text-secondary">120 $</span></td>
-											<td><span class="text-secondary">0.00</span></td>
-											<td><span class="badge badge-danger light border-0">Pending</span>
-											</td>
-										</tr>
+									</c:forEach>
 									</tbody>
-
 								</table>
-								<div class="dataTables_info" id="reports-tbl_info" role="status"
-									aria-live="polite">Showing 1 to 10 of 24 entries</div>
-								<div class="dataTables_paginate paging_simple_numbers"
-									id="reports-tbl_paginate">
-									<a class="paginate_button previous disabled"
-										aria-controls="reports-tbl" data-dt-idx="0" tabindex="0"
-										id="reports-tbl_previous"><i
-										class="fa-solid fa-angle-left"></i></a><span><a
-										class="paginate_button current" aria-controls="reports-tbl"
-										data-dt-idx="1" tabindex="0">1</a><a class="paginate_button "
-										aria-controls="reports-tbl" data-dt-idx="2" tabindex="0">2</a><a
-										class="paginate_button " aria-controls="reports-tbl"
-										data-dt-idx="3" tabindex="0">3</a></span><a
-										class="paginate_button next" aria-controls="reports-tbl"
-										data-dt-idx="4" tabindex="0" id="reports-tbl_next"><i
-										class="fa-solid fa-angle-right"></i></a>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -226,3 +102,52 @@
 		</div>
 	</div>
 </div>
+<script>
+	
+	var lecapNo = $("#lecapNo").val();
+	console.log("lecapNo!! => " +lecapNo);
+	var attendScr = $("#attendScr").val();
+	var assignScr = $("#assignScr").val();
+	var middleScr = $("#middleScr").val();
+	var finalScr = $("#finalScr").val();
+	var finalCredit = "";
+	var totalScr = "";
+	totalScr = attendScr + assignScr + middleScr + finalScr;
+	alert(totalScr);
+	
+	function calculScore(){
+		
+		attendScr = attendScr * 0.2
+		assignScr = assignScr * 0.3
+		totalScr = attendScr + assignScr + middleScr + finalScr;
+		
+		if(totalScr > 380){
+			finalCredit  = "A+";
+		} else if (totalScr > 350 ){
+			finalCredit =  "A";
+		} else if(totalScr > 330 ){
+			finalCredit = "B+";
+		} else if(totalScr > 300 ){
+			finalCredit = "B";
+		} else if(totalScr > 270 ){
+			finalCredit = "C+";
+		} else if(totalScr > 240 ){
+			finalCredit = "C";
+		} else if(totalScr > 210 ){
+			finalCredit = "D";
+		} else {
+			finalCredit = "F";
+		}
+	}
+	
+	var conFirmBtn = $("#conFirmBtn");
+	conFirmBtn.on("click", function(){
+		if(finalScr == null || finalScr == ""){
+			swal("", "모든 항목의 점수 입력 후 성적확정 가능합니다", "info");
+		}
+	
+	})
+	
+	
+
+</script>

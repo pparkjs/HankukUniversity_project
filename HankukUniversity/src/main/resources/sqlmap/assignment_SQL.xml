@@ -74,7 +74,6 @@
 		where a.asm_no = #{asmNo}
 	</select>
 	
-	
 	<!-- 과제 출제 -->
 	<insert id="giveAssignToStd" parameterType="map">
 	/*kr.or.hku.classroom.mapper.AssignmentMapper.giveAssignToStd */
@@ -100,7 +99,9 @@
             asm_ttl = #{asmTtl},
             asm_cn = #{asmCn},
             asm_regdate = sysdate,
-      		atch_file_no = null
+      		<if test="atchFileNo != 0">
+      			atch_file_no = #{atchFileNo}
+      		</if>
         WHERE asm_no = #{asmNo} 
         AND lecap_no = #{lecapNo}
 	</update>
@@ -127,6 +128,7 @@
 	
 	<!-- 학생 과제 상세보기  -->
 	<select id="stdAssignDetail" parameterType="assignmentVO" resultType="assignmentVO">
+	/* kr.or.hku.classroom.mapper.AssignmentMapper.stdAssignDetail */
 		 SELECT
 			  a.asm_no as asm_no
 			, a.lecap_no as lecap_no
@@ -138,6 +140,8 @@
 			, a.atch_file_no as atch_file_no	
 			, d.dept_nm as dept_nm
             , s.std_nm as std_nm
+            , b.avl_code
+            , b.asmsb_dt
 		FROM assignment a  
         JOIN assignment_submit b ON b.asm_no = a.asm_no
         JOIN student s ON s.std_no = b.std_no
@@ -146,7 +150,9 @@
         AND s.std_no = #{stdNo}
 	</select>
 	
+	<!-- 학생/ 과제 제출 -->
 	<update id="assignmentSubmit" parameterType="assignmentVO">
+	/* kr.or.hku.classroom.mapper.AssignmentMapper.assignmentSubmit */
 		UPDATE assignment_submit 
 		SET avl_code = 'Y'
 			, atch_file_no = #{atchFileNo}
@@ -154,5 +160,23 @@
 		WHERE std_no = #{stdNo}
 		AND asm_no = #{asmNo}
 	</update>
+	
+	<!-- 학생/ 제출한 과제 파일 수정  -->
+	<update id="modifyAssignment" parameterType="assignmentVO">
+		UPDATE assignment_submit
+		SET 
+		<if test="atchFileNo != 0">
+			atch_file_no = #{atchFileNo}
+		</if>
+		WHERE std_no = #{stdNo}
+		AND asmsb_no = #{asmsbNo}
+	</update>
+	
+	<!-- 학생/ 과제 삭제  -->
+	<delete id="deleteAssignment" parameterType="int">
+	/* kr.or.hku.classroom.mapper.AssignmentMapper.deleteAssignment */	
+		DELETE FROM assignment_submit
+		WHERE asmsb_no = #{asmsbNo}
+	</delete>
 
 </mapper>
