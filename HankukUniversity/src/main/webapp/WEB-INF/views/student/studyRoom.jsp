@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <link rel="stylesheet" href="/css/table.css">
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -113,7 +114,7 @@ input[name=color]:checked + label{
 <!-- 				<div style="display: flex; justify-content: end; margin-right: 80px; margin-top: 10px;"> -->
 <!-- 				</div> -->
 			<div class="container-fluid subCon">
-					<div class="custom-tab-1" style="display: flex; align-items: center;">
+					<div class="custom-tab-1" style="display: flex; align-items: center; justify-content: space-between;">
 						<ul class="nav nav-tabs">
 							<li class="nav-item">
 								<a class="nav-link active" data-bs-toggle="tab" href="#profile1"><i class="far fa-user me-2"></i> 스터디원</a>
@@ -125,22 +126,27 @@ input[name=color]:checked + label{
 								<a class="nav-link" data-bs-toggle="tab" href="#message1" id="calRender"><i class="ti-calendar me-2"></i> 일정</a>
 							</li>
 						</ul>
-						<a class="btn btn-primary" href="https://6ce9-1-212-157-150.ngrok-free.app/study?room=${study.studyNo }" role="button" id="btn1" style="margin-left: 733px; margin-bottom: 10px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
-					
-						<form action="/hku/student/delStudy" method="post" id="delForm">
-							<input type="hidden" name="studyNo" value="${study.studyNo}" id="studyNo">
-						</form>
-						<!-- 스터디장은 스터디 해체 버튼 보여주기 -->
-						<c:choose>
-						    <c:when test="${role eq 'Y'}">
-						        <button type="button" class="btn btn-primary" style="margin-left: 14px; margin-bottom: 10px; background: #ff4343; border-color: #ff4343;" id="delBtn">
-						            <i class="fa-solid fa-circle-exclamation me-2"></i>스터디 삭제
-						        </button>
-						    </c:when>
-						    <c:otherwise>
-						        <button type="button" class="btn btn-primary" style="margin-left: 14px; margin-bottom: 10px;" id="exitBtn"> 스터디 탈퇴</button>
-						    </c:otherwise>
-						</c:choose>									
+						<div style="display: flex;">
+							<a class="btn btn-primary" href="https://6ce9-1-212-157-150.ngrok-free.app/study?room=${study.studyNo }" role="button" id="btn1" style="margin-bottom: 10px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
+						
+							<form action="/hku/student/delStudy" method="post" id="delForm">
+								<input type="hidden" name="studyNo" value="${study.studyNo}" id="studyNo">
+								<sec:csrfInput/>
+							</form>
+							<!-- 스터디장은 스터디 해체 버튼 보여주기 -->
+							<c:choose>
+							    <c:when test="${role eq 'Y'}">
+							        <button type="button" class="btn btn-primary" style="margin-left: 14px; margin-bottom: 10px; background: #ff4343; border-color: #ff4343;" id="delBtn">
+							            <i class="fa-solid fa-circle-exclamation me-2"></i>스터디 삭제
+							        </button>
+							    </c:when>
+							    <c:otherwise>
+							        <button type="button" class="btn btn-primary" style="margin-left: 14px; margin-bottom: 10px; background: #ff4343; border-color: #ff4343;" id="exitBtn">
+							         	<i class="fa-solid fa-circle-exclamation me-2"></i>스터디 탈퇴
+							         </button>
+							    </c:otherwise>
+							</c:choose>
+						</div>								
 					</div>
 					<div class="card" id="card-title-1">
 						<div class="card-body" style="padding-top: 0px;">
@@ -462,26 +468,38 @@ $(function(){
 	var tbody = $('#tbody');
 	  
 	delBtn.on('click', function(){
-		swal.fire({
-	      title: '정말로 삭제하시겠습니까??',
-	      icon: 'warning'
-	    }).then((result) => {
-	      if (result.isConfirmed) {
-	        delForm.submit();
-	      }
-	    });
+		swal({
+			title: "스터디를 삭제하시겠습니까?",
+			text: "삭제 후 복구가 불가능합니다!",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+			if (willDelete) {
+				delForm.submit();
+			} else {
+				return false;
+			}
+		});
 	});
 
 	exitBtn.on('click', function(){
 		delForm.attr("action", "/hku/student/exitStudy");
-		swal.fire({
-	      title: '정말로 탈퇴하시겠습니까??',
-	      icon: 'warning'
-	    }).then((result) => {
-	      if (result.isConfirmed) {
-	        delForm.submit();
-	      }
-	    });
+		swal({
+			title: "스터디를 탈퇴하시겠습니까?",
+			text: "탈퇴 후 복구가 불가능합니다!",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+			if (willDelete) {
+				delForm.submit();
+			} else {
+				return false;
+			}
+		});
 	})
 	
 });
