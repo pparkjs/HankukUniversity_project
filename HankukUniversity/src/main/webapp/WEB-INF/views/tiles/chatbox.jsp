@@ -28,8 +28,8 @@
   font-size: 13px;
 }
 .chatbox .img_cont_msg img {
-    width: 180%;
-    height: 180%;
+    width: 100%;
+    height: 100%;
 }
 .chatbox .img_cont_msg2 img {
     width: 100%;
@@ -38,6 +38,11 @@
 
 .img_cont_msg2{
     position: absolute;
+    right: 0px;
+    height: 48px;
+    width: 48px;
+}
+.img_cont_msg{
     right: 0px;
     height: 48px;
     width: 48px;
@@ -156,7 +161,7 @@
 						      <li class="active dz-chat-user" id ="\${res[i].studyNo}" value="\${res[i].stdNo}" onclick="enterRoom(this)">
 						        <div class="d-flex bd-highlight">
 						          <div class="img_cont">
-						            <img src="/images/avatar/1.jpg" class="rounded-circle user_img" alt="">
+						          <img src='/download\${res[i].stdProfilePath}' width="100%" height="100%" class="rounded-circle user_img_msg" alt="">
 						            <span class="online_icon"></span>
 						          </div>
 						          <div class="user_info">
@@ -339,7 +344,7 @@ chatSocket.onmessage = function(evt) {
 	 	
 	 	// 채팅방에서 채팅 메시지 보내고 누군가 후에 들어왔을 경우 읽음처리 ajax로 다시 표현
 	    if(evt.data.split(",")[0] == "chat-reload"){
-// 	    	msgList();
+	    	msgList();
 			var studyNo = evt.data.split(",")[1];
 			
 			// 현재 뿌려져 있는 안읽은메시지개수 리스트
