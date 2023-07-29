@@ -206,7 +206,7 @@
 								과제 제출</h4>
 							<hr>
 						</div>
-						<div class="card-body">
+						<div class="card-body" style="height:350px;">
 							<div class="form-validation">
 							<c:if test="${assignVo.avlCode eq 'N' }">
 								<form class="needs-validation" id="assignForm" 
@@ -214,7 +214,7 @@
 									<input type="hidden" name="asmNo" id="asmNo" value="${assignVo.asmNo}"> 
 									<input type="hidden" name="lecapNo" value="${assignVo.lecapNo }">
 									<div class="row">
-										<div class="col-xl-12">
+										<div class="col-xl-12" style="height:350px;">
 											<div class="mb-3 row">
 												<label class="col-lg-1 col-form-label"
 													for="validationCustom01">성명 </label>
@@ -242,12 +242,12 @@
 													placeholder="파일을 선택하세요" value="${atchFileNo }">
 											</div>
 											<hr>
-											<div class="col-lg-7 ms-auto" style="padding-left: 47%;">
-											<sec:csrfInput/>
+											<div class="col-lg-7 ms-auto" style="padding-left: 52%;">
 												<button type="button" id="regiBtn" class="btn btn-primary">등록</button>
 											</div>
 										</div>
 									</div>
+									<sec:csrfInput/>
 								</form>
 								</c:if>
 								<c:if test="${assignVo.avlCode eq 'Y' }">
