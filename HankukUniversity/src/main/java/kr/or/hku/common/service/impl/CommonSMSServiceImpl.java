@@ -1,6 +1,5 @@
 package kr.or.hku.common.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,15 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.hku.ServiceResult;
+import kr.or.hku.admin.vo.SmsTemplateVO;
+import kr.or.hku.common.mapper.CommonSMSMapper;
 import kr.or.hku.common.service.CommonApiService;
 import kr.or.hku.common.service.CommonSMSService;
 import kr.or.hku.common.vo.ApiVO;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.sdk.NurigoApp;
-import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
-import net.nurigo.sdk.message.response.MultipleDetailMessageSentResponse;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
 
@@ -30,6 +29,9 @@ public class CommonSMSServiceImpl implements CommonSMSService {
 	
 	@Autowired
 	private CommonApiService apiService;
+	
+	@Autowired
+	private CommonSMSMapper smsMapper;
 	
 	public CommonSMSServiceImpl() {
 		// 생성자는 빈의 초기화 블록에서 작업을 수행하지 않도록 변경
@@ -151,5 +153,15 @@ public class CommonSMSServiceImpl implements CommonSMSService {
 			}
 		}
         return result;
+	}
+	
+	@Override
+	public int addSmsTemplate(SmsTemplateVO smsTemplateVO) {
+		return smsMapper.addSmsTemplate(smsTemplateVO);
+	}
+	
+	@Override
+	public int updateSmsTemplate(SmsTemplateVO smsTemplateVO) {
+		return smsMapper.updateSmsTemplate(smsTemplateVO);
 	}
 }

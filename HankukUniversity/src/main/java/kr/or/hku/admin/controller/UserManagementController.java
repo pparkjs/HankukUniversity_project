@@ -108,6 +108,28 @@ public class UserManagementController {
 		return "admin/sendTextMsg";
 	}
 	
+	//문자 추가 & 변경
+	@ResponseBody
+	@PostMapping("/smsTemplateProccess")
+	public Map<String, Object> smsTemplateProccess(@RequestBody SmsTemplateVO smsTemplateVO) {
+		log.info("smsTemplateVO > " + smsTemplateVO.toString());
+		Map<String, Object> returnValue = new HashMap<>();
+		int res = 0;
+		if (StringUtils.isBlank(smsTemplateVO.getSmsTempNo())) { // 기본키 없다 저장
+			res = smsService.addSmsTemplate(smsTemplateVO);
+			returnValue.put("processMsg", "add");
+		}else {
+			res = smsService.updateSmsTemplate(smsTemplateVO);
+			returnValue.put("processMsg", "update");
+		}
+		if (res > 0) {
+			returnValue.put("data", smsTemplateVO);
+		}else {
+			returnValue.put("processMsg", "error");
+		}
+		return returnValue;
+	}
+	
 	@ResponseBody
 	@GetMapping("/setting-msg")
 	public SmsTemplateVO settingMsg(SmsTemplateVO paramVO) {
