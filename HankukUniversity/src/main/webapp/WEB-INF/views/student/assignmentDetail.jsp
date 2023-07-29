@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <link rel="stylesheet" href="/css/table.css">
 <link rel="stylesheet" href="/css/pro-jh.css">
 <style>
@@ -76,11 +77,14 @@
 							<button type="button" id="listBtn" class="btn btn-primary">목록</button>
 						</div>
 					</div>
-					<div class="card-body" style="height: 390px;">
+					<div class="card-body" style="height: 410px;">
 						<div class="form-validation">
+						
+						<!-- 과제 상세 -->
 							<form class="needs-validation">
 								<input type="hidden" name="asmNo" id="asmNo"
-									value="${assignVo.asmNo}"> <input type="hidden"
+									value="${assignVo.asmNo}"> 
+									<input type="hidden"
 									name="lecapNo" id="lecapNo" value="${assignVo.lecapNo}">
 								<div class="row">
 									<div class="col-xl-12">
@@ -190,22 +194,25 @@
 					</div>
 				</div>
 			</div>
+			
+			<!-- 학생 과제 제출 -->
 			<div class="col-xl-12">
 				<div class="card">
 					<div class="card-body p-0">
 						<div class="tbl-caption"
 							style="padding-top: 15px; padding-left: 15px;">
 							<h4 class="card-title"
-								style="font-weight: bold; font-size: 1.2em; color: #800000;">
+								style="font-weight: bold; font-size: 1.2em; color:#800000;">
 								과제 제출</h4>
 							<hr>
 						</div>
-						<div class="card-body" style="height: 400px;">
+						<div class="card-body">
 							<div class="form-validation">
-								<form class="needs-validation" id="assignForm" action=""
+							<c:if test="${assignVo.avlCode eq 'N' }">
+								<form class="needs-validation" id="assignForm" 
 									method="post" enctype="multipart/form-data">
-									<input type="hidden" name="lecapNo"
-										value="${assignVo.lecapNo }">
+									<input type="hidden" name="asmNo" id="asmNo" value="${assignVo.asmNo}"> 
+									<input type="hidden" name="lecapNo" value="${assignVo.lecapNo }">
 									<div class="row">
 										<div class="col-xl-12">
 											<div class="mb-3 row">
@@ -213,7 +220,7 @@
 													for="validationCustom01">성명 </label>
 												<div class="col-lg-3">
 													<input type="text" class="form-control"
-														id="validationCustom01" value=${std.stdNm }>
+														id="validationCustom01" name="stdNm" value=${std.stdNm }>
 													<div class="invalid-feedback"></div>
 												</div>
 												<label class="col-lg-1 col-form-label"
@@ -236,11 +243,50 @@
 											</div>
 											<hr>
 											<div class="col-lg-7 ms-auto" style="padding-left: 47%;">
+											<sec:csrfInput/>
 												<button type="button" id="regiBtn" class="btn btn-primary">등록</button>
 											</div>
 										</div>
 									</div>
 								</form>
+								</c:if>
+								<c:if test="${assignVo.avlCode eq 'Y' }">
+									<div id="statusDiv">
+										<table class="table"> 
+											<thead> 
+												<tr> 
+													<th>No</th> 
+													<th>성명</th> 
+													<th>학과</th> 
+													<th>학번</th> 
+													<th>과제주차</th> 
+													<th>제출일자</th> 
+													<th>제출여부</th> 
+													<th></th> 
+												</tr> 
+											</thead> 
+											<tbody id="tBody">
+												<tr>
+													<td>1</td>
+													<td>${std.stdNm}</td>
+													<td>${assignVo.deptNm}</td>
+													<td>${std.stdNo}</td>
+													<td>${assignVo.asmWeek}</td>
+													<td>${assignVo.asmsbDt }</td>
+													<td style="color:red;">제출완료</td>
+													<td>
+													<button type="button" id="deleteBtn"
+														style="padding: 0.5rem 1.0rem; width: 80px; "
+														class="btn btn-primary">취소</button>
+													</td>
+												 </tr>
+											</tbody> 
+										</table>
+									</div>
+								</c:if>
+								<div id="myDiv">
+								
+								</div>
 							</div>
 						</div>
 					</div>
@@ -253,17 +299,111 @@
 $(function() {
 	var regiBtn = $("#regiBtn");
 	var assignForm = $("#assignForm");
-
+	
 	regiBtn.on("click", function() {
+		console.log(assignForm[0]);
+		var formData = new FormData(assignForm[0]);
+		var tBody = $("#tBody");
+		
 		var atchFileNo = $("#atchFileNo").val();
 		if (atchFileNo == null || atchFileNo == '') {
 			swal("", "과제 파일을 등록해주세요!", "error");
 			return false;
-		} else {
-			swal("", "과제 제출이 완료되었습니다!", "success");
-		}
-		assignForm.submit();
-	})
+		} 
 
-})
+		$.ajax({
+			url : "/hku/student/assignmentDetail",
+			type : "post",
+			data : formData,
+			contentType : false,
+			processData : false,
+			cache : false,
+			dataType : "text",
+			beforeSend : function(xhr){
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
+			success : function(res) {
+				console.log("res!!!!!", res);
+				
+				data = "";
+				if (res == "success") {
+                    swal("", "과제 제출이 완료되었습니다!", "success");
+                    location.reload();
+//                     var myDiv = $("#myDiv");
+//                     data += `<table class="table"> 
+// 								<thead> 
+// 									<tr> 
+// 										<th>No</th> 
+// 										<th>성명</th> 
+// 										<th>학과</th> 
+// 										<th>학번</th> 
+// 										<th>과제주차</th> 
+// 										<th>제출일자</th> 
+// 									</tr> 
+// 								</thead> 
+// 								<tbody id="tBody">
+// 									<tr>
+// 										<td>1</td>
+// 										<td>${std.stdNm}</td>
+// 										<td>${deptNm}</td>
+// 										<td>${std.stdNo}</td>
+// 										<td>${res.asmWeek}</td>
+// 										<td>${res.asmsbDt }</td>
+// 									 </tr>
+// 								</tbody> 
+// 							</table>`
+// 				$("#assignForm").remove();
+// 				$("#statusDiv").remove();
+// 				myDiv.html(data);
+                } else {
+                    swal("", "과제 제출에 실패했습니다!", "error");
+                }
+				
+// 				$("#statusDiv").css('display','block');
+			}
+		})
+
+	})
+	
+	var deleteBtn = $("#deleteBtn");
+	deleteBtn.on("click", function(){
+		var asmNo = $("#asmNo").val();
+		alert("asmNo : " + asmNo);
+				
+		var myData = {
+			asmNo : asmNo
+		}
+		
+		$.ajax({
+			url : "/hku/student/deleteAssignment",
+			type : "post",
+			data : JSON.stringify(myData),
+			contentType : "application/json;charset=utf-8",
+			dataType : "text",
+			beforeSend : function(xhr){
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
+			success : function(res){
+				console.log("성공?!", res);
+				
+			     swal({
+                     title: "과제 제출을 취소하시겠습니까?",
+                     text: "취소 후 복구 불가합니다",
+                     icon: "warning",
+                     buttons: true,
+                     dangerMode: true,
+                 })
+                     .then((willDelete) => {
+                         if (willDelete) {
+                           location.reload();  
+							swal("", "삭제가 완료되었습니다", "success");
+                          };
+                     });
+			}
+		})
+		
+	})
+	
+})	
+	
 </script>
