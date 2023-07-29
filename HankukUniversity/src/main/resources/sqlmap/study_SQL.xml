@@ -125,6 +125,7 @@
 	        a.unread_msg_cnt,
 	        b.std_no,
 	        c.std_nm,
+	        c.std_profile_path,
 	        b.study_no,
 	        b.study_name,
 	        b.study_regdate,
@@ -313,7 +314,7 @@
 			from course_regist a
 			join lecture_aply b on a.lecap_no = b.lecap_no
 			join lecture_schedule c on a.lecap_no = c.lecap_no
-		where a.std_no = #{stdNo} and b.lecap_yr = #{lecapYr}
+		where a.std_no = #{stdNo} and b.lecap_yr = #{lecapYr} and b.LECAP_SEM = 2
  	</select>
  	
  	<!-- 스터디원 추방 -->
@@ -384,9 +385,9 @@
 		values(seq_studyboard.nextval, #{studyNo}, #{stboTitle}, #{stboContent}, #{stboWriter}, sysdate)
  	</insert>
  	
- 	<select id="boardCount" parameterType="pagingVO" resultType="int">
+ 	<select id="boardCount" parameterType="stdPaginationInfoVO" resultType="int">
  		select count(stbo_no)
-		from studyboard
+		from studyboard a, studygroup b
 		where 1=1
 		<include refid="boardSearch"/>
  	</select>
@@ -398,14 +399,14 @@
  	
  	<sql id="boardSearch">
  		<if test="searchType != null and searchType == 'title'">
-			AND (stbo_title LIKE '%'||#{stboTitle}||'%')
+			AND (study_name LIKE '%'||#{searchWord}||'%')
 		</if>
 		<if test="searchType != null and searchType == 'writer'">
-			AND (stbo_writer LIKE '%'||#{stboWriter}||'%')
+			AND (stbo_writer LIKE '%'||#{searchWord}||'%')
 		</if>
  	</sql>
  	
- 	<select id="boardSelect" parameterType="pagingVO" resultType="studyVo">
+ 	<select id="boardSelect" parameterType="stdPaginationInfoVO" resultType="studyVo">
 	 	SELECT
 			b.*
 		FROM(
@@ -417,11 +418,13 @@
 					a.stbo_no,
 				    a.study_no,
 				    b.study_name,
+				    b.study_cpcy,
 				    a.stbo_title,
 				    a.stbo_content,
 				    a.stbo_writer,
 				    a.stbo_regdate,
-				    a.stbo_read_cnt
+				    a.stbo_read_cnt,
+				    (select count(*) from studymember WHERE study_no= a.study_no) as count
 				FROM studyboard a
 				JOIN studygroup b ON a.study_no = b.study_no
 				WHERE 1=1
@@ -433,6 +436,26 @@
 			WHERE b.rnum >= #{startRow} AND b.rnum <= #{endRow}
 		]]>
 	</select>
+	
+		<!-- 스터디게시판 리스트 -->
+ 	<select id="studyBoardList2" parameterType="map" resultType="studyVo">
+ 		select a.stbo_no,
+		    a.study_no,
+		    b.study_name,
+            b.study_cpcy,
+		    a.stbo_title,
+		    a.stbo_content,
+		    a.stbo_writer,
+		    a.stbo_regdate,
+		    a.stbo_read_cnt,
+            (select count(*) from studymember
+        WHERE study_no= a.study_no) as count
+		from studyboard a
+		join studygroup b on a.study_no = b.study_no
+		WHERE 1=1
+        <include refid="boardSearch"/>
+		order by a.stbo_no desc
+ 	</select>
 	
 	<update id="modifyStudyBoard" parameterType="studyVo">
 		update studyboard

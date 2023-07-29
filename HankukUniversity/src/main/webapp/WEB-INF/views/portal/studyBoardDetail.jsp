@@ -115,7 +115,7 @@
 								<label class="col-lg-4 col-form-label" for="validationCustom01">
 									제목 <span class="text-danger"></span>
 								</label>
-								<input type="text" name="stboTitle" id="stboTitle2" class="form-control" id="validationCustom01" required>
+								<input type="text" name="stboTitle" id="stboTitle2" value="${studyBoard.stboTitle }" class="form-control" id="validationCustom01" required>
 							</div>
 							<div class="mb-3">
 								<label class="col-lg-4 col-form-label" for="validationCustom04">
@@ -127,7 +127,7 @@
 								<label class="col-lg-4 col-form-label" for="validationCustom04">
 									내용 <span class="text-danger"></span>
 								</label>
-								<textarea name="stboContent" id="stboContent2" class="form-control h-50" id="validationCustom04" rows="6"required></textarea>
+								<textarea name="stboContent" id="stboContent2" class="form-control h-50" id="validationCustom04" rows="6"required>${studyBoard.stboContent }</textarea>
 								<div class="invalid-feedback">
 								</div>
 							</div>
