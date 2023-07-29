@@ -198,20 +198,15 @@
 	</div>
 </div>
 <script type="text/javascript">
+var sendData = {};
 function boardDetail(element) {
     var stboNo = $(element).attr("id");
     var sessStdNo = ${sessionScope.std.stdNo};
     console.log("id:", stboNo);
 	location.href = `/hku/student/studyBoardDetail?stboNo=\${stboNo}`
 }
-$(document).ready(function() {
-	var boardBody = document.querySelector("#boardList");
-	var pageNation = $('#pageNation');
-    
-    var sendData = {};
 
-    
-    
+
 function boardList() {
 	
 // 	let stype = $('#stype').val();
@@ -279,9 +274,82 @@ function boardList() {
             }
             body.html(data);
 			pageNation.html(res.pagingHTML);
+			
 	        }
 	    });
 	}
+
+function insertBoard(){
+	var addModal = $("#addModal");
+	
+	var modalForm = document.forms.frm1;
+	
+	var stboTitle = modalForm.stboTitle.value;
+	var stboContent = modalForm.stboContent.value;
+	var studyNo = modalForm.studyNo.value;
+	var stboWriter = modalForm.stboWriter.value;
+
+
+	if(stboTitle == ""){
+		swal({
+			title: "제목을 입력하지 않았습니다!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if(stboContent == ""){
+		swal({
+			title: "내용을 입력하지 않았습니다!", 
+			icon: "error"
+		});
+		return false;
+	}
+	if(studyNo == ""){
+		swal({
+			title: "스터디를 선택해주세요!", 
+			icon: "error"
+		});
+		return false;
+	}
+
+	var data = {
+		"stboTitle": stboTitle,
+		"stboContent": stboContent,
+		"studyNo": studyNo,
+		"stboWriter": stboWriter,
+		}
+
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST","/hku/student/insertStudyBoard",true);
+	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			if(xhr.responseText === "SUCCESS"){
+				console.log("");
+				addModal.modal('hide');
+				 swal({
+						title: "게시글 등록이 완료되었습니다.", 
+						icon: "success"
+					});
+			} else if(xhr.responseText === "FAILED"){
+				swal({
+        			title: "게시글 등록에 실패하였습니다!", 
+        			icon: "error"
+        		});
+			}
+			boardList();
+		}
+	}
+	xhr.send(JSON.stringify(data));
+}
+
+
+$(document).ready(function() {
+	var boardBody = document.querySelector("#boardList");
+	var pageNation = $('#pageNation');
+    
+   
 	boardList();
 		
 	$('#searchBtn').on('click',function(){
@@ -296,74 +364,6 @@ function boardList() {
 		console.log("페이지번호 클릭", $('#page').val());
 		boardList();
 	});
-	
-	
-	function insertBoard(){
-		var addModal = $("#addModal");
-		
-		var modalForm = document.forms.frm1;
-		
-		var stboTitle = modalForm.stboTitle.value;
-		var stboContent = modalForm.stboContent.value;
-		var studyNo = modalForm.studyNo.value;
-		var stboWriter = modalForm.stboWriter.value;
-	
-	
-		if(stboTitle == ""){
-			swal({
-				title: "제목을 입력하지 않았습니다!", 
-				icon: "error"
-			});
-			return false;
-		}
-		if(stboContent == ""){
-			swal({
-				title: "내용을 입력하지 않았습니다!", 
-				icon: "error"
-			});
-			return false;
-		}
-		if(studyNo == ""){
-			swal({
-				title: "스터디를 선택해주세요!", 
-				icon: "error"
-			});
-			return false;
-		}
-	
-		var data = {
-			"stboTitle": stboTitle,
-			"stboContent": stboContent,
-			"studyNo": studyNo,
-			"stboWriter": stboWriter,
-			}
-	
-		let xhr = new XMLHttpRequest();
-		xhr.open("POST","/hku/student/insertStudyBoard",true);
-		xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-		xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-		xhr.onreadystatechange = function(){
-			if(xhr.readyState == 4 && xhr.status == 200){
-				if(xhr.responseText === "SUCCESS"){
-					console.log("");
-					addModal.modal('hide');
-					 swal({
-							title: "게시글 등록이 완료되었습니다.", 
-							icon: "success"
-						});
-				} else if(xhr.responseText === "FAILED"){
-					swal({
-	        			title: "게시글 등록에 실패하였습니다!", 
-	        			icon: "error"
-	        		});
-				}
-				boardList();
-			}
-		}
-		xhr.send(JSON.stringify(data));
-	}
-	
-	
 	
 });
 </script>
