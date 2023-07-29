@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.service.AssignmentService;
@@ -113,7 +114,6 @@ public class StdClassroomController {
 										HttpSession session) {
 		log.info("asmNo : " + asmNo);
 		StudentVO std = (StudentVO)session.getAttribute("std");
-		
 		AssignmentVO vo = new AssignmentVO();
 		
 		vo.setAsmNo(asmNo);
@@ -129,9 +129,29 @@ public class StdClassroomController {
 		return "student/assignmentDetail";
 	}
 	
+//	// 학생 과제 제출 - form submit 방식
+//	@PostMapping("/assignmentDetail/{asmNo}")
+//	public String assignmentSubmit(HttpSession session, AssignmentVO vo, Model model) {
+//		int attachFileNo = fileService.getAttachFileNo();
+//		System.out.println("여기야여기"+vo.toString());
+//		StudentVO std = (StudentVO) session.getAttribute("std");   
+//		vo.setStdNo(std.getStdNo());
+//		fileService.insertFile(vo.getAssignFile(), attachFileNo, 0);
+//		vo.setAtchFileNo(attachFileNo);
+//		
+//		int res = assignService.assignmentSubmit(vo);
+//		if(res > 0) {
+//			return "redirect:/hku/student/stdAssignmentList/" + vo.getLecapNo();
+//		} else {
+//			model.addAttribute("assignVo", vo);
+//			return "student/assignmentDetail" ;
+//		}
+//	}
+	
 	// 학생 과제 제출
-	@PostMapping("/assignmentDetail/{asmNo}")
-	public String assignmentSubmit(HttpSession session, AssignmentVO vo, Model model) {
+	@ResponseBody
+	@PostMapping(value = "/assignmentDetail", produces = "application/json;charset=utf-8")
+	public String assignmentSubmit(HttpSession session, AssignmentVO vo) {
 		int attachFileNo = fileService.getAttachFileNo();
 		System.out.println("여기야여기"+vo.toString());
 		StudentVO std = (StudentVO) session.getAttribute("std");   
@@ -140,13 +160,32 @@ public class StdClassroomController {
 		vo.setAtchFileNo(attachFileNo);
 		
 		int res = assignService.assignmentSubmit(vo);
-		if(res > 0) {
-			return "redirect:/hku/student/stdAssignmentList/" + vo.getLecapNo();
-		} else {
-			model.addAttribute("assignVo", vo);
-			return "student/assignmentDetail" ;
+		String msg = "success";
+		if(res == 0) {
+			msg = "fail";
 		}
+		return msg;
 	}
+	
+	// 학생 과제 수정 
+	@ResponseBody
+	@PostMapping("/modifyAssignment")
+	public AssignmentVO modifyAssignment(AssignmentVO vo) {
+		ServiceResult result = assignService.modifyAssignment(vo);
+		
+		return vo;
+	}
+	
+	// 학생 과제 삭제 
+	@ResponseBody
+	@PostMapping(value="/deleteAssignment", produces = "text/plain;charset=utf-8")
+	public String deleteAssignment(@RequestBody HashMap<String, String> asmNoMap) {
+		int asmNo = Integer.parseInt(asmNoMap.get("asmNo"));
+		log.info("넘겨받은 asmNo !! " + asmNoMap.toString());
+		ServiceResult result = assignService.deleteAssignment(asmNo);
+		return result.toString();
+	}
+	
 	
 	// 출석 이의신청 
 	@GetMapping("/attendanceDmr")
@@ -207,19 +246,14 @@ public class StdClassroomController {
 	
 	// 이의신청 삭제 
 	@ResponseBody
-	@PostMapping(value="/deleteAttendDmr")
+	@PostMapping(value="/deleteAttendDmr", produces = "text/plain;charset=utf-8")
 	public String deleteAttendDmr(@RequestBody HashMap<String, String> atdcNoMap) {
-		log.info("atdcNo?????? : " + atdcNoMap.get("atdcNo").toString());
-//		ServiceResult result = attendanceService.deleteAttendDmr(atdcNo);
-//		log.info("atdcNo?????? : " + atdcNo);
-		String msg = null;
+		int atdcNo = Integer.parseInt(atdcNoMap.get("atdcNo"));
 		
-//		if(result.equals(ServiceResult.OK)) {
-//			msg =  "success";
-//		} else {
-//			msg = "failed";
-//		}
-		return null;
+		log.info("넘겨받은 no 값 : " + atdcNo);
+		
+		ServiceResult result = attendanceService.deleteAttendDmr(atdcNo);
+		return result.toString();
 	}
 	
 	@GetMapping("/noticeList")
