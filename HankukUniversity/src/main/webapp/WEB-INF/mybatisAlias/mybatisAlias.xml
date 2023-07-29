@@ -80,6 +80,7 @@
     <typeAlias type="kr.or.hku.student.vo.CertificateIssuVO" alias="certificateIssuVO"/>
     <typeAlias type="kr.or.hku.student.vo.ScoreInfoVO" alias="scoreInfoVO"/>
     <typeAlias type="kr.or.hku.student.vo.StdScholarshipVO" alias="stdScholarshipVO"/>
+    <typeAlias type="kr.or.hku.student.vo.SclsApPayVO" alias="sclsApPayVO"/>
     
     <!-- 성희칸 밑에서만 작성-->
      <typeAlias type="kr.or.hku.classroom.vo.ClassroomVO" alias="classroomVO"/>
