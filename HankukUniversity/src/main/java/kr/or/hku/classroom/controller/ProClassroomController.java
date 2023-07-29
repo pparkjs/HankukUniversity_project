@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,6 +55,7 @@ public class ProClassroomController {
 	private GradeManageService gradeService;
 	
 	// 클래스룸 목록
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/proClassroomList")
 	public String classroom(Model model, HttpServletRequest request) {
 		log.info("classroomList 실행 !");
@@ -67,6 +69,7 @@ public class ProClassroomController {
 	}
 	
 	// 클래스룸 메인
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/classroomMain/{lecapNo}")
 	public String enterClass(@PathVariable String lecapNo,
 							Model model,
@@ -91,6 +94,7 @@ public class ProClassroomController {
 	
 	
 	// 과제 목록
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/assignmentList/{lecapNo}")
 	public String assignList(@PathVariable String lecapNo,
 							Model model) {
@@ -102,6 +106,7 @@ public class ProClassroomController {
 	}
 	
 	// 과제 상세 
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/assignmentDetail/{asmNo}")
 	public String assignOne(@PathVariable String asmNo,
 							Model model) {
@@ -120,12 +125,14 @@ public class ProClassroomController {
 	}
 	
 	// 과제 등록폼
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/regiForm")
 	public String regiForm() {
 		return "professor/regiForm";
 	}
 	
 	// 과제 등록
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@PostMapping(value = "/regiAssignment")
 	public String regi(AssignmentVO vo) {
 		// -1 이면 파일없음   -1 이 아니면 파일이 있음
@@ -165,6 +172,7 @@ public class ProClassroomController {
 	
 	
 	// 과제 수정폼
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/updateForm/{asmNo}")
 	public String updateForm(@PathVariable("asmNo") String asmNo, Model model) {
 		AssignmentVO vo = assignService.assignOne(asmNo);
@@ -192,6 +200,7 @@ public class ProClassroomController {
 	
 	
 	// 과제삭제 
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@PostMapping("/deleteAssignment")
 	public String delete(String asmNo) {
 		return "professor/assignmentList";
@@ -220,6 +229,7 @@ public class ProClassroomController {
 	} 
 	
 	// 출석관리
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/manageAttendance")
 	public String getStdList(String lecapNo, Model model) {
 		model.addAttribute("lecapNo", lecapNo);
@@ -258,6 +268,7 @@ public class ProClassroomController {
 		
 
 	// 출석 이의신청 페이지 
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/attendanceDmrManage")
 	public String attendDmrStatus(HttpSession session, Model model) {
 		String lecapNo = (String) session.getAttribute("lecapNo");
@@ -297,6 +308,7 @@ public class ProClassroomController {
 	}
 	
 	// 학생 성적 관리
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/gradeManageTable/{lecapNo}")
 	public String gradeManage(@PathVariable String lecapNo, Model model) {
 		List<GradeVO> getStdList = gradeService.getStdList(lecapNo);
