@@ -24,6 +24,7 @@ import kr.or.hku.common.service.CommonFileService;
 import kr.or.hku.common.service.CommonService;
 import kr.or.hku.common.vo.AttachFileVO;
 import kr.or.hku.student.service.StdScholarshipService;
+import kr.or.hku.student.vo.SclsApPayVO;
 import kr.or.hku.student.vo.StdScholarshipVO;
 import kr.or.hku.student.vo.StudentVO;
 import lombok.extern.slf4j.Slf4j;
@@ -66,16 +67,6 @@ public class ScholarshipController {
 		List<StdScholarshipVO> sclsAplyList = scholarshipService.selectSclsAplyList(stdNo);
 		
 		return sclsAplyList;
-	}
-	
-	@GetMapping("/scholarship-list")
-	public String scholarshipList(HttpSession session, Model model) {
-		log.info("scholarshipList() 실행...!");
-		StudentVO std = (StudentVO)session.getAttribute("std");
-		StudentVO vo = commonService.myAllInfo(std.getStdNo());
-		
-		model.addAttribute("std", vo);
-		return "student/scholarship-list";
 	}
 	
 	@PostMapping("/sclsAplyInsert")
@@ -153,5 +144,27 @@ public class ScholarshipController {
 		} else {
 			return "FAILED";
 		}
+	}
+	
+
+	@GetMapping("/scholarship-list")
+	public String scholarshipList(HttpSession session, Model model) {
+		log.info("scholarshipList() 실행...!");
+		StudentVO std = (StudentVO)session.getAttribute("std");
+		StudentVO vo = commonService.myAllInfo(std.getStdNo());
+		
+		model.addAttribute("std", vo);
+		return "student/scholarship-list";
+	}
+	
+	@PostMapping("/selectSclsapPayList")
+	@ResponseBody
+	public List<SclsApPayVO> selectSclsapPayList(@RequestBody HashMap<String, String> sclsapPaySearchData){
+		log.info("selectSclsapPayList() 실행...!");
+		log.info("sclsapPaySearchData : " + sclsapPaySearchData.toString());
+		
+		List<SclsApPayVO> sclsApPayList = scholarshipService.selectSclsapPayList(sclsapPaySearchData);
+		log.info("sclsApPayList : " + sclsApPayList.toString());
+		return sclsApPayList;
 	}
 }
