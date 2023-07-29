@@ -178,7 +178,7 @@
 </div>
 <c:if test="${not empty first}">
 	<script type="text/javascript">
-	myWindow = window.open("/main/changePopup","_blank","width=400,height=450,left=650,top=350");
+		window.open("/main/changePopup","_blank","width=400,height=450,left=650,top=350");
 	</script>
 </c:if>
 <body>
@@ -348,14 +348,4 @@ refresh.addEventListener("click", function() {
     time = 10799; 
     x = setInterval(updateTimer, 1000); 
 });
-var myWindow;
-$(document).ready(function(){
-	if (myWindow) {
-		myWindow.onbeforeunload = function() {
-	    	location.href="/main/logout";
-	    };
-	}
-});
-
-
 </script>
