@@ -222,6 +222,11 @@ $(function(){
 				$('#deleteBtn').css('display', 'block');// 삭제 버튼 보이게
 				nModal.modal('show'); // 모달창 등장
 				
+				if(myName != res.depntWrtrNm){
+					$('#deleteBtn').css('display', 'none');
+					$('#sNoticeBtn').css('display', 'none');
+				}
+				
 				$('#noticeNo').val(res.depntNo);
 				$('#atchFileNo').val(res.atchFileNo);
 				$('#detailTtl').html(res.depntTtl);
@@ -551,6 +556,7 @@ $(function(){
 		$('#deleteBtn').text("삭제");
 		$('.previewFile').html("");
 		$('#noticeFileList').html("");
+		$('#sNoticeBtn').css("display", 'block');
 	});
 	
 	
