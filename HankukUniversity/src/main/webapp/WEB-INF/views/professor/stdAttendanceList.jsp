@@ -115,6 +115,9 @@ $(function(){
 			contentType : "application/json;charset=utf-8",
 			dataType : "json",
 			data : data,
+			beforeSend : function(xhr){
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
 			success : function(res){
 				console.log(res);
 				var tbl = "";// tr만들고
@@ -148,6 +151,9 @@ $(function(){
 						contentType : "application/json;charset=utf-8",
 						dataType : "json",
 						data : data,
+						beforeSend : function(xhr){
+							xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+						},
 						success : function(result){
 							console.log("학생 출석 데이터", result);
 							// td안에  출결 여부
@@ -208,19 +214,31 @@ $(function(){
 			data : JSON.stringify(sendData),
 			dataType : 'text',
 			contentType : "application/json;charset=utf-8",
+			beforeSend : function(xhr){
+				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+			},
 			success : function(res){
 				if(res == "success"){
 					getStdAttend();
-					
-					swal("", "출결 상태가 변경되었습니다!", "success");
+					swal({
+	                     title: "출결 상태를 변경하시겠습니까 ? ",
+	                     text: "학생의 이름을 확인해주세요",
+	                     icon: "warning",
+	                     buttons: true,
+	                     dangerMode: true,
+	                 })
+	                     .then((willDelete) => {
+	                         if (willDelete) {
+	                           location.reload();  
+								swal("", "출결 변경이 완료되었습니다", "success");
+	                          };
+	                     });
 				}
 			}
 			
 		})
 		
 	})
-	
-	
 	
 	
 })
