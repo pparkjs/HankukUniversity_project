@@ -13,4 +13,6 @@ public interface CommonSMSService {
 	 * @return
 	 */
 	public ServiceResult sendMsgToStudents(List<Map<String, String>> stdList, String msg);
+
+	public ServiceResult sendShMsg(List<Map<String, String>> userList, String msg);
 }

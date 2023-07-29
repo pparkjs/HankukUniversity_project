@@ -70,6 +70,9 @@
     <typeAlias type="kr.or.hku.admin.vo.StudentVO" alias="lecInStdVO"/>
     <typeAlias type="kr.or.hku.student.vo.StdCalendarVO" alias="stdCalVO"/>
     <typeAlias type="kr.or.hku.portal.vo.DetailNoticeVO" alias="detailNoticeVO"/>
+    <typeAlias type="kr.or.hku.common.vo.ApiVO" alias="commonApiVO"/>
+    <typeAlias type="kr.or.hku.admin.vo.SmsTemplateVO" alias="smsTemplateVO"/>
+    <typeAlias type="kr.or.hku.admin.vo.SmsVO" alias="smsVO"/>
     
     <!-- 영우칸 밑에서만 작성-->
     <typeAlias type="kr.or.hku.admin.vo.UserVO" alias="userVO"/>
