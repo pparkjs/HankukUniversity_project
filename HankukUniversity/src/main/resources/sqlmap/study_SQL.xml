@@ -327,11 +327,13 @@
  		select a.stbo_no,
 		    a.study_no,
 		    b.study_name,
+            b.study_cpcy,
 		    a.stbo_title,
 		    a.stbo_content,
 		    a.stbo_writer,
 		    a.stbo_regdate,
-		    a.stbo_read_cnt
+		    a.stbo_read_cnt,
+            (select count(*) from studymember WHERE study_no= a.study_no) as count
 		from studyboard a
 		join studygroup b on a.study_no = b.study_no
 		order by a.stbo_no desc
@@ -339,17 +341,19 @@
  	
  	<!-- 스터디 게시글 상세보기 -->
  	<select id="studyBoardDetail" resultType="studyVo" parameterType="int">
- 		select
-		    a.stbo_no,
+ 		select a.stbo_no,
 		    a.study_no,
-		    b.std_no,
+		    b.study_name,
+            b.study_cpcy,
+            b.stdNo,
 		    a.stbo_title,
 		    a.stbo_content,
 		    a.stbo_writer,
 		    a.stbo_regdate,
-		    a.stbo_read_cnt
+		    a.stbo_read_cnt,
+            (select count(*) from studymember WHERE study_no= a.study_no) as count
 		from studyboard a
-		join studygroup b on a.study_no = b. study_no
+		join studygroup b on a.study_no = b.study_no
 		where stbo_no = #{stboNo}
  	</select>
  	

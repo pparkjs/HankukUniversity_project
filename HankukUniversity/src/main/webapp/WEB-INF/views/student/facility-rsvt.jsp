@@ -12,7 +12,18 @@
 <!-- jQuery UI 스타일시트 -->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/css/datepicker-style.css">
-
+<style>
+.schedule-wrap{
+	overflow: scroll;
+    height: 254px;
+    margin-top: 13px;
+}
+.thead-dark{
+      position: sticky;
+      top: 0px;
+      background: #800000;
+}
+</style>
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
@@ -71,7 +82,7 @@
 			</div>
 			<div class="card-body" style="padding-top: 0px;">
 				<div class="schedule-wrap">
-					<table class="schedule" border=1>
+					<table class="schedule" border=1 style="margin-top: -2px;">
 						<thead class="thead-dark">
 							<tr>
 								<th style="width: 411px; height: 42px; font-size: 19px; font-weight: 500;"></th>

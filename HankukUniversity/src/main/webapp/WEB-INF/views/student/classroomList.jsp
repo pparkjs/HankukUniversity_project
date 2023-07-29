@@ -32,7 +32,15 @@
     font-weight: 500;
     font-size: 15px;
 }
-
+.active-projects thead tr th {
+    font-size: 18px;
+    padding: 0.625rem 1rem;
+    font-weight: 500;
+    background-color: #800000;
+    border: 0;
+    vertical-align: middle;
+    color: white;
+}
 </style>
 
 <div class="content-body">

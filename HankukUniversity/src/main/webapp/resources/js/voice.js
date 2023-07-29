@@ -1,4 +1,16 @@
 $(function() {
+const speech = new webkitSpeechRecognition();
+	const icon = document.getElementById('realMic');
+
+	  speech.continuous = false;
+	
+	  speech.onstart = function() {
+	    icon.classList.add('recording'); // 아이콘에 클래스 추가하여 스타일 적용
+	  };
+	
+	  speech.onend = function() {
+	    icon.classList.remove('recording'); // 아이콘에 클래스 제거하여 스타일 제거
+	  };
    	  
    	  //음성인식 이벤트 스탑
    	  document.getElementById('stop').addEventListener('click', function() {
@@ -24,6 +36,9 @@ $(function() {
    	  	if (transcript.includes('졸업')) {
    	      location.href = "/hku/student/gradute";
    	    }
+   	    if (transcript.includes('스터디게시판')||transcript.includes('스터디 게시판')) {
+   	     location.href = "/hku/student/studyBoard"
+     	    }
    	  // ────── 수강정보 ───────
    	    if (transcript.includes('교과목 조회')||transcript.includes('교과목조회')) {
    	      location.href = "/hku/search-subject";

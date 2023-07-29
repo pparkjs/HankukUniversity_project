@@ -17,9 +17,9 @@ public class RecordVO {
 	private String changeAplyDt; // 변동 신청일
 	private String changeStartYr; // 시작년도
 
-	private int changeStartSem; // 시작학기
+	private String changeStartSem; // 시작학기
 	private String changeEndYr; // 끝 년도
-	private int changeEndSem; // 끝 학기
+	private String changeEndSem; // 끝 학기
 	private String aprvSttsCd; // 결재 상태코드
 	private String changeRjctRsn; // 반려사유
 
@@ -27,4 +27,6 @@ public class RecordVO {
 	private String comCdNm; 
 	private String comCdNm1; // b.com_cd_nm
 	private String comCdNm2; // c.com_cd_nm
+	
+	public int no; // 변동내역순서
 }

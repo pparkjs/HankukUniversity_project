@@ -12,7 +12,7 @@
 			<li class="breadcrumb-item active"><a href="javascript:void(0)">휴강신청</a></li>
 		</ol>
     </div>
-	<div class="container-fluid">
+	<div class="container-fluid" style="margin-top: -10px;">
 	<div id="outCardBox" >
 	<!-- ■■■■■■■ 주차 선택하는 카드  ■■■■■■ -->
         <div class="card" style="width:48%; margin-bottom: 0;">
@@ -57,10 +57,10 @@
         </div>
         </div>
         <!-- ■■■■■■■ 휴강신청폼  ■■■■■■■ -->
-        <div class="grade-wrap">
+        <div class="grade-wrap" style="margin-top: -15px;">
 	        <div class="card" style="width:100%; margin-bottom: 0; height:300px;">
 		        <div class="card-header  cardTitle">
-	                <h4 class="card-title" style="font-weight: bold; font-size :1.5em; color: #800000;">휴강 신청</h4>
+	                <h4 class="card-title" style="font-weight: bold; font-size :1.2em; color: #800000;">휴강 신청</h4>
 	               <button type="button" class="btn btn-primary pro1" id="submitBtn">제출</button>
 	            </div>
 	            <div class="card-body" style="padding-right:60px; padding-left:0px"> 
@@ -88,7 +88,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td rowspan="2" colspan="4"><span>휴가사유</span> <textarea rows="3" cols="198.5" style="resize:none;" id="sunclRsn"></textarea></td>
+                                        <td rowspan="2" colspan="4" style="position: relative;"><span style="position: absolute;  top: 32px; left: 62px;">휴가사유</span> <textarea rows="3" cols="198.5" style="resize:none;" id="sunclRsn"></textarea></td>
                                         <td></td>
                                     </tr>
                                 </table>
@@ -119,8 +119,8 @@ $(document).ready(function() {
 	      dateClick: function(info) {
 	    	  mydate = info.dateStr;
 	    	  console.log("내가찍은날짜:",mydate);
-	    	    var startDate = new Date(2023, 8, 4); 
-	    	    var endDate = new Date(2023, 11, 17);
+	    	    var startDate = new Date(2023, 7, 1); 
+	    	    var endDate = new Date(2023, 10, 17);
 
 	    	    // 주차 계산
 	    	    var startWeek = 1;

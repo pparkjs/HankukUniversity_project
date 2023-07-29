@@ -23,8 +23,10 @@ import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.service.AssignmentService;
 import kr.or.hku.classroom.service.AttendanceService;
 import kr.or.hku.classroom.service.ClassroomService;
+import kr.or.hku.classroom.service.LectureNoticeService;
 import kr.or.hku.classroom.vo.AssignmentVO;
 import kr.or.hku.classroom.vo.AttendanceVO;
+import kr.or.hku.classroom.vo.LectureNoticeVO;
 import kr.or.hku.common.service.CommonFileService;
 import kr.or.hku.common.vo.AttachFileVO;
 import kr.or.hku.lectureInfo.service.CourseInfoService;
@@ -52,6 +54,9 @@ public class ProClassroomController {
 	@Autowired
 	private AttendanceService attendService;
 	
+	
+	@Autowired
+	private LectureNoticeService noticeService;
 	// 클래스룸 목록
 	@GetMapping("/proClassroomList")
 	public String classroom(Model model, HttpServletRequest request) {
@@ -83,12 +88,13 @@ public class ProClassroomController {
 		
 		// 해당 과목에 해당 년도 학기에 대한공지사항 리스트 가져와야함
 		// 지현이누나의 몫 여기다 작성하시오
-		
+		List<LectureNoticeVO> noticeList = noticeService.getNoticeList(lecapNo);
 		log.info(""+asgList);
 		model.addAttribute("lecVO", lecVO);
 		model.addAttribute("lecapNo", lecapNo);
 		model.addAttribute("subNm", subNm);
 		model.addAttribute("asgList", asgList);
+		model.addAttribute("noticeList", noticeList);
 		return "professor/classroomMain";
 	}
 	
