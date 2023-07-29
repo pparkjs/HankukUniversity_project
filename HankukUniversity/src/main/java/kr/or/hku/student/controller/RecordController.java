@@ -47,12 +47,12 @@ public class RecordController {
 	    StudentVO student = service.recordInfo(stdNo);
 	    List<RecordVO> recordList = service.recordChanged(stdNo);
 	    
+	    
 	    String comCd = student.getBankCd();
 	    StudentVO bankNm = service.getBankNm(comCd);
 	    
 	    for (RecordVO record : recordList) {     
-            log.info("RecordVO 객체 출력: " + record.toString());
-            log.info("필드1: " + record.getChangeRsn());
+            
         }
 	    
 	    model.addAttribute("student", student);

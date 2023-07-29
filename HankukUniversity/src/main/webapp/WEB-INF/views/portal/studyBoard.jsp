@@ -44,8 +44,6 @@
 				<div class="table-responsive" style="height: 683px;">
 					<div class="row" id="boardList" style="width: 100%; margin: 10px; margin-right: -10px;">
 					
-					<!--  여기다가 동적 바인딩 해요 성일이형!!!!! -->
-					
 						<div class="studycard-wrap">
 							<div class="study-top">
 								<span class="study-text">[ 스터디명 : </span>
@@ -109,22 +107,25 @@
 				</div>
 			</div>
 			<div class="card-body" id="pageNation" style="margin-top: -12px;">
-				<nav>
-					<ul class="pagination pagination-xs">
-						<li class="page-item page-indicator">
-							<a class="page-link" href="javascript:void(0)">
-							<i class="la la-angle-left"></i></a>
-						</li>
-						<li class="page-item active">
-							<a class="page-link" href="javascript:void(0)">1</a>
-						</li>
-						<li class="page-item page-indicator">
-							<a class="page-link" href="javascript:void(0)">
-							<i class="la la-angle-right"></i></a>
-						</li>
-					</ul>
-				</nav>
-			</div>
+                 <nav>
+                     <ul class="pagination pagination-xs">
+                         <li class="page-item page-indicator">
+                             <a class="page-link" href="javascript:void(0)">
+                             <i class="la la-angle-left"></i></a>
+                         </li>
+                         <li class="page-item active">
+                             <a class="page-link" href="javascript:void(0)">1</a>
+                         </li>
+                         <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
+                         <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+                         <li class="page-item"><a class="page-link" href="javascript:void(0)">4</a></li>
+                         <li class="page-item page-indicator">
+                             <a class="page-link" href="javascript:void(0)">
+                             <i class="la la-angle-right"></i></a>
+                         </li>
+                     </ul>
+                 </nav>
+             </div>
 		</div>
 	</div>
 
@@ -204,10 +205,21 @@ $(document).ready(function() {
 });
 
 function boardList() {
+	let stype = $('#stype').val();
+    let sword = $('#sword').val();
+    let page = $('#page').val();
+    
+    console.log("?",stype + sword + page);
+    
+    
+    var queryStr = "?stype=" + stype + "&sword=" + sword + "&page=" + page
+    		
+    console.log("queryStr", queryStr);
+    
     var body = $("#boardList");
     $.ajax({
         type: "get",
-        url: "/hku/student/studyBoardList",
+        url: `/hku/student/studyBoardList` + queryStr,
         dataType: "json",
         beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
         success: function(res) {
@@ -225,7 +237,7 @@ function boardList() {
 								<div class="study-name">\${res[i].studyName} ]</div>
 							</div>
 							<hr>
-							<div class="study-title">정처기 스터디 같이 하실 분??</div>
+							<div class="study-title">\${res[i].stboContent}</div>
 							<hr>
 							<div class="study-bottom">
 								<div class="bottom1">
