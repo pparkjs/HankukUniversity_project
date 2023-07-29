@@ -1,5 +1,6 @@
 package kr.or.hku.admin.controller;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -10,13 +11,16 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -531,5 +535,44 @@ public class UserManagementController {
 		}
 		
 		return entity;
+	}
+	
+	@GetMapping("/poiDownload")
+//	@ResponseBody
+	public ResponseEntity<byte[]> poiDownload(){
+		log.info("poiDownload 실행...!");
+		HttpHeaders headers = new HttpHeaders();
+        InputStream in = null;
+        ResponseEntity<byte[]> entity = null;
+		
+        String savePdfPath = "C:\\uploadfiles\\poi\\students_form.xlsx";
+        String pdfName = "students_form.xlsx";
+        
+		// 다운로드만 바로 실행시켜주는 부분
+      try {
+         // 파일을 읽기 위해 FileInputStream을 생성합니다.
+         in = new FileInputStream(savePdfPath);
+
+         // 응답 헤더를 설정합니다.
+         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+         headers.add("Content-Disposition",
+               "attachment; filename=\"" + new String(pdfName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
+
+         // ResponseEntity를 사용하여 응답 본문과 헤더를 포함한 HTTP 응답을 생성합니다.
+         // IOUtils.toByteArray(in)를 사용하여 InputStream을 바이트 배열로 변환하여 응답 본문으로 설정합니다.
+         // HttpStatus.CREATED를 사용하여 상태 코드 201(CREATED)을 설정합니다.
+         entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+      }catch (Exception e) {
+         e.printStackTrace();	
+         entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+      } finally {
+         try {
+            in.close();
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
+      }
+      return entity;
+		
 	}
 }

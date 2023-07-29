@@ -156,22 +156,24 @@
 												class="text-danger"></span>
 											</label>
 											<div class="col-lg-4">
-												<ul
-													class="mailbox-attachments d-flex align-items-stretch clearfix">
-													<li>
-														<div class="mailbox-attachment-info">
-															<a href="#" class="mailbox-attachment-name"> 
-															<i class="fas fa-paperclip"></i> 
-															</a> <span class="mailbox-attachment-size clearfix mt-1">
-																<span>파일다운로드</span> <a href="다운로드 url"> <span
-																	class="btn btn-default btn-sm float-right"> <i
-																		class="fas fa-download"></i>
+												<c:forEach items="${assignVo.fileList }" var="file">
+													<ul
+														class="mailbox-attachments d-flex align-items-stretch clearfix">
+														<li>
+															<div class="mailbox-attachment-info">
+																<a href="/download${file.filePath }" class="mailbox-attachment-name"> 
+																<i class="fas fa-paperclip"></i> 
+																</a> <span class="mailbox-attachment-size clearfix mt-1">
+																	<span>${file.fileOrgnlFileNm }</span> <a href="/download${file.filePath }" download="${file.fileOrgnlFileNm }"> <span
+																		class="btn btn-default btn-sm float-right"> <i
+																			class="fas fa-download"></i>
+																	</span>
+																</a>
 																</span>
-															</a>
-															</span>
-														</div>
-													</li>
-												</ul>
+															</div>
+														</li>
+													</ul>
+												</c:forEach>
 											</div>
 										</div>
 									</div>
@@ -248,12 +250,12 @@ function assignList(){
 	}
 
 	$.ajax({
-		url : "/hku/professor/assignmentDetail",  
+		url : "/hku/professor/assignmentDetail", 
 		type : "get",    
 		data : assObj,
 		dataType : "json",  
 		success : function(res){
-			console.log(res);
+			console.log("전달받은 데이터", res);
 
 			data = '';
 			for(var i = 0; i < res.length; i++){
@@ -267,11 +269,13 @@ function assignList(){
 					data += `<td> </td>
 							 <td> </td>` 
 				} else {
-					data += `<td><span>\${res[i].asmsbDt }</span></td>
+					data += `<td><span>\${res[i].asmsbDt }</span></td>`
 						if(res[i].fileList != null && res[i].fileList != '' ){
 							for(let j = 0; j < res[i].fileList.length; j++){
-								 <td>
-								 	<a href="/download${res[i].fileList[j].filePath}" download="${res[i].fileList[j].fileOrgnlFileNm}"
+								let realFilePath = res[i].fileList[j].filePath;
+ 
+								data += `<td>
+								 	<a href="/download\${realFilePath}" download="\${res[i].fileList[j].fileOrgnlFileNm}"
 								 		class="btn btn-primary btn-sm">파일다운로드</a>
 								 </td>`
 							}
@@ -327,6 +331,9 @@ function giveScore(data){
 		data : JSON.stringify(data),
 		contentType : "application/json; charset=utf-8",
 		dataType : 'text',
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+		},
 		success : function(res){
 			if(res == "success"){
 				swal("", "성적 부여가 완료되었습니다!", "success");
@@ -336,6 +343,7 @@ function giveScore(data){
 				swal ("", "서버 에러입니다!","error");
 			}
 		}
+
 	})
 }
 	

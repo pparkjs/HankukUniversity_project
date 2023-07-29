@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.vo.AssignmentVO;
 import kr.or.hku.classroom.vo.AttendanceVO;
 
@@ -22,7 +23,15 @@ public interface AttendanceMapper {
 	// 출석 변경 
 	public int updateAttendance(AttendanceVO vo);
 	
-
+	// 출석 이의신청 리스트
+	public List<AttendanceVO> attendanceDmrList(String lecapNo);
+	
+	// 출석 이의신청 승인
+	public int attendanceAppv(String atdcNo);  
+	
+	// 출석 이의신청 반려
+	public int attendanceRej(String atdcNo);
+		
 	
 // ------------------------ 학생 출석 이의신청 ----------------------------// 	
 	// 출석번호 가져오기

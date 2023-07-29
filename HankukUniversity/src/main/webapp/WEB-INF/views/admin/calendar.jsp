@@ -65,7 +65,21 @@ input[name=color]:checked + label{
 .fc .fc-daygrid-body td {
 	height:65px;
 }
-
+.fc .fc-daygrid-day-number {
+    padding: 4px;
+    position: relative;
+    z-index: 4;
+    color: black;
+    font-size: 17px;
+    font-weight: 600;
+}
+.fc .fc-col-header-cell-cushion {
+    display: inline-block;
+    padding: 2px 4px;
+    color: black;
+    font-size: 16px;
+    font-weight: 600;
+}
 </style>
 <div class="content-body">
 	<div class="page-titles">
