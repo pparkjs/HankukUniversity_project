@@ -144,3 +144,7 @@ h5 {
 	display: flex;
     justify-content: flex-end;
 }
+
+.content-body .pay{
+    padding-top: 1.0rem;
+}

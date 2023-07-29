@@ -141,23 +141,23 @@
 			style="width: 96.5%; margin: 0 auto; border: 1px;">
 			<thead>
 				<tr>
-					<th rowspan="2">이수연도</th>
+					<th rowspan="2" style="height:40px;">이수연도</th>
 					<th rowspan="2">이수학기</th>
 					<th rowspan="2">이수학과</th>
 					<th rowspan="2">이수구분</th>
 					<th rowspan="2">교과목명</th>
 					<th rowspan="2">교과코드</th>
 					<th rowspan="2">이수학점</th>
-					<th colspan="4">평가내용</th>
+<!-- 					<th colspan="4">평가내용</th> -->
 					<th rowspan="2">등급</th>
 					<th rowspan="2">평점</th>
 				</tr>
-				<tr>
-					<th>과제</th>
-					<th>출석</th>
-					<th>중간</th>
-					<th>기말</th>
-				</tr>
+<!-- 				<tr> -->
+<!-- 					<th>과제</th> -->
+<!-- 					<th>출석</th> -->
+<!-- 					<th>중간</th> -->
+<!-- 					<th>기말</th> -->
+<!-- 				</tr> -->
 			</thead>
 			<tbody id="allGradeTb">
 				<c:forEach items="${map.subject}" var="subject">
@@ -170,10 +170,10 @@
 						<td style="width: 300px;">${subject.subNm}</td>
 						<td>${subject.subNo}</td>
 						<td>${subject.crsEarnedCrd}</td>
-						<td>생략</td>
-						<td>생략</td>
-						<td>생략</td>
-						<td>생략</td>
+<!-- 						<td>생략</td> -->
+<!-- 						<td>생략</td> -->
+<!-- 						<td>생략</td> -->
+<!-- 						<td>생략</td> -->
 						<td>생략</td>
 						<td>${subject.crsScr}</td>
 					</tr>
@@ -309,10 +309,6 @@ function getAllGrade(){
 		      			gradeStr += '<td style="width:300px;">' + res[i].subNm+'</td>';
 		      			gradeStr += '<td>' + res[i].subNo+'</td>';
 		      			gradeStr += '<td>' + res[i].subCrd+'</td>';
-		      			gradeStr += '<td>' + '생략' +'</td>';
-		      			gradeStr += '<td>' + '생략' +'</td>';
-		      			gradeStr += '<td>' + '생략' +'</td>';
-		      			gradeStr += '<td>' + '생략' +'</td>';
 		      			gradeStr += '<td>' + '생략' +'</td>';
 		      			gradeStr += '<td>' + res[i].crsScr+'</td>';
 		      			gradeStr += '</tr>'

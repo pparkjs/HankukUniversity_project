@@ -6,6 +6,11 @@
 <link rel="stylesheet" href="/css/table.css">
 <link rel="stylesheet" href="/css/pro-jh.css">
 <style>
+.card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #800000;
+}
 .table-wrap {
     overflow: scroll;
     height: 307px;
@@ -69,8 +74,9 @@
 		</div>
 		<div class="card" id="card-title-1" style="height: 355px;">
 			<div class="card-header border-0 pb-0 ">
-				<h5 class="card-title">휴학, 복학 신청관리</h5>
+				<h5 class="card-title">학적 변동 신청 관리</h5>
 			</div>
+			<hr style="margin: 0rem; margin-top: 1rem; margin-bottom: 0.5rem;"/>
 			<div class="card-body">
 				<div class="tab-content">
 					<div class="tab-pane fade show active" id="profile1">

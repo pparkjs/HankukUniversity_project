@@ -30,6 +30,7 @@ public class StdGradeCheckServiceImpl implements StdGradeCheckService {
 		Map<String,List<?>> map = new HashMap<String, List<?>>();
 		map.put("stdInfo", gradeCheckMapper.getStudentInfo(stdNo));
 		map.put("subject",gradeCheckMapper.getSubjectInfo(stdNo));
+		map.put("dmr",gradeCheckMapper.getDmrList(stdNo));
 		return map;
 	}
 	

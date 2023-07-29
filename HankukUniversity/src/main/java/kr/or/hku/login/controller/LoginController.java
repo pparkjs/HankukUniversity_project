@@ -72,7 +72,7 @@ public class LoginController {
 		UsersVO userVo = loginService.loginUser(users.getUsername());
 		
 		System.out.println("첫번째로긴"+userVo.getUserFirstLogin());
-		if(userVo.getUserFirstLogin().equals("0") && !firstFlag) {
+		if(userVo.getUserFirstLogin().equals("0")) {
 			model.addAttribute("first", "0");
 			firstFlag = true;
 		}
@@ -97,7 +97,7 @@ public class LoginController {
 		}else{//사용자식별코드가 직원일경우
 			EmployeeVO empVo = loginService.employeeUser(userVo.getUserNo());
 			session.setAttribute("emp", empVo);
-			goPage = "admin/main";
+			goPage = "redirect:/hku/admin/totalChart";
 		}
 		return goPage;
 	}
