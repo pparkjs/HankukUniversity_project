@@ -6,6 +6,11 @@
 .card {
     height: calc(100% - 40px);
 }
+.card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #800000;
+}
 .content-body .dd {
 	padding-top: 0;
 }
@@ -95,11 +100,11 @@ ul{
 .nav-link {
 	color: #800000;
 }
-.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
-    color: #ffffff;
-    background-color: #800000;
-    border-color: #800000;
-}
+/* .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link { */
+/*     color: #ffffff; */
+/*     background-color: #800000; */
+/*     border-color: #800000; */
+/* } */
 .nav-link:hover, .nav-link:focus {
     color: #800000
 }
