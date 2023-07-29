@@ -97,7 +97,7 @@ public class LoginController {
 		}else{//사용자식별코드가 직원일경우
 			EmployeeVO empVo = loginService.employeeUser(userVo.getUserNo());
 			session.setAttribute("emp", empVo);
-			goPage = "admin/main";
+			goPage = "redirect:/hku/admin/totalChart";
 		}
 		return goPage;
 	}
