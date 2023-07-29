@@ -80,10 +80,11 @@
 </div>
 <script>
 $(function(){
+	
 	var backBtn = $("#backBtn");
 	backBtn.on("click", function(){
 		var lecapNo = $("#lecapNo").val();
-		location.href="/hku/student/classroomMain/" + lecapNo;
+		location.href="/hku/student/stdClassroomMain/" + lecapNo;
 	})
 })
 

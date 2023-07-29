@@ -2,7 +2,8 @@
 
 .table .thead-dark th {
 	color: #fff;
-	background-color: #6e6e6e;
+/* 	background-color: #6e6e6e; */
+	background-color: maroon;
 }
 
 .table {

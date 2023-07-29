@@ -10,7 +10,7 @@ import lombok.ToString;
 public class ScholarshipVO {
 	private String sclsCd;
 	private String sclsNm;
-	private long sclsAmt;
+	private String sclsAmt;
 	private String sclsAplyBgngDt;
 	private String sclsAplyEndDt;
 	private String sclsTerms;

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.security.PermitAll;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -26,7 +28,8 @@ public class AlarmController {
 	@Autowired
 	private CommonService commonService;
 	
-	// 나의 알람 리스트 가져오기
+	// 나의 알람 리스트| 가져오기
+	@PermitAll
 	@ResponseBody
 	@GetMapping("/getAlarmList")
 	public List<AlarmVO> getAlarmList(){

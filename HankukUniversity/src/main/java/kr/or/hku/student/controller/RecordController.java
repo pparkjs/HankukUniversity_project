@@ -47,18 +47,17 @@ public class RecordController {
 	    StudentVO student = service.recordInfo(stdNo);
 	    List<RecordVO> recordList = service.recordChanged(stdNo);
 	    
-	    for (RecordVO record : recordList) {
-            // RecordVO 객체의 필드를 가져와서 log.info로 출력
-            log.info("RecordVO 객체 출력: " + record.toString());
-            // 또는, 원하는 필드를 개별적으로 출력할 수도 있습니다.
-            log.info("필드1: " + record.getChangeRsn());
-            // 필드1, 필드2는 RecordVO에 존재하는 실제 필드명으로 대체되어야 합니다.
+	    
+	    String comCd = student.getBankCd();
+	    StudentVO bankNm = service.getBankNm(comCd);
+	    
+	    for (RecordVO record : recordList) {     
+            
         }
-	    if (student == null) {
-	        return "redirect:/main/portal";
-	    }
+	    
 	    model.addAttribute("student", student);
 	    model.addAttribute("recordList", recordList);
+	    model.addAttribute("bankNm", bankNm);
 	    
 	    return "student/record";
 	}

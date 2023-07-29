@@ -4,16 +4,20 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.hku.admin.mapper.UserMapper;
 import kr.or.hku.admin.service.UserService;
+import kr.or.hku.admin.vo.SmsTemplateVO;
+import kr.or.hku.admin.vo.SmsVO;
 import kr.or.hku.admin.vo.UserVO;
 import kr.or.hku.common.vo.SearchInfoVO;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +35,72 @@ public class UserServiceImpl implements UserService {
 	private String resourcePath;
 	
 	@Override
+	public List<SmsVO> getSmsDetailList() {
+		return mapper.getSmsDetailList();
+	}
+	
+	@Override
 	public int insertUser(UserVO userVO) {
 		return mapper.insertUser(userVO);
+	}
+	
+	@Override
+	public List<SmsTemplateVO> getSmsTemplateList() {
+		return mapper.getSmsTemplateList();
+	}
+	
+	@Transactional
+	@Override
+	public int sendMsgStatus(Map<String, Object> map) {
+		List<Map<String, String>> userList = (List<Map<String, String>>) map.get("userList");
+		String msg = (String) map.get("msg");
+		String empName = (String) map.get("empName");
+		
+		int res = 0;
+		for (Map<String, String> userMap : userList) { // 문자 추가 한만큼 반복
+			String userNo = userMap.get("userNo");
+			SmsVO smsVO = new SmsVO(userNo, empName, msg);
+			res = mapper.sendMsgStatus(smsVO);
+			if (res == 0) {
+				break;
+			}
+		}
+		return res;
+	}
+	
+	@Override
+	public String getMyName(String username) {
+		return mapper.getMyName(username);
+	}
+	
+	@Override
+	public SmsTemplateVO settingMsg(SmsTemplateVO paramVO) {
+		return mapper.settingMsg(paramVO);
+	}
+	
+	@Override
+	public List<Map<String, String>> getEmpList(Map<String, String> paramMap) {
+		return mapper.getEmpList(paramMap);
+	}
+
+	@Override
+	public List<Map<String, String>> getProList(Map<String, String> paramMap) {
+		return mapper.getProList(paramMap);
+	}
+
+	@Override
+	public List<Map<String, String>> getStdList(Map<String, String> paramMap) {
+		return mapper.getStdList(paramMap);
+	}
+	
+	@Override
+	public List<Map<String, String>> getDeptList() {
+		return mapper.getDeptList();
+	}
+	
+	@Override
+	public List<Map<String, String>> getEmpDeptList() {
+		return mapper.getEmpDeptList();
 	}
 
 	@Override

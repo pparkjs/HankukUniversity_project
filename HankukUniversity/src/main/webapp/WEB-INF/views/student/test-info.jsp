@@ -15,7 +15,7 @@
 				<h5 class="card-title" style="color: maroon;  font-weight: 900;">응시 과목 정보</h5>
 			</div>
 			<hr>
-			<div class="card-body" style="padding-top: 0px; display: flex;">
+			<div class="card-body" id="card-test" style="padding-top: 0px; display: flex;">
 	
 			</div>
 		</div>
@@ -67,7 +67,7 @@ $(function(){
 var childWindow;
 
 function testList(){
-	var cardBody = $(".card-body");
+	var cardBody = $("#card-test");
 
 	var obj = {
 		stdNo:"${std.stdNo}"

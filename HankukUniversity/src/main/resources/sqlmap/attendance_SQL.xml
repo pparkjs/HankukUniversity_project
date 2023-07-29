@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="kr.or.hku.classroom.mapper.AttendanceMapper">
 
-		<!-- 해당 과목 수강하는 학생 리스트 가져오기 -->
+		<!-- 교수 / 해당 과목 수강하는 학생 리스트 가져오기 -->
 	 	<select id="getStdList" resultType="attendanceVO" parameterType="string">
 	 	/*kr.or.hku.classroom.mapper.AttendanceMapper.getStdList */
 			SELECT
@@ -20,7 +20,7 @@
 			  l.lecap_no = #{lecapNo}
 		</select>
  		
- 		<!-- 학생 출석 여부 리스트 가져오기  -->
+ 		<!-- 교수 / 학생 출석 여부 리스트 가져오기  -->
  		<select id="getStdAttendanceList" parameterType="attendanceVO" resultType="attendanceVO">
  		/*kr.or.hku.classroom.mapper.AttendanceMapper.getStdAttendanceList */
  			select 
@@ -32,7 +32,7 @@
  			AND std_no = #{stdNo}
  		</select>
  		
- 		<!-- 출석 변경  -->
+ 		<!-- 교수 / 출석 변경  -->
 		<update id="updateAttendance" parameterType="attendanceVO">
 		/*kr.or.hku.classroom.mapper.AttendanceMapper.updateAttendance */
 			UPDATE attendance  
@@ -46,7 +46,41 @@
 	        WHERE atdc_no = #{atdcNo} 
 		</update>
 		
-		<!-- 학생 출석 이의신청위한 출석번호 가져오기  -->
+		<!-- 교수 / 이의신청 현황 리스트 -->
+		<select id="attendanceDmrList" resultType="attendanceVO" parameterType="String">
+		/*kr.or.hku.classroom.mapper.AttendanceMapper.attendanceDmrList */
+			SELECT
+              ad.atdc_no,
+              ad.atch_file_no,
+              ad.atdc_dmr_rsn,
+              a.std_no,
+              a.atdc_week,             
+              ad.stdc_dmr_stts_cd,
+              s.std_nm,
+              d.dept_nm
+           FROM attendance a
+           JOIN attendance_dmr ad ON ad.atdc_no = a.atdc_no
+           JOIN student s ON s.std_no = a.std_no
+           JOIN department d ON d.dept_cd = s.dept_cd
+           WHERE a.lecap_no = #{lecapNo}
+           ORDER BY a.atdc_no desc
+		</select>
+		
+		<update id="attendanceAppv" parameterType="string">
+		/*kr.or.hku.classroom.mapper.AttendanceMapper.attendanceAppv */
+			UPDATE attendance_dmr
+			SET stdc_dmr_stts_cd = 'appv'
+			WHERE atdc_no = #{atdcNo}
+		</update>
+		
+		<update id="attendanceRej" parameterType="string">
+		/*kr.or.hku.classroom.mapper.AttendanceMapper.attendanceRej */
+			UPDATE attendance_dmr
+			SET stdc_dmr_stts_cd = 'rej'
+			WHERE atdc_no = #{atdcNo}
+		</update>
+	
+		<!-- 학생 /  출석 이의신청위한 출석번호 가져오기  -->
 		<select id="getAtdcNo" resultType="map" parameterType="attendanceVO">
 		/*kr.or.hku.classroom.mapper.AttendanceMapper.getAtdcNo */
 			 SELECT	
@@ -60,7 +94,7 @@
 	        AND lecap_no = #{lecapNo}
 		</select>
 		
-		<!-- 이의신청 submit  -->
+		<!-- 학생 / 이의신청 submit  -->
 		<insert id="submitAttendDmr" parameterType="attendanceVO">
 		/*kr.or.hku.classroom.mapper.AttendanceMapper.submitAttendDmr */
 			INSERT INTO attendance_dmr(
@@ -78,7 +112,7 @@
 				
 		</insert>
 		
-		<!-- 이의신청 현황 리스트 -->
+		<!-- 학생 / 이의신청 현황 리스트 -->
 		<select id="attenDmrList" parameterType="attendanceVO" resultType="attendanceVO">
 		/*kr.or.hku.classroom.mapper.AttendanceMapper.attenDmrList */
 			 SELECT 
@@ -92,7 +126,7 @@
             and b.lecap_no = #{lecapNo}
 		</select>
 		
-		<!-- 이미 이의신청했으면 1 아니면 0 -->
+		<!-- 학생 / 이미 이의신청했으면 1 아니면 0 -->
 		<select id="dmrCheck" parameterType="int" resultType="int">
 		/*kr.or.hku.classroom.mapper.AttendanceMapper.dmrCheck */
 			SELECT COUNT(*) 
@@ -100,8 +134,9 @@
 			WHERE atdc_no = #{atdcNo}
 		</select>
 		
-		<!-- 이의신청 상세 -->
+		<!-- 학생 / 이의신청 상세 -->
 		<select id="dmrDetail" resultType="attendanceVO" parameterType="int">
+		/*kr.or.hku.classroom.mapper.AttendanceMapper.dmrDetail */
 			 SELECT 
                 A.ATDC_WEEK,
                 AD.ATDC_DMR_RSN,
@@ -111,8 +146,9 @@
             WHERE A.ATDC_NO = #{atdcNo}
 		</select>
 		
-		<!-- 이의신청 내역 삭제  -->
+		<!-- 학생 / 이의신청 내역 삭제  -->
 		<delete id="deleteAttendDmr" parameterType="int">
+		/*kr.or.hku.classroom.mapper.AttendanceMapper.deleteAttendDmr */
 			DELETE FROM attendance_dmr
 			WHERE atdc_no = #{atdcNo}
 		</delete>

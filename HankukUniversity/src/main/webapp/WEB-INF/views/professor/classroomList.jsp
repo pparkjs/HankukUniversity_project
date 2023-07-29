@@ -37,6 +37,15 @@
 .filter-option {
 	font-size: 16px;
 }
+.active-projects thead tr th {
+    font-size: 18px;
+    padding: 0.625rem 1rem;
+    font-weight: 500;
+    background-color: #800000;
+    border: 0;
+    vertical-align: middle;
+    color: white;
+}
 </style>
 
 <div class="content-body">
@@ -146,7 +155,7 @@ $(function(){
 	 tBody.on("click", '.enterGrade', function(){
 		 console.log("this!!!", $(this).parents('tr').find('svg').attr('id'));
 		 var lecapNo = $(this).parents('tr').find('svg').attr('id');
-		 location.href = `/hku/professor/stdGradeList/\${lecapNo}`;
+		 location.href = `/hku/professor/gradeManageTable/\${lecapNo}`;
 	 })
 
 }) 

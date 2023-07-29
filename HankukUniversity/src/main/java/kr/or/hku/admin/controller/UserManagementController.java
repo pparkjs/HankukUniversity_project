@@ -1,5 +1,6 @@
 package kr.or.hku.admin.controller;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -10,28 +11,40 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.or.hku.ServiceResult;
 import kr.or.hku.admin.service.UserService;
 import kr.or.hku.admin.vo.DepartmentVO;
+import kr.or.hku.admin.vo.SmsTemplateVO;
+import kr.or.hku.admin.vo.SmsVO;
 import kr.or.hku.admin.vo.UserVO;
+import kr.or.hku.common.service.CommonSMSService;
 import kr.or.hku.common.service.CommonService;
 import kr.or.hku.common.vo.CommonVO;
 import kr.or.hku.common.vo.SearchInfoVO;
@@ -52,6 +65,86 @@ public class UserManagementController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private CommonSMSService smsService;
+	 
+	// 성히꺼 // 
+	@Transactional
+	@ResponseBody
+	@PostMapping("/send-text-msg")
+	public int sendTextMsg(@RequestBody Map<String, Object> map, HttpSession session) {
+		log.info("전달 받은 파라미터 ! " + map.toString());
+		List<Map<String, String>> userList = (List<Map<String, String>>) map.get("userList");
+		String msg = (String) map.get("msg");
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String empName = userService.getMyName(user.getUsername());
+		
+		ServiceResult res = null;
+		int sendMsgStatus = 0;
+		map.put("empName", empName);
+		if( userList.size() > 0) {
+			res = smsService.sendShMsg(userList, msg);
+		}
+		if(res != null && res.equals(ServiceResult.OK)) {
+			sendMsgStatus = userService.sendMsgStatus(map);
+		}
+		
+		return sendMsgStatus;
+	}
+	
+	
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping("/send-text-msg")
+	public String showSendTextMsgPage(Model model) {
+		List<Map<String, String>> depList = userService.getDeptList();
+		List<Map<String, String>> empDeptList = userService.getEmpDeptList();
+		List<SmsTemplateVO> smsTemplateList = userService.getSmsTemplateList();
+		List<SmsVO> smsDetailList = userService.getSmsDetailList();
+		model.addAttribute("smsTemplateList", smsTemplateList);
+		model.addAttribute("depList", depList);
+		model.addAttribute("empDeptList", empDeptList);
+		model.addAttribute("smsDetailList", smsDetailList);
+		return "admin/sendTextMsg";
+	}
+	
+	@ResponseBody
+	@GetMapping("/setting-msg")
+	public SmsTemplateVO settingMsg(SmsTemplateVO paramVO) {
+		return userService.settingMsg(paramVO);
+	}
+	
+	@ResponseBody
+	@GetMapping("/getAllUsers-list")
+	public Map<String, Object> getAllUsersList(@RequestParam Map<String, String> paramMap) {
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		
+		String userClassification = paramMap.get("who"); 
+		
+		List<Map<String, String>> stdList = null;
+		List<Map<String, String>> proList = null;
+		List<Map<String, String>> empList = null;
+		
+		if (userClassification.equals("all")) {
+			stdList = userService.getStdList(paramMap);
+			proList = userService.getProList(paramMap);
+			empList = userService.getEmpList(paramMap);
+		}else if (userClassification.equals("std")) {
+			stdList = userService.getStdList(paramMap);
+		}else if (userClassification.equals("pro")) {
+			proList = userService.getProList(paramMap);
+		}else if (userClassification.equals("emp")) {
+			empList = userService.getEmpList(paramMap);
+		}
+		
+		resMap.put("stdList", stdList);
+		resMap.put("proList", proList);
+		resMap.put("empList", empList);
+		
+		return resMap;
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/user-management")
 	public String userManagement(Model model) {
 		log.info("userManagement() 실행...!");
@@ -327,6 +420,7 @@ public class UserManagementController {
 		return "admin/excelUserInsert";
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/excel-insert")
 	public String excelInsert(HttpServletRequest request, RedirectAttributes redirectAttribute){
 		log.info("excel-insert() 실행...!");
@@ -441,5 +535,44 @@ public class UserManagementController {
 		}
 		
 		return entity;
+	}
+	
+	@GetMapping("/poiDownload")
+//	@ResponseBody
+	public ResponseEntity<byte[]> poiDownload(){
+		log.info("poiDownload 실행...!");
+		HttpHeaders headers = new HttpHeaders();
+        InputStream in = null;
+        ResponseEntity<byte[]> entity = null;
+		
+        String savePdfPath = "C:\\uploadfiles\\poi\\students_form.xlsx";
+        String pdfName = "students_form.xlsx";
+        
+		// 다운로드만 바로 실행시켜주는 부분
+      try {
+         // 파일을 읽기 위해 FileInputStream을 생성합니다.
+         in = new FileInputStream(savePdfPath);
+
+         // 응답 헤더를 설정합니다.
+         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+         headers.add("Content-Disposition",
+               "attachment; filename=\"" + new String(pdfName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
+
+         // ResponseEntity를 사용하여 응답 본문과 헤더를 포함한 HTTP 응답을 생성합니다.
+         // IOUtils.toByteArray(in)를 사용하여 InputStream을 바이트 배열로 변환하여 응답 본문으로 설정합니다.
+         // HttpStatus.CREATED를 사용하여 상태 코드 201(CREATED)을 설정합니다.
+         entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+      }catch (Exception e) {
+         e.printStackTrace();	
+         entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+      } finally {
+         try {
+            in.close();
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
+      }
+      return entity;
+		
 	}
 }

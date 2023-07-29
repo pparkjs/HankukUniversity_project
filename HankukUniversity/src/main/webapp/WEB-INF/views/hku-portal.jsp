@@ -83,6 +83,7 @@
 .toast-success{
 /*  	background: black;  */
 }
+
 #preloader {
   height: 100%;
   position: fixed;
@@ -176,8 +177,6 @@
 	</div>
 </div>
 <c:if test="${not empty first}">
-	<c:remove var="first" scope="request"/>
-	<c:remove var="first" scope="session"/>
 	<script type="text/javascript">
 		window.open("/main/changePopup","_blank","width=400,height=450,left=650,top=350");
 	</script>
@@ -349,6 +348,4 @@ refresh.addEventListener("click", function() {
     time = 10799; 
     x = setInterval(updateTimer, 1000); 
 });
-
-
 </script>

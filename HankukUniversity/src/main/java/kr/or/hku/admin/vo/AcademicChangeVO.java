@@ -12,6 +12,7 @@ public class AcademicChangeVO {
 	private String stdNo;
 	private String stdNm;
 	private String changeTypeCd;
+	private String changeTypeNm;
 	private String changeRsn;
 	private String changeAplyDt;
 	private String changeStartYr;

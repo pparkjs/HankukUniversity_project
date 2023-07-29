@@ -129,4 +129,33 @@
  			scholarship_aply
  		WHERE sclsap_no = #{sclsapNo}
  	</delete>
+ 	
+ 	<select id="selectSclsapPayList" parameterType="map" resultType="sclsApPayVO">
+ 		SELECT
+		    a.sclsap_no
+		    ,a.scls_cd
+		    ,c.scls_nm
+		    ,c.scls_amt
+		    ,a.std_no
+		    ,(TO_NUMBER(TO_CHAR(a.sclsap_dt, 'yyyy')) - TO_NUMBER(TO_CHAR(b.std_mtcltn_yr)) + 1) AS grade
+		    ,a.sclsap_dt
+		    ,a.sclsap_yr
+		    ,a.sclsap_sem
+		    ,a.sclsap_pay_dt
+		FROM 
+		    scholarship_aply a INNER JOIN student b ON(a.std_no=b.std_no)
+		    INNER JOIN scholarship c ON(a.scls_cd=c.scls_cd)
+		WHERE
+		    a.std_no = #{stdNo} AND a.aprv_stts_cd = 'appv'
+		    <if test="sclsYear != null and sclsYear != ''">
+				and (a.sclsap_yr = #{sclsYear})
+			</if>
+			<if test="sclsSem != null and sclsSem != ''">
+				and (a.sclsap_sem = #{sclsSem})
+			</if>
+			<if test="sclsNm != null and sclsNm != ''">
+				and (c.scls_nm like '%'||#{sclsNm}||'%')
+			</if>
+		ORDER BY a.sclsap_no DESC
+ 	</select>
  </mapper>

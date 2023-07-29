@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.hku.common.service.CommonFileService;
 import kr.or.hku.common.vo.AttachFileVO;
@@ -62,7 +63,10 @@ public class PortalController {
 			, Model model) {
 		log.info("학생 공지 상세보기 전달 파라미터 => " + paramMap.toString());
 		DetailNoticeVO noticeVO = portalService.getNoticeDetail(paramMap);
-		int fileNo = noticeVO.getAtchFileNo();
+		if (noticeVO == null) {
+			return "redirect:/hku/portal/all-notice-list";
+		}
+		int fileNo = noticeVO.getAtchFileNo(); 
 		List<AttachFileVO> fileList = fileService.getFileList(fileNo);
 		noticeVO.setFileList(fileList);
 		model.addAttribute("notice", noticeVO);

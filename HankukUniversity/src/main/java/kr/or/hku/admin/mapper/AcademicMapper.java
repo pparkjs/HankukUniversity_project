@@ -50,4 +50,6 @@ public interface AcademicMapper {
 
 	public int academicProccess(AcademicChangeVO academicChangeVO);
 
+	public int academicStatus(AcademicChangeVO academicChangeVO);
+
 }

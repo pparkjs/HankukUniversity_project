@@ -66,6 +66,9 @@ public interface StudyMapper {
 	public void deleteUnreadMsg(StudyVO studyVo);
 	//해당 채팅방의 메세지 리스트
 	public List<StudyVO> messageList(int studyNo);
+	
+	
+	// 스터디 게시판	
 	// 스터디 게시판 리스트
 	public List<StudyVO> studyBoardList();
 	// 총 게시글 개수
