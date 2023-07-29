@@ -314,6 +314,7 @@
 
     if(location.href.includes("?error")){
         swal("올바르지않은 접근입니다.");
+        //127.0.0.1(localhost)
     }
 </script>
 

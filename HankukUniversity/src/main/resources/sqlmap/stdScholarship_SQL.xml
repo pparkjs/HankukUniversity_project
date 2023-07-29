@@ -79,4 +79,54 @@
 		WHERE
 		    sclsap_no = #{sclsapNo}
  	</select>
+ 	
+ 	<select id="getAtchFileInfo" parameterType="map" resultType="attachFileVO">
+ 		SELECT 
+ 			atch_file_no
+			,atch_file_seq
+			,biz_type
+			,file_path
+			,file_orgnl_file_nm
+			,file_size
+			,file_cont_type
+			,file_down_cnt
+ 		FROM 
+ 			attach_file
+ 		WHERE
+ 			atch_file_no = #{atchFileNo} AND atch_file_seq = #{atchFileSeq}
+ 	</select>
+ 	
+ 	<delete id="deleteSclsAplyFile" parameterType="map">
+ 		DELETE FROM 
+ 			attach_file
+ 		WHERE atch_file_no = #{atchFileNo} AND atch_file_seq = #{atchFileSeq}
+ 	</delete>
+ 	
+ 	<select id="getAtchFileInfoList" parameterType="string" resultType="attachFileVO">
+ 		SELECT 
+ 			atch_file_no
+			,atch_file_seq
+			,biz_type
+			,file_path
+			,file_orgnl_file_nm
+			,file_size
+			,file_cont_type
+			,file_down_cnt
+ 		FROM 
+ 			attach_file
+ 		WHERE
+ 			atch_file_no = #{atchFileNo}
+ 	</select>
+ 	
+ 	<delete id="deleteSclsAplyFile2" parameterType="string">
+ 		DELETE FROM 
+ 			attach_file
+ 		WHERE atch_file_no = #{atchFileNo}
+ 	</delete>
+ 	
+ 	<delete id="deleteSclsAply" parameterType="string">
+ 		DELETE FROM 
+ 			scholarship_aply
+ 		WHERE sclsap_no = #{sclsapNo}
+ 	</delete>
  </mapper>

@@ -2,6 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="/css/table.css">
+<style>
+.input-group{
+	width: 19%;
+	margin: 10px;
+}
+</style>
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
@@ -15,8 +21,8 @@
 				<h5 class="card-title">이수학점 계</h5>
 			</div>
 			<div style="margin-top: 10px;">
-				<div class="col-xl-12">
-						<table class="table" style="margin-top: 0px; margin-bottom: 0px; width: 95%;"">
+				<div class="col-xl-12" style="margin-left: 40px;">
+						<table class="table" style="margin-top: 0px; margin-bottom: 0px; width: 95%;">
 							<thead class="thead-dark">
 								<tr>
 									<th style="width: 120px;">과정</th>
@@ -65,7 +71,7 @@
 								<tr>
 									<td>70</td>
 									<td>50</td>
-									<td>120</td>
+									<td>130</td>
 									
 									<td>${student.stdMjrCrd }</td>
 									<td>${student.stdCtrlCrd }</td>
@@ -93,25 +99,23 @@
 								<div class="col-md-12">
 									졸업유예 신청
 									<form name="form1" id="form1">
-										  <div class="row" style="margin: 10px;">
+										  <div class="row" style="margin: 5px; margin-left: 0px;">
 											    <div style=" display: flex; justify-content: space-between;">
-											      <div class="input-group" style="width: 25%; margin: 10px;">
-											        <label for="stdNm" style="font-size: 20px;">이름</label> &nbsp;
+											      <div class="input-group">
+											        <label for="stdNm" style="font-size: 20px; margin-top: 8px;">이름</label> &nbsp; &nbsp;
 											        <input type="text" class="form-control" value="${student.stdNm }" name="stdNm" readonly="readonly">
 											      </div>
-											      <div class="input-group" style="width: 30%; margin: 10px;">
-											        <label for="deptNm" style="font-size: 20px;">학과</label>&nbsp;
+											      <div class="input-group">
+											        <label for="deptNm" style="font-size: 20px; margin-top: 8px;">학과</label>&nbsp; &nbsp;
 											        <input type="text" class="form-control" value="${student.deptNm }" name="deptNm" readonly="readonly">
 											      </div>
-											      <div class="input-group" style="width: 35%; margin: 10px;">
-											        <label for="stdNo" style="font-size: 20px;">학번</label>&nbsp;
+											      <div class="input-group">
+											        <label for="stdNo" style="font-size: 20px; margin-top: 8px;">학번</label>&nbsp; &nbsp;
 											        <input type="text" class="form-control" value="${student.stdNo }" name="stdNo" readonly="readonly">
 											      </div>
-										    </div>
-											<div style=" display: flex; justify-content: space-between;">
-												<div class="input-group" style="width: 30%;">
+											      <div class="input-group">
 													<div style="font-size: 20px;">
-														<label class="form-label mt-3" style="font-size: 20px;">끝년도<span class="text-danger">*</span></label>&nbsp;
+														<label style="font-size: 20px; margin-top: 8px;">끝년도</label>&nbsp; &nbsp;
 													</div>
 													<select class="default-select form-control" name="changeEndYr">
 														<option value="">년도 선택</option>
@@ -125,9 +129,9 @@
 													        <option value="2030">2030</option>
 													</select>
 												</div>
-												<div class="input-group"  style="width: 30%; margin-right: 470px;">
+												<div class="input-group">
 													<div style="font-size: 20px;">
-														<label class="form-label mt-3" style="font-size: 20px;">끝학기<span class="text-danger">*</span></label>&nbsp;
+														<label style="font-size: 20px; margin-top: 8px;">끝학기</label>&nbsp; &nbsp;
 													</div>
 													<select class="default-select form-control" name="changeEndSem">
 										               <option value="" >학기선택</option>
@@ -135,7 +139,8 @@
 										               <option value="2">2 학기</option>
 										           </select>
 												</div>
-											</div>
+										    </div>
+										
 											</div>
 											<div style="font-size: 20px;">
 												<label for="changeRsn">유예 사유</label>
@@ -190,42 +195,43 @@
 								<div class="col-md-12">
 									<form name="form2">
 										<div style="display: flex; justify-content: space-between; margin: 30px; margin-top: -20px;">
-										  <div style="display: flex; flex-direction: column; width: 50%;">
+										  <div style="display: flex; flex-direction: column; width: 40%;">
 										    <div>
-												 <div class="input-group" style="width: 25%; margin: 10px;">
-													<label for="stdNm" style="font-size: 20px;">이름</label>&nbsp;
+												 <div class="input-group" style="width: 50%; margin: 10px;">
+													<label for="stdNm" style="font-size: 20px; margin-left: 40px;">이름</label>&nbsp; &nbsp;
 													<input type="text" class="form-control" value="${student.stdNm }" name="stdNm" readonly="readonly">
 												</div>
-												<div class="input-group" style="width: 30%; margin: 10px;">
-													<label for="deptNm" style="font-size: 20px;">학과</label>&nbsp;
+												<div class="input-group" style="width: 50%; margin: 10px;">
+													<label for="deptNm" style="font-size: 20px; margin-left: 40px;">학과</label>&nbsp; &nbsp;
 													<input type="text" class="form-control" value="${student.deptNm }" name="deptNm" readonly="readonly">
 												</div>
-												<div class="input-group" style="width: 35%; margin: 10px;">
-													<label for="stdNo" style="font-size: 20px;">학번</label>&nbsp;
+												<div class="input-group" style="width: 50%; margin: 10px;">
+													<label for="stdNo" style="font-size: 20px; margin-left: 40px;">학번</label>&nbsp; &nbsp;
 													<input type="text" class="form-control" value="${student.stdNo }" name="stdNo" readonly="readonly">
 												</div>
-										    	<div class="input-group" style="width: 80%; margin: 10px;">
-													<label for="stdMjrCrd" style="font-size: 20px;">전공학점</label>&nbsp;
+										    	<div class="input-group" style="width: 50%; margin: 10px;">
+													<label for="stdMjrCrd" style="font-size: 20px;">전공학점</label>&nbsp; &nbsp;
 													<input type="text" class="form-control" value="${student.stdMjrCrd }" placeholder="Surname" readonly="readonly">
 												</div>
-										    	<div class="input-group" style="width: 80%; margin: 10px;">
-													<label for="stdCtrlCrd" style="font-size: 20px;">교양학점</label>&nbsp;
+										    	<div class="input-group" style="width: 50%; margin: 10px;">
+													<label for="stdCtrlCrd" style="font-size: 20px;">교양학점</label>&nbsp; &nbsp;
 													<input type="text" class="form-control" value="${student.stdCtrlCrd }" placeholder="Surname" readonly="readonly">
 												</div>
 												<div>
-													<label for="changeRsn" style="font-size: 20px;">사유</label>
-													<textarea rows="5" class="form-control" name="changeRsn" id="changeRsn2"></textarea>
+													<label for="changeRsn" style="font-size: 20px; width: 70%;">사유</label>
+													<textarea rows="5" class="form-control" name="changeRsn" style="width: 97%;" id="changeRsn2"></textarea>
 												</div>
-										    	<div class="input-group" style="width: 80%; margin: 10px; font-size: 20px;">
+										    	<div class="input-group" style="width: 80%; margin: 10px; margin-left: 1px; font-size: 20px;justify-content: end;">
 													<input type="text" class="form-control" value="" name="rest" readonly="readonly">
+													<div style="display: flex; justify-content: end;">
+														<button type="button" class="btn btn-primary" onclick="graduteApply()">신청</button>																	
+													</div>
 												</div>
 												<br>
-												<div style="display: flex; justify-content: end; margin-right: 120px; margin-top: 10px;">
-													<button type="button" class="btn btn-primary" onclick="graduteApply()">신청</button>																	
-												</div>
+												
 										    </div>
 										  </div>
-										  <div style="font-size: 20px; width: 50%;">
+										  <div style="font-size: 20px; width: 60%; margin-left:-100px; ">
 										    공지사항 &nbsp;
 										    <textarea rows="20" class="form-control" name="changeRsn" readonly="readonly">
 	2022학년도 전기(2023.2.17. 졸업) 조기졸업 신청 안내
@@ -260,22 +266,23 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	const stdMjrCrdString = '${student.stdMjrCrd}'; 
-	const stdCtrlCrdString = '${student.stdCtrlCrd}';
+	var stdMjrCrdString = '${student.stdMjrCrd}'; 
+	var stdCtrlCrdString = '${student.stdCtrlCrd}';
 	
-	const stdMjrCrd = parseInt(stdMjrCrdString, 10);
-	const stdCtrlCrd = parseInt(stdCtrlCrdString, 10); 
+	var stdMjrCrd = parseInt(stdMjrCrdString, 10);
+	var stdCtrlCrd = parseInt(stdCtrlCrdString, 10); 
 	
 	console.log(stdMjrCrd);
 	console.log(stdCtrlCrd); 
 
-	var res = stdMjrCrd + stdCtrlCrd
 	
 	document.getElementById("res").textContent = res;
 
+	var res = stdMjrCrd + stdCtrlCrd
+
 	var inputElement = document.querySelector('input[name="rest"]');
 
-	if (res > 120) {
+	if (res > 130) {
 	  inputElement.style.color = "green";
 	  inputElement.value = "조기졸업 신청 가능한 학점입니다.";
 	} else {
@@ -286,6 +293,7 @@ $(document).ready(function() {
 })
 
 function gradutePostpone(){
+	
 	var form1 = $("#form1");
 	
 	var stdNm = document.querySelector('input[name="stdNm"]').value;
@@ -347,13 +355,7 @@ function graduteApply(){
 	var changeRsn2 = document.querySelector('#changeRsn2').value;
 
 	
-	if(changeRsn2 == ""){
-		swal({
-			title: "사유를 입력해주세요.", 
-			icon: "error"
-		});
-		return false;
-	}
+	
 
 	var reqData = {
 		
@@ -363,6 +365,15 @@ function graduteApply(){
 		"changeRsn": changeRsn2
 		}
 	if (res > 120){
+		
+		if(changeRsn2 == ""){
+			swal({
+				title: "사유를 입력해주세요.", 
+				icon: "error"
+			});
+			return false;
+		}
+		
 		let xhr = new XMLHttpRequest();
 		xhr.open("POST","/hku/student/graduteApply",true);
 		xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');

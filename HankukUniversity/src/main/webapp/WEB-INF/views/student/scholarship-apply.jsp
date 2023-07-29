@@ -228,7 +228,7 @@
 				<div class="col-xl-6 mb-3">
 					<label class="form-label mt-2">장학 명칭</label>
 					<input type="text" class="form-control" id="sclsNm2" readonly>
-					<input type="hidden" id="sclsCd"/>
+					<input type="hidden" id="sclsapNo"/>
 				</div>	
 				<div class="col-xl-6 mb-3">
 					<label class="form-label mt-2">장학 금액</label>
@@ -257,7 +257,7 @@
 				<div class="col-xl-12 mb-3">
 					<h5 class="my-3 attach"><i class="fa fa-paperclip me-2"></i> 증빙 파일</h5>
 					<div id="aplyDetailFiles"></div>
-					<input class="form-control" type="file" id="sclsFiles2" multiple="multiple">
+					<input class="form-control" type="file" id="sclsFiles2" name="sclsFiles2" multiple="multiple">
 				</div>
 				<div class="col-xl-12 mb-3" style="display: flex; justify-content: right;">
 					<button class="btn btn-primary me-1" id="sclsAplyModifyBtn">수정</button>
@@ -339,9 +339,58 @@ $(function(){
 		var ptrn = "<input type='hidden' name='delFileNo' value='%V'/>";
 		$("#aplyDetailFiles").append(ptrn.replace("%V", delFileNo));
 		$(this).parents("li:first").hide();
+
+		let fileCount = $("#fileCount").val();
+		$("#fileCount").val(fileCount-1);
+	});
+
+	// $("#sclsFiles2").on("change", function(event){
+	// 	var files = event.target.files;
+	// 	// console.log("파일갯수", files.length);
+		
+	// 	let fileCount = $("#fileCount").val();
+
+	// 	let totalCount = parseInt(fileCount) + parseInt(files.length);
+	// 	console.log("총 갯수",totalCount);
+	// 	$("#fileCount").val(totalCount);
+	// })
+	$("#testBtn").on("click", function(){
+		let fileCount = $("#fileCount").val();
+
+		var newFiles = $('input[name="sclsFiles2"]')[0].files;
+		console.log("123",newFiles);
+		console.log("456",newFiles.length);
+
+		console.log("선택한 파일 개수", fileCount);
 	});
 
 	$("#sclsAplyModifyBtn").on('click',function(){
+		let fileCount = $("#fileCount").val();
+		console.log("선택한 파일 개수", fileCount);
+
+		let newFiles=$('input[name="sclsFiles2"]')[0].files;
+		let newFilesCount = newFiles.length;
+		fileCount = parseInt(fileCount) + parseInt(newFilesCount);
+
+
+		// 최대 첨부파일 갯수 4개 검증
+		if(fileCount > 4){
+			swal({
+				title: "파일은 최대 4개까지 첨부 가능합니다!",
+				icon: "error"
+			});
+			return false;
+		}	
+		if(fileCount == 0){
+			swal({
+				title: "증빙파일을 첨부해주세요!",
+				icon: "error"
+			});
+			return false;
+		}
+
+		let formData = new FormData();
+
 		// 삭제할 파일 정보들
 		var delInputFileArr = $("input[name=delFileNo]");
 
@@ -357,25 +406,36 @@ $(function(){
 				"atchFileNo": atchFileNo,
 				"atchFileSeq": atchFileSeq
 			}
-			delFileInfoArr.push(JSON.stringify(delFileInfo_));
-		}
+			console.log("삭제할 데이터 JSON",delFileInfo_);
 
+			delFileInfoArr.push(delFileInfo_);
+			
+			// formData.append("delFileInfoList",delFileInfo_);
+			
+			// formData.append("delFileInfoList",new Blob([JSON.stringify(delFileInfo_)] , {type: "application/json"}));
+			// formData.append("key",new Blob([delFileInfoArr] , {type: "application/json"}));
+		}
+		formData.append("delFileInfoList",new Blob([JSON.stringify(delFileInfoArr)] , {type: "application/json"}));	
+		// formData.append("delFileInfoList",JSON.stringify(delFileInfoArr));	
 		console.log("KYW",delFileInfoArr);
+
+		// formData.append("delFileInfoList", delFileInfoArr);	// 삭제 정보 append
+		let atchFileNo = $("#atchFileNo").val();
+		let atchFileNoData = {
+			"atchFileNo": atchFileNo
+		}
+		formData.append("atchFileNo",new Blob([JSON.stringify(atchFileNoData)] , {type: "application/json"}));	
 
 		// 추가할 파일 정보들
 		let aplyFiles = $("#sclsFiles2")[0].files;
-
-		// 총 파일 4개 이하 검증
-
-		let formData = new FormData();
-		formData.append("delFileInfoList", delFileInfoArr);	// 삭제 정보 append
 
 		for(let i=0; i<aplyFiles.length; i++){
 			formData.append("aplyFiles",aplyFiles[i]);		// 추가 정보 append
 		}
 
-		console.log("formData", formData);
-
+		// console.log("formData", formData);
+		// console.log("formData", formData.getAll("delFileInfoList"));
+		
 		$.ajax({
 			type: "POST",
 			url: "/hku/sclsAplyModify",
@@ -383,12 +443,63 @@ $(function(){
 			dataType: "text",
 			processData: false,
 			contentType: false,
+			// contentType: 'application/json;charset=UTF-8',
 			beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 			success: function(res){
-				alert("파일 수정 체킁");
+				$("#aplyOffcanvasCancelBtn").click();
+				swal({
+					title: "수정이 완료되었습니다!",
+					icon: "success"
+				});
+				$("#sclsFiles2").val(null);
 			},
 			error: function(res){
 	
+			}
+		});
+	});
+
+	$("#sclsAplyDeleteBtn").on('click', function(){
+		swal({
+			title: "신청취소를 진행하시겠습니까?",
+			text: "취소 후 되돌릴 수 없습니다!",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+			if (willDelete) {
+				let sclsapNo = $("#sclsapNo").val();
+				let atchFileNo = $("#atchFileNo").val();
+		
+				let delData = {
+					"sclsapNo": sclsapNo,
+					"atchFileNo": atchFileNo
+				}
+				console.log("delData",delData);
+		
+				$.ajax({
+					type: "DELETE",
+					url: "/hku/deleteSclsAply",
+					data: JSON.stringify(delData),
+					dataType: "text",
+					contentType: 'application/json;charset=UTF-8',
+					beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
+					success: function(res){
+						$("#aplyOffcanvasCancelBtn").click();
+						swal({
+							title: "신청 취소가 완료되었습니다!",
+							icon: "success"
+						});
+						$("#sclsFiles2").val(null);
+						sclsAplyListSet();
+					},
+					error: function(res){
+			
+					}
+				});
+			} else {
+				return false;
 			}
 		});
 	});
@@ -406,11 +517,13 @@ function sclsAplyDetail(target){
 		success: function(res){
 			console.log("장학신청내역 상세");
 			console.log("res",res);
+			$("#sclsapNo").val(res.sclsapNo);
 			$("#sclsNm2").val(res.sclsNm);
 			$("#sclsAmt2").val(res.sclsAmt.format()+"원");
 			$("#sclsAplyYr2").val(res.sclsapYr);
 			$("#sclsAplySem2").val(res.sclsapSem);
 			$("#sclsAplyDt2").val(res.sclsapDt.substr(0,10));
+			$("#aprvSttsCd2").val(res.aprvSttsCd);
 			$("#aprvSttsNm2").val(res.aprvSttsNm);
 			$("#sclsapRjctRsn2").val(res.sclsapRjctRsn);
 			if(res.aprvSttsCd == "rej"){
@@ -419,11 +532,21 @@ function sclsAplyDetail(target){
 				$("#sclsapRjctRsnDiv").css('display','none');
 			}
 
+			if(res.aprvSttsCd == "wait"){
+				$("#sclsAplyModifyBtn").css('display', 'block');
+				$("#sclsAplyDeleteBtn").css('display', 'block');
+			} else {
+				$("#sclsAplyModifyBtn").css('display', 'none');
+				$("#sclsAplyDeleteBtn").css('display', 'none');
+			}
+
 			let fileList = res.aplyDetailFiles;
 			console.log("fileList",fileList);
 
 			let fileStr = "";
 			if(fileList.length > 0 && fileList != null) {
+				fileStr += `<input type=hidden id="atchFileNo" value="\${fileList[0].atchFileNo}"/>`;
+				fileStr += `<input type=hidden id="fileCount" value="\${fileList.length}"/>`;
 				for(let i=0; i<fileList.length; i++) {
 					fileStr += `
 					<ul class="mailbox-attachments d-flex align-items-stretch clearfix">
@@ -468,8 +591,13 @@ function sclsAplyDetail(target){
 					</li>
 				</ul>`;
 			}
-
+			
 			$("#aplyDetailFiles").html(fileStr);
+			if(res.aprvSttsCd == "wait"){
+				$(".attachmentFileDel").css('display', 'inline-block');
+			} else {
+				$(".attachmentFileDel").css('display', 'none');
+			}
 		},
 		error: function(res){
 
@@ -533,7 +661,7 @@ function sclsAplyListSet(){
 
 		}
 	});
-}
+};
 
 function sclsDetail(target){
 	console.log("장학상세", target);

@@ -883,7 +883,7 @@
                         startTime = $(this).parent().children().first().text();
                         start = parseInt(startTime.split('')[0])
 						end = parseInt($('#inTime').val());
-                         if(start + end > 9){
+                         if(start + end - 1 > 9){
                         	 swal("수업종료시간이 9교시를 초과합니다.");
                          }
                         $("#inStart").val(startTime);

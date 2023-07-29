@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.or.hku.ServiceResult;
 import kr.or.hku.admin.vo.CollegeVO;
 import kr.or.hku.admin.vo.FacilityVO;
 import kr.or.hku.lectureInfo.vo.LectureAplyVO;
@@ -34,6 +33,7 @@ public class LectureController {//강의관리 컨트롤러
 	
 	
 	// 강의개설신청페이지
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/open")
 	public String lectureOpen(Model model) {
 		//교과목 목록 조회

@@ -119,8 +119,8 @@ $(document).ready(function() {
 	      dateClick: function(info) {
 	    	  mydate = info.dateStr;
 	    	  console.log("내가찍은날짜:",mydate);
-	    	    var startDate = new Date(2023, 8, 4); 
-	    	    var endDate = new Date(2023, 11, 17);
+	    	    var startDate = new Date(2023, 7, 1); 
+	    	    var endDate = new Date(2023, 10, 17);
 
 	    	    // 주차 계산
 	    	    var startWeek = 1;

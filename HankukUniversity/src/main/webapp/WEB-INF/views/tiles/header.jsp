@@ -68,6 +68,23 @@ position: relative;
   right: 7px;
   font-size: 13px;
 }
+
+.recording {
+  color: red;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+     transform: scale(1.2); 
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 </style>
 <div class="header">
 	<div class="header-content">
@@ -193,7 +210,7 @@ position: relative;
 										stroke="white" stroke-width="1.5" stroke-linecap="round"
 										stroke-linejoin="round" />
 									</svg>
-									<p style="color: white; font-size: 1.1em; margin-left: 32px; margin-top: -19px;" class="unMsgCnt"></p>
+									<p id="unMsgCnt" style="color: white; font-size: 1.1em; margin-left: 32px; margin-top: -19px; display: none;" class="unMsgCnt"></p>
 						</a></li>
 					</c:if>
 					<li class="nav-item align-items-center header-border"><a
@@ -263,11 +280,11 @@ position: relative;
 	</div>
 </div>
 <div id="micIcon" style="cursor:pointer; display: flex; justify-content: center;  align-items: center; position: fixed;bottom: 50px; right: 50px; z-index: 9999;width:70px; height:70px; background: #800000; border-radius: 50px; border:3px solid white; box-shadow: 1px 1px 3px 1px #dadce0;">
-	<i class="fa-solid fa-microphone" style="color: #ffffff; font-size:2em;"></i>
+	<i class="fa-solid fa-microphone" id="realMic" style="color: #ffffff; font-size:2em;"></i>
 	<p id="stop"></p>	
 </div>
 <script>
-const speech = new webkitSpeechRecognition();
+
 	var timer = document.getElementById("timer")
 	function logout(){
 		location.replace("/main/logout");
