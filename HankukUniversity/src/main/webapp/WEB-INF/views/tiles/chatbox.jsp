@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <style>
 .unreadCnt{
-    margin-left: 52px;
+    margin-left: 29px;
     margin-top: 30px;
     color: #800000;
     font-size: 1.1em;
@@ -30,10 +30,12 @@
 .chatbox .img_cont_msg img {
     width: 100%;
     height: 100%;
+    border: 1px solid #6e6e6e87;
 }
 .chatbox .img_cont_msg2 img {
     width: 100%;
     height: 100%;
+    border: 1px solid #6e6e6e87;
 }
 
 .img_cont_msg2{
@@ -56,13 +58,14 @@
     right: 550px;
 }
 .msg_cotainer{
-	font-size: 1.5em;
-	left: 30px;
+	font-size: 1.3em;
+	left: 17px;
 }
 .msg_cotainer_send{
-	font-size: 1.5em;
+	font-size: 1.3em;
 	right: 40px;
 }
+
 </style>
 <div class="chatbox">
 	<div class="chatbox-close"></div>
@@ -116,7 +119,7 @@
 					</div>
 					
 					<div class="card-footer type_msg">
-						<div class="input-group">
+						<div class="input-group2">
 							<textarea class="form-control" id="msgContent" name="msgContent" placeholder="Type your message..."></textarea>
 							<div class="input-group-append">
 								<button type="button" id="sendBtn" onclick="sendMessage()" class="btn btn-primary"><i class="fa fa-location-arrow"></i></button>
@@ -258,7 +261,7 @@
 				          <div class='d-flex justify-content-end mb-4'>
 		        			<p class='unreadCnt2'>`;
 					if(data[i].unreadMemCnt > 0){
-						msgList += `\${data[i].unreadMemCnt} </p>`
+						msgList += `\${data[i].unreadMemCnt}</p>`
 					}else{
 						msgList += `</p>`
 					}
@@ -326,6 +329,7 @@
 		
 		const data = {
 			    "stdNo": stdNo,
+			    "stdNm": "${sessionScope.std.stdNm}",
 			    "studyNo": studyNo,
 				"msgContent" : msgContent,
 				"type" : "msg"
@@ -378,7 +382,8 @@ chatSocket.onmessage = function(evt) {
 	            "msgContent": receive[2],
 	            "msgRegdate": receive[3],
 	            "unreadMsgCnt": receive[4],
-	            "stdProfilePath": receive[5]
+	            "stdProfilePath": receive[5],
+	            "stdNm":receive[6]
 	        };
 	        console.log("받은데이터:",data);
 	        console.log("받은stdNo:",data.stdNo);
@@ -399,8 +404,9 @@ chatSocket.onmessage = function(evt) {
 								\${data.msgContent}
 								<span class="msg_time_send">\${data.msgRegdate}</span>
 							</div>
-							<div class="img_cont_msg">
+							<div class="img_cont_msg2">
 								<img src='/download\${data.stdProfilePath}' class='rounded-circle user_img_msg' alt=''>
+								\${data.stdNm}
 							</div> 
 						</div>`;
 		      } else {
@@ -408,6 +414,7 @@ chatSocket.onmessage = function(evt) {
 				          <div class="d-flex justify-content-start mb-4">
 				            <div class="img_cont_msg">
 				            	<img src='/download\${data.stdProfilePath}' class='rounded-circle user_img_msg' alt=''>
+				            	\${data.stdNm}
 				            </div>
 				            <div class="msg_cotainer">
 				            \${data.msgContent}
