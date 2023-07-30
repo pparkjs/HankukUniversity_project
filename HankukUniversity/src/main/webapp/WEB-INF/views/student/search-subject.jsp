@@ -47,7 +47,7 @@
 	<div class="container-fluid subCon">
 		<div class="card" id="card-title-1">
 			<div class="card-header border-0 pb-0" style="justify-content: flex-start;">
-				<div class="card-title" style="color: maroon;  font-weight: 900; font-size: 1.2rem;">학점이수현황</div>
+				<div class="card-title" style="color: maroon;  font-weight: 900; font-size: 1rem;">학점이수현황</div>
 				<div class="exp" style=" margin-bottom:0px; margin-right:0px; margin-left: 39px; font-weight: 400;"></div>
 			</div>
 			<div class="card-body" style="padding-top: 0px;">

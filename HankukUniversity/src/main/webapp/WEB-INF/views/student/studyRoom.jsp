@@ -20,10 +20,17 @@
   	text-align: center;
 	font-size: 1.5em;
 }
-.custom-tab-1 .nav-link {
+.custom-tab-1{
     font-weight: 800;
     color: #444444;
     font-size: 17px;
+}
+.nav-link {
+    color: rgb(0,0,0);
+    font-size: 17px;
+}
+.custom-tab-1 .nav-link:focus, .custom-tab-1 .nav-link:hover, .custom-tab-1 .nav-link.active {
+    font-weight: 800;
 }
 .study-top{
 	border: 1px solid maroon;
@@ -102,13 +109,29 @@ input[name=color]{
 input[name=color]:checked + label{
 	border:2px solid black;
 }
+.fc .fc-col-header-cell-cushion {
+    display: inline-block;
+    padding: 2px 4px;
+    color: black;
+    font-weight: 600;
+}
+.fc .fc-daygrid-day-number {
+    padding: 4px;
+    position: relative;
+    z-index: 4;
+    color: black;
+    font-weight: 600;
+}
+.schedule td, .schedule th {
+    border-color: black;
+}
 </style>
 		<meta charset="UTF-8">
 		<div class="content-body">
 			<div class="page-titles">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-					<li class="breadcrumb-item active"><a href="javascript:void(0)">study room</a></li>
+					<li class="breadcrumb-item"><a href="javascript:void(0)">스터디</a></li>
+					<li class="breadcrumb-item active"><a href="javascript:void(0)">스터디룸</a></li>
 				</ol>
 			</div >
 <!-- 				<div style="display: flex; justify-content: end; margin-right: 80px; margin-top: 10px;"> -->
@@ -286,7 +309,7 @@ input[name=color]:checked + label{
 										</div>
 										<div class="schedule-wrap">
 											<table class="schedule" border=1 style="width: 92%; margin-left: 61px; margin-top: 20px;" >
-												<thead class="thead-dark" style="background: #6e6e6e; color: white;">
+												<thead class="thead-dark" style="background: #800000; color: white;">
 													<tr>
 														<th style="width: 150px; padding: 10px;"></th>
 														<th style="width: 150px; padding: 10px;">월</th>

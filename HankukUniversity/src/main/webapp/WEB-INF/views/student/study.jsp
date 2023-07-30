@@ -14,6 +14,12 @@
 .form-control {
 	width: 450px;
 }
+.nav-link {
+    color: #000;
+}
+.custom-tab-1 .nav-link:focus, .custom-tab-1 .nav-link:hover, .custom-tab-1 .nav-link.active {
+    font-weight: 800;
+}
 </style>
 <div class="content-body">
 	<div class="page-titles">
