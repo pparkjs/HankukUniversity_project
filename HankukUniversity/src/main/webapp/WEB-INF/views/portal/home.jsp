@@ -49,33 +49,13 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="grid-stack">
-                <div class="grid-stack-item portlet1" gs-w="6" gs-h="6">
-                    <div class="grid-stack-item-content">
-                        <div class="card portlet-item">
-                            <div class="card-body">
-                                <div style="display: flex; margin-left: 11px;">
-                                    <div>
-                                        <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
-                                        <h5 style="font-weight: 500; display: inline-block;">&nbsp;1일정</h5>
-                                    </div>
-                                    <div>
-                                        <a href='/calendar/main' class="ti-plus"></a>&nbsp;&nbsp;
-                                    </div>
-                                </div>
-                                <h3 class="title-h3 col" style="font-family: '양진체'!important; text-align: center;">2023년 2월 학사일정</h3>
-                                <div class="hnu_schedule" id="calendar">
-                                </div>
-                            </div>
-                        </div>
-                    </div>   
-                </div>
-                <div class="grid-stack-item portlet2" gs-w="12" gs-h="6" gs-no-resize="true">
+                <div class="grid-stack-item portlet1" gs-w="12" gs-h="6" gs-no-resize="true">
                     <div class="grid-stack-item-content" >
                         <div class="card portlet-item" style="margin-bottom: -31px; height: 394px;">
                             <div class="card-body" style="padding: 0.25rem; padding-top: 10px;">
                                 <div style="display: flex; margin-left: 11px;">
                                     <div>
-                                        <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
+                                        <a href='#'><i class="fa-solid fa-school"></i></a>
                                         <h5 style="display: inline-block; font-weight: 500; margin-bottom: 11px;">&nbsp;한국대학교 공지사항</h5>
                                     </div>
                                 </div>
@@ -151,13 +131,13 @@
                         </div>
                     </div>   
                 </div>
-                <div class="grid-stack-item portlet3" gs-w="12" gs-h="6">
+                <div class="grid-stack-item portlet2" gs-w="12" gs-h="6" gs-no-resize="true">
                     <div class="grid-stack-item-content">
                         <div class="card portlet-item">
                             <div class="card-body" style="padding: 0.25rem; padding-top: 10px;">
                                 <div style="display: flex; margin-left: 11px;">
                                     <div style="width: 93%; display: flex; align-items: center; position: relative;">
-                                        <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
+                                        <a href='#'><i class="fa-solid fa-school"></i></a>
                                         <h5 style="display: inline-block; font-weight: 500; margin-left: 4px;">&nbsp;한국대학교 일정</h5>
                                         <div style="position: absolute; position: absolute; left: 310px; font-size: 20px;">v</div>
                                       	<select class="default-select form-control" id="calClsf" tabindex="null">
@@ -187,13 +167,13 @@
                         </div>
                     </div>   
                 </div>
-                <div class="grid-stack-item portlet4" gs-w="6" gs-h="6">
+                <div class="grid-stack-item portlet3" gs-w="6" gs-h="6" gs-no-resize="true">
                     <div class="grid-stack-item-content">
                         <div class="card portlet-item">
                             <div class="card-body" style="padding: 0.25rem; padding-top: 10px;">
                                 <div style="display: flex; margin-left: 11px;">
                                     <div>
-                                        <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
+                                        <a href='#'><i class="fa-solid fa-school"></i></a>
                                         <h5 style="display: inline-block; font-weight: 500;">&nbsp;시간표</h5>
                                     </div>
                                     <div>
@@ -223,33 +203,13 @@
                         </div>
                     </div>   
                 </div>
-                <div class="grid-stack-item portlet5" gs-w="6" gs-h="6">
+                <div class="grid-stack-item portlet4" gs-w="6" gs-h="6" gs-no-resize="true">
                     <div class="grid-stack-item-content">
                         <div class="card portlet-item">
                             <div class="card-body" style="padding: 0.25rem; padding-top: 10px;">
                                 <div style="display: flex; margin-left: 11px;">
                                     <div>
-                                        <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
-                                        <h5 style="display: inline-block; font-weight: 500;">&nbsp;5이수정보</h5>
-                                    </div>
-                                    <div>
-                                        <a href='/calendar/main' class="ti-plus"></a>&nbsp;&nbsp;
-                                    </div>
-                                </div>
-                                <h3 class="title-h3 col" style="font-family: '양진체'!important; text-align: center;">2023년 2월 학사일정</h3>
-                                <div class="hnu_schedule" id="calendar">
-                                </div>
-                            </div>
-                        </div>
-                    </div>   
-                </div>
-                <div class="grid-stack-item portlet6" gs-w="6" gs-h="6">
-                    <div class="grid-stack-item-content">
-                        <div class="card portlet-item">
-                            <div class="card-body" style="padding: 0.25rem; padding-top: 10px;">
-                                <div style="display: flex; margin-left: 11px;">
-                                    <div>
-                                        <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
+                                        <a href='#'><i class="fa-solid fa-school"></i></a>
                                         <h5 style="display: inline-block; font-weight: 500;">&nbsp;오늘의 날씨</h5>
                                     </div>
                                 </div>
@@ -267,35 +227,12 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="col-lg-6" style="border: 1px solid black;">
-            <div class="card m-3" id="card-title-1">
-                <div class="card-header border-0 pb-0 ">
-                    <h5 class="card-title">메인 대쉬보드</h5>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        메인대쉬보드 입니다!!
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6" style="border: 1px solid black;">
-            <div class="card m-3" id="card-title-1">
-                <div class="card-header border-0 pb-0 ">
-                    <h5 class="card-title">메인 대쉬보드</h5>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        메인대쉬보드 입니다!!
-                    </p>
-                </div>
-            </div>
-        </div> -->
     </div>
 </div>
    <div id="hiddenWeather" style="display: none;"></div>
 <script type="text/javascript">
 $(document).ready(function () {
+	getAllNoticeData();
 	var grid = GridStack.init({ // 여기에 그리드 스택 옵션 삽입
         disableOneColumnMode: true, // jfidle 작은 창 크기용
         float: false,
@@ -368,13 +305,94 @@ $(document).ready(function () {
 		toastr.success('화면 설정이 저장되었습니다.');
     });
     
-    getAllNoticeData();
+	var pRow = $('#pRow');
+	var savePortletItemJson = {
+		p1: null,
+		p2: null,
+		p3: null,
+		p4: null,
+	};
+	
+	
+	function deletePortletItem() {
+		let saveItem = JSON.parse(localStorage.getItem("savePortletItem"));
+		if (saveItem.p1 != null) {
+			$('#pCk1').click();
+		}
+		if (saveItem.p2 != null) {
+			$('#pCk2').click();
+		}
+		if (saveItem.p3 != null) {
+			$('#pCk3').click();
+		}
+		if (saveItem.p4 != null) {
+			$('#pCk4').click();
+		}
+	}
+	
+	
+	pRow.on('click','input[type="checkbox"]', function () {
+		if($(this).prop("checked")) {
+			console.log(this.id + " 체크");
+			portletCheck(this.id)
+		}else{
+			console.log(this.id + " 체크해제");
+			portletUncheck(this.id);
+		}
+		localStorage.setItem("savePortletItem", JSON.stringify(savePortletItemJson));
+	});
+	
+	function portletCheck(pId) {
+		switch (pId) {
+			case "pCk1": 
+			 	grid.addWidget(savePortletItemJson.p1);
+				savePortletItemJson.p1 = null; 
+				break;
+			case "pCk2": 
+			 	grid.addWidget(savePortletItemJson.p2);
+				savePortletItemJson.p2 = null; 
+				break;
+			case "pCk3": 
+			 	grid.addWidget(savePortletItemJson.p3);
+				savePortletItemJson.p3 = null; 
+				break;
+			case "pCk4": 
+			 	grid.addWidget(savePortletItemJson.p4);
+				savePortletItemJson.p4 = null; 
+				break;
+		}
+	}
+	
+	function portletUncheck(pId) {
+		var portletObj;
+		switch (pId) {
+			case "pCk1": 
+				portletObj = $(".portlet1")[0];
+				savePortletItemJson.p1 = portletObj;
+				break;
+			case "pCk2": 
+				portletObj = $(".portlet2")[0];
+				savePortletItemJson.p2 = portletObj; 
+				break;
+			case "pCk3": 
+				portletObj = $(".portlet3")[0];
+				savePortletItemJson.p3 = portletObj; 
+				break;
+			case "pCk4": 
+				portletObj = $(".portlet4")[0];
+				savePortletItemJson.p4 =  portletObj
+				break;
+		}
+		grid.removeWidget(portletObj);
+	}
+	
 
     // 공지사항 가져오기
     function getAllNoticeData(){
         let deptCd = "${std.deptCd}";
 
         $.ajax({
+        	async: false,
             type: 'get',
             url: '/hku/portal/all-notice',
             contentType: 'application/json;charset=utf-8',
@@ -438,6 +456,8 @@ $(document).ready(function () {
     	location.href = `/hku/portal/notice-detail?noticeNo=\${pObjVal}&noticeDiv=\${pClsf}`;
     }
     
+    
+    deletePortletItem();
 });
 
 var calClsf = $('#calClsf');
@@ -732,3 +752,49 @@ function dayChange(day){
    	  $('#box').css('background-image','url(/images/weather/cloudsky.jpg)');
       }
 </script>
+<!-- 화면 설정 모달창 -->
+<div class="modal fade bd-example-modal-sm" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">화면 설정</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+            	<div class="row" id="pRow">
+            		<div class="col-xl-12 mb-3">
+	            		<h6>원하는 위젯을 <font style="color: red;">'체크'</font>를 통해 추가 또는 삭제 할 수 있습니다.</h6>
+            		</div>
+            		<div class="col-xl-12 mb-1">
+	            		<div class="form-check custom-checkbox mb-3 checkbox-warning">
+							<input type="checkbox" class="form-check-input" checked id="pCk1">
+							<label class="form-check-label" for="pCk1">공지사항</label>
+						</div>
+            		</div>
+            		<div class="col-xl-12 mb-1">
+	            		<div class="form-check custom-checkbox mb-3 checkbox-warning">
+							<input type="checkbox" class="form-check-input" checked id="pCk2">
+							<label class="form-check-label" for="pCk2">학교일정</label>
+						</div>
+            		</div>
+            		<div class="col-xl-12 mb-1">
+	            		<div class="form-check custom-checkbox mb-3 checkbox-warning">
+							<input type="checkbox" class="form-check-input" checked id="pCk3">
+							<label class="form-check-label" for="pCk3">시간표</label>
+						</div>
+            		</div>
+            		<div class="col-xl-12 mb-1">
+	            		<div class="form-check custom-checkbox mb-3 checkbox-warning">
+							<input type="checkbox" class="form-check-input" checked id="pCk4">
+							<label class="form-check-label" for="pCk4">날씨</label>
+						</div>
+            		</div>
+            	</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
