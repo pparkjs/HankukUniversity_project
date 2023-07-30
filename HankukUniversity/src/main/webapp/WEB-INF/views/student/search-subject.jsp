@@ -12,7 +12,7 @@
     </div>
 	<div class="container-fluid searchCon">
 		<div class="card" id="card-title-1">
-			<div class="card-body">
+			<div class="card-body" style="color: black; font-size: 18px;	padding: 0.75rem;">
 				<div class="search1">
 					이수구분:&nbsp;&nbsp;&nbsp;
 					<select class="clsfSel">
@@ -50,7 +50,7 @@
 				<div class="card-title" style="color: maroon;  font-weight: 900; font-size: 1rem;">학점이수현황</div>
 				<div class="exp" style=" margin-bottom:0px; margin-right:0px; margin-left: 39px; font-weight: 400;"></div>
 			</div>
-			<div class="card-body" style="padding-top: 0px;">
+			<div class="card-body" style="padding-top: 0px; color: black; font-size: 18px;	padding: 0.75rem;">
 				<div class="table-wrap" style="height: 425px;">
 					<table class="table" style="margin-top: -22px;">
 						<thead class="thead-dark">

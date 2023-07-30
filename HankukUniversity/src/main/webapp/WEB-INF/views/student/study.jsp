@@ -87,7 +87,7 @@
 														<div class="hit-con">
 															<img alt="" src="/images/조회수.png" class="hitImg">
 															
-															<div class="cnt-text">인원:${study.stdNm }</div>
+															<div class="cnt-text">인원:</div>
 															<div class="study-cnt">${study.count} / ${study.studyCpcy }</div>
 														</div>
 													</div>

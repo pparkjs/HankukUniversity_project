@@ -20,7 +20,7 @@
 				</div>
 			</div>
 			<hr>
-			<div class="card-body" style="padding-top: 0px;">
+			<div class="card-body" style="padding-top: 0px; color: black; font-size: 18px;	padding: 0.75rem;" >
 				<div class="pro-wrap">
 					<table class="table" style="margin-top: -22px;">
 						<thead class="thead-dark">

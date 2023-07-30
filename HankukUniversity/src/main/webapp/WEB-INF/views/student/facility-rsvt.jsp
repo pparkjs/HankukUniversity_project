@@ -39,7 +39,7 @@
 				</div>
 			</div>
 			<hr>
-			<div class="card-body" style="padding-top: 0px;">
+			<div class="card-body" style="padding-top: 0px; color: black; font-size: 18px;	padding: 0.75rem;">
 				<div class="map-wrap">
 					<img src="/images/학교지도.png" id="map" alt="">
 					<button>
@@ -80,7 +80,7 @@
 					<span style="margin-left: 9px; font-size: 18px;">예약가능</span>	
 				</div>
 			</div>
-			<div class="card-body" style="padding-top: 0px;">
+			<div class="card-body" style="padding-top: 0px; color: black; font-size: 18px;	padding: 0.75rem;">
 				<div class="schedule-wrap">
 					<table class="schedule" border=1 style="margin-top: -2px;">
 						<thead class="thead-dark">

@@ -271,7 +271,7 @@
 							</div>
 							<div class='img_cont_msg2'>
 								<img src='/download\${data[i].stdProfilePath}' class='rounded-circle user_img_msg' alt=''>		
-								\${data[i].stdNm}
+								<p style='width: 57px; font-size: 16px;'>\${data[i].stdNm}</p>
 							</div> 
 						</div>
 		        `;
@@ -280,7 +280,7 @@
 				          <div class='d-flex justify-content-start mb-4'>
 				            <div class='img_cont_msg'>
 				            	<img src='/download\${data[i].stdProfilePath}' class='rounded-circle user_img_msg' alt=''>
-				            	<p style='width: 52px; left:10px;'>\${data[i].stdNm}</p>
+				            	<p style='width: 57px; left:10px; font-size: 16px;'>\${data[i].stdNm}</p>
 				            </div>
 				            <div class='msg_cotainer'>
 				              \${data[i].msgContent}
@@ -406,7 +406,7 @@ chatSocket.onmessage = function(evt) {
 							</div>
 							<div class="img_cont_msg2">
 								<img src='/download\${data.stdProfilePath}' class='rounded-circle user_img_msg' alt=''>
-								\${data.stdNm}
+								<p style='width: 57px; font-size: 16px;'>\${data.stdNm}</p>
 							</div> 
 						</div>`;
 		      } else {
@@ -414,7 +414,7 @@ chatSocket.onmessage = function(evt) {
 				          <div class="d-flex justify-content-start mb-4">
 				            <div class="img_cont_msg">
 				            	<img src='/download\${data.stdProfilePath}' class='rounded-circle user_img_msg' alt=''>
-				            	\${data.stdNm}
+				            	<p style='width: 57px; left:10px; font-size: 16px;'>\${data.stdNm}</p>
 				            </div>
 				            <div class="msg_cotainer">
 				            \${data.msgContent}

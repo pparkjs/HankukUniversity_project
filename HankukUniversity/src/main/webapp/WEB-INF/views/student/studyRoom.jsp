@@ -20,11 +20,7 @@
   	text-align: center;
 	font-size: 1.5em;
 }
-.custom-tab-1{
-    font-weight: 800;
-    color: #444444;
-    font-size: 17px;
-}
+
 .nav-link {
     color: rgb(0,0,0);
     font-size: 17px;
@@ -137,7 +133,7 @@ input[name=color]:checked + label{
 <!-- 				<div style="display: flex; justify-content: end; margin-right: 80px; margin-top: 10px;"> -->
 <!-- 				</div> -->
 			<div class="container-fluid subCon">
-					<div class="custom-tab-1" style="display: flex; align-items: center; justify-content: space-between;">
+					<div class="custom-tab-1" style="display: flex; align-items: center; justify-content: space-between; font-weight: 800; color: #444444; font-size: 17px;">
 						<ul class="nav nav-tabs">
 							<li class="nav-item">
 								<a class="nav-link active" data-bs-toggle="tab" href="#profile1"><i class="far fa-user me-2"></i> 스터디원</a>
