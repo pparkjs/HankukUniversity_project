@@ -15226,12 +15226,12 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
         background: var(--rgba-primary-1); }
         [data-theme-version="dark"] .chatbox .chat-list-header a svg g [fill] {
           fill: #fff; }
-  .chatbox .img_cont_msg {
-    width: 1.875rem;
-    height: 1.875rem;
-    display: block;
-    max-width: 1.875rem;
-    min-width: 1.875rem; }
+/*   .chatbox .img_cont_msg { */
+/*     width: 1.875rem; */
+/*     height: 1.875rem; */
+/*     display: block; */
+/*     max-width: 1.875rem; */
+/*     min-width: 1.875rem; } */
     .chatbox .img_cont_msg img {
       width: 100%; }
   .chatbox .msg_cotainer {
@@ -15240,7 +15240,8 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
     border-radius: 0 0.375rem 0.375rem 0.375rem;
     padding: 0.625rem 0.9375rem;
     color: #fff;
-    position: relative; }
+    position: relative; 
+    max-width: 261px;}
     .chatbox .msg_cotainer .msg_time {
       display: block;
       font-size: 0.6875rem;
@@ -15262,7 +15263,8 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
     margin-right: 0.625rem;
     color: #222;
     position: relative;
-    text-align: right; }
+    text-align: right; 
+    max-width: 261px;}
     [data-theme-version="dark"] .chatbox .msg_cotainer_send {
       background: #1E1E1E;
       color: #fff; }
