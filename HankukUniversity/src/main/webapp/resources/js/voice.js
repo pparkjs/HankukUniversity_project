@@ -1,7 +1,11 @@
 $(function() {
+	//음성인식 시작이벤트
+	document.getElementById('micIcon').addEventListener('click', function() {
+	  speech.start();
+	});
 const speech = new webkitSpeechRecognition();
 	const icon = document.getElementById('realMic');
-
+	
 	  speech.continuous = false;
 	
 	  speech.onstart = function() {
@@ -192,11 +196,6 @@ const speech = new webkitSpeechRecognition();
 		   			 console.log("유효한 번호를 인식할 수 없습니다.");
 			 }
      	    }
-   	  });
-
-   	  //음성인식 시작이벤트
-   	  document.getElementById('micIcon').addEventListener('click', function() {
-   	    speech.start();
    	  });
    	  
    	  // 인식된 문장을 가공하는 메소드
