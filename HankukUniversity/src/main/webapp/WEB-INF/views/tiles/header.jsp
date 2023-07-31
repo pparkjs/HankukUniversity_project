@@ -85,6 +85,19 @@ position: relative;
     transform: scale(1);
   }
 }
+#unMsgCnt{
+    width: 20px;
+    height: 20px;
+    background-color: #e33333;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    position: absolute;
+    top: 7px;
+    right: 3px;
+    font-size: 13px;
+}
 </style>
 <div class="header">
 	<div class="header-content">
@@ -93,19 +106,19 @@ position: relative;
 				<div class="header-left">
 
 					<!--  검색에 대한 div -->
-					<div class="input-group search-area">
-						<span class="input-group-text"> <a
-							href="javascript:void(0)"> <svg width="19" height="19"
-									viewBox="0 0 19 19" fill="none"
-									xmlns="http://www.w3.org/2000/svg">
-									<circle cx="8.78605" cy="8.78605" r="8.23951" stroke="white"
-										stroke-linecap="round" stroke-linejoin="round" />
-									<path d="M14.5168 14.9447L17.7471 18.1667" stroke="white"
-										stroke-linecap="round" stroke-linejoin="round" />
-								</svg>
-						</a>
-						</span> <input type="text" class="form-control" placeholder="Search">
-					</div>
+<!-- 					<div class="input-group search-area"> -->
+<!-- 						<span class="input-group-text"> <a -->
+<!-- 							href="javascript:void(0)"> <svg width="19" height="19" -->
+<!-- 									viewBox="0 0 19 19" fill="none" -->
+<!-- 									xmlns="http://www.w3.org/2000/svg"> -->
+<%-- 									<circle cx="8.78605" cy="8.78605" r="8.23951" stroke="white" --%>
+<%-- 										stroke-linecap="round" stroke-linejoin="round" /> --%>
+<!-- 									<path d="M14.5168 14.9447L17.7471 18.1667" stroke="white" -->
+<!-- 										stroke-linecap="round" stroke-linejoin="round" /> -->
+<!-- 								</svg> -->
+<!-- 						</a> -->
+<!-- 						</span> <input type="text" class="form-control" placeholder="Search"> -->
+<!-- 					</div> -->
 
 				</div>
 				<ul class="navbar-nav header-right">
@@ -200,17 +213,9 @@ position: relative;
 					<!-- message -->
 					<c:if test="${not empty std }">
 						<li class="nav-item dropdown notification_dropdown"><a
-							class="nav-link bell-link" href="javascript:void(0);" style="margin-top: -4px;"> <svg width="30" height="34" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path
-										d="M16.9026 6.85114L12.4593 10.4642C11.6198 11.1302 10.4387 11.1302 9.59922 10.4642L5.11844 6.85114"
-										stroke="white" stroke-width="1.5" stroke-linecap="round"
-										stroke-linejoin="round" />
-									<path fill-rule="evenodd" clip-rule="evenodd"
-										d="M15.9089 19C18.9502 19.0084 21 16.5095 21 13.4384V6.57001C21 3.49883 18.9502 1 15.9089 1H6.09114C3.04979 1 1 3.49883 1 6.57001V13.4384C1 16.5095 3.04979 19.0084 6.09114 19H15.9089Z"
-										stroke="white" stroke-width="1.5" stroke-linecap="round"
-										stroke-linejoin="round" />
-									</svg>
-									<p id="unMsgCnt" style="color: white; font-size: 1.1em; margin-left: 32px; margin-top: -19px; display: none;" class="unMsgCnt"></p>
+							class="nav-link bell-link" href="javascript:void(0);" style="margin-top: 1px;"> 
+								<div id="unMsgCnt" class="unMsgCnt"></div>
+								<img alt="" src="/images/메시지3.svg" width="30" height="27">
 						</a></li>
 					</c:if>
 					<li class="nav-item align-items-center header-border"><a
@@ -382,6 +387,24 @@ position: relative;
 						}else if(res[i].alarmType === 'counseling-std'){ // 교수가 상담 요청 처리 보낸경우
 							data += `<li>
 										<a href="/hku/counseling-record" class="link-move" data-alarmno="\${res[i].alarmNo}">
+											<div class="timeline-panel">
+												<div class="media me-2" style="width: 50px; height: 50px; border: 1px solid #40404073;">`
+							if(res[i].sendProfile == 'null' || res[i].sendProfile == null || res[i].sendProfile == 'undefined' || res[i].sendProfile == '') {
+								data +=				`<img alt="image" width="50" src="/images/기본프로필.png">`
+							}else{
+								data +=				`<img alt="image" width="50" src="/download\${res[i].sendProfile}">`
+							}
+								data +=	    	`</div>
+												<div class="media-body">
+													<h6 class="mb-1" style="font-size: 14px;">\${res[i].alarmTtl}</h6>
+													<small class="d-block" style="font-size: 14px;">\${res[i].alarmRegDt}</small>
+												</div>
+											</div>
+										</a>
+									</li>`
+						}else if(res[i].alarmType === 'assign-reg'){
+							data += `<li>
+										<a href="/hku/student/assignmentDetail/\${res[i].alarmPathNo}" class="link-move" data-alarmno="\${res[i].alarmNo}">
 											<div class="timeline-panel">
 												<div class="media me-2" style="width: 50px; height: 50px; border: 1px solid #40404073;">`
 							if(res[i].sendProfile == 'null' || res[i].sendProfile == null || res[i].sendProfile == 'undefined' || res[i].sendProfile == '') {

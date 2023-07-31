@@ -31,7 +31,7 @@
 				<h1 class="card-title" style="color:#6e6e6e;  font-weight: 900; font-size: 23px;"><c:out value="${sessionScope.subNm }"/> 시험${status2 }</h1>
 			</div>
 			<hr>
-			<div class="card-body" style="padding-top: 0px;">
+			<div class="card-body" style="padding-top: 0px; color: black; font-size: 18px;	padding: 0.75rem; ">
 				<form method="post" action="/hku/test-insert?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 					<div class="noti-wrap">
 						<span style="padding-bottom: 8px;">[출제자 유의사항]</span>

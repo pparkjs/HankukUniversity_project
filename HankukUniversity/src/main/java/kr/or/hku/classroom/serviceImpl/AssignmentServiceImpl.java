@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,8 +19,12 @@ import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.mapper.AssignmentMapper;
 import kr.or.hku.classroom.service.AssignmentService;
 import kr.or.hku.classroom.vo.AssignmentVO;
+import kr.or.hku.common.mapper.CommonMapper;
 import kr.or.hku.common.service.CommonFileService;
+import kr.or.hku.common.vo.AlarmVO;
 import kr.or.hku.common.vo.AttachFileVO;
+import kr.or.hku.professor.vo.ProfessorVO;
+import kr.or.hku.student.vo.StudentVO;
 
 @Service
 public class AssignmentServiceImpl implements AssignmentService {
@@ -29,6 +35,9 @@ public class AssignmentServiceImpl implements AssignmentService {
 	@Autowired
 	private CommonFileService fileService;
 
+	@Autowired
+	private CommonMapper commonMapper;
+	
 	@Override
 	public AssignmentVO assignOne(String asmNo) {
 		return mapper.assignOne(asmNo);
@@ -63,9 +72,31 @@ public class AssignmentServiceImpl implements AssignmentService {
 	}
 	
 	// 과제 등록
+	@Transactional(rollbackFor = SQLException.class)
 	@Override
-	public int regi(AssignmentVO vo) {
-		return mapper.regi(vo);
+	public int regi(AssignmentVO vo, HttpSession session) {
+		
+		ProfessorVO pro = (ProfessorVO)session.getAttribute("pro");
+		
+		int result = mapper.regi(vo);
+		
+		List<String> stdList = this.getStdList(vo.getLecapNo());
+		
+		for (String stdNo : stdList) {
+			AlarmVO alarm = new AlarmVO();
+			
+			alarm.setAlarmTtl(pro.getProNm()+"님의 "+vo.getAsmWeek() + "주차 과제등록");
+			alarm.setAlarmType("assign-reg");
+			alarm.setSendUserNo(pro.getProNo());
+			alarm.setReceiveUserNo(stdNo);
+			alarm.setAlarmPathNo(vo.getAsmNo());
+			alarm.setSendProfile(pro.getProProfilePath());
+			
+			commonMapper.alarmInsert(alarm); // 알람 등록
+		}
+		
+		
+		return result;
 	}
 
 	// 과제 수정

@@ -186,6 +186,7 @@
 						<div class="card" id="card-title-1" style="height: 467px;">
 							<div class="card-header border-0 pb-0 ">
 								<h5 class="card-title">메세지 보내기</h5>
+								<a class="btn btn-primary btn-sm" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" id="addTempMsg">문자 추가</a>
 								<select class="selectCustom" id="whatMsg" style="width: 35%;">
 									<option value="">==선택==</option>
 									<c:forEach items="${smsTemplateList }" var="smsTemplate">
@@ -399,10 +400,41 @@ $(function(){
 			dataType: 'json',
 			data: {smsTempNo:selectedMsg},
 			success: function(res){
-				$('#msg').val(res.smsTempCn);
+				var textMsg = `<c:out value="\${res.smsTempCn}"/>`;
+				$('#msg').val(textMsg);
 			}
 		});
 	});
+	
+	$('#modMsg').on('change', function(){
+		
+		if ($(this).find(":selected").val() == "") {
+			$('#addMsgType').val("");
+			$('#addMsgCn').val("");
+			return;
+		}
+		
+		$('#addMsgType').val($(this).find(":selected").text());
+		let selectedMsg = $(this).val();
+
+		if(selectedMsg ==""){
+			$('#msg').val("");
+			return;
+		}
+		$.ajax({
+			type: 'get',
+			url: '/hku/admin/setting-msg',
+			contentType: 'application/json;charset=utf-8',
+			dataType: 'json',
+			data: {smsTempNo:selectedMsg},
+			success: function(res){
+				var textMsg = `<c:out value="\${res.smsTempCn}"/>`;
+				$('#addMsgCn').val(textMsg);
+			}
+		});
+	});
+	
+	
 	// 하나하나 선택 했을떄!!================================================================
 	$(profile1).find('#userTbody').on('click', 'input[type="checkbox"]', function(){
 		if ($(userCheckAll).prop("checked")) {
@@ -613,9 +645,149 @@ $(function(){
 		
 	});
 	
+	$('#addMsgBtn').on('click', function(event){
+		event.preventDefault();
+		$('#addMsgType').focus();
+		clearMsg();
+	});
+	
+	
 	cancelBtn.on('click',function(){
 		receiver.val("");
 		$('#msg').val("");
 	});
+	
+	$('#saveMsg').on('click', function(e) {
+		e.preventDefault();
+		
+		let smsTempNo = $('#modMsg').find(":selected").val();
+		let smsTempType = $('#addMsgType').val();
+		let smsTempCn = $('#addMsgCn').val();
+		
+		if (smsTempType == "" || smsTempType == null) {
+			swal({
+				title: "문자 제목을 입력해주세요!", 
+				icon: "error"
+			});
+			return false;
+		}
+		
+		if (smsTempCn == "" || smsTempCn == null) {
+			swal({
+				title: "문자 내용을 입력해주세요!", 
+				icon: "error"
+			});
+			return false;
+		}
+		var sendMsgData = {
+			smsTempNo: smsTempNo,
+			smsTempType: smsTempType,
+			smsTempCn: smsTempCn
+		};
+		console.log("저장 문자메시지 ",sendMsgData);
+		
+		$.ajax({
+			type: 'post',
+			url: '/hku/admin/smsTemplateProccess',
+			contentType: 'application/json;charset=utf-8',
+			dataType: 'json',
+			data: JSON.stringify(sendMsgData),
+			beforeSend : function(xhr){
+               xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
+			success: function (res) {
+				if (res.processMsg == "update") {
+					console.log("값 수정!!", res.data);
+					swal({
+						title: "문자가 수정 되었습니다.", 
+						icon: "success"
+					});
+				}else if(res.processMsg == "add"){
+					var msgTempData = res.data;
+					console.log("값 추가!!", res.data);
+					let optionStr = `<option value="\${msgTempData.smsTempNo}">\${msgTempData.smsTempType}</option>`;
+					$('#whatMsg').append(optionStr);
+					$('#modMsg').append(optionStr);
+					swal({
+						title: "문자가 저장 되었습니다.", 
+						icon: "success"
+					});
+				}else{
+					swal({
+						title: "서버 에러 다시 시도해주세요.", 
+						icon: "error"
+					});
+					setTimeout(() => {
+						location.reload();
+					}, 1000);
+				}
+				clearMsg();
+			}
+		});
+	});
+	
+	$('#cancelMsg').on('click', function(e) {
+		e.preventDefault();
+		clearMsg();
+	});
+	
+	$('#addTempMsg').on('click', function(e) {
+		clearMsg();
+	});
+	
+	function clearMsg(){
+		$('#modMsg').prop("selectedIndex",0);
+		$('#addMsgType').val("");
+		$('#addMsgCn').val("");
+	}
 });
 </script>
+<div class="offcanvas offcanvas-end customeoff" tabindex="-1" id="offcanvasExample">
+	<div class="offcanvas-header">
+	<h5 class="modal-title" id="#gridSystemModal" style="color: maroon;">문자 추가&수정</h5>
+	  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+		  <i class="fa-solid fa-xmark"></i>
+	  </button>
+	</div>
+	<div class="offcanvas-body">
+	  <div class="container-fluid">
+		  <div>
+			  <label style="font-size: 1.5em; font-weight: bold;">문자 추가 및 수정 유의사항:</label>
+			  <div class="dz-default dlab-message upload-img mb-3">	
+				  <form action="#" class="dropzone" style="text-align: left; padding: 10px;">
+					<label style="font-size: 1.1em; font-weight: bold;">* 문자 추가 방법 *</label>
+					<p> - 하단에 있는 <font style="color: red;">'+'</font> 버튼을 누르고 제목과 내용을 입력 후 저장 버튼을 눌러주세요.</p>
+					<label style="font-size: 1.1em; font-weight: bold;">* 문자 수정 방법 *</label>
+					<p> - 하단에 있는 문자 <font style="color: red;">리스트</font>를 선택 후 내용을 변경하고 저장 버튼을 눌러주세요.</p>
+				  </form>
+			  </div>	
+		  </div>
+		  <form>
+			  <div class="row">
+					<div class="col-xl-4 mb-3">
+						<label class="form-label" style="font-size: 1.2em;">문자 리스트&nbsp;<button type="button" class="btn btn-success btn-sm ms-1" id="addMsgBtn">+</button></label>
+						<select class="form-control" id="modMsg">
+							<option value="">==선택==</option>
+							<c:forEach items="${smsTemplateList }" var="smsTemplate">
+								<option value="${smsTemplate.smsTempNo }">${smsTemplate.smsTempType }</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="col-xl-12"></div>
+					<div class="col-xl-6 mb-3">
+						<label class="form-label" style="font-size: 1.2em;">문자 제목<span class="text-danger">*</span></label>
+						<input type="text" class="form-control" id="addMsgType" placeholder="제목을 입력해주세요.">
+					</div>
+					<div class="col-xl-12 mb-3">
+						<label class="form-label" style="font-size: 1.2em;">문자 내용<span class="text-danger">*</span></label>
+						<textarea rows="10" class="form-control" placeholder="문자 내용을 입력해주세요." id="addMsgCn"></textarea>
+					</div>	
+			  </div>
+			  <div>
+				  <button class="btn btn-primary me-1" id="saveMsg">저장</button>
+				  <button class="btn btn-danger light ms-1" id="cancelMsg">취소</button>
+			  </div>
+		  </form>
+		</div>
+	</div>
+  </div>

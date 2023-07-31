@@ -29,7 +29,7 @@
 				<h5 class="card-title" style="color: maroon;  font-weight: 900;">상담신청 내역</h5>
 			</div>
 			<hr>
-			<div class="card-body" style="padding-top: 0px;">
+			<div class="card-body" style="padding-top: 0px; color: black; font-size: 18px;	padding: 0.75rem;">
 				<!-- Nav tabs -->
 				<div class="tab-content">
 					<div class="tab-pane fade show active" id="home1" role="tabpanel">

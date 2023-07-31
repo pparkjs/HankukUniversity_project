@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 	<link rel="stylesheet" href="/css/admin/userManage.css">
-	<link rel="stylesheet" type="text/css" href="/icons/flaticon/flaticon.css">
 	<link rel="stylesheet" href="/css/table.css">
 <c:if test="${ilgualStatus eq '1' }">
 	<script>
@@ -78,12 +77,16 @@
 									<form action="/hku/admin/insertUserExcel?${_csrf.parameterName}=${_csrf.token}" class="input-group" id="excelForm" method="POST" enctype="multipart/form-data">
 										<input class="form-control" type="file" id="formFile" name="formFile">
 										<span class="input-group-append">
-											<button type="button" onclick="poiInsert()" class="btn btn-primary btn-flat">일괄등록</button>
+											<button type="button" onclick="poiInsert()" class="btn btn-primary btn-flat poiDownBtn" style="color: #000;">
+												<img src="\icons\icons8-microsoft-excel-2019.svg" class="excelSvg"/> 일괄등록
+											</button>
 										</span>
 									</form>
 								</div>
 								<div class="col-auto">
-									<button type="button" class="btn btn-primary" onclick="poiDownload()">양식 다운로드</button>
+									<button type="button" class="btn btn-primary poiDownBtn" style="color: #000;" onclick="poiDownload()">
+										<img src="\icons\icons8-microsoft-excel-2019.svg" class="excelSvg"/> 양식 다운로드
+									</button>
 								</div>
 								<div class="col-auto">
 									<button type="button" class="btn btn-primary" onclick="userInsert()">등록</button>
@@ -1131,37 +1134,10 @@ function poiInsert(){
 		return false;
 	}
 	$("#excelForm").submit();
-	// console.log("2",formFile.file);
-	// console.log("3",formFile.value);
-
-	// let formData = new FormData();
-	// formData.append("file",formFile.files[0]);
-	
-	// // window.href = "/hku/admin/insertUserExcel";
-	// $.ajax({
-	// 	type: 'POST',
-	// 	url: '/hku/admin/insertUserExcel',
-	// 	data: formData,
-	// 	dataType: "JSON",
-	// 	processData: false,
-	// 	contentType: false,
-	// 	success: function(res) {
-	// 		swal({
-	// 			title: "일괄등록 성공!!",
-	// 			icon: "success"
-	// 		})
-	// 		console.log("일괄등록 완료!!!!!!");
-	// 		console.log(res);
-	// 		studentsSet();
-	// 	},
-	// 	error: function (xhr, status, error) {
-	// 		alert("출력실패");
-	// 	}
-	// });
 }
 
 function tabChange(){
-	console.log("hi~");
+	// console.log("hi~");
 	// console.log(document.querySelector("#professors-tab").classList);
 	var tabButtons = document.querySelectorAll(".nav-link");
 	var tabPanels = document.querySelectorAll(".tab-pane");
@@ -1208,7 +1184,7 @@ function selectStdAll(target){
 }
 function onlyCheck(target){
 	event.stopPropagation();
-	console.log("오직 체크만",target.value);
+	// console.log("오직 체크만",target.value);
 	
 }
 
@@ -1220,7 +1196,7 @@ function usersSet(){
 		"searchWord": searchWord
 	}
 
-	console.log(data);
+	// console.log(data);
 
 	$.ajax({
 		type: 'POST',
@@ -1290,7 +1266,7 @@ function adminsSet(){
 		"searchWord": searchWord
 	}
 
-	console.log(data);
+	// console.log(data);
 
 	$.ajax({
 		type: 'POST',
@@ -1301,7 +1277,6 @@ function adminsSet(){
 		contentType: "application/json;charset=UTF-8",
 		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res) {
-			console.log("res",res);
 			var admins = $("#admins");
 			var tblStr = "";
 			tblStr += `<div class='table-wrap'>
@@ -1367,7 +1342,7 @@ function professorsSet(){
 		"searchWord": searchWord
 	}
 
-	console.log(data);
+	// console.log(data);
 
 	$.ajax({
 		type: 'POST',
@@ -1442,7 +1417,7 @@ function studentsSet(){
 		"searchWord": searchWord
 	}
 
-	console.log(data);
+	// console.log(data);
 
 	$.ajax({
 		type: 'POST',
@@ -1513,10 +1488,10 @@ function deleteUser(){
 	let users = $(".userCheck");
 	for(let i=0; i<users.length; i++){
 		if(users[i].checked == true){
-			console.log(users[i]);
+			// console.log(users[i]);
 			let userType = $(users[i]).parents("tr").children().eq(3).html();
-			console.log(userType);
-			console.log(users[i].value);
+			// console.log(userType);
+			// console.log(users[i].value);
 
 			let delUser = {
 				"type": userType,
@@ -1528,10 +1503,10 @@ function deleteUser(){
 	let students = $(".stdCheck");
 	for(let i=0; i<students.length; i++){
 		if(students[i].checked == true){
-			console.log(students[i]);
+			// console.log(students[i]);
 			let userType = $(students[i]).parents("tr").children().eq(3).html();
-			console.log(userType);
-			console.log(students[i].value);
+			// console.log(userType);
+			// console.log(students[i].value);
 
 			let delUser = {
 				"type": userType,
@@ -1543,10 +1518,10 @@ function deleteUser(){
 	let professors = $(".proCheck");
 	for(let i=0; i<professors.length; i++){
 		if(professors[i].checked == true){
-			console.log(professors[i]);
+			// console.log(professors[i]);
 			let userType = $(professors[i]).parents("tr").children().eq(3).html();
-			console.log(userType);
-			console.log(professors[i].value);
+			// console.log(userType);
+			// console.log(professors[i].value);
 
 			let delUser = {
 				"type": userType,
@@ -1558,10 +1533,10 @@ function deleteUser(){
 	let employees = $(".empCheck");
 	for(let i=0; i<employees.length; i++){
 		if(employees[i].checked == true){
-			console.log(employees[i]);
+			// console.log(employees[i]);
 			let userType = $(employees[i]).parents("tr").children().eq(3).html();
-			console.log(userType);
-			console.log(employees[i].value);
+			// console.log(userType);
+			// console.log(employees[i].value);
 
 			let delUser = {
 				"type": userType,
@@ -1586,8 +1561,8 @@ function deleteUser(){
 	})
 	.then((willDelete) => {
 		if (willDelete) {
-			console.log(delUserArr);
-			console.log(JSON.stringify(delUserArr));
+			// console.log(delUserArr);
+			// console.log(JSON.stringify(delUserArr));
 			$.ajax({
 				type: 'DELETE',
 				url: '/hku/admin/user-management',
@@ -1951,7 +1926,7 @@ function DaumPostcode() {
 }
 
 function userInsert(event){
-	console.log("등록버튼");
+	// console.log("등록버튼");
 	var userClsCd = $("#selectTarget").val();	// 사용자 구분
 	var userPw = $("#userBrdt").val();
 
@@ -2109,7 +2084,7 @@ function userInsert(event){
 	}
 
 	// var files = event.target.files;
-	console.log("file",file);
+	// console.log("file",file);
 	// var file = files[0];
 
 	let formData = new FormData();
@@ -2152,7 +2127,7 @@ function userInsert(event){
 	}
 
 	// console.log(userInsertData);
-	console.log("formData",formData);	
+	// console.log("formData",formData);	
 
 	$.ajax({
 		method: 'POST',
@@ -2179,7 +2154,6 @@ function userInsert(event){
 			$("#profileImg").attr("src", "/images/user(2).png");
 			$("#profile").val(null); // ????
 			insertFormSet(stVal);
-			console.log("휴~");
 		},
 		error: function (xhr, status, error) {
 			alert("출력실패");

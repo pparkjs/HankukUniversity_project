@@ -18,7 +18,10 @@
 		ORDER BY LECNT_NO DESC
 	</select>
 		
-	<insert id="insertNotice" parameterType="lectureNoticeVO">
+	<insert id="insertNotice" parameterType="lectureNoticeVO" useGeneratedKeys="true">
+		<selectKey resultType="int" keyProperty="lecentNo" order="BEFORE">
+			SELECT seq_lecturenotice.nextval FROM dual
+		</selectKey>
 		INSERT INTO LECTURE_NOTICE(
 					LECNT_NO
 					,LECAP_NO
@@ -31,7 +34,7 @@
 						,ATCH_FILE_NO
 					</if>
 		)VALUES(
-					SEQ_LECTURENOTICE.NEXTVAL
+					#{lecentNo}
 					,#{lecapNo}
 					,#{lecntTtl}
 					,#{lecntCn}

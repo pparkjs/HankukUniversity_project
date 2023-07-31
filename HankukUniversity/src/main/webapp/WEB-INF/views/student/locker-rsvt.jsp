@@ -11,7 +11,7 @@
     </div>
 	<div class="container-fluid searchCon">
 		<div class="card" id="card-title-1">
-			<div class="card-body">
+			<div class="card-body" style="color: black; font-size: 18px;	padding: 0.75rem;">
 				<div class="myInfo">
 					학과:&nbsp;&nbsp;&nbsp;
 					<input type="text" class="deptText" value="${std.deptNm }" disabled>
@@ -36,7 +36,7 @@
 							<div class="card-title" style="color: maroon;  font-weight: 900;">사물함 예약</div>
 						</div>
 					</div>
-					<div class="card-body" style="padding-top: 0px;">
+					<div class="card-body" style="padding-top: 0px; color: black; font-size: 18px;	padding: 0.75rem;">
 						<div class="locker-wrap" style="margin-top: 10px;">
 							<div class="lockerLeft-top">
 								<span>건물:&nbsp;&nbsp;&nbsp;</span>
@@ -72,7 +72,7 @@
 							<div class="card-title" style="color: maroon;  font-weight: 900;}">사물함 예약 수칙</div>
 						</div>
 					</div>
-					<div class="card-body" style="padding-top: 0px;">
+					<div class="card-body" style="padding-top: 0px; color: black; font-size: 18px;	padding: 0.75rem;">
 						<div class="rule-wrap">
 							<div class="rule-title">1. 신청 대상</div>
 							<div class="rule-content"> - 학부 재학생</div>

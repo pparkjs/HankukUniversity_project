@@ -13,7 +13,7 @@
         </div>
         <hr>
         <div class="col-xl-12 mb-3">
-            <div class="row">
+            <div class="row" style="font-size: 18px;">
                 <div class="col-xl-4 mb-1" style="width: 30%;">
                     <p>● 등록일 : <c:out value="${studyBoard.stboRegdate }"/></p>
                 </div>
@@ -44,15 +44,15 @@
         </div>
         <div class="col-xl-12 mb-3">
             
-                <div class="col-xl-10 mb-1" style="display: flex; justify-content: end; margin-right: 0px;">
+                <div class="col-xl-12 mb-1" style="display: flex; justify-content: end; margin-right: 0px;">
                     <button class="btn btn-primary" id="listBtn" style="margin: 5px;">목록</button>
                     <c:choose>
 	                	<c:when test="${studyBoard.stdNo eq stdNo }">
-		                    <button class="btn btn-primary" id="listBtn" style="margin: 5px;" onclick="openModal()">수정</button>
-		                    <button class="btn btn-primary" id="listBtn" style="margin: 5px;" onclick="delBoard()">삭제</button>          	
+		                    <button class="btn btn-primary" id="listBtn" style="margin: 5px; background: #0070c0; border-color: #0070c0;" onclick="openModal()">수정</button>
+		                    <button class="btn btn-primary" id="listBtn" style="margin: 5px; background: #ff4343; border-color: #ff4343;" onclick="delBoard()">삭제</button>          	
 	                	</c:when>
 	                	<c:otherwise>           	
-		                	<button type="button" class="btn btn-primary" style="margin: 5px;" data-bs-toggle="modal" data-bs-target="#basicModal">가입신청</button>
+		                	<button type="button" class="btn btn-primary" style="margin: 5px; background: #0070c0; border-color: #0070c0;" data-bs-toggle="modal" data-bs-target="#basicModal">가입신청</button>
 	                	</c:otherwise>
 	                </c:choose>     
                </div>

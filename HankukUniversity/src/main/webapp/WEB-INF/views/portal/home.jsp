@@ -14,7 +14,7 @@
     max-height: 275px;
     margin-left: 17px;
     position: relative;
-    z-index: 999;
+    z-index: 1;
 }
 .table-wrap2 td{
 	cursor: pointer;
@@ -44,38 +44,22 @@
 #box:before {
 	background-color: rgba(0,0,0,0.4)
 }
+input, select, textarea {
+    min-width: 0;
+    padding: 0;
+}
 </style>
 <div class="container-fluid mt-3">
     <div class="row">
         <div class="col-lg-12">
             <div class="grid-stack">
-                <div class="grid-stack-item portlet1" gs-w="6" gs-h="6">
-                    <div class="grid-stack-item-content">
-                        <div class="card portlet-item">
-                            <div class="card-body">
-                                <div style="display: flex; margin-left: 11px;">
-                                    <div>
-                                        <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
-                                        <h5 style="font-weight: 500; display: inline-block;">&nbsp;1일정</h5>
-                                    </div>
-                                    <div>
-                                        <a href='/calendar/main' class="ti-plus"></a>&nbsp;&nbsp;
-                                    </div>
-                                </div>
-                                <h3 class="title-h3 col" style="font-family: '양진체'!important; text-align: center;">2023년 2월 학사일정</h3>
-                                <div class="hnu_schedule" id="calendar">
-                                </div>
-                            </div>
-                        </div>
-                    </div>   
-                </div>
-                <div class="grid-stack-item portlet2" gs-w="12" gs-h="6" gs-no-resize="true">
+                <div class="grid-stack-item portlet1" gs-w="12" gs-h="6" gs-no-resize="true">
                     <div class="grid-stack-item-content" >
                         <div class="card portlet-item" style="margin-bottom: -31px; height: 394px;">
                             <div class="card-body" style="padding: 0.25rem; padding-top: 10px;">
                                 <div style="display: flex; margin-left: 11px;">
                                     <div>
-                                        <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
+                                        <a href='#'><i class="fa-solid fa-school"></i></a>
                                         <h5 style="display: inline-block; font-weight: 500; margin-bottom: 11px;">&nbsp;한국대학교 공지사항</h5>
                                     </div>
                                 </div>
@@ -151,13 +135,13 @@
                         </div>
                     </div>   
                 </div>
-                <div class="grid-stack-item portlet3" gs-w="12" gs-h="6">
+                <div class="grid-stack-item portlet2" gs-w="12" gs-h="6" gs-no-resize="true">
                     <div class="grid-stack-item-content">
                         <div class="card portlet-item">
                             <div class="card-body" style="padding: 0.25rem; padding-top: 10px;">
                                 <div style="display: flex; margin-left: 11px;">
                                     <div style="width: 93%; display: flex; align-items: center; position: relative;">
-                                        <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
+                                        <a href='#'><i class="fa-solid fa-school"></i></a>
                                         <h5 style="display: inline-block; font-weight: 500; margin-left: 4px;">&nbsp;한국대학교 일정</h5>
                                         <div style="position: absolute; position: absolute; left: 310px; font-size: 20px;">v</div>
                                       	<select class="default-select form-control" id="calClsf" tabindex="null">
@@ -187,13 +171,13 @@
                         </div>
                     </div>   
                 </div>
-                <div class="grid-stack-item portlet4" gs-w="6" gs-h="6">
+                <div class="grid-stack-item portlet3" gs-w="6" gs-h="6" gs-no-resize="true">
                     <div class="grid-stack-item-content">
                         <div class="card portlet-item">
                             <div class="card-body" style="padding: 0.25rem; padding-top: 10px;">
                                 <div style="display: flex; margin-left: 11px;">
                                     <div>
-                                        <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
+                                        <a href='#'><i class="fa-solid fa-school"></i></a>
                                         <h5 style="display: inline-block; font-weight: 500;">&nbsp;시간표</h5>
                                     </div>
                                     <div>
@@ -223,43 +207,23 @@
                         </div>
                     </div>   
                 </div>
-                <div class="grid-stack-item portlet5" gs-w="6" gs-h="6">
+                <div class="grid-stack-item portlet4" gs-w="6" gs-h="6" gs-no-resize="true">
                     <div class="grid-stack-item-content">
                         <div class="card portlet-item">
                             <div class="card-body" style="padding: 0.25rem; padding-top: 10px;">
                                 <div style="display: flex; margin-left: 11px;">
                                     <div>
-                                        <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
-                                        <h5 style="display: inline-block; font-weight: 500;">&nbsp;5이수정보</h5>
-                                    </div>
-                                    <div>
-                                        <a href='/calendar/main' class="ti-plus"></a>&nbsp;&nbsp;
-                                    </div>
-                                </div>
-                                <h3 class="title-h3 col" style="font-family: '양진체'!important; text-align: center;">2023년 2월 학사일정</h3>
-                                <div class="hnu_schedule" id="calendar">
-                                </div>
-                            </div>
-                        </div>
-                    </div>   
-                </div>
-                <div class="grid-stack-item portlet6" gs-w="6" gs-h="6">
-                    <div class="grid-stack-item-content">
-                        <div class="card portlet-item">
-                            <div class="card-body" style="padding: 0.25rem; padding-top: 10px;">
-                                <div style="display: flex; margin-left: 11px;">
-                                    <div>
-                                        <a href='/calendar/main'><i class="fa-solid fa-school"></i></a>
+                                        <a href='#'><i class="fa-solid fa-school"></i></a>
                                         <h5 style="display: inline-block; font-weight: 500;">&nbsp;오늘의 날씨</h5>
                                     </div>
                                 </div>
-                                <div class="hnu_schedule" id="box" style="display :flex; flex-direction:column; justify-content:center; align-items:center; border:1px; width : 100%; height:94%;  background-size: 100% 100% ; color:black; ">
-<!-- 									<div style="align-items:center; width : 100%; height:100%; background-color:rgba(0,0,0,0.3); background-size: 100% 100% ; "> -->
-<!-- 										<p id="city" style="color:white; z-index: 1000; font-size : 20px; position: absolute; left:87px; top:135px; text-shadow: 1px 1px 6px black; "></p> -->
-<!-- 										<p id="temp" style="color:white; z-index: 1000; font-size: 6em; position: absolute; left:85px; top:125px; font-weight: bold; text-shadow: 2px 2px 4px black;"></p> -->
-<!-- 										<p id="weather" style="color:white; z-index: 1000; font-size : 20px; position: absolute; left:115px; top:240px;  text-shadow: 1px 1px 6px black;"></p> -->
-<!-- 										<div id="say" style="color:white; z-index: 1000; font-style: italic; left:80px; top:350px; position: absolute;">인생은 폭풍이 지나갈때를 기다리는 것이 아니라,<br>비올때 춤추는 법을 배우는 것이다.</div> -->
-<!-- 									</div> -->
+                                <div class="hnu_schedule" id="box" style="border:1px; width : 100%; height:94%;  background-size: 100% 100% ; color:black; ">
+                                        <div id="naver" style="display :flex; flex-direction:column; justify-content:center; align-items:center; width : 100%; height:100%; background-color:rgba(0,0,0,0.3); background-size: 100% 100% ; ">
+                                            <p id="city" style="color:white; z-index: 1; font-size : 20px; text-shadow: 1px 1px 6px black; "></p>
+                                            <p id="temp" style="color:white; z-index: 1; font-size: 4em;  font-weight: bold; text-shadow: 2px 2px 4px black;"></p>
+                                            <p id="weather" style="color:white; z-index: 1; font-size : 20px; text-shadow: 1px 1px 6px black;"></p>
+                                            <div id="say" style="color:white; z-index: 1; font-style: italic;">인생은 폭풍이 지나갈때를 기다리는 것이 아니라,<br>비올때 춤추는 법을 배우는 것이다.</div>
+                               </div>
                                 </div>
                             </div>
                         </div>
@@ -267,34 +231,12 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="col-lg-6" style="border: 1px solid black;">
-            <div class="card m-3" id="card-title-1">
-                <div class="card-header border-0 pb-0 ">
-                    <h5 class="card-title">메인 대쉬보드</h5>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        메인대쉬보드 입니다!!
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6" style="border: 1px solid black;">
-            <div class="card m-3" id="card-title-1">
-                <div class="card-header border-0 pb-0 ">
-                    <h5 class="card-title">메인 대쉬보드</h5>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        메인대쉬보드 입니다!!
-                    </p>
-                </div>
-            </div>
-        </div> -->
     </div>
 </div>
+   <div id="hiddenWeather" style="display: none;"></div>
 <script type="text/javascript">
 $(document).ready(function () {
+	getAllNoticeData();
 	var grid = GridStack.init({ // 여기에 그리드 스택 옵션 삽입
         disableOneColumnMode: true, // jfidle 작은 창 크기용
         float: false,
@@ -367,13 +309,94 @@ $(document).ready(function () {
 		toastr.success('화면 설정이 저장되었습니다.');
     });
     
-    getAllNoticeData();
+	var pRow = $('#pRow');
+	var savePortletItemJson = {
+		p1: null,
+		p2: null,
+		p3: null,
+		p4: null,
+	};
+	
+	
+	function deletePortletItem() {
+		let saveItem = JSON.parse(localStorage.getItem("savePortletItem"));
+		if (saveItem.p1 != null) {
+			$('#pCk1').click();
+		}
+		if (saveItem.p2 != null) {
+			$('#pCk2').click();
+		}
+		if (saveItem.p3 != null) {
+			$('#pCk3').click();
+		}
+		if (saveItem.p4 != null) {
+			$('#pCk4').click();
+		}
+	}
+	
+	
+	pRow.on('click','input[type="checkbox"]', function () {
+		if($(this).prop("checked")) {
+			console.log(this.id + " 체크");
+			portletCheck(this.id)
+		}else{
+			console.log(this.id + " 체크해제");
+			portletUncheck(this.id);
+		}
+		localStorage.setItem("savePortletItem", JSON.stringify(savePortletItemJson));
+	});
+	
+	function portletCheck(pId) {
+		switch (pId) {
+			case "pCk1": 
+			 	grid.addWidget(savePortletItemJson.p1);
+				savePortletItemJson.p1 = null; 
+				break;
+			case "pCk2": 
+			 	grid.addWidget(savePortletItemJson.p2);
+				savePortletItemJson.p2 = null; 
+				break;
+			case "pCk3": 
+			 	grid.addWidget(savePortletItemJson.p3);
+				savePortletItemJson.p3 = null; 
+				break;
+			case "pCk4": 
+			 	grid.addWidget(savePortletItemJson.p4);
+				savePortletItemJson.p4 = null; 
+				break;
+		}
+	}
+	
+	function portletUncheck(pId) {
+		var portletObj;
+		switch (pId) {
+			case "pCk1": 
+				portletObj = $(".portlet1")[0];
+				savePortletItemJson.p1 = portletObj;
+				break;
+			case "pCk2": 
+				portletObj = $(".portlet2")[0];
+				savePortletItemJson.p2 = portletObj; 
+				break;
+			case "pCk3": 
+				portletObj = $(".portlet3")[0];
+				savePortletItemJson.p3 = portletObj; 
+				break;
+			case "pCk4": 
+				portletObj = $(".portlet4")[0];
+				savePortletItemJson.p4 =  portletObj
+				break;
+		}
+		grid.removeWidget(portletObj);
+	}
+	
 
     // 공지사항 가져오기
     function getAllNoticeData(){
         let deptCd = "${std.deptCd}";
 
         $.ajax({
+        	async: false,
             type: 'get',
             url: '/hku/portal/all-notice',
             contentType: 'application/json;charset=utf-8',
@@ -437,6 +460,8 @@ $(document).ready(function () {
     	location.href = `/hku/portal/notice-detail?noticeNo=\${pObjVal}&noticeDiv=\${pClsf}`;
     }
     
+    
+    deletePortletItem();
 });
 
 var calClsf = $('#calClsf');
@@ -664,84 +689,7 @@ function dayChange(day){
 }
 
 /* 날씨 API */
-// function onGeoOk(position) {
-//   const lat = position.coords.latitude;
-//   console.log("내용1:",lat);
-//   const lon = position.coords.longitude;
-//   console.log("내용2:",lon)
-//   const url = `https://api.openweathermap.org/data/2.5/weather?lat=\${lat}&lon=\${lon}&appid=${weatherkey}&lang=kr&units=metric`;
-
-//   fetch(url)
-//     .then(response => response.json())
-//     .then(data => {
-//       console.log(data);
-//       console.log(data.name);
-//       $('#city')[0].innerText = data.name;
-  
-//       cod = 802;
-// //       cod = parseInt(data.cod);
-//       if(cod >= 200 && cod < 300 ){
-//     	  $('#box').css('background-image','url(/images/weather/stormclouds.jpg)');
-//     	 $('#weather')[0].innerText = wDescEngToKor(cod);
-//       }else if(cod >= 300 && cod <600){
-    	  
-//     	  $('#box').css('background-image','url(/images/weather/rain.jpg)');
-//     	 $('#weather')[0].innerText = wDescEngToKor(cod);
-//       }else if(cod == 800 || cod == 801){
-//     	  $('#box').css('background-image','url(/images/weather/sunny.jpg)');
-//     	 $('#weather')[0].innerText = wDescEngToKor(cod);
-    	  
-//       }else if(cod == 802){
-//     	  $('#box').css('background-image','url(/images/weather/cloudsky.jpg)');
-//      	 $('#weather')[0].innerText = wDescEngToKor(cod);
-//        }
-      
-//       $('#temp')[0].innerText = Math.round(data.main.temp*10)/10 + '°C';
-
-//     })
-//     .catch(error => {
-//       console.error('데이터 가져오기 실패:', error);
-//     });
-// }
-
-// function onGeoError() {
-//   alert("위치를 알 수 없어~");
-// }
-
-// window.addEventListener('load', function() {
-//   navigator.geolocation.getCurrentPosition(onGeoOk, onGeoError);
-// });
-
-// function wDescEngToKor(w_id) {
-// 	var w_id_arr = [201,200,202,210,211,212,221,230,231,232,
-// 	300,301,302,310,311,312,313,314,321,500,
-// 	501,502,503,504,511,520,521,522,531,600,
-// 	601,602,611,612,615,616,620,621,622,701,
-// 	711,721,731,741,751,761,762,771,781,800,
-// 	801,802,803,804,900,901,902,903,904,905,
-// 	906,951,952,953,954,955,956,957,958,959,
-// 	960,961,962];
-// 	var w_kor_arr = ["가벼운 비를 동반한 천둥구름","비를 동반한 천둥구름","폭우를 동반한 천둥구름","약한 천둥구름",
-// 	"천둥구름","강한 천둥구름","불규칙적 천둥구름","약한 연무를 동반한 천둥구름","연무를 동반한 천둥구름",
-// 	"강한 안개비를 동반한 천둥구름","가벼운 안개비","안개비","강한 안개비","가벼운 적은비","적은비",
-// 	"강한 적은비","소나기와 안개비","강한 소나기와 안개비","소나기","악한 비","중간 비","강한 비",
-// 	"매우 강한 비","극심한 비","우박","약한 소나기 비","소나기 비","강한 소나기 비","불규칙적 소나기 비",
-// 	"가벼운 눈","눈","강한 눈","진눈깨비","소나기 진눈깨비","약한 비와 눈","비와 눈","약한 소나기 눈",
-// 	"소나기 눈","강한 소나기 눈","박무","연기","연무","모래 먼지","안개","모래","먼지","화산재","돌풍",
-// 	"토네이도","구름 한 점 없는 맑은 하늘","약간의 구름이 낀 하늘","드문드문 구름이 낀 하늘","구름이 거의 없는 하늘",
-// 	"구름으로 뒤덮인 흐린 하늘","토네이도","태풍","허리케인","한랭","고온","바람부는","우박","바람이 거의 없는",
-// 	"약한 바람","부드러운 바람","중간 세기 바람","신선한 바람","센 바람","돌풍에 가까운 센 바람","돌풍",
-// 	"심각한 돌풍","폭풍","강한 폭풍","허리케인"];
-// 	for(var i=0; i<w_id_arr.length; i++) {
-// 	if(w_id_arr[i]==w_id) {
-// 	return w_kor_arr[i];
-// 	break;
-// 	}
-// 	}
-// 	return "none";
-// 	}
-	
-	const myDisp = document.querySelector("#box");
+	const myDisp = document.querySelector("#hiddenWeather");
 	function fGetWeather(){
 	    //let schURL = `https://weather.naver.com`;
 	    let schURL = "/hku/portal/naver";
@@ -752,7 +700,7 @@ function dayChange(day){
 	    xhr.onreadystatechange = ()=>{
 	        if(xhr.readyState == 4 && xhr.status == 200){
 	            let cont = xhr.responseText;
-	            console.log(cont);
+// 	            console.log(cont);
 	            myDisp.innerHTML = "";
 	
 // 	           myDisp.innerHTML=cont;
@@ -764,7 +712,7 @@ function dayChange(day){
 	            let content="";
 	            for(let i=1; i<=2;i++){
 	                endIndex = cont.indexOf("</div>",endIndex)+6;
-	              //  console.log("체킁:",cont.substring(startIndex+14,endIndex));
+	               console.log("체킁:",cont.substring(startIndex+14,endIndex));
 	                content = cont.substring(startIndex+14,endIndex);
 	            }
 	            myDisp.innerHTML = content;
@@ -772,10 +720,9 @@ function dayChange(day){
 	            // 위치정보
 	            startIndex = cont.indexOf("location_name")+15;
 	            endIndex = cont.indexOf("</strong>",startIndex);
-	            myDisp.innerHTML += "<div>" + cont.substring(startIndex,endIndex) + "</div>";
+	            myDisp.innerHTML += "<div>" +  + "</div>";
 	            console.log("내용"+content);
-	            var location = cont.substring(startIndex,endIndex);
-	            console.log("위치"+location);
+	            document.querySelector('#city').innerText = '대전광역시 '+cont.substring(startIndex,endIndex);
 	        }
 	    }
 	    xhr.send();
@@ -785,22 +732,75 @@ function dayChange(day){
      
 	var weather = document.querySelector('.weather').innerText;
 	var blind = document.querySelector('.current').innerText;
+	
+	function extractNumbersAndSymbols(inputString) {
+		  const cleanedText = inputString.replace(/[ㄱ-ㅎㅏ-ㅣ가-힣<br>]/g, '');
+		  const extractedData = cleanedText.match(/[0-9.,!@#$%^&*()_+={}\[\]:;"'<>\?/\\|]/g);
+		  const result = extractedData ? extractedData.join('') : '';
+		  return result;
+		}
+	
 	console.log("날씨"+weather);
-	console.log("날씨"+blind);
-		
-	 if(weather == '흐림'){
+	console.log("온도"+blind.substring(5).trim());
+	document.querySelector('#weather').innerText = weather;
+    document.querySelector('#temp').innerText = extractNumbersAndSymbols(blind)+'°';
+    
+	
+	 if(weather.includes('천둥')){
    	  $('#box').css('background-image','url(/images/weather/stormclouds.jpg)');
-//    	 $('#weather')[0].innerText = wDescEngToKor(cod);
-     }else if(weather == '비'){
-   	  
+     }else if(weather.includes('비')){
    	  $('#box').css('background-image','url(/images/weather/rain.jpg)');
-//    	 $('#weather')[0].innerText = wDescEngToKor(cod);
-     }else if(weather == '맑음'){
+     }else if(weather.includes('맑음')){
    	  $('#box').css('background-image','url(/images/weather/sunny.jpg)');
-//    	 $('#weather')[0].innerText = wDescEngToKor(cod);
-   	  
-     }else if(weather == '흐림'){
-//    	  $('#box').css('background-image','url(/images/weather/cloudsky.jpg)');
-//     	 $('#weather')[0].innerText = wDescEngToKor(cod);
+     }else if(weather.includes ('구름')){
+   	  $('#box').css('background-image','url(/images/weather/cloudsky.jpg)');
+      }else if(weather.includes ('흐림')){
+   	  $('#box').css('background-image','url(/images/weather/흐린날씨.jpg)');
       }
 </script>
+<!-- 화면 설정 모달창 -->
+<div class="modal fade bd-example-modal-sm" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">화면 설정</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+            	<div class="row" id="pRow">
+            		<div class="col-xl-12 mb-3">
+	            		<h6>원하는 위젯을 <font style="color: red;">'체크'</font>를 통해 추가 또는 삭제 할 수 있습니다.</h6>
+            		</div>
+            		<div class="col-xl-12 mb-1">
+	            		<div class="form-check custom-checkbox mb-3 checkbox-warning">
+							<input type="checkbox" class="form-check-input" checked id="pCk1">
+							<label class="form-check-label" for="pCk1">공지사항</label>
+						</div>
+            		</div>
+            		<div class="col-xl-12 mb-1">
+	            		<div class="form-check custom-checkbox mb-3 checkbox-warning">
+							<input type="checkbox" class="form-check-input" checked id="pCk2">
+							<label class="form-check-label" for="pCk2">학교일정</label>
+						</div>
+            		</div>
+            		<div class="col-xl-12 mb-1">
+	            		<div class="form-check custom-checkbox mb-3 checkbox-warning">
+							<input type="checkbox" class="form-check-input" checked id="pCk3">
+							<label class="form-check-label" for="pCk3">시간표</label>
+						</div>
+            		</div>
+            		<div class="col-xl-12 mb-1">
+	            		<div class="form-check custom-checkbox mb-3 checkbox-warning">
+							<input type="checkbox" class="form-check-input" checked id="pCk4">
+							<label class="form-check-label" for="pCk4">날씨</label>
+						</div>
+            		</div>
+            	</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>

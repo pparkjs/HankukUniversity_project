@@ -22,4 +22,5 @@ public interface StdGradeCheckMapper {
 	public DepartmentCrtrVO getDeptCrtr(String deptCd);
 	public List<String> getSubjectYear(String stdNo);
 	public List<CourseRegistVO> getAllgrade(Map<String, String> mymap);
+	public List<CourseRegistVO> getDmrList(String stdNo);
 }

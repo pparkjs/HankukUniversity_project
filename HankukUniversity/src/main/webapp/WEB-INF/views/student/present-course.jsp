@@ -12,7 +12,7 @@
     </div>
 	<div class="container-fluid searchCon">
 		<div class="card" id="card-title-1">
-			<div class="card-body">
+			<div class="card-body" style="color: black; font-size: 18px;	padding: 0.75rem;">
 				<div class="myInfo">
 					학과:&nbsp;&nbsp;&nbsp;
 					<input type="text" class="deptText" value="${std.deptNm }" disabled>
@@ -40,7 +40,7 @@
 				</div>
 			</div>
 			<hr>
-			<div class="card-body" style="padding-top: 0px;">
+			<div class="card-body" style="padding-top: 0px; color: black; font-size: 18px;	padding: 0.75rem;">
 				<div class="presentCon">
 					<div class="record-wrap2" style="margin-top: 10px;">
 						<table class="table" style="margin-top: -22px;">
@@ -80,12 +80,12 @@
 					<table class="schedule" border=1>
 						<thead class="thead-dark">
 							<tr>
-								<th style="width: 30px; height: 42px; font-size: 19px; font-weight: 500;"></th>
-								<th style="width: 30px; height: 42px; font-size: 19px; font-weight: 500;">월</th>
-								<th style="width: 30px; height: 42px; font-size: 19px; font-weight: 500;">화</th>
-								<th style="width: 30px; height: 42px; font-size: 19px; font-weight: 500;">수</th>
-								<th style="width: 30px; height: 42px; font-size: 19px; font-weight: 500;">목</th>
-								<th style="width: 30px; height: 42px; font-size: 19px; font-weight: 500;">금</th>
+								<th style="width: 15%; height: 42px; font-size: 19px; font-weight: 500;"></th>
+								<th style="width: 17%; height: 42px; font-size: 19px; font-weight: 500;">월</th>
+								<th style="width: 17%; height: 42px; font-size: 19px; font-weight: 500;">화</th>
+								<th style="width: 17%; height: 42px; font-size: 19px; font-weight: 500;">수</th>
+								<th style="width: 17%; height: 42px; font-size: 19px; font-weight: 500;">목</th>
+								<th style="width: 17%; height: 42px; font-size: 19px; font-weight: 500;">금</th>
 							</tr>
 						</thead>
 						<tbody id="timeBody">
@@ -128,7 +128,7 @@ function presentCourseList(){
 			var h1 = document.querySelector(".modal-body h1");
 			
 			if(res.length > 0){
-				h1.innerHTML = `\${res[0].lecapYr}학년도 \${res[0].lecapSem}학기 강의시간표`;;
+				h1.innerHTML = `\${res[0].lecapYr}학년도 \${res[0].lecapSem}학기 강의시간표`;
 							
 				var schedule = []; 
 				for(var i = 0; i < res.length; i++){

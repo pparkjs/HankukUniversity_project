@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.or.hku.admin.vo.CollegeVO;
 import kr.or.hku.admin.vo.FacilityVO;
 import kr.or.hku.lectureInfo.vo.LectureAplyVO;
+import kr.or.hku.lectureInfo.vo.LecturePlanVO;
 import kr.or.hku.lectureInfo.vo.LectureTimeTableVO;
 import kr.or.hku.lectureInfo.vo.SubjectVO;
 import kr.or.hku.professor.service.ILectureService;
@@ -128,5 +129,16 @@ public class LectureController {//강의관리 컨트롤러
 		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return lectureService.getMyLectire(users.getUsername());
 	}
+	
+//	기존 작성되있는 강의계획서 불러오기
+	
+	@ResponseBody
+	@GetMapping("/loadPlan")
+	public LecturePlanVO loadPlan(String subNo) {
+		LecturePlanVO vo = lectureService.loadPlan(subNo);
+		return  vo;
+	}
+	
+	
 	
 }
