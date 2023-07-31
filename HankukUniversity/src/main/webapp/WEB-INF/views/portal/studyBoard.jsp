@@ -204,15 +204,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-<<<<<<< HEAD
-				<button type="button" class="btn btn-danger light"
-					data-bs-dismiss="modal">닫기</button>
-				<button type="button" class="btn btn-primary"
-					onclick="insertBoard()" id="btn1">등록</button>
-=======
-				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal" onclick="closeModal()" id="closeBtn">닫기</button>
-				<button type="button" class="btn btn-primary" onclick="insertBoard()" id="btn1">등록</button>
->>>>>>> 9a15533f42a4a6fd9aa87c20f15262627761492c
+ 			<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
+            <button type="button" class="btn btn-primary" onclick="insertBoard()" id="btn1">등록</button>
 			</div>
 		</div>
 	</div>
@@ -414,51 +407,43 @@ $(function() {
    	 
    	 if (transcript.includes('제목')) {
 	    	var transtitle = newsentence(transcript);
-	    	console.log("가공문" + transtitle);
 	    	$('#stboTitle').attr('placeholder','');
 	    	$('#stboTitle').val(transtitle);
 	    }
 	    
 	  if (transcript.includes('내용')) {
 		var transcontent = newsentence(transcript);
-		console.log("가공문" +transcontent);
 		$('#stboContent').attr('placeholder','');
 	      $('#stboContent').val(transcontent);
 	    }
 	  
 	  if (transcript.includes('스터디선택')||transcript.includes('스터디 선택')||transcript.includes('선택')) {
 			var transcontent = newsentence(transcript);
-			console.log("가공문" +transcontent);
 			$('#selStudy').prop('size', $('#selStudy option').length); 
 			$('#selStudy').css("height", $('#selStudy option').length * 20 );
 	}
 	  if (transcript.includes('첫 번째')||transcript.includes('첫번째')) {
 			var transcontent = newsentence(transcript);
-			console.log("가공문" +transcontent);
 			$('#selStudy').find('option').eq(1).prop('selected',true);
 
 	}
 	  if (transcript.includes('두 번째')||transcript.includes('두번째')) {
 			var transcontent = newsentence(transcript);
-			console.log("가공문" +transcontent);
 			$('#selStudy').find('option').eq(2).prop('selected',true);
 
 	}
 	  if (transcript.includes('세 번째')||transcript.includes('세번째')) {
 			var transcontent = newsentence(transcript);
-			console.log("가공문" +transcontent);
 			$('#selStudy').find('option').eq(3).prop('selected',true);
 
 	}
 	  if (transcript.includes('네 번째')||transcript.includes('네번째')) {
 			var transcontent = newsentence(transcript);
-			console.log("가공문" +transcontent);
 			$('#selStudy').find('option').eq(4).prop('selected',true);
 
 	}
 	  if (transcript.includes('다섯 번째')||transcript.includes('다섯번째')) {
 			var transcontent = newsentence(transcript);
-			console.log("가공문" +transcontent);
 			$('#selStudy').find('option').eq(5).prop('selected',true);
 
 	}
