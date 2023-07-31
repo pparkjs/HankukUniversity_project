@@ -754,6 +754,8 @@ function dayChange(day){
    	  $('#box').css('background-image','url(/images/weather/sunny.jpg)');
      }else if(weather.includes ('구름')){
    	  $('#box').css('background-image','url(/images/weather/cloudsky.jpg)');
+      }else if(weather.includes ('흐림')){
+   	  $('#box').css('background-image','url(/images/weather/흐린날씨.jpg)');
       }
 </script>
 <!-- 화면 설정 모달창 -->

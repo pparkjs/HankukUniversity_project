@@ -65,7 +65,37 @@
 	font-size: 1.3em;
 	right: 40px;
 }
-
+.chatList-msg-count {
+    width: 31px;
+    height: 31px;
+    background-color: #e33333;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    font-size: 18px;
+    padding-top: 6px;
+    padding-left: 2px;
+}
+.user_info{
+	display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.chatbox .user_info span {
+    font-size: 0.9375rem;
+    color: #000;
+    display: block;
+    font-weight: 500;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    max-width: 10.625rem;
+    margin-bottom:0px;
+}
 </style>
 <div class="chatbox">
 	<div class="chatbox-close"></div>
@@ -80,8 +110,7 @@
 			<div class="tab-pane fade active show" id="chat">
 				<div class="card mb-sm-3 mb-md-0 contacts_card dz-chat-user-box">
 					<div class="card-header chat-list-header text-center">
-						<h6 class="mb-1"  style="font-size: 1.5em;">스터디 채팅방 목록</h6>
-						
+						<h6 style="font-size: 1.5em; font-weight: 600; margin-bottom: 0px;">스터디 채팅방 목록</h6>
 					</div>
 					
 					<div class="card-body contacts_body p-0 dz-scroll  " id="DZ_W_Contacts_Body">
@@ -98,7 +127,7 @@
 							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><polygon points="0 0 24 0 24 24 0 24"/><rect fill="#000000" opacity="0.3" transform="translate(15.000000, 12.000000) scale(-1, 1) rotate(-90.000000) translate(-15.000000, -12.000000) " x="14" y="7" width="2" height="10" rx="1"/><path d="M3.7071045,15.7071045 C3.3165802,16.0976288 2.68341522,16.0976288 2.29289093,15.7071045 C1.90236664,15.3165802 1.90236664,14.6834152 2.29289093,14.2928909 L8.29289093,8.29289093 C8.67146987,7.914312 9.28105631,7.90106637 9.67572234,8.26284357 L15.6757223,13.7628436 C16.0828413,14.136036 16.1103443,14.7686034 15.7371519,15.1757223 C15.3639594,15.5828413 14.7313921,15.6103443 14.3242731,15.2371519 L9.03007346,10.3841355 L3.7071045,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(9.000001, 11.999997) scale(-1, -1) rotate(90.000000) translate(-9.000001, -11.999997) "/></g></svg>
 						</a>
 						<div>
-							<h6 class="mb-1" id="roomNm" style="font-size: 1.5em;">채팅</h6>
+							<h6 class="mb-1" id="roomNm" style="font-size: 1.5em; font-weight: 700;">채팅</h6>
 						</div>							
 						<div class="dropdown">
 							<a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg></a>
@@ -119,7 +148,7 @@
 					</div>
 					
 					<div class="card-footer type_msg">
-						<div class="input-group2">
+						<div class="input-group">
 							<textarea class="form-control" id="msgContent" name="msgContent" placeholder="Type your message..."></textarea>
 							<div class="input-group-append">
 								<button type="button" id="sendBtn" onclick="sendMessage()" class="btn btn-primary"><i class="fa fa-location-arrow"></i></button>
@@ -164,15 +193,12 @@
 						      <li class="active dz-chat-user" id ="\${res[i].studyNo}" value="\${res[i].stdNo}" onclick="enterRoom(this)">
 						        <div class="d-flex bd-highlight">
 						          <div class="img_cont">
-						          <img src='/download\${res[i].stdProfilePath}' width="100%" height="100%" class="rounded-circle user_img_msg" alt="">
-						            <span class="online_icon"></span>
+						          <img src='/download\${res[i].stdProfilePath}' width="100%" height="100%" style="border: 1px solid #88888861;" class="rounded-circle user_img_msg" alt="">
 						          </div>
-						          <div class="user_info">
-						            <span style='font-size: 1em;'>\${res[i].studyName}</span>`;
+						          <div class="user_info" >
+						            <span style='font-size: 1.2em;'>\${res[i].studyName}</span>`;
 					if(res[i].unreadMsgCnt > 0){
-						chatList += `<p style='color: red'>\${res[i].unreadMsgCnt}</p>`;
-					}else{
-						chatList += `<p style='color: red'></p>`;						
+						chatList += `<div class="chatList-msg-count">\${res[i].unreadMsgCnt}</div>`;
 					}
 					chatList += `	</div>
 						        </div>

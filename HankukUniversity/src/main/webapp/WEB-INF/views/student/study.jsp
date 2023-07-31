@@ -4,6 +4,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/student/study-pjs.css">
+<link rel="stylesheet" href="/css/table.css">
 <style>
 @media only screen and (min-width: 1199px) and (max-width: 1920px) {
 	.customeoff {
@@ -51,101 +52,98 @@
 				<div class="tab-content">
 					<div class="tab-pane fade show active" id="home1" role="tabpanel">
 						
-							<div class="row" id="studyListDiv" style="margin-top: 23px; padding-top: 14px; margin-left: 15px; height:640px; overflow:scroll; width: 100%;">
-								<c:choose>
-									<c:when test="${empty studyList }">
-										<p>현재 가입되어있는 스터디가 없습니다.</p>
-									</c:when>
-									<c:otherwise>
-										<c:forEach items="${studyList }" var="study">
-									
-											
-											<div class="studycard-wrap" style="width: 24%;">
-												<div class="study-top">
-													<span class="study-text">[ 스터디명 : </span>
-													<div class="study-name">${study.studyName } ]</div>
-												</div>
-												<hr>
-												<div class="study-title">${study.studyIntro }</div>
-												<hr>
-												<div class="study-bottom">
-													<div class="bottom1">
-														<span class="date-text">생성일 :</span>
-														<div class="reg-date">												
-															<fmt:parseDate value="${study.studyRegdate }" var="regDate" pattern="yyyy-MM-dd HH:mm:ss"/>
-	                             							<fmt:formatDate value="${regDate }" pattern="yyyy-MM-dd"/>
-														</div>
-														<div style="margin-left: 55px;">
-															<a href="/hku/student/studyRoom?studyNo=${study.studyNo }">
-																<button class="end-button">입장</button>
-															</a>
-														</div>
-													</div>
-													<div class="bottom2">
-														<img alt="" src="/images/왕관.png" class="crownImg">
-														<div class="master-name">박정수</div>
-														<div class="hit-con">
-															<img alt="" src="/images/조회수.png" class="hitImg">
-															
-															<div class="cnt-text">인원:</div>
-															<div class="study-cnt">${study.count} / ${study.studyCpcy }</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											
-									</c:forEach>
-									</c:otherwise>
-								</c:choose>
-								</div>		
-					</div>
-				</div>
-				
-				<!-- 승인대기중인 스터디 목록 -->
-				<div class="tab-pane fade" id="contact1">
-					<div class="table-wrap">
-						<div class="row">
-							
+						<div class="row" id="studyListDiv" style="margin-top: 23px; padding-top: 14px; margin-left: 15px; height:640px; overflow:scroll; width: 100%;">
 							<c:choose>
 								<c:when test="${empty studyList }">
-									<p>가입승인 대기중인 스터디가 없습니다.</p>
+									<p>현재 가입되어있는 스터디가 없습니다.</p>
 								</c:when>
 								<c:otherwise>
-									<c:forEach items="${waitStudy }" var="waitStudy">
-									<div class="col-xl-3 col-lg-4 col-sm-6">
-										<div class="card" style="background-color: #adb17d1c;">
-											<div class="card-body">
-												<div class="card-use-box">
-													<div class="card__text">
-														<h4 class="mb-0">${waitStudy.studyName }</h4>
-														<p>${waitStudy.studyIntro }</p>
+									<c:forEach items="${studyList }" var="study">
+								
+										
+										<div class="studycard-wrap" style="width: 24%;">
+											<div class="study-top">
+												<span class="study-text">[ 스터디명 : </span>
+												<div class="study-name">${study.studyName } ]</div>
+											</div>
+											<hr>
+											<div class="study-title">${study.studyIntro }</div>
+											<hr>
+											<div class="study-bottom">
+												<div class="bottom1">
+													<span class="date-text">생성일 :</span>
+													<div class="reg-date">												
+														<fmt:parseDate value="${study.studyRegdate }" var="regDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+                             							<fmt:formatDate value="${regDate }" pattern="yyyy-MM-dd"/>
 													</div>
-													<ul class="card__info">
-														<li><span>인원수</span> <span class="card__info__stats">1 / ${waitStudy.studyCpcy }</span>
-														</li>
-													</ul>
-													<ul class="post-pos">
-														<li><span class="card__info__stats">스터디장: </span> <span>${waitStudy.stdNm }</span>
-														</li>
-														<span>${waitStudy.studyRegdate }</span>
-														</li>
-													</ul>
-													
-													<div>
-														<a href="/hku/student/studyRoom?studyNo=${waitStudy.studyNo }" class="btn btn-outline-primary btn-xs">취소</a>
-														<!-- <a href="javascript:void(0)" class="btn btn-secondary btn-sm ms-2">Following</a> -->
+													<div style="margin-left: 55px;">
+														<a href="/hku/student/studyRoom?studyNo=${study.studyNo }">
+															<button class="end-button">입장</button>
+														</a>
+													</div>
+												</div>
+												<div class="bottom2">
+													<img alt="" src="/images/왕관.png" class="crownImg">
+													<div class="master-name">박정수</div>
+													<div class="hit-con">
+														<img alt="" src="/images/조회수.png" class="hitImg">
+														
+														<div class="cnt-text">인원:${study.stdNm }</div>
+														<div class="study-cnt">${study.count} / ${study.studyCpcy }</div>
 													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								</c:forEach>
+											
+									</c:forEach>
 								</c:otherwise>
 							</c:choose>
-							
-							</div>
-						</div>
+						</div>		
 					</div>
+				
+				<!-- 승인대기중인 스터디 목록 -->
+				<div class="tab-pane fade" id="profile1">
+					<table class="table" style="margin-top: 10px;">
+						<thead class="thead-dark">
+							<tr>
+								<th style="width:180px;">스터디번호</th>
+								<th style="width:450px;">스터디명</th>
+								<th style="width:280px;">가입신청일</th>
+								<th style="width:350px;">스터디장</th>
+								<th style="width:400px;">신청사유</th>
+								<th style="width:200px;">승인여부</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:choose>
+								<c:when test="${empty waitStudy }">
+									<td colspan="6">가입승인 대기중인 스터디가 없습니다</td>
+								</c:when>
+
+								<c:otherwise>
+									<c:set value="0" var="count"/>
+									<c:forEach items="${waitStudy }" var="waitStudy">								
+										<tr>
+											<td><c:out value="${waitStudy.studyNo }"></c:out></td>
+											<td><c:out value="${waitStudy.studyName }"></c:out></td>
+											<td><c:out value="${waitStudy.joinRegdate }"></c:out></td>
+											<td><c:out value="${waitStudy.stdNm }"></c:out></td>
+											<td><c:out value="${waitStudy.joinReason }"></c:out></td>
+											<c:if test="${waitStudy.aprvSttsCd == 'wait' }">
+												<td><button type="button" class="btn btn-danger" id="regBtn" style=" margin-bottom: 12px; padding: 8px 15px; background: #0070c0; border-color: #0070c0;">대기</button> </td>												
+											</c:if>	
+											<c:if test="${waitStudy.aprvSttsCd == 'rej' }">
+												<td><a href="#" class="btn btn-danger" id="regBtn" style=" margin-bottom: 12px; padding: 8px 15px; background: #ff4343; border-color: #ff4343;">반려</a></td>																							
+											</c:if>								
+										<tr>	
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
+						</tbody>
+					</table>
+											
+					</div>
+				</div>
 				<!-- end tab -->
 				</div>
 

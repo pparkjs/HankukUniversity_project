@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,7 @@ public class CertificateController {
 	@Resource(name = "uploadPath")
 	private String resourcePath;
 
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/certificate")
 	public String certificate(HttpSession session, Model model) {
 		log.info("certificate() 실행...!");
@@ -63,7 +65,6 @@ public class CertificateController {
 		return "student/certificate-list";
 	}
 	
-//	@PostMapping("/certifi-print")
 	@RequestMapping(value = "/certifi-print", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String certifiPrint(@RequestBody HashMap<String, String> certifiMap) {

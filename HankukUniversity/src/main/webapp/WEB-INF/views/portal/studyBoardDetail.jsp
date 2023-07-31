@@ -14,16 +14,16 @@
         <hr>
         <div class="col-xl-12 mb-3">
             <div class="row" style="font-size: 18px;">
-                <div class="col-xl-4 mb-1" style="width: 33%;">
+                <div class="col-xl-4 mb-1" style="width: 30%;">
                     <p>● 등록일 : <c:out value="${studyBoard.stboRegdate }"/></p>
                 </div>
-                <div class="col-xl-4 mb-1" style="width: 25%;">
+               <div class="col-xl-4 mb-1" style="width: 30%;">
+                    <p>● 스터디명 : <c:out value="${studyBoard.studyName }"/></p>
+                </div>
+                <div class="col-xl-4 mb-1" style="width: 20%;">
                     <p>● 스터디장 : <c:out value="${studyBoard.stboWriter }"/></p>
                 </div>
-                <div class="col-xl-4 mb-1" style="width: 17%;">
-                    <p>● 인원 : <c:out value="${studyBoard.count }/${studyBoard.studyCpcy }"/></p>
-                </div>
-                <div class="col-xl-4 mb-1" style="width: 25%;">
+                <div class="col-xl-4 mb-1" style="width: 20%;">
                     <p>● 조회수 : <c:out value="${studyBoard.stboReadCnt }"/></p>
                 </div>
             </div>

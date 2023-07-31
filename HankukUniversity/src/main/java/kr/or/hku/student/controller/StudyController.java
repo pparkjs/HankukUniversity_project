@@ -43,7 +43,7 @@ public class StudyController {
 		StudentVO stdVo = (StudentVO) session.getAttribute("std");
 		String stdNo = stdVo.getStdNo();
 		List<StudyVO> studyList = service.studyList(stdNo);		
-		List<StudyVO> waitStudy = service.waitStudy(stdNo);		
+		List<StudyVO> waitStudy = service.waitStudy(stdNo);	
 		model.addAttribute("studyList", studyList);
 		model.addAttribute("waitStudy", waitStudy);
 		return "student/study";

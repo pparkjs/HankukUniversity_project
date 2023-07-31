@@ -268,6 +268,8 @@
 					<div class="form-validation">
 						<form class="needs-validation" id="planFrm">
 							<div class="mb-3">
+							<input type="button" value="기존 계획서 불러오기" class="btn btn-primary pro5"
+								id="loadPlanner" style="padding: 0; width:150px; float:right;">
 								<span
 									style="color: #800000; font-size: 1.2em; font-weight: bold;">평가기준</span><br>
 								<span>*평가기준은 비율(%)로 계산하여 입력해주세요. </span>
@@ -313,7 +315,7 @@
 								<div>
 									<span
 										style="color: #800000; font-size: 1.2em; font-weight: bold;">강의소개</span><br>
-									<textarea name="lectureIntro" rows="5" cols="100"></textarea>
+									<textarea id="lecpgIntro" name="lectureIntro" rows="5" cols="100"></textarea>
 								</div>
 								<span
 									style="color: #800000; font-size: 1.2em; font-weight: bold;">주차별
@@ -1126,4 +1128,46 @@
         			
         		});
             }
+            
+            $('#loadPlanner').on('click',function(){
+            	var subNo = $('#inSubjectCd').val();
+            	if(subNo == null || subNo == ''){
+            		swal("","교과목 선택을 먼저해주세요.","warning")
+            	}
+            	
+            	console.log("강의번호"+subNo);
+            	 $.ajax({
+                     url: '/hku/lecture/loadPlan',
+                     method: 'get',
+                     data: {
+                    	 subNo: subNo
+                     },
+                     dataType:'json',
+                     beforeSend : function(xhr){
+                         xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                      },
+                     success: function (res) {
+                    	 console.log(res);
+                    	 $('input[name="lecpgAtd"]').val(res.lecpgAtd);
+                    	 $('input[name="lecpgHw"]').val(res.lecpgHw);
+                    	 $('input[name="lecpgMdTest"]').val(res.lecpgMdTest);
+                    	 $('input[name="lecpgFnTest"]').val(res.lecpgFnTest);
+                    	 $('input[name="avlCd"]').val(res.avlCd);
+                    	 $('input[name="lecpgBook"]').val(res.lecpgBook);
+                    	 $('input[name="lecpgLggCd"]').val(res.lecpgLggCd);
+                    	 $('#lecpgIntro').val(res.lecpgIntro);
+                    	 for(let i = 1; i <= 15; i++){
+                    		 let week = "week"+i
+                    		 $('input[name="week'+i+'"]').val(res[week]);
+                    	 }
+                    	 
+                     	swal("","기존 강의계획서를 불러왔습니다.","success");
+                     	
+                     },error: function(xhr){
+                    	 swal("","기존 등록되있는 계획서가 없습니다.","warning");
+                    	 }
+                     })
+            	
+            })
+            
         </script>

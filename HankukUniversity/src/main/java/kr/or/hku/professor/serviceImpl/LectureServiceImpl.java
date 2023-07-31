@@ -11,6 +11,7 @@ import kr.or.hku.admin.vo.CollegeVO;
 import kr.or.hku.admin.vo.DepartmentVO;
 import kr.or.hku.admin.vo.FacilityVO;
 import kr.or.hku.lectureInfo.vo.LectureAplyVO;
+import kr.or.hku.lectureInfo.vo.LecturePlanVO;
 import kr.or.hku.lectureInfo.vo.LectureTimeTableVO;
 import kr.or.hku.lectureInfo.vo.SubjectVO;
 import kr.or.hku.professor.mapper.LectureMapper;
@@ -103,5 +104,9 @@ public class LectureServiceImpl implements ILectureService {
 	@Override
 	public List<LectureAplyVO> getMyLectire(String username) {
 		return lectureMapper.getMyLectire(username);
+	}
+	@Override
+	public LecturePlanVO loadPlan(String subNo) {
+		return lectureMapper.loadPlan(subNo);
 	}
 }
