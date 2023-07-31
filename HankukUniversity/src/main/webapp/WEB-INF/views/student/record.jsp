@@ -50,8 +50,8 @@ $(document).ready(function() {
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-			<li class="breadcrumb-item active"><a href="javascript:void(0)">메인대쉬보드</a></li>
+			<li class="breadcrumb-item"><a href="javascript:void(0)">학적</a></li>
+			<li class="breadcrumb-item active"><a href="javascript:void(0)">기본사항</a></li>
 		</ol>
     </div>
 	<div class="container-fluid">

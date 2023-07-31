@@ -12,7 +12,7 @@
     </div>
 	<div class="container-fluid" style="margin-top: -14px;">
 		<div class="card" id="card-title-1">
-			<div class="card-body">
+			<div class="card-body" style="color: black; font-size: 18px;	padding: 0.75rem;">
 				<div class="myInfo">
 					학과:&nbsp;&nbsp;&nbsp;
 					<input type="text" class="deptText" value="${std.deptNm }" disabled>
@@ -33,7 +33,7 @@
 			<div class="card-header border-0 pb-0 ">
 				<h5 class="card-title" style="color: maroon;  font-weight: 900;">사물함 예약현황</h5>
 			</div>
-			<div class="card-body" style="padding-top: 0px;">
+			<div class="card-body" style="padding-top: 0px; color: black; font-size: 18px;	padding: 0.75rem;">
 				<div class="table-wrap">
 					<table class="table" style="margin-top: -22px;">
 						<thead class="thead-dark">
@@ -87,7 +87,7 @@
 			<div class="card-header border-0 pb-0 ">
 				<h5 class="card-title" style="color: maroon;  font-weight: 900;">시설물 예약현황</h5>
 			</div>
-			<div class="card-body" style="padding-top: 0px;">
+			<div class="card-body" style="padding-top: 0px; color: black; font-size: 18px;	padding: 0.75rem;">
 				<div class="table-wrap">
 					<table class="table" style="margin-top: -22px;">
 						<thead class="thead-dark">

@@ -14,6 +14,12 @@
 .form-control {
 	width: 450px;
 }
+.nav-link {
+    color: #000;
+}
+.custom-tab-1 .nav-link:focus, .custom-tab-1 .nav-link:hover, .custom-tab-1 .nav-link.active {
+    font-weight: 800;
+}
 </style>
 <div class="content-body">
 	<div class="page-titles">
@@ -35,10 +41,10 @@
 							</li>
 						</ul>
 						
-						<div style="display: flex; justify-content: end; margin-right: 80px; position: relative;" >
+						<div style="display: flex; justify-content: end; position: relative;" >
 							<a class="btn btn-primary" data-bs-toggle="offcanvas"
 								href="#offcanvasExample" role="button"
-								aria-controls="offcanvasExample" style="position:absolute; top: -44px; padding: 9px 20px; height: 37px;">스터디 개설</a>
+								aria-controls="offcanvasExample" style="position:absolute; background: #0070c0; border-color: #0070c0; top: -44px; padding: 9px 20px; height: 37px;">스터디 개설</a>
 						</div>
 					</div>					
 				
@@ -81,7 +87,7 @@
 														<div class="hit-con">
 															<img alt="" src="/images/조회수.png" class="hitImg">
 															
-															<div class="cnt-text">인원:${study.stdNm }</div>
+															<div class="cnt-text">인원:</div>
 															<div class="study-cnt">${study.count} / ${study.studyCpcy }</div>
 														</div>
 													</div>

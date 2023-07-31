@@ -12,7 +12,7 @@
     </div>
 	<div class="container-fluid searchCon">
 		<div class="card" id="card-title-1">
-			<div class="card-body">
+			<div class="card-body" style="color: black; font-size: 18px;	padding: 0.75rem;">
 				<div class="myInfo">
 					학과:&nbsp;&nbsp;&nbsp;
 					<input type="text" class="deptText" value="${std.deptNm }" disabled>
@@ -30,7 +30,7 @@
 	</div>
 	<div class="container-fluid subCon">
 		<div class="card" id="card-title-1">
-			<div class="card-body" style="padding-top: 0px;">
+			<div class="card-body" style="padding-top: 0px; color: black; font-size: 18px;	padding: 0.75rem;">
 				<div class="recordMain">
 					<div class="recordLeft">
 						<div class="lTitle">

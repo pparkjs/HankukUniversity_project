@@ -55,6 +55,7 @@
 						<div class="card" id="card-title-1">
 							<div class="card-header border-0 pb-0 ">
 								<h5 class="card-title">휴강신청 목록</h5>
+								 <div class="exp" style="margin-right: 139px;"> * 휴강신청한 교수를 선택하면 하단에 해당 수업 듣는 학생리스트가 출력됩니다.</div>
 							</div>
 							<div class="card-body" style="height: 349px; overflow: visible">
 								<div class="table-wrap">
@@ -111,6 +112,9 @@
 											</tr>
 										</thead>
 										<tbody id="stdTBody">
+											<tr>
+												<td colspan="5" style="text-align: center;">휴강신청한 교수를 선택하세요.</td>
+											</tr>
 										</tbody>
 									</table>
 								</div>

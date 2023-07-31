@@ -11,7 +11,7 @@
         </div>
         <hr>
         <div class="col-xl-12 mb-3">
-            <div class="row">
+            <div class="row" style="font-size: 18px;">
                 <div class="col-xl-4 mb-1">
                     <p>● 등록일 : <c:out value="${notice.noticeRegdate}"/></p>
                 </div>

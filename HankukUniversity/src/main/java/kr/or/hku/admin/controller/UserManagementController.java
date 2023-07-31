@@ -25,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -67,6 +68,9 @@ public class UserManagementController {
 	
 	@Autowired
 	private CommonSMSService smsService;
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	 
 	// 성히꺼 // 
 	@Transactional
@@ -106,6 +110,28 @@ public class UserManagementController {
 		model.addAttribute("empDeptList", empDeptList);
 		model.addAttribute("smsDetailList", smsDetailList);
 		return "admin/sendTextMsg";
+	}
+	
+	//문자 추가 & 변경
+	@ResponseBody
+	@PostMapping("/smsTemplateProccess")
+	public Map<String, Object> smsTemplateProccess(@RequestBody SmsTemplateVO smsTemplateVO) {
+		log.info("smsTemplateVO > " + smsTemplateVO.toString());
+		Map<String, Object> returnValue = new HashMap<>();
+		int res = 0;
+		if (StringUtils.isBlank(smsTemplateVO.getSmsTempNo())) { // 기본키 없다 저장
+			res = smsService.addSmsTemplate(smsTemplateVO);
+			returnValue.put("processMsg", "add");
+		}else {
+			res = smsService.updateSmsTemplate(smsTemplateVO);
+			returnValue.put("processMsg", "update");
+		}
+		if (res > 0) {
+			returnValue.put("data", smsTemplateVO);
+		}else {
+			returnValue.put("processMsg", "error");
+		}
+		return returnValue;
 	}
 	
 	@ResponseBody
@@ -285,6 +311,12 @@ public class UserManagementController {
 	@ResponseBody
 	public ResponseEntity<String> insertUser(UserVO userVO) {
 		ResponseEntity<String> entity = null;
+		
+		String userPw = userVO.getUserPw();	// 생년월일이 넘어온 비밀번호
+		String userPw_ = pe.encode(userPw);	// 암호화
+		
+		userVO.setUserPw(userPw_);
+		
 		log.info("insertUser() 실행...!");
 //		log.info(userVO.toString());
 		int userStatus = userService.insertUser(userVO);
