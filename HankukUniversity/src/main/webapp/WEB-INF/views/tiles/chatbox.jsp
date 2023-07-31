@@ -96,6 +96,12 @@
     max-width: 10.625rem;
     margin-bottom:0px;
 }
+.crownImg2 {
+    width: 18px;
+    height: 18px;
+    margin-bottom: 5px;
+    margin-left: 8px;
+}
 </style>
 <div class="chatbox">
 	<div class="chatbox-close"></div>
@@ -130,13 +136,20 @@
 							<h6 class="mb-1" id="roomNm" style="font-size: 1.5em; font-weight: 700;">채팅</h6>
 						</div>							
 						<div class="dropdown">
-							<a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg></a>
-							<ul class="dropdown-menu dropdown-menu-end">
-								<li class="dropdown-item"><i class="fa fa-user-circle text-primary me-2"></i> View profile</li>
-								<li class="dropdown-item"><i class="fa fa-users text-primary me-2"></i> Add to btn-close friends</li>
-								<li class="dropdown-item"><i class="fa fa-plus text-primary me-2"></i> Add to group</li>
-								<li class="dropdown-item"><i class="fa fa-ban text-primary me-2"></i> Block</li>
-							</ul>
+							<a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">
+								<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1">
+									<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+									<rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/>
+									<circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/>
+									</g>
+								</svg>
+							</a>
+								<ul class="dropdown-menu dropdown-menu-end" id="memList">
+									<li class="dropdown-item"><i class="fa fa-user-circle text-primary me-2"></i></li>
+									<li class="dropdown-item"><i class="fa fa-users text-primary me-2"></i> Add to btn-close friends</li>
+									<li class="dropdown-item"><i class="fa fa-plus text-primary me-2"></i> Add to group</li>
+									<li class="dropdown-item"><i class="fa fa-ban text-primary me-2"></i> Block</li>
+								</ul>
 						</div>
 					</div>
 					<div class="card-body msg_card_body dz-scroll" id="DZ_W_Contacts_Body3">
@@ -163,6 +176,7 @@
 </div>
 <c:if test="${not empty std}">
 	<script type="text/javascript">
+	
 	$(document).ready(function() {
 		chatList();
 		
@@ -256,9 +270,43 @@
 		roomNm.html(studyName);
 		// 이전에 추가된 동적 태그를 모두 지우기
 		$('.msgDiv').html("");
-	
+		
+		memList();
 		msgList();
 		chatList();
+		
+	
+	}
+	
+	function memList(){
+		var memList = $("#memList");
+		console.log("채팅방 멤버 불러오깅");
+		//memList.html("");
+		
+		$.ajax({
+			  type: "get",
+			  url: "/hku/student/chatMemList",
+			  data: {
+			    "studyNo": studyNo
+			  },
+			  dataType: "json",
+			  success: function (data) {
+			    var memListData = "";
+			    console.log("뭐가져옴?: ", data);
+			   
+				    for (var i = 0; i < data.length; i++) {
+				    	console.log(data[i].stdNm);
+				    	if(data[i].studyRole == 'Y'){
+				    		memListData += `<li class="dropdown-item">\${data[i].stdNm}<img alt="" src="/images/왕관.png" class="crownImg2"></li>` 
+				    	}else{
+				        	memListData += `<li class="dropdown-item">\${data[i].stdNm}</li>`;				    		
+				    	}
+				    }
+					console.log("memListData: ",memListData);
+					memList.html("");
+				    memList.html(memListData);
+			    }
+			});
 	}
 	
 	function msgList(){
@@ -276,12 +324,9 @@
 			console.log("메세지리스트 성공적으로 가져옴!");
 		    var msgBody = $("#msgBody");
 		    var msgList = '';
-		    //console.log("stdNo: ", stdNo);
+		    
 		    for (var i = 0; i < data.length; i++) {
-		  	  //console.log("chatMsg",data);
 		  	  var stdNo2 = data[i].stdNo
-			  //console.log("stdNo2: ", stdNo2);
-		    	console.log("이새기 갑자기 안뜸: ", data[i].unreadMemCnt);
 		      if (stdNo2 == stdNo) {
 		        msgList += `
 				          <div class='d-flex justify-content-end mb-4'>
@@ -326,6 +371,7 @@
 		    // 스크롤 맨 아래로 이동
 			var chatBody = document.getElementById("DZ_W_Contacts_Body3");
 			chatBody.scrollTop = chatBody.scrollHeight;
+			memList();
 		    },
 		    error: function(err) {
 	        	console.log("에러 발생",err);
@@ -471,6 +517,8 @@ $('.studyClose').on('click', function(){
 	console.log("닫기버튼 : ", roomData);
 	
 	chatSocket.send(JSON.stringify(roomData));
+	var memList = $("#memList");
+	memList.html("");
 	
 })
 function getUnreadCntList(studyNo){
