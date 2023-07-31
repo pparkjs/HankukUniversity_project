@@ -174,7 +174,7 @@
 <!-- 						<td>생략</td> -->
 <!-- 						<td>생략</td> -->
 <!-- 						<td>생략</td> -->
-						<td>생략</td>
+						<td>${subject.crsGrd}</td>
 						<td>${subject.crsScr}</td>
 					</tr>
 					</c:if>
