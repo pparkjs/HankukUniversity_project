@@ -14,7 +14,7 @@
     max-height: 275px;
     margin-left: 17px;
     position: relative;
-    z-index: 999;
+    z-index: 1;
 }
 .table-wrap2 td{
 	cursor: pointer;
@@ -43,6 +43,10 @@
 }
 #box:before {
 	background-color: rgba(0,0,0,0.4)
+}
+input, select, textarea {
+    min-width: 0;
+    padding: 0;
 }
 </style>
 <div class="container-fluid mt-3">
@@ -215,10 +219,10 @@
                                 </div>
                                 <div class="hnu_schedule" id="box" style="border:1px; width : 100%; height:94%;  background-size: 100% 100% ; color:black; ">
                                         <div id="naver" style="display :flex; flex-direction:column; justify-content:center; align-items:center; width : 100%; height:100%; background-color:rgba(0,0,0,0.3); background-size: 100% 100% ; ">
-                                            <p id="city" style="color:white; z-index: 1000; font-size : 20px; text-shadow: 1px 1px 6px black; "></p>
-                                            <p id="temp" style="color:white; z-index: 1000; font-size: 4em;  font-weight: bold; text-shadow: 2px 2px 4px black;"></p>
-                                            <p id="weather" style="color:white; z-index: 1000; font-size : 20px; text-shadow: 1px 1px 6px black;"></p>
-                                            <div id="say" style="color:white; z-index: 1000; font-style: italic;">인생은 폭풍이 지나갈때를 기다리는 것이 아니라,<br>비올때 춤추는 법을 배우는 것이다.</div>
+                                            <p id="city" style="color:white; z-index: 1; font-size : 20px; text-shadow: 1px 1px 6px black; "></p>
+                                            <p id="temp" style="color:white; z-index: 1; font-size: 4em;  font-weight: bold; text-shadow: 2px 2px 4px black;"></p>
+                                            <p id="weather" style="color:white; z-index: 1; font-size : 20px; text-shadow: 1px 1px 6px black;"></p>
+                                            <div id="say" style="color:white; z-index: 1; font-style: italic;">인생은 폭풍이 지나갈때를 기다리는 것이 아니라,<br>비올때 춤추는 법을 배우는 것이다.</div>
                                </div>
                                 </div>
                             </div>
