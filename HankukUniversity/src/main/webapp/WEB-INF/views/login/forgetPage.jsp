@@ -125,15 +125,15 @@ min-width : 0px;
 			<div class="pt-4" style="padding-left: 35px;">
 				<div style="display: flex; align-items: center; justify-content: space-around; ">
 				<div class="radioBtn">
-				 <label class="col-sm-2 col-form-label" style="width:25px;">학생</label>
+				 <label class="col-sm-2 col-form-label" style="width:27px;">학생</label>
 					<input type="radio" name="type" value="student" checked="checked">
 					</div>
 					<div class="radioBtn">
-				 <label class="col-sm-2 col-form-label" style="width:25px;">교수</label>
+				 <label class="col-sm-2 col-form-label" style="width:27px;">교수</label>
 					<input type="radio" name="type" value="professor" >
 					</div>
 					<div class="radioBtn">
-				 <label class="col-sm-2 col-form-label" style="width:25px;">직원</label>
+				 <label class="col-sm-2 col-form-label" style="width:27px;">직원</label>
 					<input type="radio" name="type" value="employee">
 					</div>
 				</div>
