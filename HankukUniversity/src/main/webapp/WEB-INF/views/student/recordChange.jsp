@@ -35,12 +35,13 @@
 			
 			<div class="title-wrap" style="display:flex; justify-content: space-between; margin-bottom: 10px;">
 				<div class="card-header border-0 pb-0 ">
-					<h5 class="card-title" style="font-weight: 700; color: maroon;">신청 내역</h5>
+					<h5 class="card-title" style="font-weight: 700;
+    color: maroon;">신청 내역</h5>
 				</div>
 				<ul class="nav nav-pills mb-4 light" style="margin-bottom:0px;">
 				</ul>
 				<div style="display: flex; justify-content: end; margin-right: 80px;">
-					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertModal" style="margin-top: 15px;">신청하기</button>
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertModal" style="padding: 8px 15px; background: #0070c0; border-color: #0070c0; margin-top: 15px;">신청하기</button>
 				</div>
 			</div>
 			<div class="card-body" style="margin: 7px;">

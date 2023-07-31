@@ -20,7 +20,7 @@
 	<div class="container-fluid">
 		<div class="card" id="card-title-1">
 			<div class="card-header border-0 pb-0 ">
-				<h5 class="card-title">이수학점 계</h5>
+				<h5 class="card-title" style="color: #800000; font-weight: 700;">기본사항</h5>
 			</div>
 			<div style="margin-top: 10px;">
 				<div class="col-xl-12" style="margin-left: 40px;">

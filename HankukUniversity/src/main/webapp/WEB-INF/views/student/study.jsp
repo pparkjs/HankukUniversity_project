@@ -52,48 +52,48 @@
 				<div class="tab-content">
 					<div class="tab-pane fade show active" id="home1" role="tabpanel">
 						
-						<div class="row" id="studyListDiv" style="margin-top: 23px; padding-top: 14px; margin-left: 15px; height:640px; overflow:scroll; width: 100%;">
-							<c:choose>
-								<c:when test="${empty studyList }">
-									<p>현재 가입되어있는 스터디가 없습니다.</p>
-								</c:when>
-								<c:otherwise>
-									<c:forEach items="${studyList }" var="study">
-								
-										
-										<div class="studycard-wrap" style="width: 24%;">
-											<div class="study-top">
-												<span class="study-text">[ 스터디명 : </span>
-												<div class="study-name">${study.studyName } ]</div>
-											</div>
-											<hr>
-											<div class="study-title">${study.studyIntro }</div>
-											<hr>
-											<div class="study-bottom">
-												<div class="bottom1">
-													<span class="date-text">생성일 :</span>
-													<div class="reg-date">												
-														<fmt:parseDate value="${study.studyRegdate }" var="regDate" pattern="yyyy-MM-dd HH:mm:ss"/>
-                             							<fmt:formatDate value="${regDate }" pattern="yyyy-MM-dd"/>
+							<div class="row" id="studyListDiv" style="margin-top: 23px; padding-top: 14px; margin-left: 15px; height:640px; overflow:scroll; width: 100%;">
+								<c:choose>
+									<c:when test="${empty studyList }">
+										<p>현재 가입되어있는 스터디가 없습니다.</p>
+									</c:when>
+									<c:otherwise>
+										<c:forEach items="${studyList }" var="study">
+									
+											
+											<div class="studycard-wrap" style="width: 24%;">
+												<div class="study-top">
+													<span class="study-text">[ 스터디명 : </span>
+													<div class="study-name">${study.studyName } ]</div>
+												</div>
+												<hr>
+												<div class="study-title">${study.studyIntro }</div>
+												<hr>
+												<div class="study-bottom">
+													<div class="bottom1">
+														<span class="date-text">생성일 :</span>
+														<div class="reg-date">												
+															<fmt:parseDate value="${study.studyRegdate }" var="regDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+	                             							<fmt:formatDate value="${regDate }" pattern="yyyy-MM-dd"/>
+														</div>
+														<div style="margin-left: 55px;">
+															<a href="/hku/student/studyRoom?studyNo=${study.studyNo }">
+																<button class="end-button">입장</button>
+															</a>
+														</div>
 													</div>
-													<div style="margin-left: 55px;">
-														<a href="/hku/student/studyRoom?studyNo=${study.studyNo }">
-															<button class="end-button">입장</button>
-														</a>
+													<div class="bottom2">
+														<img alt="" src="/images/왕관.png" class="crownImg">
+														<div class="master-name">${study.stdNm }</div>
+														<div class="hit-con">
+															<img alt="" src="/images/조회수.png" class="hitImg">
+															
+															<div class="cnt-text">인원:</div>
+															<div class="study-cnt">${study.count} / ${study.studyCpcy }</div>
+														</div>
 													</div>
 												</div>
-												<div class="bottom2">
-													<img alt="" src="/images/왕관.png" class="crownImg">
-													<div class="master-name">박정수</div>
-													<div class="hit-con">
-														<img alt="" src="/images/조회수.png" class="hitImg">
-														
-														<div class="cnt-text">인원:${study.stdNm }</div>
-														<div class="study-cnt">${study.count} / ${study.studyCpcy }</div>
-													</div>
-												</div>
 											</div>
-										</div>
 											
 									</c:forEach>
 								</c:otherwise>

@@ -36,7 +36,7 @@
 					<div class="totalCdt">
 						<span>수강학점&nbsp;:&nbsp;&nbsp;</span><div class="totalRight">0과목</div>
 					</div>
-					<button type="button" class="btn btn-primary" id="scheduleBtn" data-bs-toggle="modal" data-bs-target="#scheduleModal">시간표보기</button>
+					<button type="button" class="btn btn-primary" id="scheduleBtn" style="background: #0070c0; border-color: #0070c0;" data-bs-toggle="modal" data-bs-target="#scheduleModal">시간표보기</button>
 				</div>
 			</div>
 			<hr>
