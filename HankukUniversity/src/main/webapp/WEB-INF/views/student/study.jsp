@@ -83,7 +83,7 @@
 													</div>
 													<div class="bottom2">
 														<img alt="" src="/images/왕관.png" class="crownImg">
-														<div class="master-name">박정수</div>
+														<div class="master-name">${study.stdNm }</div>
 														<div class="hit-con">
 															<img alt="" src="/images/조회수.png" class="hitImg">
 															
