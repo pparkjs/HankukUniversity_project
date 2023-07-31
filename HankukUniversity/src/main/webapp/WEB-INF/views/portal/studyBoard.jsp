@@ -204,10 +204,15 @@
 				</div>
 			</div>
 			<div class="modal-footer">
+<<<<<<< HEAD
 				<button type="button" class="btn btn-danger light"
 					data-bs-dismiss="modal">닫기</button>
 				<button type="button" class="btn btn-primary"
 					onclick="insertBoard()" id="btn1">등록</button>
+=======
+				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal" onclick="closeModal()" id="closeBtn">닫기</button>
+				<button type="button" class="btn btn-primary" onclick="insertBoard()" id="btn1">등록</button>
+>>>>>>> 9a15533f42a4a6fd9aa87c20f15262627761492c
 			</div>
 		</div>
 	</div>
@@ -216,6 +221,17 @@
 var sendData = {};
 var boardBody = document.querySelector("#boardList");
 var pageNation = $('#pageNation');
+
+function closeModal() {
+    var closeBtn = document.getElementById("closeBtn");
+    document.getElementById("stboTitle").value = "";
+    document.getElementById("stboContent").value = "";
+    document.getElementsByName("studyNo")[0].selectedIndex = 0;
+    document.getElementById("atchFileNo").value = "";
+    var previewFileDiv = document.querySelector(".previewFile");
+    previewFileDiv.innerHTML = "";
+    closeBtn.click();
+  }
 
 
 boardList();
@@ -340,21 +356,10 @@ function insertBoard(){
 	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
-			if(xhr.responseText === "SUCCESS"){
-				console.log("");
-				addModal.modal('hide');
-				 swal({
-						title: "게시글 등록이 완료되었습니다.", 
-						icon: "success"
-					});
-			} else if(xhr.responseText === "FAILED"){
-				swal({
-        			title: "게시글 등록에 실패하였습니다!", 
-        			icon: "error"
-        		});
-			}
+			closeModal();
 			boardList();
 		}
+		
 	}
 	xhr.send(JSON.stringify(data));
 }
@@ -463,15 +468,6 @@ $(function() {
  		
 	    }    
    	    
-//    	    if (transcript.includes('번글')||transcript.includes('번 글')||transcript.includes('번') ) {
-//    	    	var num = newsentence(transcript)
-//    	    	 var parsedNum = parseInt(num); // 문자열을 숫자로 변환합니다.
-// 		  			if (!isNaN(parsedNum)) { // 숫자인지 확인합니다.
-// 		  				  location.href = "/boardDetail/" + parsedNum;
-// 		 			 } else {
-// 		   			 console.log("유효한 번호를 인식할 수 없습니다.");
-// 			 }
-//      	    }
    	  });
    	  
    	  // 인식된 문장을 가공하는 메소드
