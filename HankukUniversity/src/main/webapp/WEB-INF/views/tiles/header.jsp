@@ -106,19 +106,19 @@ position: relative;
 				<div class="header-left">
 
 					<!--  검색에 대한 div -->
-					<div class="input-group search-area">
-						<span class="input-group-text"> <a
-							href="javascript:void(0)"> <svg width="19" height="19"
-									viewBox="0 0 19 19" fill="none"
-									xmlns="http://www.w3.org/2000/svg">
-									<circle cx="8.78605" cy="8.78605" r="8.23951" stroke="white"
-										stroke-linecap="round" stroke-linejoin="round" />
-									<path d="M14.5168 14.9447L17.7471 18.1667" stroke="white"
-										stroke-linecap="round" stroke-linejoin="round" />
-								</svg>
-						</a>
-						</span> <input type="text" class="form-control" placeholder="Search">
-					</div>
+<!-- 					<div class="input-group search-area"> -->
+<!-- 						<span class="input-group-text"> <a -->
+<!-- 							href="javascript:void(0)"> <svg width="19" height="19" -->
+<!-- 									viewBox="0 0 19 19" fill="none" -->
+<!-- 									xmlns="http://www.w3.org/2000/svg"> -->
+<%-- 									<circle cx="8.78605" cy="8.78605" r="8.23951" stroke="white" --%>
+<%-- 										stroke-linecap="round" stroke-linejoin="round" /> --%>
+<!-- 									<path d="M14.5168 14.9447L17.7471 18.1667" stroke="white" -->
+<!-- 										stroke-linecap="round" stroke-linejoin="round" /> -->
+<!-- 								</svg> -->
+<!-- 						</a> -->
+<!-- 						</span> <input type="text" class="form-control" placeholder="Search"> -->
+<!-- 					</div> -->
 
 				</div>
 				<ul class="navbar-nav header-right">

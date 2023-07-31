@@ -19,7 +19,8 @@
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="javascript:void(0)">Charts</a></li>
+			<li class="breadcrumb-item"><a href="javascript:void(0)">home</a></li>
+			<li class="breadcrumb-item active"><a href="javascript:void(0)">총지표</a></li>
 		</ol>
     </div>
 	<div class="container-fluid">
