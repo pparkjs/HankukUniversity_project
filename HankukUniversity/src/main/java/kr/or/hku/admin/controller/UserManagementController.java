@@ -180,11 +180,6 @@ public class UserManagementController {
 		model.addAttribute("commonList",commonList);
 		model.addAttribute("deptList",deptList);
 		
-//		model.addAttribute("usersList",usersList);
-//		model.addAttribute("adminsList",adminsList);
-//		model.addAttribute("professorsList",professorsList);
-//		model.addAttribute("studentsList",studentsList);
-		
 		return "admin/user-management";
 	}
 	
@@ -210,10 +205,7 @@ public class UserManagementController {
 		
 		List<UserVO> usersList = userService.getAllUsers(searchInfoVO);
 		
-//		if(usersList != null && usersList.size() > 0) {
-			entity = new ResponseEntity<List<UserVO>>(usersList, HttpStatus.OK);
-//		}
-//		log.info(usersList.toString());
+		entity = new ResponseEntity<List<UserVO>>(usersList, HttpStatus.OK);
 		return entity;
 	}
 	
@@ -240,10 +232,7 @@ public class UserManagementController {
 		
 		List<UserVO> studentsList = userService.getAllStudents(searchInfoVO);
 		
-//		if(studentsList != null && studentsList.size() > 0) {
-			entity = new ResponseEntity<List<UserVO>>(studentsList, HttpStatus.OK);
-//		}
-//		log.info(studentsList.toString());
+		entity = new ResponseEntity<List<UserVO>>(studentsList, HttpStatus.OK);
 		return entity;
 	}
 	
@@ -270,10 +259,7 @@ public class UserManagementController {
 		
 		List<UserVO> professorsList = userService.getAllProfessors(searchInfoVO);
 		
-//		if(professorsList != null && professorsList.size() > 0) {
-			entity = new ResponseEntity<List<UserVO>>(professorsList, HttpStatus.OK);
-//		}
-//		log.info(professorsList.toString());
+		entity = new ResponseEntity<List<UserVO>>(professorsList, HttpStatus.OK);
 		return entity;
 	}
 	
@@ -300,10 +286,7 @@ public class UserManagementController {
 		
 		List<UserVO> adminsList = userService.getAllAdmins(searchInfoVO);
 		
-//		if(adminsList != null && adminsList.size() > 0) {
 		entity = new ResponseEntity<List<UserVO>>(adminsList, HttpStatus.OK);
-//		}
-//		log.info(adminsList.toString());
 		return entity;
 	}
 	
@@ -318,7 +301,6 @@ public class UserManagementController {
 		userVO.setUserPw(userPw_);
 		
 		log.info("insertUser() 실행...!");
-//		log.info(userVO.toString());
 		int userStatus = userService.insertUser(userVO);
 		int status = 0;
 		int authStatus = 0;
@@ -348,28 +330,17 @@ public class UserManagementController {
 	@PostMapping("/insertUserExcel")
 	public String insertUserExcel(MultipartFile formFile, HttpServletRequest request) throws IOException {
 		log.info("insertUserExcel() 실행...!");
-//		ResponseEntity<List<UserVO>> entity = null;
-//		byte[] bytes = file.getBytes();
-////		File file = new 
-//		log.info("OFName : " + file.getOriginalFilename());
-//		File convFile = new File(file.getOriginalFilename());
 		log.info("oName : " + formFile.getOriginalFilename());
 		log.info("name : " + formFile.getName());
 		log.info("contentType : " + formFile.getContentType());
 		log.info("size : " + formFile.getSize());
 		InputStream file2 = formFile.getInputStream();
 		
-		
-//		FileInputStream file2 = new FileInputStream(new File("D:/students.xlsx"));
 		XSSFWorkbook workbook = new XSSFWorkbook(file2);
 		XSSFSheet sheet = workbook.getSheet("Sheet1");
 		
-//		Row row = sheet.getRow(2);
-//		log.info("row physical : " + row.getPhysicalNumberOfCells());
-//		log.info("row first : " + row.getFirstCellNum());
-//		log.info("row last : " + row.getLastCellNum());
 		List<UserVO> excelInsList = new ArrayList<UserVO>();
-		int status = 1;
+//		int status = 1;
 		for(Row row : sheet) {
 			if(!(row.getRowNum() == 0)) {
 				row.getCell(0).setCellType(CellType.STRING);
@@ -421,34 +392,15 @@ public class UserManagementController {
 				userVO.setBankCd(bankCd);
 				userVO.setUserActno(userActno);
 				
-//				userService.insertUser(userVO);
-//				status = userService.insertStudent(userVO);
-//				userService.insertUserAuth(userVO);
-//				if(status > 0) {
-//					excelInsList.add(userVO);
-//				} else {
-//					status = 0;
-//				}
 				excelInsList.add(userVO);
 			}
 		}
 		HttpSession session = request.getSession();
 		session.setAttribute("excelInsList", excelInsList);
 		
-//		for(UserVO user : excelInsList) {
-//			int cnt = userService.insertUser(user);
-//			int cnt1 = userService.insertStudent(user);
-//			int cnt2 = userService.insertUserAuth(user);
-//			if(cnt==0 || cnt1==0 || cnt2==0) {
-//				status = 0;
-//			}
-//		}
-				
 		log.info(excelInsList.toString());
-//		if(status > 0) {
-//			entity = new ResponseEntity<List<UserVO>>(excelInsList,HttpStatus.OK);
-//		}
 		workbook.close();
+		
 		return "admin/excelUserInsert";
 	}
 	
@@ -549,16 +501,15 @@ public class UserManagementController {
 		int status = 0;
 		
 		if(userVO.getUserClsNm().equals("student")) {
-			log.info("학생수정");
+//			log.info("학생수정");
 			status = userService.updateStudent(userVO);
 			
-			
 		} else if(userVO.getUserClsNm().equals("professor")) {
-			log.info("교수수정");
+//			log.info("교수수정");
 			status = userService.updateProfessor(userVO);
 			
 		} else if(userVO.getUserClsNm().equals("employee")) {
-			log.info("직원수정");
+//			log.info("직원수정");
 			status = userService.updateEmployee(userVO);
 			
 		}
@@ -570,41 +521,39 @@ public class UserManagementController {
 	}
 	
 	@GetMapping("/poiDownload")
-//	@ResponseBody
 	public ResponseEntity<byte[]> poiDownload(){
 		log.info("poiDownload 실행...!");
 		HttpHeaders headers = new HttpHeaders();
         InputStream in = null;
         ResponseEntity<byte[]> entity = null;
 		
-        String savePdfPath = "C:\\uploadfiles\\poi\\students_form.xlsx";
-        String pdfName = "students_form.xlsx";
+        String savePdfPath = "C:\\uploadfiles\\poi\\학생 일괄등록 양식.xlsx";
+        String pdfName = "학생 일괄등록 양식.xlsx";
         
 		// 다운로드만 바로 실행시켜주는 부분
-      try {
-         // 파일을 읽기 위해 FileInputStream을 생성합니다.
-         in = new FileInputStream(savePdfPath);
+        try {
+           // 파일을 읽기 위해 FileInputStream을 생성합니다.
+           in = new FileInputStream(savePdfPath);
 
-         // 응답 헤더를 설정합니다.
-         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-         headers.add("Content-Disposition",
+           // 응답 헤더를 설정합니다.
+           headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+           headers.add("Content-Disposition",
                "attachment; filename=\"" + new String(pdfName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
 
-         // ResponseEntity를 사용하여 응답 본문과 헤더를 포함한 HTTP 응답을 생성합니다.
-         // IOUtils.toByteArray(in)를 사용하여 InputStream을 바이트 배열로 변환하여 응답 본문으로 설정합니다.
-         // HttpStatus.CREATED를 사용하여 상태 코드 201(CREATED)을 설정합니다.
-         entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
-      }catch (Exception e) {
-         e.printStackTrace();	
-         entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+           // ResponseEntity를 사용하여 응답 본문과 헤더를 포함한 HTTP 응답을 생성합니다.
+           // IOUtils.toByteArray(in)를 사용하여 InputStream을 바이트 배열로 변환하여 응답 본문으로 설정합니다.
+           // HttpStatus.CREATED를 사용하여 상태 코드 201(CREATED)을 설정합니다.
+           entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+      } catch (Exception e) {
+           e.printStackTrace();	
+           entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
       } finally {
-         try {
-            in.close();
-         } catch (IOException e) {
-            e.printStackTrace();
-         }
+           try {
+              in.close();
+           } catch (IOException e) {
+              e.printStackTrace();
+           }
       }
       return entity;
-		
 	}
 }
