@@ -76,10 +76,14 @@ public class StudyBoardController {
 		
 		pagingVO.setCurrentPage(currentPage);
 		
-		int totalRecord = service.boardCount(pagingVO);
-		pagingVO.setTotalRecord(totalRecord);
+//		int totalRecord = service.boardCount(pagingVO);
+//		log.info("총 게시글 수: " +totalRecord);
 		
 		List<StudyVO> dataList = service.boardSelect(pagingVO);
+		if(!dataList.isEmpty()) {
+			pagingVO.setTotalRecord(dataList.get(0).getTotalRecord());
+			log.info("개수: " + pagingVO.getTotalRecord());
+		}
 		pagingVO.setDataList(dataList);
 		
 		entity = new ResponseEntity<PaginationInfoVO>(pagingVO, HttpStatus.OK);

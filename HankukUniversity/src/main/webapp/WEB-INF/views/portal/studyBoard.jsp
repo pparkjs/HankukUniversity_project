@@ -22,9 +22,11 @@
 					<form class="row g-3 custom-form" action="">
 						<div class="col-md-2">
 						   <select class="default-select form-control" id="stype">
-							  <option value="">선택</option>
-							  <option value="title">스터디명</option>
+							  <option value="total">전체</option>
+							  <option value="title">제목</option>
+							  <option value="studyName">스터디명</option>
 							  <option value="writer">작성자</option>
+							  <option value="content">내용</option>
 						   </select>
 						</div>
 						<div class="col-md-3">
@@ -46,6 +48,8 @@
 					
 						<div class="studycard-wrap">
 							<div class="study-top">
+								<span class="study-text">[ 제목 : </span>
+								<div class="study-name">스터디 모집합니다~ ]</div>
 								<span class="study-text">[ 스터디명 : </span>
 								<div class="study-name">정처기스터디 ]</div>
 							</div>
@@ -199,6 +203,12 @@
 </div>
 <script type="text/javascript">
 var sendData = {};
+var boardBody = document.querySelector("#boardList");
+var pageNation = $('#pageNation');
+
+
+boardList();
+
 function boardDetail(element) {
     var stboNo = $(element).attr("id");
     var sessStdNo = ${sessionScope.std.stdNo};
@@ -208,11 +218,7 @@ function boardDetail(element) {
 
 
 function boardList() {
-	
-// 	let stype = $('#stype').val();
-//     let sword = $('#sword').val();
-//     let page = $('#page').val();
-    
+
     sendData.stype = $('#stype').val();
 	sendData.sword = $('#sword').val();
 	sendData.page = $('#page').val();
@@ -237,40 +243,38 @@ function boardList() {
             	const splitDate = regDate.split(" ")[0];
             	console.log("splitDate", splitDate);
             	console.log("stdBoardList",stdBoardList);
-                data += `
-	                	<div class="studycard-wrap" id="\${stdBoardList[i].stboNo}" onclick="boardDetail(this)">
+                data += `<div class="studycard-wrap" id="\${stdBoardList[i].stboNo}" onclick="boardDetail(this)">
 							<div class="study-top">
-								<span class="study-text">[ 스터디이름 : </span>
-								<div class="study-name">\${stdBoardList[i].studyName} ]</div>
+								<span class="study-text">[ 제목 : </span>
+								<div class="study-name">\${stdBoardList[i].stboTitle.substring(0, 11)} ]</div>
 							</div>
 							<hr>
-							<div class="study-title">\${stdBoardList[i].stboContent}</div>
+							<div class="study-title">\${stdBoardList[i].stboContent.substring(0, 63)}</div>
 							<hr>
 							<div class="study-bottom">
 								<div class="bottom1">
 									<span class="date-text">작성일 :</span>
 									<div class="reg-date"> \${splitDate} </div>
 									<div>`;
-				if(stdBoardList[i].count < stdBoardList[i].studyCpcy){
-					data +=	`<button class="ing-button">모집중</button>`		
-				}else{
-					data +=	`<button class="end-button">모집완료</button>`							
-				}					
-				data +=		`</div>
+					if(stdBoardList[i].count < stdBoardList[i].studyCpcy){
+						data +=	`<button class="ing-button">모집중</button>`		
+					}else{
+						data +=	`<button class="end-button">모집완료</button>`							
+					}					
+					data +=		`</div>
 								</div>
-								<div class="bottom2">
-									<img alt="" src="/images/왕관.png" class="crownImg">
-									<div class="master-name">\${stdBoardList[i].stboWriter}</div>
-									<div class="hit-con">
-										<img alt="" src="/images/조회수.png" class="hitImg">
-										<div class="study-hit">\${stdBoardList[i].stboReadCnt}</div>
-										<div class="cnt-text">정원 :</div>
-										<div class="study-cnt">\${stdBoardList[i].count}/\${stdBoardList[i].studyCpcy}</div>
+									<div class="bottom2">
+										<img alt="" src="/images/왕관.png" class="crownImg">
+										<div class="master-name">\${stdBoardList[i].stboWriter}</div>
+										<div class="hit-con">
+											<img alt="" src="/images/조회수.png" class="hitImg">
+											<div class="study-hit">\${stdBoardList[i].stboReadCnt}</div>
+											<div class="cnt-text">정원 :</div>
+											<div class="study-cnt">\${stdBoardList[i].count}/\${stdBoardList[i].studyCpcy}</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-                        `;
+							</div>`;
             }
             body.html(data);
 			pageNation.html(res.pagingHTML);
@@ -344,26 +348,17 @@ function insertBoard(){
 	xhr.send(JSON.stringify(data));
 }
 
-
-$(document).ready(function() {
-	var boardBody = document.querySelector("#boardList");
-	var pageNation = $('#pageNation');
-    
-   
+$('#searchBtn').on('click',function(){
 	boardList();
-		
-	$('#searchBtn').on('click',function(){
-		boardList();
-	});
-	
-	// 페이징
-	pageNation.on('click','a',function(event){
-		event.preventDefault();
-		pageNo = $(this).data('page'); // 페이지 번호 날라옴
-		$('#page').val(pageNo);
-		console.log("페이지번호 클릭", $('#page').val());
-		boardList();
-	});
-	
 });
+
+// 페이징
+pageNation.on('click','a',function(event){
+	event.preventDefault();
+	pageNo = $(this).data('page'); // 페이지 번호 날라옴
+	$('#page').val(pageNo);
+	console.log("페이지번호 클릭", $('#page').val());
+	boardList();
+});
+
 </script>
