@@ -9,6 +9,7 @@ import kr.or.hku.admin.vo.DepartmentVO;
 import kr.or.hku.admin.vo.FacilitiesVO;
 import kr.or.hku.admin.vo.FacilityVO;
 import kr.or.hku.lectureInfo.vo.LectureAplyVO;
+import kr.or.hku.lectureInfo.vo.LecturePlanVO;
 import kr.or.hku.lectureInfo.vo.LectureTimeTableVO;
 import kr.or.hku.lectureInfo.vo.SubjectVO;
 @Mapper
@@ -43,5 +44,7 @@ public interface LectureMapper {
 	public void returnLecture(String lecapNo);
 
 	public List<LectureAplyVO> getMyLectire(String username);
+
+	public LecturePlanVO loadPlan(String subNo);
 
 }
