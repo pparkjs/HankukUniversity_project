@@ -252,6 +252,7 @@
 			join student b on b.std_no = a.std_no
 			join department d on d.dept_cd = b.dept_cd
 		where study_no = #{studyNo}
+		order by study_role desc
 	</select>
 
  	<!-- 스터디 select one -->

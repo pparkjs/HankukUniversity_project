@@ -195,7 +195,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
+				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal" onclick="closeModal()" id="closeBtn">닫기</button>
 				<button type="button" class="btn btn-primary" onclick="insertBoard()" id="btn1">등록</button>
 			</div>
 		</div>
@@ -205,6 +205,17 @@
 var sendData = {};
 var boardBody = document.querySelector("#boardList");
 var pageNation = $('#pageNation');
+
+function closeModal() {
+    var closeBtn = document.getElementById("closeBtn");
+    document.getElementById("stboTitle").value = "";
+    document.getElementById("stboContent").value = "";
+    document.getElementsByName("studyNo")[0].selectedIndex = 0;
+    document.getElementById("atchFileNo").value = "";
+    var previewFileDiv = document.querySelector(".previewFile");
+    previewFileDiv.innerHTML = "";
+    closeBtn.click();
+  }
 
 
 boardList();
@@ -329,21 +340,10 @@ function insertBoard(){
 	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
-			if(xhr.responseText === "SUCCESS"){
-				console.log("");
-				addModal.modal('hide');
-				 swal({
-						title: "게시글 등록이 완료되었습니다.", 
-						icon: "success"
-					});
-			} else if(xhr.responseText === "FAILED"){
-				swal({
-        			title: "게시글 등록에 실패하였습니다!", 
-        			icon: "error"
-        		});
-			}
+			closeModal();
 			boardList();
 		}
+		
 	}
 	xhr.send(JSON.stringify(data));
 }
