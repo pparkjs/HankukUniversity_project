@@ -549,7 +549,8 @@ function assignStudy() {
 						icon: "success"
 					});
 	            }else{
-	            	swal({
+	            	location.reload();
+	            	swal({ 
 	        			title: "승인실패", 
 	        			icon: "error"
 	        		});
