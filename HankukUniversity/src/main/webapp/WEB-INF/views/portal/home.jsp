@@ -7,6 +7,10 @@
 <!-- jQuery UI 스타일시트 -->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/css/home-pjs.css">
+ <!-- 슬릭 슬라이더 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+	<!-- 슬릭 슬라이더 -->
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <style>
 .table-wrap2{
 	margin-top: -321px;
@@ -47,6 +51,25 @@
 input, select, textarea {
     min-width: 0;
     padding: 0;
+}
+.move-table td{
+	text-align: left;
+	border: 1px solid #808080a1;
+    padding: 7px;
+    font-size: 15px;
+}
+.left-one {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%; 
+    background: gray;
+    margin-bottom: 4px;
+    margin-right: 6px;
+}
+.schedule .thead-dark th {
+    color: #fff;
+    background-color: #800000;
+    /* border: 1px solid black; */
 }
 </style>
 <div class="container-fluid mt-3">
@@ -217,13 +240,150 @@ input, select, textarea {
                                         <h5 style="display: inline-block; font-weight: 500;">&nbsp;오늘의 날씨</h5>
                                     </div>
                                 </div>
-                                <div class="hnu_schedule" id="box" style="border:1px; width : 100%; height:94%;  background-size: 100% 100% ; color:black; ">
+                                <div class="hnu_schedule" id="box" style="border:1px; width : 100%; height:92%; margin-top:9px; background-size: 100% 100% ; color:black; ">
                                         <div id="naver" style="display :flex; flex-direction:column; justify-content:center; align-items:center; width : 100%; height:100%; background-color:rgba(0,0,0,0.3); background-size: 100% 100% ; ">
                                             <p id="city" style="color:white; z-index: 1; font-size : 20px; text-shadow: 1px 1px 6px black; "></p>
                                             <p id="temp" style="color:white; z-index: 1; font-size: 4em;  font-weight: bold; text-shadow: 2px 2px 4px black;"></p>
                                             <p id="weather" style="color:white; z-index: 1; font-size : 20px; text-shadow: 1px 1px 6px black;"></p>
                                             <div id="say" style="color:white; z-index: 1; font-style: italic;">인생은 폭풍이 지나갈때를 기다리는 것이 아니라,<br>비올때 춤추는 법을 배우는 것이다.</div>
                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+                <div class="grid-stack-item portlet5" gs-w="6" gs-h="6" gs-no-resize="true">
+                    <div class="grid-stack-item-content">
+                        <div class="card portlet-item">
+                            <div class="card-body" style="padding: 0.25rem; padding-top: 10px;">
+                                <div style="display: flex; margin-left: 11px;">
+                                    <div>
+                                        <a href='#'><i class="fa-solid fa-school"></i></a>
+                                        <h5 style="display: inline-block; font-weight: 500;">&nbsp;바로가기서비스</h5>
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+                                <div class="hnu_schedule" id="sub-schedule">
+                           	       	<div class="move-wrap">
+                           	       		<table class="move-table" style="margin-top: 3px;">
+                           	       			<tr>
+                           	       				<td colspan="3" style="background: maroon; height: 19px;"></td>
+                           	       			</tr>
+                           	       			<tr>
+                           	       				<td colspan="3" style=" height: 23px; text-align: center;">이동하기 원하시는 페이지를 선택하세요.</td>
+                           	       			</tr>
+                           	       			<tr>
+                           	       				<td><span class="left-one"></span><a href="/hku/student/record">기본사항</a></td>
+                           	       				<td><span class="left-one"></span><a href="/hku/student/recordChange">학적변동 신청</a></td>
+                           	       				<td><span class="left-one"></span><a href="/hku/student/gradute">졸업</a></td>
+                           	       			</tr>
+                           	       			<tr>
+                           	       				<td><span class="left-one"></span><a href="/hku/search-subject">교과목 조회</a></td>
+                           	       				<td><span class="left-one"></span><a href="/hku/course-req">수강신청</a></td>
+                           	       				<td><span class="left-one"></span><a href="/hku/course-record">수강이력</a></td>
+                           	       			</tr>
+                           	       			<tr>
+                           	       				<td><span class="left-one"></span><a href="/hku/present-course">수강중인 강의</a></td>
+                           	       				<td><span class="left-one"></span><a href="/hku/student/all-grade">전체학기 성적 조회</a></td>
+                           	       				<td><span class="left-one"></span><a href="/hku/student/subject-grade">당학기 성적 조회</a></td>
+                           	       			</tr>
+                           	       			<tr>
+                           	       				<td><span class="left-one"></span><a href="/hku/test-info">응시과목 정보</a></td>
+                           	       				<td><span class="left-one"></span><a href="/hku/counseling-req">상담신청</a></td>
+                           	       				<td><span class="left-one"></span><a href="/hku/counseling-record">신청내역 조회</a></td>
+                           	       			</tr>
+                           	       			<tr>
+                           	       				<td><span class="left-one"></span><a href="/hku/locker-rsvt">사물함예약</a></td>
+                           	       				<td><span class="left-one"></span><a href="/hku/facility-rsvt">시설물예약</a></td>
+                           	       				<td><span class="left-one"></span><a href="/hku/my-reservation">나의 예약 현황 </a></td>
+                           	       			</tr>
+                           	       			<tr>
+                           	       				<td><span class="left-one"></span><a href="/hku/tuition-payment-details">등록금 납부내역</a></td>
+                           	       				<td><span class="left-one"></span><a href="/hku/tuition-bill">등록금 고지서</a></td>
+                           	       				<td><span class="left-one"></span><a href="/hku/scholarship-apply">장학금 신청</a></td>
+                           	       			</tr>
+                           	       			<tr>
+                           	       				<td><span class="left-one"></span><a href="/hku/scholarship-list">장학금 수혜 내역</a></td>
+                           	       				<td><span class="left-one"></span><a href="/hku/certificate">증명서 발급</a></td>
+                           	       				<td><span class="left-one"></span><a href="/hku/certificate-list">증명서 발급 내역</a></td>
+                           	       			</tr>
+                           	       			<tr>
+                           	       				<td><span class="left-one"></span><a href="/hku/student/study">스터디</a></td>
+                           	       				<td><span class="left-one"></span><a href="/hku/student/stdClassroomList">클래스룸</a></td>
+                           	       			</tr>
+                           	       			<tr>
+                           	       				<td colspan="3" style="background: maroon; height: 19px;"></td>
+                           	       			</tr>
+                           	       		</table>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+                <div class="grid-stack-item portlet6" gs-w="6" gs-h="6" gs-no-resize="true">
+                    <div class="grid-stack-item-content">
+                        <div class="card portlet-item">
+                            <div class="card-body" style="padding: 0.25rem; padding-top: 10px;">
+                                <div style="display: flex; margin-left: 11px;">
+                                    <div>
+                                        <a href='#'><i class="fa-solid fa-school"></i></a>
+                                        <h5 style="display: inline-block; font-weight: 500;">&nbsp;오늘의 식단</h5>
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+                                <div class="hnu_schedule" id="sub-schedule">
+<!--                            			<div style="height: 400px;" class="alert alert-info"> -->
+<!-- 										<div class="bootstrap-carousel"> -->
+<!-- 											<div id="carouselExampleControls" class="carousel slide" -->
+<!-- 												data-ride="carousel"> -->
+												<div id="divCarousel" class="carousel-inner" style="background: #ffdede; margin-top: 10px;">
+<!-- 													<div class="carousel-item" style="height: 300px;"></div> -->
+													<div id="car1" style="height: 350px;">
+														<div id="title1" style="margin-top: 10px; font-size:2.0em; text-align: center;  font-family: '양진체'; font-weight: 700; color: #800000;"> 
+							                               2022-08-11
+							                            </div>
+							                            <div style="font-size:1.5em; text-align: center; font-family: '양진체';">
+							                            	<img alt="" src="/images/금요일.png">
+							                            </div>
+														<div id="content1">
+							                                <div style="padding: 12px;">
+							                                   <div class="input-group">
+							                                         <div class="input-group-prepend"><span class="input-group-text" style="background: maroon; height: 52px; color: #ffffff;">조식</span>
+							                                         </div>
+							                                         <textarea class="form-control">온잼의팟타이/팽이버섯장국/미니오꼬노미야끼/단무지/배추김치/양배추샐러드</textarea>
+							                                     </div>
+							                                     <br>
+							                                   <div class="input-group">
+							                                         <div class="input-group-prepend"><span class="input-group-text" style="background: maroon; height: 52px;color: #ffffff;">중식</span>
+							                                         </div>
+							                                         <textarea class="form-control">뚝배기물닭갈비/환어묵새송이버섯볶음/잡곡밥/미나리무생채/산고추장아찌/포기김치</textarea>
+							                                     </div>
+							                                     <br>
+							                                   <div class="input-group">
+							                                         <div class="input-group-prepend"><span class="input-group-text" style="background: maroon; height: 52px; color: #ffffff;">석식</span>
+							                                         </div>
+							                                         <textarea class="form-control">김치치즈볶음밥/치킨텐더/머스터드/유부맑은국/단무지/배추김치/양배추샐러드</textarea>
+							                                     </div>
+							                                     <br>
+							                                </div>
+							                             </div>
+							                          </div>
+												</div>
+<!-- 												<a class="carousel-control-prev" -->
+<!-- 													href="#carouselExampleControls" data-slide="prev"> <span -->
+<!-- 													class="carousel-control-prev-icon"></span> <span -->
+<!-- 													class="sr-only">Previous</span> -->
+<!-- 												</a> <a class="carousel-control-next" -->
+<!-- 													href="#carouselExampleControls" data-slide="next"> <span -->
+<!-- 													class="carousel-control-next-icon"></span> <span -->
+<!-- 													class="sr-only">Next</span> -->
+<!-- 												</a> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
                                 </div>
                             </div>
                         </div>
@@ -315,6 +475,8 @@ $(document).ready(function () {
 		p2: null,
 		p3: null,
 		p4: null,
+		p5: null,
+		p6: null
 	};
 	
 	
@@ -331,6 +493,12 @@ $(document).ready(function () {
 		}
 		if (saveItem.p4 != null) {
 			$('#pCk4').click();
+		}
+		if (saveItem.p5 != null) {
+			$('#pCk5').click();
+		}
+		if (saveItem.p6 != null) {
+			$('#pCk6').click();
 		}
 	}
 	
@@ -364,6 +532,14 @@ $(document).ready(function () {
 			 	grid.addWidget(savePortletItemJson.p4);
 				savePortletItemJson.p4 = null; 
 				break;
+			case "pCk5": 
+			 	grid.addWidget(savePortletItemJson.p5);
+				savePortletItemJson.p5 = null; 
+				break;
+			case "pCk6": 
+			 	grid.addWidget(savePortletItemJson.p6);
+				savePortletItemJson.p6 = null; 
+				break;
 		}
 	}
 	
@@ -384,7 +560,15 @@ $(document).ready(function () {
 				break;
 			case "pCk4": 
 				portletObj = $(".portlet4")[0];
-				savePortletItemJson.p4 =  portletObj
+				savePortletItemJson.p4 = portletObj
+				break;
+			case "pCk5": 
+				portletObj = $(".portlet5")[0];
+				savePortletItemJson.p5 = portletObj
+				break;
+			case "pCk6": 
+				portletObj = $(".portlet6")[0];
+				savePortletItemJson.p6 = portletObj
 				break;
 		}
 		grid.removeWidget(portletObj);
@@ -794,6 +978,18 @@ function dayChange(day){
 	            		<div class="form-check custom-checkbox mb-3 checkbox-warning">
 							<input type="checkbox" class="form-check-input" checked id="pCk4">
 							<label class="form-check-label" for="pCk4">날씨</label>
+						</div>
+            		</div>
+            		<div class="col-xl-12 mb-1">
+	            		<div class="form-check custom-checkbox mb-3 checkbox-warning">
+							<input type="checkbox" class="form-check-input" checked id="pCk5">
+							<label class="form-check-label" for="pCk5">바로가기서비스</label>
+						</div>
+            		</div>
+            		<div class="col-xl-12 mb-1">
+	            		<div class="form-check custom-checkbox mb-3 checkbox-warning">
+							<input type="checkbox" class="form-check-input" checked id="pCk6">
+							<label class="form-check-label" for="pCk6">오늘의 식단</label>
 						</div>
             		</div>
             	</div>
