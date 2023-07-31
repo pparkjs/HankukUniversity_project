@@ -162,6 +162,14 @@ table{
 	border-color: #8bc2a4;
     background-color: #107c42;
 }
+.poiDownBtn:focus {
+	border-color: #8bc2a4;
+    background-color: #107c42;
+}
+.poiDownBtn:first-child:active {
+    border-color: #8bc2a4;
+    background-color: #107c42; 
+}
 
 
 

@@ -6,9 +6,9 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,6 +43,7 @@ public class ScholarshipController {
 	@Autowired
 	private StdScholarshipService scholarshipService;
 
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/scholarship-apply")
 	public String scholarshipApply(HttpSession session, Model model) {
 		log.info("scholarshipApply() 실행...!");
@@ -74,8 +75,6 @@ public class ScholarshipController {
 	public String sclsAplyInsert(StdScholarshipVO sclsAplyVO) {
 		log.info("sclsAplyInsert() 실행...!");
 		log.info("sclsAplyVO : " + sclsAplyVO.toString());
-		
-//		String atchFileNo = commonService.get
 		
 		int status = scholarshipService.sclsAplyInsert(sclsAplyVO);
 		
@@ -146,7 +145,7 @@ public class ScholarshipController {
 		}
 	}
 	
-
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/scholarship-list")
 	public String scholarshipList(HttpSession session, Model model) {
 		log.info("scholarshipList() 실행...!");
