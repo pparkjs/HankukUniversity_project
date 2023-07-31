@@ -205,6 +205,33 @@
 </head>
 
 <body>
+<%! 
+	int cnt = 0;
+	public void errorCountUp(int cnt){
+		this.cnt = cnt;
+	};
+	public int getCnt(){
+		return cnt;
+	};
+%>
+
+<% 
+	String queryStr = request.getQueryString();
+if(queryStr != null && !queryStr.equals("")){
+	errorCountUp(getCnt()+1);
+// 	out.println("시도"+cnt);
+	if(getCnt() > 4){
+		errorCountUp(0);
+		%>
+		<script type="text/javascript">
+			swal("올바르지않은 접근입니다.");
+		</script>
+		<%
+	}
+}
+%>
+
+
     <div id='backstretch'>
 
     </div>
