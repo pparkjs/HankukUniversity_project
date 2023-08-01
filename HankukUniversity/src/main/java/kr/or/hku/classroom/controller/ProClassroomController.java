@@ -1,6 +1,7 @@
 package kr.or.hku.classroom.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,7 +37,8 @@ import kr.or.hku.common.vo.AttachFileVO;
 import kr.or.hku.lectureInfo.service.CourseInfoService;
 import kr.or.hku.lectureInfo.vo.LectureAplyVO;
 import kr.or.hku.professor.vo.ProfessorVO;
-import lombok.extern.slf4j.Slf4j; 
+import lombok.extern.slf4j.Slf4j;
+import oracle.jdbc.proxy.annotation.Post; 
 
 @Slf4j
 @Controller
@@ -332,6 +335,32 @@ public class ProClassroomController {
 		return "professor/gradeTable";
 	}	
 	
+	// 성적 확정 
+	@ResponseBody
+	@PostMapping("/confirmScore")
+	public String confirmScore(@RequestBody GradeVO vo) {
+		ServiceResult result = gradeService.confirmScore(vo);
+		String msg = null;
+		if(result.equals(ServiceResult.OK)) {
+			msg = "success";
+		}
+		return msg;
+	}
+	
+	// 시험성적 수정 
+	@ResponseBody
+	@PostMapping("/modifyScore")
+	public GradeVO modifyScore(@RequestParam Map<String, String> myMap) {
+		log.info("myMap!!!" + myMap);
+		GradeVO vo = gradeService.modifyScore(myMap);
+		if(vo.getTestSe().equals("middle")) {
+			vo.setMiddleScr(vo.getMiddleScr());
+		} 
+		
+		return vo;
+		
+		
+	}
 	
 	
 	

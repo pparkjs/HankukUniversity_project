@@ -266,8 +266,8 @@ function assignList(){
 							<td><span>\${res[i].stdNo }</span></td>
 							<td><span>\${res[i].deptNm }</span></td>`
 				if(res[i].asmsbDt == null || res[i].asmsbDt == ''){
-					data += `<td> </td>
-							 <td> </td>` 
+					data += `<td>미제출 </td>
+							 <td> </td>`;
 				} else {
 					data += `<td><span>\${res[i].asmsbDt }</span></td>`
 						if(res[i].fileList != null && res[i].fileList != '' ){

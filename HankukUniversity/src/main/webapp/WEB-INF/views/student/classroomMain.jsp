@@ -130,7 +130,10 @@
 												</c:if>	
 											</c:forEach>
 											<td class="text-center">
-												<span style="font-size: 15px;">13/15</span>
+											<c:set value="${list.atdcYnCd}" var="i"/>
+											<c:if test="${list.atdcYnCd eq 'Y' }">
+												<span style="font-size: 15px;">${i }/15</span>
+											</c:if>
 											</td>
 										</tr>
 									</tbody>
