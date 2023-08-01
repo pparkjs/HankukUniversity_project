@@ -75,7 +75,7 @@
 									<td>${subject.attendScr}</td>
 									<td>${subject.middleScr}</td>
 									<td>${subject.finalScr}</td>
-									<td>생략</td>
+									<td>${subject.crsGrd}</td>
 									<td>${subject.crsScr}</td>
 									<td>
 									<input type="hidden" value="${subject.lecapNo}" class="hlecapNo">

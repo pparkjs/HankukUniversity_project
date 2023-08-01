@@ -43,7 +43,7 @@ public class StudyController {
 		StudentVO stdVo = (StudentVO) session.getAttribute("std");
 		String stdNo = stdVo.getStdNo();
 		List<StudyVO> studyList = service.studyList(stdNo);		
-		List<StudyVO> waitStudy = service.waitStudy(stdNo);		
+		List<StudyVO> waitStudy = service.waitStudy(stdNo);	
 		model.addAttribute("studyList", studyList);
 		model.addAttribute("waitStudy", waitStudy);
 		return "student/study";
@@ -193,6 +193,18 @@ public class StudyController {
 	    }
 	    // userId 는 안읽은 메시지 처리 위해서 받아온건데 1:1이 아니라 멀티 채팅방일때 생각중
 	    return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
+	}
+
+	@ResponseBody
+	@GetMapping(value="/student/chatMemList")
+	public ResponseEntity<List<StudyVO>> chatMemList(@RequestParam("studyNo") int studyNo) {
+	    log.info("memList실행!");
+		List<StudyVO> list = service.studyMem(studyNo); 
+		for(int i = 0; i< list.size(); i++) {
+			log.info("memList: " + list);
+			
+		}
+		return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
 	}
 	
 	@ResponseBody

@@ -11,6 +11,7 @@ public class CourseRegistVO {
 	private String stdNo;			//학번
 	private String lecapNo;			// 개설신청과목
 	private String crsScr;			// 수강과목성정
+	private String crsGrd;			// 취득등급
 	private String crsEarnedCrd;	//수강과목취득학점
 	private String grdDmrCn;		//성적이의내용
 	private String grdDmrAns;		//성적이의답변

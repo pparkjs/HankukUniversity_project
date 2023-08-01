@@ -242,7 +242,7 @@
 		from joinstatus a
 		join studygroup b on a.study_no = b.study_no
 		join student c on b.std_no = c.std_no
-		where a.std_no = #{stdNo} and a.aprv_stts_cd = 'wait'
+		where a.std_no = #{stdNo} and a.aprv_stts_cd = 'wait' or a.aprv_stts_cd = 'rej'
 	</select>
 	
 	<!-- 스터디멤버 조회 -->
@@ -252,6 +252,7 @@
 			join student b on b.std_no = a.std_no
 			join department d on d.dept_cd = b.dept_cd
 		where study_no = #{studyNo}
+		order by study_role desc
 	</select>
 
  	<!-- 스터디 select one -->
@@ -385,12 +386,12 @@
 		values(seq_studyboard.nextval, #{studyNo}, #{stboTitle}, #{stboContent}, #{stboWriter}, sysdate)
  	</insert>
  	
- 	<select id="boardCount" parameterType="stdPaginationInfoVO" resultType="int">
- 		select count(stbo_no)
-		from studyboard a, studygroup b
-		where 1=1
-		<include refid="boardSearch"/>
- 	</select>
+<!--  	<select id="boardCount" parameterType="stdPaginationInfoVO" resultType="int"> -->
+<!--  		select count(stbo_no) -->
+<!-- 		from studyboard a, studygroup b -->
+<!-- 		where 1=1 -->
+<!-- 		<include refid="boardSearch"/> -->
+<!--  	</select> -->
  	
  	<delete id="deleteStudyBoard" parameterType="int">
  		delete from studyboard
@@ -398,11 +399,24 @@
  	</delete>
  	
  	<sql id="boardSearch">
- 		<if test="searchType != null and searchType == 'title'">
+		<if test="searchType != null and searchType == 'title'">
+			AND (stbo_title LIKE '%'||#{searchWord}||'%')
+		</if>
+ 		<if test="searchType != null and searchType == 'studyName'">
 			AND (study_name LIKE '%'||#{searchWord}||'%')
 		</if>
 		<if test="searchType != null and searchType == 'writer'">
 			AND (stbo_writer LIKE '%'||#{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'content'">
+			AND (stbo_content LIKE '%'||#{searchWord}||'%')
+		</if>
+
+		<if test="searchType != null and searchType == 'total'">
+			AND (stbo_content LIKE '%'||#{searchWord}||'%') or
+				(stbo_title LIKE '%'||#{searchWord}||'%') or
+				(study_name LIKE '%'||#{searchWord}||'%') or
+				(stbo_writer LIKE '%'||#{searchWord}||'%')
 		</if>
  	</sql>
  	
@@ -415,6 +429,7 @@
 				row_number() over (order by a.stbo_no desc) rnum
 			FROM(
 				SELECT
+					COUNT(*) OVER() AS total_record,
 					a.stbo_no,
 				    a.study_no,
 				    b.study_name,
