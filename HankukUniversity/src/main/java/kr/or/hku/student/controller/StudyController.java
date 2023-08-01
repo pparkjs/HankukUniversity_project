@@ -194,6 +194,7 @@ public class StudyController {
 	    // userId 는 안읽은 메시지 처리 위해서 받아온건데 1:1이 아니라 멀티 채팅방일때 생각중
 	    return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
 	}
+
 	
 	@ResponseBody
 	@GetMapping(value="/student/chatMemList")

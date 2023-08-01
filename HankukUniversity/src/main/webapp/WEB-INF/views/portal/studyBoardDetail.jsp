@@ -154,8 +154,6 @@ function clearInputFields() {
     document.getElementById("stboContent2").value = "";
 }
 
-
-
 function openModal() {
     $('#detailModal').modal('show');
 }
@@ -164,6 +162,7 @@ function closeModal() {
     closeBtn.click();
     clearInputFields();
 }
+
 function closeModal2() {
     var delBtn = document.getElementById("delBtn");
     delBtn.click();
