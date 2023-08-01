@@ -112,6 +112,13 @@
 						<div style="padding-left: 20px; width: 50%;"> 
 							<button type="button" class="btn btn-primary" id="addBtn" style="margin-bottom: 12px; margin-top: 12px; padding: 8px 15px;">답안추가</button>
 							<button type="button" class="btn btn-danger light" id="delBtn" style="margin-bottom: 12px; margin-top: 12px; padding: 8px 15px; margin-left: 30px;">답안삭제</button>
+							<select class="form-control totalAw" style="width: 9%; position: absolute; top: 12px; right: 375px; height: 38px;">
+								<option value="">--선지선택(일괄)--</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
 							<div id="answer-container">
 								<c:choose>
 									<c:when test="${msg == 'exist' || msg == 'failed' || msg == 'notFile' || type == 'update'}">
@@ -120,7 +127,14 @@
 												<input type="hidden" class="form-control aw" name="answerList[${status.index }].taNo" value="${status.index+1}">
 												<span style="width: 73px; text-align:center;">${status.index+1}번 답 :</span> <input type="text" class="form-control aw" value="${answer.taAns }" name="answerList[${status.index }].taAns">
 												<span style="width: 73px; text-align:center;">배점 :</span> <input type="text" class="form-control aw" value="${answer.taScr }" name="answerList[${status.index }].taScr" placeholder="숫자만 입력">
-												<span style="width: 73px; text-align:center;">선지수 :</span> <input type="text" class="form-control aw" value="${answer.answerCh }" name="answerList[${status.index }].answerCh" placeholder="숫자만 입력">
+												<span style="width: 73px; text-align:center;">선지수 :</span> 	
+												<select class="form-control aw awSel"  name="answerList[${status.index }].answerCh">
+													<option value="">--선지 선택--</option>
+													<option value="2" <c:if test="${answer.answerCh eq 2}">selected</c:if>>2</option>
+													<option value="3" <c:if test="${answer.answerCh eq 3}">selected</c:if>>3</option>
+													<option value="4" <c:if test="${answer.answerCh eq 4}">selected</c:if>>4</option>
+													<option value="5" <c:if test="${answer.answerCh eq 5}">selected</c:if>>5</option>
+												</select>
 											</div>
 										</c:forEach>
 									</c:when>
@@ -129,7 +143,14 @@
 											<input type="hidden" class="form-control aw" name="answerList[0].taNo" value="1">
 											<span style="width: 73px; text-align:center;">1번 답 :</span> <input type="text" class="form-control aw" name="answerList[0].taAns">
 											<span style="width: 73px; text-align:center;">배점 :</span> <input type="text" class="form-control aw" name="answerList[0].taScr" placeholder="숫자만 입력">
-											<span style="width: 73px; text-align:center;">선지수 :</span> <input type="text" class="form-control aw" name="answerList[0].answerCh" placeholder="숫자만 입력">
+											<span style="width: 73px; text-align:center;">선지수 :</span>
+											<select class="form-control aw awSel" name="answerList[0].answerCh">
+												<option value="">--선지 선택--</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+											</select>
 										</div>
 									</c:otherwise>
 								</c:choose>
@@ -149,6 +170,15 @@ $(function(){
 var addBtn = document.querySelector("#addBtn");
 var delBtn = document.querySelector("#delBtn");
 var answerCon = $("#answer-container");
+
+$(".totalAw").on("change", function(){
+	var awSel = $(".awSel");
+	console.log("확인",$(this))
+	console.log("일괄확인",$(this).val())
+	for(var i = 0; i < awSel.length; i++){
+		awSel.eq(i).val($(this).val());
+	}
+})
 
 if("${msg}" == "exist" || "${msg}" == "failed" || "${msg}" == "notFile" || "${type}" == "update" || "${msg}" == "update-failed"){
 	if("${msg}" == "exist"){
@@ -289,7 +319,14 @@ function addAnswerDiv(){
 				<input type="hidden" class="form-control aw" name="answerList[\${awNumber - 1}].taNo" value="\${awNumber}">
 				<span style="width: 73px; text-align:center;">\${awNumber}번 답 :</span> <input type="text" class="form-control aw" name="answerList[\${awNumber - 1}].taAns">
 				<span style="width: 73px; text-align:center;">배점 :</span> <input type="text" class="form-control aw" name="answerList[\${awNumber - 1}].taScr"  placeholder="숫자만 입력">
-				<span style="width: 73px; text-align:center;">선지수 :</span> <input type="text" class="form-control aw" name="answerList[\${awNumber - 1}].answerCh"  placeholder="숫자만 입력">
+				<span style="width: 73px; text-align:center;">선지수 :</span> 
+				<select class="form-control aw awSel" name="answerList[\${awNumber - 1}].answerCh">
+					<option value="">--선지 선택--</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+				</select>
 			</div>`
 	awNumber++;
 	answerCon.append(data);

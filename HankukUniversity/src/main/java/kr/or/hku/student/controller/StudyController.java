@@ -195,6 +195,7 @@ public class StudyController {
 	    return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
 	}
 
+	
 	@ResponseBody
 	@GetMapping(value="/student/chatMemList")
 	public ResponseEntity<List<StudyVO>> chatMemList(@RequestParam("studyNo") int studyNo) {
