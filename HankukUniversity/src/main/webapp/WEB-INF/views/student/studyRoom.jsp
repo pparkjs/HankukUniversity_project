@@ -146,7 +146,7 @@ input[name=color]:checked + label{
 							</li>
 						</ul>
 						<div style="display: flex;">
-							<a class="btn btn-primary" href="https://6ce9-1-212-157-150.ngrok-free.app/study?room=${study.studyNo }" role="button" id="btn1" style="margin-bottom: 10px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
+							<a class="btn btn-primary" href="https://1340-1-212-157-150.ngrok-free.app/study?room=${study.studyNo }" role="button" id="btn1" style="margin-bottom: 10px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
 						
 							<form action="/hku/student/delStudy" method="post" id="delForm">
 								<input type="hidden" name="studyNo" value="${study.studyNo}" id="studyNo">
