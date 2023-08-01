@@ -148,6 +148,11 @@
 
 </div>
 <script>
+function clearInputFields() {   
+    document.getElementById("stboTitle2").value = "";
+    document.getElementById("stboWriter2").value = "";
+    document.getElementById("stboContent2").value = "";
+}
 
 function openModal() {
     $('#detailModal').modal('show');
@@ -155,10 +160,13 @@ function openModal() {
 function closeModal() {
     var closeBtn = document.getElementById("closeBtn");
     closeBtn.click();
+    clearInputFields();
 }
+
 function closeModal2() {
     var delBtn = document.getElementById("delBtn");
     delBtn.click();
+    clearInputFields();
 }
 
 var listBtn = document.querySelector('#listBtn');
