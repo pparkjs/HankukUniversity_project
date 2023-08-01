@@ -34,7 +34,7 @@
                                 <form class="row g-3 custom-form" action="">
                                     <div class="col-md-2">
                                        <select class="default-select form-control" id="stype">
-                                          <option value="">======== 선택 ========</option>
+                                          <option value="">=선택=</option>
                                           <option value="title">제목</option>
                                           <option value="writer">작성자</option>
                                        </select>
