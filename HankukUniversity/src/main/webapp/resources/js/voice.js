@@ -1,7 +1,11 @@
 $(function() {
+	//음성인식 시작이벤트
+	document.getElementById('micIcon').addEventListener('click', function() {
+	  speech.start();
+	});
 const speech = new webkitSpeechRecognition();
 	const icon = document.getElementById('realMic');
-
+	
 	  speech.continuous = false;
 	
 	  speech.onstart = function() {
@@ -27,6 +31,10 @@ const speech = new webkitSpeechRecognition();
      	    
    	  //■■■■■■■■■■ 학생 ■■■■■■■■■■
    	  // ────── 학적 ───────
+   	  
+   	    if (transcript.includes('스터디 게시판')||transcript.includes('스터디게시판')) {
+   	     location.href = "/hku/student/studyBoard"
+     	    }
    	  	if (transcript.includes('기본 사항')||transcript.includes('기본사항')) {
    	      location.href = "/hku/student/record";
    	    }
@@ -36,9 +44,6 @@ const speech = new webkitSpeechRecognition();
    	  	if (transcript.includes('졸업')) {
    	      location.href = "/hku/student/gradute";
    	    }
-   	    if (transcript.includes('스터디게시판')||transcript.includes('스터디 게시판')) {
-   	     location.href = "/hku/student/studyBoard"
-     	    }
    	  // ────── 수강정보 ───────
    	    if (transcript.includes('교과목 조회')||transcript.includes('교과목조회')) {
    	      location.href = "/hku/search-subject";
@@ -77,7 +82,7 @@ const speech = new webkitSpeechRecognition();
    	    console.log(transcript);
    	   
    	  // ────── 스터디  ───────
-   	 if (transcript.includes('스터디')) {
+   	 if (transcript.includes('스터디룸')||transcript.includes('스터디 룸')) {
    	      location.href = "/hku/student/study";
    	    }
    	  // ────── 시설예약 ───────
@@ -192,11 +197,6 @@ const speech = new webkitSpeechRecognition();
 		   			 console.log("유효한 번호를 인식할 수 없습니다.");
 			 }
      	    }
-   	  });
-
-   	  //음성인식 시작이벤트
-   	  document.getElementById('micIcon').addEventListener('click', function() {
-   	    speech.start();
    	  });
    	  
    	  // 인식된 문장을 가공하는 메소드

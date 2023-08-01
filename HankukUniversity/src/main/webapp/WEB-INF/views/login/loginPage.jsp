@@ -97,6 +97,17 @@
             font-weight: bold;
             width:90px;
         }
+        
+        .autoLogin{
+       			  height: 40px;
+            background-color: rgba(0,0,0,0.4);
+            cursor: pointer;
+            border-radius: 10px;
+            color : white;
+            font-weight: bold;
+            width:100px;
+        
+        }
 
         #pwdDiv {
             margin: 20px;
@@ -282,11 +293,13 @@ if(queryStr != null && !queryStr.equals("")){
         </tr>
         <tr id="trtwo">
             <td>
-           
-                    <span>ID</span><br>
-                    <input type="text" id="username" name="username" style="width:100%; height:30px; " placeholder="학번/교번/사번을 입력하세요"><br>
+                    <span style="margin-right: 13px;">ID</span>
+                    	<input type="button" class='autoLogin' id="stdLogin" value="학생로그인">
+	           		<input type="button" class='autoLogin' id="proLogin" value="교수로그인">
+	           		<input type="button" class='autoLogin' id="adminLogin" value="교직원로그인">
+                    <input type="text" id="username" name="username" style="width:95%; height:30px; " placeholder="학번/교번/사번을 입력하세요"><br>
                     <span>Password</span><br>
-                    <input type="password" id="password" name="password" style="width:100%; height:30px; " placeholder="비밀번호를 입력하세요"><br>
+                    <input type="password" id="password" name="password" style="width:95%; height:30px; " placeholder="비밀번호를 입력하세요"><br>
                
             </td>
             <td>
@@ -344,6 +357,27 @@ if(queryStr != null && !queryStr.equals("")){
         swal("올바르지않은 접근입니다.");
         //127.0.0.1(localhost)
     }
+    
+    var stdLogin = document.querySelector("#stdLogin");
+    var proLogin = document.querySelector("#proLogin");
+    var adminLogin = document.querySelector("#adminLogin");
+    
+    stdLogin.addEventListener("click",function(){
+    	document.querySelector("#username").value='20220004';
+    	document.querySelector("#password").value='1234';
+    	
+    })
+    proLogin.addEventListener("click",function(){
+    	document.querySelector("#username").value='10024';
+    	document.querySelector("#password").value='1234';
+    	
+    })
+    adminLogin.addEventListener("click",function(){
+    	document.querySelector("#username").value='20001';
+    	document.querySelector("#password").value='1234';
+    	
+    })
+    
 </script>
 
 </html>

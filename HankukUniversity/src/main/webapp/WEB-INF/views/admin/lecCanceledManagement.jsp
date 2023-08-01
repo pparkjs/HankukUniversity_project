@@ -193,13 +193,13 @@ $(function(){
 	
 	
 	cancelBtn.on('click', function(){
-		$('#receiver').text("");
-		$('#msg').text("");
+		$('#receiver').val("");
+		$('#msg').val("");
 		checkAll.click();
 	});
 	
 	msgSendBtn.on('click',function(){
-		var msg = $('#msg').text();
+		var msg = $('#msg').val();
 		if (msg == "" || msg == null) {
 			swal({
 				title: "휴강 정보를 선택해주세요.", 
@@ -223,6 +223,7 @@ $(function(){
 		}
 		
 		console.log("전송 하는 데이터 > ", realSendData);
+		
 		$.ajax({
 			type: 'post',
 			url: '/hku/admin/lec-cancel-TextMsg-spread',
@@ -258,7 +259,8 @@ $(function(){
 		let lecapNo = $(this).find('#lecapNo').val();
 		getStdList(lecapNo);
 		
-		$('#receiver').text("");
+// 		$('#receiver').text("");
+		$('#receiver').val("");
 		
 		
 		let msgText = {
@@ -311,7 +313,7 @@ $(function(){
 		console.log(text);
 		let msg = $('#msg');
 		let msgStr = `한국대학교 에서 전해 드립니다. \n\${text.week} <\${text.sub}> 수업은 \${text.pro}교수님에 사정으로 인해 휴강되었습니다.\n[사유] \${text.rsn}`;
-		msg.text(msgStr);
+		msg.val(msgStr);
 	}
 	
 	checkAll.on('click',function(){
@@ -335,7 +337,7 @@ $(function(){
 		var selectedCheckboxes = $(stdTBody).find("input[name='stdCk']:checked");
 		
 		var receiver = $('#receiver');
-		receiver.text("");
+		receiver.val("");
 		let receiverStr = "";
 		let saveData = [];
 	 	selectedCheckboxes.each(function() {
@@ -348,7 +350,7 @@ $(function(){
 	      	receiverStr += value + " ";
       		console.log(value);
 	    });
-	 	receiver.text(receiverStr);
+	 	receiver.val(receiverStr);
 	 	console.log("================")
 	 	console.log("결과 => ",saveData);
 	 	stdInfo = saveData;
