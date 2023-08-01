@@ -56,15 +56,16 @@
 		</div>
 		<div class="card cardRight" id="card-title-1">
 			<div class="card-header border-0 pb-0 ">
-				<div class="">
+				<div style="display: flex;">
 					<div class="card-title" style="color: maroon;  font-weight: 900;">예약 날짜</div>
+					<div class="exp" style="margin-left: 33px; margin-top: 3px;"> * 금일로 부터 한달 내의 날짜만 예약가능</div>
 				</div>
 			</div>
 			<hr>
 			<div class="card-body" style="padding: 0px;">
 			    <div>
 			        <input type="hidden" id="myDate" name="" value="" class="datepicker inp" readonly="true" /> 
-			        <div id="datepicker-container" style="height: 418px;"></div>
+			        <div id="datepicker-container" style="height: 430px;"></div>
 	   			</div>	
 			</div>
 		</div>
