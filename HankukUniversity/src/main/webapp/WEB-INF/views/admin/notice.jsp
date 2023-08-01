@@ -428,7 +428,10 @@
 					$('#detailDiv').css('display', 'block');// 상세div 보이게
 					$('#deleteBtn').css('display', 'block');// 삭제 버튼 보이게
 					addModal.modal('show'); // 모달창 등장
-					
+					if (myName != res.noticeWrtrNm) {
+						$(deleteBtn).css('display', 'none');
+						$(sNoticeBtn).css('display', 'none');
+					}
 					// 데이터 삽입
 					console.log(res);
 					$('#detailTtl').html(res.noticeTtl);
@@ -606,6 +609,7 @@
 			$('#deleteBtn').text("삭제");
 			$('.previewFile').html("");
 			$('#noticeFileList').html("");
+			$(sNoticeBtn).css('display', 'block');
 		});
 	});
 </script>

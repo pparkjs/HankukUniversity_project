@@ -3,22 +3,24 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="/css/table.css">
 <style>
-.input-group{
-	width: 19%;
-	margin: 10px;
+.custom-tab-1 .nav-link:focus, .custom-tab-1 .nav-link:hover, .custom-tab-1 .nav-link.active {
+    font-weight: 700;
+}
+.nav-link {
+    color: rgba(0,0,0,0.85);
 }
 </style>
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+			<li class="breadcrumb-item"><a href="javascript:void(0)">학적</a></li>
 			<li class="breadcrumb-item active"><a href="javascript:void(0)">졸업</a></li>
 		</ol>
     </div>
 	<div class="container-fluid">
 		<div class="card" id="card-title-1">
 			<div class="card-header border-0 pb-0 ">
-				<h5 class="card-title">이수학점 계</h5>
+				<h5 class="card-title" style="color: #800000; font-weight: 700;">기본사항</h5>
 			</div>
 			<div style="margin-top: 10px;">
 				<div class="col-xl-12" style="margin-left: 40px;">
@@ -129,7 +131,7 @@
 													        <option value="2030">2030</option>
 													</select>
 												</div>
-												<div class="input-group">
+												<div class="input-group" style="width: 19%; margin: 10px;">
 													<div style="font-size: 20px;">
 														<label style="font-size: 20px; margin-top: 8px;">끝학기</label>&nbsp; &nbsp;
 													</div>

@@ -1,11 +1,13 @@
 package kr.or.hku.student.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.hku.student.vo.PaginationInfoVO;
 import kr.or.hku.student.service.StudyService;
 import kr.or.hku.student.vo.StudentVO;
 import kr.or.hku.student.vo.StudyVO;
@@ -53,10 +56,38 @@ public class StudyBoardController {
 	
 	@ResponseBody
 	@GetMapping("/studyBoardList")
-	public ResponseEntity<List<StudyVO>> studyBoardList() {
-		List<StudyVO> list = service.studyBoardList();
-	    
-		return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
+	public ResponseEntity<PaginationInfoVO> studyBoardList(@RequestParam Map<String, String> map) {
+		log.info("스터디게시판 전달 파라미터 > " + map.toString());
+		ResponseEntity<PaginationInfoVO> entity = null;
+		
+		PaginationInfoVO<StudyVO> pagingVO = new PaginationInfoVO<StudyVO>();
+		if (StringUtils.isBlank(map.get("stype"))) { 
+			map.put("stype", "title");
+		}
+		int currentPage = 1;
+		if (StringUtils.isNotBlank(map.get("page"))) { 
+			currentPage = Integer.parseInt(map.get("page"));
+		}
+		
+		if (StringUtils.isNotBlank(map.get("sword"))) {
+			pagingVO.setSearchType(map.get("stype"));
+			pagingVO.setSearchWord(map.get("sword"));
+		}
+		
+		pagingVO.setCurrentPage(currentPage);
+		
+//		int totalRecord = service.boardCount(pagingVO);
+//		log.info("총 게시글 수: " +totalRecord);
+		
+		List<StudyVO> dataList = service.boardSelect(pagingVO);
+		if(!dataList.isEmpty()) {
+			pagingVO.setTotalRecord(dataList.get(0).getTotalRecord());
+			log.info("개수: " + pagingVO.getTotalRecord());
+		}
+		pagingVO.setDataList(dataList);
+		
+		entity = new ResponseEntity<PaginationInfoVO>(pagingVO, HttpStatus.OK);
+		return entity;
 	}
 	
 	@PreAuthorize("hasAnyRole('ROLE_STUDENT')")

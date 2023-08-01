@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import kr.or.hku.admin.vo.ScholarshipVO;
+import kr.or.hku.student.vo.SclsApPayVO;
 import kr.or.hku.student.vo.StdScholarshipVO;
 
 public interface StdScholarshipService {
@@ -19,5 +20,7 @@ public interface StdScholarshipService {
 	public int sclsAplyModify(StdScholarshipVO sclsAplyModiVO);
 
 	public int deleteSclsAply(HashMap<String, String> delData);
+
+	public List<SclsApPayVO> selectSclsapPayList(HashMap<String, String> sclsapPaySearchData);
 
 }

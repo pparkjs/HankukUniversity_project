@@ -13,17 +13,17 @@
         </div>
         <hr>
         <div class="col-xl-12 mb-3">
-            <div class="row">
-                <div class="col-xl-4 mb-1" style="width: 25%;">
+            <div class="row" style="font-size: 18px;">
+                <div class="col-xl-4 mb-1" style="width: 30%;">
                     <p>● 등록일 : <c:out value="${studyBoard.stboRegdate }"/></p>
                 </div>
-                <div class="col-xl-4 mb-1" style="width: 25%;">
+               <div class="col-xl-4 mb-1" style="width: 30%;">
+                    <p>● 스터디명 : <c:out value="${studyBoard.studyName }"/></p>
+                </div>
+                <div class="col-xl-4 mb-1" style="width: 20%;">
                     <p>● 스터디장 : <c:out value="${studyBoard.stboWriter }"/></p>
                 </div>
-                <div class="col-xl-4 mb-1" style="width: 25%;">
-                    <p>● 인원 : <c:out value="${studyBoard.count }/${studyBoard.studyCpcy }"/></p>
-                </div>
-                <div class="col-xl-4 mb-1" style="width: 25%;">
+                <div class="col-xl-4 mb-1" style="width: 20%;">
                     <p>● 조회수 : <c:out value="${studyBoard.stboReadCnt }"/></p>
                 </div>
             </div>
@@ -44,15 +44,15 @@
         </div>
         <div class="col-xl-12 mb-3">
             
-                <div class="col-xl-10 mb-1" style="display: flex; justify-content: end; margin-right: 0px;">
+                <div class="col-xl-12 mb-1" style="display: flex; justify-content: end; margin-right: 0px;">
                     <button class="btn btn-primary" id="listBtn" style="margin: 5px;">목록</button>
                     <c:choose>
 	                	<c:when test="${studyBoard.stdNo eq stdNo }">
-		                    <button class="btn btn-primary" id="listBtn" style="margin: 5px;" onclick="openModal()">수정</button>
-		                    <button class="btn btn-primary" id="listBtn" style="margin: 5px;" onclick="delBoard()">삭제</button>          	
+		                    <button class="btn btn-primary" id="" style="margin: 5px; background: #0070c0; border-color: #0070c0;" onclick="openModal()">수정</button>
+		                    <button class="btn btn-primary" id="delBtn" style="margin: 5px; background: #ff4343; border-color: #ff4343;" onclick="delBoard()">삭제</button>          	
 	                	</c:when>
 	                	<c:otherwise>           	
-		                	<button type="button" class="btn btn-primary" style="margin: 5px;" data-bs-toggle="modal" data-bs-target="#basicModal">가입신청</button>
+		                	<button type="button" class="btn btn-primary" style="margin: 5px; background: #0070c0; border-color: #0070c0;" data-bs-toggle="modal" data-bs-target="#basicModal">가입신청</button>
 	                	</c:otherwise>
 	                </c:choose>     
                </div>
@@ -115,7 +115,7 @@
 								<label class="col-lg-4 col-form-label" for="validationCustom01">
 									제목 <span class="text-danger"></span>
 								</label>
-								<input type="text" name="stboTitle" id="stboTitle2" class="form-control" id="validationCustom01" required>
+								<input type="text" name="stboTitle" id="stboTitle2" value="${studyBoard.stboTitle }" class="form-control" id="validationCustom01" required>
 							</div>
 							<div class="mb-3">
 								<label class="col-lg-4 col-form-label" for="validationCustom04">
@@ -127,7 +127,7 @@
 								<label class="col-lg-4 col-form-label" for="validationCustom04">
 									내용 <span class="text-danger"></span>
 								</label>
-								<textarea name="stboContent" id="stboContent2" class="form-control h-50" id="validationCustom04" rows="6"required></textarea>
+								<textarea name="stboContent" id="stboContent2" class="form-control h-50" id="validationCustom04" rows="6"required>${studyBoard.stboContent }</textarea>
 								<div class="invalid-feedback">
 								</div>
 							</div>
@@ -138,7 +138,7 @@
 				</div>
 			</div>
 			<div class="modal-footer" id="btnDiv">
-				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
+				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal" id="closeBtn">닫기</button>
 				<button type="button" class="btn btn-primary" onclick="modifyStudyBoard()" id="btn2">수정</button>
 				<button type="button" class="btn btn-primary" onclick="delBoard()" id="btn3">삭제</button>
 			</div>
@@ -153,7 +153,12 @@ function openModal() {
     $('#detailModal').modal('show');
 }
 function closeModal() {
-    $('#detailModal').modal('hide');
+    var closeBtn = document.getElementById("closeBtn");
+    closeBtn.click();
+}
+function closeModal2() {
+    var delBtn = document.getElementById("delBtn");
+    delBtn.click();
 }
 
 var listBtn = document.querySelector('#listBtn');
@@ -206,6 +211,7 @@ function intoStudy(){
 			}
 			boardList();
 			$('#basicModal').modal('hide');
+			closeModal2();
 		}
 	}
 	xhr.send(JSON.stringify(data));

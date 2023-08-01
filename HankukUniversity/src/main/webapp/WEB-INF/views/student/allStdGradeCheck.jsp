@@ -69,8 +69,8 @@
 							<th colspan="3" style="width: 25%;">총 취득학점</th>
 							<th colspan="3"
 								style="width: 25%; background-color: #ccced0; color: #800000;">필요학점</th>
-							<th rowspan="2" style="width: 12.5%;">평점합계</th>
-							<th rowspan="2" style="width: 12.5%;">평점평균</th>
+							<th rowspan="2" style="width: 12.5%;">평균평점</th>
+							<th rowspan="2" style="width: 12.5%;">평균등급</th>
 						</tr>
 						<tr>
 							<th>전공</th>
@@ -95,8 +95,8 @@
 							<td id="needMjr" style="background-color: #ccced0;"></td>
 							<td id="needCtrl" style="background-color: #ccced0;"></td>
 							<td id="needAll" style="background-color: #ccced0;"></td>
-							<td>-</td>
-							<td>-</td>
+							<td id="averCrd"></td>
+							<td id="averGrd"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -113,8 +113,8 @@
 					<thead>
 						<tr>
 							<th colspan="3">이수학점</th>
-							<th rowspan="2">평점합계</th>
-							<th rowspan="2">평점평균</th>
+							<th rowspan="2">평균평점</th>
+							<th rowspan="2">평균등급</th>
 						</tr>
 						<tr>
 							<th>전공</th>
@@ -127,8 +127,8 @@
 							<td id="semMjr" style="width: 20%;">-</td>
 							<td id="semCtrl" style="width: 20%;">-</td>
 							<td id="semAll" style="width: 20%;">-</td>
-							<td style="width: 20%;">-</td>
-							<td style="width: 20%;">-</td>
+							<td id="semScr" style="width: 20%;" >-</td>
+							<td id="semGrd" style="width: 20%;">-</td>
 						</tr>
 					</tbody>
 				</table>
@@ -141,23 +141,23 @@
 			style="width: 96.5%; margin: 0 auto; border: 1px;">
 			<thead>
 				<tr>
-					<th rowspan="2">이수연도</th>
+					<th rowspan="2" style="height:40px;">이수연도</th>
 					<th rowspan="2">이수학기</th>
 					<th rowspan="2">이수학과</th>
 					<th rowspan="2">이수구분</th>
 					<th rowspan="2">교과목명</th>
 					<th rowspan="2">교과코드</th>
 					<th rowspan="2">이수학점</th>
-					<th colspan="4">평가내용</th>
+<!-- 					<th colspan="4">평가내용</th> -->
 					<th rowspan="2">등급</th>
 					<th rowspan="2">평점</th>
 				</tr>
-				<tr>
-					<th>과제</th>
-					<th>출석</th>
-					<th>중간</th>
-					<th>기말</th>
-				</tr>
+<!-- 				<tr> -->
+<!-- 					<th>과제</th> -->
+<!-- 					<th>출석</th> -->
+<!-- 					<th>중간</th> -->
+<!-- 					<th>기말</th> -->
+<!-- 				</tr> -->
 			</thead>
 			<tbody id="allGradeTb">
 				<c:forEach items="${map.subject}" var="subject">
@@ -170,11 +170,7 @@
 						<td style="width: 300px;">${subject.subNm}</td>
 						<td>${subject.subNo}</td>
 						<td>${subject.crsEarnedCrd}</td>
-						<td>생략</td>
-						<td>생략</td>
-						<td>생략</td>
-						<td>생략</td>
-						<td>생략</td>
+						<td>${subject.crsGrd}</td>
 						<td>${subject.crsScr}</td>
 					</tr>
 					</c:if>
@@ -222,6 +218,7 @@ let two;
 			 crsEarnedCrd:'${subject.crsEarnedCrd}',
 			 crsClassfCd:'${subject.crsClassfCd}',
 			 crsScr:'${subject.crsScr}',
+			 crsGrd:'${subject.crsGrd}',
 			 lecapYr:'${subject.lecapYr}',
 			 lecapSem:'${subject.lecapSem}',
 			 deptNm:'${subject.deptNm}',
@@ -235,9 +232,13 @@ let two;
 
 let mjrCrd = 0 ;
 let ctrlCrd  = 0 ;
+let scr = 0;
+let cnt = 0;
 var stdNo = ${std.stdNo};
 console.log(stdInfo);
 console.log(subject);
+
+//학점계산
 for (let i = 0; i < subject.length; i++) {
 	if (subject[i].crsClassfCd === '전필'|| subject[i].crsClassfCd === '전선') {
 		if(subject[i].crsEarnedCrd == null || subject[i].crsEarnedCrd == ''){
@@ -253,6 +254,24 @@ for (let i = 0; i < subject.length; i++) {
 		}
 	}
 }
+
+//평균평점
+for (let i = 0; i < subject.length; i++) {
+	if(subject[i].crsEarnedCrd == null || subject[i].crsEarnedCrd == ''){
+		scr += 0;
+	}else{
+		scr += parseFloat(subject[i].crsScr);
+		cnt ++;
+	}
+}
+		console.log("평점"+scr);
+		console.log("과목수"+cnt);
+		
+var grd = scr/cnt;		
+$('#averCrd').text(scr/cnt);
+$('#averGrd').text(getGrd(grd));
+
+
 $('#getMjr').text(mjrCrd);
 $('#getCtrl').text(ctrlCrd);
 $('#getAll').text(ctrlCrd+mjrCrd);
@@ -309,11 +328,7 @@ function getAllGrade(){
 		      			gradeStr += '<td style="width:300px;">' + res[i].subNm+'</td>';
 		      			gradeStr += '<td>' + res[i].subNo+'</td>';
 		      			gradeStr += '<td>' + res[i].subCrd+'</td>';
-		      			gradeStr += '<td>' + '생략' +'</td>';
-		      			gradeStr += '<td>' + '생략' +'</td>';
-		      			gradeStr += '<td>' + '생략' +'</td>';
-		      			gradeStr += '<td>' + '생략' +'</td>';
-		      			gradeStr += '<td>' + '생략' +'</td>';
+		      			gradeStr += '<td>' + res[i].crsGrd +'</td>';
 		      			gradeStr += '<td>' + res[i].crsScr+'</td>';
 		      			gradeStr += '</tr>'
 	        		}
@@ -322,6 +337,8 @@ function getAllGrade(){
 	        	
 	        	let mjr= 0;
 	        	let ctrl = 0;
+	        	let scr = 0;
+	        	/* 학기별 취득학점 계산  */
 	        	for(let i=0; i <res.length; i++){
 		        		if (res[i].crsClassfCd === '전필'|| res[i].crsClassfCd === '전선') {
 		        			mjr += parseInt(res[i].subCrd);
@@ -329,24 +346,36 @@ function getAllGrade(){
 		        			ctrl += parseInt(res[i].subCrd);
 		        		}
 	        	}
-        	
+	        	/* 학기별 취득 평점 계산 */
+	        	for(let i=0; i <res.length; i++){
+	        		scr += parseFloat(res[i].crsScr);
+        		}
+	        	
 			let all = mjr + ctrl ;
 			console.log(all);
-	        	
+	        /* 학기별 학점계산 코드 */
+	        if(!isNaN(scr)){
+	        	$('#semScr').text('-');
+	        	$('#semGrd').text('-');
+	        }else{
+	        	let grade = scr/res.length;
+				let grdScr = Math.round(grade*10)/10;
+				$('#semScr').text(grdScr);
+	        	$('#semGrd').text(getGrd(grdScr));
+	        }
+	        
+			
 	        	$('#semMjr').text(mjr);
 	        	$('#semCtrl').text(ctrl);
 	        	$('#semAll').text(all);
+	        	
 	        	if(lecapYr == '' && lecapSem != ''){
-	        		console.log("1");
 	        		$('#selectedSem').text('전체연도'+" "+lecapSem+'학기 이수학점');
 	        	}else if(lecapSem  == '' && lecapYr != '' ){
-	        		console.log("2");
 	        		$('#selectedSem').text(lecapYr+"년 "+'전체학기 이수학점');
 	        	}else if(lecapYr == ''&& lecapSem  == ''){
-	        		console.log("3");
 	        		$('#selectedSem').text('전체연도 전체학기 이수학점');
 	        	}else{
-	        		console.log("4");
 	        	$('#selectedSem').text(lecapYr+'년 '+lecapSem+'학기 이수학점');
 	        	}
         	
@@ -358,5 +387,29 @@ function getAllGrade(){
 	
 	})
 }
+
+function getGrd(scr){
+	if(scr >= 4.5){
+		return "A+"
+	}else if(scr >= 4.0){
+		return "A"
+	}else if(scr >= 3.5){
+		return "B+"
+	}else if(scr >= 3.0){
+		return "B"
+	}else if(scr >= 2.5){
+		return "C+"
+	}else if(scr >= 2.0){
+		return "C"
+	}else if(scr >= 1.5){
+		return "D+"
+	}else if(scr >= 1.0){
+		return "D"
+	}else if(scr < 1.0){
+		return "F"
+	}else{
+		return "-";
+	}
+};
 	
 </script>

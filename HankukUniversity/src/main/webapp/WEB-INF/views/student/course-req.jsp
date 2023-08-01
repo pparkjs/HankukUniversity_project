@@ -12,7 +12,7 @@
     </div>
 	<div class="container-fluid searchCon">
 		<div class="card" id="card-title-1">
-			<div class="card-body">
+			<div class="card-body" style="color: black; font-size: 18px;	padding: 0.75rem;">
 				<div class="search1">
 					이수구분:&nbsp;&nbsp;&nbsp;
 					<select class="clsfSel">
@@ -52,7 +52,7 @@
 	</div>
 	<div class="container-fluid subCon">
 		<div class="card" id="card-title-1">
-			<div class="card-body" style="padding-top: 0px;">
+			<div class="card-body" style="padding-top: 0px; color: black; font-size: 18px;	padding: 0.75rem;">
 				<div class="course-wrap">
 					<table class="table" style="margin-top: -22px;">
 						<thead class="thead-dark">

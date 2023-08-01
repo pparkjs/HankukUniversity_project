@@ -230,4 +230,16 @@
 			WHERE LECAP_NO = #{LECAPNO}
 	</update>
 	
+	
+	<select id="loadPlan" parameterType="String" resultType="planVO">
+		SELECT *
+		FROM (
+		    SELECT a.*, ROWNUM AS rnum
+		    FROM lecture_program a
+		    JOIN lecture_aply b ON a.lecap_no = b.lecap_no
+		    WHERE b.sub_no = #{subNo}
+		    ORDER BY b.lecap_no desc
+		) 
+		WHERE ROWNUM = 1
+	</select>
 </mapper>

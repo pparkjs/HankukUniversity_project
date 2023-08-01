@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 	<link rel="stylesheet" href="/css/admin/userManage.css">
-	<link rel="stylesheet" type="text/css" href="/icons/flaticon/flaticon.css">
 	<link rel="stylesheet" href="/css/table.css">
 <c:if test="${ilgualStatus eq '1' }">
 	<script>
@@ -59,8 +58,8 @@
 			<div class="col-xl-9">
 				<div class="card profile-card card-bx m-b30">
 					<div class="card-header">
-						<div>
-							<h4 class="title">
+						<div style="width: 100px;">
+							<h4 class="card-title">
 								사용자 등록
 							</h4>
 						</div>
@@ -78,9 +77,16 @@
 									<form action="/hku/admin/insertUserExcel?${_csrf.parameterName}=${_csrf.token}" class="input-group" id="excelForm" method="POST" enctype="multipart/form-data">
 										<input class="form-control" type="file" id="formFile" name="formFile">
 										<span class="input-group-append">
-											<button type="button" onclick="poiInsert()" class="btn btn-primary btn-flat">일괄등록</button>
+											<button type="button" onclick="poiInsert()" class="btn btn-primary btn-flat poiDownBtn" style="color: #000;">
+												<img src="\icons\icons8-microsoft-excel-2019.svg" class="excelSvg"/> 일괄등록
+											</button>
 										</span>
 									</form>
+								</div>
+								<div class="col-auto">
+									<button type="button" class="btn btn-primary poiDownBtn" style="color: #000;" onclick="poiDownload()">
+										<img src="\icons\icons8-microsoft-excel-2019.svg" class="excelSvg"/> 양식 다운로드
+									</button>
 								</div>
 								<div class="col-auto">
 									<button type="button" class="btn btn-primary" onclick="userInsert()">등록</button>
@@ -102,14 +108,53 @@
 		</div>
 	</div>
 	<div class="container-fluid dd">
+		<div class="custom-tab-1" style="display: flex; align-items: center;">
+			<ul class="nav nav-tabs" role="tablist">
+				<li class="nav-item" role="presentation">
+					<a class="nav-link active" data-bs-toggle="tab" href="#users" id="users-tab" aria-selected="true" role="tab">전체</a>
+				</li>
+				<li class="nav-item" role="presentation">
+					<a class="nav-link" data-bs-toggle="tab" href="#admins" id="admins-tab" aria-selected="false" role="tab" tabindex="-1">교직원</a>
+				</li>
+				<li class="nav-item" role="presentation">
+					<a class="nav-link" data-bs-toggle="tab" href="#professors" id="professors-tab" aria-selected="false" role="tab" tabindex="-1">교수</a>
+				</li>
+				<li class="nav-item" role="presentation">
+					<a class="nav-link" data-bs-toggle="tab" href="#students" id="students-tab" aria-selected="false" role="tab" tabindex="-1">학생</a>
+				</li>
+			</ul>
+		</div>
 		<div class="card" id="card-title-1">
-			<div class="card-header border-0 pb-0 ">
+			<div class="card-header border-0 pb-0 " id="userListDiv" style="display: flex; justify-content: space-between; padding: 0.5rem;">
 				<h5 class="card-title">전체 사용자</h5>
+				<div class="col-md-8" style="margin-bottom: 7px;">
+					<form class="row g-3 custom-form" action="" id="searchForm">
+						<div class="col-md-2">
+							<select class="default-select form-control form-control-sm" id="searchType">
+								<option value="userNo">학번/교번</option>
+								<option value="userNm">이름</option>
+								<option value="deptNm">학과명</option>
+							</select>
+						</div>
+						<div class="col-md-3">
+							<input type="text" class="form-control form-control-sm input-default" id="searchWord" value="${searchWord }" placeholder="검색어를 입력해주세요">
+						</div>
+						<div class="col-auto">
+							<button type="button" class="btn btn-sm btn-primary listBtn" id="userSearchBtn">검색</button>
+						</div>
+						<!-- <div class="col-auto">
+							<button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#deptModal" onclick="deptCdSet()">학과개설</button>
+						</div> -->
+						<div class="col-auto">
+							<button type="button" class="btn btn-sm btn-primary listBtn" onclick="deleteUser()">삭제</button>
+						</div>
+					</form>
+				</div>
 			</div>
+			<hr style="margin: 0rem;"/>
 			<div class="card-body">
 				<div class="row spaceBetween">
-					<div class="col-auto">
-						<!-- Nav tabs -->
+					<!-- <div class="col-auto">
 						<ul class="nav nav-tabs" id="myTab" role="tablist">
 							<li class="nav-item" role="presentation">
 								<button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-controls="users" aria-selected="true">전체</button>
@@ -124,30 +169,8 @@
 								<button class="nav-link" id="students-tab" data-bs-toggle="tab" data-bs-target="#students" type="button" role="tab" aria-controls="students" aria-selected="false">학생</button>
 							</li>
 						</ul>
-					</div>
-					<div class="col-md-8">
-						<form class="row g-3 custom-form" action="" id="searchForm">
-							<div class="col-md-2">
-								<select class="default-select form-control form-control-sm" id="searchType">
-									<option value="userNo">학번/교번</option>
-									<option value="userNm">이름</option>
-									<option value="deptNm">학과명</option>
-								</select>
-							</div>
-							<div class="col-md-3">
-								<input type="text" class="form-control form-control-sm input-default" id="searchWord" value="${searchWord }" placeholder="검색어를 입력해주세요">
-							</div>
-							<div class="col-auto">
-								<button type="button" class="btn btn-sm btn-primary listBtn" id="userSearchBtn">검색</button>
-							</div>
-							<!-- <div class="col-auto">
-								<button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#deptModal" onclick="deptCdSet()">학과개설</button>
-							</div> -->
-							<div class="col-auto">
-								<button type="button" class="btn btn-sm btn-primary listBtn" onclick="deleteUser()">삭제</button>
-							</div>
-						</form>
-					</div>
+					</div> -->
+					
 				</div>
 				<!-- <button type="button" onclick="tabChange()">탭변경</button> -->
 				<!-- Tab panes -->
@@ -796,6 +819,22 @@ $(function(){
 	})
 })
 
+function poiDownload(){
+	// console.log("11");
+	// $.ajax({
+	// 	type: "GET",
+	// 	url: "/hku/admin/poiDownload",
+	// 	//dataType: "bytes",
+	// 	success: function(){
+	// 		alert("양식다운로드 성공");
+	// 	},
+	// 	error: function(){
+
+	// 	}
+	// });
+	location.href = "/hku/admin/poiDownload";
+}
+
 function userModify(param){
 	var formdata = new FormData();
 	// let formData = new FormData();
@@ -1095,37 +1134,10 @@ function poiInsert(){
 		return false;
 	}
 	$("#excelForm").submit();
-	// console.log("2",formFile.file);
-	// console.log("3",formFile.value);
-
-	// let formData = new FormData();
-	// formData.append("file",formFile.files[0]);
-	
-	// // window.href = "/hku/admin/insertUserExcel";
-	// $.ajax({
-	// 	type: 'POST',
-	// 	url: '/hku/admin/insertUserExcel',
-	// 	data: formData,
-	// 	dataType: "JSON",
-	// 	processData: false,
-	// 	contentType: false,
-	// 	success: function(res) {
-	// 		swal({
-	// 			title: "일괄등록 성공!!",
-	// 			icon: "success"
-	// 		})
-	// 		console.log("일괄등록 완료!!!!!!");
-	// 		console.log(res);
-	// 		studentsSet();
-	// 	},
-	// 	error: function (xhr, status, error) {
-	// 		alert("출력실패");
-	// 	}
-	// });
 }
 
 function tabChange(){
-	console.log("hi~");
+	// console.log("hi~");
 	// console.log(document.querySelector("#professors-tab").classList);
 	var tabButtons = document.querySelectorAll(".nav-link");
 	var tabPanels = document.querySelectorAll(".tab-pane");
@@ -1172,7 +1184,7 @@ function selectStdAll(target){
 }
 function onlyCheck(target){
 	event.stopPropagation();
-	console.log("오직 체크만",target.value);
+	// console.log("오직 체크만",target.value);
 	
 }
 
@@ -1184,7 +1196,7 @@ function usersSet(){
 		"searchWord": searchWord
 	}
 
-	console.log(data);
+	// console.log(data);
 
 	$.ajax({
 		type: 'POST',
@@ -1254,7 +1266,7 @@ function adminsSet(){
 		"searchWord": searchWord
 	}
 
-	console.log(data);
+	// console.log(data);
 
 	$.ajax({
 		type: 'POST',
@@ -1265,7 +1277,6 @@ function adminsSet(){
 		contentType: "application/json;charset=UTF-8",
 		beforeSend : function(xhr){xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}"); },
 		success: function(res) {
-			console.log("res",res);
 			var admins = $("#admins");
 			var tblStr = "";
 			tblStr += `<div class='table-wrap'>
@@ -1331,7 +1342,7 @@ function professorsSet(){
 		"searchWord": searchWord
 	}
 
-	console.log(data);
+	// console.log(data);
 
 	$.ajax({
 		type: 'POST',
@@ -1406,7 +1417,7 @@ function studentsSet(){
 		"searchWord": searchWord
 	}
 
-	console.log(data);
+	// console.log(data);
 
 	$.ajax({
 		type: 'POST',
@@ -1477,10 +1488,10 @@ function deleteUser(){
 	let users = $(".userCheck");
 	for(let i=0; i<users.length; i++){
 		if(users[i].checked == true){
-			console.log(users[i]);
+			// console.log(users[i]);
 			let userType = $(users[i]).parents("tr").children().eq(3).html();
-			console.log(userType);
-			console.log(users[i].value);
+			// console.log(userType);
+			// console.log(users[i].value);
 
 			let delUser = {
 				"type": userType,
@@ -1492,10 +1503,10 @@ function deleteUser(){
 	let students = $(".stdCheck");
 	for(let i=0; i<students.length; i++){
 		if(students[i].checked == true){
-			console.log(students[i]);
+			// console.log(students[i]);
 			let userType = $(students[i]).parents("tr").children().eq(3).html();
-			console.log(userType);
-			console.log(students[i].value);
+			// console.log(userType);
+			// console.log(students[i].value);
 
 			let delUser = {
 				"type": userType,
@@ -1507,10 +1518,10 @@ function deleteUser(){
 	let professors = $(".proCheck");
 	for(let i=0; i<professors.length; i++){
 		if(professors[i].checked == true){
-			console.log(professors[i]);
+			// console.log(professors[i]);
 			let userType = $(professors[i]).parents("tr").children().eq(3).html();
-			console.log(userType);
-			console.log(professors[i].value);
+			// console.log(userType);
+			// console.log(professors[i].value);
 
 			let delUser = {
 				"type": userType,
@@ -1522,10 +1533,10 @@ function deleteUser(){
 	let employees = $(".empCheck");
 	for(let i=0; i<employees.length; i++){
 		if(employees[i].checked == true){
-			console.log(employees[i]);
+			// console.log(employees[i]);
 			let userType = $(employees[i]).parents("tr").children().eq(3).html();
-			console.log(userType);
-			console.log(employees[i].value);
+			// console.log(userType);
+			// console.log(employees[i].value);
 
 			let delUser = {
 				"type": userType,
@@ -1550,8 +1561,8 @@ function deleteUser(){
 	})
 	.then((willDelete) => {
 		if (willDelete) {
-			console.log(delUserArr);
-			console.log(JSON.stringify(delUserArr));
+			// console.log(delUserArr);
+			// console.log(JSON.stringify(delUserArr));
 			$.ajax({
 				type: 'DELETE',
 				url: '/hku/admin/user-management',
@@ -1915,7 +1926,7 @@ function DaumPostcode() {
 }
 
 function userInsert(event){
-	console.log("등록버튼");
+	// console.log("등록버튼");
 	var userClsCd = $("#selectTarget").val();	// 사용자 구분
 	var userPw = $("#userBrdt").val();
 
@@ -2073,7 +2084,7 @@ function userInsert(event){
 	}
 
 	// var files = event.target.files;
-	console.log("file",file);
+	// console.log("file",file);
 	// var file = files[0];
 
 	let formData = new FormData();
@@ -2116,7 +2127,7 @@ function userInsert(event){
 	}
 
 	// console.log(userInsertData);
-	console.log("formData",formData);	
+	// console.log("formData",formData);	
 
 	$.ajax({
 		method: 'POST',
@@ -2143,7 +2154,6 @@ function userInsert(event){
 			$("#profileImg").attr("src", "/images/user(2).png");
 			$("#profile").val(null); // ????
 			insertFormSet(stVal);
-			console.log("휴~");
 		},
 		error: function (xhr, status, error) {
 			alert("출력실패");

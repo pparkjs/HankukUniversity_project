@@ -8,7 +8,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import kr.or.hku.notice.vo.PaginationInfoVO;
+import kr.or.hku.student.vo.PaginationInfoVO;
 import kr.or.hku.student.mapper.StudyMapper;
 import kr.or.hku.student.service.StudyService;
 import kr.or.hku.student.vo.StdCalendarVO;
@@ -99,18 +99,6 @@ public class StudyServiceImpl implements StudyService{
 	public List<StudyVO> studyBoardList() {
 		// TODO Auto-generated method stub
 		return mapper.studyBoardList();
-	}
-
-	@Override
-	public int boardCount(PaginationInfoVO<StudyVO> pagingVO) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<StudyVO> boardSelect(PaginationInfoVO<StudyVO> pagingVO) {
-		// TODO Auto-generated method stub
-		return mapper.boardSelect(pagingVO);
 	}
 
 	@Override
@@ -266,5 +254,24 @@ public class StudyServiceImpl implements StudyService{
 		// TODO Auto-generated method stub
 		return mapper.insertStudyMem(studyVo);
 	}
+
+	@Override
+	public List<StudyVO> studyBoardList2(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return mapper.studyBoardList2(map);
+	}
+	
+	@Override
+	public int boardCount(PaginationInfoVO<StudyVO> pagingVO) {
+		// TODO Auto-generated method stub
+		return mapper.boardCount(pagingVO);
+	}
+
+	@Override
+	public List<StudyVO> boardSelect(PaginationInfoVO<StudyVO> pagingVO) {
+		// TODO Auto-generated method stub
+		return mapper.boardSelect(pagingVO);
+	}
+
 
 }

@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <style>
 .unreadCnt{
-    margin-left: 52px;
+    margin-left: 29px;
     margin-top: 30px;
     color: #800000;
     font-size: 1.1em;
@@ -28,16 +28,23 @@
   font-size: 13px;
 }
 .chatbox .img_cont_msg img {
-    width: 180%;
-    height: 180%;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #6e6e6e87;
 }
 .chatbox .img_cont_msg2 img {
     width: 100%;
     height: 100%;
+    border: 1px solid #6e6e6e87;
 }
 
 .img_cont_msg2{
     position: absolute;
+    right: 0px;
+    height: 48px;
+    width: 48px;
+}
+.img_cont_msg{
     right: 0px;
     height: 48px;
     width: 48px;
@@ -51,12 +58,49 @@
     right: 550px;
 }
 .msg_cotainer{
-	font-size: 1.5em;
-	left: 30px;
+	font-size: 1.3em;
+	left: 17px;
 }
 .msg_cotainer_send{
-	font-size: 1.5em;
+	font-size: 1.3em;
 	right: 40px;
+}
+.chatList-msg-count {
+    width: 31px;
+    height: 31px;
+    background-color: #e33333;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    font-size: 18px;
+    padding-top: 6px;
+    padding-left: 2px;
+}
+.user_info{
+	display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.chatbox .user_info span {
+    font-size: 0.9375rem;
+    color: #000;
+    display: block;
+    font-weight: 500;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    max-width: 10.625rem;
+    margin-bottom:0px;
+}
+.crownImg2 {
+    width: 18px;
+    height: 18px;
+    margin-bottom: 5px;
+    margin-left: 8px;
 }
 </style>
 <div class="chatbox">
@@ -72,8 +116,7 @@
 			<div class="tab-pane fade active show" id="chat">
 				<div class="card mb-sm-3 mb-md-0 contacts_card dz-chat-user-box">
 					<div class="card-header chat-list-header text-center">
-						<h6 class="mb-1"  style="font-size: 1.5em;">스터디 채팅방 목록</h6>
-						
+						<h6 style="font-size: 1.5em; font-weight: 600; margin-bottom: 0px;">스터디 채팅방 목록</h6>
 					</div>
 					
 					<div class="card-body contacts_body p-0 dz-scroll  " id="DZ_W_Contacts_Body">
@@ -90,16 +133,23 @@
 							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><polygon points="0 0 24 0 24 24 0 24"/><rect fill="#000000" opacity="0.3" transform="translate(15.000000, 12.000000) scale(-1, 1) rotate(-90.000000) translate(-15.000000, -12.000000) " x="14" y="7" width="2" height="10" rx="1"/><path d="M3.7071045,15.7071045 C3.3165802,16.0976288 2.68341522,16.0976288 2.29289093,15.7071045 C1.90236664,15.3165802 1.90236664,14.6834152 2.29289093,14.2928909 L8.29289093,8.29289093 C8.67146987,7.914312 9.28105631,7.90106637 9.67572234,8.26284357 L15.6757223,13.7628436 C16.0828413,14.136036 16.1103443,14.7686034 15.7371519,15.1757223 C15.3639594,15.5828413 14.7313921,15.6103443 14.3242731,15.2371519 L9.03007346,10.3841355 L3.7071045,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(9.000001, 11.999997) scale(-1, -1) rotate(90.000000) translate(-9.000001, -11.999997) "/></g></svg>
 						</a>
 						<div>
-							<h6 class="mb-1" id="roomNm" style="font-size: 1.5em;">채팅</h6>
+							<h6 class="mb-1" id="roomNm" style="font-size: 1.5em; font-weight: 700;">채팅</h6>
 						</div>							
 						<div class="dropdown">
-							<a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg></a>
-							<ul class="dropdown-menu dropdown-menu-end">
-								<li class="dropdown-item"><i class="fa fa-user-circle text-primary me-2"></i> View profile</li>
-								<li class="dropdown-item"><i class="fa fa-users text-primary me-2"></i> Add to btn-close friends</li>
-								<li class="dropdown-item"><i class="fa fa-plus text-primary me-2"></i> Add to group</li>
-								<li class="dropdown-item"><i class="fa fa-ban text-primary me-2"></i> Block</li>
-							</ul>
+							<a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">
+								<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1">
+									<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+									<rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/>
+									<circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/>
+									</g>
+								</svg>
+							</a>
+								<ul class="dropdown-menu dropdown-menu-end" id="memList">
+									<li class="dropdown-item"><i class="fa fa-user-circle text-primary me-2"></i></li>
+									<li class="dropdown-item"><i class="fa fa-users text-primary me-2"></i> Add to btn-close friends</li>
+									<li class="dropdown-item"><i class="fa fa-plus text-primary me-2"></i> Add to group</li>
+									<li class="dropdown-item"><i class="fa fa-ban text-primary me-2"></i> Block</li>
+								</ul>
 						</div>
 					</div>
 					<div class="card-body msg_card_body dz-scroll" id="DZ_W_Contacts_Body3">
@@ -126,6 +176,7 @@
 </div>
 <c:if test="${not empty std}">
 	<script type="text/javascript">
+	
 	$(document).ready(function() {
 		chatList();
 		
@@ -156,15 +207,12 @@
 						      <li class="active dz-chat-user" id ="\${res[i].studyNo}" value="\${res[i].stdNo}" onclick="enterRoom(this)">
 						        <div class="d-flex bd-highlight">
 						          <div class="img_cont">
-						            <img src="/images/avatar/1.jpg" class="rounded-circle user_img" alt="">
-						            <span class="online_icon"></span>
+						          <img src='/download\${res[i].stdProfilePath}' width="100%" height="100%" style="border: 1px solid #88888861;" class="rounded-circle user_img_msg" alt="">
 						          </div>
-						          <div class="user_info">
-						            <span style='font-size: 1em;'>\${res[i].studyName}</span>`;
+						          <div class="user_info" >
+						            <span style='font-size: 1.2em;'>\${res[i].studyName}</span>`;
 					if(res[i].unreadMsgCnt > 0){
-						chatList += `<p style='color: red'>\${res[i].unreadMsgCnt}</p>`;
-					}else{
-						chatList += `<p style='color: red'></p>`;						
+						chatList += `<div class="chatList-msg-count">\${res[i].unreadMsgCnt}</div>`;
 					}
 					chatList += `	</div>
 						        </div>
@@ -222,9 +270,43 @@
 		roomNm.html(studyName);
 		// 이전에 추가된 동적 태그를 모두 지우기
 		$('.msgDiv').html("");
-	
+		
+		memList();
 		msgList();
 		chatList();
+		
+	
+	}
+	
+	function memList(){
+		var memList = $("#memList");
+		console.log("채팅방 멤버 불러오깅");
+		//memList.html("");
+		
+		$.ajax({
+			  type: "get",
+			  url: "/hku/student/chatMemList",
+			  data: {
+			    "studyNo": studyNo
+			  },
+			  dataType: "json",
+			  success: function (data) {
+			    var memListData = "";
+			    console.log("뭐가져옴?: ", data);
+			   
+				    for (var i = 0; i < data.length; i++) {
+				    	console.log(data[i].stdNm);
+				    	if(data[i].studyRole == 'Y'){
+				    		memListData += `<li class="dropdown-item">\${data[i].stdNm}<img alt="" src="/images/왕관.png" class="crownImg2"></li>` 
+				    	}else{
+				        	memListData += `<li class="dropdown-item">\${data[i].stdNm}</li>`;				    		
+				    	}
+				    }
+					console.log("memListData: ",memListData);
+					memList.html("");
+				    memList.html(memListData);
+			    }
+			});
 	}
 	
 	function msgList(){
@@ -242,18 +324,15 @@
 			console.log("메세지리스트 성공적으로 가져옴!");
 		    var msgBody = $("#msgBody");
 		    var msgList = '';
-		    //console.log("stdNo: ", stdNo);
+		    
 		    for (var i = 0; i < data.length; i++) {
-		  	  //console.log("chatMsg",data);
 		  	  var stdNo2 = data[i].stdNo
-			  //console.log("stdNo2: ", stdNo2);
-		    	console.log("이새기 갑자기 안뜸: ", data[i].unreadMemCnt);
 		      if (stdNo2 == stdNo) {
 		        msgList += `
 				          <div class='d-flex justify-content-end mb-4'>
 		        			<p class='unreadCnt2'>`;
 					if(data[i].unreadMemCnt > 0){
-						msgList += `\${data[i].unreadMemCnt} </p>`
+						msgList += `\${data[i].unreadMemCnt}</p>`
 					}else{
 						msgList += `</p>`
 					}
@@ -263,7 +342,7 @@
 							</div>
 							<div class='img_cont_msg2'>
 								<img src='/download\${data[i].stdProfilePath}' class='rounded-circle user_img_msg' alt=''>		
-								\${data[i].stdNm}
+								<p style='width: 57px; font-size: 16px;'>\${data[i].stdNm}</p>
 							</div> 
 						</div>
 		        `;
@@ -272,7 +351,7 @@
 				          <div class='d-flex justify-content-start mb-4'>
 				            <div class='img_cont_msg'>
 				            	<img src='/download\${data[i].stdProfilePath}' class='rounded-circle user_img_msg' alt=''>
-				            	<p style='width: 52px; left:10px;'>\${data[i].stdNm}</p>
+				            	<p style='width: 57px; left:10px; font-size: 16px;'>\${data[i].stdNm}</p>
 				            </div>
 				            <div class='msg_cotainer'>
 				              \${data[i].msgContent}
@@ -292,6 +371,7 @@
 		    // 스크롤 맨 아래로 이동
 			var chatBody = document.getElementById("DZ_W_Contacts_Body3");
 			chatBody.scrollTop = chatBody.scrollHeight;
+			memList();
 		    },
 		    error: function(err) {
 	        	console.log("에러 발생",err);
@@ -321,6 +401,7 @@
 		
 		const data = {
 			    "stdNo": stdNo,
+			    "stdNm": "${sessionScope.std.stdNm}",
 			    "studyNo": studyNo,
 				"msgContent" : msgContent,
 				"type" : "msg"
@@ -339,7 +420,7 @@ chatSocket.onmessage = function(evt) {
 	 	
 	 	// 채팅방에서 채팅 메시지 보내고 누군가 후에 들어왔을 경우 읽음처리 ajax로 다시 표현
 	    if(evt.data.split(",")[0] == "chat-reload"){
-// 	    	msgList();
+	    	msgList();
 			var studyNo = evt.data.split(",")[1];
 			
 			// 현재 뿌려져 있는 안읽은메시지개수 리스트
@@ -373,7 +454,8 @@ chatSocket.onmessage = function(evt) {
 	            "msgContent": receive[2],
 	            "msgRegdate": receive[3],
 	            "unreadMsgCnt": receive[4],
-	            "stdProfilePath": receive[5]
+	            "stdProfilePath": receive[5],
+	            "stdNm":receive[6]
 	        };
 	        console.log("받은데이터:",data);
 	        console.log("받은stdNo:",data.stdNo);
@@ -394,8 +476,9 @@ chatSocket.onmessage = function(evt) {
 								\${data.msgContent}
 								<span class="msg_time_send">\${data.msgRegdate}</span>
 							</div>
-							<div class="img_cont_msg">
+							<div class="img_cont_msg2">
 								<img src='/download\${data.stdProfilePath}' class='rounded-circle user_img_msg' alt=''>
+								<p style='width: 57px; font-size: 16px;'>\${data.stdNm}</p>
 							</div> 
 						</div>`;
 		      } else {
@@ -403,6 +486,7 @@ chatSocket.onmessage = function(evt) {
 				          <div class="d-flex justify-content-start mb-4">
 				            <div class="img_cont_msg">
 				            	<img src='/download\${data.stdProfilePath}' class='rounded-circle user_img_msg' alt=''>
+				            	<p style='width: 57px; left:10px; font-size: 16px;'>\${data.stdNm}</p>
 				            </div>
 				            <div class="msg_cotainer">
 				            \${data.msgContent}
@@ -433,6 +517,8 @@ $('.studyClose').on('click', function(){
 	console.log("닫기버튼 : ", roomData);
 	
 	chatSocket.send(JSON.stringify(roomData));
+	var memList = $("#memList");
+	memList.html("");
 	
 })
 function getUnreadCntList(studyNo){

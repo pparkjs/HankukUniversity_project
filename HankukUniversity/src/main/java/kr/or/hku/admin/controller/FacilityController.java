@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,6 +39,7 @@ public class FacilityController {
 	@Autowired
 	private FacilityManageService fcltService;
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/facility-administration")
 	public String facility(Model model) {
 		log.info("facility() 실행...!");
@@ -238,26 +240,10 @@ public class FacilityController {
 	@ResponseBody
 	public ResponseEntity<String> flctsInsert(@RequestBody FacilitiesVO flctsVO){
 		ResponseEntity<String> entity = null;
-		int successFlag = 1;
-		
-		log.info("flctsVO : " + flctsVO.toString());
+//		log.info("flctsVO : " + flctsVO.toString());
 		
 		int status = fcltService.flctsInsert(flctsVO);
 		
-//		if(flctVO.getFlctClsfCd().equals("clsf01")) {
-//			int maxFloor = flctVO.getFloor();
-//			FlctFloorVO flctFloorVO = new FlctFloorVO();
-//			flctFloorVO.setFlctNo(flctVO.getFlctNo());
-//			for(int i=1; i<=maxFloor; i++) {
-//				flctFloorVO.setFloor(i);
-//				int floorStatus = fcltService.insertFloor(flctFloorVO);
-//				
-//				if(floorStatus == 0) {
-//					successFlag = 0;
-//				}
-//			}
-//		}
-//		log.info("status : " + status);
 		if(status > 0) {
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		}else {

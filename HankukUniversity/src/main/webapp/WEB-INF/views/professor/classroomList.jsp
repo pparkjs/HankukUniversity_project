@@ -103,7 +103,7 @@
 														<p class="mb-0 font-w500">${list.subNm }</p>
 													</td>
 													<td><svg class="enterClassroom" id="${list.lecapNo }"
-															width="40" height="40" viewBox="0 0 20 20" fill="none"
+															width="40" height="40" style="cursor: pointer;" viewBox="0 0 20 20" fill="none"
 															xmlns="http://www.w3.org/2000/svg">
 															<path
 																d="M2.5 7.49999L10 1.66666L17.5 7.49999V16.6667C17.5 17.1087 

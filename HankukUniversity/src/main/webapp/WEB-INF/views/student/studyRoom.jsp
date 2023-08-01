@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <link rel="stylesheet" href="/css/table.css">
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -19,10 +20,13 @@
   	text-align: center;
 	font-size: 1.5em;
 }
-.custom-tab-1 .nav-link {
-    font-weight: 800;
-    color: #444444;
+
+.nav-link {
+    color: rgb(0,0,0);
     font-size: 17px;
+}
+.custom-tab-1 .nav-link:focus, .custom-tab-1 .nav-link:hover, .custom-tab-1 .nav-link.active {
+    font-weight: 800;
 }
 .study-top{
 	border: 1px solid maroon;
@@ -101,19 +105,35 @@ input[name=color]{
 input[name=color]:checked + label{
 	border:2px solid black;
 }
+.fc .fc-col-header-cell-cushion {
+    display: inline-block;
+    padding: 2px 4px;
+    color: black;
+    font-weight: 600;
+}
+.fc .fc-daygrid-day-number {
+    padding: 4px;
+    position: relative;
+    z-index: 4;
+    color: black;
+    font-weight: 600;
+}
+.schedule td, .schedule th {
+    border-color: black;
+}
 </style>
 		<meta charset="UTF-8">
 		<div class="content-body">
 			<div class="page-titles">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-					<li class="breadcrumb-item active"><a href="javascript:void(0)">study room</a></li>
+					<li class="breadcrumb-item"><a href="javascript:void(0)">스터디</a></li>
+					<li class="breadcrumb-item active"><a href="javascript:void(0)">스터디룸</a></li>
 				</ol>
 			</div >
 <!-- 				<div style="display: flex; justify-content: end; margin-right: 80px; margin-top: 10px;"> -->
 <!-- 				</div> -->
 			<div class="container-fluid subCon">
-					<div class="custom-tab-1" style="display: flex; align-items: center;">
+					<div class="custom-tab-1" style="display: flex; align-items: center; justify-content: space-between; font-weight: 800; color: #444444; font-size: 17px;">
 						<ul class="nav nav-tabs">
 							<li class="nav-item">
 								<a class="nav-link active" data-bs-toggle="tab" href="#profile1"><i class="far fa-user me-2"></i> 스터디원</a>
@@ -125,22 +145,27 @@ input[name=color]:checked + label{
 								<a class="nav-link" data-bs-toggle="tab" href="#message1" id="calRender"><i class="ti-calendar me-2"></i> 일정</a>
 							</li>
 						</ul>
-						<a class="btn btn-primary" href="https://4276-1-212-157-150.ngrok-free.app/study?room=${study.studyNo }" role="button" id="btn1" style="margin-left: 733px; margin-bottom: 10px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
-					
-						<form action="/hku/student/delStudy" method="post" id="delForm">
-							<input type="hidden" name="studyNo" value="${study.studyNo}" id="studyNo">
-						</form>
-						<!-- 스터디장은 스터디 해체 버튼 보여주기 -->
-						<c:choose>
-						    <c:when test="${role eq 'Y'}">
-						        <button type="button" class="btn btn-primary" style="margin-left: 14px; margin-bottom: 10px; background: #ff4343; border-color: #ff4343;" id="delBtn">
-						            <i class="fa-solid fa-circle-exclamation me-2"></i>스터디 삭제
-						        </button>
-						    </c:when>
-						    <c:otherwise>
-						        <button type="button" class="btn btn-primary" style="margin-left: 14px; margin-bottom: 10px;" id="exitBtn"> 스터디 탈퇴</button>
-						    </c:otherwise>
-						</c:choose>									
+						<div style="display: flex;">
+							<a class="btn btn-primary" href="https://6ce9-1-212-157-150.ngrok-free.app/study?room=${study.studyNo }" role="button" id="btn1" style="margin-bottom: 10px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
+						
+							<form action="/hku/student/delStudy" method="post" id="delForm">
+								<input type="hidden" name="studyNo" value="${study.studyNo}" id="studyNo">
+								<sec:csrfInput/>
+							</form>
+							<!-- 스터디장은 스터디 해체 버튼 보여주기 -->
+							<c:choose>
+							    <c:when test="${role eq 'Y'}">
+							        <button type="button" class="btn btn-primary" style="margin-left: 14px; margin-bottom: 10px; background: #ff4343; border-color: #ff4343;" id="delBtn">
+							            <i class="fa-solid fa-circle-exclamation me-2"></i>스터디 삭제
+							        </button>
+							    </c:when>
+							    <c:otherwise>
+							        <button type="button" class="btn btn-primary" style="margin-left: 14px; margin-bottom: 10px; background: #ff4343; border-color: #ff4343;" id="exitBtn">
+							         	<i class="fa-solid fa-circle-exclamation me-2"></i>스터디 탈퇴
+							         </button>
+							    </c:otherwise>
+							</c:choose>
+						</div>								
 					</div>
 					<div class="card" id="card-title-1">
 						<div class="card-body" style="padding-top: 0px;">
@@ -196,7 +221,7 @@ input[name=color]:checked + label{
 										<table style="width: 100%; border: none;" class="table" id="tbl1">
 											<thead class="thead-dark">
 												<tr>
-													<th>이름 </th><th>학과 </th><th>학번 </th><th>신청일</th><th style="width: 300px;">comment</th><th> </th>
+													<th>이름 </th><th>학과 </th><th>학번 </th><th>신청일</th><th style="width: 300px;">자기소개</th><th> </th>
 												</tr>
 											</thead>
 											<tbody>
@@ -280,7 +305,7 @@ input[name=color]:checked + label{
 										</div>
 										<div class="schedule-wrap">
 											<table class="schedule" border=1 style="width: 92%; margin-left: 61px; margin-top: 20px;" >
-												<thead class="thead-dark" style="background: #6e6e6e; color: white;">
+												<thead class="thead-dark" style="background: #800000; color: white;">
 													<tr>
 														<th style="width: 150px; padding: 10px;"></th>
 														<th style="width: 150px; padding: 10px;">월</th>
@@ -462,26 +487,38 @@ $(function(){
 	var tbody = $('#tbody');
 	  
 	delBtn.on('click', function(){
-		swal.fire({
-	      title: '정말로 삭제하시겠습니까??',
-	      icon: 'warning'
-	    }).then((result) => {
-	      if (result.isConfirmed) {
-	        delForm.submit();
-	      }
-	    });
+		swal({
+			title: "스터디를 삭제하시겠습니까?",
+			text: "삭제 후 복구가 불가능합니다!",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+			if (willDelete) {
+				delForm.submit();
+			} else {
+				return false;
+			}
+		});
 	});
 
 	exitBtn.on('click', function(){
 		delForm.attr("action", "/hku/student/exitStudy");
-		swal.fire({
-	      title: '정말로 탈퇴하시겠습니까??',
-	      icon: 'warning'
-	    }).then((result) => {
-	      if (result.isConfirmed) {
-	        delForm.submit();
-	      }
-	    });
+		swal({
+			title: "스터디를 탈퇴하시겠습니까?",
+			text: "탈퇴 후 복구가 불가능합니다!",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+			if (willDelete) {
+				delForm.submit();
+			} else {
+				return false;
+			}
+		});
 	})
 	
 });
@@ -512,7 +549,8 @@ function assignStudy() {
 						icon: "success"
 					});
 	            }else{
-	            	swal({
+	            	location.reload();
+	            	swal({ 
 	        			title: "승인실패", 
 	        			icon: "error"
 	        		});

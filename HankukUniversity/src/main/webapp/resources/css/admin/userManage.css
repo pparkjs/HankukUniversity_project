@@ -6,6 +6,11 @@
 .card {
     height: calc(100% - 40px);
 }
+.card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #800000;
+}
 .content-body .dd {
 	padding-top: 0;
 }
@@ -95,11 +100,11 @@ ul{
 .nav-link {
 	color: #800000;
 }
-.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
-    color: #ffffff;
-    background-color: #800000;
-    border-color: #800000;
-}
+/* .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link { */
+/*     color: #ffffff; */
+/*     background-color: #800000; */
+/*     border-color: #800000; */
+/* } */
 .nav-link:hover, .nav-link:focus {
     color: #800000
 }
@@ -139,3 +144,32 @@ ul{
 table{
     margin-top: -22px;
 }
+
+.excelSvg {
+	width: 40px;
+    height: 33px;
+}
+.poiDownBtn {
+	padding: 4px;
+    padding-right: 15px;
+    background-color: #8bc2a4;
+    border: 2px solid #107c42;
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;
+}
+.poiDownBtn:hover {
+	border-color: #8bc2a4;
+    background-color: #107c42;
+}
+.poiDownBtn:focus {
+	border-color: #8bc2a4;
+    background-color: #107c42;
+}
+.poiDownBtn:first-child:active {
+    border-color: #8bc2a4;
+    background-color: #107c42; 
+}
+
+
+

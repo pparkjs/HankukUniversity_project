@@ -263,10 +263,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 //			// 메세지에 이름, 아이디, 내용을 담는다.
 			TextMessage textMessage = new TextMessage(studyVo.getStudyNo() + "," + studyVo.getStdNo() + ","
 					+ studyVo.getMsgContent() + "," + formattedDateTime + "," + (studyVo.getUnreadMemCnt()-sessionCount)
-					+ "," + vo.getStdProfilePath());
-			//log.info("언리드멤버씨엔티 : "+studyVo.getUnreadMemCnt());
-			//log.info("세션카운트 : "+sessionCount);
-			//log.info("합친거 : "+(studyVo.getUnreadMemCnt()-sessionCount));
+					+ "," + vo.getStdProfilePath() + "," + studyVo.getStdNm());
 			
 			// 해당 채팅방에 속한 모든 세션에게 메시지 전송함
 			// 해당 RoomList에 들어온 사람이 2명이면 sessionCount = 2;

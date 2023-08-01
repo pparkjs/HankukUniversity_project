@@ -15,7 +15,7 @@
 				<h5 class="card-title" style="color: maroon;  font-weight: 900;">응시 과목 정보</h5>
 			</div>
 			<hr>
-			<div class="card-body" id="card-test" style="padding-top: 0px; display: flex;">
+			<div class="card-body" id="card-test" style="padding-top: 0px; display: flex; color: black; mfont-size: 18px;	padding: 0.75rem;">
 	
 			</div>
 		</div>

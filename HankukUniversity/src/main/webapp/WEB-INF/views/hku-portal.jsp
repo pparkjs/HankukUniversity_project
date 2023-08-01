@@ -7,6 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="/images/hankuk.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
@@ -26,7 +27,10 @@
 	<script src="/resources/js/voice.js"></script>
 </head>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gridstack@8.2.1/dist/gridstack-all.js"></script>
+<script src="/vendor/global/global.min.js"></script>
+<script src="/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 <script src="/js/custom.js"></script>
+<script src="/js/deznav-init.js"></script>
 <style>
 .grid-stack {
 /*   background: lightgoldenrodyellow; */
@@ -178,7 +182,7 @@
 </div>
 <c:if test="${not empty first}">
 	<script type="text/javascript">
-	myWindow = window.open("/main/changePopup","_blank","width=400,height=450,left=650,top=350");
+		window.open("/main/changePopup","_blank","width=400,height=450,left=650,top=350");
 	</script>
 </c:if>
 <body>
@@ -215,7 +219,10 @@
                                     <a class="LK046_A bb" href="/main/logout">로그아웃</a>
                                 </li>
                                 <li>
-                                    <a class="LK047_A bb" href="#none" style="width: 90px;">비밀번호변경</a>
+                                    <a class="LK047_A bb" href="javascript:changePassword();" style="width: 90px;">비밀번호변경</a>
+                                </li>
+                                <li>
+                                    <a class="LK047_A bb" href="#" style="width: 90px; margin-left: 10px;" data-bs-toggle="modal" data-bs-target=".bd-example-modal-sm">화면 설정</a>
                                 </li>
                             </ul>
                             <hr style="margin: 0.5rem 0; color: white;"/>
@@ -307,6 +314,11 @@ var time = 10799;
 var hour ="";
 var min = ""; 
 var sec = ""; 
+
+// 비밀번호 변경 눌럿을떄 함수
+function changePassword(){
+	window.open("/main/changePopup","_blank","width=400,height=450,left=650,top=350");
+}
 function formatTwoDigits(number) {
     return number.toString().padStart(2, '0');
 }
@@ -348,14 +360,4 @@ refresh.addEventListener("click", function() {
     time = 10799; 
     x = setInterval(updateTimer, 1000); 
 });
-var myWindow;
-$(document).ready(function(){
-	if (myWindow) {
-		myWindow.onbeforeunload = function() {
-	    	location.href="/main/logout";
-	    };
-	}
-});
-
-
 </script>

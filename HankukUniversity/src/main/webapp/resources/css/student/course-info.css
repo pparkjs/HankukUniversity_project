@@ -4,11 +4,11 @@
     width:95%;
     margin-top: -15px;
 }
-.card-body{
-	color: black;
-	font-size: 18px;
-	padding: 0.75rem;
-}
+/* .card-body{ */
+/* 	color: black; */
+/* 	font-size: 18px; */
+/* 	padding: 0.75rem; */
+/* } */
 .card{
 	margin-bottom:0px;
 }
@@ -318,12 +318,11 @@
 /* } */
 
 /* Handle */
-::-webkit-scrollbar-thumb {
+/* ::-webkit-scrollbar-thumb { */
 /*   background: #888; */
-    background: #555;
-}
+/*     background: #555; */
+/* } */
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
+/* ::-webkit-scrollbar-thumb:hover { */
+/*   background: #555; }*/

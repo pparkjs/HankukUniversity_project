@@ -45,6 +45,7 @@ public class AcademicController {
 	@Autowired
 	private CommonService commonService;
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/dept-administration")
 	public String deptAdministration(Model model) {
 		log.info("dept-administration 실행~!");
@@ -169,6 +170,7 @@ public class AcademicController {
 		return entity;
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/subject-administration")
 	public String lecAdministration(Model model) {
 //		List<DepartmentVO> deptList = academicAdmService.deptList();

@@ -3,12 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="shortcut icon" type="image/png" href="/images/hankuk.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.1.18/jquery.backstretch.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>한국대학교 하이포탈</title>
     <style>
         body {
             height: 120vh;
@@ -95,6 +96,17 @@
             color : white;
             font-weight: bold;
             width:90px;
+        }
+        
+        .autoLogin{
+       			  height: 40px;
+            background-color: rgba(0,0,0,0.4);
+            cursor: pointer;
+            border-radius: 10px;
+            color : white;
+            font-weight: bold;
+            width:100px;
+        
         }
 
         #pwdDiv {
@@ -205,6 +217,33 @@
 </head>
 
 <body>
+<%! 
+	int cnt = 0;
+	public void errorCountUp(int cnt){
+		this.cnt = cnt;
+	};
+	public int getCnt(){
+		return cnt;
+	};
+%>
+
+<% 
+	String queryStr = request.getQueryString();
+if(queryStr != null && !queryStr.equals("")){
+	errorCountUp(getCnt()+1);
+// 	out.println("시도"+cnt);
+	if(getCnt() > 4){
+		errorCountUp(0);
+		%>
+		<script type="text/javascript">
+			swal("올바르지않은 접근입니다.");
+		</script>
+		<%
+	}
+}
+%>
+
+
     <div id='backstretch'>
 
     </div>
@@ -254,11 +293,13 @@
         </tr>
         <tr id="trtwo">
             <td>
-           
-                    <span>ID</span><br>
-                    <input type="text" id="username" name="username" style="width:100%; height:30px; " placeholder="학번/교번/사번을 입력하세요"><br>
+                    <span style="margin-right: 13px;">ID</span>
+                    	<input type="button" class='autoLogin' id="stdLogin" value="학생로그인">
+	           		<input type="button" class='autoLogin' id="proLogin" value="교수로그인">
+	           		<input type="button" class='autoLogin' id="adminLogin" value="교직원로그인">
+                    <input type="text" id="username" name="username" style="width:95%; height:30px; " placeholder="학번/교번/사번을 입력하세요"><br>
                     <span>Password</span><br>
-                    <input type="password" id="password" name="password" style="width:100%; height:30px; " placeholder="비밀번호를 입력하세요"><br>
+                    <input type="password" id="password" name="password" style="width:95%; height:30px; " placeholder="비밀번호를 입력하세요"><br>
                
             </td>
             <td>
@@ -316,6 +357,27 @@
         swal("올바르지않은 접근입니다.");
         //127.0.0.1(localhost)
     }
+    
+    var stdLogin = document.querySelector("#stdLogin");
+    var proLogin = document.querySelector("#proLogin");
+    var adminLogin = document.querySelector("#adminLogin");
+    
+    stdLogin.addEventListener("click",function(){
+    	document.querySelector("#username").value='20220004';
+    	document.querySelector("#password").value='1234';
+    	
+    })
+    proLogin.addEventListener("click",function(){
+    	document.querySelector("#username").value='10024';
+    	document.querySelector("#password").value='1234';
+    	
+    })
+    adminLogin.addEventListener("click",function(){
+    	document.querySelector("#username").value='20001';
+    	document.querySelector("#password").value='1234';
+    	
+    })
+    
 </script>
 
 </html>

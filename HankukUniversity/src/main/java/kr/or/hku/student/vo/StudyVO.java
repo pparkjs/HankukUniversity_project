@@ -41,6 +41,8 @@ public class StudyVO {
 	private List<MultipartFile> files;
 	private List<AttachFileVO> fileList;
 
+	private int totalRecord;
+	
 	// 채팅방
 	private int unreadMsgCnt; // 안읽은 메세지 개수
 	private int msgNo; // 메세지 번호

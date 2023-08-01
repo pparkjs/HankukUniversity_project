@@ -6,9 +6,9 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +24,7 @@ import kr.or.hku.common.service.CommonFileService;
 import kr.or.hku.common.service.CommonService;
 import kr.or.hku.common.vo.AttachFileVO;
 import kr.or.hku.student.service.StdScholarshipService;
+import kr.or.hku.student.vo.SclsApPayVO;
 import kr.or.hku.student.vo.StdScholarshipVO;
 import kr.or.hku.student.vo.StudentVO;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +43,7 @@ public class ScholarshipController {
 	@Autowired
 	private StdScholarshipService scholarshipService;
 
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/scholarship-apply")
 	public String scholarshipApply(HttpSession session, Model model) {
 		log.info("scholarshipApply() 실행...!");
@@ -68,23 +70,11 @@ public class ScholarshipController {
 		return sclsAplyList;
 	}
 	
-	@GetMapping("/scholarship-list")
-	public String scholarshipList(HttpSession session, Model model) {
-		log.info("scholarshipList() 실행...!");
-		StudentVO std = (StudentVO)session.getAttribute("std");
-		StudentVO vo = commonService.myAllInfo(std.getStdNo());
-		
-		model.addAttribute("std", vo);
-		return "student/scholarship-list";
-	}
-	
 	@PostMapping("/sclsAplyInsert")
 	@ResponseBody
 	public String sclsAplyInsert(StdScholarshipVO sclsAplyVO) {
 		log.info("sclsAplyInsert() 실행...!");
 		log.info("sclsAplyVO : " + sclsAplyVO.toString());
-		
-//		String atchFileNo = commonService.get
 		
 		int status = scholarshipService.sclsAplyInsert(sclsAplyVO);
 		
@@ -153,5 +143,27 @@ public class ScholarshipController {
 		} else {
 			return "FAILED";
 		}
+	}
+	
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
+	@GetMapping("/scholarship-list")
+	public String scholarshipList(HttpSession session, Model model) {
+		log.info("scholarshipList() 실행...!");
+		StudentVO std = (StudentVO)session.getAttribute("std");
+		StudentVO vo = commonService.myAllInfo(std.getStdNo());
+		
+		model.addAttribute("std", vo);
+		return "student/scholarship-list";
+	}
+	
+	@PostMapping("/selectSclsapPayList")
+	@ResponseBody
+	public List<SclsApPayVO> selectSclsapPayList(@RequestBody HashMap<String, String> sclsapPaySearchData){
+		log.info("selectSclsapPayList() 실행...!");
+		log.info("sclsapPaySearchData : " + sclsapPaySearchData.toString());
+		
+		List<SclsApPayVO> sclsApPayList = scholarshipService.selectSclsapPayList(sclsapPaySearchData);
+		log.info("sclsApPayList : " + sclsApPayList.toString());
+		return sclsApPayList;
 	}
 }

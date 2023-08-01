@@ -16,8 +16,8 @@
 <div class="content-body">
 	<div class="page-titles">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="javascript:void(0)">Charts</a></li>
-			<li class="breadcrumb-item active"><a href="javascript:void(0)">Flot</a></li>
+			<li class="breadcrumb-item"><a href="javascript:void(0)">교수</a></li>
+			<li class="breadcrumb-item active"><a href="javascript:void(0)">내정보</a></li>
 		</ol>
     </div>
     <div class="top-wrap">

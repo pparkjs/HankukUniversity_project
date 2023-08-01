@@ -6,6 +6,36 @@
 	.content-body .container-fluid {
 		padding-top: 0.875rem;
 	}
+	.card-title {
+		font-size: 1.1rem;
+		font-weight: bold;
+		color: #800000;
+	}
+	.excelSvg {
+		width: 40px;
+		height: 33px;
+	}
+	.poiDownBtn {
+		padding: 4px;
+		padding-right: 15px;
+		background-color: #8bc2a4;
+		border: 2px solid #107c42;
+		color: #000;
+		font-size: 16px;
+		font-weight: 600;
+	}
+	.poiDownBtn:hover {
+		border-color: #8bc2a4;
+		background-color: #107c42;
+	}
+	.poiDownBtn:focus {
+		border-color: #8bc2a4;
+		background-color: #107c42;
+	}
+	.poiDownBtn:first-child:active {
+		border-color: #8bc2a4;
+		background-color: #107c42; 
+	}
 </style>
 <div class="content-body">
 	<div class="page-titles">
@@ -18,7 +48,9 @@
     <div class="container-fluid">
     	<div class="row justify-content-end">
 			<div class="col-auto">
-				<button type="button" class="btn btn-primary" onclick="ilgualGoGo()">일괄등록</button>
+				<button type="button" class="btn btn-primary poiDownBtn" style="color: #000;" onclick="ilgualGoGo()">
+					<img src="\icons\icons8-microsoft-excel-2019.svg" class="excelSvg"/> 일괄등록
+				</button>
 			</div>
 			<div class="col-auto">
 				<button type="button" class="btn btn-primary" onclick="cancel()">취소</button>
