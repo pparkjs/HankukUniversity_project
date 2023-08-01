@@ -93,6 +93,7 @@
 			join com_code c on a.aprv_stts_cd = c.com_cd
 			join department d on b.dept_cd = d.dept_cd
 		where study_no = #{studyNo} and aprv_stts_cd ='wait'
+		order by a.join_regdate desc
 	</select>
 	
 	<!-- 가입신청 상세보기 -->
@@ -248,6 +249,7 @@
 		join studygroup b on a.study_no = b.study_no
 		join student c on b.std_no = c.std_no
 		where a.std_no = #{stdNo} and a.aprv_stts_cd = 'wait' or a.aprv_stts_cd = 'rej'
+		order by a.join_regdate desc
 	</select>
 	
 	<!-- 스터디멤버 조회 -->
