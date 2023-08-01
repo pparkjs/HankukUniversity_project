@@ -129,6 +129,7 @@
 				<h5 class="card-title">전체 사용자</h5>
 				<div class="col-md-8" style="margin-bottom: 7px;">
 					<form class="row g-3 custom-form" action="" id="searchForm">
+						<input hidden="hidden"/>
 						<div class="col-md-2">
 							<select class="default-select form-control form-control-sm" id="searchType">
 								<option value="userNo">학번/교번</option>
@@ -815,6 +816,13 @@ $(function(){
 		} else if(searchType == "deptNm"){
 			studentsSet();
 			professorsSet();
+		}
+	})
+	$("#searchWord").keydown(function(event) {
+// 		console.log(event.key);
+		if(event.key == "Enter"){
+			// $("#searchForm").preventDefault();
+			$("#userSearchBtn").click();
 		}
 	})
 })
