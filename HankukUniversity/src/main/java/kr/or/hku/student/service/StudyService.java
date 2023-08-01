@@ -14,6 +14,8 @@ public interface StudyService {
 	public int getMemberCount(int studyNo);
 	// 가입 대기중인 스터디리스트
 	public List<StudyVO> waitStudy(String stdNo);
+	// 가입신청 대기준인지 검사
+	public List<StudyVO> joinCheck(StudyVO studyVo);
 	// 스터디상세보기
 	public StudyVO studyRoom(int studyNo);
 	// 스터디 멤버 조회

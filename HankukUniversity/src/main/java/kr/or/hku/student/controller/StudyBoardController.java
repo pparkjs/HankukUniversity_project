@@ -163,14 +163,12 @@ public class StudyBoardController {
 	    log.info(""+studyVo.getStudyNo());
 	    log.info(studyVo.getJoinReason());
 	    
-		int res = service.intoStudy(studyVo);
-		
-		if(res > 0) {
-			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-		} else {
-			entity = new ResponseEntity<String>("FAILED", HttpStatus.OK);
-		}
-		
+	    List<StudyVO> joinList = service.joinCheck(studyVo);		
+	    if (!joinList.isEmpty()) {
+	    	entity = new ResponseEntity<String>("FAILED", HttpStatus.OK);
+	    }else {
+	    	int res = service.intoStudy(studyVo);
+	    }		
 		return entity;
 	}
 

@@ -70,6 +70,11 @@
 		)
 		values(seq_joinstatus.nextval, #{studyNo}, #{stdNo}, sysdate, #{joinReason})
 	</insert>
+	
+	<select id="joinCheck" parameterType="studyVo" resultType="studyVo">
+		select * from joinstatus
+        where study_no = #{studyNo} and std_no = #{stdNo}
+	</select>
 
 	<!-- 가입신청 대기중인 리스트 -->
 	<select id="applicationsList" parameterType="int" resultType="studyVo">
