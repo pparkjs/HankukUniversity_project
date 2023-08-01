@@ -297,6 +297,8 @@ function boardList() {
 function insertBoard(){
    var addModal = $("#addModal");
    
+   console.log("등록:",addModal)
+   
    var modalForm = document.forms.frm1;
    
    var stboTitle = modalForm.stboTitle.value;
@@ -345,6 +347,7 @@ function insertBoard(){
 		}
 		
 	}
+	xhr.send(JSON.stringify(data));
 }
 
 $('#searchBtn').on('click',function(){

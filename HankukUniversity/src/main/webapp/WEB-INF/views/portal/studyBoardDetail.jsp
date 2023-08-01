@@ -13,19 +13,19 @@
         </div>
         <hr>
         <div class="col-xl-12 mb-3">
-            <div class="row" style="font-size: 18px;">
-                <div class="col-xl-4 mb-1" style="width: 30%;">
-                    <p>● 등록일 : <c:out value="${studyBoard.stboRegdate }"/></p>
-                </div>
-               <div class="col-xl-4 mb-1" style="width: 30%;">
+            <div class="row" style="font-size: 18px; display: flex; flex-direction: column;">
+                <div class="col-xl-4 mb-1" style="width: 100%; display: flex; justify-content: space-between;">
                     <p>● 스터디명 : <c:out value="${studyBoard.studyName }"/></p>
                 </div>
-                <div class="col-xl-4 mb-1" style="width: 20%;">
+               <div class="col-xl-4 mb-1" style="width: 94%; display: flex; justify-content: space-between;">
                     <p>● 스터디장 : <c:out value="${studyBoard.stboWriter }"/></p>
-                </div>
-                <div class="col-xl-4 mb-1" style="width: 20%;">
+                    <p>● 등록일 : <c:out value="${studyBoard.stboRegdate }"/></p>
                     <p>● 조회수 : <c:out value="${studyBoard.stboReadCnt }"/></p>
                 </div>
+<!--                 <div class="col-xl-4 mb-1" style="width: 20%;"> -->
+<!--                 </div> -->
+<!--                 <div class="col-xl-4 mb-1" style="width: 20%;"> -->
+<!--                 </div> -->
             </div>
         </div>
         <hr>
@@ -42,9 +42,8 @@
 				</div>
     		</c:forEach>
         </div>
-        <div class="col-xl-12 mb-3">
-            
-                <div class="col-xl-12 mb-1" style="display: flex; justify-content: end; margin-right: 0px;">
+        <div class="col-xl-12" style="position: relative;">
+                <div class="col-xl-12" style="position: absolute; top:0; top: -39px; right: -619px;">
                     <button class="btn btn-primary" id="listBtn" style="margin: 5px;">목록</button>
                     <c:choose>
 	                	<c:when test="${studyBoard.stdNo eq stdNo }">
@@ -83,7 +82,7 @@
 	            	</form>
 	            </div>
 	            <div class="modal-footer">
-	                <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+	                <button type="button" id="join-close" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
 	                <c:choose>
 	                	<c:when test="${studyBoard.stdNo eq stdNo }">
             	
@@ -207,6 +206,7 @@ function intoStudy(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			if(xhr.responseText === "SUCCESS"){
 				console.log("");
+				document.getElementById("join-close").click();
 				 swal({
 						title: "가입신청이 완료되었습니다.", 
 						icon: "success"
@@ -218,7 +218,6 @@ function intoStudy(){
         		});
 			}
 			boardList();
-			$('#basicModal').modal('hide');
 			closeModal2();
 		}
 	}
