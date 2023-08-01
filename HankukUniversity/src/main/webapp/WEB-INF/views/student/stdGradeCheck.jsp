@@ -350,7 +350,8 @@
 <script>
 let stdInfo = [];
 let one;
-
+let subject = [];
+let two;
 </script>
 <c:forEach items="${map.stdInfo}" var="stdVO">
 <script>
@@ -366,20 +367,24 @@ let one;
 	crsClassfNm:'${stdVO.crsClassfNm}'
 	}
 	stdInfo.push(one);
+//  console.log('${map.subject}');
 </script>	
 </c:forEach>
+<c:forEach items="${map.subject}" var="subject">
+<script>
+ console.log("subject"+'${subject.crsScr}');
+ two = {
+	crsScr : '${subject.crsScr}'
+ }
+ subject.push(two);
+</script>	
+</c:forEach>
+
 <script>
 let mjrCrd = 0 ;
 let ctrlCrd  = 0 ;
 let semCrd  = 0;
 var stdNo = ${std.stdNo};
-// var year = new Date().getFullYear();
-// var month = new Date().getMonth();
-// if(month >= 6){
-// 	$('#sem').val("2학기");
-// }else{
-// 	$('#sem').val("1학기");
-// }
 console.log(stdInfo);
 for (let i = 0; i < stdInfo.length; i++) {
 	if (stdInfo[i].crsClassfNm === '전필'|| stdInfo[i].crsClassfNm === '전선') {
@@ -390,8 +395,6 @@ for (let i = 0; i < stdInfo.length; i++) {
 	semCrd += parseInt(stdInfo[i].subCrd);
 }
 	
-// 	$('#year').val(year);
-// 	$('#sem').val(sem);
 	$('#applyCrd').val(semCrd);
 	
 		console.log("전공",mjrCrd);
@@ -409,6 +412,8 @@ $('#submitBtn').on("click",function(){
 	console.log("grdDmrCn",grdDmrCn);
 	console.log("examType",examType);
 	
+	
+	if(subject[0].crsScr){
    	swal({
 		  title: "이의신청을 등록하시겠습니까?",
 		  text: "신청 완료 후 회수가 불가합니다.",
@@ -443,6 +448,9 @@ $('#submitBtn').on("click",function(){
 				})
 		  } 
 		});
+	}else{
+		swal("","성적열람 후에 이의신청이 가능합니다.","warning");
+	}
 })		
 $(document).ready(function() {
 	var lecapNo = "";
