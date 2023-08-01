@@ -196,6 +196,18 @@ public class StudyController {
 	}
 	
 	@ResponseBody
+	@GetMapping(value="/student/chatMemList")
+	public ResponseEntity<List<StudyVO>> chatMemList(@RequestParam("studyNo") int studyNo) {
+	    log.info("memList실행!");
+		List<StudyVO> list = service.studyMem(studyNo); 
+		for(int i = 0; i< list.size(); i++) {
+			log.info("memList: " + list);
+			
+		}
+		return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
+	}
+	
+	@ResponseBody
 	@GetMapping(value="/student/studymemberList")
 	public ResponseEntity<List<StudyVO>> studymemberList(int studyNo) {
 		// 해당 방의 멤버 리스트 가져오기

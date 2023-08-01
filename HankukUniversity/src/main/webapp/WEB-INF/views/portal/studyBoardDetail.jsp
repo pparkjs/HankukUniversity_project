@@ -48,8 +48,8 @@
                     <button class="btn btn-primary" id="listBtn" style="margin: 5px;">목록</button>
                     <c:choose>
 	                	<c:when test="${studyBoard.stdNo eq stdNo }">
-		                    <button class="btn btn-primary" id="listBtn" style="margin: 5px; background: #0070c0; border-color: #0070c0;" onclick="openModal()">수정</button>
-		                    <button class="btn btn-primary" id="listBtn" style="margin: 5px; background: #ff4343; border-color: #ff4343;" onclick="delBoard()">삭제</button>          	
+		                    <button class="btn btn-primary" id="" style="margin: 5px; background: #0070c0; border-color: #0070c0;" onclick="openModal()">수정</button>
+		                    <button class="btn btn-primary" id="delBtn" style="margin: 5px; background: #ff4343; border-color: #ff4343;" onclick="delBoard()">삭제</button>          	
 	                	</c:when>
 	                	<c:otherwise>           	
 		                	<button type="button" class="btn btn-primary" style="margin: 5px; background: #0070c0; border-color: #0070c0;" data-bs-toggle="modal" data-bs-target="#basicModal">가입신청</button>
@@ -138,7 +138,7 @@
 				</div>
 			</div>
 			<div class="modal-footer" id="btnDiv">
-				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
+				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal" id="closeBtn">닫기</button>
 				<button type="button" class="btn btn-primary" onclick="modifyStudyBoard()" id="btn2">수정</button>
 				<button type="button" class="btn btn-primary" onclick="delBoard()" id="btn3">삭제</button>
 			</div>
@@ -148,12 +148,26 @@
 
 </div>
 <script>
+function clearInputFields() {   
+    document.getElementById("stboTitle2").value = "";
+    document.getElementById("stboWriter2").value = "";
+    document.getElementById("stboContent2").value = "";
+}
+
+
 
 function openModal() {
     $('#detailModal').modal('show');
 }
 function closeModal() {
-    $('#detailModal').modal('hide');
+    var closeBtn = document.getElementById("closeBtn");
+    closeBtn.click();
+    clearInputFields();
+}
+function closeModal2() {
+    var delBtn = document.getElementById("delBtn");
+    delBtn.click();
+    clearInputFields();
 }
 
 var listBtn = document.querySelector('#listBtn');
@@ -206,6 +220,7 @@ function intoStudy(){
 			}
 			boardList();
 			$('#basicModal').modal('hide');
+			closeModal2();
 		}
 	}
 	xhr.send(JSON.stringify(data));
