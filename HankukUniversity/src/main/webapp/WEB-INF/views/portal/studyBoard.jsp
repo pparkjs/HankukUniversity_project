@@ -19,7 +19,7 @@
 		<div class="card" id="card-title-1" style="height: 850px;">
 			<div style="margin-top: 20px; margin-left: 30px;">
 				<div class="basic-form">
-					<form class="row g-3 custom-form" action="">
+					<form class="row g-3 custom-form" action="" style="margin-left: 140px;">
 						<div class="col-md-2">
 						   <select class="default-select form-control" id="stype">
 							  <option value="">선택</option>
