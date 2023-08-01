@@ -288,7 +288,7 @@ function boardList() {
                      </div>`;
             }
             body.html(data);
-         pageNation.html(res.pagingHTML);
+         	pageNation.html(res.pagingHTML);
          
            }
        });
@@ -334,7 +334,6 @@ function insertBoard(){
       "stboWriter": stboWriter,
       }
 
-<<<<<<< HEAD
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST","/hku/student/insertStudyBoard",true);
 	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
@@ -346,32 +345,6 @@ function insertBoard(){
 		}
 		
 	}
-	xhr.send(JSON.stringify(data));
-=======
-   let xhr = new XMLHttpRequest();
-   xhr.open("POST","/hku/student/insertStudyBoard",true);
-   xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-   xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-   xhr.onreadystatechange = function(){
-      if(xhr.readyState == 4 && xhr.status == 200){
-         if(xhr.responseText === "SUCCESS"){
-            console.log("");
-            addModal.modal('hide');
-             swal({
-                  title: "게시글 등록이 완료되었습니다.", 
-                  icon: "success"
-               });
-         } else if(xhr.responseText === "FAILED"){
-            swal({
-                 title: "게시글 등록에 실패하였습니다!", 
-                 icon: "error"
-              });
-         }
-         boardList();
-      }
-   }
-   xhr.send(JSON.stringify(data));
->>>>>>> 8bd12e2a57bbf0be995b13551466bf93c8a9e9ca
 }
 
 $('#searchBtn').on('click',function(){
