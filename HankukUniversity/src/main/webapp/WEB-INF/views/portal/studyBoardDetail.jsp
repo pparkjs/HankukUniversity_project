@@ -82,7 +82,7 @@
 	            	</form>
 	            </div>
 	            <div class="modal-footer">
-	                <button type="button" id="join-close" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+	                <button type="button" id="join-close" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
 	                <c:choose>
 	                	<c:when test="${studyBoard.stdNo eq stdNo }">
             	
