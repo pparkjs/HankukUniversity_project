@@ -273,5 +273,11 @@ public class StudyServiceImpl implements StudyService{
 		return mapper.boardSelect(pagingVO);
 	}
 
+	@Override
+	public List<StudyVO> joinCheck(StudyVO studyVo) {
+		// TODO Auto-generated method stub
+		return mapper.joinCheck(studyVo);
+	}
+
 
 }
