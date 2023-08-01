@@ -33,7 +33,7 @@
                         <div class="basic-form">
                                 <form class="row g-3 custom-form" action="">
                                     <div class="col-md-2">
-                                       <select class="default-select form-control" id="stype">
+                                       <select id="stype" style="height: 45px; border-radius: 5px;">
                                           <option value="">=선택=</option>
                                           <option value="title">제목</option>
                                           <option value="writer">작성자</option>
