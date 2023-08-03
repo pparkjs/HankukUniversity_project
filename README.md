@@ -135,7 +135,8 @@
 > ### *스터디원들간 비대면 멀티 화상채팅*
 - 실시간 멀티화상채팅을 위해 nodeJs를 이용하여 webRTC의 시그널링 서버를 구축하였으며 해당 서버에서 socket.io를 이용하여 실시간으로 해당 방(스터디번호)에 스터디원이 접속할때마다 클라이언트들의 stream 정보들을 스터디의 화상채팅에 접속한 모든 사람들과 공유합니다.
 - 스터디원에 소속되어있는 학생들은 해당 스터디룸에서 화상채팅 버튼을 클릭시 실시간으로 멀티 화상채팅이 가능합니다.
-![멀티](https://github.com/pparkjs/HankukUniversity_project/assets/107859870/dc8cb894-4f6c-4ec6-bb1f-b09942d1ab17)
+![멀티화상](https://github.com/pparkjs/HankukUniversity_project/assets/107859870/497c74da-ea71-4469-ae1d-f00074525aed)
+
 
   <br>
 > ### *시험출제*
