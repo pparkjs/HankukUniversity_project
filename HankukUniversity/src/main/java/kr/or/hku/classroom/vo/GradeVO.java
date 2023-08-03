@@ -23,5 +23,9 @@ public class GradeVO {
 	private String crsScr 	;	// 수강과목점수
 	private String crsGrd 	;	// 수강과목점수
 	private String crsEarnedCrd;// 수강과목학점
+	private String totalScr;	// 총점
+	private int lecpgMdTest; //중간고사
+	private int lecpgFnTest; // 기말고사
+	
 		
 }
