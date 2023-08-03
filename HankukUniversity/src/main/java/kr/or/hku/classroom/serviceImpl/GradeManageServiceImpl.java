@@ -11,6 +11,7 @@ import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.mapper.GradeManageMapper;
 import kr.or.hku.classroom.service.GradeManageService;
 import kr.or.hku.classroom.vo.GradeVO;
+import kr.or.hku.lectureInfo.vo.LecturePlanVO;
 
 @Service
 public class GradeManageServiceImpl implements GradeManageService {
@@ -50,6 +51,21 @@ public class GradeManageServiceImpl implements GradeManageService {
 			result = ServiceResult.FAILED;
 		}
 		return result;
+	}
+	
+	@Override
+	public Map<String, String> getStdAsignScr(GradeVO gradeVO) {
+		return gradeMapper.getStdAsignScr(gradeVO);
+	}
+	
+	@Override
+	public Map<String, String> getStdAtdCnt(GradeVO gradeVO) {
+		return gradeMapper.getStdAtdCnt(gradeVO);
+	}
+	
+	@Override
+	public LecturePlanVO getPercent(String lecapNo) {
+		return gradeMapper.getPercent(lecapNo);
 	}
 
 	@Override
