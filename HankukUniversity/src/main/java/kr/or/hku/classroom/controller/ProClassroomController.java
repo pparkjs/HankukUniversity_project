@@ -1,6 +1,8 @@
 package kr.or.hku.classroom.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,6 +37,7 @@ import kr.or.hku.common.service.CommonFileService;
 import kr.or.hku.common.vo.AttachFileVO;
 import kr.or.hku.lectureInfo.service.CourseInfoService;
 import kr.or.hku.lectureInfo.vo.LectureAplyVO;
+import kr.or.hku.lectureInfo.vo.LecturePlanVO;
 import kr.or.hku.professor.vo.ProfessorVO;
 import lombok.extern.slf4j.Slf4j; 
 
@@ -326,12 +330,76 @@ public class ProClassroomController {
 	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("/gradeManageTable/{lecapNo}")
 	public String gradeManage(@PathVariable String lecapNo, Model model) {
+		LecturePlanVO lecPlanVo= gradeService.getPercent(lecapNo);
 		List<GradeVO> getStdList = gradeService.getStdList(lecapNo);
+		int lecpgMdTest = lecPlanVo.getLecpgMdTest();
+		int lecpgFnTest = lecPlanVo.getLecpgFnTest();
 		log.info("getStdList???" + getStdList.toString());
-		model.addAttribute("getStdList", getStdList);
+		
+		List<GradeVO> returnStdList = new ArrayList<GradeVO>();
+		for (GradeVO gradeVO : getStdList) {
+			gradeVO.setLecapNo(lecapNo);
+			gradeVO.setLecpgMdTest(lecpgMdTest);
+			gradeVO.setLecpgFnTest(lecpgFnTest);
+			gradeVO = settingScr(gradeVO, lecPlanVo);
+			returnStdList.add(gradeVO);
+		}
+		
+		model.addAttribute("stdList", returnStdList);
 		return "professor/gradeTable";
 	}	
 	
+	private GradeVO settingScr(GradeVO gradeVO, LecturePlanVO lecPlanVo) {
+		int lecpgAtd = lecPlanVo.getLecpgAtd(); // 출석 성적 비율
+		int lecpgHw = lecPlanVo.getLecpgHw();	// 과제
+		int lecpgMdTest = lecPlanVo.getLecpgMdTest(); // 중간
+		int lecpgFnTest = lecPlanVo.getLecpgFnTest(); // 기말
+		
+		// 출석 횟수 가져오기
+		Map<String, String> stdAtdCntMap = gradeService.getStdAtdCnt(gradeVO);
+		Map<String, String> stdAsignScrMap = gradeService.getStdAsignScr(gradeVO);
+		
+		int middleScr = gradeVO.getMiddleScr();
+		int finalScr = gradeVO.getFinalScr();
+		
+		int attendScr = Math.round(((float)Integer.parseInt(String.valueOf(stdAtdCntMap.get("ATD_CNT"))) / 15) * lecpgAtd);
+		int assignScr = Math.round(((float)Integer.parseInt(String.valueOf(stdAsignScrMap.get("ASN_SUM"))) / (Integer.parseInt(String.valueOf(stdAsignScrMap.get("ASN_CNT"))) * 100) * lecpgHw));
+		
+		middleScr = Math.round(((float)  middleScr / 100) * lecpgMdTest); // 중간 계산 끝
+		finalScr = Math.round(((float) finalScr / 100) * lecpgFnTest); 	  // 기말 계산 끝
+		
+		gradeVO.setAttendScr(attendScr+"");
+		gradeVO.setAssignScr(assignScr+""); 
+		
+		gradeVO.setMiddleScr(middleScr);
+		gradeVO.setFinalScr(finalScr);
+		return gradeVO;
+	}
+
+	// 성적 확정 
+	@ResponseBody
+	@PostMapping("/confirmScore")
+	public String confirmScore(@RequestBody GradeVO vo) {
+		log.info("===================================");
+		ServiceResult result = gradeService.confirmScore(vo);
+		String msg = null;
+		if(result.equals(ServiceResult.OK)) {
+			msg = "success";
+		}
+		return msg;
+	}
+	
+	// 시험성적 수정 
+	@ResponseBody
+	@PutMapping("/modifyScore")
+	public String modifyScore(@RequestBody GradeVO vo) {
+		ServiceResult result = gradeService.confirmScore(vo);
+		String msg = null;
+		if(result.equals(ServiceResult.OK)) {
+			msg = "success";
+		}
+		return msg;
+	}
 	
 	
 	

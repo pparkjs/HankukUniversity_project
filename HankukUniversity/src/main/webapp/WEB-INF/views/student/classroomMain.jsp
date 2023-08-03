@@ -113,8 +113,10 @@
 													</div>
 												</div>
 											</td>
+											<c:set var="myAtd" value="0"/>
 											<c:forEach items="${attendList }" var="list">
 												<c:if test="${list.atdcYnCd eq 'Y' }">
+													<c:set var="myAtd" value="${myAtd+1}"/>
 													<td><span class="text-success" style="width:15px;">
 														<i class="fa-solid fa-check"></i>
 													</span></td>
@@ -130,7 +132,7 @@
 												</c:if>	
 											</c:forEach>
 											<td class="text-center">
-												<span style="font-size: 15px;">13/15</span>
+												<span style="font-size: 15px;">${myAtd }/15</span>
 											</td>
 										</tr>
 									</tbody>
