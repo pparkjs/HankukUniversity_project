@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.vo.GradeVO;
+import kr.or.hku.lectureInfo.vo.LecturePlanVO;
 
 @Mapper
 public interface GradeManageMapper {
@@ -31,6 +32,12 @@ public interface GradeManageMapper {
 	
 	// 최종점수 확정
 	public int confirmRealScore(GradeVO vo);
+
+	public LecturePlanVO getPercent(String lecapNo);
+
+	public Map<String, String> getStdAsignScr(GradeVO gradeVO);
+
+	public Map<String, String> getStdAtdCnt(GradeVO gradeVO);
 	
 	
 }
