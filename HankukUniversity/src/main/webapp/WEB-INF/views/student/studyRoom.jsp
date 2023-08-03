@@ -31,7 +31,7 @@
 .study-top{
 	border: 1px solid maroon;
     padding: 13px;
-    height: 252px;
+    height: 273px;
 }
 .schedule td, .schedule th{
 border-color: #6e6e6e;
@@ -121,6 +121,18 @@ input[name=color]:checked + label{
 .schedule td, .schedule th {
     border-color: black;
 }
+.table tbody th, .table tbody td {
+    border: none;
+    padding: 4px;
+    font-size: 18px;
+    color: black;
+}
+.table thead th {
+    border: none;
+    padding: 3px;
+    font-size: 20px;
+    color: #fff;
+} 
 </style>
 		<meta charset="UTF-8">
 		<div class="content-body">
@@ -168,7 +180,7 @@ input[name=color]:checked + label{
 						</div>								
 					</div>
 					<div class="card" id="card-title-1">
-						<div class="card-body" style="padding-top: 0px;">
+						<div class="card-body" style="padding-top: 0px; height: 760px;">
 							<div class="tab-content">
 								<div class="tab-pane fade show active" id="profile1">
 									<div class="pt-4">
@@ -180,7 +192,7 @@ input[name=color]:checked + label{
 													<p>스터디 소개글이 존재하지 않습니다.</p>
 												</c:when>
 												<c:otherwise>
-													<p> ${study.studyIntro }</p>																						
+													<p style=" overflow: auto; height: 187px;"> ${study.studyIntro }</p>																						
 												</c:otherwise>
 											</c:choose>
 										</div>
