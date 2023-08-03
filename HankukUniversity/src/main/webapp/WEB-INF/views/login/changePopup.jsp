@@ -55,7 +55,7 @@ min-width : 0px;
 				<div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">현재 비밀번호 입력</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="temporary">
+                    <input type="text" class="form-control" id="temporary" placeholder='소문자, 숫자, 특수기호가 포함된 8글자 이상'>
                 </div>
                 </div>
 				<div class="mb-3 row" >
