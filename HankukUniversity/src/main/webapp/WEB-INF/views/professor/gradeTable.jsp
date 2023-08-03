@@ -49,6 +49,7 @@ span{
 											<th>과제점수</th>
 											<th>중간고사</th>
 											<th>기말고사</th>
+											<th>총점</th>
 											<th>평점</th>
 											<th>학점</th>
 											<th style="text-align: center;">성적부여</th>
@@ -56,7 +57,7 @@ span{
 										</tr>
 									</thead>
 									<tbody id="tBody">
-									<c:forEach items="${getStdList }" var="list" varStatus="status">
+									<c:forEach items="${stdList }" var="list" varStatus="status">
 										<tr>
 											<td>${status.index+1 }</td>
 											<td><span id="stdNm">${list.stdNm }</span></td>
@@ -78,13 +79,15 @@ span{
 												<input type="text" style="width:45px; border:1px solid #afaeae; text-align: center;"
 													id="finalScr" name="finalScr" value="${list.finalScr }"/>
 											</td>
-											<td><span>${list.crsScr }</span></td>
-											<td><span>${list.crsGrd }</span></td>
+											<td><span>${list.attendScr + list.assignScr + list.middleScr + list.finalScr }/100</span></td>
+											<td><span id="crsScr">${list.crsScr }</span></td>
+											<td><span id="crsGrd">${list.crsGrd }</span></td>
 											<c:if test="${list.confirmYn eq 'N'}">
 												<td>
 													<button type="button" id="conFirmBtn" class="btn btn-primary conFirmBtn" 
-														style="" value="${list.lecapNo}">성적확정</button>			
+														style="padding: 6px 17px; background: #0070c0; border-color: #0070c0;" value="${list.lecapNo}">성적확정</button>			
 												</td>
+												<td></td>
 											</c:if>
 											<c:if test="${list.confirmYn eq 'Y'}">
 												<td>
@@ -92,10 +95,12 @@ span{
 												</td>
 											<td>
 												<button type="button" id="modifyBtn" class="btn btn-primary" 
-													style="" value="${list.lecapNo}">수정</button>			
+													style="padding: 4px 17px; background: #ff4343; border-color: #ff4343;" value="${list.lecapNo}">수정</button>			
 											</td>
 											</c:if>
 										</tr>
+										<input type="hidden" id="lecpgMdTest" value="${list.lecpgMdTest}" name="lecpgMdTest">
+										<input type="hidden" id="lecpgFnTest" value="${list.lecpgFnTest}" name="lecpgFnTest">
 									</c:forEach>
 									</tbody>
 								</table>
@@ -108,9 +113,7 @@ span{
 	</div>
 </div>
 <script>
-// 	confirmScore();
-// 	calculScore();
-	
+
 	function calculScore(pObj){
 		var lecapNo = $("#lecapNo").val();
 		console.log("lecapNo!! => " +lecapNo);
@@ -119,33 +122,32 @@ span{
 		var assignScr = $(pObj).parents('tr').find("#assignScr").val();
 		var middleScr = $(pObj).parents('tr').find("#middleScr").val();
 		var finalScr = $(pObj).parents('tr').find("#finalScr").val();
-		var crsScr = "";	 	// ex) 4.5 
-		var grade = "";
-		var totalScr = attendScr + assignScr + middleScr + finalScr;
+		var crsScr = $(pObj).parents('tr').find("#crsScrs").val();
+		var grade =  $(pObj).parents('tr').find("#grade").val();
+		var totalScr = parseInt(attendScr) + parseInt(assignScr) + parseInt(middleScr) + parseInt(finalScr);
 		
-		var percent = totalScr/450*100
-		if(percent >= 95 && attendScr > 110){
+		if(totalScr >= 90){
 			crsScr = "4.5";
 			grade = "A+";
-		} else if (percent > 90 && attendScr > 110){
+		} else if (totalScr >= 85){
 			crsScr =  "4.0";
 			grade = "A";
-		} else if(percent > 85 && attendScr > 110){
+		} else if(totalScr >= 80){
 			crsScr = "3.5";
 			grade = "B+";
-		} else if(percent > 80 && attendScr > 110){
+		} else if(totalScr >= 70){
 			crsScr = "3.0";
 			grade = "B";
-		} else if(percent > 75 && attendScr > 110){
+		} else if(totalScr >= 65){
 			crsScr = "2.5";
 			grade = "C+";
-		} else if(percent > 70 && attendScr > 110){
+		} else if(totalScr > 60){
 			crsScr = "2.0";
 			grade = "C";
-		} else if(percent > 65 && attendScr > 110){
+		} else if(totalScr > 50 ){
 			crsScr = "1.5";
 			grade = "D+";
-		} else if(percent > 60 && attendScr > 110){
+		} else if(totalScr > 40){
 			crsScr = "1.0";
 			grade = "D";
 		} else {
@@ -159,112 +161,97 @@ span{
 			middleScr: middleScr,
 			finalScr:finalScr,
 			lecapNo:lecapNo,
-			stdNo:stdNo
+			stdNo:stdNo,
+			totalScr: totalScr
 		}
 	}
 	
-	
 	$('#tBody').on("click",'#conFirmBtn', function(){
-		console.log(this)
+		console.log($(this).parents('tr')[0])
 		let sendData = calculScore(this);
-		console.log(sendData);
-		
-		if(sendData.middleScr == null || sendData.middleScr == "" || sendData.middleScr == "0"){
+// 		console.log(sendData);
+		let myTr = $(this).parents('tr');
+		if(sendData.middleScr == null || sendData.middleScr == ""){
 			swal("", "모든 항목의 점수 입력 후 성적확정 가능합니다", "info");
 		} 
 		
-		if(sendData.finalScr == null || sendData.finalScr == "" || sendData.finalScr == "0"){
+		if(sendData.finalScr == null || sendData.finalScr == ""){
 			swal("", "모든 항목의 점수 입력 후 성적확정 가능합니다", "info");
 		} 
 		
-	
 		$.ajax({
 			url : "/hku/professor/confirmScore",
 			type : "post",
-			data : JSON.stringify(calculScore()),
-			dataType : "json",
+			data : JSON.stringify(sendData),
+			dataType : "text",
 			contentType : "application/json;charset=utf-8",
 			beforeSend : function(xhr){
 				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 			},
 			success : function(res){
-				console.log(res) 
-				data = "";
-				data += "<td></td>";
-				
-				
+				console.log("성공햇니?", res);
+				if(res == "success"){
+					swal("", "성적 확정이 완료되었습니다.", "success");					
+					let data = "";
+					
+					data = `<span>\${sendData.crsScr}</span>`
+					$(myTr).find('td').eq(9).html(data);
+					
+					data = `<span>\${sendData.crsGrd}</span>`
+					$(myTr).find('td').eq(10).html(data);
+					
+					data = `<span style="color:red;">완료</span>`
+					$(myTr).find('td').eq(11).html(data);
+					
+					data = `<button type="button" id="modifyBtn" class="btn btn-primary" 
+						style="padding: 4px 17px; background: #ff4343; border-color: #ff4343;" value="\${sendData.lecapNo}">수정</button>`
+					$(myTr).find('td').eq(12).html(data);
+				}
 			}
 		})
 	});
 	
-// 	function confirmScore(){
-// 		var conFirmBtn = $(".conFirmBtn");
-// 		var attendScr = $("#attendScr").val();
-// 		var assignScr = $("#assignScr").val();
-// 		var middleScr = $("#middleScr").val();
-// 		var finalScr = $("#finalScr").val();
-// 		var crsScr = "";	 	// ex) 4.5 
-// 		var grade = "";
-		
-		
-		
-// 		conFirmBtn.on("click", function(){
-// 			var stdNo = $(this).parents('tr').find('td').eq(2).text().trim();
-			
-// 			alert(stdNo);
-			
-// 			console.log(calculScore());
-// 			if(finalScr == null || finalScr == "" || finalScr == "-"){
-// 				swal("", "모든 항목의 점수 입력 후 성적확정 가능합니다", "info");
-// 			} 
-			
-// 			$.ajax({
-// 				url : "/hku/professor/confirmScore",
-// 				type : "post",
-// 				data : JSON.stringify(calculScore(stdNo)),
-// 				dataType : "json",
-// 				contentType : "application/json;charset=utf-8",
-// 				beforeSend : function(xhr){
-// 					xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-// 				},
-// 				success : function(res){
-// 					console.log(res) 
-// 					data = "";
-					
-// 				}
-// 			})
-// 		})
-// }
 	
-	
-	var modifyBtn = $("#modifyBtn");
-	modifyBtn.on("click", function(){
-		var middleScr = $("#middleScr").val();
-		var finalScr = $("#finalScr").val(); 
-		var lecapNo = $("#lecapNo").val();
-		var stdNo = $(this).parents('tr').find('td').eq(2).text().trim();
-		alert(stdNo)
+	$(tBody).on("click","#modifyBtn", function(){
+		var lecpgMdTest = parseInt($("#lecpgMdTest").val());
+		var lecpgFnTest = parseInt($("#lecpgFnTest").val());
+		console.log("=======>" + lecpgMdTest)
+		console.log("=======>" + lecpgFnTest)
+// 		console.log($(this).parents('tr')[0]);
+		let myTr = $(this).parents('tr');
 		
-		var StdData = {
-				stdNo : stdNo,
-				lecapNo : lecapNo,
-				middleScr : middleScr,
-				finalScr : finalScr
-		}
 		
+		let newData = calculScore(this);
+		newData.middleScr = Math.round((parseInt(newData.middleScr)*100)/lecpgMdTest);
+		newData.finalScr = Math.round((parseInt(newData.finalScr)*100)/lecpgFnTest);
+		console.log(newData);
+// 		console.log(newData.middleScr);
+
 		$.ajax({
 			url : "/hku/professor/modifyScore",
-			type : "post",
-			data : JSON.stringify(StdData),
-			dataType : "json",
+			type : "put",
+			data : JSON.stringify(newData),
+			dataType : "text",
 			contentType : "application/json;charset=utf-8",
 			beforeSend : function(xhr){
 				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 			},
 			success : function(res){
 				console.log(res) 
-				data = "";
-				
+				if(res == "success"){
+					swal("", "수정이 완료 되었습니다.", "success");					
+					
+					let data = "";
+					
+					data = `<span>\${newData.totalScr}/100</span>`
+					$(myTr).find('td').eq(8).html(data);
+					
+					data = `<span>\${newData.crsScr}</span>`
+					$(myTr).find('td').eq(9).html(data);
+					
+					data = `<span>\${newData.crsGrd}</span>`
+					$(myTr).find('td').eq(10).html(data);
+				}
 				
 			}
 		})
