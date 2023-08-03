@@ -263,7 +263,7 @@ var userNo ;
 	        	changeStr = "<div class='mb-3 row'>";
 	        	changeStr += "<label class='col-sm-2 col-form-label'>임시비밀번호</label>";
 	        	changeStr += "<div class='col-sm-10'>";
-	        	changeStr += "<input type='text' class='form-control' id='temporary'></div>";
+	        	changeStr += "<input type='text' class='form-control' id='temporary' placeholder='소문자, 숫자, 특수기호가 포함된 8글자 이상이어야합니다.'></div>";
 	        	changeStr += "<label class='col-sm-2 col-form-label'>새로운 비밀번호</label>";
 	        	changeStr += "<div class='col-sm-10'>";
 	        	changeStr += "<input type='password' class='form-control' id='newPw'></div>";
