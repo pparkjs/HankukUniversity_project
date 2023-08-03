@@ -404,6 +404,9 @@ $(function() {
 		
 	})
 	
+	$('#listBtn').on('click', function(){
+		location.href = "/hku/student/stdAssignmentList/" + $('#lecapNo').val();
+	});
 })	
 	
 </script>
