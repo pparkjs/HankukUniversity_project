@@ -410,7 +410,7 @@ $(function() {
 	      $('#stboContent').val(transcontent);
 	    }
 	  
-	  if (transcript.includes('스터디선택')||transcript.includes('스터디 선택')||transcript.includes('선택')) {
+	  if (transcript.includes('선택')||transcript.includes('선택')||transcript.includes('선택')) {
 			var transcontent = newsentence(transcript);
 			$('#selStudy').prop('size', $('#selStudy option').length); 
 			$('#selStudy').css("height", $('#selStudy option').length * 20 );
