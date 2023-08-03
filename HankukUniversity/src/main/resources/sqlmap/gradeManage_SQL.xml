@@ -13,7 +13,7 @@
 			 , cr.crs_scr
 			 , cr.crs_grd
           ,(select count(a.atdc_yn_cd)*10 from attendance a where s.std_no = a.std_no and atdc_yn_cd like 'Y' and a.lecap_no = #{lecapNo}) as attend_scr
-          ,(select round(sum(asmsb_scr) * 0.066, 2) from assignment_submit a, assignment b where s.std_no = a.std_no and b.asm_no = a.asm_no and b.lecap_no = #{lecapNo}) as assign_scr
+          ,(select NVL(round(sum(asmsb_scr) * 0.066,2), 0) from assignment_submit a, assignment b where s.std_no = a.std_no and b.asm_no = a.asm_no and b.lecap_no = #{lecapNo}) as assign_scr
           ,(select a.tt_scr from test_take a, test b where s.std_no = a.std_no and b.test_no = a.test_no and b.lecap_no = #{lecapNo} and b.test_se like 'middle') as middle_scr
 		  ,(select a.tt_scr from test_take a, test b where s.std_no = a.std_no and b.test_no = a.test_no and b.lecap_no = #{lecapNo} and b.test_se like 'final') as final_scr
           ,(select nvl2(crs_scr, 'Y' ,'N') from course_regist a where s.std_no = a.std_no and a.lecap_no = #{lecapNo}) as confirm_yn
@@ -24,27 +24,7 @@
 		  JOIN department d ON d.dept_cd = s.dept_cd
 		WHERE  l.lecap_no = #{lecapNo}         
  	</select>
- 	
-<!--  	<update id="confirmScore" parameterType="gradeVO"> -->
-<!--  	/*kr.or.hku.classroom.mapper.GradeManageMapper.confirmScore */	 -->
-<!--  		UPDATE course_regist -->
-<!--  		SET  -->
- 			
- 		
-<!--  		WHERE lecap_no = #{lecapNo} -->
-<!--  		AND std_no = #{stdNo} -->
-<!--  	</update> -->
- 	
-<!--  	<update id="modifyScore" parameterType="gradeVO"> -->
-<!--  	/*kr.or.hku.classroom.mapper.GradeManageMapper.modifyScore */	 -->
-<!--  		UPDATE course_regist -->
-<!--  		SET  -->
-
-<!--  		WHERE lecap_no = #{lecapNo} -->
-<!--  		AND std_no = #{stdNo} -->
-<!--  	</update> -->
- 	
- 	
+ 
  	<select id="getTestNos" parameterType="gradeVO" resultType="map">
  		select 
 		    test_no,
@@ -67,6 +47,35 @@
  		and std_no = #{stdNo}
  	</update>
  	
+ 	<select id="getPercent" parameterType="string" resultType="planVO">
+ 		 select
+         	lecpg_atd
+			, lecpg_hw
+			, lecpg_md_test
+			, lecpg_fn_test
+         from LECTURE_PROGRAM
+         where LECAP_NO = #{lecapNo}
+ 	</select>
+ 	
+ 	<select id="getStdAsignScr" parameterType="gradeVO" resultType="map">
+ 		  select
+            count(*) as ASN_CNT
+            , NVL(sum(b.ASMSB_SCR), 0) as ASN_SUM
+         from ASSIGNMENT a
+         inner join ASSIGNMENT_SUBMIT b on a.ASM_NO = b.ASM_NO
+         where LECAP_NO = #{lecapNo}
+         and std_no = #{stdNo}
+ 	</select>
+ 	
+ 	<select id="getStdAtdCnt" parameterType="gradeVO" resultType="map">
+ 		  select
+            count(*) as ATD_CNT
+            from ATTENDANCE
+         where LECAP_NO = #{lecapNo}
+         and std_no = #{stdNo}
+         and ATDC_YN_CD = 'Y'
+ 	</select>
+ 	
  	<update id="confirmRealScore" parameterType="gradeVO">
  		update COURSE_REGIST
  		set 
@@ -74,18 +83,6 @@
  			CRS_GRD = #{crsGrd}
  		where LECAP_NO = #{lecapNo}
  		and STD_NO = #{stdNo}
- 	</update>
- 	
- 	<update id="modifyScore" parameterType="map">
- 	/*kr.or.hku.classroom.mapper.GradeManageMapper.modifyScore */	
-	 UPDATE test_take A
-	    SET A.tt_scr = 80
-	    WHERE A.lecap_no = '18'
-	    AND A.std_no = '20220002'
-	    AND A.test_no IN (
-	        SELECT B.test_no
-	        FROM test B
-	      	  WHERE B.test_se LIKE 'middle'
  	</update>
  
  
