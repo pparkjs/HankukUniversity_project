@@ -75,4 +75,10 @@ public class CommonFileServiceImpl implements CommonFileService {
 		return fileMapper.deleteFile(fileNo);
 	}
 
+	@Override
+	public List<AttachFileVO> boardFileList(int atchFileNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

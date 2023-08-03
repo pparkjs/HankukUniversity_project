@@ -284,7 +284,6 @@ function addStudy(){
 				location.reload(true);
 			}
 		}
-			
 	}
 	xhr.send(JSON.stringify(data));
 	studyList();
