@@ -38,13 +38,5 @@ public class AssignmentVO {
 	
 	// 파일 정보들
 	private List<AttachFileVO> fileList;
-	
-//	// 알람테이블 조인
-//	private int alarmNo			;	// 알람번호
-//	private String userNo		;	// 사용자번호
-//	private String alarmType	;	// 알람타입
-//	private String alarmTtl		;	// 알람제목
-//	private String alarmRegDt	;	// 알람등록일
-//	private String alarmPathNo	; 	// 알람경로번호
 
 }

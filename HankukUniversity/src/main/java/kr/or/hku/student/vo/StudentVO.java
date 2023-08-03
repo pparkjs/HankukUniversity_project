@@ -1,5 +1,7 @@
 package kr.or.hku.student.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -46,4 +48,7 @@ public class StudentVO {
 	private String currentYear; //현재년도
 	private int currentSem; //현재학기
 	private String deptNm; //학과이름
+	
+	// 학생 프로필 파일 들어올 필드
+	private MultipartFile stdMultipartFile;
 }

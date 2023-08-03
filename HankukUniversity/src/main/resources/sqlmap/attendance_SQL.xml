@@ -66,17 +66,31 @@
            ORDER BY a.atdc_no desc
 		</select>
 		
-		<update id="attendanceAppv" parameterType="string">
-		/*kr.or.hku.classroom.mapper.AttendanceMapper.attendanceAppv */
+		<update id="attendanceAppv1" parameterType="string">
+		/*kr.or.hku.classroom.mapper.AttendanceMapper.attendanceAppv1 */
 			UPDATE attendance_dmr
 			SET stdc_dmr_stts_cd = 'appv'
 			WHERE atdc_no = #{atdcNo}
 		</update>
 		
-		<update id="attendanceRej" parameterType="string">
-		/*kr.or.hku.classroom.mapper.AttendanceMapper.attendanceRej */
+		<update id="attendanceAppv2" parameterType="string">
+		/*kr.or.hku.classroom.mapper.AttendanceMapper.attendanceAppv2 */
+			UPDATE attendance
+			SET atdc_yn_cd = 'Y'
+			WHERE atdc_no = #{atdcNo}
+		</update>
+		
+		<update id="attendanceRej1" parameterType="string">
+		/*kr.or.hku.classroom.mapper.AttendanceMapper.attendanceRej1 */
 			UPDATE attendance_dmr
 			SET stdc_dmr_stts_cd = 'rej'
+			WHERE atdc_no = #{atdcNo}
+		</update>
+		
+		<update id="attendanceRej2" parameterType="string">
+		/*kr.or.hku.classroom.mapper.AttendanceMapper.attendanceRej2 */
+			UPDATE attendance
+			SET atdc_yn_cd = 'N'
 			WHERE atdc_no = #{atdcNo}
 		</update>
 	

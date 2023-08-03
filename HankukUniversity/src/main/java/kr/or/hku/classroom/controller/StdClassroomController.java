@@ -95,7 +95,7 @@ public class StdClassroomController {
 	
 	// 과제 목록
 	@PreAuthorize("hasRole('ROLE_STUDENT')")
-	@GetMapping("stdAssignmentList/{lecapNo}")
+	@GetMapping("/stdAssignmentList/{lecapNo}")
 	public String stdAssignmentList(@PathVariable String lecapNo,
 									HttpSession session,
 									Model model) {
