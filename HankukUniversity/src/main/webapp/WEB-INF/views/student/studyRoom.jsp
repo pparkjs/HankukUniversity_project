@@ -706,12 +706,14 @@ $(document).on('DOMContentLoaded', function() {
 				console.log("캘린더 정보", res);
 				for(let i=0; i<res.length; i++){
 					let calData = res[i];
+					const endDate = moment(calData.calEndDt);
+					const nextDay = endDate.add(1, 'days').format('YYYY-MM-DD');
 					calendar.addEvent({
 						id: calData.calNo,
 						title: calData.calTtl,
 						start: calData.calBgngDt,
 						description : calData.calCn,
-						end: calData.calEndDt,
+						end: nextDay,
 						textColor: "black",
 						backgroundColor: calData.calColor
 					});
