@@ -14,6 +14,8 @@ public interface CommonFileService {
 
 	public List<AttachFileVO> getFileList(int atchFileNo);
 
+	public List<AttachFileVO> boardFileList(int atchFileNo);
+
 	public int deleteFile(int fileNo);
 
 }

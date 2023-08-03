@@ -34,7 +34,7 @@
 
 						<div class="basic-form" id="regDiv">
 							<div class="form-validation">
-								<form class="needs-validation" id="planFrm">
+								<form class="needs-validation" >
 									<div class="mb-3">
 										<div style="margin-left: 20px; margin-top: 30px;">
 											<input type="button" value="전체" id="statusAll"
@@ -391,6 +391,7 @@
                 }
                 /* ■■■■■■ 교과목 클릭에 대한 이벤트  ■■■■■■ */
                 table.on("click", "tbody tr", function () {
+                	$("#planFrm")[0].reset();
                     var rows = table.find("tbody tr");
                     if (flag === true) {
                         swal({

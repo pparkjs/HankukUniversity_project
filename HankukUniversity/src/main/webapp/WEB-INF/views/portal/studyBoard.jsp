@@ -170,7 +170,7 @@
 							<div class="col-xl-6 mb-3">
 								<label class="form-label mt-3">스터디선택<span class="text-danger">*</span></label>
 								<div class="input-group">
-									<select class="default-select form-control" name=studyNo>
+									<select class="default-select form-control" id='selStudy'  name=studyNo>
 									<option value="" >스터디 선택</option>
 									 <c:choose>
 								 		<c:when test="${empty myStudy}">
@@ -205,6 +205,7 @@
 var sendData = {};
 var boardBody = document.querySelector("#boardList");
 var pageNation = $('#pageNation');
+var atchFileNo = $('#atchFileNo');
 
 function closeModal() {
     var closeBtn = document.getElementById("closeBtn");
@@ -328,26 +329,40 @@ function insertBoard(){
       });
       return false;
    }
+   
+   var formData = new FormData();
+   formData.append("stboTitle", stboTitle);
+   formData.append("stboContent", stboContent);
+   formData.append("studyNo", studyNo);
+   formData.append("stboWriter", stboWriter);
 
-   var data = {
-      "stboTitle": stboTitle,
-      "stboContent": stboContent,
-      "studyNo": studyNo,
-      "stboWriter": stboWriter,
-      }
-
-	let xhr = new XMLHttpRequest();
-	xhr.open("POST","/hku/student/insertStudyBoard",true);
-	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-	xhr.onreadystatechange = function(){
-		if(xhr.readyState == 4 && xhr.status == 200){
-			closeModal();
+   let files = atchFileNo[0].files;
+   if (files != null && files.length > 0) {
+       for (let i = 0; i < files.length; i++) {
+    	   formData.append("files", files[i]);
+       }
+   }
+   	console.log("formData: ", formData);
+   	
+	$.ajax({
+		type: "POST",
+		url: "/hku/student/insertStudyBoard",
+		data: formData,
+		processData : false,
+		beforeSend : function(xhr){
+           xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+        },
+		contentType : false,
+		cache: false,
+		success : function(res){
+		   	closeModal();
 			boardList();
+			swal({
+		         title: "글이 등록되었습니다!", 
+		         icon: "success"
+		      });
 		}
-		
-	}
-	xhr.send(JSON.stringify(data));
+	})
 }
 
 $('#searchBtn').on('click',function(){
@@ -410,7 +425,7 @@ $(function() {
 	      $('#stboContent').val(transcontent);
 	    }
 	  
-	  if (transcript.includes('스터디선택')||transcript.includes('스터디 선택')||transcript.includes('선택')) {
+	  if (transcript.includes('선택')||transcript.includes('스터디 선택')||transcript.includes('선택')) {
 			var transcontent = newsentence(transcript);
 			$('#selStudy').prop('size', $('#selStudy option').length); 
 			$('#selStudy').css("height", $('#selStudy option').length * 20 );
