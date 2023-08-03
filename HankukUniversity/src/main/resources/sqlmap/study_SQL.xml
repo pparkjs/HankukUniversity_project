@@ -389,8 +389,22 @@
 		            stbo_title,
 		            stbo_content,
 		            stbo_writer,
-		            stbo_regdate)
-		values(seq_studyboard.nextval, #{studyNo}, #{stboTitle}, #{stboContent}, #{stboWriter}, sysdate)
+		            stbo_regdate
+		            <if test="atchFileNo != '0'">
+		            	, ATCH_FILE_NO
+		            </if>
+		            )
+		values(
+			seq_studyboard.nextval, 
+			#{studyNo}, 
+			#{stboTitle}, 
+			#{stboContent}, 
+			#{stboWriter}, 
+			sysdate
+			<if test="atchFileNo != '0'">
+            	, #{atchFileNo}
+            </if>
+			)
  	</insert>
  	
 <!--  	<select id="boardCount" parameterType="stdPaginationInfoVO" resultType="int"> -->
