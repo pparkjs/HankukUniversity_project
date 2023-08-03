@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 </style>
@@ -36,9 +37,9 @@
     	<div class="col-xl-12 mb-3">
     		<c:forEach items="" var="file">
     			<div class="mailbox-attachment-info">
-					<a href="/download${file.filePath}" download="${file.fileOrgnlFileNm}" class="mailbox-attachment-name fileDown">
-						<i class="fas fa-paperclip"></i> &nbsp;${file.fileOrgnlFileNm} &nbsp;[${file.fileSize}]
-					</a>
+<%-- 					<a href="/download${file.filePath}" download="${file.fileOrgnlFileNm}" class="mailbox-attachment-name fileDown"> --%>
+<%-- 						<i class="fas fa-paperclip"></i> &nbsp;${file.fileOrgnlFileNm} &nbsp;[${file.fileSize}] --%>
+<!-- 					</a> -->
 				</div>
     		</c:forEach>
         </div>
@@ -50,8 +51,13 @@
 		                    <button class="btn btn-primary" id="" style="margin: 5px; background: #0070c0; border-color: #0070c0;" onclick="openModal()">수정</button>
 		                    <button class="btn btn-primary" id="delBtn" style="margin: 5px; background: #ff4343; border-color: #ff4343;" onclick="delBoard()">삭제</button>          	
 	                	</c:when>
-	                	<c:otherwise>           	
-		                	<button type="button" class="btn btn-primary" style="margin: 5px; background: #0070c0; border-color: #0070c0;" data-bs-toggle="modal" data-bs-target="#basicModal">가입신청</button>
+	                	<c:otherwise>
+	                		<c:if test="${studyBoard.studyCpcy gt studyBoard.count}">				        	
+			                	<button type="button" class="btn btn-primary" style="margin: 5px; background: #0070c0; border-color: #0070c0;" data-bs-toggle="modal" data-bs-target="#basicModal">가입신청</button>
+					        </c:if>
+					        <c:if test="${studyBoard.studyCpcy le studyBoard.count}">
+					            <button type="button" class="btn btn-primary">모집완료</button>
+					        </c:if>       	
 	                	</c:otherwise>
 	                </c:choose>     
                </div>
@@ -84,14 +90,19 @@
 	            <div class="modal-footer">
 	                <button type="button" id="join-close" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
 	                <c:choose>
-	                	<c:when test="${studyBoard.stdNo eq stdNo }">
-            	
-	                	</c:when>
-	                	<c:otherwise>
-			                <button type="button" class="btn btn-primary" onclick="intoStudy()">가입신청</button>                	
-	                	</c:otherwise>
-	                </c:choose>          
-	            </div>
+					    <c:when test="${studyBoard.stdNo eq stdNo}">
+					    	
+					    </c:when>
+					    <c:otherwise>
+					        <c:if test="${studyBoard.studyCpcy gt studyBoard.count}">				        	
+					            <button type="button" class="btn btn-primary" onclick="intoStudy()">가입신청</button>
+					        </c:if>
+					        <c:if test="${studyBoard.studyCpcy le studyBoard.count}">
+					            <button type="button" class="btn btn-primary">모집완료</button>
+					        </c:if>
+					    </c:otherwise>
+					</c:choose>	     					               
+            	</div>
 	        </div>
 	    </div>
 	</div>
@@ -213,7 +224,7 @@ function intoStudy(){
 					});
 			} else if(xhr.responseText === "FAILED"){
 				swal({
-        			title: "가입신청에 실패하였습니다!", 
+        			title: "이미 가입된 스터디 입니다!", 
         			icon: "error"
         		});
 			}

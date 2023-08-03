@@ -22,6 +22,15 @@
 .custom-tab-1 .nav-link:focus, .custom-tab-1 .nav-link:hover, .custom-tab-1 .nav-link.active {
     font-weight: 800;
 }
+.st-wrap{
+	overflow: scroll;
+	height: 663px;
+	margin-top: 15px;
+}
+.thead-dark{
+      position: sticky;
+      top: 0px;
+}
 </style>
 <div class="content-body">
 	<div class="page-titles">
@@ -104,45 +113,46 @@
 				
 				<!-- 승인대기중인 스터디 목록 -->
 				<div class="tab-pane fade" id="profile1">
-					<table class="table" style="margin-top: 10px;">
-						<thead class="thead-dark">
-							<tr>
-								<th style="width:180px;">스터디번호</th>
-								<th style="width:450px;">스터디명</th>
-								<th style="width:280px;">가입신청일</th>
-								<th style="width:350px;">스터디장</th>
-								<th style="width:400px;">신청사유</th>
-								<th style="width:200px;">승인여부</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:choose>
-								<c:when test="${empty waitStudy }">
-									<td colspan="6">가입승인 대기중인 스터디가 없습니다</td>
-								</c:when>
-
-								<c:otherwise>
-									<c:set value="0" var="count"/>
-									<c:forEach items="${waitStudy }" var="waitStudy">								
-										<tr>
-											<td><c:out value="${waitStudy.studyNo }"></c:out></td>
-											<td><c:out value="${waitStudy.studyName }"></c:out></td>
-											<td><c:out value="${waitStudy.joinRegdate }"></c:out></td>
-											<td><c:out value="${waitStudy.stdNm }"></c:out></td>
-											<td><c:out value="${waitStudy.joinReason }"></c:out></td>
-											<c:if test="${waitStudy.aprvSttsCd == 'wait' }">
-												<td><button type="button" class="btn btn-danger" id="regBtn" style=" margin-bottom: 12px; padding: 8px 15px; background: #0070c0; border-color: #0070c0;">대기</button> </td>												
-											</c:if>	
-											<c:if test="${waitStudy.aprvSttsCd == 'rej' }">
-												<td><a href="#" class="btn btn-danger" id="regBtn" style=" margin-bottom: 12px; padding: 8px 15px; background: #ff4343; border-color: #ff4343;">반려</a></td>																							
-											</c:if>								
-										<tr>	
-									</c:forEach>
-								</c:otherwise>
-							</c:choose>
-						</tbody>
-					</table>
-											
+					<div class="st-wrap">
+						<table class="table" style="margin-top: -16px; ">
+							<thead class="thead-dark">
+								<tr>
+									<th style="width:180px;">스터디번호</th>
+									<th style="width:450px;">스터디명</th>
+									<th style="width:280px;">가입신청일</th>
+									<th style="width:350px;">스터디장</th>
+									<th style="width:400px;">신청사유</th>
+									<th style="width:200px;">승인여부</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:choose>
+									<c:when test="${empty waitStudy }">
+										<td colspan="6">가입승인 대기중인 스터디가 없습니다</td>
+									</c:when>
+	
+									<c:otherwise>
+										<c:set value="0" var="count"/>
+										<c:forEach items="${waitStudy }" var="waitStudy">								
+											<tr>
+												<td><c:out value="${waitStudy.studyNo }"></c:out></td>
+												<td><c:out value="${waitStudy.studyName }"></c:out></td>
+												<td><c:out value="${waitStudy.joinRegdate }"></c:out></td>
+												<td><c:out value="${waitStudy.stdNm }"></c:out></td>
+												<td><c:out value="${waitStudy.joinReason }"></c:out></td>
+												<c:if test="${waitStudy.aprvSttsCd == 'wait' }">
+													<td><button type="button" class="btn btn-danger" id="regBtn" style=" margin-bottom: 12px; padding: 8px 15px; background: #0070c0; border-color: #0070c0;">대기</button> </td>												
+												</c:if>	
+												<c:if test="${waitStudy.aprvSttsCd == 'rej' }">
+													<td><a href="#" class="btn btn-danger" id="regBtn" style=" margin-bottom: 12px; padding: 8px 15px; background: #ff4343; border-color: #ff4343;">반려</a></td>																							
+												</c:if>								
+											<tr>	
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
+						</table>
+						</div>				
 					</div>
 				</div>
 				<!-- end tab -->
@@ -278,7 +288,6 @@ function addStudy(){
 				location.reload(true);
 			}
 		}
-			
 	}
 	xhr.send(JSON.stringify(data));
 	studyList();

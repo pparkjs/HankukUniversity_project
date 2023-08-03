@@ -158,7 +158,7 @@ input[name=color]:checked + label{
 							</li>
 						</ul>
 						<div style="display: flex;">
-							<a class="btn btn-primary" href="https://6ce9-1-212-157-150.ngrok-free.app/study?room=${study.studyNo }" role="button" id="btn1" style="margin-bottom: 10px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
+							<a class="btn btn-primary" href="https://e898-1-212-157-150.ngrok-free.app/study?room=${study.studyNo }" role="button" id="btn1" style="margin-bottom: 10px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
 						
 							<form action="/hku/student/delStudy" method="post" id="delForm">
 								<input type="hidden" name="studyNo" value="${study.studyNo}" id="studyNo">
@@ -233,7 +233,7 @@ input[name=color]:checked + label{
 										<table style="width: 100%; border: none;" class="table" id="tbl1">
 											<thead class="thead-dark">
 												<tr>
-													<th>이름 </th><th>학과 </th><th>학번 </th><th>신청일</th><th style="width: 300px;">자기소개</th><th> </th>
+													<th>이름 </th><th>학과 </th><th>학번 </th><th>신청일</th><th> </th>
 												</tr>
 											</thead>
 											<tbody>
@@ -244,44 +244,59 @@ input[name=color]:checked + label{
 															<tr><td colspan="5">가입신청 인원이 존재하지 않습니다.</td></tr>
 														</c:when>
 														<c:otherwise>
-															<c:forEach items="${appli }" var="appli">
-																<tr id="link">
-																	<td>${appli.stdNm } </td>
-																	<td>${appli.deptNm } </td>
-																	<td id="td">${appli.stdNo }</td>
-																	<td>${appli.joinRegdate }</td>
-																	<td style="width: 300px;">${appli.joinReason }</td>
-																	<td>
-																		<div class="action-button">
-																			<form action="" method="post" id="applFrm" name="applFrm">
-																				<input type="hidden" name="joinNo" id="joinNo" value="${appli.joinNo}">																	
-																				<a href="#" class="applBtn1" onclick="assignStudy()">
-																					<span class="badge badge-success badge-sm">승인<span class="ms-1 fa fa-check"></span></span>																	
-																				</a>
-																				<a href="#" class="applBtn2" onclick="rejStudy()">
-																					<span class="badge badge-secondary  badge-sm">반려<span class="ms-1 fa fa-ban"></span></span>
-																				</a>
-																			</form>
-																		</div>
-																	</td>
-																</tr>
+															<c:forEach items="${appli}" var="appli">
+															    <tr id="link" class="rea" onclick="showJoinReason('${appli.joinReason}')"> <!-- '${appli.joinReason}' 값을 인자로 넘겨줌 -->
+															        <td>${appli.stdNm}</td>
+															        <td>${appli.deptNm}</td>
+															        <td id="td">${appli.stdNo}</td>
+															        <td>${appli.joinRegdate}</td>
+															        <td>
+															            <div class="action-button">
+															                <form action="" method="post" id="applFrm" name="applFrm">
+															                    <input type="hidden" name="joinNo" id="joinNo" value="${appli.joinNo}">
+															                    <a href="#" class="applBtn1" onclick="assignStudy()">
+															                        <span class="badge badge-success badge-sm">승인<span class="ms-1 fa fa-check"></span></span>
+															                    </a>
+															                    <a href="#" class="applBtn2" onclick="rejStudy()">
+															                        <span class="badge badge-secondary badge-sm">반려<span class="ms-1 fa fa-ban"></span></span>
+															                    </a>
+															                </form>
+															            </div>
+															        </td>
+															    </tr>
+															    <div class="modal fade" id="basicModal-${appli.joinNo}" style="display: none;" aria-hidden="true"> <!-- 'appli.joinNo'를 사용하여 각각의 모달에 유니크한 id 부여 -->
+															        <div class="modal-dialog" role="document">
+															            <div class="modal-content">
+															                <div class="modal-header">
+															                    <h5 class="modal-title">자기소개</h5>
+															       
+															                </div>
+															                <div class="modal-body">
+															                	<textarea name="joinReason" id="joinReason${appli.joinNo}" class="form-control h-50" id="validationCustom04" rows="10"required>${appli.joinReason}</textarea>	              
+															                </div>
+															                <div class="modal-footer">
+															                    <button type="button" id="join-close" class="btn btn-danger light" data-bs-dismiss="modal" onclick="closeModal('${appli.joinNo}')">닫기</button> <!-- 'appli.joinNo' 값을 인자로 넘겨줌 -->
+															                </div>
+															            </div>
+															        </div>
+															    </div>
 															</c:forEach>
+															
 														</c:otherwise>
 													</c:choose>											
-									    </c:when>
-									    <c:otherwise>
-									       <tr>
-									       <td colspan="5"> 스터디장만 확인 가능합니다.</td>
-									       </tr>
-									    </c:otherwise>
-									</c:choose>	
-											</div>
+										    </c:when>
+										    <c:otherwise>
+										       <tr>
+										       <td colspan="5"> 스터디장만 확인 가능합니다.</td>
+										       </tr>
+										    </c:otherwise>
+										</c:choose>	
 										</tbody>
 									</table>
 									</div>
 								</div>
 							</div>
-						</div>
+						</div>			   
 
 							<div class="tab-pane fade" id="contact1">
 								<div style="display: flex;">
@@ -421,6 +436,23 @@ input[name=color]:checked + label{
 $(document).ready(function() {
 	sTbl();
 });
+
+function showJoinReason() {
+    const modalDiv = document.querySelector('.modal.fade');
+    if (modalDiv) {
+        modalDiv.classList.add('show'); 
+        modalDiv.style.display = 'block'; 
+    }
+}
+
+function closeModal() {
+    const modalDiv = document.querySelector('.modal.fade.show');
+    if (modalDiv) {
+        modalDiv.classList.remove('show'); 
+        modalDiv.style.display = 'none'; 
+    }
+}
+
 function sTbl(){
 	var sBody = $("#sBody");
     var timeTable = '';
@@ -536,10 +568,11 @@ $(function(){
 });
 
 function assignStudy() {
+	var tdElement = event.target.closest('td'); // 현재 클릭한 버튼이 포함된 td 요소 찾기
+    var joinNoInput = tdElement.querySelector('input[name="joinNo"]'); // 해당 td 요소 내의 joinNo input 요소 찾기
+    var joinNo = joinNoInput.value
 
-	var frm = document.forms.applFrm;	
-	var joinNo = frm.joinNo.value;
-
+	console.log("join no: ", joinNo);
 	var joinNo = {
 		"joinNo": joinNo
 		}
@@ -574,9 +607,10 @@ function assignStudy() {
 
 function rejStudy() {
 
-	var frm = document.forms.applFrm;	
-	var joinNo = frm.joinNo.value;
-
+	var tdElement = event.target.closest('td'); // 현재 클릭한 버튼이 포함된 td 요소 찾기
+    var joinNoInput = tdElement.querySelector('input[name="joinNo"]'); // 해당 td 요소 내의 joinNo input 요소 찾기
+    var joinNo = joinNoInput.value
+	
 	var joinNo = {
 		"joinNo": joinNo
 		}

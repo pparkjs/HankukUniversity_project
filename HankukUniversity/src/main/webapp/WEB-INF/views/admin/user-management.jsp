@@ -129,6 +129,7 @@
 				<h5 class="card-title">전체 사용자</h5>
 				<div class="col-md-8" style="margin-bottom: 7px;">
 					<form class="row g-3 custom-form" action="" id="searchForm">
+						<input hidden="hidden"/>
 						<div class="col-md-2">
 							<select class="default-select form-control form-control-sm" id="searchType">
 								<option value="userNo">학번/교번</option>
@@ -817,6 +818,13 @@ $(function(){
 			professorsSet();
 		}
 	})
+	$("#searchWord").keydown(function(event) {
+// 		console.log(event.key);
+		if(event.key == "Enter"){
+			// $("#searchForm").preventDefault();
+			$("#userSearchBtn").click();
+		}
+	})
 })
 
 function poiDownload(){
@@ -1213,18 +1221,18 @@ function usersSet(){
 				<table class='table'>
 					<thead class='thead-dark'>
 						<tr>
-							<th>
+							<th width="78.7px">
 								<div class='form-check custom-checkbox checkbox-danger'>
 									<input type='checkbox' class='form-check-input' onclick='selectUserAll(this)'>
 								</div>
 							</th>
-							<th>학번/교번</th>
-							<th>이름</th>
-							<th>사용자 종류</th>
-							<th>생년월일</th>
-							<th>성별</th>
-							<th>연락처</th>
-							<th>이메일</th>
+							<th width="185.63px">학번/교번</th>
+							<th width="129.64px">이름</th>
+							<th width="208.66px">사용자 종류</th>
+							<th width="177.81px">생년월일</th>
+							<th width="108.03px">성별</th>
+							<th width="261.03px">연락처</th>
+							<th width="423.5px">이메일</th>
 						</tr>
 					</thead>
 					<tbody>`;
@@ -1283,21 +1291,21 @@ function adminsSet(){
 				<table class='table'>
 					<thead class='thead-dark'>
 						<tr>
-							<th>
+							<th width="62.78px">
 								<div class='form-check custom-checkbox checkbox-danger'>
 									<input type='checkbox' class='form-check-input' onclick='selectEmpAll(this)'>
 								</div>
 							</th>
-							<th>학번/교번</th>
-							<th>이름</th>
-							<th>사용자 종류</th>
-							<th>부서</th>
-							<th>직급</th>
-							<th>직책</th>
-							<th>생년월일</th>
-							<th>성별</th>
-							<th>연락처</th>
-							<th>이메일</th>
+							<th width="148.08px">학번/교번</th>
+							<th width="103.41px">이름</th>
+							<th width="166.45px">사용자 종류</th>
+							<th width="147.73px">부서</th>
+							<th width="86.17px">직급</th>
+							<th width="86.17px">직책</th>
+							<th width="139.94px">생년월일</th>
+							<th width="86.17px">성별</th>
+							<th width="208.23px">연락처</th>
+							<th width="337.86px">이메일</th>
 						</tr>
 					</thead>
 					<tbody>`;
@@ -1359,20 +1367,20 @@ function professorsSet(){
 				<table class='table'>
 					<thead class='thead-dark'>
 						<tr>
-							<th>
+							<th width="66.55px">
 								<div class='form-check custom-checkbox checkbox-danger'>
 									<input type='checkbox' class='form-check-input' onclick='selectProAll(this)'>
 								</div>
 							</th>
-							<th>학번/교번</th>
-							<th>이름</th>
-							<th>사용자 종류</th>
-							<th>직책</th>
-							<th>학과</th>
-							<th>생년월일</th>
-							<th>성별</th>
-							<th>연락처</th>
-							<th>이메일</th>
+							<th width="156.95px">학번/교번</th>
+							<th width="109.61px">이름</th>
+							<th width="176.42px">사용자 종류</th>
+							<th width="156.58px">직책</th>
+							<th width="180.06px">학과</th>
+							<th width="150.03px">생년월일</th>
+							<th width="91.33px">성별</th>
+							<th width="220.7px">연락처</th>
+							<th width="264.77px">이메일</th>
 						</tr>
 					</thead>
 					<tbody>`;
@@ -1435,19 +1443,19 @@ function studentsSet(){
 				<table class='table'>
 					<thead class='thead-dark'>
 						<tr>
-							<th>
+							<th width="68.67px">
 								<div class='form-check custom-checkbox checkbox-danger'>
 									<input type='checkbox' class='form-check-input' onclick='selectStdAll(this)'>
 								</div>
 							</th>
-							<th>학번/교번</th>
-							<th>이름</th>
-							<th>사용자 종류</th>
-							<th>학과</th>
-							<th>생년월일</th>
-							<th>성별</th>
-							<th>연락처</th>
-							<th>이메일</th>
+							<th width="161.98px">학번/교번</th>
+							<th width="113.13px">이름</th>
+							<th width="182.08px">사용자 종류</th>
+							<th width="210.09px">학과</th>
+							<th width="155.17px">생년월일</th>
+							<th width="94.27px">성별</th>
+							<th width="227.8px">연락처</th>
+							<th width="359.81px">이메일</th>
 						</tr>
 					</thead>
 					<tbody>`;
