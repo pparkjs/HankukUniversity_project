@@ -200,6 +200,10 @@
                         <div class="profile_box" style="text-align: center;">
                             <div class="profile_div" style="margin-top: 10px;">
                                 <hr style="margin: 0.5rem 0rem 1rem 0rem; color: white;"/>
+	                             <c:if test="${not empty std }">
+						           <c:set target="${sessionScope.stdInfo }" property="stdProfilePath" value="${std.stdProfilePath }"/>
+						           <c:set target="${sessionScope.stdInfo }" property="stdNm" value="${std.stdNm }"/>
+						        </c:if>
                                 <c:choose >
                                 	<c:when test="${sessionScope.stdInfo.stdProfilePath == null || sessionScope.stdInfo.stdProfilePath == ''}">
                                 		<img src="/images/기본프로필.png" id="profileImg" style="width:200px; height:200px; border-radius: 50%; border: 3px solid white;">
@@ -213,14 +217,14 @@
                         <div class="text_wrap">
                             <p class="balloon">환영합니다!</p>
                             <p><span style="margin-right: 10px;"><c:out value="${sessionScope.stdInfo.deptNm }"/></span><span style="font-size: 25px;"><c:out value="${std.stdNo }"/></span></p>
-                            <p class="en title"><c:out value="${std.stdNm }"/> 님</p>
+                            <p class="en title"><c:out value="${sessionScope.stdInfo.stdNm }"/> 님</p>
                             <ul>
                                 <li>
                                     <a class="LK046_A bb" href="/main/logout">로그아웃</a>
                                 </li>
-                                <li>
-                                    <a class="LK047_A bb" href="javascript:changePassword();" style="width: 90px;">비밀번호변경</a>
-                                </li>
+<!--                                 <li> -->
+<!--                                     <a class="LK047_A bb" href="javascript:changePassword();" style="width: 90px;">비밀번호변경</a> -->
+<!--                                 </li> -->
                                 <li>
                                     <a class="LK047_A bb" href="#" style="width: 90px; margin-left: 10px;" data-bs-toggle="modal" data-bs-target=".bd-example-modal-sm">화면 설정</a>
                                 </li>
@@ -267,7 +271,7 @@
                             <a href="/hku/portal/all-notice-list">공지사항</a>
                         </div>
                         <div class="sidemenu_btn" style="cursor:pointer;">
-                            <a href="/main/student">마이페이지</a>
+                            <a href="/hku/mypage">마이페이지</a>
                         </div>
                         <hr style="margin: 1rem 0rem 0rem 0rem; color: white;"/>
                     </div>
@@ -360,4 +364,9 @@ refresh.addEventListener("click", function() {
     time = 10799; 
     x = setInterval(updateTimer, 1000); 
 });
+
+// function passwordCheckPage(){
+	
+// 	window.open("/hku/mypage/security","_blank","width=400,height=280,left=650,top=250");
+// }
 </script>
