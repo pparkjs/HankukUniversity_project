@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 </style>
@@ -13,19 +14,19 @@
         </div>
         <hr>
         <div class="col-xl-12 mb-3">
-            <div class="row" style="font-size: 18px;">
-                <div class="col-xl-4 mb-1" style="width: 30%;">
-                    <p>● 등록일 : <c:out value="${studyBoard.stboRegdate }"/></p>
-                </div>
-               <div class="col-xl-4 mb-1" style="width: 30%;">
+            <div class="row" style="font-size: 18px; display: flex; flex-direction: column;">
+                <div class="col-xl-4 mb-1" style="width: 100%; display: flex; justify-content: space-between;">
                     <p>● 스터디명 : <c:out value="${studyBoard.studyName }"/></p>
                 </div>
-                <div class="col-xl-4 mb-1" style="width: 20%;">
+               <div class="col-xl-4 mb-1" style="width: 94%; display: flex; justify-content: space-between;">
                     <p>● 스터디장 : <c:out value="${studyBoard.stboWriter }"/></p>
-                </div>
-                <div class="col-xl-4 mb-1" style="width: 20%;">
+                    <p>● 등록일 : <c:out value="${studyBoard.stboRegdate }"/></p>
                     <p>● 조회수 : <c:out value="${studyBoard.stboReadCnt }"/></p>
                 </div>
+<!--                 <div class="col-xl-4 mb-1" style="width: 20%;"> -->
+<!--                 </div> -->
+<!--                 <div class="col-xl-4 mb-1" style="width: 20%;"> -->
+<!--                 </div> -->
             </div>
         </div>
         <hr>
@@ -36,23 +37,27 @@
     	<div class="col-xl-12 mb-3">
     		<c:forEach items="" var="file">
     			<div class="mailbox-attachment-info">
-					<a href="/download${file.filePath}" download="${file.fileOrgnlFileNm}" class="mailbox-attachment-name fileDown">
-						<i class="fas fa-paperclip"></i> &nbsp;${file.fileOrgnlFileNm} &nbsp;[${file.fileSize}]
-					</a>
+<%-- 					<a href="/download${file.filePath}" download="${file.fileOrgnlFileNm}" class="mailbox-attachment-name fileDown"> --%>
+<%-- 						<i class="fas fa-paperclip"></i> &nbsp;${file.fileOrgnlFileNm} &nbsp;[${file.fileSize}] --%>
+<!-- 					</a> -->
 				</div>
     		</c:forEach>
         </div>
-        <div class="col-xl-12 mb-3">
-            
-                <div class="col-xl-12 mb-1" style="display: flex; justify-content: end; margin-right: 0px;">
+        <div class="col-xl-12" style="position: relative;">
+                <div class="col-xl-12" style="position: absolute; top:0; top: -39px; right: -619px;">
                     <button class="btn btn-primary" id="listBtn" style="margin: 5px;">목록</button>
                     <c:choose>
 	                	<c:when test="${studyBoard.stdNo eq stdNo }">
 		                    <button class="btn btn-primary" id="" style="margin: 5px; background: #0070c0; border-color: #0070c0;" onclick="openModal()">수정</button>
 		                    <button class="btn btn-primary" id="delBtn" style="margin: 5px; background: #ff4343; border-color: #ff4343;" onclick="delBoard()">삭제</button>          	
 	                	</c:when>
-	                	<c:otherwise>           	
-		                	<button type="button" class="btn btn-primary" style="margin: 5px; background: #0070c0; border-color: #0070c0;" data-bs-toggle="modal" data-bs-target="#basicModal">가입신청</button>
+	                	<c:otherwise>
+	                		<c:if test="${studyBoard.studyCpcy gt studyBoard.count}">				        	
+			                	<button type="button" class="btn btn-primary" style="margin: 5px; background: #0070c0; border-color: #0070c0;" data-bs-toggle="modal" data-bs-target="#basicModal">가입신청</button>
+					        </c:if>
+					        <c:if test="${studyBoard.studyCpcy le studyBoard.count}">
+					            <button type="button" class="btn btn-primary">모집완료</button>
+					        </c:if>       	
 	                	</c:otherwise>
 	                </c:choose>     
                </div>
@@ -83,16 +88,21 @@
 	            	</form>
 	            </div>
 	            <div class="modal-footer">
-	                <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+	                <button type="button" id="join-close" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
 	                <c:choose>
-	                	<c:when test="${studyBoard.stdNo eq stdNo }">
-            	
-	                	</c:when>
-	                	<c:otherwise>
-			                <button type="button" class="btn btn-primary" onclick="intoStudy()">가입신청</button>                	
-	                	</c:otherwise>
-	                </c:choose>          
-	            </div>
+					    <c:when test="${studyBoard.stdNo eq stdNo}">
+					    	
+					    </c:when>
+					    <c:otherwise>
+					        <c:if test="${studyBoard.studyCpcy gt studyBoard.count}">				        	
+					            <button type="button" class="btn btn-primary" onclick="intoStudy()">가입신청</button>
+					        </c:if>
+					        <c:if test="${studyBoard.studyCpcy le studyBoard.count}">
+					            <button type="button" class="btn btn-primary">모집완료</button>
+					        </c:if>
+					    </c:otherwise>
+					</c:choose>	     					               
+            	</div>
 	        </div>
 	    </div>
 	</div>
@@ -148,6 +158,11 @@
 
 </div>
 <script>
+function clearInputFields() {   
+    document.getElementById("stboTitle2").value = "";
+    document.getElementById("stboWriter2").value = "";
+    document.getElementById("stboContent2").value = "";
+}
 
 function openModal() {
     $('#detailModal').modal('show');
@@ -155,10 +170,13 @@ function openModal() {
 function closeModal() {
     var closeBtn = document.getElementById("closeBtn");
     closeBtn.click();
+    clearInputFields();
 }
+
 function closeModal2() {
     var delBtn = document.getElementById("delBtn");
     delBtn.click();
+    clearInputFields();
 }
 
 var listBtn = document.querySelector('#listBtn');
@@ -199,18 +217,18 @@ function intoStudy(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			if(xhr.responseText === "SUCCESS"){
 				console.log("");
+				document.getElementById("join-close").click();
 				 swal({
 						title: "가입신청이 완료되었습니다.", 
 						icon: "success"
 					});
 			} else if(xhr.responseText === "FAILED"){
 				swal({
-        			title: "가입신청에 실패하였습니다!", 
+        			title: "이미 가입된 스터디 입니다!", 
         			icon: "error"
         		});
 			}
 			boardList();
-			$('#basicModal').modal('hide');
 			closeModal2();
 		}
 	}

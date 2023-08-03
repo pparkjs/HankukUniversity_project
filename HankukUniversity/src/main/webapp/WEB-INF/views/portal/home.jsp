@@ -71,6 +71,10 @@ input, select, textarea {
     background-color: #800000;
     /* border: 1px solid black; */
 }
+.move-table td {
+    padding: 8px;
+    font-size: 14px;
+}
 </style>
 <div class="container-fluid mt-3">
     <div class="row">

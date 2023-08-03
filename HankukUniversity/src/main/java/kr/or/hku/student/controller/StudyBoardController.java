@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,8 +20,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.hku.student.vo.PaginationInfoVO;
+import kr.or.hku.common.service.CommonFileService;
+import kr.or.hku.common.service.CommonService;
+import kr.or.hku.common.vo.AttachFileVO;
 import kr.or.hku.student.service.StudyService;
 import kr.or.hku.student.vo.StudentVO;
 import kr.or.hku.student.vo.StudyVO;
@@ -34,6 +39,11 @@ public class StudyBoardController {
 	@Inject
 	private StudyService service;
 	
+	@Inject
+	private CommonFileService fileService;
+	
+	@Inject
+	private CommonService commonService;
 	
 	@GetMapping(value = "/studyBoard")
 	public String studyBoard(HttpServletRequest request, Model model) {
@@ -110,10 +120,30 @@ public class StudyBoardController {
 	
 	@ResponseBody
 	@PostMapping(value = "/insertStudyBoard")
-	public ResponseEntity<String> insertStudyBoard( @RequestBody StudyVO studyVo) {
+	public ResponseEntity<String> insertStudyBoard(StudyVO studyVo) {
 		ResponseEntity<String> entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 	    
-	    int res = service.insertStudyBoard(studyVo);
+		log.info("스터디브이오: "+studyVo);
+		List<MultipartFile> files = studyVo.getFiles();
+		int attachFileNo = 0;
+		if(files != null && files.size() > 0) {
+			attachFileNo = fileService.getAttachFileNo();
+			for (int i = 0; i < files.size(); i++) {
+				MultipartFile file = files.get(i);
+				if (file.getSize() > 0) {
+					int fileResult = fileService.insertFile(file, attachFileNo, i);
+					if (fileResult == 0) {
+						attachFileNo = 0;
+						break;
+					}
+				}
+			}
+		}
+		
+		studyVo.setAtchFileNo(attachFileNo);
+		
+		int res = service.insertStudyBoard(studyVo);
+	    
 	    
 	    log.info("insert status : " + res);
 		
@@ -163,14 +193,12 @@ public class StudyBoardController {
 	    log.info(""+studyVo.getStudyNo());
 	    log.info(studyVo.getJoinReason());
 	    
-		int res = service.intoStudy(studyVo);
-		
-		if(res > 0) {
-			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-		} else {
-			entity = new ResponseEntity<String>("FAILED", HttpStatus.OK);
-		}
-		
+	    List<StudyVO> joinList = service.joinCheck(studyVo);		
+	    if (!joinList.isEmpty()) {
+	    	entity = new ResponseEntity<String>("FAILED", HttpStatus.OK);
+	    }else {
+	    	int res = service.intoStudy(studyVo);
+	    }		
 		return entity;
 	}
 

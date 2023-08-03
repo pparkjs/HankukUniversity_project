@@ -70,6 +70,11 @@
 		)
 		values(seq_joinstatus.nextval, #{studyNo}, #{stdNo}, sysdate, #{joinReason})
 	</insert>
+	
+	<select id="joinCheck" parameterType="studyVo" resultType="studyVo">
+		select * from joinstatus
+        where study_no = #{studyNo} and std_no = #{stdNo}
+	</select>
 
 	<!-- 가입신청 대기중인 리스트 -->
 	<select id="applicationsList" parameterType="int" resultType="studyVo">
@@ -88,6 +93,7 @@
 			join com_code c on a.aprv_stts_cd = c.com_cd
 			join department d on b.dept_cd = d.dept_cd
 		where study_no = #{studyNo} and aprv_stts_cd ='wait'
+		order by a.join_regdate desc
 	</select>
 	
 	<!-- 가입신청 상세보기 -->
@@ -243,6 +249,7 @@
 		join studygroup b on a.study_no = b.study_no
 		join student c on b.std_no = c.std_no
 		where a.std_no = #{stdNo} and a.aprv_stts_cd = 'wait' or a.aprv_stts_cd = 'rej'
+		order by a.join_regdate desc
 	</select>
 	
 	<!-- 스터디멤버 조회 -->
@@ -382,8 +389,22 @@
 		            stbo_title,
 		            stbo_content,
 		            stbo_writer,
-		            stbo_regdate)
-		values(seq_studyboard.nextval, #{studyNo}, #{stboTitle}, #{stboContent}, #{stboWriter}, sysdate)
+		            stbo_regdate
+		            <if test="atchFileNo != '0'">
+		            	, ATCH_FILE_NO
+		            </if>
+		            )
+		values(
+			seq_studyboard.nextval, 
+			#{studyNo}, 
+			#{stboTitle}, 
+			#{stboContent}, 
+			#{stboWriter}, 
+			sysdate
+			<if test="atchFileNo != '0'">
+            	, #{atchFileNo}
+            </if>
+			)
  	</insert>
  	
 <!--  	<select id="boardCount" parameterType="stdPaginationInfoVO" resultType="int"> -->

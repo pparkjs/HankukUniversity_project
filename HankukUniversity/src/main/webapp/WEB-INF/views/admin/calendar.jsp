@@ -179,6 +179,7 @@ $(document).ready(function() {
 		select: function(info) {
 			$('#calBgngDt').val(info.startStr);
 			$('#calEndDt').val(info.endStr);
+			$('#automaticCompletionBtn').css('display', 'block');
 			calModal.modal('show');
 			console.log('selected ' + info.startStr + ' to ' + info.endStr);
 		},
@@ -522,7 +523,7 @@ $(document).ready(function() {
 		$('#calBgngDt').val(moment(e.start).format("YYYY-MM-DD"))
 		$('#calEndDt').val(moment(e.end).format("YYYY-MM-DD"));
 		$('input[name="color"][value="' + e.backgroundColor + '"]').prop('checked', true);
-
+		$('#automaticCompletionBtn').css('display', 'none');
 		calModal.modal('show');
 	}
 
@@ -574,6 +575,11 @@ $(document).ready(function() {
 	// 	console.log("setCurDate 매서드 실행", keyword);
 	// 	timeTitle.innerText = year + '년도 ' + month + '월 '+keyword+' 일정';
 	// }
+	
+	$('#automaticCompletionBtn').on('click', function(){
+		$('#calTtl').val('한국대학교 2학기 휴학/복학 신청 기간');
+		$('#calCn').val('한국대학교 2학기 \n휴학,복학 신청 기간입니다. \n신청기간에 준수하여 신청하기 바랍니다.');
+	});
 });
 </script>
 <div class="modal fade bd-example-modal-lg" tabindex="-1" style="display: none;" aria-hidden="true" id="calModal">
@@ -643,6 +649,7 @@ $(document).ready(function() {
 				</div>
 			</div>
 			<div class="modal-footer">
+				<button type="button" class="btn btn-info" id="automaticCompletionBtn">자동완성</button>
 				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
 				<button type="button" class="btn btn-primary" id="addBtn">등록</button>
 			</div>

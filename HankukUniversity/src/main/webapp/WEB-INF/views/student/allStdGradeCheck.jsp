@@ -353,15 +353,19 @@ function getAllGrade(){
 	        	
 			let all = mjr + ctrl ;
 			console.log(all);
+			console.log("scr"+scr);
+			console.log("isNaN(scr)"+isNaN(scr));
 	        /* 학기별 학점계산 코드 */
-	        if(!isNaN(scr)){
-	        	$('#semScr').text('-');
-	        	$('#semGrd').text('-');
-	        }else{
-	        	let grade = scr/res.length;
+	        if(scr){
+	           	let grade = scr/res.length;
 				let grdScr = Math.round(grade*10)/10;
+				console.log("grdScr"+grdScr);
+				console.log("grade"+grade);
 				$('#semScr').text(grdScr);
 	        	$('#semGrd').text(getGrd(grdScr));
+	        }else{
+	        	$('#semScr').text('-');
+	        	$('#semGrd').text('-');
 	        }
 	        
 			
@@ -388,6 +392,8 @@ function getAllGrade(){
 	})
 }
 
+
+/* 평점을 통한 등급 반환메소드 */
 function getGrd(scr){
 	if(scr >= 4.5){
 		return "A+"
