@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.vo.GradeVO;
+import kr.or.hku.lectureInfo.vo.LecturePlanVO;
 
 public interface GradeManageService {
 	
@@ -19,6 +20,12 @@ public interface GradeManageService {
 	
 	// 시험번호 가져오기
 	public List<Map<String, String>> getTestNos(GradeVO vo);
+
+	public LecturePlanVO getPercent(String lecapNo);
+
+	public Map<String, String> getStdAtdCnt(GradeVO gradeVO);
+
+	public Map<String, String> getStdAsignScr(GradeVO gradeVO);
 		
 	
 		
