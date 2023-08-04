@@ -66,9 +66,10 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	public ServiceResult attendanceAppv(String atdcNo) {
 		ServiceResult result = null;
-		int check = attendanceMapper.attendanceAppv(atdcNo);
+		int check1 = attendanceMapper.attendanceAppv1(atdcNo);
+		int check2 = attendanceMapper.attendanceAppv2(atdcNo);
 		
-		if(check > 0) {
+		if(check1 > 0 && check2 > 0) {
 			result = ServiceResult.OK;
 		} else {
 			result = ServiceResult.FAILED;
@@ -80,16 +81,15 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	public ServiceResult attendanceRej(String atdcNo) {
 		ServiceResult result = null;
-		int check = attendanceMapper.attendanceRej(atdcNo);
+		int check1 = attendanceMapper.attendanceRej1(atdcNo);
+		int check2 = attendanceMapper.attendanceRej2(atdcNo);
 		
-		if(check > 0) {
+		if(check1 > 0 && check2 > 0) {
 			result = ServiceResult.OK;
 		}
 		return result;
 	}
 
-	
-	
 	
 // ------------------------ 학생 출석 이의신청 ----------------------------// 
 	@Override

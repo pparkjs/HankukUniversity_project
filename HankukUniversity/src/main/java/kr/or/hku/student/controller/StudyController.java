@@ -54,8 +54,8 @@ public class StudyController {
 	public ResponseEntity<List<StudyVO>> getStudyList(String stdNo) {
 		log.info("stdNo: " + stdNo);
 		List<StudyVO> list = service.studyList(stdNo);
-		for (StudyVO studyVo : list) {
-		}
+//		for (StudyVO studyVo : list) {
+//		}
 	    
 		return new ResponseEntity<List<StudyVO>>(list, HttpStatus.OK);
 	}

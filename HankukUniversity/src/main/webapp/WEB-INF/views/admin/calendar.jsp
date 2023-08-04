@@ -192,6 +192,13 @@ $(document).ready(function() {
 		eventResize: function(info){
 			changeEvent(info.event);
 		},
+		eventDataTransform: function(event) {                                                                                                                                
+	 		if(event.allDay) {                                                                                                                                               
+	 			console.log("여기", event.dateStr);
+// 	    		event.end = moment(event.end).add(1, 'days')                                                                                                                 
+	  		}
+// 	  		return event;  
+		}, 
 		// 툴팁인데 안먹네..
 // 		eventDidMount: function(info) {
 // 			var tooltip = new Tooltip(info.el, {
@@ -258,12 +265,14 @@ $(document).ready(function() {
 				console.log(res);
 				for(let i=0; i<res.length; i++){
 					let calData = res[i];
+					var endDate = moment(calData.calEndDt);
+					var nextDay = endDate.add(1, 'days').format('YYYY-MM-DD');
 					calendar.addEvent({
 						id: calData.calNo,
 						title: calData.calTtl,
 						start: calData.calBgngDt,
 						description : calData.calCn,
-						end: calData.calEndDt,
+						end: nextDay,
 						textColor: 'black',
 						backgroundColor: calData.calColor
 					});
@@ -376,6 +385,9 @@ $(document).ready(function() {
 	// 모달창 닫힐떄 일어나는 매서드
 	calModal.on('hidden.bs.modal', function() {
 		$('#calFrm')[0].reset();
+		$('input[type="radio"]').each(function() {
+	    	$(this).prop('checked', false);
+	  	});
 		addBtn.text("등록");
 	});
 
@@ -420,12 +432,14 @@ $(document).ready(function() {
 						});
 						console.log("일정 추가 성공", res);
 						res = JSON.parse(res);
+						const endDate = moment(res.calEndDt);
+						const nextDay = endDate.add(1, 'days').format('YYYY-MM-DD');
 						calendar.addEvent({
 							id: res.calNo,
 							title: res.calTtl,
 							start: res.calBgngDt,
 							description : res.calCn,
-							end: res.calEndDt,
+							end: nextDay,
 							textColor: 'black',
 							backgroundColor: res.calColor
 						});
@@ -470,23 +484,28 @@ $(document).ready(function() {
 	
 	// 변경 했을때 다시 저장
 	function setChangeEvent(e,data){
-		
+		const endDate = moment(data.calEndDt);
+		const nextDay = endDate.add(1, 'days').format('YYYY-MM-DD');
 		console.log("왜 안됨?", data);
 		e.setProp('title', data.calTtl);
 		e.setExtendedProp('description', data.calCn);
 		e.setStart(data.calBgngDt);
-		e.setEnd(data.calEndDt);
+		e.setEnd(nextDay);
 		e.setProp('backgroundColor', data.calColor);
 	}
 	
 	function changeEvent(e){
 		// 이벤트 움직엿을떄 발생할떄 변경 해주기
+		let realDate = moment(e.end).format("YYYY-MM-DD");
+		const endDate = moment(realDate);
+		const nextDay = endDate.subtract(1, 'days').format('YYYY-MM-DD');
+		
 		let changeData = {
 			calNo: e.id,
 			calTtl: e.title,
 			calCn: e.extendedProps.description,
 			calBgngDt: moment(e.start).format("YYYY-MM-DD"),
-			calEndDt: moment(e.end).format("YYYY-MM-DD"),
+			calEndDt: nextDay,
 			calColor: e.backgroundColor,
 			calClsfCd: 'uni'
 		};
@@ -577,8 +596,10 @@ $(document).ready(function() {
 	// }
 	
 	$('#automaticCompletionBtn').on('click', function(){
-		$('#calTtl').val('한국대학교 2학기 휴학/복학 신청 기간');
-		$('#calCn').val('한국대학교 2학기 \n휴학,복학 신청 기간입니다. \n신청기간에 준수하여 신청하기 바랍니다.');
+		$('#calTtl').val('한국대학교 수강신청 기간');
+		$('#calCn').val('한국대학교 2학기 \n수강 신청 기간입니다. \n신청기간에 준수하여 신청하기 바랍니다.');
+		$('#calEndDt').val("2023-08-12")
+		$('#color2').attr("checked", true);
 	});
 });
 </script>

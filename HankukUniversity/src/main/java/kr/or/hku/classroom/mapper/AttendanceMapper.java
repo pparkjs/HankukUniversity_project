@@ -27,10 +27,12 @@ public interface AttendanceMapper {
 	public List<AttendanceVO> attendanceDmrList(String lecapNo);
 	
 	// 출석 이의신청 승인
-	public int attendanceAppv(String atdcNo);  
+	public int attendanceAppv1(String atdcNo);  
+	public int attendanceAppv2(String atdcNo);  
 	
 	// 출석 이의신청 반려
-	public int attendanceRej(String atdcNo);
+	public int attendanceRej1(String atdcNo);
+	public int attendanceRej2(String atdcNo);
 		
 	
 // ------------------------ 학생 출석 이의신청 ----------------------------// 	

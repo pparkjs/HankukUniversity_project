@@ -82,10 +82,12 @@ label {
 		<input type="hidden" name="lecapNo" id="lecapNo" value="${lecapNo}">
 			<div class="col-xl-6 col-lg-12" style="width: 100%;">
 				<div class="card">
-					<div class="card-header aaa">
+					<div class="card-header aaa" style="height: 64px;">
 						<h4 class="card-title"
 							style="font-weight: bold; font-size: 1.2em; color: #800000;">
 							출석 이의신청 현황</h4>
+							<button type="button" style="padding: 0.5rem 1.0rem; width: 80px;" 
+							id="goMainBtn" class="btn btn-danger light">메인</button>
 					</div>
 					<div class="card-body">
 						<div class="basic-form">
@@ -114,7 +116,7 @@ label {
 										<td>${list.atdcWeek }</td>
 										<c:forEach items="${fileList }" var="file">
 											<td><a href="/download${file.filePath}" download="${file.fileOrgnlFileNm}"
-									 			class="btn btn-primary btn-sm">파일다운로드</a></td>
+									 			class="btn btn-primary btn-sm" style="background-color:#9d9898; border-color:rgba(255, 255, 255, 0.15);">파일 다운로드</a></td>
 								 		</c:forEach>	
 								 		<c:if test="${list.stdcDmrSttsCd eq 'wait'}">
 											<td><span class="badge badge-rounded badge-warning" style="background-color:#df9212; 
@@ -270,14 +272,16 @@ $(function(){
 			
 		})
 	})
-	
-	
-	
-	
-	
-	
+		
+	var goMainBtn = $("#goMainBtn");
+	var lecapNo = $("#lecapNo").val();
+	goMainBtn.on('click', function(){
+		location.href="/hku/professor/classroomMain/"+lecapNo;
+	})
+
+
 })
-	
+
 	
 
 </script>

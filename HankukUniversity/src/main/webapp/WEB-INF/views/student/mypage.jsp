@@ -57,8 +57,8 @@
 										</div>
 									</div>
 									<div class="author-info">
-										<h6 class="title">${std.stdNm} </h6>
-										<span>컴퓨터공학</span>
+										<h6 class="title">${std.stdNm}</h6>
+										<span>학과</span>
 									</div>
 								</div> 
 							</div>
@@ -102,16 +102,9 @@
 								</div>
 								<div class="col-sm-6 m-b30">
 									<label class="form-label">성별</label>
-<%-- 									<c:forEach items="${cVo }" var="cVo"> --%>
-<%-- 										<c:if test="${cVo.comCdGrp eq 'sex'}"> --%>
-<%-- 											<c:if test="${cVo.comCd eq std.stdSexCd}"> --%>
-<%-- 											 <c:out value=""></c:out> --%>
-											<input type="text" disabled name="stdSexCd" class="form-control" value="?">
-<%-- 											</c:if> --%>
-<%-- 										</c:if> --%>
-<%-- 									</c:forEach> --%>
 								</div>
 								<div class="col-sm-6 m-b30">
+<!-- 								하하호호~~ -->
 									<label class="form-label">생년월일</label> 
 									<input type="text" disabled name="stdBrdt" class="form-control" value="${std.stdBrdt }">
 								</div>
@@ -140,8 +133,6 @@
 						</div>
 						<div class="card-footer" style="padding-left:800px;">
 							<button class="btn btn-primary" id="updateBtn" onclick="updateF()">수정하기</button>
-<!-- 							<a href="page-register.html" class="btn-link">Forgot your -->
-<!-- 								password?</a> -->
 						</div>
 					</form>
 				</div>
