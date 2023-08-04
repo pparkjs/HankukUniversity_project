@@ -426,6 +426,7 @@ input[name=color]:checked + label{
 				</div>
 			</div>
 			<div class="modal-footer">
+				<button type="button" class="btn btn-info" id="automaticCompletionBtn">자동완성</button>
 				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
 				<button type="button" class="btn btn-primary" id="addBtn">등록</button>
 			</div>
@@ -878,6 +879,9 @@ $(document).on('DOMContentLoaded', function() {
 	// 모달창 닫힐떄 일어나는 매서드
 	calModal.on('hidden.bs.modal', function() {
 		$('#calFrm')[0].reset();
+		$('input[type="radio"]').each(function() {
+	    	$(this).prop('checked', false);
+	  	});
 		addBtn.text("등록");
 	});
 	
@@ -963,6 +967,13 @@ $(document).on('DOMContentLoaded', function() {
 	// 일정 버튼 눌럿을떄 캘린더 다시 랜더링
 	$('#calRender').click(function(){
 		calendar.render();
+	});
+	
+	$('#automaticCompletionBtn').on('click', function(){
+		$('#calTtl').val('알고리즘 모임');
+		$('#calCn').val('일정 \n금요일 2시부터 4시 \n장소\n그룹스터디룸3');
+		$('#calEndDt').val("2023-08-10")
+		$('#color2').attr("checked", true);
 	});
 });
 </script>
