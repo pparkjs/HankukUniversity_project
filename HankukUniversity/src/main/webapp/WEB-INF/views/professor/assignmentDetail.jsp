@@ -52,13 +52,17 @@
     border-radius: 11px;
     height: 30px;
 }
-.card-body {
-	overflow: scroll;	
-}
 .active-projects tbody tr td {
     font-size: 15px;
 }
-
+.table-wrap {
+    overflow: scroll;
+    height: 337px;
+    margin-top: 13px;
+}
+.card-body {
+    height: auto;
+}
 </style>
 
 <div class="content-body">
@@ -194,27 +198,25 @@
 							과제제출현황</h4>
 							<hr>
 						</div>
-						<div class="table-responsive active-projects manage-client">
-							<div class="card-body ccc" style="padding-top: 0px;">
-								<table class="table" style="margin-top: -22px;">
-									<thead>
-										<tr class="">
-											<th>No</th>
-											<th>학번</th>
-											<th>이름</th>
-											<th>학과</th>
-											<th>제출일자</th>
-											<th>제출파일</th>
-											<th>과제점수</th>
-											<th style="text-align: center;">제출확인</th>
-										</tr>
-									</thead>
-									<tbody id="tBody">
-										<!-- 동적추가 -->
+						<div class="card-body" style="padding-top: 0px;">
+							<table class="table" style="margin-top: -22px;">
+								<thead>
+									<tr class="">
+										<th>No</th>
+										<th>학번</th>
+										<th>이름</th>
+										<th>학과</th>
+										<th>제출일자</th>
+										<th>제출파일</th>
+										<th>과제점수</th>
+										<th style="text-align: center;">제출확인</th>
+									</tr>
+								</thead>
+								<tbody id="tBody">
+									<!-- 동적추가 -->
 
-									</tbody>
-								</table>
-							</div>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>
