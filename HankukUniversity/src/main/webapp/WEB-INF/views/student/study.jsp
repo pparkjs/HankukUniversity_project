@@ -191,7 +191,7 @@
 										<textarea cols="10" rows="10" class="form-control" name="studyIntro" id="studyIntro" placeholder=""></textarea>
 									</div>
 									<div>
-										<button class="btn btn-primary me-1" onclick="addStudy()">개설</button>
+										<input type="button" class="btn btn-primary" onclick="addStudy()" value="개설">
 										<button class="btn btn-danger light ms-1">취소</button>
 										<button class="btn btn-danger light ms-1" onclick="auto()">자동완성</button>
 									</div>
@@ -209,7 +209,7 @@
 
 function studyList(){
 	var stdNo = {
-			"stdNo":"\${sessionScope.std.stdNo}"
+			"stdNo":"${sessionScope.std.stdNo}"
 	};
 	console.log("보낸 stdNo: ", stdNo);
 	var body = $("#studyListDiv");
@@ -223,34 +223,38 @@ function studyList(){
 			
 			var data = '';
 			for(var i = 0; i < res.length; i++){
-				data += `<div class="col-xl-3 col-lg-4 col-sm-6">
-							<div class="card" style="background-color: #adb17d1c;">
-							<div class="card-body">
-								<div class="card-use-box">
-									<div class="card__text">
-										<h4 class="mb-0">\${res[i].studyName }</h4>
-										<p>${res[i].studyIntro}</p>
+				data += `	<div class="studycard-wrap" style="width: 24%;">
+									<div class="study-top">
+									<span class="study-text">[ 스터디명 : </span>
+									<div class="study-name">\${res[i].studyName.substring(0, 13) } ]</div>
+								</div>
+								<hr>
+								<div class="study-title">\${res[i].studyIntro.substring(0, 50) }</div>
+								<hr>
+								<div class="study-bottom">
+									<div class="bottom1">
+										<span class="date-text">생성일 :</span>
+										<div class="reg-date">	
+											\${res[i].studyRegdate.substring(0, 10)}										
+										</div>
+										<div style="margin-left: 55px;">
+											<a href="/hku/student/studyRoom?studyNo=\${res[i].studyNo }">
+												<button class="end-button">입장</button>
+											</a>
+										</div>
 									</div>
-									<ul class="card__info">
-										<li><span>인원수</span> <span class="card__info__stats">\${res[i].count} / \${res[i].studyCpcy }</span>
-										</li>
-									</ul>
-									<ul class="post-pos">
-										<li><span class="card__info__stats">스터디장: </span> 
-										<span>\${res[i].stdNm }</span>
-										</li>
-											<span>\${res[i].studyRegdate }</span>
-										</li>
-									</ul>
-									
-									<div>
-										<a href="/hku/student/studyRoom?studyNo=\${res[i].studyNo }"
-											class="btn btn-outline-primary btn-xs">Enter</a>
+									<div class="bottom2">
+										<img alt="" src="/images/왕관.png" class="crownImg">
+										<div class="master-name">\${res[i].stdNm }</div>
+										<div class="hit-con">
+											<img alt="" src="/images/조회수.png" class="hitImg">
+											
+											<div class="cnt-text">인원:</div>
+											<div class="study-cnt">\${res[i].count} / \${res[i].studyCpcy }</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>	
-					</div>`;
+							</div>`;
 			}
 			body.html(data);
 		}
@@ -279,19 +283,23 @@ function addStudy(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			if(xhr.responseText === "SUCCESS"){
 				console.log("성공");
-				location.reload(true);
+// 				location.reload(true);
 				studyList();
-				
-				
+				$(".btn-close").click();
+		      	swal({
+		          title: "스터디 개설에 성공했습니다.!", 
+		          icon: "success"
+		        });
+		      	$(".btn-close").click();
 			} else if(xhr.responseText === "FAILED"){
 				console.log(" 실패");
-				location.reload(true);
+// 				location.reload(true);
 			}
 		}
 	}
 	xhr.send(JSON.stringify(data));
-	studyList();
-	location.reload(true);
+// 	studyList();
+// 	location.reload(true);
 }
 
 function auto(){
