@@ -171,6 +171,7 @@ min-width : 0px;
                 </div>
                 </div>
                 <br>
+				<button type="button" class="btn btn-primary" style="background:#800000; width:300px; border:none; margin-bottom: 5px;" id="auto">자동완성</button>
 				<button type="button" class="btn btn-primary" style="background:#800000; width:300px; border:none;" id="sendPw">임시비밀번호 발급</button>
 				<div style="height: 50px; width:300px; margin:0px; display: flex; justify-content: center; align-items: center;">
 				 <p id="resultContent" style="color:blue; font-size: 1.3em; font-weight: bold;"> </p>
@@ -375,6 +376,11 @@ var userNo ;
 			});
 	});
 
-
+ $('#auto').on('click',function(event){
+	 event.preventDefault();
+	 $('#forgetNo').val('20220004');
+	 $('#forgetEmail').val('qkrwjdtn741@naver.com');
+	 
+ })
 
 </script>
