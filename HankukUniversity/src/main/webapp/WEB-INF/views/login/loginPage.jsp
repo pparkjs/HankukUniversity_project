@@ -245,7 +245,6 @@ if(queryStr != null && !queryStr.equals("")){
 
 
     <div id='backstretch'>
-
     </div>
     <h1 id="mainName"> Hankuk <br>University</h1>
 <!--   <form action="/main/login" method="post"> -->
