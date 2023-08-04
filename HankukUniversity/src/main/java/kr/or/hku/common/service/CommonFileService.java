@@ -18,4 +18,6 @@ public interface CommonFileService {
 
 	public int deleteFile(int fileNo);
 
+	public String updateProfile(MultipartFile stdMultipartFile);
+
 }
