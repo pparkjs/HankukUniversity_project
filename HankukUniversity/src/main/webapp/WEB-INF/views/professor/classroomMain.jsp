@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<link rel="stylesheet" href="/css/table.css">
 <link rel="stylesheet" href="/css/pro-jh.css">
 <link rel="stylesheet" href="/css/pro-js.css">
+<link rel="stylesheet" href="/css/table.css">
 <style>
 .light.btn-primary {
     background-color: rgb(128 0 0 / 0%);
@@ -36,14 +36,18 @@
   margin-right: 20px; 
   margin-left: 20px; 
 }
-.card-body {
-	overflow: scroll;
-}
 
 .active-projects tbody tr td {
     font-size: 20px;
 }
-
+.table-wrap {
+    overflow: scroll;
+    height: 257px;
+    margin-top: -15px;
+}
+.table {
+	border-collapse: collapse;
+}
 </style>
 
 <div class="content-body" style="min-height: 975px;">
@@ -59,7 +63,7 @@
 		<div style="display: flex;">
 			<h2 style="font-weight: 600; color: #404040;">${subNm }</h2>
 			<div class="buttons" style="padding-left:68%; padding-bottom:10px;">
-				<button type="button" id="attendBtn" style="padding: 0.6rem 1.0rem; background: #0070c0; border-color: #0070c0;" class="btn btn-primary">출석관리</button>
+				<button type="button" id="attendBtn" style="padding: 0.6rem 1.0rem; background: #0070c0; border-color: #0070c0; margin-left: 47px;" class="btn btn-primary">출석관리</button>
 				<button type="button" id="attendDmrBtn" style="padding: 0.6rem 1.2rem; background: #ff4343; border-color: #ff4343;" class="btn btn-primary">이의신청관리</button>
 			</div>
 		</div>
@@ -161,37 +165,39 @@
 								<circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
 							</button>
 					</div>
-					<div class="card-body ccc" style="padding-top: 0;">
-						<table class="table">
-							<thead>
-								<tr>
-									<th>No</th>
-									<th>제목</th>
-									<th>작성일시</th>
-								</tr>
-							</thead>
-							<tbody id="tbtb">
-							<c:set value="${asgList }" var="asgList"/>
-							<c:choose>
-								<c:when test="${empty asgList }">
+					<div class="card-body">
+						<div class="table-wrap">
+							<table class="table">
+								<thead class="thead-dark">
 									<tr>
-										<td colspan="5">등록된 게시글이 없습니다</td>
+										<th>No</th>
+										<th>제목</th>
+										<th>작성일시</th>
 									</tr>
-								</c:when>
-								<c:when test="${not empty asgList }">
-									<c:forEach items="${asgList}" var="list" varStatus="status">
-										<tr class="tbtr">
-											<td class="">${status.index + 1}</td>
-											<td class="">
-												<a href="/hku/professor/assignmentDetail/${list.asmNo}">${list.asmTtl }</a>
-											</td>
-											<td class="">${list.asmRegdate}</td>
+								</thead>
+								<tbody id="tbtb">
+								<c:set value="${asgList }" var="asgList"/>
+								<c:choose>
+									<c:when test="${empty asgList }">
+										<tr>
+											<td colspan="5">등록된 게시글이 없습니다</td>
 										</tr>
-									</c:forEach>
-								</c:when>
-							</c:choose>
-							</tbody>
-						</table>
+									</c:when>
+									<c:when test="${not empty asgList }">
+										<c:forEach items="${asgList}" var="list" varStatus="status">
+											<tr class="tbtr">
+												<td class="">${status.index + 1}</td>
+												<td class="">
+													<a href="/hku/professor/assignmentDetail/${list.asmNo}">${list.asmTtl }</a>
+												</td>
+												<td class="">${list.asmRegdate}</td>
+											</tr>
+										</c:forEach>
+									</c:when>
+								</c:choose>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -216,27 +222,29 @@
 								<circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
 							</button>
 					</div>
-					<div class="card-body ccc" style="padding-top: 0;">
-						<table class="table">
-							<thead>
-								<tr>
-									<th>No</th>
-									<th>제목</th>
-									<th>작성일</th>
-									<th>조회수</th>
-								</tr>
-							</thead>
-							<tbody id="tbtb">
-							<c:forEach items="${noticeList}" var="notice" varStatus="status">
-								<tr class="tbtr">
-									<td class="">${status.index + 1}</td>
-									<td class=""><a href="/hku/professor/detailNotice/${notice.lecntNo}">${notice.lecntTtl}</a></td>
-									<td class="">${notice.lecntRegdate}</td>
-									<td class="">${notice.lecntReadCnt}</td>
-								</tr>
-							</c:forEach>
-							</tbody>
-						</table>
+					<div class="card-body">
+						<div class="table-wrap">
+							<table class="table">
+								<thead class="thead-dark">
+									<tr>
+										<th>No</th>
+										<th>제목</th>
+										<th>작성일</th>
+										<th>조회수</th>
+									</tr>
+								</thead>
+								<tbody id="tbtb">
+								<c:forEach items="${noticeList}" var="notice" varStatus="status">
+									<tr class="tbtr">
+										<td class="">${status.index + 1}</td>
+										<td class=""><a href="/hku/professor/detailNotice/${notice.lecntNo}">${notice.lecntTtl}</a></td>
+										<td class="">${notice.lecntRegdate}</td>
+										<td class="">${notice.lecntReadCnt}</td>
+									</tr>
+								</c:forEach>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
