@@ -260,6 +260,9 @@ $(function(){
 		$("#flctsNo").val('');
 		$("#flctsNm").val('');
 
+		$("#flctsInsertBtn").css('display', 'inline');
+		$("#flctsModifyBtn").css('display', 'none');
+
 		flctsNoSet();
 	});
 });

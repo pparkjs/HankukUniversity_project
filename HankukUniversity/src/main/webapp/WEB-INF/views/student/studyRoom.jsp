@@ -31,7 +31,7 @@
 .study-top{
 	border: 1px solid maroon;
     padding: 13px;
-    height: 252px;
+    height: 273px;
 }
 .schedule td, .schedule th{
 border-color: #6e6e6e;
@@ -121,6 +121,18 @@ input[name=color]:checked + label{
 .schedule td, .schedule th {
     border-color: black;
 }
+.table tbody th, .table tbody td {
+    border: none;
+    padding: 4px;
+    font-size: 18px;
+    color: black;
+}
+.table thead th {
+    border: none;
+    padding: 3px;
+    font-size: 20px;
+    color: #fff;
+} 
 </style>
 		<meta charset="UTF-8">
 		<div class="content-body">
@@ -146,7 +158,7 @@ input[name=color]:checked + label{
 							</li>
 						</ul>
 						<div style="display: flex;">
-							<a class="btn btn-primary" href="https://6ce9-1-212-157-150.ngrok-free.app/study?room=${study.studyNo }" role="button" id="btn1" style="margin-bottom: 10px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
+							<a class="btn btn-primary" href="https://e898-1-212-157-150.ngrok-free.app/study?room=${study.studyNo }" role="button" id="btn1" style="margin-bottom: 10px; background: #0070c0; border-color: #0070c0;">화상채팅</a>
 						
 							<form action="/hku/student/delStudy" method="post" id="delForm">
 								<input type="hidden" name="studyNo" value="${study.studyNo}" id="studyNo">
@@ -168,7 +180,7 @@ input[name=color]:checked + label{
 						</div>								
 					</div>
 					<div class="card" id="card-title-1">
-						<div class="card-body" style="padding-top: 0px;">
+						<div class="card-body" style="padding-top: 0px; height: 760px;">
 							<div class="tab-content">
 								<div class="tab-pane fade show active" id="profile1">
 									<div class="pt-4">
@@ -180,7 +192,7 @@ input[name=color]:checked + label{
 													<p>스터디 소개글이 존재하지 않습니다.</p>
 												</c:when>
 												<c:otherwise>
-													<p> ${study.studyIntro }</p>																						
+													<p style=" overflow: auto; height: 187px;"> ${study.studyIntro }</p>																						
 												</c:otherwise>
 											</c:choose>
 										</div>
@@ -418,6 +430,7 @@ input[name=color]:checked + label{
 				</div>
 			</div>
 			<div class="modal-footer">
+				<button type="button" class="btn btn-info" id="automaticCompletionBtn">자동완성</button>
 				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
 				<button type="button" class="btn btn-primary" id="addBtn">등록</button>
 			</div>
@@ -705,12 +718,14 @@ $(document).on('DOMContentLoaded', function() {
 				console.log("캘린더 정보", res);
 				for(let i=0; i<res.length; i++){
 					let calData = res[i];
+					const endDate = moment(calData.calEndDt);
+					const nextDay = endDate.add(1, 'days').format('YYYY-MM-DD');
 					calendar.addEvent({
 						id: calData.calNo,
 						title: calData.calTtl,
 						start: calData.calBgngDt,
 						description : calData.calCn,
-						end: calData.calEndDt,
+						end: nextDay,
 						textColor: "black",
 						backgroundColor: calData.calColor
 					});
@@ -741,23 +756,27 @@ $(document).on('DOMContentLoaded', function() {
 	
 	// 변경 했을때 다시 저장
 	function setChangeEvent(e,data){
-		
+		const endDate = moment(data.calEndDt);
+		const nextDay = endDate.add(1, 'days').format('YYYY-MM-DD');
 		console.log("왜 안됨?", data);
 		e.setProp('title', data.calTtl);
 		e.setExtendedProp('description', data.calCn);
 		e.setStart(data.calBgngDt);
-		e.setEnd(data.calEndDt);
+		e.setEnd(nextDay);
 		e.setProp('backgroundColor', data.calColor);
 	}
 	
 	function changeEvent(e){
+		let realDate = moment(e.end).format("YYYY-MM-DD");
+		const endDate = moment(realDate);
+		const nextDay = endDate.subtract(1, 'days').format('YYYY-MM-DD');
 		// 이벤트 움직엿을떄 발생할떄 변경 해주기
 		let changeData = {
 			calNo: e.id,
 			calTtl: e.title,
 			calCn: e.extendedProps.description,
 			calBgngDt: moment(e.start).format("YYYY-MM-DD"),
-			calEndDt: moment(e.end).format("YYYY-MM-DD"),
+			calEndDt: nextDay,
 			calColor: e.backgroundColor,
 			studyNo: calStudyNo
 		};
@@ -819,12 +838,14 @@ $(document).on('DOMContentLoaded', function() {
 						});
 						console.log("일정 추가 성공", res);
 						res = JSON.parse(res);
+						const endDate = moment(res.calEndDt);
+						const nextDay = endDate.add(1, 'days').format('YYYY-MM-DD');
 						calendar.addEvent({
 							id: res.calNo,
 							title: res.calTtl,
 							start: res.calBgngDt,
 							description : res.calCn,
-							end: res.calEndDt,
+							end: nextDay,
 							textColor: 'black',
 							backgroundColor: res.calColor
 						});
@@ -869,6 +890,9 @@ $(document).on('DOMContentLoaded', function() {
 	// 모달창 닫힐떄 일어나는 매서드
 	calModal.on('hidden.bs.modal', function() {
 		$('#calFrm')[0].reset();
+		$('input[type="radio"]').each(function() {
+	    	$(this).prop('checked', false);
+	  	});
 		addBtn.text("등록");
 	});
 	
@@ -954,6 +978,13 @@ $(document).on('DOMContentLoaded', function() {
 	// 일정 버튼 눌럿을떄 캘린더 다시 랜더링
 	$('#calRender').click(function(){
 		calendar.render();
+	});
+	
+	$('#automaticCompletionBtn').on('click', function(){
+		$('#calTtl').val('알고리즘 모임');
+		$('#calCn').val('일정 \n금요일 2시부터 4시 \n장소\n그룹스터디룸3');
+		$('#calEndDt').val("2023-08-10")
+		$('#color2').attr("checked", true);
 	});
 });
 </script>

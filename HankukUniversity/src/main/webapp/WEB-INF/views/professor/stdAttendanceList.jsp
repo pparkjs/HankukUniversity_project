@@ -41,7 +41,7 @@
 						<button type="button" id="listBtn" class="btn btn-primary btn-sm"
 							data-bs-toggle="modal" data-bs-target="#exampleModal"
 								style="width:65px; height:35px;">
-							<p style="font-size:14px;">목록</p></button>
+							<p style="font-size:14px;">메인</p></button>
 					</div>
 					<input type="hidden" name="lecapNo" id="lecapNo" value="${lecapNo }" >
 					<div class="card-body p-0">
@@ -219,7 +219,6 @@ $(function(){
 			},
 			success : function(res){
 				if(res == "success"){
-					getStdAttend();
 					swal({
 	                     title: "출결 상태를 변경하시겠습니까 ? ",
 	                     text: "학생의 이름을 확인해주세요",
@@ -229,7 +228,7 @@ $(function(){
 	                 })
 	                     .then((willDelete) => {
 	                         if (willDelete) {
-	                           location.reload();  
+	                        	 getStdAttend();
 								swal("", "출결 변경이 완료되었습니다", "success");
 	                          };
 	                     });

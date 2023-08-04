@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/student/study-pjs.css">
 <link rel="stylesheet" href="/css/table.css">
@@ -73,10 +74,10 @@
 											<div class="studycard-wrap" style="width: 24%;">
 												<div class="study-top">
 													<span class="study-text">[ 스터디명 : </span>
-													<div class="study-name">${study.studyName } ]</div>
+													<div class="study-name">${fn:substring(study.studyName,0,13) } ]</div>
 												</div>
 												<hr>
-												<div class="study-title">${study.studyIntro }</div>
+												<div class="study-title">${fn:substring(study.studyIntro,0, 50) }</div>
 												<hr>
 												<div class="study-bottom">
 													<div class="bottom1">
@@ -173,7 +174,8 @@
 									<div class="col-xl-6 mb-3">
 										<label for="exampleFormControlInput1" class="form-label">
 										스터디 이름 <span class="text-danger">*</span>
-										</label> <input type="text" class="form-control" name="studyName"
+										</label> <input type="text" class="form-control" id="studyName" name="studyName"
+										
 											id="exampleFormControlInput1" placeholder="">
 									</div>
 									<div class="col-xl-6 mb-3">
@@ -186,11 +188,12 @@
 										<label for="exampleFormControlInput2" class="form-label">
 										스터디 소개글<span class="text-danger">*</span>
 										</label>
-										<input type="text" class="form-control" name="studyIntro" id="" placeholder="">
+										<textarea cols="10" rows="10" class="form-control" name="studyIntro" id="studyIntro" placeholder=""></textarea>
 									</div>
 									<div>
-										<button class="btn btn-primary me-1" onclick="addStudy()">개설</button>
+										<input type="button" class="btn btn-primary" onclick="addStudy()" value="개설">
 										<button class="btn btn-danger light ms-1">취소</button>
+										<button class="btn btn-danger light ms-1" onclick="auto()">자동완성</button>
 									</div>
 								</div>
 							</form>
@@ -206,7 +209,7 @@
 
 function studyList(){
 	var stdNo = {
-			"stdNo":"\${sessionScope.std.stdNo}"
+			"stdNo":"${sessionScope.std.stdNo}"
 	};
 	console.log("보낸 stdNo: ", stdNo);
 	var body = $("#studyListDiv");
@@ -220,34 +223,38 @@ function studyList(){
 			
 			var data = '';
 			for(var i = 0; i < res.length; i++){
-				data += `<div class="col-xl-3 col-lg-4 col-sm-6">
-							<div class="card" style="background-color: #adb17d1c;">
-							<div class="card-body">
-								<div class="card-use-box">
-									<div class="card__text">
-										<h4 class="mb-0">\${res[i].studyName }</h4>
-										<p>${res[i].studyIntro }</p>
+				data += `	<div class="studycard-wrap" style="width: 24%;">
+									<div class="study-top">
+									<span class="study-text">[ 스터디명 : </span>
+									<div class="study-name">\${res[i].studyName.substring(0, 13) } ]</div>
+								</div>
+								<hr>
+								<div class="study-title">\${res[i].studyIntro.substring(0, 50) }</div>
+								<hr>
+								<div class="study-bottom">
+									<div class="bottom1">
+										<span class="date-text">생성일 :</span>
+										<div class="reg-date">	
+											\${res[i].studyRegdate.substring(0, 10)}										
+										</div>
+										<div style="margin-left: 55px;">
+											<a href="/hku/student/studyRoom?studyNo=\${res[i].studyNo }">
+												<button class="end-button">입장</button>
+											</a>
+										</div>
 									</div>
-									<ul class="card__info">
-										<li><span>인원수</span> <span class="card__info__stats">\${res[i].count} / \${res[i].studyCpcy }</span>
-										</li>
-									</ul>
-									<ul class="post-pos">
-										<li><span class="card__info__stats">스터디장: </span> 
-										<span>\${res[i].stdNm }</span>
-										</li>
-											<span>\${res[i].studyRegdate }</span>
-										</li>
-									</ul>
-									
-									<div>
-										<a href="/hku/student/studyRoom?studyNo=\${res[i].studyNo }"
-											class="btn btn-outline-primary btn-xs">Enter</a>
+									<div class="bottom2">
+										<img alt="" src="/images/왕관.png" class="crownImg">
+										<div class="master-name">\${res[i].stdNm }</div>
+										<div class="hit-con">
+											<img alt="" src="/images/조회수.png" class="hitImg">
+											
+											<div class="cnt-text">인원:</div>
+											<div class="study-cnt">\${res[i].count} / \${res[i].studyCpcy }</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>	
-					</div>`;
+							</div>`;
 			}
 			body.html(data);
 		}
@@ -261,7 +268,8 @@ function addStudy(){
 	var studyName = addStudyForm.studyName.value;
 	var studyCpcy = addStudyForm.studyCpcy.value;
 	var studyIntro = addStudyForm.studyIntro.value;
-	
+	studyIntro = studyIntro.replaceAll(/(\n|\r\n)/g, "<br>");
+	console.log("체킁 : ", studyIntro)
 	let data = {
 		"studyName" : studyName,
 		"studyCpcy" : studyCpcy,
@@ -275,19 +283,37 @@ function addStudy(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			if(xhr.responseText === "SUCCESS"){
 				console.log("성공");
-				location.reload(true);
+// 				location.reload(true);
 				studyList();
-				
-				
+				$(".btn-close").click();
+		      	swal({
+		          title: "스터디 개설에 성공했습니다.!", 
+		          icon: "success"
+		        });
+		      	$(".btn-close").click();
 			} else if(xhr.responseText === "FAILED"){
 				console.log(" 실패");
-				location.reload(true);
+// 				location.reload(true);
 			}
 		}
 	}
 	xhr.send(JSON.stringify(data));
-	studyList();
-	location.reload(true);
+// 	studyList();
+// 	location.reload(true);
+}
+
+function auto(){
+	
+	str ='2023 3회 정보처리기사 필기 시험에 맞춰서 스터디를 구성해서 자격증을 준비해보려고 합니다.\n\r';
+	str+= '스터디 주제 : 정보처리기사 실기\n\r스터디 목표 : 2023 3회 정보처리기사 실기 합격\n\r'
+	str+= '예상 스터디 일정(횟수) : 매주 월,수,금 오후 9시\n\r'
+	str+= '스터디 내용 : 20년 이후 기출문제 스터디  풀이 및 공유와 신기술 문제 스터디\n\r 이후 각자 문제집으로 호흡맞춰 스터디예정\n\r '
+	str+= '스터디 관련 주의사항 :3회 이상 불참시 스터디 탈퇴 조건입니다. \n\r모두 같이 열심히 해봐요!'
+	
+	event.preventDefault();
+	document.querySelector('#studyName').value = '정보처리기사 스터디';
+	document.querySelector('#exampleFormControlInput2').value  = '5';
+	document.querySelector('#studyIntro').value  = str;
 }
 </script>
 

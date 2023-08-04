@@ -298,7 +298,7 @@ function counselingReqList(){
 						
 						if(res[i].attendModeCd == '비대면'){
 							appvData +=		`<td>
-												<a href="https://191c-1-212-157-150.ngrok-free.app/rtc?dscsnNo=\${res[i].dscsnNo }" class="btn btn-primary" id="rtcBtn" style="background: #0070c0; border-color:#0070c0;">입장</a>
+												<a href="https://0075-1-212-157-150.ngrok-free.app/rtc?dscsnNo=\${res[i].dscsnNo }" class="btn btn-primary" id="rtcBtn" style="background: #0070c0; border-color:#0070c0;">입장</a>
 											</td>`
 						}else{
 							appvData +=     `<td style="display: flex; justify-content: center;"> 

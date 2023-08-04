@@ -171,6 +171,7 @@ min-width : 0px;
                 </div>
                 </div>
                 <br>
+				<button type="button" class="btn btn-primary" style="background:#800000; width:300px; border:none; margin-bottom: 5px;" id="auto">자동완성</button>
 				<button type="button" class="btn btn-primary" style="background:#800000; width:300px; border:none;" id="sendPw">임시비밀번호 발급</button>
 				<div style="height: 50px; width:300px; margin:0px; display: flex; justify-content: center; align-items: center;">
 				 <p id="resultContent" style="color:blue; font-size: 1.3em; font-weight: bold;"> </p>
@@ -263,7 +264,7 @@ var userNo ;
 	        	changeStr = "<div class='mb-3 row'>";
 	        	changeStr += "<label class='col-sm-2 col-form-label'>임시비밀번호</label>";
 	        	changeStr += "<div class='col-sm-10'>";
-	        	changeStr += "<input type='text' class='form-control' id='temporary'></div>";
+	        	changeStr += "<input type='text' class='form-control' id='temporary' placeholder='소문자, 숫자, 특수기호가 포함된 8글자 이상이어야합니다.'></div>";
 	        	changeStr += "<label class='col-sm-2 col-form-label'>새로운 비밀번호</label>";
 	        	changeStr += "<div class='col-sm-10'>";
 	        	changeStr += "<input type='password' class='form-control' id='newPw'></div>";
@@ -375,6 +376,11 @@ var userNo ;
 			});
 	});
 
-
+ $('#auto').on('click',function(event){
+	 event.preventDefault();
+	 $('#forgetNo').val('20220004');
+	 $('#forgetEmail').val('qkrwjdtn741@naver.com');
+	 
+ })
 
 </script>

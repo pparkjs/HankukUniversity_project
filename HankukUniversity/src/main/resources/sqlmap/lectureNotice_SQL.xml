@@ -19,7 +19,7 @@
 	</select>
 		
 	<insert id="insertNotice" parameterType="lectureNoticeVO" useGeneratedKeys="true">
-		<selectKey resultType="int" keyProperty="lecentNo" order="BEFORE">
+		<selectKey resultType="int" keyProperty="lecntNo" order="BEFORE">
 			SELECT seq_lecturenotice.nextval FROM dual
 		</selectKey>
 		INSERT INTO LECTURE_NOTICE(
@@ -34,7 +34,7 @@
 						,ATCH_FILE_NO
 					</if>
 		)VALUES(
-					#{lecentNo}
+					#{lecntNo}
 					,#{lecapNo}
 					,#{lecntTtl}
 					,#{lecntCn}

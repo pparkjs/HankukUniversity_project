@@ -74,6 +74,27 @@ public class CommonFileServiceImpl implements CommonFileService {
 	public int deleteFile(int fileNo) {
 		return fileMapper.deleteFile(fileNo);
 	}
+	
+	@Override
+	public String updateProfile(MultipartFile stdMultipartFile) {
+		String uploadPath = resourcePath;
+		File folder = new File(uploadPath);
+		if(!folder.exists()) {
+			folder.mkdirs();
+		}
+		String uuid = UUID.randomUUID().toString();
+		// uuid + 오리지날 네임 결합
+		String saveFileName = "/" + uuid + "_" + stdMultipartFile.getOriginalFilename();
+		
+		uploadPath = uploadPath + saveFileName;
+		
+		try {
+			stdMultipartFile.transferTo(new File(uploadPath));
+		} catch (IllegalStateException | IOException e) {
+			log.error(e.getMessage());
+		}
+		return saveFileName;
+	}
 
 	@Override
 	public List<AttachFileVO> boardFileList(int atchFileNo) {

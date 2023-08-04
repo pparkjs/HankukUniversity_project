@@ -81,7 +81,7 @@ public class CommonSMSServiceImpl implements CommonSMSService {
 		List<ApiVO> apiId = apiService.getApiId(apiType);
 		String sendFrom = apiId.get(0).getApiId().trim();
 		// 여기 진짜 핸드폰 번호 넣어야함 =======================================================================================
-		String[] tels = {"0asd1asd0asd-53asd9asd8-1asd8asd2asd1"}; // 정재균 핸드폰 번호 입력해야함
+		String[] tels = {"010-5398-1821","010-6647-7508"}; // 정재균 핸드폰 번호 입력해야함
 		// 여기 진짜 핸드폰 번호 넣어야함 =======================================================================================
 		for (int i = 0; i < tels.length; i++) {
 			Message message = new Message();

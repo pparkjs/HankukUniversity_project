@@ -170,7 +170,7 @@
 							<div class="col-xl-6 mb-3">
 								<label class="form-label mt-3">스터디선택<span class="text-danger">*</span></label>
 								<div class="input-group">
-									<select class="default-select form-control" name=studyNo>
+									<select class="default-select form-control" id='selStudy'  name=studyNo>
 									<option value="" >스터디 선택</option>
 									 <c:choose>
 								 		<c:when test="${empty myStudy}">
@@ -425,7 +425,7 @@ $(function() {
 	      $('#stboContent').val(transcontent);
 	    }
 	  
-	  if (transcript.includes('스터디선택')||transcript.includes('스터디 선택')||transcript.includes('선택')) {
+	  if (transcript.includes('선택')||transcript.includes('스터디 선택')||transcript.includes('선택')) {
 			var transcontent = newsentence(transcript);
 			$('#selStudy').prop('size', $('#selStudy option').length); 
 			$('#selStudy').css("height", $('#selStudy option').length * 20 );
