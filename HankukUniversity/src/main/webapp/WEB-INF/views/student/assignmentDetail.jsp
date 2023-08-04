@@ -54,10 +54,6 @@
 	height: 30px;
 }
 
-.card-body {
-	overflow: scroll;
-}
-
 .active-projects tbody tr td {
 	font-size: 15px;
 }
@@ -219,7 +215,7 @@
 												<label class="col-lg-1 col-form-label"
 													for="validationCustom01">성명 </label>
 												<div class="col-lg-3">
-													<input type="text" class="form-control"
+													<input type="text" class="form-control" style="margin-left: -13px;"
 														id="validationCustom01" name="stdNm" value=${std.stdNm }>
 													<div class="invalid-feedback"></div>
 												</div>
@@ -237,7 +233,7 @@
 												<label class="col-lg-1 col-form-label"
 													for="validationCustom06">파일 <span
 													class="text-danger"></span>
-												</label> <input type="file" style="width: 500px;"
+												</label> <input type="file" style="width: 375px;"
 													class="form-control" name="assignFile" id="atchFileNo"
 													placeholder="파일을 선택하세요" value="${atchFileNo }">
 											</div>

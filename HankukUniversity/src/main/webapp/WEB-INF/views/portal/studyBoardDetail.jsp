@@ -206,9 +206,11 @@ function intoStudy(){
 
 	var data = {
 		"studyNo": studyNo,
-		"joinReason": joinReason
+		"joinReason": joinReason,
+		"stdNo":"${studyBoard.stdNo}"
 		}
-
+	
+	console.log("글쓴이 체크",data)
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST","/hku/student/intoStudy",true);
 	xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');

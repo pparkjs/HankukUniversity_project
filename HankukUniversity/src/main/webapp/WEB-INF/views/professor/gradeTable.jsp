@@ -7,9 +7,6 @@
     font-size: 16px;
     background-color: #800000;
 }
-span{
-	font-size: 14px;
-}
 .active-projects.manage-client tbody tr td:last-child {
     text-align: center;
 }

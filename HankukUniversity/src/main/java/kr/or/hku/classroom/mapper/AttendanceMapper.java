@@ -53,4 +53,6 @@ public interface AttendanceMapper {
 	
 	// 이의신청 삭제 
 	public int deleteAttendDmr(int atdcNo);
+
+	public String getProNo(String lecapNo);
 }
