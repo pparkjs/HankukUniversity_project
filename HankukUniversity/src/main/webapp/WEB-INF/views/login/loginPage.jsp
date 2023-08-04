@@ -242,8 +242,6 @@ if(queryStr != null && !queryStr.equals("")){
 	}
 }
 %>
-
-
     <div id='backstretch'>
 
     </div>
@@ -291,7 +289,7 @@ if(queryStr != null && !queryStr.equals("")){
                <img src="/images/흰색로고lg.png">
             </td>
         </tr>
-        <tr id="trtwo">
+        <tr id="trtwo" style="position: relative;">
             <td>
                     <span style="margin-right: 13px;">ID</span>
                     	<input type="button" class='autoLogin' id="stdLogin" value="학생로그인">
@@ -302,8 +300,12 @@ if(queryStr != null && !queryStr.equals("")){
                     <input type="password" id="password" name="password" style="width:95%; height:30px; " placeholder="비밀번호를 입력하세요"><br>
                
             </td>
+            	
             <td>
-                <input type="submit" id="loginBtn" value="L&nbsp;O&nbsp;G&nbsp;I&nbsp;N">
+                <button type="submit" id="loginBtn" value="L&nbsp;O&nbsp;G&nbsp;I&nbsp;N">L&nbsp;O&nbsp;G&nbsp;I&nbsp;N</button>
+            </td>
+            <td>
+            	<div id="myCapcha" style="display: none; position: absolute; left: 602px; top: 241px;"></div>
             </td>
         </tr>
         <tr id="trthree">
@@ -311,12 +313,54 @@ if(queryStr != null && !queryStr.equals("")){
                 <a href="" onclick="forget()" >계정이 기억나지않으시나요?</a>
             </td>
         </tr>
-    </table>
+    </table>		   
+                
+				
      <sec:csrfInput/>
   </form>
+  
 </body>
-
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 <script type="text/javascript">
+
+	var mainName = document.querySelector("h1");
+	var loginFrm = document.querySelector("table");
+	
+    // 이 페이지가 로드되면 리캡챠 위젯을 초기화
+    window.onload = onloadCallback;
+	
+	// 리캡챠 체크 후 원하는 이벤트를 실행
+    function onRecaptchaSuccess() {
+        console.log("리캡챠 인증 성공!");
+        document.getElementById("loginBtn").disabled = false;
+    }
+
+    // 리캡챠 실행 후 콜백 함수를 등록
+    function onloadCallback() {
+        grecaptcha.render('myCapcha', {
+            'sitekey': '6LdU8XcnAAAAAO3rBY7UQXT2kB2O_1jnW4GUQMc1',
+            'callback': onRecaptchaSuccess, // 리캡챠 인증 성공 시 실행할 콜백 함수
+        });
+    }
+    
+    function showMyCapcha() {
+        var myCapchaDiv = document.getElementById("myCapcha");
+        myCapchaDiv.style.display = "block";
+    }
+    
+    
+    // 로그인 실패시
+    if(location.href.includes("?error")){
+        swal("로그인 정보가 일치하지 않습니다.");
+        
+        document.getElementById("loginBtn").disabled = true;
+	        
+        mainName.style.animation = 'downslide 1s ease-out forwards';
+        loginFrm.classList.add("show");
+        $("#loginTable").css("top", "22%");
+        showMyCapcha();       
+    }
+    
     $.backstretch(['/images/login/imgSub135000_01.jpg',
         '/images/login/imgSub340000_01.jpg',
         '/images/login/DJI_0886s.jpg'], { duration: 3500, fade: true, resize: true, firstfade: true });
@@ -327,11 +371,11 @@ if(queryStr != null && !queryStr.equals("")){
         }, 100);
     }
 
-    let mainName = document.querySelector("h1");
-    let loginFrm = document.querySelector("table");
+    
     //        let logo = document.querySelector("#logo");
     console.log("내용", mainName.value);
     window.addEventListener("scroll", function () {
+    	 $("#loginTable").css("top", "35%");
         let value = window.scrollY;
         console.log(value);
 
@@ -351,11 +395,6 @@ if(queryStr != null && !queryStr.equals("")){
     function forget(){
        event.preventDefault();
        window.open("/main/forget","_blank","width=400,height=450,left=600,top=350");
-    }
-
-    if(location.href.includes("?error")){
-        swal("올바르지않은 접근입니다.");
-        //127.0.0.1(localhost)
     }
     
     var stdLogin = document.querySelector("#stdLogin");
@@ -379,5 +418,3 @@ if(queryStr != null && !queryStr.equals("")){
     })
     
 </script>
-
-</html>

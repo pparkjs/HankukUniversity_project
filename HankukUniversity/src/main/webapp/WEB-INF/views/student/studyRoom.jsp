@@ -233,7 +233,7 @@ input[name=color]:checked + label{
 										<table style="width: 100%; border: none;" class="table" id="tbl1">
 											<thead class="thead-dark">
 												<tr>
-													<th>이름 </th><th>학과 </th><th>학번 </th><th>신청일</th><th> </th>
+													<th>이름 </th><th>학과 </th><th>학번 </th><th>신청일</th><th>자기소개</th><th> </th>
 												</tr>
 											</thead>
 											<tbody>
@@ -245,11 +245,14 @@ input[name=color]:checked + label{
 														</c:when>
 														<c:otherwise>
 															<c:forEach items="${appli}" var="appli">
-															    <tr id="link" class="rea" onclick="showJoinReason('${appli.joinReason}')"> <!-- '${appli.joinReason}' 값을 인자로 넘겨줌 -->
+															    <tr id="link" class="rea"> <!-- '${appli.joinReason}' 값을 인자로 넘겨줌 -->
 															        <td>${appli.stdNm}</td>
 															        <td>${appli.deptNm}</td>
 															        <td id="td">${appli.stdNo}</td>
 															        <td>${appli.joinRegdate}</td>
+															        <td hidden>														        	
+															        	${appli.joinReason}
+															        </td>
 															        <td>
 															            <div class="action-button">
 															                <form action="" method="post" id="applFrm" name="applFrm">
@@ -263,23 +266,8 @@ input[name=color]:checked + label{
 															                </form>
 															            </div>
 															        </td>
-															    </tr>
-															    <div class="modal fade" id="basicModal-${appli.joinNo}" style="display: none;" aria-hidden="true"> <!-- 'appli.joinNo'를 사용하여 각각의 모달에 유니크한 id 부여 -->
-															        <div class="modal-dialog" role="document">
-															            <div class="modal-content">
-															                <div class="modal-header">
-															                    <h5 class="modal-title">자기소개</h5>
 															       
-															                </div>
-															                <div class="modal-body">
-															                	<textarea name="joinReason" id="joinReason${appli.joinNo}" class="form-control h-50" id="validationCustom04" rows="10"required>${appli.joinReason}</textarea>	              
-															                </div>
-															                <div class="modal-footer">
-															                    <button type="button" id="join-close" class="btn btn-danger light" data-bs-dismiss="modal" onclick="closeModal('${appli.joinNo}')">닫기</button> <!-- 'appli.joinNo' 값을 인자로 넘겨줌 -->
-															                </div>
-															            </div>
-															        </div>
-															    </div>
+															    </tr>
 															</c:forEach>
 															
 														</c:otherwise>
@@ -296,7 +284,23 @@ input[name=color]:checked + label{
 									</div>
 								</div>
 							</div>
-						</div>			   
+						</div>
+						<button type="button" hidden class="btn btn-primary" id="reaBtn" style="margin: 5px; background: #0070c0; border-color: #0070c0;" data-bs-toggle="modal" data-bs-target="#basicModal">보기</button>		   
+						 <div class="modal fade" id="basicModal" style="display: none;" aria-hidden="true"> <!-- 'appli.joinNo'를 사용하여 각각의 모달에 유니크한 id 부여 -->
+					        <div class="modal-dialog" role="document">
+					            <div class="modal-content">
+					                <div class="modal-header">
+					                    <h5 class="modal-title">자기소개</h5>
+					                </div>
+					                <div class="modal-body">
+					                	<textarea name="joinReason" id="joinReason" class="form-control h-50" id="validationCustom04" rows="10"required></textarea>	              
+					                </div>
+					                <div class="modal-footer">
+					                    <button type="button" id="join-close" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button> <!-- 'appli.joinNo' 값을 인자로 넘겨줌 -->
+					                </div>
+					            </div>
+					        </div>
+					    </div>
 
 							<div class="tab-pane fade" id="contact1">
 								<div style="display: flex;">
@@ -438,21 +442,28 @@ $(document).ready(function() {
 	sTbl();
 });
 
-function showJoinReason() {
-    const modalDiv = document.querySelector('.modal.fade');
-    if (modalDiv) {
-        modalDiv.classList.add('show'); 
-        modalDiv.style.display = 'block'; 
-    }
-}
+document.addEventListener("DOMContentLoaded", function() {
+    const reaTrElements = document.querySelectorAll("tr.rea");
 
-function closeModal() {
-    const modalDiv = document.querySelector('.modal.fade.show');
-    if (modalDiv) {
-        modalDiv.classList.remove('show'); 
-        modalDiv.style.display = 'none'; 
+    for (const tr of reaTrElements) {
+        tr.addEventListener("click", function() {
+            const joinReasonValue = tr.querySelector("td:nth-last-child(2)").textContent.trim();
+            const joinReasonTextArea = document.getElementById("joinReason");
+            joinReasonTextArea.value = joinReasonValue;
+        });
     }
-}
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const reaTrElements = document.querySelectorAll("tr.rea");
+
+    for (const tr of reaTrElements) {
+        tr.addEventListener("click", function() {
+            const reaBtn = document.getElementById("reaBtn");
+            reaBtn.click();
+        });
+    }
+});
 
 function sTbl(){
 	var sBody = $("#sBody");
