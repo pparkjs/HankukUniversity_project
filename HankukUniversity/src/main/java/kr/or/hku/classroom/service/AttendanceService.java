@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.vo.AttendanceVO;
+import kr.or.hku.student.vo.StudentVO;
 
 public interface AttendanceService {
 	
@@ -35,7 +36,7 @@ public interface AttendanceService {
 	public Map<String, Object> getAtdcNo(AttendanceVO attend);
 	
 	// 이의신청하기 
-	public ServiceResult submitAttendDmr(AttendanceVO attend);
+	public ServiceResult submitAttendDmr(AttendanceVO attend, String proNo, StudentVO std);
 	
 	// 이의신청현황 리스트 
 	public List<AttendanceVO> attenDmrList(AttendanceVO vo);
@@ -48,6 +49,8 @@ public interface AttendanceService {
 	
 	// 이의신청 삭제 
 	public ServiceResult deleteAttendDmr(int atdcNo);
+
+	public String getProNo(String lecapNo);
 
 	
 	

@@ -233,7 +233,7 @@ input[name=color]:checked + label{
 										<table style="width: 100%; border: none;" class="table" id="tbl1">
 											<thead class="thead-dark">
 												<tr>
-													<th>이름 </th><th>학과 </th><th>학번 </th><th>신청일</th><th>자기소개</th><th> </th>
+													<th>이름 </th><th>학과 </th><th>학번 </th><th>신청일</th><th></th>
 												</tr>
 											</thead>
 											<tbody>
@@ -578,6 +578,7 @@ $(function(){
 	})
 	
 });
+
 
 function assignStudy() {
 	var tdElement = event.target.closest('td'); // 현재 클릭한 버튼이 포함된 td 요소 찾기

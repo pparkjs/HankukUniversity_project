@@ -167,4 +167,8 @@
 			WHERE atdc_no = #{atdcNo}
 		</delete>
 		
+		<!-- 교번 가져오기 -->
+		<select id="getProNo" parameterType="string" resultType="string">
+			select pro_no from lecture_aply where lecap_no = #{lecapNo}
+		</select>
  </mapper>
