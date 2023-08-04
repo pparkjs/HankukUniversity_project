@@ -200,13 +200,18 @@ public class StdClassroomController {
 	// 이의신청 완료
 	@ResponseBody
 	@PostMapping("/submitAttendDmr")
-	public String submitAttendDmr(AttendanceVO vo) {
+	public String submitAttendDmr(AttendanceVO vo, HttpSession session) {
 		log.info("여기에 뭐가 오냐면" + vo.toString());
+		
+		String proNo = attendanceService.getProNo(vo.getLecapNo());
+		StudentVO std = (StudentVO)session.getAttribute("std");
+		log.info("교번오나? : " + proNo);
+		
 		int atchFileNo = fileService.getAttachFileNo();
 		fileService.insertFile(vo.getAttendanceFile(), atchFileNo, 0);
 		log.info("파일 저장 성공 ? " + atchFileNo);
 		vo.setAtchFileNo(atchFileNo);
-		ServiceResult result = attendanceService.submitAttendDmr(vo);
+		ServiceResult result = attendanceService.submitAttendDmr(vo, proNo, std);
 		
 		if(result.equals(ServiceResult.EXIST)){
 			return "exist";

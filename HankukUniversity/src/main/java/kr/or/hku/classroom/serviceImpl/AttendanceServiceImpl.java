@@ -11,8 +11,11 @@ import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.mapper.AttendanceMapper;
 import kr.or.hku.classroom.service.AttendanceService;
 import kr.or.hku.classroom.vo.AttendanceVO;
+import kr.or.hku.common.mapper.CommonMapper;
 import kr.or.hku.common.service.CommonFileService;
+import kr.or.hku.common.vo.AlarmVO;
 import kr.or.hku.common.vo.AttachFileVO;
+import kr.or.hku.student.vo.StudentVO;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
@@ -22,6 +25,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 	
 	@Autowired
 	private CommonFileService fileService;
+	
+	@Autowired
+	private CommonMapper commonMapper;
 	
 	// 출석관리 
 	@Override
@@ -98,13 +104,26 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public ServiceResult submitAttendDmr(AttendanceVO vo) {
+	public ServiceResult submitAttendDmr(AttendanceVO vo, String proNo, StudentVO std) {
 		ServiceResult result = null;
 		int check = attendanceMapper.dmrCheck(vo.getAtdcNo());
 		
 		if(check > 0) {
 			result = ServiceResult.EXIST;
 		}else {
+			
+			// 출석이의신청시 알람!!
+			AlarmVO alarm = new AlarmVO();
+			
+			alarm.setAlarmTtl(std.getStdNm() + "님의 출석이의신청");
+			alarm.setAlarmType("attend-dmr");
+			alarm.setSendUserNo(std.getStdNo());
+			alarm.setReceiveUserNo(proNo);
+			alarm.setAlarmPathNo(vo.getLecapNo());
+			alarm.setSendProfile(std.getStdProfilePath());
+			
+			commonMapper.alarmInsert(alarm); // 알람 등록
+			
 			int cnt = attendanceMapper.submitAttendDmr(vo);
 			
 			if(cnt > 0) {
@@ -146,6 +165,11 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	public AttendanceVO dmrDetail(int atdcNo) {
 		return attendanceMapper.dmrDetail(atdcNo);
+	}
+
+	@Override
+	public String getProNo(String lecapNo) {
+		return attendanceMapper.getProNo(lecapNo);
 	}
 
 	

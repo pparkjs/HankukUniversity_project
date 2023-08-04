@@ -9,9 +9,12 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import kr.or.hku.student.vo.PaginationInfoVO;
+import kr.or.hku.common.mapper.CommonMapper;
+import kr.or.hku.common.vo.AlarmVO;
 import kr.or.hku.student.mapper.StudyMapper;
 import kr.or.hku.student.service.StudyService;
 import kr.or.hku.student.vo.StdCalendarVO;
+import kr.or.hku.student.vo.StudentVO;
 import kr.or.hku.student.vo.StudyVO;
 
 @Service
@@ -20,6 +23,9 @@ public class StudyServiceImpl implements StudyService{
 	@Inject
 	private StudyMapper mapper;
 
+	@Inject
+	private CommonMapper commonMapper;
+	
 	@Override
 	public List<StudyVO> studyList(String stdNo) {
 		return mapper.studyList(stdNo);
@@ -47,7 +53,20 @@ public class StudyServiceImpl implements StudyService{
 	}
 
 	@Override
-	public int intoStudy(StudyVO studyVo) {
+	public int intoStudy(StudyVO studyVo, StudentVO stdVo, String writer) {
+		
+		// 해당 스터디에 가입 신청 시 가입 알람!!
+		AlarmVO alarm = new AlarmVO();
+		
+		alarm.setAlarmTtl(stdVo.getStdNm() + "님의 스터디가입요청");
+		alarm.setAlarmType("study-join");
+		alarm.setSendUserNo(stdVo.getStdNo());
+		alarm.setReceiveUserNo(writer);
+		alarm.setAlarmPathNo(""+studyVo.getStudyNo());
+		alarm.setSendProfile(stdVo.getStdProfilePath());
+		
+		commonMapper.alarmInsert(alarm); // 알람 등록
+		
 		return mapper.intoStudy(studyVo);
 	}
 

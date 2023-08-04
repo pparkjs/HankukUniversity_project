@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.or.hku.student.vo.PaginationInfoVO;
 import kr.or.hku.student.vo.StdCalendarVO;
+import kr.or.hku.student.vo.StudentVO;
 import kr.or.hku.student.vo.StudyVO;
 
 public interface StudyService {
@@ -48,7 +49,7 @@ public interface StudyService {
 	public void delStudy(int studyNo);
 	public int delStudyMem(int studyNo);
 	// 스터디 가입신청
-	public int intoStudy(StudyVO studyVo);
+	public int intoStudy(StudyVO studyVo, StudentVO stdVo, String writer);
 	// 스터디 가입신청 승인/반려
 	public int assignStudy(int joinNo);
 	public int rejStudy(int joinNo);

@@ -181,7 +181,7 @@
 									<div class="col-xl-6 mb-3">
 										<label for="exampleFormControlInput2" class="form-label">
 											인원수 <span class="text-danger">*</span>
-										</label> 
+										</label> 89
 										<input type="text" class="form-control" id="exampleFormControlInput2" name="studyCpcy" placeholder="">
 									</div>
 									<div class="col-xl-6 mb-3">

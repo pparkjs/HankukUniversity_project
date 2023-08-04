@@ -186,7 +186,10 @@ public class StudyBoardController {
 		ResponseEntity<String> entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		HttpSession session = request.getSession();
 	    StudentVO stdVo = (StudentVO) session.getAttribute("std");
-	  
+	    
+	    // 스터디장 변수로 빼놓기
+	    String writer = studyVo.getStdNo();
+	    
 	    String stdNo = stdVo.getStdNo();
 	    studyVo.setStdNo(stdNo);
 	    log.info(studyVo.getStdNo());
@@ -197,7 +200,7 @@ public class StudyBoardController {
 	    if (!joinList.isEmpty()) {
 	    	entity = new ResponseEntity<String>("FAILED", HttpStatus.OK);
 	    }else {
-	    	int res = service.intoStudy(studyVo);
+	    	int res = service.intoStudy(studyVo, stdVo, writer);
 	    }		
 		return entity;
 	}

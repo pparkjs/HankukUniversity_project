@@ -23,6 +23,7 @@ public class AttendanceVO {
 	private String stdcDmrSttsCd;	// 상태코드
 	private String stdNm;			// 학생이름
 	private String deptNm;			// 힉과명
+	private String proNo; //교번
 	
 	// 이의신청 파일첨부
 	private int atchFileNo;		// 파일첨부번호

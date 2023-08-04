@@ -250,7 +250,7 @@ $(function(){
 			lecapNo : "${lecapNo}"
 		}
 
-		console.log(data)
+		console.log("이게 맞나?",data)
 		$.ajax({
 			url : "/hku/student/getAtdcNo",
 			beforeSend : function(xhr){
@@ -271,6 +271,7 @@ $(function(){
 		var formData = new FormData();
 		formData.append("atdcNo", atdcNo);
 		formData.append("atdcDmrRsn", content);
+		formData.append("lecapNo", "${lecapNo}");
 		let sendFile = $('#attendanceFile')[0].files[0];
 		console.log("보낼 파일 ", sendFile);
 
