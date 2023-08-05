@@ -1,6 +1,6 @@
 # ![로고(마크)](https://github.com/pparkjs/HankukUniversity_project/assets/107859870/32e54a61-02e7-4606-ad65-902ba5893848)한국대학교 학사관리시스템 (HANKUK University LMS)
 
-> ### *누구랑?*
+> ### *Who are we?*
 - 제작 기간 : 2023-06-21 ~ 2023-08-11
 - 팀구성 : 박정수(PL) 고영우(UA,DA) 조성희(TA,AA) 정재균(DA,UA) 황지현(AA,TA) 이성일(AA,TA)
 
