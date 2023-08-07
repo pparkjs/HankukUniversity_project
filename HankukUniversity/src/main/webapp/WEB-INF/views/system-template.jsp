@@ -38,6 +38,9 @@
 	
 	<!-- toastr -->
 	<script type="text/javascript" src="/resources/vendor/toastr/js/toastr.min.js"></script>
+	
+	<!-- XSS막기용 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/he/1.2.0/he.min.js"></script>
 </head>
 <body>
 	<!-- Preloader start -->
