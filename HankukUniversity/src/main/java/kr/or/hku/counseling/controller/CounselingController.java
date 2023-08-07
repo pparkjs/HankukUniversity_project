@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,18 +55,13 @@ public class CounselingController {
 	@ResponseBody
 	@GetMapping("/getScheduleList/{proNo}")
 	public ResponseEntity<Map<String, Object>> getScheduleList(@PathVariable("proNo") String proNo){
-		log.info("교수번호 : " + proNo);
 		List<LectureScheduleVO> lecList = counselingService.getLecList(proNo);
 		List<CounselingRsvtVO> counseList = counselingService.getCounseList(proNo);
-		
-		log.info("강의시간표 : " + lecList);
-		log.info("상담시간표 : " + counseList);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("lecture", lecList);
 		map.put("counse", counseList);
 		
-		log.info("맵 : " + map);
 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
 
@@ -72,6 +69,8 @@ public class CounselingController {
 	@ResponseBody
 	@PostMapping("/counseling-rsvt")
 	public ResponseEntity<String> counselingRsvt(@RequestBody CounselingRsvtVO vo, HttpSession session){
+		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		vo.setStdNo(users.getUsername());
 		log.info("상담예약 : "  + vo);
 		ServiceResult result = counselingService.counselingRsvt(vo, session);
 		
@@ -90,8 +89,6 @@ public class CounselingController {
 		StudentVO std = (StudentVO)session.getAttribute("std");
 		
 		List<CounselingRsvtVO> list = counselingService.counselingRecord(std.getStdNo());
-		
-		log.info("상담내역 : " + list);
 		
 		model.addAttribute("counseList", list);
 		return "student/counseling-record";
