@@ -177,7 +177,7 @@
 								<td>${dmr.subNo}</td>
 								<td>${dmr.subNm}</td>
 								<td>
-									생략
+									${dmr.crsGrd}
 									<input type="hidden" class="grdDmrAns" value="${dmr.grdDmrAns}">
 									<input type="hidden" class="grdDmrCn" value="${dmr.grdDmrCn}">
 								</td>
