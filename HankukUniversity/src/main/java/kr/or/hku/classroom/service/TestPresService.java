@@ -7,6 +7,7 @@ import java.util.Map;
 import kr.or.hku.ServiceResult;
 import kr.or.hku.classroom.vo.StudentAnswerVO;
 import kr.or.hku.classroom.vo.TestAnswerVO;
+import kr.or.hku.classroom.vo.TestResultVO;
 import kr.or.hku.classroom.vo.TestVO;
 
 public interface TestPresService {
@@ -16,12 +17,13 @@ public interface TestPresService {
 	public TestVO timeChange(TestVO test);
 	public ServiceResult testUpdate(TestVO testVO);
 	public List<TestVO> getTestList(String stdNo);
-	public List<TestAnswerVO> getAnswerList(TestVO test);
+	public String getAnswerList(TestVO test, List<StudentAnswerVO> studentAnsList);
 	public int getMaxCh(TestVO test);
 	public int testTakeInsert(TestVO test);
 	public void studentTestAnswerInsert(StudentAnswerVO sAnsVO);
 	public int scoreUpdate(Map<String, Object> map);
 	public int preTestCheck(TestVO test);
-	public TestVO getTtNo(TestVO test);
+	public TestResultVO getTtNo(TestVO test);
 	public List<StudentAnswerVO> getStuAnsList(int ttNo);
+	public List<TestAnswerVO> getAnswerList2(TestVO test);
 }
