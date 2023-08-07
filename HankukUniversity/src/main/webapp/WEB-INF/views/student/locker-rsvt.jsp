@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <link rel="stylesheet" href="/css/student/facility-rsvt.css">
 <div class="content-body">
 	<div class="page-titles">
@@ -41,9 +42,6 @@
 							<div class="lockerLeft-top">
 								<span>건물:&nbsp;&nbsp;&nbsp;</span>
 								<input type="text" class="flctSel" style="background: whitesmoke;" value="${std.flctNm }" data-flctno="${std.flctNo}" readonly="readonly">
-<!-- 								<select > -->
-<%-- 									<option value="${std.flctNo}">${std.flctNm }</option> --%>
-<!-- 								</select> -->
 								<span>층수:&nbsp;&nbsp;&nbsp;</span>
 								<select class="floorSel">
 									<c:forEach items="${flctList}" var="flct">
@@ -144,13 +142,11 @@ function lockerReservation(){
 	var selectedOption = floorSel.options[floorSel.selectedIndex]; //선택된 option 가져옴
 	var floor = selectedOption.id;
 	var fcltNo = selectedOption.value;
-	var stdNo = '${std.stdNo}';
 	
 	var lockerObj = {
 		"floor" : floor,
 		"flctNo": fcltNo,
 		"lockerNo": lockerNum,
-		"stdNo" : stdNo,
 		"lockerYr":"${std.currentYear}",
 		"rsvtSem":"${std.currentSem}"
 	}
