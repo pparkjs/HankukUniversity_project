@@ -185,7 +185,15 @@ position: relative;
 							</div>
 						</div>
 					</li>
-
+								<c:if test="${not empty std}">
+											<h1 style="color:white; font-weight:bold;">학생</h1>
+										</c:if>
+										<c:if test="${not empty pro}">
+											<h1 style="color:white; font-weight:bold;">교수</h1>
+										</c:if>
+										<c:if test="${not empty emp}">
+											<h1 style="color:white; font-weight:bold;">직원</h1>
+										</c:if>
 			<!-- 알람  + 로그인 타이머 -->
 					<div class="tCon">
 						<span id="timer" style=" margin-right:4px; font-size:1.3em; color:white; font-weight: 500; width: 97px;"></span>
