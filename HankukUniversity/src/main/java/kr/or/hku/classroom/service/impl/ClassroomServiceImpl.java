@@ -1,4 +1,4 @@
-package kr.or.hku.classroom.serviceImpl;
+package kr.or.hku.classroom.service.impl;
 
 import java.util.List;
 import java.util.Map;

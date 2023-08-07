@@ -15,7 +15,7 @@
 				<h5 class="card-title" style="color: maroon;  font-weight: 900;">응시 과목 정보</h5>
 			</div>
 			<hr>
-			<div class="card-body" id="card-test" style="padding-top: 0px; display: flex; color: black; mfont-size: 18px;	padding: 0.75rem;">
+			<div class="card-body" id="card-test" style="padding-top: 0px; display: flex; color: black; flex-wrap: wrap; mfont-size: 18px;	padding: 0.75rem;">
 	
 			</div>
 		</div>
@@ -69,14 +69,10 @@ var childWindow;
 function testList(){
 	var cardBody = $("#card-test");
 
-	var obj = {
-		stdNo:"${std.stdNo}"
-	}
 	$.ajax({
 		url:"/hku/getTestList",
         type:"get",
         dataType:"json",
-		data:obj,
 		beforeSend : function(xhr){
 			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 		},
@@ -86,7 +82,7 @@ function testList(){
 			
 			if(res.length > 0){
 				for(var i=0; i<res.length; i++){
-					data += `<div class="info-wrap">
+					data += `<div class="info-wrap" style="margin-bottom: 12px;">
 								<div class="testInfo-con">
 									<div class="test-top">
 										<img alt="" src="/images/시험지아이콘.png" style="margin-left: 10px; width:28px; height: 28px;">
@@ -144,11 +140,11 @@ function testList(){
 
 // 시험 응시
 $(document).on("click", "#testBtn", function(){
-	var middleDate = $(this).parents(".info-wrap").find(".middle-date").attr("id")
+	var testDate = $(this).parents(".info-wrap").find(".middle-date").attr("id")
 	const currentDate = getCurrentDate();
-	console.log("현재일자",currentDate);
-	console.log("시험일자",middleDate);
-	if(middleDate <= currentDate){
+	
+	// 현재일자가 시험일자보다 지나있어야 시험 응시 가능
+	if(testDate <= currentDate){ 
 		var testNo = $(this).val();
 		var testFile = $(this).parents(".test-button").find(".testFile").val();
 		var lecapNo = $(this).parents(".test-button").find(".lecapNo").val();
@@ -156,7 +152,6 @@ $(document).on("click", "#testBtn", function(){
 		var testBgngYmd = $(this).parents(".test-button").find(".testBgngYmd").val();
 		var testTimeLimit = $(this).parents(".test-button").find(".testTimeLimit").val();
 		var subNm = $(this).parents(".info-wrap").find(".subNm").text();
-		var stdNo = "${sessionScope.std.stdNo}";
 		
 	  	var screenWidth = screen.width;
 	  	var screenHeight = screen.height;
@@ -165,8 +160,7 @@ $(document).on("click", "#testBtn", function(){
 	 	windowFeatures += ",left=200";
 		
 		var preObj = {
-			testNo:testNo,
-			stdNo:stdNo
+			testNo:testNo
 		}
 	
 		$.ajax({
@@ -186,7 +180,7 @@ $(document).on("click", "#testBtn", function(){
 				}else if(res === "notExist"){
 					console.log(testNo, testFile, testSe, lecapNo, subNm, testTimeLimit);
 					childWindow = window.open("/hku/open-test?testNo="+testNo+"&testFile="+testFile+"&lecapNo="+lecapNo+"&testSe="+testSe+"&subNm="
-								+subNm+"&testTimeLimit="+testTimeLimit+"&testBgngYmd="+testBgngYmd+"&stdNo="+stdNo, "시험지", windowFeatures);
+								+subNm+"&testTimeLimit="+testTimeLimit+"&testBgngYmd="+testBgngYmd, "시험지", windowFeatures);
 					console.log("윈도우",childWindow)
 				}
 			}
@@ -219,11 +213,9 @@ $(document).on("click", "#infoBtn", function(){
 	var testBgngYmd = $(this).parents(".test-button").find(".testBgngYmd").val();
 	var testTimeLimit = $(this).parents(".test-button").find(".testTimeLimit").val();
 	var subNm = $(this).parents(".info-wrap").find(".subNm").text();
-	var stdNo = "${sessionScope.std.stdNo}";
 
 	var testObj ={
 		testNo:testNo,
-        stdNo:stdNo,
 		testFile:testFile,
         lecapNo:lecapNo,
         testSe:testSe,
@@ -232,8 +224,7 @@ $(document).on("click", "#infoBtn", function(){
 	}
 	
 	var preObj = {
-		testNo:testNo,
-		stdNo:stdNo
+		testNo:testNo
 	}
 
 	$.ajax({
@@ -245,7 +236,7 @@ $(document).on("click", "#infoBtn", function(){
 		},
 		success:function(res){
 			if(res === "exist"){
-				console.log("체킁1 ",res)
+				// 이미 응시 했으면 응시내역 확인 가능!
 				testRecord(testObj);
 				infoBtn.attr("data-bs-toggle", "modal");
 				infoBtn.attr("data-bs-target", "#testModal");
@@ -261,6 +252,8 @@ $(document).on("click", "#infoBtn", function(){
 	})
   }
 })
+
+// 응시내역 확인!
 function testRecord(obj){
 	
 	$.ajax({

@@ -8,6 +8,7 @@
 		<id property="testNo" column="test_no"/>
 		<id property="lecapNo" column="lecap_no"/>
 		<result property="testNo" column="test_no"/>
+		<result property="proNo" column="pro_no"/>
 		<result property="lecapNo" column="lecap_no"/>
 		<result property="testSe" column="test_se"/>
 		<result property="testBgngYmd" column="test_bgng_ymd"/>
@@ -57,6 +58,7 @@
  	/*kr.or.hku.classroom.mapper.TestPresMapper.testDetail */
 	 	SELECT 
 	 		  a.test_no
+            , c.pro_no
 	 	    , a.lecap_no
 	 	    , a.test_se
 	 	    , a.test_bgng_ymd
@@ -69,6 +71,7 @@
 	 	    , b.answer_ch
 		FROM test a 
 		LEFT OUTER JOIN test_answer b ON(a.test_no = b.test_no)
+        LEFT OUTER JOIN lecture_aply c ON(a.lecap_no = c.lecap_no)
 		WHERE a.lecap_no = #{lecapNo}
 		AND a.test_se = #{testSe}
 		ORDER BY b.ta_no

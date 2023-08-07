@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -69,6 +71,8 @@ public class FaciltyReservationController {
 	@ResponseBody
 	@PostMapping(value="/locker-reservation",  produces = "application/json;charset=utf-8")
 	public ResponseEntity<String> lockerReservation(@RequestBody LockerRsvtVO locker){
+		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		locker.setStdNo(users.getUsername());
 		log.info("사물함 예약 정보: " + locker);
 		
 		ServiceResult result = facilityService.lockerReservation(locker);
@@ -127,6 +131,8 @@ public class FaciltyReservationController {
 	@ResponseBody
 	@PostMapping("/flcts-reservation")
 	public String flctsReservation(@RequestBody FacilitiesVO vo) {
+		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		vo.setStdNo(users.getUsername());
 		log.info("시설물 예약 : " + vo);
 		
 		ServiceResult result = facilityService.flctsReservation(vo);

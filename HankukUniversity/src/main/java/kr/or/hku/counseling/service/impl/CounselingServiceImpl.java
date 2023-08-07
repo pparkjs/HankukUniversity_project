@@ -46,7 +46,7 @@ public class CounselingServiceImpl implements CounselingService {
 		return counselingMapper.getCounseList(proNo);
 	}
 
-	@Transactional(rollbackFor = SQLException.class)
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public ServiceResult counselingRsvt(CounselingRsvtVO vo, HttpSession session) {
 		ServiceResult result = null;

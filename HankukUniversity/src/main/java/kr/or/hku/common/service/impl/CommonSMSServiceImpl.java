@@ -81,7 +81,7 @@ public class CommonSMSServiceImpl implements CommonSMSService {
 		List<ApiVO> apiId = apiService.getApiId(apiType);
 		String sendFrom = apiId.get(0).getApiId().trim();
 		// 여기 진짜 핸드폰 번호 넣어야함 =======================================================================================
-		String[] tels = {"010-5398-1821","010-6647-7508"}; // 정재균 핸드폰 번호 입력해야함
+		String[] tels = {"010-6647-7508", "010-5398-1821"}; // 정재균 핸드폰 번호 입력해야함
 		// 여기 진짜 핸드폰 번호 넣어야함 =======================================================================================
 		for (int i = 0; i < tels.length; i++) {
 			Message message = new Message();
@@ -94,7 +94,7 @@ public class CommonSMSServiceImpl implements CommonSMSService {
 				message.setText(msg);
 				response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
 				log.info("문자 메시지 response값 => " + response.getStatusCode());
-				if (!response.getStatusCode().equals("2000")) {
+				if (!(response.getStatusCode().equals("2000"))) {
 					res = ServiceResult.FAILED;
 					break;
 				}
@@ -131,7 +131,7 @@ public class CommonSMSServiceImpl implements CommonSMSService {
 //        	}
 //        }
 		SingleMessageSentResponse response = null;
-		String[] tels = {"010-5398-1821"}; // 정재균 핸드폰 번호 입력해야함
+		String[] tels = {"010-6647-7508", "010-5398-1821", "010-4139-7907", "010-7925-2321"};
 		// 여기 진짜 핸드폰 번호 넣어야함 =======================================================================================
 		for (int i = 0; i < tels.length; i++) {
 			Message message = new Message();
@@ -144,7 +144,7 @@ public class CommonSMSServiceImpl implements CommonSMSService {
 				message.setText(msg);
 				response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
 				log.info("문자 메시지 response값 => " + response.getStatusCode());
-				if (!response.getStatusCode().equals("2000")) {
+				if (!(response.getStatusCode().equals("2000"))) {
 					result = ServiceResult.FAILED;
 					break;
 				}else {

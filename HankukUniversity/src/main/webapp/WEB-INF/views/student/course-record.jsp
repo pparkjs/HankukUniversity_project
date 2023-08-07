@@ -7,7 +7,7 @@
 	<div class="page-titles">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="javascript:void(0)">수강정보</a></li>
-			<li class="breadcrumb-item active"><a href="javascript:void(0)">교과목 조회</a></li>
+			<li class="breadcrumb-item active"><a href="javascript:void(0)">수강이력</a></li>
 		</ol>
     </div>
 	<div class="container-fluid searchCon">
@@ -124,8 +124,7 @@ $(function(){
 		var crsClassfCd = crs.attr("id")
 		
 		var dataObj = {
-			"crsClassfCd" : crsClassfCd,
-			"stdNo": "${std.stdNo}"
+			"crsClassfCd" : crsClassfCd
 		}
 		
 		subRecordList(dataObj)
@@ -137,13 +136,8 @@ $(function(){
 function craditList(){
 	var craditBody = $("#craditBody");
 	
-	var stdData = {
-		"stdNo":"${std.stdNo }"
-	}
-	
 	$.ajax({
 		type:"get",
-		data:stdData,
 		url : "/hku/cradit-history",
 		dataType : "json",
 		beforeSend : function(xhr){
@@ -223,8 +217,7 @@ function subRecordList(obj){
 
 function initSubList(){
 	var dataObj = {
-			"crsClassfCd" : 'MR',
-			"stdNo": "${std.stdNo}"
+			"crsClassfCd" : 'MR'
 		}
 	var firstTr = document.querySelectorAll('#craditBody tr')[0]
 	console.log(firstTr)
@@ -234,6 +227,7 @@ function initSubList(){
 
 var myChart;
 
+// 이수학점 막대그래프 가져오기
 function getMyChart(){
 	const ctx = document.querySelector('#myChart');
 		myChart = new Chart(ctx, {

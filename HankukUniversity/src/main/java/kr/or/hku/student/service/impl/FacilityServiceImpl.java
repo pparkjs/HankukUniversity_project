@@ -28,7 +28,7 @@ public class FacilityServiceImpl implements FacilityService {
 		return facilityMapper.lockerList(map);
 	}
 
-	@Transactional(rollbackFor = SQLSyntaxErrorException.class)
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public ServiceResult lockerReservation(LockerRsvtVO locker) {
 		ServiceResult result = null;

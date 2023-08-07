@@ -126,7 +126,7 @@
 											<div style="display: flex; align-items: center; margin-top: 20px;" class="aw-wrap">
 												<input type="hidden" class="form-control aw" name="answerList[${status.index }].taNo" value="${status.index+1}">
 												<span style="width: 73px; text-align:center;">${status.index+1}번 답 :</span> <input type="text" class="form-control aw" value="${answer.taAns }" name="answerList[${status.index }].taAns">
-												<span style="width: 73px; text-align:center;">배점 :</span> <input type="text" class="form-control aw" value="${answer.taScr }" name="answerList[${status.index }].taScr" placeholder="숫자만 입력">
+												<span style="width: 73px; text-align:center;">배점 :</span> <input type="text" class="form-control aw ts-scr" value="${answer.taScr }" name="answerList[${status.index }].taScr" placeholder="숫자만 입력">
 												<span style="width: 73px; text-align:center;">선지수 :</span> 	
 												<select class="form-control aw awSel"  name="answerList[${status.index }].answerCh">
 													<option value="">--선지 선택--</option>
@@ -142,7 +142,7 @@
 										<div style="display: flex; align-items: center; margin-top: 20px;" class="aw-wrap">
 											<input type="hidden" class="form-control aw" name="answerList[0].taNo" value="1">
 											<span style="width: 73px; text-align:center;">1번 답 :</span> <input type="text" class="form-control aw" name="answerList[0].taAns">
-											<span style="width: 73px; text-align:center;">배점 :</span> <input type="text" class="form-control aw" name="answerList[0].taScr" placeholder="숫자만 입력">
+											<span style="width: 73px; text-align:center;">배점 :</span> <input type="text" class="form-control aw ts-scr" name="answerList[0].taScr" placeholder="숫자만 입력">
 											<span style="width: 73px; text-align:center;">선지수 :</span>
 											<select class="form-control aw awSel" name="answerList[0].answerCh">
 												<option value="">--선지 선택--</option>
@@ -210,7 +210,6 @@ if("${msg}" == "exist" || "${msg}" == "failed" || "${msg}" == "notFile" || "${ty
 	var awNumber = parseInt("${cnt}") + 1;
 }else{
 	var awNumber = 2;
-	console.log("넘버 : ", awNumber)
 }
 
 addBtn.addEventListener("click", addAnswerDiv);
@@ -226,9 +225,9 @@ $("#regBtn").on("click", function(){
     var answerCh = $("#answerCh").val();
 	var aw = $(".aw");
     var testFile = $("#test-file")[0].files[0];
+    var tsScr = $(".ts-scr");
 
 	console.log(pTest, testDate, hours, minute, second, answerCh)
-	console.log(aw);
 
 	if(pTest == "" || pTest == null){
 		swal({
@@ -280,7 +279,24 @@ $("#regBtn").on("click", function(){
 
 	$("#timeLimt").val(timeSum);
 	console.log("잘 들어갔나?",$("#timeLimt").val());
-
+	
+	var cnt = 0;
+	for(var i = 0; i < aw.length; i++){
+		if(aw.eq(i).val() == "" || aw.eq(i).val() == null){
+			cnt++;
+		};
+	}
+	
+	if(cnt > 0){
+		swal({
+			title: "비어있는 답안 작성 칸을 채워주세요.",
+			icon: "error",
+			button: "닫기"
+		})
+		return false;
+	}
+	
+	
 	if("${type}" == "update"){
 		$("form").attr("action", "/hku/test-update?${_csrf.parameterName}=${_csrf.token}")
 	}else{
@@ -293,21 +309,17 @@ $("#regBtn").on("click", function(){
 			return false;
 		}
 	}
-
-	var cnt = 0;
-	for(var i = 0; i < aw.length; i++){
-		if(aw.eq(i).val() == "" || aw.eq(i).val() == null){
-			cnt++;
+	
+	for(var i = 0; i < tsScr.length; i++){
+		if(isNaN(tsScr.eq(i).val())){
+			swal({
+				title: "배점은 숫자로 입력하세요",
+				icon: "error",
+				button: "닫기"
+			})
+			return false; // 값이 숫자가 아닌 경우 false를 반환
 		};
 	}
-	if(cnt > 0){
-		swal({
-			title: "비어있는 답안 작성 칸을 채워주세요.",
-			icon: "error",
-			button: "닫기"
-		})
-	}
-	
 	
 	$("form").submit();
 
@@ -318,7 +330,7 @@ function addAnswerDiv(){
 	data = `<div style="display: flex; align-items: center; margin-top: 20px;" class="aw-wrap">
 				<input type="hidden" class="form-control aw" name="answerList[\${awNumber - 1}].taNo" value="\${awNumber}">
 				<span style="width: 73px; text-align:center;">\${awNumber}번 답 :</span> <input type="text" class="form-control aw" name="answerList[\${awNumber - 1}].taAns">
-				<span style="width: 73px; text-align:center;">배점 :</span> <input type="text" class="form-control aw" name="answerList[\${awNumber - 1}].taScr"  placeholder="숫자만 입력">
+				<span style="width: 73px; text-align:center;">배점 :</span> <input type="text" class="form-control aw ts-scr" name="answerList[\${awNumber - 1}].taScr"  placeholder="숫자만 입력">
 				<span style="width: 73px; text-align:center;">선지수 :</span> 
 				<select class="form-control aw awSel" name="answerList[\${awNumber - 1}].answerCh">
 					<option value="">--선지 선택--</option>
@@ -353,33 +365,62 @@ if("${type}" == "update"){
 	}, 150);
 }
 
+// 파일 고를경우 실행
 $("#test-file").on("change", function(event){
 	var files = event.target.files;
 	var file = files[0];
-	console.log(file);
 	
-	if(isPdfFile(file)){
-		var formData = new FormData();
-		formData.append("file", file);
-
-		var file = event.target.files[0];
-		var reader = new FileReader();
-		reader.onload = function(e){
-			PDFObject.embed(e.target.result, "#myPdf", option);
-			setTimeout(() => {
-				$(".hidden").css("display","block");	
-			}, 150);
+	var formData = new FormData();
+	formData.append("file", file); // formData에 file을 추가해준다는 것
+	
+	// pdf파일인지 아닌지 서버에서 체크
+	$.ajax({
+		type : "post",
+		url : "/hku/pdfCheck",
+		data : formData,
+		dataType : "text", // 요청해서 받을 데이터 타입을 text형식으로 정한다는 의미
+		processData : false,
+		contentType : false,
+		cache : false,
+		beforeSend : function(xhr){
+            xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+         },
+		success : function(res){
+			if(res === "success"){
+				// 클라이언트단에서도 pdf파일인지 한번 더 체크 
+				if(isPdfFile(file)){
+					pdfPreview(file);
+				}else{
+					swal({
+			            title: "PDF 파일을 선택해주세요.",
+			            icon: "error",
+			            button: "닫기"
+			        })
+					$("#test-file").val("");
+				}
+			}else{
+				swal({
+		            title: "PDF 파일을 선택해주세요.",
+		            icon: "error",
+		            button: "닫기"
+		        })
+				$("#test-file").val("");
+			}
 		}
-		reader.readAsDataURL(file);
-	}else{
-		swal({
-            title: "PDF 파일을 선택해주세요.",
-            icon: "error",
-            button: "닫기"
-        })
-		$("#test-file").val("");
-	}
+	})
 })
+
+// pdf파일 미리보기 함수
+function pdfPreview(fileData){
+	var reader = new FileReader();
+	reader.onload = function(e){
+		PDFObject.embed(e.target.result, "#myPdf", option);
+		setTimeout(() => {
+			$(".hidden").css("display","block");	
+		}, 150);
+	}
+	reader.readAsDataURL(fileData);
+}
 
 function isPdfFile(file){
 // 우리는 pop()을 이용해서 .구분자 바로 뒤에 녀석을 꺼내겠다라는 방법론을 선택함 (파일 확장자)

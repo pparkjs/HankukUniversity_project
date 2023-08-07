@@ -7,7 +7,7 @@
 	<div class="page-titles">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="javascript:void(0)">수강정보</a></li>
-			<li class="breadcrumb-item active"><a href="javascript:void(0)">교과목 조회</a></li>
+			<li class="breadcrumb-item active"><a href="javascript:void(0)">수강신청</a></li>
 		</ol>
     </div>
 	<div class="container-fluid searchCon">
@@ -353,9 +353,6 @@ function cartList(){
 	$.ajax({
 		type:"get",
 		url : "/hku/cart-list",
-		data:{
-			"stdNo" : "${sessionScope.std.stdNo}"
-		},
 		beforeSend : function(xhr){
 			xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 		},
