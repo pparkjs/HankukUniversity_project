@@ -41,6 +41,11 @@
 .tblSpan{
 	font-size:18px;"
 }
+.products {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
 </style>
 
 <div class="content-body" style="min-height: 975px;">
@@ -75,7 +80,7 @@
 							<div id="attendance-tbl_wrapper"
 								class="dataTables_wrapper no-footer">
 								<table id="attendance-tbl" class="table dataTable no-footer"
-									role="grid" aria-describedby="attendance-tbl_info" style="height:180px;">
+									role="grid" aria-describedby="attendance-tbl_info" style="height:180px; margin-top: 20px;">
 									<thead>
 										<tr>
 											<th 
