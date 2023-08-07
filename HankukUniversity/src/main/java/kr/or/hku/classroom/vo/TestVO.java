@@ -39,4 +39,6 @@ public class TestVO {
 	private int ttNo;
 	private String ttDt;
 	private int ttScr;
+	
+	private String proNo; //교번
 }

@@ -1,5 +1,6 @@
 package kr.or.hku.lectureInfo.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -104,9 +107,10 @@ public class CourseInfoController {
 	@ResponseBody
 	@GetMapping("/cart-list")
 	public ResponseEntity<List<CartVO>> cartList(String stdNo){
+		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
-		log.info("내학번 :" +  stdNo);
-		List<CartVO> list = courseService.cartList(stdNo);
+		log.info("내학번 :" +  users.getUsername());
+		List<CartVO> list = courseService.cartList(users.getUsername());
 		
 		return new ResponseEntity<List<CartVO>>(list, HttpStatus.OK);
 	}
@@ -156,9 +160,11 @@ public class CourseInfoController {
 	// 학점이수현황가져오기
 	@ResponseBody
 	@GetMapping("/cradit-history")
-	public ResponseEntity<List<CourseRegistVO>> craditHistory(String stdNo){
-		log.info("학번입니다!! : " + stdNo);
-		List<CourseRegistVO> list = courseService.craditHistory(stdNo);
+	public ResponseEntity<List<CourseRegistVO>> craditHistory(){
+		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		log.info("학번입니다!! : " + users.getUsername());
+		List<CourseRegistVO> list = courseService.craditHistory(users.getUsername());
 		
 		return new ResponseEntity<List<CourseRegistVO>>(list, HttpStatus.OK);
 	}
@@ -167,6 +173,9 @@ public class CourseInfoController {
 	@ResponseBody
 	@PostMapping("/sub-history")
 	public ResponseEntity<List<CourseRegistVO>> getSubRecord(@RequestBody CourseRegistVO vo){
+		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		vo.setStdNo(users.getUsername());
+		
 		log.info("이수구분코드 : " + vo.getCrsClassfCd());
 		log.info("학번 : " + vo.getStdNo());
 		
@@ -178,17 +187,19 @@ public class CourseInfoController {
 	// 수강중인 강의 폼으로 이동
 	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/present-course")
-	public String presentCourseForm(HttpSession session, Model model) {
-		StudentVO std = (StudentVO)session.getAttribute("std");
-		StudentVO vo = commonService.myAllInfo(std.getStdNo());
+	public String presentCourseForm(Model model) {
+		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		StudentVO vo = commonService.myAllInfo(users.getUsername());
 		model.addAttribute("std", vo);
-		log.info("회원정보 : "+std);
 		return "student/present-course";
 	}
 	
 	// 수강중인 강의 리스트 가져오기
 	@GetMapping("/present-list")
-	public ResponseEntity<List<LectureAplyVO>> presentList(@RequestParam Map<String, Object> map){
+	public ResponseEntity<List<LectureAplyVO>> presentList(){
+		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("stdNo", users.getUsername());
 		map.put("aprvSttsCd", "appv");
 		List<LectureAplyVO> list = courseService.getPresentList(map);
 		return new ResponseEntity<List<LectureAplyVO>>(list, HttpStatus.OK);

@@ -337,7 +337,7 @@
 						msgList += `</p>`
 					}
 		        msgList +=	`<div class='msg_cotainer_send'>
-							 \${data[i].msgContent}
+							 \${he.encode(data[i].msgContent)}
 								<span class='msg_time_send'>\${data[i].msgRegdate}</span>
 							</div>
 							<div class='img_cont_msg2'>
@@ -354,7 +354,7 @@
 				            	<p style='width: 57px; left:10px; font-size: 16px;'>\${data[i].stdNm}</p>
 				            </div>
 				            <div class='msg_cotainer'>
-				              \${data[i].msgContent}
+				              \${he.encode(data[i].msgContent)}
 				              <span class='msg_time'>\${data[i].msgRegdate} </span>
 				            </div> <p class='unreadCnt'>`;
 				  if(data[i].unreadMemCnt > 0){
@@ -473,7 +473,7 @@ chatSocket.onmessage = function(evt) {
 		    	}
 		    	msgList2 += `
 							<div class="msg_cotainer_send">
-								\${data.msgContent}
+								\${he.encode(data.msgContent)}
 								<span class="msg_time_send">\${data.msgRegdate}</span>
 							</div>
 							<div class="img_cont_msg2">
@@ -489,7 +489,7 @@ chatSocket.onmessage = function(evt) {
 				            	<p style='width: 57px; left:10px; font-size: 16px;'>\${data.stdNm}</p>
 				            </div>
 				            <div class="msg_cotainer">
-				            \${data.msgContent}
+				            \${he.encode(data.msgContent)}
 				              <span class="msg_time">\${data.msgRegdate} </span>
 				            </div> <p class="unreadCnt">`;
 					if(data.unreadMsgCnt > 0){

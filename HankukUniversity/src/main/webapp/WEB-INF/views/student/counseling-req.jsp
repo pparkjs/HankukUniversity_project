@@ -138,10 +138,10 @@ $(".schedule-wrap").on("click", ".rsvt", function(){
 	}
 })
 
+// 상담예약 신청
 $('#regBtn').on("click", function(){
 	var regObj = {
 		proNo: $("#rsvt-proNo").val(),
-        stdNo: "${std.stdNo}",
         stdNm: "${std.stdNm}",
         attendModeCd: $("#rsvt-face").val(),
         dscsnAplyDt: $("#rsvt-date").val(),

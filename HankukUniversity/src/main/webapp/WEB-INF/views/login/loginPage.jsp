@@ -321,7 +321,11 @@ if(queryStr != null && !queryStr.equals("")){
 </body>
 <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 <script type="text/javascript">
-
+	
+	if("${authErr}" == "1"){
+		swal("접근 권한이 없습니다.");
+	}
+	
 	var mainName = document.querySelector("h1");
 	var loginFrm = document.querySelector("table");
 	

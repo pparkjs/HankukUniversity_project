@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <link rel="stylesheet" href="/css/table.css">
 <link rel="stylesheet" href="/css/counseling-style.css">
 <div class="content-body">
@@ -178,8 +179,7 @@
 														<td><c:out value="${counse.dscsnRsn }"></c:out></td>
 														<td><c:out value="${counse.attendModeCd }"></c:out></td>
 														<td style="display: flex; justify-content: center;">
-															<div class="rej" title="${counse.rejCon }">반려 내용</div>
-															<input type="hidden" value="${counse.rejCon }" id="rejCon">
+															<div class="rej" data-bs-toggle="modal" data-rejcon="${fn:escapeXml(counse.rejCon) }" data-bs-target="#rejModal" style="cursor: pointer;">반려 내용</div>
 														</td>
 													<tr>
 													<c:set value="${count + 1 }" var="count"/>
@@ -201,3 +201,26 @@
 		</div>
 	</div>
 </div>
+<div class="modal fade sModal" id="rejModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="font-size: 18px; font-weight: 800;">반려 사유</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+				<textarea rows="10" cols="10" class="form-control" id="rej-con" readonly="readonly"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(".rej").on("click", function(){
+	var rejcon = $(this).data("rejcon")
+	$("#rej-con").val(rejcon)
+})
+</script>

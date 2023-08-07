@@ -259,11 +259,11 @@ function counselingReqList(){
 					if(res[i].aprvSttsCd == 'wait'){
 						waitData += `<tr>
 										<td class="stdNo" data-stdno="\${res[i].stdNo }"><c:out value="\${res[i].stdNo }"></c:out></td>
-										<td><c:out value="\${res[i].stdNm }"></c:out></td>
-										<td><c:out value="\${res[i].dscsnAplyDt }"></c:out></td>
-										<td><c:out value="\${res[i].periodCd }"></c:out></td>
-										<td><c:out value="\${res[i].dscsnRsn }"></c:out></td>
-										<td><c:out value="\${res[i].attendModeCd }"></c:out></td>
+										<td>\${res[i].stdNm }</td>
+										<td>\${res[i].dscsnAplyDt }</td>
+										<td>\${res[i].periodCd }</td>
+										<td>\${he.encode(res[i].dscsnRsn) }</td>
+										<td>\${res[i].attendModeCd }</td>
 										<td>
 											<button type="button" value="\${res[i].dscsnNo }" class="btn btn-primary" id="regBtn" style="background: #0070c0; border-color:#0070c0;">승인</button>
 											<button type="button" value="\${res[i].dscsnNo }" class="btn btn-primary" id="rejBtn2" style="background: #ff4343; border-color:#ff4343; " data-bs-toggle="modal" data-bs-target="#rejModal">반려</button>
@@ -289,12 +289,12 @@ function counselingReqList(){
 				for(var i=0; i<res.length; i++){
 					if(res[i].aprvSttsCd == 'appv'){
 						appvData += `<tr>
-										<td><c:out value="\${res[i].stdNo }"></c:out></td>
-										<td><c:out value="\${res[i].stdNm }"></c:out></td>
-										<td><c:out value="\${res[i].dscsnAplyDt }"></c:out></td>
-										<td><c:out value="\${res[i].periodCd }"></c:out></td>
-										<td><c:out value="\${res[i].dscsnRsn }"></c:out></td>
-										<td><c:out value="\${res[i].attendModeCd }"></c:out></td>`
+										<td>\${res[i].stdNo }</td>
+										<td>\${res[i].stdNm }</td>
+										<td>\${res[i].dscsnAplyDt }</td>
+										<td>\${res[i].periodCd }</td>
+										<td>\${he.encode(res[i].dscsnRsn) }</td>
+										<td>\${res[i].attendModeCd }</td>`
 						
 						if(res[i].attendModeCd == '비대면'){
 							appvData +=		`<td>
@@ -327,12 +327,12 @@ function counselingReqList(){
 				for(var i=0; i<res.length; i++){
 					if(res[i].aprvSttsCd == 'rej'){
 						rejData += `<tr>
-										<td><c:out value="\${res[i].stdNo }"></c:out></td>
-										<td><c:out value="\${res[i].stdNm }"></c:out></td>
-										<td><c:out value="\${res[i].dscsnAplyDt }"></c:out></td>
-										<td><c:out value="\${res[i].periodCd }"></c:out></td>
-										<td><c:out value="\${res[i].dscsnRsn }"></c:out></td>
-										<td><c:out value="\${res[i].attendModeCd }"></c:out></td>
+										<td>\${res[i].stdNo }</td>
+										<td>\${res[i].stdNm }</td>
+										<td>\${res[i].dscsnAplyDt }</td>
+										<td>\${res[i].periodCd }</td>
+										<td>\${he.encode(res[i].dscsnRsn) }</td>
+										<td>\${res[i].attendModeCd }</td>
 										<td style="display: flex; justify-content: center;"> 
 											<div class="rej">반려</div>
 										</td>

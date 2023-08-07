@@ -23,6 +23,12 @@
       top: 0px;
       background: #800000;
 }
+#exp2{
+    margin-left: 44px;
+    margin-bottom: -2px;
+    font-weight: 600;
+    font-size: 16px;
+}
 </style>
 <div class="content-body">
 	<div class="page-titles">
@@ -75,6 +81,7 @@
 			<div class="card-header border-0 pb-0 ">
 				<div class="fTitle-wrap">
 					<div class="card-title" style="color: maroon;  font-weight: 900;">시설 예약 현황</div>
+					<div class="exp" id="exp2"></div>
 					<div class="fUseing"></div>
 					<span style="margin-left: 9px; font-size: 18px;">예약불가</span>
 					<div class="fCanUse"></div>
@@ -123,7 +130,6 @@
             </div>
             <div class="modal-body">
 				<div class="modal-wrap">
-<!-- 					<form action="/hku/flcts-reservation" method="post"> -->
 					<div class="modal-title1">
 						<span style="font-size: 19px;">신청자</span>
 						<span style="margin-right: 68px; font-size: 19px;">시설물명</span>
@@ -153,8 +159,6 @@
 					<div class="modal-content3">
 						<textarea rows="10" cols="10" class="form-control" id="rsvt-prps" name="usePrps" placeholder="사용 목적을 입력하세요."></textarea>
 					</div>
-<%-- 						<sec:csrfInput/> --%>
-<!-- 					</form> -->
 				</div>
             </div>
             <div class="modal-footer">
@@ -178,13 +182,12 @@ if("${msg}" == "error"){
 		button: "닫기"
 	})
 }
-
+// 사물함예약하기
 $("#regBtn").on("click", function(){
     var useUsers = $("#rsvt-cnt").val();
     var endHours = $("#rsvt-endTime").val();
 	var startHours = $("#rsvt-startTime").val();
     var usePrps = $("#rsvt-prps").val();
-	var rsvtStdNo = $("#rsvt-stdNo").val();
 	var rsvtFlctsNo = $("#rsvt-flctsNo").val();
 	var rsvtDate = $("#rsvt-date").val();
 
@@ -218,11 +221,20 @@ $("#regBtn").on("click", function(){
 		return false;
 	}
 	
+	if(isNaN(useUsers)){
+		swal({
+			title: "사용인원은 숫자만 입력 가능합니다.",
+			icon: "error",
+			button: "닫기"
+		})
+		useUsers.focus();
+		return false;
+	}
+	
 	var rsvtData = {
         'useUsers': useUsers,
         'endHours': endHours,
         'usePrps': usePrps,
-		'stdNo': rsvtStdNo,
         'flctsNo': rsvtFlctsNo,
         'rsvtDate': rsvtDate,
 		'startHours': startHours
@@ -312,24 +324,11 @@ $("#timeBody").on("click", ".rsvt", function(){
 	var flctsNo = $(this).parent().attr("class");
 	var startTime = $(this).attr('id');
 
-
-	console.log("내가 누른 rsvt : ", $(this));
-	console.log("내가 누른 rsvt의 부모 : ", $(this).parent());
-	console.log("내 학번 : ", "${std.stdNo}");
-	console.log("시설물 이름 : ", $(this).parent().find('#flctsNm').text())
-	console.log("시설물 번호 : ", $(this).parent().attr("class"))
-	console.log("예약날짜 : ", date);
-	console.log("시작시간1 : ", $(this).attr('id'));
-	console.log("시작시간2 : ", $(this).attr('class').split(" ")[0]);
-	
 	var nextDatas = $(this).nextAll("td");
-	console.log("가져올 시간 : ",$(this).nextAll("td"))
 	
 	let endArr = [];
 	
 	for(var i = 0; i < nextDatas.length; i++){
-		console.log("형재들이여 : ", nextDatas.eq(i).attr("class").split(" ")[1])
-		console.log("안녕" + i)
 		endArr.push(nextDatas.eq(i).attr("id"))
 		if(nextDatas.eq(i).attr("class").split(" ")[1] == 'rsvt-active'){
 			break;
@@ -382,7 +381,7 @@ $.datepicker.setDefaults({
 //   })
 
 $("#datepicker-container").datepicker({
-	onSelect: function(dateString) {
+	onSelect: function(dateString) { // 선택한 날짜 가져오기
 		setTimeout(() => {
 			if(flctNo == '' || flctNo == null){
 				swal({
@@ -395,8 +394,8 @@ $("#datepicker-container").datepicker({
 				selectedDate.css("background", "#ffdede");
 			}
 		}, 0.5)
-        console.log(dateString);
 		date = dateString;
+		$("#exp2").text(`선택 날짜 : \${dateString}`);
 		flctTimeTable();
 	}
 });	
