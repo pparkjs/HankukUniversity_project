@@ -7,7 +7,7 @@
 	<div class="page-titles">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="javascript:void(0)">수강정보</a></li>
-			<li class="breadcrumb-item active"><a href="javascript:void(0)">교과목 조회</a></li>
+			<li class="breadcrumb-item active"><a href="javascript:void(0)">수강중인 강의</a></li>
 		</ol>
     </div>
 	<div class="container-fluid searchCon">
@@ -110,13 +110,8 @@ $(function(){
 function presentCourseList(){
 	var presentBody = $("#presentBody");
 	
-	var stdData = {
-		"stdNo":"${std.stdNo }"
-	}
-	
 	$.ajax({
 		type:"get",
-		data:stdData,
 		url : "/hku/present-list",
 		dataType : "json",
 		beforeSend : function(xhr){

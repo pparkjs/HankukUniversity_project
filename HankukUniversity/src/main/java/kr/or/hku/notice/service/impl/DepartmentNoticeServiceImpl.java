@@ -1,4 +1,4 @@
-package kr.or.hku.notice.serviceImpl;
+package kr.or.hku.notice.service.impl;
 
 import java.util.List;
 import java.util.Map;

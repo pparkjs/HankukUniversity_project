@@ -97,7 +97,7 @@ public class CourseInfoServiceImpl implements CourseInfoService {
 		return res;
 	}
 	
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public ServiceResult cartRegister(Map<String, Object> map) {
 		ServiceResult res = null;
@@ -108,6 +108,7 @@ public class CourseInfoServiceImpl implements CourseInfoService {
 		if(remainder == 0) { //  잔여정원이 0 이면 return
 			res = ServiceResult.EXCEED;
 		}else {
+			//장바구니에 신청여부 Y로 업데이트 
 			courseMapper.cartApplUpdate(map);
 			int insertCnt = courseMapper.cartRegister(map);
 			

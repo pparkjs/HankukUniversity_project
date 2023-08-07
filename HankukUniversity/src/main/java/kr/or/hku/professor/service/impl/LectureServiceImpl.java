@@ -1,4 +1,4 @@
-package kr.or.hku.professor.serviceImpl;
+package kr.or.hku.professor.service.impl;
 
 import java.util.HashMap;
 import java.util.List;

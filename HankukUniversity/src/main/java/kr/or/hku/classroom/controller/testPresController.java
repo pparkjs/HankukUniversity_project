@@ -10,12 +10,15 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -46,6 +49,29 @@ public class testPresController {
 		return "professor/test-form";
 	}
 	
+   // 서버단에서 pdf파일인지 체크!
+   @ResponseBody
+   @PostMapping(value="/pdfCheck", produces="text/plain; charset=utf-8")
+    public String uploadFile(MultipartFile file) {
+        if (isPdfFile(file)) {
+            // 파일이 PDF인 경우 처리
+            return "success";
+        } else {
+            // 파일이 PDF가 아닌 경우 에러 처리
+            return "error";
+        }
+    }
+
+   // pdf파일인지 체크하는 메소드
+    private boolean isPdfFile(MultipartFile file ) {
+        String originalFilename = file.getOriginalFilename();
+        if (originalFilename != null) {
+            String ext = originalFilename.substring(originalFilename.lastIndexOf(".") + 1).toLowerCase();
+            return "pdf".equals(ext);
+        }
+        return false;
+    }
+    
 	// 시험 출제
 	@PreAuthorize("hasRole('ROLE_PROFESSOR')") 
 	@PostMapping("/test-insert")
@@ -107,18 +133,25 @@ public class testPresController {
 	// 수정하기폼으로 이동
 	@PreAuthorize("hasRole('ROLE_PROFESSOR')") 
 	@GetMapping("/testUpdate")
-	public String testUpdateForm(TestVO test, Model model) {
-		log.info("시험!! : " + test);
+	public String testUpdateForm(TestVO test, Model model, RedirectAttributes ra) {
+		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		TestVO vo = testPresService.testDetail(test);
 		
-		log.info("시험지 상세 : " + vo);
-		log.info("시험지 답안 : " + vo.getAnswerList());
+		// 해당 시험수정 폼이 출제한 교수가 아니면 접근 불가
+		if(vo.getProNo().equals(users.getUsername())) {
+			log.info("시험지 상세 : " + vo);
+			log.info("시험지 답안 : " + vo.getAnswerList());
+			
+			model.addAttribute("test", vo);
+			model.addAttribute("type", "update");
+			model.addAttribute("cnt", vo.getAnswerList().size());
+			return "professor/test-form";
+		}else {
+			ra.addFlashAttribute("authErr", "1");
+			return "redirect:/main/login";
+		}
 		
-		model.addAttribute("test", vo);
-		model.addAttribute("type", "update");
-		model.addAttribute("cnt", vo.getAnswerList().size());
-		return "professor/test-form";
 	}
 	
 	// 수정하기 처리
@@ -161,8 +194,9 @@ public class testPresController {
 	
 	@ResponseBody
 	@GetMapping("/getTestList")
-	public List<TestVO> getTestList(String stdNo){
-		List<TestVO> list = testPresService.getTestList(stdNo);
+	public List<TestVO> getTestList(){
+		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<TestVO> list = testPresService.getTestList(users.getUsername());
 		return list;
 	}
 	
@@ -170,6 +204,8 @@ public class testPresController {
 	@ResponseBody
 	@GetMapping("/preTest-check")
 	public String preTestCheck(TestVO test) {
+		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		test.setStdNo(users.getUsername());
 		int cnt = testPresService.preTestCheck(test);
 		if(cnt > 0) {
 			return "exist";
@@ -182,7 +218,8 @@ public class testPresController {
 	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/open-test")
 	public String openTest(TestVO test, Model model, HttpSession session, RedirectAttributes redi) {
-		TestVO testVO = testPresService.timeChange(test);
+		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		test.setStdNo(users.getUsername());
 		
 		int cnt = testPresService.preTestCheck(test);
 		if(cnt > 0) {
@@ -194,8 +231,8 @@ public class testPresController {
 			
 			int maxCh = testPresService.getMaxCh(test); // 선지의 최대 수 가져오기
 			
-			// 해당시험 답지 리스트 가져오기
-			List<TestAnswerVO> list = testPresService.getAnswerList(test);
+			// 해당시험 답지 리스트만 가져오기
+			List<TestAnswerVO> list = testPresService.getAnswerList2(test);
 			
 			log.info("ttNo : " + test.getTtNo());
 			session.setAttribute("testVO", test); // 시험지 정보 세션에 담기
@@ -215,109 +252,29 @@ public class testPresController {
 	@PostMapping("/studentAnswerInsert")
 	public String studentAnswerInsert(@RequestBody List<StudentAnswerVO> studentAnsList, HttpSession session) {
 		
-		String result = "";
 		TestVO test = (TestVO)session.getAttribute("testVO");
 		int ttNo = (int)session.getAttribute("ttNo");
 		
+		test.setTtNo(ttNo);
+		
 		log.info("세션테스트 : " + test);
-		List<TestAnswerVO> answerList = testPresService.getAnswerList(test);
-		
-		log.info("모범답 : " + answerList);
-		log.info("제출답 : " + studentAnsList);
-		
-		int scoreSum = 0;
-		// 정답 체크
-		for(int i = 0; i < answerList.size(); i++) {
-			
-			if(studentAnsList.size() <= i && studentAnsList.size() != answerList.size()) {
-				result = "over";
-				break;
-			}
-			
-			if(answerList.get(i).getTaAns().equals(studentAnsList.get(i).getStaAns())) {
-				scoreSum += answerList.get(i).getTaScr();
-			}
-		}
-		log.info("총 점수 : " + scoreSum);
-		
-		for (StudentAnswerVO answer : studentAnsList) {
-			answer.setLecapNo(test.getLecapNo());
-			answer.setTestNo(test.getTestNo());
-			answer.setTtNo(ttNo);
-//			sAnsVO.setStaNo(answer.getStaNo());
-//			sAnsVO.setStaAns(answer.getStaAns());
-			
-			testPresService.studentTestAnswerInsert(answer); //학생 답안 등록
-		}
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("ttScr", scoreSum);
-		map.put("ttNo", ttNo);
-		int cnt = testPresService.scoreUpdate(map);
-		
-		if(result.equals("over")) {
-			return result;
-		}else {
-			if(cnt > 0) {
-				return "success";
-			}else {
-				return "failed";
-			}
-		}
-		
+	
+		// 답안 리스트 가져옴과 동시에 답안 계산 후 등록
+		String result = testPresService.getAnswerList(test, studentAnsList);
+
+		return result;
 	}
 	
+	// 응시내역 확인
 	@ResponseBody
 	@GetMapping("/test-record")
 	public TestResultVO testRecord(TestVO test) {
+		User users = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		test.setStdNo(users.getUsername());
 		
-		TestResultVO result = new TestResultVO();
-		
-		// 응시번호 가져오기
-		TestVO vo = testPresService.getTtNo(test);
-		
-		if(vo != null) {
-			int ttNo = vo.getTtNo(); //응시번호
-			
-			// 해당시험 답지 리스트 가져오기
-			List<TestAnswerVO> ansList = testPresService.getAnswerList(test);
-			
-			List<StudentAnswerVO> stuAnsList = testPresService.getStuAnsList(ttNo);
-			
-			int answerCnt = 0;
-			int wrongCnt = 0;
-			// 정답 체크
-			for(int i = 0; i < ansList.size(); i++) {
-				
-				if(stuAnsList.size() <= i && stuAnsList.size() != ansList.size()) {
-					log.info("틀린 개수 전 : " + wrongCnt);
-					wrongCnt = ansList.size() - answerCnt ; // 만약 제한시간에 풀지 못한 답안일경우
-					log.info("틀린 개수 후 : " + wrongCnt);
-					break;
-				}
-				
-				if(ansList.get(i).getTaAns().equals(stuAnsList.get(i).getStaAns())) {
-					answerCnt++;
-				}else {
-					wrongCnt++;
-				}
-			}
-			
-			int examTotalScore = 0; // 총점
-			for(int i = 0; i < ansList.size(); i++) {
-				examTotalScore += ansList.get(i).getTaScr();
-			}
-			
-			result.setExamTotalScore(examTotalScore);
-			result.setAnswerCnt(answerCnt); //맞은개수
-			result.setWrongCnt(wrongCnt); // 틀린개수
-			result.setTaTotal(ansList.size());// 총 문제 수 
-			result.setTestDate(test.getTestBgngYmd()); //시험일자 저장
-			result.setTakeDate(vo.getTtDt()); //응시일자 저장
-			result.setMyScore(vo.getTtScr()); // 나의점수 저장
-			
-			log.info("여기 시험결과 있어요 : " + result);
-		}
+		// 응시내역보기 위해 서비스 로직에서 응시내역에 필요한 계산 해서 가져오기
+		TestResultVO result = testPresService.getTtNo(test);
+
 		return result;
 	}
 	

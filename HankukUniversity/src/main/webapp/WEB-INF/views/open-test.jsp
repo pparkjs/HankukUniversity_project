@@ -149,6 +149,31 @@ $("#regBtn").on("click", function(){
 	studentAnswerInsert(answerArr);
 
 })
+function answerArrPush(){
+	var obj = [];
+    
+	// 문제 번호와 문제 답 json 배열로 담기
+    $(".num-active").each(function(i,v){
+    var answer = {}; // 답안
+        answer.staAns = $(this).text();
+        answer.staNo = i + 1;
+        obj.push(answer)
+    })
+
+	return obj;
+}
+
+function noEvent() {
+    if (event.keyCode == 116) { //F5 (새로고침)
+        event.keyCode= 2; // F5의 키코드를 2로 변경해서 새로고침 못하게함
+        return false;
+    }else if(event.ctrlKey && (event.keyCode==78 || event.keyCode == 82)){
+        return false; // Ctrl + N (새로운 창 열기) 및 Ctrl + R (새로 고침) 이벤트를 막습니다.
+    }
+}
+        
+document.onkeydown = noEvent;
+
 function studentAnswerInsert(obj){
 	console.log("등록");
     $.ajax({
@@ -174,40 +199,6 @@ function studentAnswerInsert(obj){
     });
 }
 
-function answerArrPush(){
-	var obj = [];
-    
-	// 문제 번호와 문제 답 json 배열로 담기
-    $(".num-active").each(function(i,v){
-    var answer = {}; // 답안
-        answer.staAns = $(this).text();
-        answer.staNo = i + 1;
-        obj.push(answer)
-    })
 
-	return obj;
-}
-function noEvent() {
-    if (event.keyCode == 116) {
-        event.keyCode= 2;
-        return false
-function noEvent() {
-    if (event.keyCode == 116) {
-        event.keyCode= 2;
-        return false;
-    }
-    else if(event.ctrlKey && (event.keyCode==78 || event.keyCode == 82))
-    {
-        return false;
-    }
-}
-document.onkeydown = noEvent;
-    }
-    else if(event.ctrlKey && (event.keyCode==78 || event.keyCode == 82))
-    {
-        return false;
-    }
-}
-document.onkeydown = noEvent;
 </script>
 </html>

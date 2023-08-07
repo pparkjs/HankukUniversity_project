@@ -1,4 +1,4 @@
-package kr.or.hku.classroom.serviceImpl;
+package kr.or.hku.classroom.service.impl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
