@@ -71,12 +71,13 @@ label {
 </style>
 
 <div class="content-body" style="min-height: 975px;">
+<input type="hidden" id="lecapNo" name="lecapNo" value="${lecapNo }">
 	<div class="page-titles">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="javascript:void(0)">출석이의신청</a></li>
 			<li class="breadcrumb-item active"><a href="javascript:void(0)">클래스룸</a></li>
 		</ol>
-	</div>
+	</div> 
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-xl-6 col-lg-12" style="width: 100%;">
@@ -85,6 +86,7 @@ label {
 						<h4 class="card-title"
 							style="font-weight: bold; font-size: 1.2em; color: #800000;">
 							출석 이의신청</h4>
+						<button type="button" id="goMainBtn" class="btn btn-danger light">메인</button>
 					</div>
 					<div class="card-body">
 						<div class="basic-form">
@@ -228,8 +230,14 @@ label {
 </div>
 <script>
 $(function(){
+	var goMainBtn = $("#goMainBtn");
+	goMainBtn.on('click', function(){
+		var lecapNo = $("#lecapNo").val();
+		location.href = "/hku/student/stdClassroomMain/" + lecapNo;
+	})
+	
 	var atdcNo;
-
+	
 	var submitBtn = $("#submitBtn");
 
 	submitBtn.on("click", function() {

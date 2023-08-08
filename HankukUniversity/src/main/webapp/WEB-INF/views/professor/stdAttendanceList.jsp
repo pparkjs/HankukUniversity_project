@@ -127,8 +127,7 @@ $(function(){
 					tbl += `<tr role="row" class="odd">`
 					tbl += `<td class="sorting_1">
 								<div class="products">
-									<img src="/resources/images/profile11.png"
-										class="avatar avatar-md" alt="">
+									<img src="/images/profile11.png" style="width:50px;height:50px;">
 									<div>
 										<h6>\${stdData.stdNm}</h6>
 										<h6>\${stdData.stdNo}</h6>

@@ -186,7 +186,7 @@
 				xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
 			},
 			success : function(res){
-				console.log("성공햇니?", res);
+				console.log("성공?", res);
 				if(res == "success"){
 					swal("", "성적 확정이 완료되었습니다.", "success");					
 					let data = "";

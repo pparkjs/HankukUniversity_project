@@ -334,7 +334,7 @@ public class ProClassroomController {
 		List<GradeVO> getStdList = gradeService.getStdList(lecapNo);
 		int lecpgMdTest = lecPlanVo.getLecpgMdTest();
 		int lecpgFnTest = lecPlanVo.getLecpgFnTest();
-		log.info("getStdList???" + getStdList.toString());
+		log.info("getStdList ===>" + getStdList.toString());
 		
 		List<GradeVO> returnStdList = new ArrayList<GradeVO>();
 		for (GradeVO gradeVO : getStdList) {
