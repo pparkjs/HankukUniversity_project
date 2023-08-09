@@ -7,6 +7,9 @@
     font-size: 16px;
     background-color: #800000;
 }
+.active-projects tbody tr td {
+	font-size: 16px;
+}
 .active-projects.manage-client tbody tr td:last-child {
     text-align: center;
 }
@@ -30,6 +33,10 @@
 								성적관리</h4>
 						</div>
 					<div class="card-body">
+						<div style="background-color: #f5e9ec; border-radius:8px; height:60px; padding: 10px;">
+						<span style="font-size:14px; font-weight:bold;">&nbsp;&nbsp;&nbsp;▶ 해당 과목의 성적 반영 비율은 출석 20% 과제 20% 중간고사 30% 기말고사 30%입니다 </span><br/>
+						<span style="font-size:14px; font-weight:bold;">&nbsp;&nbsp;&nbsp;▶ 모든 항목의 점수는 성적 반영 비율에 따라 환산되며 성적확정 시 평점 및 학점이 부여됩니다 </span>
+						</div>
 						<div class="table-responsive active-projects manage-client">
 							<div id="reports-tbl_wrapper"
 								class="dataTables_wrapper no-footer">

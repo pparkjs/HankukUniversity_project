@@ -126,17 +126,19 @@ $(function(){
 					let stdData = res[i];
 					tbl += `<tr role="row" class="odd">`
 					tbl += `<td class="sorting_1">
-								<div class="products">
-									<img src="/images/profile11.png" style="width:50px;height:50px;">
-									<div>
+								<div class="products">`
+									if(${empty stdData.stdProfilePath and stdData.stdProfilePath eq ''}){
+										tbl += `<img id="myPageProfileImg" src="/images/user(2).png" alt="">`
+									} else {
+										tbl += `<img src="/download\${stdData.stdProfilePath}" style="width:50px;height:50px;border-radius:50%;">`
+									}
+									tbl += `<div>
 										<h6>\${stdData.stdNm}</h6>
 										<h6>\${stdData.stdNo}</h6>
 										<h6>\${stdData.deptNm}</h6>
 									</div>
 								</div>
 							</td>`	
-					
-					
 					// 위  데이터 무시하고 새로 담기
 					data = {
 						lecapNo : lecapNo,
