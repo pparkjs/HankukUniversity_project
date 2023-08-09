@@ -251,7 +251,7 @@ public class ProClassroomController {
 	// 학생 리스트를 가져오는 비동기 
 	@ResponseBody
 	@GetMapping("/getStdAttendance") 
-	public List<AttendanceVO> getStdAttendance(AttendanceVO vo) {
+	public List<AttendanceVO> getStdAttendance(AttendanceVO vo, Model model) {
 		log.info("list!!!!!!!! : " + vo.toString());
 		List<AttendanceVO> list = attendService.getStdList(vo.getLecapNo());
 		return list;

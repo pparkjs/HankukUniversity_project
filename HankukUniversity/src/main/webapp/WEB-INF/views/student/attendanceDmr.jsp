@@ -124,8 +124,11 @@ label {
 									rows="7" id="content"></textarea>
 							</div>
 							<hr>
-							<div class="mb-3" style="padding-left: 92%;">
+							<div class="mb-3" style="padding-left: 85%;">
+								<input type="button" id="autoWrite" class="btn btn-primary" style="background-color: #f1e9e9;
+    								border-color: #f1e9e9; color: #424040;" value="자동완성">
 								<button type="button" id="submitBtn" class="btn btn-primary">신청하기</button>
+								
 							</div>
 						</div>
 					</div>
@@ -230,6 +233,15 @@ label {
 </div>
 <script>
 $(function(){
+	
+	var autoWrite = $("#autoWrite");
+	autoWrite.on('click',function(){
+		var content = $("#content");
+		var autoWrite = "첨부한 증빙파일 확인 후 공결처리 부탁드립니다! " 
+		content.val(autoWrite);
+	})
+	
+	
 	var goMainBtn = $("#goMainBtn");
 	goMainBtn.on('click', function(){
 		var lecapNo = $("#lecapNo").val();

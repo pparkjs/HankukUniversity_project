@@ -85,7 +85,7 @@
 										<tr>
 											<th 
 												aria-controls="attendance-tbl" rowspan="1" colspan="1"
-												style="width: 158.7px; text-align: center;"><span style="font-size:16px;">성명 | 학과</span>
+												style="width: 158.7px; text-align: center;"><span style="font-size:16px; margin-left: 57px;">성명 | 학과</span>
 											</th>
 											<c:forEach var="i" begin="1" end="15" step="1">
 											<th class="sorting" tabindex="0"
@@ -110,11 +110,18 @@
 										<tr role="row" class="odd">
 											<td class="sorting_1">
 												<div class="products" style="text-align: center;">
-													<img src="/resources/images/profile11.png"
-														class="avatar avatar-md" alt="">
+													<c:choose>
+														<c:when test="${empty std.stdProfilePath and std.stdProfilePath eq ''}">
+															<img id="myPageProfileImg" src="/images/user(2).png" alt="">
+														</c:when>
+														<c:otherwise>
+															<img id="myPageProfileImg" src="/download${std.stdProfilePath }" alt=""
+																style="width:60px; height:60px; border-radius:50%; margin-right:-10px; margin-bottom:10px;">
+														</c:otherwise>
+													</c:choose>
 													<div style="text-align: center;">
-														<h6 style="font-size: 15px;">${std.stdNm }</h6>
-														<span style="font-size: 15px;">${std.stdNo }</span>
+														<h6 style="font-size: 17px;">${std.stdNm }</h6>
+														<span style="font-size: 17px;">${std.stdNo }</span>
 													</div>
 												</div>
 											</td>
