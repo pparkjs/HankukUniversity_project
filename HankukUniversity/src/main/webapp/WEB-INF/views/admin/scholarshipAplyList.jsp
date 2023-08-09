@@ -484,8 +484,9 @@ $(function(){
 						title: "서버 에러 다시 시도해 주세요.", 
 						icon: "error"
 					});
-				}
-				location.reload();
+				}setTimeout(() => {
+					location.reload();
+				}, 1500);
 			}
 		});
 	}
