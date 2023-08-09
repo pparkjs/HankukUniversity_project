@@ -11,6 +11,7 @@
 			  s.std_no
 			, s.std_nm
 			, d.dept_nm
+			, s.std_profile_path
 			FROM 
 			  course_regist cr
 			  JOIN student s ON cr.std_no = s.std_no
