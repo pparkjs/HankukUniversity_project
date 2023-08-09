@@ -1,0 +1,29 @@
+doctype html
+html(lang="ko")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no")
+        title 한국대학교 스터디화상채팅
+        link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.15.4/css/all.css", integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm", crossorigin="anonymous")
+        link(rel="stylesheet", href="./public/css/style.css")
+    body 
+        main 
+            div#controlers__column
+                img#logo(src="./public/css/logo.png", alt="logo.png")
+                div#buttons
+                    button#mute
+                        i(class="fas fa-microphone fa-2x unMuteIcon")
+                        i(class="fas fa-microphone-slash fa-2x muteIcon")
+                    button#camera 
+                        i(class="fas fa-video fa-2x cameraIcon")
+                        i(class="fas fa-video-slash fa-2x unCameraIcon")
+            div#call
+                div#myStream
+                    video#myFace(autoplay, playinline, width="570", height="410")
+                //- div#othersStream
+
+        script.
+            var room = "#{name}";
+
+        script(src="/socket.io/socket.io.js")
+        script(src="/public/js/app.js")
