@@ -464,7 +464,7 @@ $(function() {
    	  });
    	  
    	  // 인식된 문장을 가공하는 메소드
-   	   function newsentence(transcript) {
+   	function newsentence(transcript) {
 	  var keyword = '';
 	  if(transcript.includes('제목에')){
 		  keyword = '제목에';
