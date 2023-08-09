@@ -40,6 +40,8 @@
 				<div class="card">
 					<div class="card-header">
 						<h4 class="card-title" style="font-size: 2em;">과제 ${name }</h4>
+						<input type="button" id="autoWrite" class="btn btn-primary" style="background-color: #f1e9e9;
+    						border-color: #f1e9e9; color: #424040;" value="자동완성">
 					</div>
 					<div class="card-body">
 						<div class="form-validation">
@@ -78,7 +80,7 @@
 											</label>
 											<div class="col-lg-7">
 												<input type="text" id="asmTtl" class="form-control"
-													name="asmTtl" id="asmTtl" placeholder="제목을 입력하세요"
+													name="asmTtl" placeholder="제목을 입력하세요"
 													value="${vo.asmTtl }" required="">
 												<div class="invalid-feedback"></div>
 											</div>
@@ -157,12 +159,26 @@
 </div>
 <script>
 $(function(){
+
 	
+
 var listBtn = $("#listBtn");
 var regBtn = $("#regBtn");
 var cancelBtn = $("#cancelBtn");
 var regiForm = $("#regiForm");
 var asmNo = $("#asmNo").val();
+var autoWrite = $("#autoWrite");
+
+autoWrite.on('click', function(){
+	var asmTtl = $("#asmTtl");
+	var asmCn = $("#asmCn");
+	var title = "14주차 과제";
+	var content = "14주차 과제입니다. 수업내용 이해도 확인을 위한 기말고사 전 마지막 과제이니 첨부된 파일 확인 후  성실히 작성해서 제출바랍니다."
+	
+	asmTtl.val(title);
+	asmCn.val(content);
+		
+})
 
 listBtn.on("click", function(){
 	var lecapNo = $("#lecapNo").val();
@@ -192,6 +208,7 @@ regBtn.on("click", function(){
 		console.log("여기 실행")
 		regiForm.attr("action", "/hku/professor/updateAssignment");
 	} 
+	
 	regiForm.submit();
 	swal("", "과제가 등록되었습니다", "success")
 	

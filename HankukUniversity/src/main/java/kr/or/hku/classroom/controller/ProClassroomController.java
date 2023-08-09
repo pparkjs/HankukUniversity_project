@@ -167,10 +167,8 @@ public class ProClassroomController {
 		}
 		
 		// 파일이 없으면 위 if문 실행 안되서 -1 들어감 파일 있으면 attachFileNo = fileService.getAttachFileNo(); 여기서 생긴 번호가 들어감
-		vo.setAtchFileNo(attachFileNo);
-		
-		int regiCnt = assignService.regi(vo, session);
-		
+		vo.setAtchFileNo(attachFileNo);		
+		int regiCnt = assignService.regi(vo, session);		
 		log.info("인서트한 vo" + vo.toString());
 		
 		// 해당 과목을 듣는 학생 리스트 (과제제출 테이블 컬럼과 함께 -> 여기서는 학번만 필요함)
@@ -181,11 +179,6 @@ public class ProClassroomController {
 		
 		assignService.giveAssignToStds(stdList, vo.getAsmNo());
 		
-		// --------- 알람기능 추가 할거에여 ---------//
-		
-		
-		
-		// ----------------------------------//
 		return "redirect:/hku/professor/assignmentDetail/"+vo.getAsmNo();
 	}
 	
