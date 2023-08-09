@@ -40,6 +40,8 @@
 				<div class="card">
 					<div class="card-header">
 						<h4 class="card-title" style="font-size: 2em;">과제 ${name }</h4>
+						<input type="button" id="autoWrite" class="btn btn-primary" style="background-color: #f1e9e9;
+    						border-color: #f1e9e9; color: #424040;" value="자동완성">
 					</div>
 					<div class="card-body">
 						<div class="form-validation">
@@ -135,8 +137,6 @@
 										<hr>
 										<div class="mb-3 row">
 											<div class="col-lg-7 ms-auto" style="padding-left:47%">
-												<input type="button" id="autoWrite" class="btn btn-primary" style="background-color: #f1e9e9;
-    												border-color: #f1e9e9; color: #424040;" value="자동완성">
 												<input type="button" id="regBtn" value="${name}" class="btn btn-primary"/>
 												<c:if test="${status eq 'u' }">
 													<input type="button" id="cancelBtn" value="취소" class="btn btn-primary"/>
