@@ -1,0 +1,4 @@
+{
+    "ignore": ["src/public/*.pug"],
+    "exec": "babel-node src/server.js"
+}
