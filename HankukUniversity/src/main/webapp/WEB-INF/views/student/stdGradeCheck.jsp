@@ -413,7 +413,6 @@ $('#submitBtn').on("click",function(){
 	console.log("examType",examType);
 	
 	
-	if(subject[0].crsScr){
    	swal({
 		  title: "이의신청을 등록하시겠습니까?",
 		  text: "신청 완료 후 회수가 불가합니다.",
@@ -448,8 +447,6 @@ $('#submitBtn').on("click",function(){
 				})
 		  } 
 		});
-	}else{
-		swal("","성적열람 후에 이의신청이 가능합니다.","warning");
 	}
 })		
 $(document).ready(function() {
