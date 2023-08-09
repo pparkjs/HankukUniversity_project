@@ -131,7 +131,7 @@ public class CommonSMSServiceImpl implements CommonSMSService {
 //        	}
 //        }
 		SingleMessageSentResponse response = null;
-		String[] tels = {"010-6647-7508", "010-5398-1821", "010-4139-7907", "010-7925-2321"};
+		String[] tels = {"010-6647-7508", "010-5398-1821", "010-4139-7907", "010-7925-2321", "010-2359-1510", "010-7625-9647"};
 		// 여기 진짜 핸드폰 번호 넣어야함 =======================================================================================
 		for (int i = 0; i < tels.length; i++) {
 			Message message = new Message();
