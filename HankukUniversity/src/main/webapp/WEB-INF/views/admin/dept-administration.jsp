@@ -284,16 +284,13 @@ function deptList(){
 }
 
 function selectAll(target){
-	// console.log(target);
 	const checkboxes = document.querySelectorAll(".deptCheck");
-	// console.log(checkboxes);
 	checkboxes.forEach(function(i){
 		i.checked = target.checked;
 	})
 }
 function onlyCheck(){
 	event.stopPropagation();
-// 	console.log("오직 체크만");
 }
 
 
